@@ -13,6 +13,8 @@
             <element id="module-production-resource-output" name="xml-impl" />
             <element id="module-output" name="xml-intellilang" />
             <element id="module-production-resource-output" name="xml-intellilang" />
+            <element id="module-output" name="xml-spellchecker" />
+            <element id="module-production-resource-output" name="xml-api" />
           </element>
           <element id="dir-copy" path="$PROJECT_DIR$/lib" />
         </element>
