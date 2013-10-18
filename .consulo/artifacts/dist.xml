@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="dist">
+    <output-path>$PROJECT_DIR$/out/artifacts/dist</output-path>
+    <root id="root">
+      <element id="directory" name="xml">
+        <element id="directory" name="lib">
+          <element id="zip-archive" name="xml.jar">
+            <element id="module-production-resource-output" name="consulo-xml" />
+            <element id="module-output" name="xml-api" />
+            <element id="module-output" name="xml-dom-api" />
+            <element id="module-output" name="xml-dom-impl" />
+            <element id="module-output" name="xml-impl" />
+            <element id="module-production-resource-output" name="xml-impl" />
+            <element id="module-output" name="xml-intellilang" />
+            <element id="module-production-resource-output" name="xml-intellilang" />
+          </element>
+          <element id="dir-copy" path="$PROJECT_DIR$/lib" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
