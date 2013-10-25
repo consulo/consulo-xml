@@ -15,10 +15,10 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import com.intellij.openapi.project.Project;
-import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
+import javax.swing.JPanel;
 
-import javax.swing.*;
+import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
+import com.intellij.openapi.project.Project;
 
 public class XmlTagPanel extends AbstractInjectionPanel<XmlTagInjection> {
 

@@ -15,6 +15,19 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+
+import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
+import org.intellij.plugins.intelliLang.inject.config.JspSupportProxy;
+import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
@@ -25,15 +38,6 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Key;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
-import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
-import org.intellij.plugins.intelliLang.inject.config.JspSupportProxy;
-import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection> {
   public static final Key<List<String>> URI_MODEL = Key.create("URI_MODEL");

@@ -15,13 +15,13 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
+import javax.swing.JPanel;
+
+import org.intellij.plugins.intelliLang.inject.config.XmlAttributeInjection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
-import org.intellij.plugins.intelliLang.inject.config.XmlAttributeInjection;
-
-import javax.swing.*;
 
 public class XmlAttributePanel extends AbstractInjectionPanel<XmlAttributeInjection> {
 
