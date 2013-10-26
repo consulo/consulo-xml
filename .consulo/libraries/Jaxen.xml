@@ -5,8 +5,8 @@
     </CLASSES>
     <DOCUMENTATION />
     <SOURCES>
-      <root url="zip://H:/github.com/consulo/consulo-xml/libSrc/jaxen-1.1.3-src.zip!/" />
+      <root url="zip://$PROJECT_DIR$/libSrc/jaxen-1.1.3-src.zip!/" />
     </SOURCES>
-    <jarDirectory url="zip://H:/github.com/consulo/consulo-xml/libSrc/jaxen-1.1.3-src.zip!/" recursive="false" type="SOURCES" />
+    <jarDirectory url="zip://$PROJECT_DIR$/libSrc/jaxen-1.1.3-src.zip!/" recursive="false" type="SOURCES" />
   </library>
 </component>

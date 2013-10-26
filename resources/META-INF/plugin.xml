@@ -476,6 +476,7 @@
                        implementationClass="com.intellij.psi.impl.source.html.HtmlScriptLanguageInjector"/>
 
     <gotoRelatedProvider implementation="com.intellij.navigation.HtmlGotoRelatedProvider"/>
+	<gotoTargetRendererProvider implementation="com.intellij.xml.impl.schema.GotoXmlSchemaTypeRendererProvider"/>
 
     <intentionAction>
       <category>XML</category>

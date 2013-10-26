@@ -5,8 +5,8 @@
     </CLASSES>
     <DOCUMENTATION />
     <SOURCES>
-      <root url="zip://H:/github.com/consulo/consulo-xml/libSrc/Xerces-J-src.2.9.1.zip!/" />
+      <root url="zip://$PROJECT_DIR$/libSrc/Xerces-J-src.2.9.1.zip!/" />
     </SOURCES>
-    <jarDirectory url="zip://H:/github.com/consulo/consulo-xml/libSrc/Xerces-J-src.2.9.1.zip!/" recursive="false" type="SOURCES" />
+    <jarDirectory url="zip://$PROJECT_DIR$/libSrc/Xerces-J-src.2.9.1.zip!/" recursive="false" type="SOURCES" />
   </library>
 </component>
