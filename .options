@@ -1,0 +1,4 @@
+<options>
+	<dep>consulo-intelliLang</dep>
+	<dep>consulo-spellchecker</dep>
+</options>
