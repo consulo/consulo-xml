@@ -84,7 +84,6 @@
           </library>
         </orderEntry>
         <orderEntry type="module" module-name="xml-impl" />
-        <orderEntry type="library" name="Jaxen" level="project" />
       </module>
       <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker">
         <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
