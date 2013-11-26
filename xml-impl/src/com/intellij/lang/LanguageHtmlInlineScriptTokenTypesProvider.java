@@ -21,7 +21,7 @@ public class LanguageHtmlInlineScriptTokenTypesProvider extends LanguageExtensio
   public final static LanguageHtmlInlineScriptTokenTypesProvider INSTANCE = new LanguageHtmlInlineScriptTokenTypesProvider();
 
   public LanguageHtmlInlineScriptTokenTypesProvider() {
-    super("com.intellij.html.inlineScriptTokenTypesProvider");
+    super("com.intellij.xml.html.inlineScriptTokenTypesProvider");
   }
 
   @Nullable

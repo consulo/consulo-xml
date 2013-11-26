@@ -3,8 +3,8 @@
   <component name="ModuleManager">
     <modules>
       <module name="consulo-xml" dirurl="file://$PROJECT_DIR$">
-        <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" />
+        <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
         </content>
@@ -17,8 +17,8 @@
         <orderEntry type="module" module-name="xml-spellchecker" />
       </module>
       <module name="xml-api" dirurl="file://$PROJECT_DIR$/xml-api">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
           <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
@@ -28,8 +28,8 @@
         <orderEntry type="sourceFolder" forTests="false" />
       </module>
       <module name="xml-dom-api" dirurl="file://$PROJECT_DIR$/xml-dom-api">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="xml-api" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
@@ -39,8 +39,8 @@
         <orderEntry type="module" module-name="xml-api" />
       </module>
       <module name="xml-impl" dirurl="file://$PROJECT_DIR$/xml-impl">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
@@ -53,8 +53,8 @@
         <orderEntry type="library" name="XmlBeans" level="project" />
       </module>
       <module name="xml-dom-impl" dirurl="file://$PROJECT_DIR$/xml-dom-impl">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
@@ -65,8 +65,8 @@
         <orderEntry type="module" module-name="xml-dom-api" exported="" />
       </module>
       <module name="xml-intellilang" dirurl="file://$PROJECT_DIR$/xml-intellilang">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
           <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
@@ -86,8 +86,8 @@
         <orderEntry type="module" module-name="xml-impl" />
       </module>
       <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker">
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
+        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
         </content>
