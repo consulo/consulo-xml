@@ -65,7 +65,7 @@
         <orderEntry type="module" module-name="xml-dom-api" exported="" />
       </module>
       <module name="xml-intellilang" dirurl="file://$PROJECT_DIR$/xml-intellilang">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
+        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="file://$MODULE_DIR$/../dep" />
         <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
         <content url="file://$MODULE_DIR$">
           <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
@@ -74,6 +74,7 @@
         <orderEntry type="module-extension-sdk" extension-id="java" />
         <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
         <orderEntry type="sourceFolder" forTests="false" />
+        <orderEntry type="module" module-name="xml-impl" />
         <orderEntry type="module-library">
           <library name="consulo:IntelliLang">
             <CLASSES>
@@ -83,7 +84,6 @@
             <SOURCES />
           </library>
         </orderEntry>
-        <orderEntry type="module" module-name="xml-impl" />
       </module>
       <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker">
         <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
