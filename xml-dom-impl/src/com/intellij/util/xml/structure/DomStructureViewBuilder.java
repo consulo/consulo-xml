@@ -63,7 +63,7 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 	@NotNull
 	public StructureView createStructureView(final FileEditor fileEditor, final Project project)
 	{
-		return new StructureViewComponent(fileEditor, createStructureViewModel(), project)
+		return new StructureViewComponent(fileEditor, createStructureViewModel(null), project)
 		{
 			@Override
 			public AsyncResult<AbstractTreeNode> expandPathToElement(final Object element)
