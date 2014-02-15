@@ -27,9 +27,16 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.stubs.BinaryFileStubBuilder;
 import com.intellij.psi.stubs.Stub;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.indexing.FileBasedIndexImpl;
 import com.intellij.util.indexing.FileContent;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomFileDescription;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomService;
+import com.intellij.util.xml.XmlFileHeader;
+import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
 
@@ -37,53 +44,70 @@ import com.intellij.xml.util.XmlUtil;
  * @author Dmitry Avdeev
  *         Date: 8/2/12
  */
-public class DomStubBuilder implements BinaryFileStubBuilder {
+public class DomStubBuilder implements BinaryFileStubBuilder
+{
 
-  public final static Key<FileContent> CONTENT_FOR_DOM_STUBS = Key.create("dom stubs content");
-  private final static Logger LOG = Logger.getInstance(DomStubBuilder.class);
+	public final static Key<FileContent> CONTENT_FOR_DOM_STUBS = Key.create("dom stubs content");
+	private final static Logger LOG = Logger.getInstance(DomStubBuilder.class);
 
-  @Override
-  public boolean acceptsFile(VirtualFile file) {
-    FileType fileType = file.getFileType();
-    return fileType == XmlFileType.INSTANCE && !FileBasedIndexImpl.isProjectOrWorkspaceFile(file, fileType);
-  }
+	@Override
+	public boolean acceptsFile(VirtualFile file)
+	{
+		FileType fileType = file.getFileType();
+		return fileType == XmlFileType.INSTANCE && !FileBasedIndexImpl.isProjectOrWorkspaceFile(file, fileType);
+	}
 
-  @Override
-  public Stub buildStubTree(FileContent fileContent) {
-    VirtualFile file = fileContent.getFile();
-    Project project = fileContent.getProject();
-    PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-    if (!(psiFile instanceof XmlFile)) return null;
+	@Override
+	public Stub buildStubTree(FileContent fileContent)
+	{
+		VirtualFile file = fileContent.getFile();
+		Project project = fileContent.getProject();
+		PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+		if(!(psiFile instanceof XmlFile))
+		{
+			return null;
+		}
 
-    XmlFile xmlFile = (XmlFile)psiFile;
-    try {
-      XmlUtil.BUILDING_DOM_STUBS.set(Boolean.TRUE);
-      psiFile.putUserData(CONTENT_FOR_DOM_STUBS, fileContent);
-      DomFileElement<? extends DomElement> fileElement = DomManager.getDomManager(project).getFileElement(xmlFile);
-      if (fileElement == null || !fileElement.getFileDescription().hasStubs()) return null;
+		XmlFile xmlFile = (XmlFile) psiFile;
+		try
+		{
+			XmlUtil.BUILDING_DOM_STUBS.set(Boolean.TRUE);
+			psiFile.putUserData(CONTENT_FOR_DOM_STUBS, fileContent);
+			DomFileElement<? extends DomElement> fileElement = DomManager.getDomManager(project).getFileElement(xmlFile);
+			if(fileElement == null || !fileElement.getFileDescription().hasStubs())
+			{
+				return null;
+			}
 
-      XmlFileHeader header = DomService.getInstance().getXmlFileHeader(xmlFile);
-      if (header.getRootTagLocalName() == null) {
-        LOG.error("null root tag for " + fileElement + " for " + file);
-      }
-      FileStub fileStub = new FileStub(header);
-      DomStubBuilderVisitor visitor = new DomStubBuilderVisitor(fileStub);
-      visitor.visitDomElement(fileElement.getRootElement());
-      return fileStub;
-    }
-    finally {
-      XmlUtil.BUILDING_DOM_STUBS.set(Boolean.FALSE);
-      psiFile.putUserData(CONTENT_FOR_DOM_STUBS, null);
-    }
-  }
+			XmlFileHeader header = DomService.getInstance().getXmlFileHeader(xmlFile);
+			if(header.getRootTagLocalName() == null)
+			{
+				LOG.error("null root tag for " + fileElement + " for " + file);
+			}
+			FileStub fileStub = new FileStub(header);
+			XmlTag rootTag = xmlFile.getRootTag();
+			if(rootTag != null)
+			{
+				new DomStubBuilderVisitor(DomManagerImpl.getDomManager(project)).visitXmlElement(rootTag, fileStub, 0);
+			}
+			return fileStub;
+		}
+		finally
+		{
+			XmlUtil.BUILDING_DOM_STUBS.set(Boolean.FALSE);
+			psiFile.putUserData(CONTENT_FOR_DOM_STUBS, null);
+		}
+	}
 
-  @Override
-  public int getStubVersion() {
-    int version = 9;
-    DomFileDescription[] descriptions = Extensions.getExtensions(DomFileDescription.EP_NAME);
-    for (DomFileDescription description : descriptions) {
-      version += description.getStubVersion();
-    }
-    return version;
-  }
+	@Override
+	public int getStubVersion()
+	{
+		int version = 11;
+		DomFileDescription[] descriptions = Extensions.getExtensions(DomFileDescription.EP_NAME);
+		for(DomFileDescription description : descriptions)
+		{
+			version += description.getStubVersion();
+		}
+		return version;
+	}
 }

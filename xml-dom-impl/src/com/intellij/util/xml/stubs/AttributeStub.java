@@ -15,41 +15,52 @@
  */
 package com.intellij.util.xml.stubs;
 
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.util.io.StringRef;
-
 import java.util.Collections;
 import java.util.List;
+
+import com.intellij.psi.stubs.ObjectStubSerializer;
+import com.intellij.util.io.StringRef;
 
 /**
  * @author Dmitry Avdeev
  *         Date: 8/2/12
  */
-public class AttributeStub extends DomStub {
+public class AttributeStub extends DomStub
+{
+	private final String myValue;
 
-  private final String myValue;
+	public AttributeStub(DomStub parent, StringRef name, StringRef namespace, String value)
+	{
+		super(parent, name, namespace);
+		myValue = value;
+	}
 
-  public AttributeStub(DomStub parent, StringRef name, StringRef namespace, String value) {
-    super(parent, name, namespace);
-    myValue = value;
-  }
+	public String getValue()
+	{
+		return myValue;
+	}
 
-  public String getValue() {
-    return myValue;
-  }
+	@Override
+	public List<DomStub> getChildrenStubs()
+	{
+		return Collections.emptyList();
+	}
 
-  @Override
-  public List<DomStub> getChildrenStubs() {
-    return Collections.emptyList();
-  }
+	@Override
+	public int getIndex()
+	{
+		return 0;
+	}
 
-  @Override
-  public ObjectStubSerializer getStubType() {
-    return AttributeStubSerializer.INSTANCE;
-  }
+	@Override
+	public ObjectStubSerializer getStubType()
+	{
+		return AttributeStubSerializer.INSTANCE;
+	}
 
-  @Override
-  public String toString() {
-    return getName() + ":" + getValue();
-  }
+	@Override
+	public String toString()
+	{
+		return getName() + ":" + getValue();
+	}
 }

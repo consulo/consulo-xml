@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2012 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,56 +15,76 @@
  */
 package com.intellij.util.xml.stubs;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.stubs.ObjectStubSerializer;
 import com.intellij.util.SmartList;
 import com.intellij.util.io.StringRef;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * @author Dmitry Avdeev
  *         Date: 8/2/12
  */
-public class ElementStub extends DomStub {
+public class ElementStub extends DomStub
+{
 
-  private final List<DomStub> myChildren = new SmartList<DomStub>();
-  private final boolean myCustom;
+	private final List<DomStub> myChildren = new SmartList<DomStub>();
+	private final int myIndex;
+	private final boolean myCustom;
 
-  public ElementStub(@Nullable ElementStub parent, @NotNull StringRef name, @Nullable StringRef namespace, boolean custom) {
-    super(parent, name, namespace);
-    myCustom = custom;
-  }
+	@Nullable
+	private final StringRef myElementClass;
 
-  void addChild(DomStub child) {
-    myChildren.add(child);
-  }
+	public ElementStub(@Nullable ElementStub parent, @NotNull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
+			@Nullable StringRef elementClass)
+	{
+		super(parent, name, namespace);
+		myIndex = index;
+		myCustom = custom;
+		myElementClass = elementClass;
+	}
 
-  @Override
-  public List<DomStub> getChildrenStubs() {
-    return myChildren;
-  }
+	void addChild(DomStub child)
+	{
+		myChildren.add(child);
+	}
 
-  @Override
-  public ObjectStubSerializer getStubType() {
-    return ElementStubSerializer.INSTANCE;
-  }
+	@Override
+	public List<DomStub> getChildrenStubs()
+	{
+		return myChildren;
+	}
 
-  @Override
-  public String toString() {
-    String key = getNamespaceKey();
-    return StringUtil.isEmpty(key) ? getName() : key + ":" + getName();
-  }
+	@Override
+	public ObjectStubSerializer getStubType()
+	{
+		return ElementStubSerializer.INSTANCE;
+	}
 
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == this) return true;
-    return obj instanceof ElementStub && id == ((ElementStub)obj).id && myLocalName.equals(((ElementStub)obj).myLocalName);
-  }
+	@Override
+	public String toString()
+	{
+		String key = getNamespaceKey();
+		return StringUtil.isEmpty(key) ? getName() : key + ":" + getName();
+	}
 
-  public boolean isCustom() {
-    return myCustom;
-  }
+	public boolean isCustom()
+	{
+		return myCustom;
+	}
+
+	@Override
+	public int getIndex()
+	{
+		return myIndex;
+	}
+
+	@Nullable
+	String getElementClass()
+	{
+		return myElementClass == null ? null : myElementClass.getString();
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2012 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.util.xml.stubs;
+package com.intellij.util.xml;
 
-import com.intellij.psi.stubs.SerializationManager;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author Dmitry Avdeev
- *         Date: 8/2/12
+ * Marks occurrence of element for querying via {@link DomElementClassIndex}.
+ *
+ * @since 13
  */
-public class DomElementTypeHolder
-{
-
-	static
-	{
-		SerializationManager.getInstance().registerSerializer(ElementStubSerializer.INSTANCE);
-		SerializationManager.getInstance().registerSerializer(AttributeStubSerializer.INSTANCE);
-		SerializationManager.getInstance().registerSerializer(FileStubSerializer.INSTANCE);
-	}
+@Retention(value = RetentionPolicy.RUNTIME)
+@Target(value = ElementType.TYPE)
+public @interface StubbedOccurrence {
 }
