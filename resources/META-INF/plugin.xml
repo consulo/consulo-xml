@@ -219,7 +219,7 @@
 		<fileBasedIndex implementation="com.intellij.html.index.Html5CustomAttributesIndex"/>
 		<fileBasedIndex implementation="com.intellij.xml.index.SchemaTypeInheritanceIndex"/>
 		<include.provider implementation="com.intellij.xml.util.XIncludeProvider"/>
-		<indexedRootsProvider implementation="com.intellij.javaee.ExternalResourcesRootsProvider"/>
+		<indexedRootsContributor implementation="com.intellij.javaee.ExternalResourcesRootsProvider"/>
 
 		<applicationService serviceInterface="com.intellij.application.options.editor.XmlEditorOptions"
 							serviceImplementation="com.intellij.application.options.editor.XmlEditorOptions"/>
@@ -246,8 +246,8 @@
 		<externalAnnotator language="XML" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
 		<externalAnnotator language="HTML" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
 		<externalAnnotator language="XHTML" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
-		<externalAnnotator language="JSP" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
-		<externalAnnotator language="JSPX" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
+		<!--<externalAnnotator language="JSP" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
+		<externalAnnotator language="JSPX" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/> -->
 
 		<lang.parserDefinition language="DTD" implementationClass="com.intellij.lang.dtd.DTDParserDefinition"/>
 		<lang.parserDefinition language="XML" implementationClass="com.intellij.lang.xml.XMLParserDefinition"/>
@@ -276,8 +276,8 @@
 		<lang.unwrapDescriptor language="XML" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
 		<lang.unwrapDescriptor language="HTML" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
 		<lang.unwrapDescriptor language="XHTML" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
-		<lang.unwrapDescriptor language="JSP" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
-		<lang.unwrapDescriptor language="JSPX" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
+		<!--<lang.unwrapDescriptor language="JSP" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
+		<lang.unwrapDescriptor language="JSPX" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>  -->
 
 		<lang.findUsagesProvider language="DTD" implementationClass="com.intellij.lang.xml.XmlFindUsagesProvider"/>
 		<lang.findUsagesProvider language="XML" implementationClass="com.intellij.lang.xml.XmlFindUsagesProvider"/>
@@ -306,8 +306,8 @@
 		<codeInsight.wordCompletionFilter language="XML" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
 		<codeInsight.wordCompletionFilter language="HTML" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
 		<codeInsight.wordCompletionFilter language="XHTML" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
-		<codeInsight.wordCompletionFilter language="JSP" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
-		<codeInsight.wordCompletionFilter language="JSPX" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
+		<!--<codeInsight.wordCompletionFilter language="JSP" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
+		<codeInsight.wordCompletionFilter language="JSPX" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/> -->
 
 
 		<lang.psiStructureViewFactory language="DTD" implementationClass="com.intellij.lang.dtd.DtdStructureViewBuilderFactory"/>

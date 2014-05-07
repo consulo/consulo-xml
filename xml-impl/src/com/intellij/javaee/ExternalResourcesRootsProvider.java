@@ -15,6 +15,12 @@
  */
 package com.intellij.javaee;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -22,12 +28,6 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.indexing.IndexableSetContributor;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -61,6 +61,7 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor {
     }
   };
 
+  @Override
   public Set<VirtualFile> getAdditionalRootsToIndex() {
 
     HashSet<VirtualFile> roots = new HashSet<VirtualFile>();
