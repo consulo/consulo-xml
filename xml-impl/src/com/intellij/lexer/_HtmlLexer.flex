@@ -25,7 +25,7 @@ import com.intellij.psi.xml.*;
 
 %class _HtmlLexer
 %public
-%implements FlexLexer,ELHostLexer
+%implements FlexLexer
 %function advance
 %type IElementType
 %eof{ return;
