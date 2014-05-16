@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,54 +16,62 @@
 
 package com.intellij.util.xml.structure;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlFileTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import com.intellij.ide.util.treeView.smartTree.Sorter;
 import com.intellij.openapi.Disposable;
-import com.intellij.psi.PsiFile;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.Function;
-import com.intellij.util.xml.*;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomElementNavigationProvider;
+import com.intellij.util.xml.DomElementsNavigationManager;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomService;
 
 /**
  * @author Gregory.Shrago
-*/
-public class DomStructureViewTreeModel extends XmlStructureViewTreeModel implements Disposable {
-  private final XmlFile myFile;
-  private final DomElementNavigationProvider myNavigationProvider;
-  private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
+ */
+public class DomStructureViewTreeModel extends XmlStructureViewTreeModel implements Disposable
+{
+	private final DomElementNavigationProvider myNavigationProvider;
+	private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
 
-  public DomStructureViewTreeModel(final XmlFile file, final Function<DomElement, DomService.StructureViewMode> descriptor) {
-    this(file, DomElementsNavigationManager.getManager(file.getProject()).getDomElementsNavigateProvider(DomElementsNavigationManager.DEFAULT_PROVIDER_NAME), descriptor);
-  }
+	public DomStructureViewTreeModel(
+			@NotNull XmlFile file,
+			@NotNull Function<DomElement, DomService.StructureViewMode> descriptor,
+			@Nullable Editor editor)
+	{
+		this(file, DomElementsNavigationManager.getManager(file.getProject()).getDomElementsNavigateProvider(DomElementsNavigationManager
+				.DEFAULT_PROVIDER_NAME), descriptor, editor);
+	}
 
-  public DomStructureViewTreeModel(final XmlFile file, final DomElementNavigationProvider navigationProvider, final Function<DomElement, DomService.StructureViewMode> descriptor) {
-    super(file);
-    myFile = file;
-    myNavigationProvider = navigationProvider;
-    myDescriptor = descriptor;
-  }
+	public DomStructureViewTreeModel(
+			@NotNull XmlFile file,
+			final DomElementNavigationProvider navigationProvider,
+			@NotNull Function<DomElement, DomService.StructureViewMode> descriptor,
+			@Nullable Editor editor)
+	{
+		super(file, editor);
+		myNavigationProvider = navigationProvider;
+		myDescriptor = descriptor;
+	}
 
-  @NotNull
-  public StructureViewTreeElement getRoot() {
-    final DomFileElement<DomElement> fileElement = DomManager.getDomManager(myFile.getProject()).getFileElement(myFile, DomElement.class);
-    return fileElement == null?
-           new XmlFileTreeElement(myFile) :
-           new DomStructureTreeElement(fileElement.getRootElement().createStableCopy(), myDescriptor, myNavigationProvider);
-  }
+	@Override
+	@NotNull
+	public StructureViewTreeElement getRoot()
+	{
+		XmlFile myFile = getPsiFile();
+		final DomFileElement<DomElement> fileElement = DomManager.getDomManager(myFile.getProject()).getFileElement(myFile, DomElement.class);
+		return fileElement == null ? new XmlFileTreeElement(myFile) : new DomStructureTreeElement(fileElement.getRootElement().createStableCopy(),
+				myDescriptor, myNavigationProvider);
+	}
 
-  protected DomElementNavigationProvider getNavigationProvider() {
-    return myNavigationProvider;
-  }
-
-  @NotNull
-  public Sorter[] getSorters() {
-    return new Sorter[]{Sorter.ALPHA_SORTER};
-  }
-
-  protected PsiFile getPsiFile() {
-    return myFile;
-  }
+	protected DomElementNavigationProvider getNavigationProvider()
+	{
+		return myNavigationProvider;
+	}
 }

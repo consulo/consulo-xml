@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,63 +15,93 @@
  */
 package com.intellij.ide.structureView.impl.xml;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.structureView.StructureViewExtension;
 import com.intellij.ide.structureView.StructureViewFactoryEx;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.TextEditorBasedStructureViewModel;
 import com.intellij.ide.util.treeView.smartTree.Sorter;
 import com.intellij.lang.dtd.DTDLanguage;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.*;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.xml.XmlAttlistDecl;
+import com.intellij.psi.xml.XmlConditionalSection;
+import com.intellij.psi.xml.XmlElementDecl;
+import com.intellij.psi.xml.XmlEntityDecl;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 
-import java.util.Collection;
+public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
+{
+	private static final Class[] CLASSES = {
+			XmlTag.class,
+			XmlFile.class,
+			XmlEntityDecl.class,
+			XmlElementDecl.class,
+			XmlAttlistDecl.class,
+			XmlConditionalSection.class
+	};
+	private static final Sorter[] SORTERS = {Sorter.ALPHA_SORTER};
 
-public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel{
-  private final XmlFile myFile;
-  private static final Class[] myClasses = new Class[]{XmlTag.class, XmlFile.class, XmlEntityDecl.class, XmlElementDecl.class, XmlAttlistDecl.class, XmlConditionalSection.class};
-  private static final Sorter[] mySorters = {Sorter.ALPHA_SORTER};
+	public XmlStructureViewTreeModel(@NotNull XmlFile file, @Nullable Editor editor)
+	{
+		super(editor, file);
+	}
 
-  public XmlStructureViewTreeModel(XmlFile file) {
-    super(file);
-    myFile = file;
-  }
+	@Override
+	@NotNull
+	public StructureViewTreeElement getRoot()
+	{
+		XmlFile myFile = getPsiFile();
+		if(myFile.getLanguage() == DTDLanguage.INSTANCE)
+		{
+			return new DtdFileTreeElement(myFile);
+		}
+		return new XmlFileTreeElement(myFile);
+	}
 
-  @NotNull
-  public StructureViewTreeElement getRoot() {
-    if (myFile.getLanguage() == DTDLanguage.INSTANCE) return new DtdFileTreeElement(myFile);
-    return new XmlFileTreeElement(myFile);
-  }
+	@Override
+	public boolean shouldEnterElement(final Object element)
+	{
+		return element instanceof XmlTag && ((XmlTag) element).getSubTags().length > 0;
+	}
 
-  public boolean shouldEnterElement(final Object element) {
-    return element instanceof XmlTag && ((XmlTag)element).getSubTags().length > 0;
-  }
+	@Override
+	protected XmlFile getPsiFile()
+	{
+		return (XmlFile) super.getPsiFile();
+	}
 
-  protected PsiFile getPsiFile() {
-    return myFile;
-  }
+	@Override
+	@NotNull
+	protected Class[] getSuitableClasses()
+	{
+		return CLASSES;
+	}
 
-  @NotNull
-  protected Class[] getSuitableClasses() {
-    return myClasses;
-  }
+	@Override
+	public Object getCurrentEditorElement()
+	{
+		final Object editorElement = super.getCurrentEditorElement();
+		if(editorElement instanceof XmlTag)
+		{
+			for(StructureViewExtension extension : StructureViewFactoryEx.getInstanceEx(getPsiFile().getProject()).getAllExtensions(XmlTag.class))
+			{
+				final Object element = extension.getCurrentEditorElement(getEditor(), (PsiElement) editorElement);
+				if(element != null)
+				{
+					return element;
+				}
+			}
+		}
+		return editorElement;
+	}
 
-  public Object getCurrentEditorElement() {
-    final Object editorElement = super.getCurrentEditorElement();
-    if (editorElement instanceof XmlTag) {
-      final Collection<StructureViewExtension> structureViewExtensions =
-          StructureViewFactoryEx.getInstanceEx(myFile.getProject()).getAllExtensions(XmlTag.class);
-      for(StructureViewExtension extension:structureViewExtensions) {
-        final Object element = extension.getCurrentEditorElement(getEditor(), (PsiElement)editorElement);
-        if (element != null) return element;
-      }
-    }
-    return editorElement;
-  }
-
-  @NotNull
-  public Sorter[] getSorters() {
-    return mySorters;
-  }
+	@Override
+	@NotNull
+	public Sorter[] getSorters()
+	{
+		return SORTERS;
+	}
 }

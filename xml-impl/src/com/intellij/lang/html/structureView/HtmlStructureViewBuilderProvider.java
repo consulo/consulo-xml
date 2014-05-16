@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2013 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,23 +25,31 @@ import com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.xml.XmlFile;
 
-public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {
-  @Override
-  @Nullable
-  public StructureViewBuilder createStructureViewBuilder(@NotNull final XmlFile file) {
-    if (file.getViewProvider().getVirtualFile().getFileType() != HtmlFileType.INSTANCE) return null;
+public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider
+{
+	@Override
+	@Nullable
+	public StructureViewBuilder createStructureViewBuilder(@NotNull final XmlFile file)
+	{
+		if(file.getViewProvider().getVirtualFile().getFileType() != HtmlFileType.INSTANCE)
+		{
+			return null;
+		}
 
-    return new TreeBasedStructureViewBuilder() {
-      @Override
-	  public boolean isRootNodeShown() {
-        return false;
-      }
+		return new TreeBasedStructureViewBuilder()
+		{
+			@Override
+			public boolean isRootNodeShown()
+			{
+				return false;
+			}
 
-      @Override
-	  @NotNull
-      public StructureViewModel createStructureViewModel(@Nullable Editor editor) {
-        return new HtmlStructureViewTreeModel(file);
-      }
-    };
-  }
+			@Override
+			@NotNull
+			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
+			{
+				return new HtmlStructureViewTreeModel(file, editor);
+			}
+		};
+	}
 }

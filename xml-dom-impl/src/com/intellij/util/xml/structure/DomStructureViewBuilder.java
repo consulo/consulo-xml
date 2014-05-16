@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.intellij.util.xml.structure;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.structureView.StructureView;
 import com.intellij.ide.structureView.StructureViewModel;
 import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
@@ -24,6 +25,7 @@ import com.intellij.ide.structureView.newStructureView.StructureViewComponent;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.AsyncResult;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -48,9 +50,9 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 
 	@Override
 	@NotNull
-	public StructureViewModel createStructureViewModel(Editor editor)
+	public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 	{
-		return new DomStructureViewTreeModel(myFile, myDescriptor);
+		return new DomStructureViewTreeModel(myFile, myDescriptor, editor);
 	}
 
 	@Override
@@ -61,14 +63,15 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 
 	@Override
 	@NotNull
-	public StructureView createStructureView(final FileEditor fileEditor, final Project project)
+	public StructureView createStructureView(final FileEditor fileEditor, @NotNull final Project project)
 	{
-		return new StructureViewComponent(fileEditor, createStructureViewModel(null), project)
+		return new StructureViewComponent(fileEditor, createStructureViewModel(fileEditor instanceof TextEditor ? ((TextEditor) fileEditor)
+				.getEditor() : null), project, true)
 		{
 			@Override
 			public AsyncResult<AbstractTreeNode> expandPathToElement(final Object element)
 			{
-				if(element instanceof XmlElement)
+				if(element instanceof XmlElement && ((XmlElement) element).isValid())
 				{
 					final XmlElement xmlElement = (XmlElement) element;
 					XmlTag tag = PsiTreeUtil.getParentOfType(xmlElement, XmlTag.class, false);

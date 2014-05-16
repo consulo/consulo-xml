@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,48 +34,63 @@ import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 
-public class XmlStructureViewBuilderFactory implements PsiStructureViewFactory {
-  @Override
-  @Nullable
-  public StructureViewBuilder getStructureViewBuilder(final PsiFile psiFile) {
-    if (!(psiFile instanceof XmlFile)) {
-      return null;
-    }
-    StructureViewBuilder builder = getStructureViewBuilderForExtensions(psiFile);
-    if (builder != null) {
-      return builder;
-    }
+public class XmlStructureViewBuilderFactory implements PsiStructureViewFactory
+{
+	@Override
+	@Nullable
+	public StructureViewBuilder getStructureViewBuilder(final PsiFile psiFile)
+	{
+		if(!(psiFile instanceof XmlFile))
+		{
+			return null;
+		}
+		StructureViewBuilder builder = getStructureViewBuilderForExtensions(psiFile);
+		if(builder != null)
+		{
+			return builder;
+		}
 
-    for (XmlStructureViewBuilderProvider xmlStructureViewBuilderProvider : getStructureViewBuilderProviders()) {
-      final StructureViewBuilder structureViewBuilder = xmlStructureViewBuilderProvider.createStructureViewBuilder((XmlFile)psiFile);
-      if (structureViewBuilder != null) {
-        return structureViewBuilder;
-      }
-    }
+		for(XmlStructureViewBuilderProvider xmlStructureViewBuilderProvider : getStructureViewBuilderProviders())
+		{
+			final StructureViewBuilder structureViewBuilder = xmlStructureViewBuilderProvider.createStructureViewBuilder((XmlFile) psiFile);
+			if(structureViewBuilder != null)
+			{
+				return structureViewBuilder;
+			}
+		}
 
-    return new TreeBasedStructureViewBuilder() {
-      @Override
-	  @NotNull
-      public StructureViewModel createStructureViewModel(@Nullable Editor editor) {
-        return new XmlStructureViewTreeModel((XmlFile)psiFile);
-      }
-    };
-  }
+		return new TreeBasedStructureViewBuilder()
+		{
+			@Override
+			@NotNull
+			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
+			{
+				return new XmlStructureViewTreeModel((XmlFile) psiFile, editor);
+			}
+		};
+	}
 
-  private static XmlStructureViewBuilderProvider[] getStructureViewBuilderProviders() {
-    return (XmlStructureViewBuilderProvider[])Extensions.getExtensions(XmlStructureViewBuilderProvider.EXTENSION_POINT_NAME);
-  }
+	private static XmlStructureViewBuilderProvider[] getStructureViewBuilderProviders()
+	{
+		return (XmlStructureViewBuilderProvider[]) Extensions.getExtensions(XmlStructureViewBuilderProvider.EXTENSION_POINT_NAME);
+	}
 
-  @Nullable
-  private static StructureViewBuilder getStructureViewBuilderForExtensions(final PsiFile psiFile) {
-    for (Language language : XMLLanguage.INSTANCE.getLanguageExtensionsForFile(psiFile)) {
-      PsiStructureViewFactory factory = LanguageStructureViewBuilder.INSTANCE.forLanguage(language);
-      if (factory == null) continue;
-      final StructureViewBuilder builder = factory.getStructureViewBuilder(psiFile);
-      if (builder != null) {
-        return builder;
-      }
-    }
-    return null;
-  }
+	@Nullable
+	private static StructureViewBuilder getStructureViewBuilderForExtensions(final PsiFile psiFile)
+	{
+		for(Language language : XMLLanguage.INSTANCE.getLanguageExtensionsForFile(psiFile))
+		{
+			PsiStructureViewFactory factory = LanguageStructureViewBuilder.INSTANCE.forLanguage(language);
+			if(factory == null)
+			{
+				continue;
+			}
+			final StructureViewBuilder builder = factory.getStructureViewBuilder(psiFile);
+			if(builder != null)
+			{
+				return builder;
+			}
+		}
+		return null;
+	}
 }
