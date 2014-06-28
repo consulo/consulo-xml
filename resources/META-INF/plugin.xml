@@ -550,6 +550,7 @@
 		</projectConfigurable>
 
 		<selectInTarget implementation="com.intellij.ide.browsers.SelectInDefaultBrowserTarget"/>
+		<lang.inspectionSuppressor language="XML" implementationClass="com.intellij.codeInspection.XmlInspectionSuppressor"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
