@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.ide.browsers.impl;
+package com.intellij.ide.browsers.actions;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.ide.browsers.BrowserLauncher;
-import com.intellij.ide.browsers.UrlOpener;
 import com.intellij.ide.browsers.WebBrowser;
-import com.intellij.openapi.project.Project;
-import com.intellij.util.ArrayUtil;
+import com.intellij.ide.browsers.WebBrowserManager;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 
-final class DefaultUrlOpener extends UrlOpener
+final class BaseWebBrowserAction extends BaseOpenInBrowserAction
 {
-	@Override
-	public boolean openUrl(@NotNull WebBrowser browser, @NotNull String url, @Nullable Project project)
+	private final WebBrowser browser;
+
+	public BaseWebBrowserAction(@NotNull WebBrowser browser)
 	{
-		return BrowserLauncher.getInstance().browseUsingPath(url, null, browser, project, ArrayUtil.EMPTY_STRING_ARRAY);
+		super(browser);
+
+		this.browser = browser;
+	}
+
+	@Nullable
+	@Override
+	protected WebBrowser getBrowser(@NotNull AnActionEvent event)
+	{
+		return WebBrowserManager.getInstance().isActive(browser) && browser.getPath() != null ? browser : null;
 	}
 }
