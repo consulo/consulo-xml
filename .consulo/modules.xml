@@ -2,109 +2,123 @@
 <project version="4">
   <component name="ModuleManager">
     <modules>
-      <module name="consulo-xml" dirurl="file://$PROJECT_DIR$">
-        <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" />
-        <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-impl" />
-        <orderEntry type="module" module-name="xml-dom-impl" />
-        <orderEntry type="module" module-name="xml-intellilang" />
-        <orderEntry type="module" module-name="xml-spellchecker" />
+      <module name="consulo-xml" dirurl="file://$PROJECT_DIR$" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="" sdk-name="Consulo 1.SNAPSHOT" />
+          <extension id="java" sdk-module-name="" sdk-name="1.6" language-level-module-name="" language-level-name="JDK_1_6" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-impl" />
+          <orderEntry type="module" module-name="xml-dom-impl" />
+          <orderEntry type="module" module-name="xml-intellilang" />
+          <orderEntry type="module" module-name="xml-spellchecker" />
+        </module-layer>
       </module>
-      <module name="xml-api" dirurl="file://$PROJECT_DIR$/xml-api">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-          <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
+      <module name="xml-api" dirurl="file://$PROJECT_DIR$/xml-api" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+        </module-layer>
       </module>
-      <module name="xml-dom-api" dirurl="file://$PROJECT_DIR$/xml-dom-api">
-        <extension id="consulo-plugin" sdk-module-name="xml-api" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-api" />
+      <module name="xml-dom-api" dirurl="file://$PROJECT_DIR$/xml-dom-api" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="xml-api" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-api" />
+        </module-layer>
       </module>
-      <module name="xml-impl" dirurl="file://$PROJECT_DIR$/xml-impl">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-api" exported="" />
-        <orderEntry type="library" name="Xerces" level="project" />
-        <orderEntry type="library" name="XmlBeans" level="project" />
+      <module name="xml-impl" dirurl="file://$PROJECT_DIR$/xml-impl" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-api" exported="" />
+          <orderEntry type="library" name="Xerces" level="project" />
+          <orderEntry type="library" name="XmlBeans" level="project" />
+        </module-layer>
       </module>
-      <module name="xml-dom-impl" dirurl="file://$PROJECT_DIR$/xml-dom-impl">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-impl" />
-        <orderEntry type="module" module-name="xml-dom-api" exported="" />
+      <module name="xml-dom-impl" dirurl="file://$PROJECT_DIR$/xml-dom-impl" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-impl" />
+          <orderEntry type="module" module-name="xml-dom-api" exported="" />
+        </module-layer>
       </module>
-      <module name="xml-intellilang" dirurl="file://$PROJECT_DIR$/xml-intellilang">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="file://$MODULE_DIR$/../dep" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-          <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-impl" />
-        <orderEntry type="module-library">
-          <library name="consulo:IntelliLang">
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/../dep/intelliLang/lib/intelliLang.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
+      <module name="xml-intellilang" dirurl="file://$PROJECT_DIR$/xml-intellilang" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="file://$MODULE_DIR$/../dep" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-impl" />
+          <orderEntry type="module-library">
+            <library name="consulo:IntelliLang">
+              <CLASSES>
+                <root url="jar://$MODULE_DIR$/../dep/intelliLang/lib/intelliLang.jar!/" />
+              </CLASSES>
+              <DOCUMENTATION />
+              <SOURCES />
+            </library>
+          </orderEntry>
+        </module-layer>
       </module>
-      <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker">
-        <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
-        <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
-        <content url="file://$MODULE_DIR$">
-          <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
-        </content>
-        <orderEntry type="module-extension-sdk" extension-id="java" />
-        <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-        <orderEntry type="sourceFolder" forTests="false" />
-        <orderEntry type="module" module-name="xml-impl" />
-        <orderEntry type="module-library">
-          <library name="consulo:Spellchecker">
-            <CLASSES>
-              <root url="jar://$MODULE_DIR$/../dep/spellchecker/lib/spellchecker.jar!/" />
-            </CLASSES>
-            <DOCUMENTATION />
-            <SOURCES />
-          </library>
-        </orderEntry>
-        <orderEntry type="module" module-name="xml-dom-impl" />
+      <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
+          <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="module" module-name="xml-impl" />
+          <orderEntry type="module-library">
+            <library name="consulo:Spellchecker">
+              <CLASSES>
+                <root url="jar://$MODULE_DIR$/../dep/spellchecker/lib/spellchecker.jar!/" />
+              </CLASSES>
+              <DOCUMENTATION />
+              <SOURCES />
+            </library>
+          </orderEntry>
+          <orderEntry type="module" module-name="xml-dom-impl" />
+        </module-layer>
       </module>
     </modules>
   </component>
