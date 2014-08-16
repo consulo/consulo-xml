@@ -13,32 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/*
+ * User: anna
+ * Date: 14-Feb-2008
+ */
 package com.intellij.application.options.editor;
 
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;
 
-/**
- * @author VISTALL
- */
-public class XmlEditorOptionsProvider extends BeanConfigurable<XmlEditorOptions> implements Configurable
+public class HtmlCodeFoldingConfigurable extends BeanConfigurable<XmlFoldingSettings> implements Configurable
 {
-	public XmlEditorOptionsProvider()
+	public HtmlCodeFoldingConfigurable()
 	{
-		super(XmlEditorOptions.getInstance());
-		checkBox("automaticallyInsertClosingTag", "Automatically insert closing tag");
-		checkBox("automaticallyInsertRequiredAttributes", "Automatically insert required attributes");
-		checkBox("automaticallyStartAttribute", "Automatically start attribute");
-		checkBox("automaticallyInsertRequiredSubTags", "Automatically insert required subtags");
+		super(XmlFoldingSettings.getInstance());
+		checkBox("COLLAPSE_HTML_STYLE_ATTRIBUTE", ApplicationBundle.message("checkbox.collapse.html.style.attribute"));
 	}
 
-
+	@Nls
 	@Override
 	public String getDisplayName()
 	{
 		return null;
 	}
 
+	@Nullable
 	@Override
 	public String getHelpTopic()
 	{

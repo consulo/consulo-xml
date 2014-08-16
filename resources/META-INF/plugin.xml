@@ -206,13 +206,10 @@
 		<codeInsight.lineMarkerProvider language="HTML" implementationClass="com.intellij.html.HtmlLineMarkerProvider"/>
 		<codeInsight.lineMarkerProvider language="XHTML" implementationClass="com.intellij.html.HtmlLineMarkerProvider"/>
 
-		<editorSmartKeysConfigurable instance="com.intellij.application.options.editor.XmlEditorOptionsProvider"/>
 		<editorAppearanceConfigurable instance="com.intellij.application.options.editor.XmlEditorAppearanceConfigurable"
 									  id="WebEditorAppearanceConfigurable"/>
 
 		<editorAppearanceConfigurable instance="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingConfigurable"/>
-
-		<autoImportOptionsProvider instance="com.intellij.application.options.XmlAutoImportOptionsProvider"/>
 
 		<highlightErrorFilter implementation="com.intellij.codeInsight.highlighting.HtmlClosingTagErrorFilter"/>
 
@@ -485,7 +482,25 @@
 		<globalInspection shortName="XmlHighlighting" displayName="XML highlighting" groupName="General" enabledByDefault="true" level="ERROR"
 						  implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitorBasedInspection"/>
 
-		<codeFoldingOptionsProvider instance="com.intellij.application.options.editor.XmlCodeFoldingOptionsProvider"/>
+		<applicationConfigurable id="editor.preferences.smartKeys.xml"
+								 parentId="editor.preferences.smartKeys"
+								 displayName="XML/HTML"
+								 instance="com.intellij.application.options.editor.XmlEditorOptionsProvider"/>
+
+		<applicationConfigurable id="editor.preferences.import.xml"
+								 parentId="editor.preferences.import"
+								 displayName="XML"
+								 instance="com.intellij.application.options.XmlAutoImportOptionsProvider"/>
+
+		<applicationConfigurable id="editor.preferences.folding.xml"
+								 parentId="editor.preferences.folding"
+								 displayName="XML"
+								 instance="com.intellij.application.options.editor.XmlCodeFoldingConfigurable"/>
+
+		<applicationConfigurable id="editor.preferences.folding.html"
+								 parentId="editor.preferences.folding"
+								 displayName="HTML"
+								 instance="com.intellij.application.options.editor.HtmlCodeFoldingConfigurable"/>
 
 		<colorSettingsPage implementation="com.intellij.openapi.options.colors.pages.XMLColorsPage"/>
 		<colorSettingsPage implementation="com.intellij.openapi.options.colors.pages.HTMLColorsPage"/>

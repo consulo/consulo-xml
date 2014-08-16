@@ -15,36 +15,34 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.application.options.editor.AutoImportOptionsProvider;
-import com.intellij.openapi.options.ConfigurationException;
-
-import javax.swing.*;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.application.ApplicationBundle;
+import com.intellij.openapi.options.BeanConfigurable;
+import com.intellij.openapi.options.Configurable;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlAutoImportOptionsProvider implements AutoImportOptionsProvider {
+public class XmlAutoImportOptionsProvider extends BeanConfigurable<XmlSettings> implements Configurable
+{
+	public XmlAutoImportOptionsProvider()
+	{
+		super(XmlSettings.getInstance());
+		checkBox("SHOW_XML_ADD_IMPORT_HINTS", ApplicationBundle.message("checkbox.show.import.popup"));
+	}
 
-  private JPanel myPanel;
-  private JCheckBox myShowAutoImportPopups;
+	@Nls
+	@Override
+	public String getDisplayName()
+	{
+		return null;
+	}
 
-  public JComponent createComponent() {
-    return myPanel;
-  }
-
-  public boolean isModified() {
-    return XmlSettings.getInstance().SHOW_XML_ADD_IMPORT_HINTS != myShowAutoImportPopups.isSelected();
-  }
-
-  public void apply() throws ConfigurationException {
-    XmlSettings.getInstance().SHOW_XML_ADD_IMPORT_HINTS = myShowAutoImportPopups.isSelected();
-  }
-
-  public void reset() {
-    myShowAutoImportPopups.setSelected(XmlSettings.getInstance().SHOW_XML_ADD_IMPORT_HINTS);    
-  }
-
-  public void disposeUIResources() {
-
-  }
+	@Nullable
+	@Override
+	public String getHelpTopic()
+	{
+		return null;
+	}
 }

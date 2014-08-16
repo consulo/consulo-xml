@@ -20,13 +20,31 @@
  */
 package com.intellij.application.options.editor;
 
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.BeanConfigurable;
+import com.intellij.openapi.options.Configurable;
 
-public class XmlCodeFoldingOptionsProvider extends BeanConfigurable<XmlFoldingSettings> implements CodeFoldingOptionsProvider {
-  public XmlCodeFoldingOptionsProvider() {
-    super(XmlFoldingSettings.getInstance());
-    checkBox("COLLAPSE_XML_TAGS", ApplicationBundle.message("checkbox.collapse.xml.tags"));
-    checkBox("COLLAPSE_HTML_STYLE_ATTRIBUTE", ApplicationBundle.message("checkbox.collapse.html.style.attribute"));
-  }
+public class XmlCodeFoldingConfigurable extends BeanConfigurable<XmlFoldingSettings> implements Configurable
+{
+	public XmlCodeFoldingConfigurable()
+	{
+		super(XmlFoldingSettings.getInstance());
+		checkBox("COLLAPSE_XML_TAGS", ApplicationBundle.message("checkbox.collapse.xml.tags"));
+	}
+
+	@Nls
+	@Override
+	public String getDisplayName()
+	{
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public String getHelpTopic()
+	{
+		return null;
+	}
 }
