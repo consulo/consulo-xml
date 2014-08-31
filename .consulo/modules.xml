@@ -11,7 +11,7 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
           <orderEntry type="module" module-name="xml-dom-impl" />
           <orderEntry type="module" module-name="xml-intellilang" />
@@ -28,7 +28,7 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
         </module-layer>
       </module>
       <module name="xml-dom-api" dirurl="file://$PROJECT_DIR$/xml-dom-api" current-layer="Default">
@@ -40,7 +40,7 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-api" />
         </module-layer>
       </module>
@@ -54,7 +54,7 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-api" exported="" />
           <orderEntry type="library" name="Xerces" level="project" />
           <orderEntry type="library" name="XmlBeans" level="project" />
@@ -69,7 +69,7 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
           <orderEntry type="module" module-name="xml-dom-api" exported="" />
         </module-layer>
@@ -84,15 +84,13 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
           <orderEntry type="module-library">
             <library name="consulo:IntelliLang">
-              <CLASSES>
+              <binaries>
                 <root url="jar://$MODULE_DIR$/../dep/intelliLang/lib/intelliLang.jar!/" />
-              </CLASSES>
-              <DOCUMENTATION />
-              <SOURCES />
+              </binaries>
             </library>
           </orderEntry>
         </module-layer>
@@ -106,15 +104,13 @@
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
-          <orderEntry type="sourceFolder" forTests="false" />
+          <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
           <orderEntry type="module-library">
             <library name="consulo:Spellchecker">
-              <CLASSES>
+              <binaries>
                 <root url="jar://$MODULE_DIR$/../dep/spellchecker/lib/spellchecker.jar!/" />
-              </CLASSES>
-              <DOCUMENTATION />
-              <SOURCES />
+              </binaries>
             </library>
           </orderEntry>
           <orderEntry type="module" module-name="xml-dom-impl" />

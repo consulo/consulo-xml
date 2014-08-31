@@ -1,10 +1,8 @@
 <component name="libraryTable">
   <library name="XmlBeans">
-    <CLASSES>
+    <binaries>
       <root url="jar://$PROJECT_DIR$/lib/jsr173_1.0_api.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/resolver.jar!/" />
-    </CLASSES>
-    <DOCUMENTATION />
-    <SOURCES />
+    </binaries>
   </library>
 </component>

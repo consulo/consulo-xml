@@ -165,6 +165,10 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
+		<internalFileTemplate name="Html"/>
+		<internalFileTemplate name="Html5"/>
+		<internalFileTemplate name="Xhtml"/>
+
 		<fileTypeFactory implementation="com.intellij.xml.XmlFileTypeFactory"/>
 
 		<fileBasedIndex implementation="com.intellij.util.xml.DomFileIndex"/>
@@ -584,7 +588,7 @@
 
 		<urlOpener implementation="com.intellij.ide.browsers.impl.DefaultUrlOpener" order="last"/>
 
-		<applicationConfigurable groupId="tools" instance="com.intellij.ide.browsers.BrowserSettings" id="reference.settings.ide.settings.web.browsers"
+		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings" id="reference.settings.ide.settings.web.browsers"
 								 key="browsers.settings" bundle="messages.IdeBundle"/>
 
 	</extensions>
