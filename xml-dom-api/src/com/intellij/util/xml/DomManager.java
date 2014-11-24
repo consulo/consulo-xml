@@ -15,22 +15,26 @@
  */
 package com.intellij.util.xml;
 
+import java.lang.reflect.Type;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.*;
+import com.intellij.openapi.util.Condition;
+import com.intellij.openapi.util.Factory;
+import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.ModificationTracker;
+import com.intellij.openapi.util.NotNullLazyKey;
 import com.intellij.psi.PsiReferenceFactory;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.lang.reflect.Type;
 
 /**
  * @author peter
@@ -50,7 +54,7 @@ public abstract class DomManager implements ModificationTracker {
    * @param file XML file
    * @param domClass desired DOM element class 
    * @return New or cached DOM file element for the given file. All registered {@link com.intellij.util.xml.DomFileDescription}s are
-   * asked if they are responsible for the file {@link com.intellij.util.xml.DomFileDescription#isMyFile(com.intellij.psi.xml.XmlFile, com.intellij.openapi.module.Module)}.
+   * asked if they are responsible for the file {@link com.intellij.util.xml.DomFileDescription#isMyFile(com.intellij.psi.xml.XmlFile)}.
    * If there is a {@link com.intellij.util.xml.DomFileDescription} that is responsible for the file, but its {@link DomFileDescription#getRootElementClass()}
    * result is incompatible with domClass parameter, null is returned
    */

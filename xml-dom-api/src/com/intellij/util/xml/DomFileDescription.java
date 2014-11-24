@@ -29,7 +29,7 @@ import javax.swing.Icon;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.diagnostic.Logger;
+import org.mustbe.consulo.DeprecationInfo;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Iconable;
@@ -51,7 +51,6 @@ public class DomFileDescription<T>
 {
 	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.fileDescription");
 
-	private static final Logger LOG = Logger.getInstance("#com.intellij.util.xml.DomFileDescription");
 	private final ConcurrentInstanceMap<ScopeProvider> myScopeProviders = new ConcurrentInstanceMap<ScopeProvider>();
 	protected final Class<T> myRootElementClass;
 	protected final String myRootTagName;
@@ -229,7 +228,14 @@ public class DomFileDescription<T>
 		return myRootTagName;
 	}
 
+	@Deprecated
+	@DeprecationInfo(value = "Use #isMyFile(XmlFile)", until = "2.0")
 	public boolean isMyFile(@NotNull XmlFile file, @Nullable final Module module)
+	{
+		return isMyFile(file);
+	}
+
+	public boolean isMyFile(@NotNull XmlFile file)
 	{
 		final Namespace namespace = DomReflectionUtil.findAnnotationDFS(myRootElementClass, Namespace.class);
 		if(namespace != null)
@@ -255,7 +261,7 @@ public class DomFileDescription<T>
 
 	/**
 	 * Get dependency items (the same, as in {@link com.intellij.psi.util.CachedValue}) for file. On any dependency item change, the
-	 * {@link #isMyFile(com.intellij.psi.xml.XmlFile, Module)} method will be invoked once more to ensure that the file description still
+	 * {@link #isMyFile(com.intellij.psi.xml.XmlFile)} method will be invoked once more to ensure that the file description still
 	 * accepts this file
 	 *
 	 * @param file XML file to get dependencies of

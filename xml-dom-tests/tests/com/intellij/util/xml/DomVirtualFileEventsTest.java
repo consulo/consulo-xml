@@ -24,8 +24,8 @@ public class DomVirtualFileEventsTest extends DomHardCoreTestCase{
     getDomManager().registerFileDescription(new DomFileDescription(MyElement.class, "a") {
 
       @Override
-      public boolean isMyFile(@NotNull final XmlFile file, final Module module) {
-        return super.isMyFile(file, module) && file.getName().contains("a");
+      public boolean isMyFile(@NotNull final XmlFile file) {
+        return super.isMyFile(file) && file.getName().contains("a");
       }
     }, getTestRootDisposable());
   }

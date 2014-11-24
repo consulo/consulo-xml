@@ -23,7 +23,6 @@ import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileWithId;
@@ -236,12 +235,10 @@ class FileDescriptionCachedValueProvider<T extends DomElement> implements SemEle
 
 	private class MyCondition implements Condition<DomFileDescription>
 	{
-		public Module module;
-
 		@Override
 		public boolean value(final DomFileDescription description)
 		{
-			return description.isMyFile(myXmlFile, module);
+			return description.isMyFile(myXmlFile);
 		}
 	}
 

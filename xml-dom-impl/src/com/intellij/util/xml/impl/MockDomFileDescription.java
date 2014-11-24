@@ -15,34 +15,43 @@
  */
 package com.intellij.util.xml.impl;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileDescription;
-import com.intellij.openapi.module.Module;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
-*/
-public class MockDomFileDescription<T> extends DomFileDescription<T> {
-  private final XmlFile myFile;
+ */
+public class MockDomFileDescription<T> extends DomFileDescription<T>
+{
+	private final XmlFile myFile;
 
-  public MockDomFileDescription(final Class<T> aClass, final String rootTagName, final XmlFile file) {
-    super(aClass, rootTagName);
-    myFile = file;
-  }
+	public MockDomFileDescription(final Class<T> aClass, final String rootTagName, final XmlFile file)
+	{
+		super(aClass, rootTagName);
+		myFile = file;
+	}
 
-  public boolean isMyFile(@NotNull final XmlFile xmlFile, final Module module) {
-    return myFile == xmlFile;
-  }
+	@Override
+	public boolean isMyFile(@NotNull final XmlFile xmlFile)
+	{
+		return myFile == xmlFile;
+	}
 
-  public boolean acceptsOtherRootTagNames() {
-    return true;
-  }
+	@Override
+	public boolean acceptsOtherRootTagNames()
+	{
+		return true;
+	}
 
-  protected void initializeFileDescription() {
-  }
+	@Override
+	protected void initializeFileDescription()
+	{
+	}
 
-  public boolean isAutomaticHighlightingEnabled() {
-    return false;
-  }
+	@Override
+	public boolean isAutomaticHighlightingEnabled()
+	{
+		return false;
+	}
 }
