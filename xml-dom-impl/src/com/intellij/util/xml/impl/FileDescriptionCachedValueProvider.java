@@ -15,6 +15,13 @@
  */
 package com.intellij.util.xml.impl;
 
+import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Condition;
@@ -28,174 +35,214 @@ import com.intellij.semantic.SemElement;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.containers.HashSet;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomFileDescription;
+import com.intellij.util.xml.DomService;
+import com.intellij.util.xml.EvaluatedXmlNameImpl;
+import com.intellij.util.xml.XmlFileHeader;
+import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.lang.ref.WeakReference;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author peter
  */
-@SuppressWarnings({"HardCodedStringLiteral", "StringConcatenationInsideStringBufferAppend"})
-class FileDescriptionCachedValueProvider<T extends DomElement> implements SemElement{
+@SuppressWarnings({
+		"HardCodedStringLiteral",
+		"StringConcatenationInsideStringBufferAppend"
+})
+class FileDescriptionCachedValueProvider<T extends DomElement> implements SemElement
+{
 
-  private final XmlFile myXmlFile;
-  private volatile boolean myComputed;
-  private volatile DomFileElementImpl<T> myLastResult;
-  private final MyCondition myCondition = new MyCondition();
+	private final XmlFile myXmlFile;
+	private volatile boolean myComputed;
+	private volatile DomFileElementImpl<T> myLastResult;
+	private final MyCondition myCondition = new MyCondition();
 
-  private final DomManagerImpl myDomManager;
-  private final DomService myDomService;
+	private final DomManagerImpl myDomManager;
+	private final DomService myDomService;
 
-  public FileDescriptionCachedValueProvider(final DomManagerImpl domManager, final XmlFile xmlFile) {
-    myDomManager = domManager;
-    myXmlFile = xmlFile;
-    myDomService = DomService.getInstance();
-  }
+	public FileDescriptionCachedValueProvider(final DomManagerImpl domManager, final XmlFile xmlFile)
+	{
+		myDomManager = domManager;
+		myXmlFile = xmlFile;
+		myDomService = DomService.getInstance();
+	}
 
-  @Nullable
-  public final DomFileElementImpl<T> getFileElement() {
-    if (myComputed) return myLastResult;
+	@Nullable
+	public final DomFileElementImpl<T> getFileElement()
+	{
+		if(myComputed)
+		{
+			return myLastResult;
+		}
 
-    DomFileElementImpl<T> result = _computeFileElement(false, myDomService.getXmlFileHeader(myXmlFile), null);
+		DomFileElementImpl<T> result = _computeFileElement(false, myDomService.getXmlFileHeader(myXmlFile), null);
 
-    synchronized (myCondition) {
-      if (myComputed) return myLastResult;
+		synchronized(myCondition)
+		{
+			if(myComputed)
+			{
+				return myLastResult;
+			}
 
-      myLastResult = result;
-      WeakReference<DomFileElementImpl> ref = result != null ? new WeakReference<DomFileElementImpl>(result) : null;
-      myXmlFile.putUserData(DomManagerImpl.CACHED_FILE_ELEMENT, ref);
-      myComputed = true;
-      return result;
-    }
-  }
+			myLastResult = result;
+			WeakReference<DomFileElementImpl> ref = result != null ? new WeakReference<DomFileElementImpl>(result) : null;
+			myXmlFile.putUserData(DomManagerImpl.CACHED_FILE_ELEMENT, ref);
+			myComputed = true;
+			return result;
+		}
+	}
 
-  @Nullable
-  private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents,
-                                                    @NotNull final XmlFileHeader rootTagName, @Nullable StringBuilder sb) {
-    if (sb != null) {
-      sb.append(rootTagName).append("\n");
-    }
+	@Nullable
+	private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents, @NotNull final XmlFileHeader rootTagName, @Nullable StringBuilder sb)
+	{
+		if(sb != null)
+		{
+			sb.append(rootTagName).append("\n");
+		}
 
-    if (!myXmlFile.isValid()) {
-      return null;
-    }
-    if (sb != null) {
-      sb.append("File is valid\n");
-    }
+		if(!myXmlFile.isValid())
+		{
+			return null;
+		}
+		if(sb != null)
+		{
+			sb.append("File is valid\n");
+		}
 
-    final DomFileDescription<T> description = findFileDescription(rootTagName, sb);
+		final DomFileDescription<T> description = findFileDescription(rootTagName, sb);
 
-    final DomFileElementImpl oldValue = getLastValue();
-    if (sb != null) {
-      sb.append("last " + oldValue + "\n");
-    }
-    final List<DomEvent> events = fireEvents ? new SmartList<DomEvent>() : Collections.<DomEvent>emptyList();
-    if (oldValue != null) {
-      if (fireEvents) {
-        events.add(new DomEvent(oldValue, false));
-      }
-    }
+		final DomFileElementImpl oldValue = getLastValue();
+		if(sb != null)
+		{
+			sb.append("last " + oldValue + "\n");
+		}
+		final List<DomEvent> events = fireEvents ? new SmartList<DomEvent>() : Collections.<DomEvent>emptyList();
+		if(oldValue != null)
+		{
+			if(fireEvents)
+			{
+				events.add(new DomEvent(oldValue, false));
+			}
+		}
 
-    if (description == null) {
-      return null;
-    }
+		if(description == null)
+		{
+			return null;
+		}
 
-    final Class<T> rootElementClass = description.getRootElementClass();
-    final XmlName xmlName = DomImplUtil.createXmlName(description.getRootTagName(), rootElementClass, null);
-    assert xmlName != null;
-    final EvaluatedXmlNameImpl rootTagName1 = EvaluatedXmlNameImpl.createEvaluatedXmlName(xmlName, xmlName.getNamespaceKey(), false);
+		final Class<T> rootElementClass = description.getRootElementClass();
+		final XmlName xmlName = DomImplUtil.createXmlName(description.getRootTagName(), rootElementClass, null);
+		assert xmlName != null;
+		final EvaluatedXmlNameImpl rootTagName1 = EvaluatedXmlNameImpl.createEvaluatedXmlName(xmlName, xmlName.getNamespaceKey(), false);
 
-    VirtualFile file = myXmlFile.getVirtualFile();
-    FileStub stub = null;
-    if (description.hasStubs() && file instanceof VirtualFileWithId && !isFileParsed()) {
-      ApplicationManager.getApplication().assertReadAccessAllowed();
-      if (!XmlUtil.isStubBuilding()) {
-        ObjectStubTree stubTree = StubTreeLoader.getInstance().readOrBuild(myXmlFile.getProject(), file, myXmlFile);
-        if (stubTree != null) {
-          stub = (FileStub)stubTree.getRoot();
-        }
-      }
-    }
+		VirtualFile file = myXmlFile.getVirtualFile();
+		FileStub stub = null;
+		if(description.hasStubs() && file instanceof VirtualFileWithId && !isFileParsed())
+		{
+			ApplicationManager.getApplication().assertReadAccessAllowed();
+			if(!XmlUtil.isStubBuilding())
+			{
+				ObjectStubTree stubTree = StubTreeLoader.getInstance().readOrBuild(myXmlFile.getProject(), file, myXmlFile);
+				if(stubTree != null)
+				{
+					stub = (FileStub) stubTree.getRoot();
+				}
+			}
+		}
 
-    DomFileElementImpl<T> result = new DomFileElementImpl<T>(myXmlFile, rootElementClass, rootTagName1, myDomManager, description, stub);
-    if (sb != null) {
-      sb.append("success " + result + "\n");
-    }
+		DomFileElementImpl<T> result = new DomFileElementImpl<T>(myXmlFile, rootElementClass, rootTagName1, myDomManager, description, stub);
+		if(sb != null)
+		{
+			sb.append("success " + result + "\n");
+		}
 
-    if (fireEvents) {
-      events.add(new DomEvent(result, true));
-    }
-    return result;
-  }
+		if(fireEvents)
+		{
+			events.add(new DomEvent(result, true));
+		}
+		return result;
+	}
 
-  private boolean isFileParsed() {
-    return myXmlFile instanceof PsiFileEx && ((PsiFileEx)myXmlFile).isContentsLoaded();
-  }
+	private boolean isFileParsed()
+	{
+		return myXmlFile instanceof PsiFileEx && ((PsiFileEx) myXmlFile).isContentsLoaded();
+	}
 
-  @Nullable
-  private DomFileDescription<T> findFileDescription(final XmlFileHeader rootTagName, @Nullable StringBuilder sb) {
-    final DomFileDescription<T> mockDescription = myXmlFile.getUserData(DomManagerImpl.MOCK_DESCRIPTION);
-    if (mockDescription != null) return mockDescription;
+	@Nullable
+	private DomFileDescription<T> findFileDescription(final XmlFileHeader rootTagName, @Nullable StringBuilder sb)
+	{
+		final DomFileDescription<T> mockDescription = myXmlFile.getUserData(DomManagerImpl.MOCK_DESCRIPTION);
+		if(mockDescription != null)
+		{
+			return mockDescription;
+		}
 
-    if (sb != null) {
-      sb.append("no mock\n");
-    }
+		if(sb != null)
+		{
+			sb.append("no mock\n");
+		}
 
-    final XmlFile originalFile = (XmlFile)myXmlFile.getOriginalFile();
-    if (sb != null) {
-      sb.append("original: " + originalFile + "\n");
-    }
-    if (!originalFile.equals(myXmlFile)) {
-      final FileDescriptionCachedValueProvider<T> provider = myDomManager.getOrCreateCachedValueProvider(originalFile);
-      final DomFileElementImpl<T> element = provider.getFileElement();
-      if (sb != null) {
-        sb.append("originalDom " + element + "\n");
-      }
-      return element == null ? null : element.getFileDescription();
-    }
+		final XmlFile originalFile = (XmlFile) myXmlFile.getOriginalFile();
+		if(sb != null)
+		{
+			sb.append("original: " + originalFile + "\n");
+		}
+		if(!originalFile.equals(myXmlFile))
+		{
+			final FileDescriptionCachedValueProvider<T> provider = myDomManager.getOrCreateCachedValueProvider(originalFile);
+			final DomFileElementImpl<T> element = provider.getFileElement();
+			if(sb != null)
+			{
+				sb.append("originalDom " + element + "\n");
+			}
+			return element == null ? null : element.getFileDescription();
+		}
 
-    //noinspection unchecked
-    final Set<DomFileDescription> namedDescriptions = myDomManager.getFileDescriptions(rootTagName.getRootTagLocalName());
-    if (sb != null) {
-      sb.append("named " + new HashSet<DomFileDescription>(namedDescriptions) + "\n");
-    }
-    DomFileDescription<T> description = ContainerUtil.find(namedDescriptions, myCondition);
-    if (description == null) {
-      final Set<DomFileDescription> unnamed = myDomManager.getAcceptingOtherRootTagNameDescriptions();
-      description = ContainerUtil.find(unnamed, myCondition);
-    }
-    if (sb != null) {
-      sb.append("found " + description + "\n");
-    }
-    return description;
-  }
+		//noinspection unchecked
+		final Set<DomFileDescription> namedDescriptions = myDomManager.getFileDescriptions(rootTagName.getRootTagLocalName());
+		if(sb != null)
+		{
+			sb.append("named " + new HashSet<DomFileDescription>(namedDescriptions) + "\n");
+		}
+		DomFileDescription<T> description = ContainerUtil.find(namedDescriptions, myCondition);
+		if(description == null)
+		{
+			final Set<DomFileDescription> unnamed = myDomManager.getAcceptingOtherRootTagNameDescriptions();
+			description = ContainerUtil.find(unnamed, myCondition);
+		}
+		if(sb != null)
+		{
+			sb.append("found " + description + "\n");
+		}
+		return description;
+	}
 
-  @Nullable
-  final DomFileElementImpl<T> getLastValue() {
-    return myLastResult;
-  }
+	@Nullable
+	final DomFileElementImpl<T> getLastValue()
+	{
+		return myLastResult;
+	}
 
-  public String getFileElementWithLogging() {
-    final XmlFileHeader rootTagName = myDomService.getXmlFileHeader(myXmlFile);
-    final StringBuilder log = new StringBuilder();
-    myLastResult = _computeFileElement(false, rootTagName, log);
-    return log.toString();
-  }
+	public String getFileElementWithLogging()
+	{
+		final XmlFileHeader rootTagName = myDomService.getXmlFileHeader(myXmlFile);
+		final StringBuilder log = new StringBuilder();
+		myLastResult = _computeFileElement(false, rootTagName, log);
+		return log.toString();
+	}
 
-  private class MyCondition implements Condition<DomFileDescription> {
-    public Module module;
+	private class MyCondition implements Condition<DomFileDescription>
+	{
+		public Module module;
 
-    public boolean value(final DomFileDescription description) {
-      return description.isMyFile(myXmlFile, module);
-    }
-  }
+		@Override
+		public boolean value(final DomFileDescription description)
+		{
+			return description.isMyFile(myXmlFile, module);
+		}
+	}
 
 }
