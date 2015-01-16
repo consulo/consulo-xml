@@ -1,6 +1,9 @@
 <idea-plugin version="2" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<id>com.intellij.xml</id>
 	<name>XML</name>
+	<version>SNAPSHOT</version>
+	<category>Custom Languages</category>
+
 	<depends optional="true" config-file="org.intellij.intelliLang.xml">org.intellij.intelliLang</depends>
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
