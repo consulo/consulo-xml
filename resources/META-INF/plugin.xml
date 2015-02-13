@@ -599,6 +599,8 @@
 	<extensions defaultExtensionNs="com.intellij.copyright">
 		<updater filetype="XML" implementationClass="com.maddyhome.idea.copyright.psi.UpdateXmlCopyrightsProvider"/>
 		<updater filetype="HTML" implementationClass="com.maddyhome.idea.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<updater filetype="XHTML" implementationClass="com.maddyhome.idea.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<updater filetype="DTD" implementationClass="com.maddyhome.idea.copyright.psi.UpdateXmlCopyrightsProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">
