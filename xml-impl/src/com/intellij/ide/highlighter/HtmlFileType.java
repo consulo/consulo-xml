@@ -15,6 +15,14 @@
  */
 package com.intellij.ide.highlighter;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.Language;
@@ -24,13 +32,6 @@ import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 public class HtmlFileType extends XmlLikeFileType {
   @NonNls public static final String DOT_DEFAULT_EXTENSION = ".html";
@@ -78,7 +79,7 @@ public class HtmlFileType extends XmlLikeFileType {
     return c == null ? null : c.name();
   }
 
-  public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @NotNull final String content) {
+  public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @NotNull final CharSequence content) {
     String name = XmlUtil.extractXmlEncodingFromProlog(content);
     Charset charset = CharsetToolkit.forName(name);
 

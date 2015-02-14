@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.psi.tree.xml;
+package com.intellij.lang.dtd;
 
-import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.xml.XMLLanguage;
 
 /**
- * @author ik
+ * @author max
  */
-public class IDTDElementType extends IElementType
+public class DTDLanguage extends XMLLanguage
 {
-	public IDTDElementType(@NonNls String debugName)
+	public static final DTDLanguage INSTANCE = new DTDLanguage();
+
+	private DTDLanguage()
 	{
-		super(debugName, DTDLanguage.INSTANCE);
+		super(XMLLanguage.INSTANCE, "DTD", "text/dtd", "text/x-dtd");
 	}
 }

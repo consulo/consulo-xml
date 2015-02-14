@@ -13,19 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.psi.tree.xml;
+package com.intellij.lang.xml;
 
 import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.CompositeLanguage;
+import com.intellij.lang.Language;
 
 /**
- * @author ik
+ * @author max
  */
-public class IDTDElementType extends IElementType
+public class XMLLanguage extends CompositeLanguage
 {
-	public IDTDElementType(@NonNls String debugName)
+	public final static XMLLanguage INSTANCE = new XMLLanguage();
+
+	private XMLLanguage()
 	{
-		super(debugName, DTDLanguage.INSTANCE);
+		super("XML", "text/xml");
+	}
+
+	@Deprecated
+	protected XMLLanguage(@NonNls String name, @NonNls String... mime)
+	{
+		super(name, mime);
+	}
+
+	protected XMLLanguage(Language baseLanguage, @NonNls String name, @NonNls String... mime)
+	{
+		super(baseLanguage, name, mime);
 	}
 }

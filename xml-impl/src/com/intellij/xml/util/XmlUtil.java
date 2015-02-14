@@ -15,6 +15,13 @@
  */
 package com.intellij.xml.util;
 
+import java.io.File;
+import java.net.URL;
+import java.util.*;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtilCore;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
@@ -62,7 +69,11 @@ import com.intellij.util.NullableFunction;
 import com.intellij.util.Processor;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.text.XmlCharsetDetector;
-import com.intellij.xml.*;
+import com.intellij.xml.Html5SchemaProvider;
+import com.intellij.xml.XmlElementDescriptor;
+import com.intellij.xml.XmlExtension;
+import com.intellij.xml.XmlNSDescriptor;
+import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
 import com.intellij.xml.impl.schema.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
@@ -70,13 +81,6 @@ import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.File;
-import java.net.URL;
-import java.util.*;
 
 /**
  * @author Mike
@@ -1381,7 +1385,7 @@ public class XmlUtil {
   }
 
   @Nullable
-  public static String extractXmlEncodingFromProlog(String text) {
+  public static String extractXmlEncodingFromProlog(CharSequence text) {
     return XmlCharsetDetector.extractXmlEncodingFromProlog(text);
   }
 

@@ -15,15 +15,15 @@
  */
 package com.intellij.psi.tree.xml;
 
-import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NonNls;
+import com.intellij.lang.xml.XMLLanguage;
+import com.intellij.psi.tree.IElementType;
 
 /**
  * @author max
  */
 public class IXmlElementType extends IElementType {
   public IXmlElementType(@NonNls String debugName) {
-    super(debugName, StdFileTypes.XML.getLanguage());
+    super(debugName, XMLLanguage.INSTANCE);
   }
 }

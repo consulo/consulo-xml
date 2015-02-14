@@ -720,7 +720,7 @@ public class HtmlUtil
 		private static final TerminateException INSTANCE = new TerminateException();
 	}
 
-	public static Charset detectCharsetFromMetaHttpEquiv(@NotNull String content)
+	public static Charset detectCharsetFromMetaHttpEquiv(@NotNull CharSequence content)
 	{
 		final Ref<String> charsetNameRef = new Ref<String>();
 		try

@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.highlighter.DomSupportEnabled;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.startup.StartupManagerEx;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
@@ -175,7 +176,7 @@ public final class DomManagerImpl extends DomManager
 							return;
 						}
 
-						if(file.isValid() && StdFileTypes.XML.equals(file.getFileType()))
+						if(file.isValid() && XmlFileType.INSTANCE.equals(file.getFileType()))
 						{
 							final PsiFile psiFile = getCachedPsiFile(file);
 							if(psiFile instanceof XmlFile)
@@ -244,7 +245,7 @@ public final class DomManagerImpl extends DomManager
 
 	private void processFileChange(final VirtualFile file)
 	{
-		if(StdFileTypes.XML != file.getFileType())
+		if(XmlFileType.INSTANCE != file.getFileType())
 		{
 			return;
 		}
@@ -258,7 +259,7 @@ public final class DomManagerImpl extends DomManager
 
 	private void processFileChange(final PsiFile file)
 	{
-		if(file != null && StdFileTypes.XML.equals(file.getFileType()) && file instanceof XmlFile)
+		if(file != null && XmlFileType.INSTANCE.equals(file.getFileType()) && file instanceof XmlFile)
 		{
 			for(final DomEvent event : recomputeFileElement((XmlFile) file))
 			{
@@ -576,7 +577,7 @@ public final class DomManagerImpl extends DomManager
 	@Override
 	public final <T extends DomElement> T createMockElement(final Class<T> aClass, final Module module, final boolean physical)
 	{
-		final XmlFile file = (XmlFile) myFileFactory.createFileFromText("a.xml", StdFileTypes.XML, "", (long) 0, physical);
+		final XmlFile file = (XmlFile) myFileFactory.createFileFromText("a.xml", XmlFileType.INSTANCE, "", (long) 0, physical);
 		file.putUserData(MOCK_ELEMENT_MODULE, module);
 		file.putUserData(MOCK, new Object());
 		return getFileElement(file, aClass, "I_sincerely_hope_that_nobody_will_have_such_a_root_tag_name").getRootElement();

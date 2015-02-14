@@ -15,12 +15,34 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.*;
-import com.intellij.lang.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.formatting.Alignment;
+import com.intellij.formatting.Block;
+import com.intellij.formatting.DelegatingFormattingModelBuilder;
+import com.intellij.formatting.FormattingModelBuilder;
+import com.intellij.formatting.Indent;
+import com.intellij.formatting.Spacing;
+import com.intellij.formatting.Wrap;
+import com.intellij.formatting.WrapType;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.Language;
+import com.intellij.lang.LanguageFormatting;
+import com.intellij.lang.LanguageParserDefinitions;
+import com.intellij.lang.ParserDefinition;
+import com.intellij.lang.html.HTMLLanguage;
+import com.intellij.lang.xhtml.XHTMLLanguage;
+import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
+import com.intellij.psi.FileViewProvider;
+import com.intellij.psi.PsiComment;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.formatter.WhiteSpaceFormattingStrategy;
@@ -34,12 +56,13 @@ import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.xml.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlChildRole;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.XmlTokenType;
 
 
 public abstract class AbstractXmlBlock extends AbstractBlock {
@@ -357,9 +380,9 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
 
   protected boolean useMyFormatter(final Language myLanguage, final Language childLanguage, final PsiElement childPsi) {
     if (myLanguage == childLanguage ||
-        childLanguage == StdFileTypes.HTML.getLanguage() ||
-        childLanguage == StdFileTypes.XHTML.getLanguage() ||
-        childLanguage == StdFileTypes.XML.getLanguage()) {
+        childLanguage == HTMLLanguage.INSTANCE ||
+        childLanguage == XHTMLLanguage.INSTANCE ||
+        childLanguage == XMLLanguage.INSTANCE) {
       return true;
     }
     final FormattingModelBuilder childFormatter = LanguageFormatting.INSTANCE.forLanguage(childLanguage);

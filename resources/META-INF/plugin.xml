@@ -165,6 +165,11 @@
 		</extensionPoint>
 
 		<extensionPoint name="namespaceHelper" interface="com.intellij.xml.XmlNamespaceHelper"/>
+
+		<extensionPoint name="psiPolicy"
+						beanClass="com.intellij.util.KeyedLazyInstanceEP">
+			<with attribute="implementationClass" implements="com.intellij.psi.impl.source.xml.XmlPsiPolicy"/>
+		</extensionPoint>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
@@ -594,6 +599,10 @@
 		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings" id="reference.settings.ide.settings.web.browsers"
 								 key="browsers.settings" bundle="messages.IdeBundle"/>
 
+		<lang.syntaxHighlighterFactory key="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory key="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory key="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
@@ -616,5 +625,8 @@
 		<xmlSuppressionProvider implementation="com.intellij.codeInspection.DefaultXmlSuppressionProvider" order="last"/>
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
 		<standardResourceProvider implementation="com.intellij.javaee.InternalResourceProvider"/>
+
+		<psiPolicy key="HTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy" />
+		<psiPolicy key="XHTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy" />
 	</extensions>
 </idea-plugin>

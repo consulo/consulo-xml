@@ -4,8 +4,8 @@
 package com.intellij.util.xml;
 
 import com.intellij.codeInspection.InspectionManager;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.xml.XmlFile;
@@ -22,7 +22,7 @@ public class DomAnnotationsTest extends DomTestCase{
   @Override
   protected <T extends DomElement> T createElement(final String xml, final Class<T> aClass) {
     final String name = "a.xml";
-    final XmlFile file = (XmlFile)PsiFileFactory.getInstance(getProject()).createFileFromText(name, StdFileTypes.XML, xml, 0,
+    final XmlFile file = (XmlFile)PsiFileFactory.getInstance(getProject()).createFileFromText(name, XmlFileType.INSTANCE, xml, 0,
                                                                                                               true);
     final XmlTag tag = file.getDocument().getRootTag();
     final String rootTagName = tag != null ? tag.getName() : "root";

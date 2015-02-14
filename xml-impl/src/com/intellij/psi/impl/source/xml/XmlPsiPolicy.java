@@ -16,8 +16,13 @@
 package com.intellij.psi.impl.source.xml;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.lang.LanguageExtension;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
 
-public interface XmlPsiPolicy {
-  ASTNode encodeXmlTextContents(String displayText, PsiElement text);
+public interface XmlPsiPolicy
+{
+	LanguageExtension<XmlPsiPolicy> EP_NAME = new LanguageExtension<XmlPsiPolicy>("com.intellij.xml.psiPolicy", new CDATAOnAnyEncodedPolicy());
+
+	ASTNode encodeXmlTextContents(String displayText, PsiElement text);
 }
