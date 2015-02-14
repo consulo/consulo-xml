@@ -15,12 +15,25 @@
  */
 package com.intellij.application.options;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.highlighter.EditorHighlighter;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.text.StringUtil;
@@ -29,14 +42,6 @@ import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.PlatformIcons;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
@@ -267,7 +272,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
   @NotNull
   protected FileType getFileType() {
-    return StdFileTypes.HTML;
+    return HtmlFileType.INSTANCE;
   }
 
   protected void prepareForReformat(final PsiFile psiFile) {

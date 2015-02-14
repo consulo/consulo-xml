@@ -15,7 +15,14 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.openapi.fileTypes.StdFileTypes;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
@@ -29,13 +36,6 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author mike
@@ -188,8 +188,7 @@ public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef {
       if (notfound &&       // no dtd ref at all
           targetElement instanceof XmlFile &&
           deps.size() == 1 &&
-          ((XmlFile)targetElement).getFileType() != StdFileTypes.DTD
-         ) {
+          ((XmlFile)targetElement).getFileType() != DTDFileType.INSTANCE) {
         XmlDocument document = ((XmlFile)targetElement).getDocument();
         final XmlTag rootTag = document.getRootTag();
 

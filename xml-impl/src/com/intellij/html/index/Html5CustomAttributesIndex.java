@@ -15,6 +15,12 @@
  */
 package com.intellij.html.index;
 
+import java.util.Collections;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.HtmlFileType;
+import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
@@ -23,7 +29,6 @@ import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlHighlightingLexer;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -31,14 +36,14 @@ import com.intellij.openapi.vfs.ex.temp.TempFileSystem;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.containers.HashMap;
-import com.intellij.util.indexing.*;
+import com.intellij.util.indexing.DataIndexer;
+import com.intellij.util.indexing.FileBasedIndex;
+import com.intellij.util.indexing.FileContent;
+import com.intellij.util.indexing.ID;
+import com.intellij.util.indexing.ScalarIndexExtension;
 import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.xml.util.HtmlUtil;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * @author Eugene.Kudelevsky
@@ -85,7 +90,7 @@ public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
       }
 
       final FileType fileType = file.getFileType();
-      return fileType == StdFileTypes.HTML || fileType == StdFileTypes.XHTML;
+      return fileType == HtmlFileType.INSTANCE || fileType == XHtmlFileType.INSTANCE;
     }
   };
 

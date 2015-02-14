@@ -39,6 +39,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
+import com.intellij.ide.highlighter.HtmlFileType;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.application.AccessToken;
 import com.intellij.openapi.application.ApplicationManager;
@@ -46,7 +48,6 @@ import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileTypeManager;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.fileTypes.UnknownFileType;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -487,8 +488,8 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 				== UnknownFileType.INSTANCE)
 		{
 			// remote url does not contain file with extension
-			final String extension = result.contentType != null && result.contentType.contains(HTML_MIME) ? StdFileTypes.HTML.getDefaultExtension()
-					: StdFileTypes.XML.getDefaultExtension();
+			final String extension = result.contentType != null && result.contentType.contains(HTML_MIME) ? HtmlFileType.INSTANCE.getDefaultExtension()
+					: XmlFileType.INSTANCE.getDefaultExtension();
 			resPath += "." + extension;
 		}
 

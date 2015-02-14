@@ -15,19 +15,24 @@
  */
 package com.intellij.application.options;
 
+import java.awt.Dimension;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.highlighter.EditorHighlighter;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.formatter.xml.XmlCodeStyleSettings;
 import com.intellij.ui.components.JBScrollPane;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class CodeStyleXmlPanel extends CodeStyleAbstractPanel{
   private JTextField myKeepBlankLines;
@@ -168,7 +173,7 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel{
 
   @NotNull
   protected FileType getFileType() {
-    return StdFileTypes.XML;
+    return XmlFileType.INSTANCE;
   }
 
   protected void prepareForReformat(final PsiFile psiFile) {

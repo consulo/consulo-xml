@@ -15,33 +15,48 @@
  */
 package com.intellij.codeInsight.completion;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupValueFactory;
+import com.intellij.ide.highlighter.XHtmlFileType;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.filters.*;
+import com.intellij.psi.filters.AndFilter;
+import com.intellij.psi.filters.ContextGetter;
+import com.intellij.psi.filters.ElementFilter;
+import com.intellij.psi.filters.NotFilter;
+import com.intellij.psi.filters.OrFilter;
+import com.intellij.psi.filters.TrueFilter;
+import com.intellij.psi.filters.XmlTextFilter;
 import com.intellij.psi.filters.getters.XmlAttributeValueGetter;
 import com.intellij.psi.filters.position.LeftNeighbour;
 import com.intellij.psi.filters.position.XmlTokenTypeFilter;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlEntityDecl;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlProlog;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -214,8 +229,8 @@ public class XmlCompletionData extends CompletionData {
 
           final FileType ft = containingFile.getFileType();
 
-          if(ft != StdFileTypes.XML) {
-            final String namespace = ft == StdFileTypes.XHTML || ft == StdFileTypes.JSPX || isHtml5? XmlUtil.XHTML_URI:XmlUtil.HTML_URI;
+          if(ft != XmlFileType.INSTANCE) {
+            final String namespace = ft == XHtmlFileType.INSTANCE || isHtml5? XmlUtil.XHTML_URI:XmlUtil.HTML_URI;
             final XmlNSDescriptor nsDescriptor = document.getDefaultNSDescriptor(namespace, true);
 
             if (nsDescriptor != null) {
@@ -227,7 +242,7 @@ public class XmlCompletionData extends CompletionData {
 
       if (descriptorFile != null) {
         final List<Object> results = new ArrayList<Object>();
-        final boolean acceptSystemEntities = containingFile.getFileType() == StdFileTypes.XML;
+        final boolean acceptSystemEntities = containingFile.getFileType() == XmlFileType.INSTANCE;
 
         final PsiElementProcessor processor = new PsiElementProcessor() {
           public boolean execute(@NotNull final PsiElement element) {
@@ -244,7 +259,7 @@ public class XmlCompletionData extends CompletionData {
         };
 
         XmlUtil.processXmlElements(descriptorFile, processor, true);
-        if (descriptorFile != containingFile && containingFile.getFileType() == StdFileTypes.XML) {
+        if (descriptorFile != containingFile && containingFile.getFileType() == XmlFileType.INSTANCE) {
           final XmlProlog element = containingFile.getDocument().getProlog();
           if (element != null) XmlUtil.processXmlElements(element, processor, true);
         }

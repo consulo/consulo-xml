@@ -15,13 +15,14 @@
  */
 package com.intellij.ide.actions;
 
+import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
-import com.intellij.openapi.fileTypes.StdFileTypes;
+import com.intellij.ide.highlighter.HtmlFileType;
+import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Eugene.Kudelevsky
@@ -31,7 +32,7 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   @NonNls private static final String DEFAULT_HTML_TEMPLATE_PROPERTY = "DefaultHtmlFileTemplate";
 
   public CreateHtmlFileAction() {
-    super(XmlBundle.message("new.html.file.action"), XmlBundle.message("new.html.file.action.description"), StdFileTypes.HTML.getIcon());
+    super(XmlBundle.message("new.html.file.action"), XmlBundle.message("new.html.file.action.description"), HtmlFileType.INSTANCE.getIcon());
   }
 
   @Override
@@ -43,9 +44,9 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   protected void buildDialog(Project project, PsiDirectory directory, CreateFileFromTemplateDialog.Builder builder) {
     builder
       .setTitle(XmlBundle.message("new.html.file.action"))
-      .addKind("HTML file", StdFileTypes.HTML.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
-      .addKind("HTML4 file", StdFileTypes.HTML.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
-      .addKind("XHTML file", StdFileTypes.XHTML.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
+      .addKind("HTML file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
+      .addKind("HTML4 file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
+      .addKind("XHTML file", XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
   }
 
   @Override

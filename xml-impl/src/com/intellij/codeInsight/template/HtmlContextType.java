@@ -15,20 +15,20 @@
  */
 package com.intellij.codeInsight.template;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.CodeInsightBundle;
+import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author yole
  */
 public class HtmlContextType extends FileTypeBasedContextType {
   public HtmlContextType() {
-    super("HTML", CodeInsightBundle.message("dialog.edit.template.checkbox.html"), StdFileTypes.HTML);
+    super("HTML", CodeInsightBundle.message("dialog.edit.template.checkbox.html"), HtmlFileType.INSTANCE);
   }
 
   @Override

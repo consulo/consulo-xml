@@ -15,18 +15,15 @@
  */
 package com.intellij.codeInsight.folding.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.util.HtmlUtil;
+import java.util.StringTokenizer;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.StringTokenizer;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 
 /**
  * @author yole
@@ -77,22 +74,8 @@ public class XmlElementSignatureProvider extends AbstractElementSignatureProvide
 
       try {
         int index = Integer.parseInt(tokenizer.nextToken());
-        PsiElement result = restoreElementInternal(parent, name, index, XmlTag.class);
 
-        if (result == null &&
-            file.getFileType() == StdFileTypes.JSP) {
-          //TODO: FoldingBuilder API, psi roots, etc?
-          if (parent instanceof XmlDocument) {
-            // html tag, not found in jsp tree
-            result = restoreElementInternal(HtmlUtil.getRealXmlDocument((XmlDocument)parent), name, index, XmlTag.class);
-          }
-          else if (name.equals("<unnamed>") && parent != null) {
-            // scriplet/declaration missed because null name
-            result = restoreElementInternal(parent, "", index, XmlTag.class);
-          }
-        }
-
-        return result;
+        return restoreElementInternal(parent, name, index, XmlTag.class);
       }
       catch (NumberFormatException e) {
         LOG.error(e);

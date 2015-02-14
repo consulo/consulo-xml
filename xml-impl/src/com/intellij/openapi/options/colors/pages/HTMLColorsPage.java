@@ -15,22 +15,23 @@
  */
 package com.intellij.openapi.options.colors.pages;
 
+import java.util.Map;
+
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
+import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.application.ApplicationNamesInfo;
 import com.intellij.openapi.editor.XmlHighlighterColors;
 import com.intellij.openapi.editor.colors.ColorKey;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.options.OptionsBundle;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.util.Map;
 
 public class HTMLColorsPage implements ColorSettingsPage {
   private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
@@ -50,7 +51,7 @@ public class HTMLColorsPage implements ColorSettingsPage {
   }
 
   public Icon getIcon() {
-    return StdFileTypes.HTML.getIcon();
+    return HtmlFileType.INSTANCE.getIcon();
   }
 
   @NotNull

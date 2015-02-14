@@ -15,16 +15,21 @@
  */
 package com.intellij.xml.actions.validate;
 
-import com.intellij.openapi.actionSystem.*;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.XHtmlFileType;
+import com.intellij.ide.highlighter.XmlFileType;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author mike
@@ -100,8 +105,8 @@ public class ValidateXmlAction extends AnAction {
       final PsiFile containingFile = psiElement.getContainingFile();
 
       if (containingFile!=null &&
-          (containingFile.getFileType() == StdFileTypes.XML ||
-           containingFile.getFileType() == StdFileTypes.XHTML
+          (containingFile.getFileType() == XmlFileType.INSTANCE ||
+           containingFile.getFileType() == XHtmlFileType.INSTANCE
           )) {
         value = containingFile.getUserData(runningValidationKey) == null;
       } else {

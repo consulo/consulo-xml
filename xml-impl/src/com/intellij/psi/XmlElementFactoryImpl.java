@@ -15,6 +15,8 @@
  */
 package com.intellij.psi;
 
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.ASTFactory;
@@ -22,14 +24,16 @@ import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
@@ -46,7 +50,7 @@ public class XmlElementFactoryImpl extends XmlElementFactory {
   public XmlTag createTagFromText(@NotNull @NonNls String text, @NotNull Language language) throws IncorrectOperationException {
     assert language instanceof XMLLanguage:"Tag can be created only for xml language";
     FileType type = language.getAssociatedFileType();
-    if (type == null) type = StdFileTypes.XML;
+    if (type == null) type = XmlFileType.INSTANCE;
     final XmlDocument document = createXmlDocument(text, "dummy."+ type.getDefaultExtension(), type);
     final XmlTag tag = document.getRootTag();
     if (tag == null) throw new IncorrectOperationException("Incorrect tag text");
@@ -55,7 +59,7 @@ public class XmlElementFactoryImpl extends XmlElementFactory {
 
   @NotNull
   public XmlTag createTagFromText(@NotNull String text) throws IncorrectOperationException {
-    return createTagFromText(text, StdFileTypes.XML.getLanguage());
+    return createTagFromText(text, XmlFileType.INSTANCE.getLanguage());
   }
 
   @NotNull

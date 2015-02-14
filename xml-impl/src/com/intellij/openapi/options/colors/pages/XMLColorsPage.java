@@ -15,19 +15,20 @@
  */
 package com.intellij.openapi.options.colors.pages;
 
+import java.util.Map;
+
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.XmlFileHighlighter;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.editor.XmlHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.options.OptionsBundle;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.util.Map;
 
 public class XMLColorsPage implements ColorSettingsPage {
   private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
@@ -47,7 +48,7 @@ public class XMLColorsPage implements ColorSettingsPage {
   }
 
   public Icon getIcon() {
-    return StdFileTypes.XML.getIcon();
+    return XmlFileType.INSTANCE.getIcon();
   }
 
   @NotNull

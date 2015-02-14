@@ -22,16 +22,23 @@
  */
 package com.intellij.xml.util;
 
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInspection.*;
+import com.intellij.codeInspection.LocalQuickFix;
+import com.intellij.codeInspection.ProblemDescriptor;
+import com.intellij.codeInspection.ProblemHighlightType;
+import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.codeInspection.XmlInspectionGroupNames;
+import com.intellij.codeInspection.XmlSuppressableInspectionTool;
+import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XmlLexer;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -45,8 +52,6 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Maxim Mossienko
@@ -74,7 +79,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
           final PsiFile psiFile = tag.getContainingFile();
           final FileType fileType = psiFile.getFileType();
 
-          if (fileType == StdFileTypes.XHTML || fileType == StdFileTypes.JSPX) {
+          if (fileType == XHtmlFileType.INSTANCE) {
             synchronized(CheckValidXmlInScriptBodyInspection.class) {
               if (myXmlLexer == null) myXmlLexer = new XmlLexer();
               final XmlTagValue tagValue = tag.getValue();
