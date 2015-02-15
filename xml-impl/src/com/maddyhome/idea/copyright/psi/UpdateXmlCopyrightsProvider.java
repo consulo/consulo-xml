@@ -16,7 +16,6 @@
 package com.maddyhome.idea.copyright.psi;
 
 import javax.swing.JPanel;
-import javax.xml.bind.annotation.XmlElementDecl;
 
 import org.jetbrains.annotations.NotNull;
 import org.mustbe.consulo.copyright.config.CopyrightFileConfig;
@@ -28,6 +27,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlDoctype;
 import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlElementDecl;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlProlog;
 import com.intellij.psi.xml.XmlTag;
