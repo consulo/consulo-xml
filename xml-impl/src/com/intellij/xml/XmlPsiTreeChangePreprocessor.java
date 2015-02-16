@@ -1,9 +1,10 @@
 package com.intellij.xml;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.xml.XMLLanguage;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileSystemItem;
-import com.intellij.psi.impl.PsiManagerImpl;
 import com.intellij.psi.impl.PsiTreeChangePreprocessorBase;
 
 /**
@@ -12,9 +13,9 @@ import com.intellij.psi.impl.PsiTreeChangePreprocessorBase;
  */
 public class XmlPsiTreeChangePreprocessor extends PsiTreeChangePreprocessorBase
 {
-	public XmlPsiTreeChangePreprocessor(PsiManagerImpl psiManager)
+	public XmlPsiTreeChangePreprocessor(@NotNull Project project)
 	{
-		super(psiManager);
+		super(project);
 	}
 
 	@Override
