@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.impl.PsiTreeChangePreprocessorBase;
+import com.intellij.psi.xml.XmlFile;
 
 /**
  * @author VISTALL
@@ -35,5 +37,11 @@ public class XmlPsiTreeChangePreprocessor extends PsiTreeChangePreprocessorBase
 		// any xml element isn't inside a "code block"
 		// cause we display even attributes and tag values in structure view
 		return !isXml;
+	}
+
+	@Override
+	protected boolean isMyFile(@NotNull PsiFile file)
+	{
+		return file instanceof XmlFile;
 	}
 }
