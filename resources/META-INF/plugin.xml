@@ -92,10 +92,6 @@
 		<component>
 			<implementation-class>com.intellij.javaee.PsiExternalResourceNotifier</implementation-class>
 		</component>
-
-		<component>
-			<implementation-class>com.intellij.xml.XmlPsiManager</implementation-class>
-		</component>
 	</project-components>
 
 	<extensionPoints>
@@ -603,6 +599,8 @@
 		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
+
+		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor" />
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
