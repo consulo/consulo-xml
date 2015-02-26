@@ -250,9 +250,6 @@
 							serviceImplementation="com.intellij.application.options.XmlSettings"/>
 		<exportable serviceInterface="com.intellij.application.options.XmlSettings"/>
 
-		<applicationService serviceInterface="com.intellij.ide.browsers.BrowsersConfiguration"
-							serviceImplementation="com.intellij.ide.browsers.BrowsersConfiguration"/>
-
 		<projectService serviceInterface="com.intellij.psi.XmlElementFactory"
 						serviceImplementation="com.intellij.psi.XmlElementFactoryImpl"/>
 
@@ -594,7 +591,7 @@
 
 		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings" id="reference.settings.ide.settings.web.browsers"
 								 key="browsers.settings" bundle="messages.IdeBundle"/>
-
+		BrowsersConfiguration
 		<lang.syntaxHighlighterFactory key="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
