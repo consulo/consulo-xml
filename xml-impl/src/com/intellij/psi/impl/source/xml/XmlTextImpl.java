@@ -293,7 +293,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	private XmlPsiPolicy getPolicy()
 	{
 		XmlPsiPolicy xmlPsiPolicy = XmlPsiPolicy.EP_NAME.forLanguage(getLanguage());
-		assert xmlPsiPolicy == null : getLanguage().getID();
+		assert xmlPsiPolicy != null : getLanguage().getID();
 		return xmlPsiPolicy;
 	}
 
