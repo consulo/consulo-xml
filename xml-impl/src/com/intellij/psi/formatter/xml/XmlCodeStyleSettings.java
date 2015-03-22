@@ -20,7 +20,6 @@ import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 
 /**
- * Moved from CodeStyleSettings
  * @author Rustam Vishnyakov
  */
 public class XmlCodeStyleSettings extends CustomCodeStyleSettings {
@@ -47,46 +46,7 @@ public class XmlCodeStyleSettings extends CustomCodeStyleSettings {
   public boolean XML_KEEP_WHITE_SPACES_INSIDE_CDATA = false;
   public int XML_WHITE_SPACE_AROUND_CDATA = WS_AROUND_CDATA_PRESERVE;
 
-  public boolean XML_LEGACY_SETTINGS_IMPORTED = false;
-
   public XmlCodeStyleSettings(CodeStyleSettings container) {
     super("XML", container);
-  }
-
-  @Override
-  public void importLegacySettings() {
-    if (!XML_LEGACY_SETTINGS_IMPORTED) {
-      CodeStyleSettings container = getContainer();
-      CodeStyleSettings defaults = new CodeStyleSettings();
-      XML_KEEP_WHITESPACES = container.XML_KEEP_WHITESPACES;
-      XML_ATTRIBUTE_WRAP = container.XML_ATTRIBUTE_WRAP;
-      XML_TEXT_WRAP = container.XML_TEXT_WRAP;
-      XML_KEEP_LINE_BREAKS = container.XML_KEEP_LINE_BREAKS;
-      XML_KEEP_LINE_BREAKS_IN_TEXT = container.XML_KEEP_LINE_BREAKS_IN_TEXT;
-      XML_KEEP_BLANK_LINES = container.XML_KEEP_BLANK_LINES;
-      XML_ALIGN_ATTRIBUTES = container.XML_ALIGN_ATTRIBUTES;
-      XML_ALIGN_TEXT = container.XML_ALIGN_TEXT;
-      XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE = container.XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE;
-      XML_SPACE_AFTER_TAG_NAME = container.XML_SPACE_AFTER_TAG_NAME;
-      XML_SPACE_INSIDE_EMPTY_TAG = container.XML_SPACE_INSIDE_EMPTY_TAG;
-      XML_KEEP_WHITE_SPACES_INSIDE_CDATA = container.XML_KEEP_WHITE_SPACES_INSIDE_CDATA;
-      XML_WHITE_SPACE_AROUND_CDATA = container.XML_WHITE_SPACE_AROUND_CDATA;
-
-      container.XML_KEEP_WHITESPACES = defaults.XML_KEEP_WHITESPACES ;
-      container.XML_ATTRIBUTE_WRAP = defaults.XML_ATTRIBUTE_WRAP;
-      container.XML_TEXT_WRAP = defaults.XML_TEXT_WRAP;
-      container.XML_KEEP_LINE_BREAKS = defaults.XML_KEEP_LINE_BREAKS;
-      container.XML_KEEP_LINE_BREAKS_IN_TEXT = defaults.XML_KEEP_LINE_BREAKS_IN_TEXT;
-      container.XML_KEEP_BLANK_LINES = defaults.XML_KEEP_BLANK_LINES;
-      container.XML_ALIGN_ATTRIBUTES = defaults.XML_ALIGN_ATTRIBUTES;
-      container.XML_ALIGN_TEXT = defaults.XML_ALIGN_TEXT;
-      container.XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE = defaults.XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE;
-      container.XML_SPACE_AFTER_TAG_NAME = defaults.XML_SPACE_AFTER_TAG_NAME;
-      container.XML_SPACE_INSIDE_EMPTY_TAG = defaults.XML_SPACE_INSIDE_EMPTY_TAG;
-      container.XML_KEEP_WHITE_SPACES_INSIDE_CDATA = defaults.XML_KEEP_WHITE_SPACES_INSIDE_CDATA;
-      container.XML_WHITE_SPACE_AROUND_CDATA = defaults.XML_WHITE_SPACE_AROUND_CDATA;
-
-      XML_LEGACY_SETTINGS_IMPORTED = true;
-    }
   }
 }
