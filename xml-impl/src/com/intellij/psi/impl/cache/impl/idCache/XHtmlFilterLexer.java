@@ -23,6 +23,7 @@ import com.intellij.psi.impl.cache.impl.OccurrenceConsumer;
 import com.intellij.psi.search.UsageSearchContext;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
+import com.intellij.util.LanguageVersionUtil;
 import com.intellij.util.codeInsight.CommentUtilCore;
 
 public class XHtmlFilterLexer extends BaseFilterLexer {
@@ -46,7 +47,7 @@ public class XHtmlFilterLexer extends BaseFilterLexer {
     } else if (tokenType.getLanguage() != XMLLanguage.INSTANCE &&
       tokenType.getLanguage() != Language.ANY         
     ) {
-      boolean inComments = CommentUtilCore.isCommentToken(tokenType, tokenType.getLanguageVersion());
+      boolean inComments = CommentUtilCore.isCommentToken(tokenType, LanguageVersionUtil.findDefaultVersion(tokenType.getLanguage()));
       scanWordsInToken((inComments)?UsageSearchContext.IN_COMMENTS:UsageSearchContext.IN_PLAIN_TEXT | UsageSearchContext.IN_FOREIGN_LANGUAGES, true,
                        false);
       
