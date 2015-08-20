@@ -177,7 +177,7 @@ final class BrowserSettingsPanel
 	{
 		alternativeBrowserPathField.addBrowseFolderListener(IdeBundle.message("title.select.path.to.browser"), null, null,
 				APP_FILE_CHOOSER_DESCRIPTOR);
-		defaultBrowserPanel.setBorder(TitledSeparator.EMPTY_BORDER);
+		defaultBrowserPanel.setBorder(TitledSeparator.createEmptyBorder());
 
 		//noinspection unchecked
 		defaultBrowserComboBox.setModel(new EnumComboBoxModel<DefaultBrowser>(DefaultBrowser.class));
