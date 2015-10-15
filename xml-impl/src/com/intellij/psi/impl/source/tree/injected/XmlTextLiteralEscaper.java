@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,45 +15,59 @@
  */
 package com.intellij.psi.impl.source.tree.injected;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.ProperTextRange;
-import com.intellij.psi.impl.source.xml.XmlTextImpl;
-import com.intellij.psi.LiteralTextEscaper;
 import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.LiteralTextEscaper;
+import com.intellij.psi.impl.source.xml.XmlTextImpl;
 
 /**
  * @author cdr
-*/
-public class XmlTextLiteralEscaper extends LiteralTextEscaper<XmlTextImpl> {
-  public XmlTextLiteralEscaper(final XmlTextImpl xmlText) {
-    super(xmlText);
-  }
+ */
+public class XmlTextLiteralEscaper extends LiteralTextEscaper<XmlTextImpl>
+{
+	public XmlTextLiteralEscaper(final XmlTextImpl xmlText)
+	{
+		super(xmlText);
+	}
 
-  public boolean decode(@NotNull final TextRange rangeInsideHost, @NotNull StringBuilder outChars) {
-    ProperTextRange.assertProperRange(rangeInsideHost);
-    int startInDecoded = myHost.physicalToDisplay(rangeInsideHost.getStartOffset());
-    int endInDecoded = myHost.physicalToDisplay(rangeInsideHost.getEndOffset());
-    outChars.append(myHost.getValue(), startInDecoded, endInDecoded);
-    return true;
-  }
+	@Override
+	public boolean decode(@NotNull final TextRange rangeInsideHost, @NotNull StringBuilder outChars)
+	{
+		int startInDecoded = myHost.physicalToDisplay(rangeInsideHost.getStartOffset());
+		int endInDecoded = myHost.physicalToDisplay(rangeInsideHost.getEndOffset());
+		outChars.append(myHost.getValue(), startInDecoded, endInDecoded);
+		return true;
+	}
 
-  public int getOffsetInHost(final int offsetInDecoded, @NotNull final TextRange rangeInsideHost) {
-    final int rangeInsideHostStartOffset = rangeInsideHost.getStartOffset();
-    int displayStart = myHost.physicalToDisplay(rangeInsideHostStartOffset);
+	@Override
+	public int getOffsetInHost(final int offsetInDecoded, @NotNull final TextRange rangeInsideHost)
+	{
+		final int rangeInsideHostStartOffset = rangeInsideHost.getStartOffset();
+		int displayStart = myHost.physicalToDisplay(rangeInsideHostStartOffset);
 
-    int i = myHost.displayToPhysical(offsetInDecoded + displayStart);
-    if (i < rangeInsideHostStartOffset) i = rangeInsideHostStartOffset;
-    final int rangeInsideHostEndOffset = rangeInsideHost.getEndOffset();
-    if (i > rangeInsideHostEndOffset) i = rangeInsideHostEndOffset;
-    return i;
-  }
+		int i = myHost.displayToPhysical(offsetInDecoded + displayStart);
+		if(i < rangeInsideHostStartOffset)
+		{
+			i = rangeInsideHostStartOffset;
+		}
+		final int rangeInsideHostEndOffset = rangeInsideHost.getEndOffset();
+		if(i > rangeInsideHostEndOffset)
+		{
+			i = rangeInsideHostEndOffset;
+		}
+		return i;
+	}
 
-  @NotNull
-  public TextRange getRelevantTextRange() {
-    return myHost.getCDATAInterior();
-  }
+	@Override
+	@NotNull
+	public TextRange getRelevantTextRange()
+	{
+		return myHost.getCDATAInterior();
+	}
 
-  public boolean isOneLine() {
-    return false;
-  }
+	@Override
+	public boolean isOneLine()
+	{
+		return false;
+	}
 }

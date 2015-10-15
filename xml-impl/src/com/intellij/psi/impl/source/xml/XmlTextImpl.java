@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,14 @@ package com.intellij.psi.impl.source.xml;
 import gnu.trove.TIntArrayList;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTFactory;
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.pom.PomManager;
 import com.intellij.pom.PomModel;
 import com.intellij.pom.event.PomModelEvent;
@@ -51,7 +49,6 @@ import com.intellij.psi.impl.source.codeStyle.CodeEditUtil;
 import com.intellij.psi.impl.source.tree.FileElement;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.impl.source.tree.injected.XmlTextLiteralEscaper;
 import com.intellij.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import com.intellij.psi.tree.IElementType;
@@ -89,6 +86,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return true;
 	}
 
+	@Override
 	@Nullable
 	public XmlText split(int displayIndex)
 	{
@@ -102,6 +100,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		}
 	}
 
+	@Override
 	public String getValue()
 	{
 		String displayText = myDisplayText;
@@ -128,8 +127,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 				LOG.assertTrue(text != null, child);
 				buffer.append(XmlUtil.getCharFromEntityRef(text));
 			}
-			else if(elementType == XmlTokenType.XML_WHITE_SPACE || elementType == XmlTokenType.XML_DATA_CHARACTERS || elementType == XmlTokenType
-					.XML_ATTRIBUTE_VALUE_TOKEN)
+			else if(elementType == XmlTokenType.XML_WHITE_SPACE || elementType == XmlTokenType.XML_DATA_CHARACTERS || elementType == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
 			{
 				buffer.append(child.getText());
 			}
@@ -171,6 +169,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return text;
 	}
 
+	@Override
 	public int physicalToDisplay(int physicalIndex)
 	{
 		getValue();
@@ -195,8 +194,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 
 		if(insertionIndex < myGapDisplayStarts.length)
 		{
-			int prevDisplayGapLength = insertionIndex > 0 ? myGapDisplayStarts[insertionIndex] - myGapDisplayStarts[insertionIndex - 1] :
-					myGapDisplayStarts[0];
+			int prevDisplayGapLength = insertionIndex > 0 ? myGapDisplayStarts[insertionIndex] - myGapDisplayStarts[insertionIndex - 1] : myGapDisplayStarts[0];
 			if(physicalIndex - prevPhysGapStart > prevDisplayGapLength)
 			{
 				return myGapDisplayStarts[insertionIndex];
@@ -206,6 +204,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return physicalIndex - prevPhysGapStart + prevDisplayGapStart;
 	}
 
+	@Override
 	public int displayToPhysical(int displayIndex)
 	{
 		getValue();
@@ -226,35 +225,38 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return displayIndex - prevDisplayGapStart + prevPhysGapStart;
 	}
 
+	@Override
 	public void setValue(String s) throws IncorrectOperationException
 	{
 		doSetValue(s, getPolicy());
 	}
 
-	private void doSetValue(final String s, XmlPsiPolicy policy) throws IncorrectOperationException
+	public void doSetValue(final String s, final XmlPsiPolicy policy) throws IncorrectOperationException
 	{
-		final ASTNode firstEncodedElement = policy.encodeXmlTextContents(s, this);
-
-		if(firstEncodedElement == null)
-		{
-			delete();
-			return;
-		}
-
 		final PomModel model = PomManager.getModel(getProject());
 		final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
 		model.runTransaction(new PomTransactionBase(this, aspect)
 		{
+			@Override
 			public PomModelEvent runInner()
 			{
 				final String oldText = getText();
-				replaceAllChildrenToChildrenOf(firstEncodedElement.getTreeParent());
+				final ASTNode firstEncodedElement = policy.encodeXmlTextContents(s, XmlTextImpl.this);
+				if(firstEncodedElement == null)
+				{
+					delete();
+				}
+				else
+				{
+					replaceAllChildrenToChildrenOf(firstEncodedElement.getTreeParent());
+				}
 				clearCaches();
 				return XmlTextChangedImpl.createXmlTextChanged(model, XmlTextImpl.this, oldText);
 			}
 		});
 	}
 
+	@Override
 	public XmlElement insertAtOffset(final XmlElement element, final int displayOffset) throws IncorrectOperationException
 	{
 		if(element instanceof XmlText)
@@ -267,6 +269,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 			final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
 			model.runTransaction(new PomTransactionBase(getParent(), aspect)
 			{
+				@Override
 				public PomModelEvent runInner() throws IncorrectOperationException
 				{
 					final XmlTag tag = getParentTag();
@@ -292,14 +295,13 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 
 	private XmlPsiPolicy getPolicy()
 	{
-		XmlPsiPolicy xmlPsiPolicy = XmlPsiPolicy.EP_NAME.forLanguage(getLanguage());
-		assert xmlPsiPolicy != null : getLanguage().getID();
-		return xmlPsiPolicy;
+		return LanguageXmlPsiPolicy.INSTANCE.forLanguage(getLanguage());
 	}
 
+	@Override
 	public void insertText(String text, int displayOffset) throws IncorrectOperationException
 	{
-		if(text == null || text.length() == 0)
+		if(StringUtil.isEmpty(text))
 		{
 			return;
 		}
@@ -320,6 +322,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 			final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
 			model.runTransaction(new PomTransactionBase(this, aspect)
 			{
+				@Override
 				public PomModelEvent runInner()
 				{
 					final String oldText = getText();
@@ -345,6 +348,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		}
 	}
 
+	@Override
 	public void removeText(int displayStart, int displayEnd) throws IncorrectOperationException
 	{
 		final String value = getValue();
@@ -380,11 +384,12 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 					final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
 					model.runTransaction(new PomTransactionBase(this, aspect)
 					{
+						@Override
 						public PomModelEvent runInner() throws IncorrectOperationException
 						{
 							final String oldText = getText();
 
-							if(newElementText.length() > 0)
+							if(!newElementText.isEmpty())
 							{
 								final ASTNode e = getPolicy().encodeXmlTextContents(newElementText, XmlTextImpl.this);
 								replaceChild(psiElement.getNode(), e);
@@ -414,6 +419,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		}
 	}
 
+	@Override
 	public XmlTag getParentTag()
 	{
 		final PsiElement parent = getParent();
@@ -424,6 +430,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return null;
 	}
 
+	@Override
 	public XmlTagChild getNextSiblingInTag()
 	{
 		PsiElement nextSibling = getNextSibling();
@@ -434,6 +441,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return null;
 	}
 
+	@Override
 	public XmlTagChild getPrevSiblingInTag()
 	{
 		PsiElement prevSibling = getPrevSibling();
@@ -444,11 +452,13 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return null;
 	}
 
+	@Override
 	public TreeElement addInternal(TreeElement first, ASTNode last, ASTNode anchor, Boolean before)
 	{
 		throw new RuntimeException("Clients must not use operations with direct children of XmlText!");
 	}
 
+	@Override
 	public void accept(@NotNull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
@@ -461,18 +471,13 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		}
 	}
 
+	@Override
 	public void clearCaches()
 	{
 		super.clearCaches();
 		myDisplayText = null;
 		myGapDisplayStarts = null;
 		myGapPhysicalStarts = null;
-	}
-
-	@Nullable
-	public List<Pair<PsiElement, TextRange>> getInjectedPsi()
-	{
-		return InjectedLanguageManager.getInstance(getProject()).getInjectedPsiFiles(this);
 	}
 
 	public TextRange getCDATAInterior()
@@ -510,6 +515,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return new TextRange(start, end);
 	}
 
+	@Override
 	public PsiLanguageInjectionHost updateText(@NotNull final String text)
 	{
 		try
@@ -549,6 +555,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 				super(xmlTag, aspect);
 			}
 
+			@Override
 			@Nullable
 			public PomModelEvent runInner() throws IncorrectOperationException
 			{
@@ -595,8 +602,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 				else
 				{
 					final PsiFile containingFile = xmlTag.getContainingFile();
-					final FileElement holder = DummyHolderFactory.createHolder(containingFile.getManager(), null,
-							((PsiFileImpl) containingFile).getTreeElement().getCharTable()).getTreeElement();
+					final FileElement holder = DummyHolderFactory.createHolder(containingFile.getManager(), null, ((PsiFileImpl) containingFile).getTreeElement().getCharTable()).getTreeElement();
 					final XmlTextImpl rightText = (XmlTextImpl) ASTFactory.composite(XmlElementType.XML_TEXT);
 					CodeEditUtil.setNodeGenerated(rightText, true);
 
@@ -634,8 +640,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	{
 		final PomModelEvent event = new PomModelEvent(PomManager.getModel(getProject()));
 
-		final XmlAspectChangeSetImpl xmlAspectChangeSet = new XmlAspectChangeSetImpl(PomManager.getModel(getProject()),
-				(XmlFile) getContainingFile());
+		final XmlAspectChangeSetImpl xmlAspectChangeSet = new XmlAspectChangeSetImpl(PomManager.getModel(getProject()), (XmlFile) getContainingFile());
 
 		for(XmlChange xmlChange : events)
 		{
@@ -647,14 +652,10 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 		return event;
 	}
 
+	@Override
 	@NotNull
 	public LiteralTextEscaper<XmlTextImpl> createLiteralTextEscaper()
 	{
 		return new XmlTextLiteralEscaper(this);
-	}
-
-	public void processInjectedPsi(@NotNull InjectedPsiVisitor visitor)
-	{
-		InjectedLanguageUtil.enumerate(this, visitor);
 	}
 }

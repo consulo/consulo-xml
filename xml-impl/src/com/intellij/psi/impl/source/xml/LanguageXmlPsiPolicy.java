@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.psi.xml;
+package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
-import com.intellij.openapi.util.TextRange;
+import com.intellij.lang.LanguageExtension;
+import com.intellij.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
 
-public interface XmlTagValue
+/**
+ * @author yole
+ */
+public class LanguageXmlPsiPolicy extends LanguageExtension<XmlPsiPolicy>
 {
-	@NotNull
-	XmlTagChild[] getChildren();
+	public static final LanguageXmlPsiPolicy INSTANCE = new LanguageXmlPsiPolicy();
 
-	@NotNull
-	XmlText[] getTextElements();
-
-	@NotNull
-	String getText();
-
-	@NotNull
-	TextRange getTextRange();
-
-	@NotNull
-	String getTrimmedText();
-
-	void setText(String value);
-
-	void setEscapedText(String value);
-
-	boolean hasCDATA();
+	private LanguageXmlPsiPolicy()
+	{
+		super("com.intellij.xml.psiPolicy", new CDATAOnAnyEncodedPolicy());
+	}
 }
