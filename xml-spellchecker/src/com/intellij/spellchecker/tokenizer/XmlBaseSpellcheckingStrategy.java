@@ -30,29 +30,45 @@ public class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy
 	protected final Tokenizer<XmlText> myXmlTextTokenizer = new XmlTextTokenizer();
 
 	@NotNull
-	public Tokenizer getTokenizer(PsiElement element) {
-		if (element instanceof XmlAttributeValue) return myXmlAttributeTokenizer;
-		if (element instanceof XmlText) return myXmlTextTokenizer;
+	public Tokenizer getTokenizer(PsiElement element)
+	{
+		if(element instanceof XmlAttributeValue)
+		{
+			return myXmlAttributeTokenizer;
+		}
+		if(element instanceof XmlText)
+		{
+			return myXmlTextTokenizer;
+		}
 
 		return EMPTY_TOKENIZER;
 	}
 
-	private static class XmlAttributeValueTokenizer extends Tokenizer<XmlAttributeValue> {
-		public void tokenize(@NotNull final XmlAttributeValue element, final TokenConsumer consumer) {
-			if (element instanceof PsiLanguageInjectionHost && InjectedLanguageUtil.hasInjections((PsiLanguageInjectionHost)element)) return;
+	public static class XmlAttributeValueTokenizer extends Tokenizer<XmlAttributeValue>
+	{
+		public void tokenize(@NotNull final XmlAttributeValue element, final TokenConsumer consumer)
+		{
+			if(element instanceof PsiLanguageInjectionHost && InjectedLanguageUtil.hasInjections((PsiLanguageInjectionHost) element))
+			{
+				return;
+			}
 
 			final String valueTextTrimmed = element.getValue().trim();
 			// do not inspect colors like #00aaFF
-			if (valueTextTrimmed.startsWith("#") && valueTextTrimmed.length() <= 7 && isHexString(valueTextTrimmed.substring(1))) {
+			if(valueTextTrimmed.startsWith("#") && valueTextTrimmed.length() <= 7 && isHexString(valueTextTrimmed.substring(1)))
+			{
 				return;
 			}
 
 			consumer.consumeToken(element, TextSplitter.getInstance());
 		}
 
-		private static boolean isHexString(final String s) {
-			for (int i = 0; i < s.length(); i++) {
-				if (!StringUtil.isHexDigit(s.charAt(i))) {
+		private static boolean isHexString(final String s)
+		{
+			for(int i = 0; i < s.length(); i++)
+			{
+				if(!StringUtil.isHexDigit(s.charAt(i)))
+				{
 					return false;
 				}
 			}
