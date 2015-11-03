@@ -598,6 +598,8 @@
 		<lang.syntaxHighlighterFactory key="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
 
 		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor" />
+
+		<smartPointerAnchorProvider implementation="com.intellij.psi.impl.smartPointers.XmlAnchorProvider" />
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
