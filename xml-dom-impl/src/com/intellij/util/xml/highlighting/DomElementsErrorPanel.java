@@ -18,7 +18,7 @@ package com.intellij.util.xml.highlighting;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.Point;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -112,7 +112,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 		}
 
 		repaint();
-		setToolTipText(myErrorStripeRenderer.getTooltipMessage());
+		//setToolTipText(myErrorStripeRenderer.getTooltipMessage());
 
 		if(!isHighlightingFinished())
 		{
@@ -153,7 +153,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 	{
 		super.paintComponent(g);
 
-		myErrorStripeRenderer.paint(this, g, new Rectangle(0, 0, getWidth(), getHeight()));
+		myErrorStripeRenderer.paint(this, g, new Point(0, 0));
 	}
 
 	@Override
