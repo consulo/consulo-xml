@@ -15,144 +15,177 @@
  */
 package com.intellij.application.options.editor;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.components.*;
-import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.intellij.xml.XmlBundle;
+import java.io.File;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.io.File;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.PathManager;
+import com.intellij.openapi.components.ExportableComponent;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.StoragePathMacros;
+import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.xml.XmlBundle;
 
 /**
  * @author spleaner
  */
 @State(
-  name="XmlEditorOptions",
-  storages= {
-    @Storage(
-      file = StoragePathMacros.APP_CONFIG + "/editor.xml"
-    )}
+		name = "XmlEditorOptions",
+		storages = {
+				@Storage(
+						file = StoragePathMacros.APP_CONFIG + "/editor.xml"
+				)
+		}
 )
-public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>, ExportableComponent {
+public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>, ExportableComponent
+{
+	private boolean myBreadcrumbsEnabled = true;
+	private boolean myBreadcrumbsEnabledInXml = false;
+	private boolean myAutomaticallyInsertClosingTag = true;
+	private boolean myAutomaticallyInsertRequiredAttributes = true;
+	private boolean myAutomaticallyInsertRequiredSubTags = true;
+	private boolean myAutomaticallyStartAttribute = true;
 
-  private boolean myBreadcrumbsEnabled = true;
-  private boolean myBreadcrumbsEnabledInXml = false;
-  private boolean myAutomaticallyInsertClosingTag = true;
-  private boolean myAutomaticallyInsertRequiredAttributes = true;
-  private boolean myAutomaticallyInsertRequiredSubTags = true;
-  private boolean myAutomaticallyStartAttribute = true;
+	private boolean myTagTreeHighlightingEnabled = true;
+	private int myTagTreeHighlightingLevelCount = 6;
+	private int myTagTreeHighlightingOpacity = 10;
 
-  private boolean myTagTreeHighlightingEnabled = true;
-  private int myTagTreeHighlightingLevelCount = 6;
-  private int myTagTreeHighlightingOpacity = 10;
+	public static XmlEditorOptions getInstance()
+	{
+		return ServiceManager.getService(XmlEditorOptions.class);
+	}
 
-  public static XmlEditorOptions getInstance() {
-    return ServiceManager.getService(XmlEditorOptions.class);
-  }
+	public XmlEditorOptions()
+	{
+		setTagTreeHighlightingEnabled(!ApplicationManager.getApplication().isUnitTestMode());
+	}
 
-  public XmlEditorOptions() {
-    setTagTreeHighlightingEnabled(!ApplicationManager.getApplication().isUnitTestMode());
-  }
+	public void setBreadcrumbsEnabled(boolean b)
+	{
+		myBreadcrumbsEnabled = b;
+	}
 
-  public void setBreadcrumbsEnabled(boolean b) {
-    myBreadcrumbsEnabled = b;
-  }
+	public boolean isBreadcrumbsEnabled()
+	{
+		return myBreadcrumbsEnabled;
+	}
 
-  public boolean isBreadcrumbsEnabled() {
-    return myBreadcrumbsEnabled;
-  }
+	public void setBreadcrumbsEnabledInXml(boolean b)
+	{
+		myBreadcrumbsEnabledInXml = b;
+	}
 
-  public void setBreadcrumbsEnabledInXml(boolean b) {
-    myBreadcrumbsEnabledInXml = b;
-  }
+	public boolean isBreadcrumbsEnabledInXml()
+	{
+		return myBreadcrumbsEnabledInXml;
+	}
 
-  public boolean isBreadcrumbsEnabledInXml() {
-    return myBreadcrumbsEnabledInXml;
-  }
+	public boolean isAutomaticallyInsertClosingTag()
+	{
+		return myAutomaticallyInsertClosingTag;
+	}
 
-  public boolean isAutomaticallyInsertClosingTag() {
-    return myAutomaticallyInsertClosingTag;
-  }
+	public void setAutomaticallyInsertClosingTag(final boolean automaticallyInsertClosingTag)
+	{
+		myAutomaticallyInsertClosingTag = automaticallyInsertClosingTag;
+	}
 
-  public void setAutomaticallyInsertClosingTag(final boolean automaticallyInsertClosingTag) {
-    myAutomaticallyInsertClosingTag = automaticallyInsertClosingTag;
-  }
+	public boolean isAutomaticallyInsertRequiredAttributes()
+	{
+		return myAutomaticallyInsertRequiredAttributes;
+	}
 
-  public boolean isAutomaticallyInsertRequiredAttributes() {
-    return myAutomaticallyInsertRequiredAttributes;
-  }
+	public void setAutomaticallyInsertRequiredAttributes(final boolean automaticallyInsertRequiredAttributes)
+	{
+		myAutomaticallyInsertRequiredAttributes = automaticallyInsertRequiredAttributes;
+	}
 
-  public void setAutomaticallyInsertRequiredAttributes(final boolean automaticallyInsertRequiredAttributes) {
-    myAutomaticallyInsertRequiredAttributes = automaticallyInsertRequiredAttributes;
-  }
+	public boolean isAutomaticallyStartAttribute()
+	{
+		return myAutomaticallyStartAttribute;
+	}
 
-  public boolean isAutomaticallyStartAttribute() {
-    return myAutomaticallyStartAttribute;
-  }
+	public void setAutomaticallyStartAttribute(final boolean automaticallyStartAttribute)
+	{
+		myAutomaticallyStartAttribute = automaticallyStartAttribute;
+	}
 
-  public void setAutomaticallyStartAttribute(final boolean automaticallyStartAttribute) {
-    myAutomaticallyStartAttribute = automaticallyStartAttribute;
-  }
+	public boolean isAutomaticallyInsertRequiredSubTags()
+	{
+		return myAutomaticallyInsertRequiredSubTags;
+	}
 
-  public boolean isAutomaticallyInsertRequiredSubTags() {
-    return myAutomaticallyInsertRequiredSubTags;
-  }
+	public void setAutomaticallyInsertRequiredSubTags(boolean automaticallyInsertRequiredSubTags)
+	{
+		myAutomaticallyInsertRequiredSubTags = automaticallyInsertRequiredSubTags;
+	}
 
-  public void setAutomaticallyInsertRequiredSubTags(boolean automaticallyInsertRequiredSubTags) {
-    myAutomaticallyInsertRequiredSubTags = automaticallyInsertRequiredSubTags;
-  }
+	public void setTagTreeHighlightingLevelCount(int tagTreeHighlightingLevelCount)
+	{
+		myTagTreeHighlightingLevelCount = tagTreeHighlightingLevelCount;
+	}
 
-  public void setTagTreeHighlightingLevelCount(int tagTreeHighlightingLevelCount) {
-    myTagTreeHighlightingLevelCount = tagTreeHighlightingLevelCount;
-  }
+	public int getTagTreeHighlightingLevelCount()
+	{
+		return myTagTreeHighlightingLevelCount;
+	}
 
-  public int getTagTreeHighlightingLevelCount() {
-    return myTagTreeHighlightingLevelCount;
-  }
+	public void setTagTreeHighlightingOpacity(int tagTreeHighlightingOpacity)
+	{
+		myTagTreeHighlightingOpacity = tagTreeHighlightingOpacity;
+	}
 
-  public void setTagTreeHighlightingOpacity(int tagTreeHighlightingOpacity) {
-    myTagTreeHighlightingOpacity = tagTreeHighlightingOpacity;
-  }
+	public int getTagTreeHighlightingOpacity()
+	{
+		return myTagTreeHighlightingOpacity;
+	}
 
-  public int getTagTreeHighlightingOpacity() {
-    return myTagTreeHighlightingOpacity;
-  }
+	public void setTagTreeHighlightingEnabled(boolean tagTreeHighlightingEnabled)
+	{
+		myTagTreeHighlightingEnabled = tagTreeHighlightingEnabled;
+	}
 
-  public void setTagTreeHighlightingEnabled(boolean tagTreeHighlightingEnabled) {
-    myTagTreeHighlightingEnabled = tagTreeHighlightingEnabled;
-  }
+	public boolean isTagTreeHighlightingEnabled()
+	{
+		return myTagTreeHighlightingEnabled;
+	}
 
-  public boolean isTagTreeHighlightingEnabled() {
-    return myTagTreeHighlightingEnabled;
-  }
+	@NotNull
+	public File[] getExportFiles()
+	{
+		return new File[]{PathManager.getOptionsFile("editor")};
+	}
 
-  @NotNull
-  public File[] getExportFiles() {
-    return new File[]{PathManager.getOptionsFile("editor")};
-  }
+	@NotNull
+	public String getPresentableName()
+	{
+		return XmlBundle.message("xml.options");
+	}
 
-  @NotNull
-  public String getPresentableName() {
-    return XmlBundle.message("xml.options");
-  }
+	@Nullable
+	public Object clone()
+	{
+		try
+		{
+			return super.clone();
+		}
+		catch(CloneNotSupportedException e)
+		{
+			return null;
+		}
+	}
 
-  @Nullable
-  public Object clone() {
-    try {
-      return super.clone();
-    }
-    catch (CloneNotSupportedException e) {
-      return null;
-    }
-  }
+	public XmlEditorOptions getState()
+	{
+		return this;
+	}
 
-  public XmlEditorOptions getState() {
-    return this;
-  }
-
-  public void loadState(final XmlEditorOptions state) {
-    XmlSerializerUtil.copyBean(state, this);
-  }
+	public void loadState(final XmlEditorOptions state)
+	{
+		XmlSerializerUtil.copyBean(state, this);
+	}
 }
