@@ -16,6 +16,7 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.intention.IntentionAction;
@@ -24,7 +25,11 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiErrorElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
@@ -32,105 +37,135 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
  */
-public class RenameTagBeginOrEndIntentionAction implements IntentionAction {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.RenameTagBeginOrEndIntentionAction");
+public class RenameTagBeginOrEndIntentionAction implements IntentionAction
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.RenameTagBeginOrEndIntentionAction");
 
-  private final boolean myStart;
-  private final String myTargetName;
-  private final String mySourceName;
+	private final boolean myStart;
+	private final String myTargetName;
+	private final String mySourceName;
 
-  RenameTagBeginOrEndIntentionAction(@NotNull final String targetName, @NotNull final String sourceName, final boolean start) {
-    myTargetName = targetName;
-    mySourceName = sourceName;
-    myStart = start;
-  }
+	RenameTagBeginOrEndIntentionAction(@NotNull final String targetName, @NotNull final String sourceName, final boolean start)
+	{
+		myTargetName = targetName;
+		mySourceName = sourceName;
+		myStart = start;
+	}
 
-  @Override
-  @NotNull
-  public String getFamilyName() {
-    return getName();
-  }
+	@Override
+	@NotNull
+	public String getFamilyName()
+	{
+		return getName();
+	}
 
-  @Override
-  @NotNull
-  public String getText() {
-    return getName();
-  }
+	@Override
+	@NotNull
+	public String getText()
+	{
+		return getName();
+	}
 
-  @Override
-  public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
-    return true;
-  }
+	@Override
+	public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file)
+	{
+		return true;
+	}
 
-  @Override
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
-    final int offset = editor.getCaretModel().getOffset();
-    PsiElement psiElement = file.findElementAt(offset);
+	@Override
+	public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException
+	{
+		final int offset = editor.getCaretModel().getOffset();
+		PsiElement psiElement = file.findElementAt(offset);
 
-    if (psiElement == null || !psiElement.isValid()) return;
-    if (!FileModificationService.getInstance().prepareFileForWrite(psiElement.getContainingFile())) return;
+		if(psiElement == null || !psiElement.isValid())
+		{
+			return;
+		}
+		if(!FileModificationService.getInstance().prepareFileForWrite(psiElement.getContainingFile()))
+		{
+			return;
+		}
 
-    if (psiElement instanceof PsiWhiteSpace) psiElement = PsiTreeUtil.prevLeaf(psiElement);
-    if (psiElement instanceof XmlToken) {
-      final IElementType tokenType = ((XmlToken)psiElement).getTokenType();
-      if (tokenType != XmlTokenType.XML_NAME) {
-        if (tokenType == XmlTokenType.XML_TAG_END) {
-          psiElement = psiElement.getPrevSibling();
-          if (psiElement == null) return;
-        }
-      }
+		if(psiElement instanceof PsiWhiteSpace)
+		{
+			psiElement = PsiTreeUtil.prevLeaf(psiElement);
+		}
+		if(psiElement instanceof XmlToken)
+		{
+			final IElementType tokenType = ((XmlToken) psiElement).getTokenType();
+			if(tokenType != XmlTokenType.XML_NAME)
+			{
+				if(tokenType == XmlTokenType.XML_TAG_END)
+				{
+					psiElement = psiElement.getPrevSibling();
+					if(psiElement == null)
+					{
+						return;
+					}
+				}
+			}
 
-      PsiElement target = null;
-      final String text = psiElement.getText();
-      if (!myTargetName.equals(text)) {
-        target = psiElement;
-      }
-      else {
-        // we're in the other
-        PsiElement parent = psiElement.getParent();
-        if (parent instanceof PsiErrorElement) {
-          parent = parent.getParent();
-        }
+			PsiElement target = null;
+			final String text = psiElement.getText();
+			if(!myTargetName.equals(text))
+			{
+				target = psiElement;
+			}
+			else
+			{
+				// we're in the other
+				PsiElement parent = psiElement.getParent();
+				if(parent instanceof PsiErrorElement)
+				{
+					parent = parent.getParent();
+				}
 
-        if (parent instanceof XmlTag) {
-          if (myStart) {
-            target = XmlTagUtil.getStartTagNameElement((XmlTag)parent);
-          }
-          else {
-            target = XmlTagUtil.getEndTagNameElement((XmlTag)parent);
-            if (target == null) {
-              final PsiErrorElement errorElement = PsiTreeUtil.getChildOfType(parent, PsiErrorElement.class);
-              target = XmlWrongClosingTagNameInspection.findEndTagName(errorElement);
-            }
-          }
-        }
-      }
+				if(parent instanceof XmlTag)
+				{
+					if(myStart)
+					{
+						target = XmlTagUtil.getStartTagNameElement((XmlTag) parent);
+					}
+					else
+					{
+						target = XmlTagUtil.getEndTagNameElement((XmlTag) parent);
+						if(target == null)
+						{
+							final PsiErrorElement errorElement = PsiTreeUtil.getChildOfType(parent, PsiErrorElement.class);
+							target = XmlWrongClosingTagNameInspection.findEndTagName(errorElement);
+						}
+					}
+				}
+			}
 
-      if (target != null) {
-        final Document document = PsiDocumentManager.getInstance(project).getDocument(file);
-        if (document != null) {
-          final TextRange textRange = target.getTextRange();
-          document.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), myTargetName);
-        }
-      }
+			if(target != null)
+			{
+				final Document document = PsiDocumentManager.getInstance(project).getDocument(file);
+				if(document != null)
+				{
+					final TextRange textRange = target.getTextRange();
+					document.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), myTargetName);
+				}
+			}
 
-    }
-  }
+		}
+	}
 
-  @Override
-  public boolean startInWriteAction() {
-    return true;
-  }
+	@Override
+	public boolean startInWriteAction()
+	{
+		return true;
+	}
 
-  @NotNull
-  public String getName() {
-    return myStart
-           ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName)
-           : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName, myTargetName);
-  }
+	@NotNull
+	public String getName()
+	{
+		return myStart ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName) : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName,
+				myTargetName);
+	}
 }
