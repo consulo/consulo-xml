@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.intellij.codeInspection.htmlInspections;
-
-import javax.swing.JComponent;
+package com.intellij.codeInsight.daemon.impl.analysis;
 
 import org.jetbrains.annotations.Nullable;
+import org.mustbe.consulo.extensions.CompositeExtensionPointName;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.psi.xml.XmlElement;
 
-public class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspectionBase
+/**
+ * @author Dmitry Avdeev
+ *         Date: 17.10.13
+ */
+public interface XmlNSColorProvider
 {
+	CompositeExtensionPointName<XmlNSColorProvider> EP_NAME = CompositeExtensionPointName.applicationPoint("com.intellij.xml.nsColorProvider", XmlNSColorProvider.class);
+
 	@Nullable
-	@Override
-	public JComponent createOptionsPanel()
-	{
-		return HtmlUnknownTagInspection.createOptionsPanel(this);
-	}
+	TextAttributesKey getKeyForNamespace(String namespace, XmlElement context);
 }

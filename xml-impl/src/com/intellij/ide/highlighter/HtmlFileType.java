@@ -30,62 +30,78 @@ import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.text.XmlCharsetDetector;
 import com.intellij.xml.util.HtmlUtil;
-import com.intellij.xml.util.XmlUtil;
 
-public class HtmlFileType extends XmlLikeFileType {
-  @NonNls public static final String DOT_DEFAULT_EXTENSION = ".html";
+public class HtmlFileType extends XmlLikeFileType
+{
+	@NonNls
+	public static final String DOT_DEFAULT_EXTENSION = ".html";
 
-  public final static HtmlFileType INSTANCE = new HtmlFileType();
+	public final static HtmlFileType INSTANCE = new HtmlFileType();
 
-  private HtmlFileType() {
-    super(HTMLLanguage.INSTANCE);
-  }
+	private HtmlFileType()
+	{
+		super(HTMLLanguage.INSTANCE);
+	}
 
-  HtmlFileType(Language language) {
-    super(language);
-  }
+	HtmlFileType(Language language)
+	{
+		super(language);
+	}
 
-  @NotNull
-  public String getName() {
-    return "HTML";
-  }
+	@NotNull
+	public String getName()
+	{
+		return "HTML";
+	}
 
-  @NotNull
-  public String getDescription() {
-    return IdeBundle.message("filetype.description.html");
-  }
+	@NotNull
+	public String getDescription()
+	{
+		return IdeBundle.message("filetype.description.html");
+	}
 
-  @NotNull
-  public String getDefaultExtension() {
-    return "html";
-  }
+	@NotNull
+	public String getDefaultExtension()
+	{
+		return "html";
+	}
 
-  public Icon getIcon() {
-    return AllIcons.FileTypes.Html;
-  }
+	public Icon getIcon()
+	{
+		return AllIcons.FileTypes.Html;
+	}
 
-  public String getCharset(@NotNull final VirtualFile file, final byte[] content) {
-    String charset = XmlUtil.extractXmlEncodingFromProlog(content);
-    if (charset != null) return charset;
-    @NonNls String strContent;
-    try {
-      strContent = new String(content, "ISO-8859-1");
-    }
-    catch (UnsupportedEncodingException e) {
-      return null;
-    }
-    Charset c = HtmlUtil.detectCharsetFromMetaHttpEquiv(strContent);
-    return c == null ? null : c.name();
-  }
+	public String getCharset(@NotNull final VirtualFile file, final byte[] content)
+	{
+		String charset = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
+		if(charset != null)
+		{
+			return charset;
+		}
+		@NonNls String strContent;
+		try
+		{
+			strContent = new String(content, "ISO-8859-1");
+		}
+		catch(UnsupportedEncodingException e)
+		{
+			return null;
+		}
+		Charset c = HtmlUtil.detectCharsetFromMetaTag(strContent);
+		return c == null ? null : c.name();
+	}
 
-  public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @NotNull final CharSequence content) {
-    String name = XmlUtil.extractXmlEncodingFromProlog(content);
-    Charset charset = CharsetToolkit.forName(name);
+	public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @NotNull final CharSequence content)
+	{
+		String name = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
+		Charset charset = CharsetToolkit.forName(name);
 
-    if (charset != null) {
-      return charset;
-    }
-    return HtmlUtil.detectCharsetFromMetaHttpEquiv(content);
-  }
+		if(charset != null)
+		{
+			return charset;
+		}
+		return HtmlUtil.detectCharsetFromMetaTag(content);
+	}
 }

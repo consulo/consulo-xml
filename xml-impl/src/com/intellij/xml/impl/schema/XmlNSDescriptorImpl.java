@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2013 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
@@ -66,16 +65,12 @@ import com.intellij.xml.util.XmlUtil;
 @SuppressWarnings({"HardCodedStringLiteral"})
 public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocument>, DumbAware, XmlNSTypeDescriptorProvider
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.impl.schema.XmlNSDescriptorImpl");
-	@NonNls
-	private static final Set<String> STD_TYPES = new HashSet<String>();
-	private static final Set<String> UNDECLARED_STD_TYPES = new HashSet<String>();
-	private XmlFile myFile;
-	private XmlTag myTag;
-	private String myTargetNamespace;
 	@NonNls
 	public static final String XSD_PREFIX = "xsd";
-
+	@NonNls
+	public static final String SCHEMA_TAG_NAME = "schema";
+	@NonNls
+	public static final String IMPORT_TAG_NAME = "import";
 	@NonNls
 	static final String ELEMENT_TAG_NAME = "element";
 	@NonNls
@@ -84,14 +79,22 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	static final String COMPLEX_TYPE_TAG_NAME = "complexType";
 	@NonNls
 	static final String SEQUENCE_TAG_NAME = "sequence";
+	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.impl.schema.XmlNSDescriptorImpl");
 	@NonNls
-	static final String SCHEMA_TAG_NAME = "schema";
+	private static final Set<String> STD_TYPES = new HashSet<String>();
+	private static final Set<String> UNDECLARED_STD_TYPES = new HashSet<String>();
 	@NonNls
 	private static final String INCLUDE_TAG_NAME = "include";
 	@NonNls
-	private static final String IMPORT_TAG_NAME = "import";
-	@NonNls
 	private static final String REDEFINE_TAG_NAME = "redefine";
+	private static final ThreadLocal<Set<PsiFile>> myRedefinedDescriptorsInProcessing = new ThreadLocal<Set<PsiFile>>();
+	private final Map<QNameKey, CachedValue<XmlElementDescriptor>> myDescriptorsMap = Collections.synchronizedMap(new HashMap<QNameKey, CachedValue<XmlElementDescriptor>>());
+	private final Map<Pair<QNameKey, XmlTag>, CachedValue<TypeDescriptor>> myTypesMap = Collections.synchronizedMap(new HashMap<Pair<QNameKey, XmlTag>, CachedValue<TypeDescriptor>>());
+	private XmlFile myFile;
+	private XmlTag myTag;
+	private String myTargetNamespace;
+	private volatile Object[] dependencies;
+	private MultiMap<String, XmlTag> mySubstitutions;
 
 	public XmlNSDescriptorImpl(XmlFile file)
 	{
@@ -101,10 +104,6 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	public XmlNSDescriptorImpl()
 	{
 	}
-
-	private volatile Object[] dependencies;
-
-	private static final ThreadLocal<Set<PsiFile>> myRedefinedDescriptorsInProcessing = new ThreadLocal<Set<PsiFile>>();
 
 	private static void collectDependencies(@Nullable XmlTag myTag, @NotNull XmlFile myFile, @NotNull Set<PsiFile> visited)
 	{
@@ -158,7 +157,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 				if(tokenizer.hasMoreTokens())
 				{
 					PsiFile resourceLocation = ExternalResourceManager.getInstance().getResourceLocation(tokenizer.nextToken(), myFile, null);
-					if(resourceLocation == null && uri != null)
+					if(resourceLocation == null)
 					{
 						resourceLocation = ExternalResourceManager.getInstance().getResourceLocation(uri, myFile, null);
 					}
@@ -181,14 +180,279 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		}
 	}
 
+	private static boolean checkSchemaNamespace(String name, XmlTag context)
+	{
+		final String namespace = context.getNamespaceByPrefix(XmlUtil.findPrefixByQualifiedName(name));
+		if(namespace.length() > 0)
+		{
+			return checkSchemaNamespace(namespace);
+		}
+		return XSD_PREFIX.equals(XmlUtil.findPrefixByQualifiedName(name));
+	}
+
+	public static boolean checkSchemaNamespace(String namespace)
+	{
+		return XmlUtil.XML_SCHEMA_URI.equals(namespace) ||
+				XmlUtil.XML_SCHEMA_URI2.equals(namespace) ||
+				XmlUtil.XML_SCHEMA_URI3.equals(namespace);
+	}
+
+	public static boolean checkSchemaNamespace(@NotNull XmlTag context)
+	{
+		LOG.assertTrue(context.isValid());
+		final String namespace = context.getNamespace();
+		if(namespace.length() > 0)
+		{
+			return checkSchemaNamespace(namespace);
+		}
+		return StringUtil.startsWithConcatenation(context.getName(), XSD_PREFIX, ":");
+	}
+
+	static
+	@NotNull
+	XmlNSDescriptorImpl getNSDescriptorToSearchIn(XmlTag rootTag, final String name, XmlNSDescriptorImpl defaultNSDescriptor)
+	{
+		if(name == null)
+		{
+			return defaultNSDescriptor;
+		}
+		final String namespacePrefix = XmlUtil.findPrefixByQualifiedName(name);
+
+		if(namespacePrefix.length() > 0)
+		{
+			final String namespace = rootTag.getNamespaceByPrefix(namespacePrefix);
+			final XmlNSDescriptor nsDescriptor = rootTag.getNSDescriptor(namespace, true);
+
+			if(nsDescriptor instanceof XmlNSDescriptorImpl)
+			{
+				return (XmlNSDescriptorImpl) nsDescriptor;
+			}
+		}
+
+		return defaultNSDescriptor;
+	}
+
+	@Nullable
+	private static XmlElementDescriptor getDescriptorFromParent(final XmlTag tag, XmlElementDescriptor elementDescriptor)
+	{
+		final PsiElement parent = tag.getParent();
+		if(parent instanceof XmlTag)
+		{
+			final XmlElementDescriptor descriptor = ((XmlTag) parent).getDescriptor();
+			if(descriptor != null)
+			{
+				elementDescriptor = descriptor.getElementDescriptor(tag, (XmlTag) parent);
+			}
+		}
+		return elementDescriptor;
+	}
+
+	public static boolean processTagsInNamespace(@NotNull final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor)
+	{
+		return processTagsInNamespaceInner(rootTag, tagNames, processor, null);
+	}
+
+	private static boolean processTagsInNamespaceInner(@NotNull final XmlTag rootTag, final String[] tagNames, final PsiElementProcessor<XmlTag> processor, Set<XmlTag> visitedTags)
+	{
+		if(visitedTags == null)
+		{
+			visitedTags = new HashSet<XmlTag>(3);
+		}
+		else if(visitedTags.contains(rootTag))
+		{
+			return true;
+		}
+
+		visitedTags.add(rootTag);
+		XmlTag[] tags = rootTag.getSubTags();
+
+		NextTag:
+		for(XmlTag tag : tags)
+		{
+			for(String tagName : tagNames)
+			{
+				if(equalsToSchemaName(tag, tagName))
+				{
+					final String name = tag.getAttributeValue("name");
+
+					if(name != null)
+					{
+						if(!processor.execute(tag))
+						{
+							return false;
+						}
+					}
+
+					continue NextTag;
+				}
+			}
+
+			if(equalsToSchemaName(tag, INCLUDE_TAG_NAME))
+			{
+				final String schemaLocation = tag.getAttributeValue("schemaLocation");
+
+				if(schemaLocation != null)
+				{
+					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation);
+
+					if(xmlFile != null)
+					{
+						final XmlDocument includedDocument = xmlFile.getDocument();
+
+						if(includedDocument != null)
+						{
+							if(!processTagsInNamespaceInner(includedDocument.getRootTag(), tagNames, processor, visitedTags))
+							{
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean equalsToSchemaName(@NotNull XmlTag tag, @NonNls String schemaName)
+	{
+		return schemaName.equals(tag.getLocalName()) && checkSchemaNamespace(tag);
+	}
+
+	private static
+	@Nullable
+	XmlTag findSpecialTag(@NonNls String name, @NonNls String specialName, XmlTag rootTag, XmlNSDescriptorImpl descriptor, HashSet<XmlTag> visited)
+	{
+		XmlNSDescriptorImpl nsDescriptor = getNSDescriptorToSearchIn(rootTag, name, descriptor);
+
+		if(nsDescriptor != descriptor)
+		{
+			final XmlDocument document = nsDescriptor.getDescriptorFile() != null ? nsDescriptor.getDescriptorFile().getDocument() : null;
+			if(document == null)
+			{
+				return null;
+			}
+
+			return findSpecialTag(XmlUtil.findLocalNameByQualifiedName(name), specialName, document.getRootTag(), nsDescriptor, visited);
+		}
+
+		if(visited == null)
+		{
+			visited = new HashSet<XmlTag>(1);
+		}
+		else if(visited.contains(rootTag))
+		{
+			return null;
+		}
+		visited.add(rootTag);
+
+		XmlTag[] tags = rootTag.getSubTags();
+
+		return findSpecialTagIn(tags, specialName, name, rootTag, descriptor, visited);
+	}
+
+	private static XmlTag findSpecialTagIn(final XmlTag[] tags, final String specialName, final String name, final XmlTag rootTag, final XmlNSDescriptorImpl descriptor, final HashSet<XmlTag> visited)
+	{
+		for(XmlTag tag : tags)
+		{
+			if(equalsToSchemaName(tag, specialName))
+			{
+				String attribute = tag.getAttributeValue("name");
+
+				if(name.equals(attribute) || name.contains(":") && name.substring(name.indexOf(":") + 1).equals(attribute))
+				{
+					return tag;
+				}
+			}
+			else if(equalsToSchemaName(tag, INCLUDE_TAG_NAME) || (equalsToSchemaName(tag, IMPORT_TAG_NAME) && rootTag.getNamespaceByPrefix(XmlUtil.findPrefixByQualifiedName(name)).equals(tag
+					.getAttributeValue("namespace"))))
+			{
+				final String schemaLocation = tag.getAttributeValue("schemaLocation");
+
+				if(schemaLocation != null)
+				{
+					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation);
+
+					if(xmlFile != null)
+					{
+						final XmlDocument document = xmlFile.getDocument();
+						if(document != null)
+						{
+							final XmlTag rTag = findSpecialTag(name, specialName, document.getRootTag(), descriptor, visited);
+
+							if(rTag != null)
+							{
+								return rTag;
+							}
+						}
+					}
+				}
+			}
+			else if(equalsToSchemaName(tag, REDEFINE_TAG_NAME))
+			{
+				XmlTag rTag = findSpecialTagIn(tag.getSubTags(), specialName, name, rootTag, descriptor, visited);
+				if(rTag != null)
+				{
+					return rTag;
+				}
+
+				final XmlNSDescriptorImpl nsDescriptor = getRedefinedElementDescriptor(tag);
+				if(nsDescriptor != null)
+				{
+					final XmlTag redefinedRootTag = ((XmlDocument) nsDescriptor.getDeclaration()).getRootTag();
+
+					rTag = findSpecialTagIn(redefinedRootTag.getSubTags(), specialName, name, redefinedRootTag, nsDescriptor, visited);
+					if(rTag != null)
+					{
+						return rTag;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public static XmlNSDescriptorImpl getRedefinedElementDescriptor(final XmlTag parentTag)
+	{
+		XmlFile file = getRedefinedElementDescriptorFile(parentTag);
+		if(file != null)
+		{
+			final XmlDocument document = file.getDocument();
+			final PsiMetaData metaData = document != null ? document.getMetaData() : null;
+			if(metaData instanceof XmlNSDescriptorImpl)
+			{
+				return (XmlNSDescriptorImpl) metaData;
+			}
+		}
+		return null;
+	}
+
+	public static XmlFile getRedefinedElementDescriptorFile(final XmlTag parentTag)
+	{
+		final String schemaL = parentTag.getAttributeValue(XmlUtil.SCHEMA_LOCATION_ATT);
+
+		if(schemaL != null)
+		{
+			final PsiReference[] references = parentTag.getAttribute(XmlUtil.SCHEMA_LOCATION_ATT, null).getValueElement().getReferences();
+
+			if(references.length > 0)
+			{
+				final PsiElement psiElement = references[references.length - 1].resolve();
+
+				if(psiElement instanceof XmlFile)
+				{
+					return ((XmlFile) psiElement);
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public XmlFile getDescriptorFile()
 	{
 		return myFile;
-	}
-
-	public boolean isHierarhyEnabled()
-	{
-		return true;
 	}
 
 	public String getDefaultNamespace()
@@ -196,17 +460,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return myTargetNamespace != null ? myTargetNamespace : "";
 	}
 
-	static class QNameKey extends Pair<String, String>
-	{
-		QNameKey(String name, String namespace)
-		{
-			super(name, namespace);
-		}
-	}
-
-	private final Map<QNameKey, CachedValue<XmlElementDescriptor>> myDescriptorsMap = Collections.synchronizedMap(new HashMap<QNameKey, CachedValue<XmlElementDescriptor>>());
-	private final Map<Pair<QNameKey, XmlTag>, CachedValue<TypeDescriptor>> myTypesMap = Collections.synchronizedMap(new HashMap<Pair<QNameKey, XmlTag>, CachedValue<TypeDescriptor>>());
-
+	@Override
 	@Nullable
 	public XmlElementDescriptor getElementDescriptor(String localName, String namespace)
 	{
@@ -253,6 +507,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 					{
 						final CachedValue<XmlElementDescriptor> cachedValue = CachedValuesManager.getManager(tag.getProject()).createCachedValue(new CachedValueProvider<XmlElementDescriptor>()
 						{
+							@Override
 							public Result<XmlElementDescriptor> compute()
 							{
 								final String name = tag.getAttributeValue("name");
@@ -275,10 +530,10 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 					equalsToSchemaName(tag, IMPORT_TAG_NAME) &&
 					(namespace.equals(tag.getAttributeValue("namespace")) || namespace.length() == 0 && tag.getAttributeValue("namespace") == null)))
 			{
-				final XmlAttribute schemaLocation = tag.getAttribute("schemaLocation");
+				final String schemaLocation = tag.getAttributeValue("schemaLocation");
 				if(schemaLocation != null)
 				{
-					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation.getValue());
+					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation);
 					if(xmlFile != null)
 					{
 						final XmlDocument includedDocument = xmlFile.getDocument();
@@ -348,10 +603,9 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		}
 		else
 		{
-			final boolean b = myTargetNamespace.equals(namespace);
-			if(b)
+			if(myTargetNamespace.equals(namespace))
 			{
-				return b;
+				return true;
 			}
 			return context.getNSDescriptor(namespace, true) == this; // schema's targetNamespace could be different from file systemId
 		}
@@ -372,11 +626,11 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			return null;
 		}
 
-		XmlNSDescriptorImpl nsDescriptor = (XmlNSDescriptorImpl) myTag.getNSDescriptor(namespace, true);
+		XmlNSDescriptor nsDescriptor = myTag.getNSDescriptor(namespace, true);
 
-		if(nsDescriptor != this && nsDescriptor != null)
+		if(nsDescriptor != this && nsDescriptor instanceof XmlNSDescriptorImpl)
 		{
-			return nsDescriptor.getAttributeImpl(localName, namespace, visited);
+			return ((XmlNSDescriptorImpl) nsDescriptor).getAttributeImpl(localName, namespace, visited);
 		}
 
 		if(visited == null)
@@ -406,11 +660,11 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			}
 			else if(equalsToSchemaName(tag, INCLUDE_TAG_NAME) || (equalsToSchemaName(tag, IMPORT_TAG_NAME) && namespace.equals(tag.getAttributeValue("namespace"))))
 			{
-				final XmlAttribute schemaLocation = tag.getAttribute("schemaLocation");
+				final String schemaLocation = tag.getAttributeValue("schemaLocation");
 
 				if(schemaLocation != null)
 				{
-					final XmlFile xmlFile = XmlUtil.findNamespace(myTag.getContainingFile(), schemaLocation.getValue());
+					final XmlFile xmlFile = XmlUtil.findNamespace(myTag.getContainingFile(), schemaLocation);
 
 					if(xmlFile != null)
 					{
@@ -429,9 +683,15 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 									final CachedValue<XmlAttributeDescriptor> value = CachedValuesManager.getManager(includedDocument.getProject()).createCachedValue(new
 																																											  CachedValueProvider<XmlAttributeDescriptor>()
 									{
+										@Override
 										public Result<XmlAttributeDescriptor> compute()
 										{
-											return new Result<XmlAttributeDescriptor>(attributeDescriptor, attributeDescriptor.getDependences());
+											Object[] deps = attributeDescriptor.getDependences();
+											if(deps.length == 0)
+											{
+												LOG.error(attributeDescriptor + " (" + attributeDescriptor.getClass() + ") returned no dependencies");
+											}
+											return new Result<XmlAttributeDescriptor>(attributeDescriptor, deps);
 										}
 									}, false);
 									return value.getValue();
@@ -451,6 +711,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return new XmlAttributeDescriptorImpl(tag);
 	}
 
+	@Override
 	public TypeDescriptor getTypeDescriptor(XmlTag descriptorTag)
 	{
 		String type = descriptorTag.getAttributeValue("type");
@@ -463,6 +724,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return findTypeDescriptorImpl(descriptorTag, null, null, null);
 	}
 
+	@Override
 	public TypeDescriptor getTypeDescriptor(final String name, XmlTag context)
 	{
 		if(checkSchemaNamespace(name, context))
@@ -491,58 +753,6 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			return null;
 		}
 		return new XmlElementDescriptorByType(instanceTag, (ComplexTypeDescriptor) typeDescriptor);
-	}
-
-	private static boolean checkSchemaNamespace(String name, XmlTag context)
-	{
-		final String namespace = context.getNamespaceByPrefix(XmlUtil.findPrefixByQualifiedName(name));
-		if(namespace.length() > 0)
-		{
-			return checkSchemaNamespace(namespace);
-		}
-		return XSD_PREFIX.equals(XmlUtil.findPrefixByQualifiedName(name));
-	}
-
-	public static boolean checkSchemaNamespace(String namespace)
-	{
-		return XmlUtil.XML_SCHEMA_URI.equals(namespace) ||
-				XmlUtil.XML_SCHEMA_URI2.equals(namespace) ||
-				XmlUtil.XML_SCHEMA_URI3.equals(namespace);
-	}
-
-	public static boolean checkSchemaNamespace(XmlTag context)
-	{
-		LOG.assertTrue(context.isValid());
-		final String namespace = context.getNamespace();
-		if(namespace.length() > 0)
-		{
-			return checkSchemaNamespace(namespace);
-		}
-		return StringUtil.startsWithConcatenation(context.getName(), XSD_PREFIX, ":");
-	}
-
-	static
-	@NotNull
-	XmlNSDescriptorImpl getNSDescriptorToSearchIn(XmlTag rootTag, final String name, XmlNSDescriptorImpl defaultNSDescriptor)
-	{
-		if(name == null)
-		{
-			return defaultNSDescriptor;
-		}
-		final String namespacePrefix = XmlUtil.findPrefixByQualifiedName(name);
-
-		if(namespacePrefix != null && namespacePrefix.length() > 0)
-		{
-			final String namespace = rootTag.getNamespaceByPrefix(namespacePrefix);
-			final XmlNSDescriptor nsDescriptor = rootTag.getNSDescriptor(namespace, true);
-
-			if(nsDescriptor instanceof XmlNSDescriptorImpl)
-			{
-				return (XmlNSDescriptorImpl) nsDescriptor;
-			}
-		}
-
-		return defaultNSDescriptor;
 	}
 
 	@Nullable
@@ -596,7 +806,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			visited.add(rootTag);
 		}
 
-		final Pair<QNameKey, XmlTag> pair = new Pair<QNameKey, XmlTag>(new QNameKey(name, namespace), rootTag);
+		final Pair<QNameKey, XmlTag> pair = Pair.create(new QNameKey(name, namespace), rootTag);
 
 		final CachedValue<TypeDescriptor> descriptor = myTypesMap.get(pair);
 		if(descriptor != null)
@@ -672,6 +882,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 
 							final CachedValue<TypeDescriptor> value = CachedValuesManager.getManager(tag.getProject()).createCachedValue(new CachedValueProvider<TypeDescriptor>()
 							{
+								@Override
 								public Result<TypeDescriptor> compute()
 								{
 									final String currentName = tag.getAttributeValue("name");
@@ -736,7 +947,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	private boolean isSameName(@NotNull String name, String namespace, String nameAttribute)
 	{
 		return nameAttribute != null &&
-				(nameAttribute.equals(name) || (name.indexOf(":") >= 0 && nameAttribute.equals(name.substring(name.indexOf(":") + 1)))) &&
+				(nameAttribute.equals(name) || (name.contains(":") && nameAttribute.equals(name.substring(name.indexOf(":") + 1)))) &&
 				(namespace == null || namespace.length() == 0 || namespace.equals(getDefaultNamespace()));
 	}
 
@@ -759,6 +970,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	{
 		final CachedValue<TypeDescriptor> value = CachedValuesManager.getManager(tag.getProject()).createCachedValue(new CachedValueProvider<TypeDescriptor>()
 		{
+			@Override
 			public CachedValueProvider.Result<TypeDescriptor> compute()
 			{
 				final SimpleTypeDescriptor simpleTypeDescriptor = new SimpleTypeDescriptor(tag);
@@ -773,6 +985,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	{
 		final CachedValue<TypeDescriptor> value = CachedValuesManager.getManager(tag.getProject()).createCachedValue(new CachedValueProvider<TypeDescriptor>()
 		{
+			@Override
 			public CachedValueProvider.Result<TypeDescriptor> compute()
 			{
 				final String name = tag.getAttributeValue("name");
@@ -793,6 +1006,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return value;
 	}
 
+	@Override
 	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
 	{
 		PsiElement parent = tag.getParent();
@@ -842,21 +1056,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		}
 	}
 
-	@Nullable
-	private static XmlElementDescriptor getDescriptorFromParent(final XmlTag tag, XmlElementDescriptor elementDescriptor)
-	{
-		final PsiElement parent = tag.getParent();
-		if(parent instanceof XmlTag)
-		{
-			final XmlElementDescriptor descriptor = ((XmlTag) parent).getDescriptor();
-			if(descriptor != null)
-			{
-				elementDescriptor = descriptor.getElementDescriptor(tag, (XmlTag) parent);
-			}
-		}
-		return elementDescriptor;
-	}
-
+	@Override
 	@NotNull
 	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc)
 	{
@@ -864,6 +1064,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		{
 			final List<XmlElementDescriptor> result = new ArrayList<XmlElementDescriptor>();
 
+			@Override
 			public boolean execute(@NotNull final XmlTag element)
 			{
 				ContainerUtil.addIfNotNull(result, getElementDescriptor(element.getAttributeValue("name"), getDefaultNamespace()));
@@ -873,6 +1074,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 
 		CollectElementsProcessor processor = new CollectElementsProcessor()
 		{
+			@Override
 			public boolean execute(@NotNull final XmlTag element)
 			{
 				if(!XmlElementDescriptorImpl.isAbstractDeclaration(element))
@@ -893,6 +1095,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		{
 			final List<XmlAttributeDescriptor> result = new ArrayList<XmlAttributeDescriptor>();
 
+			@Override
 			public boolean execute(@NotNull final XmlTag element)
 			{
 				result.add(createAttributeDescriptor(element));
@@ -904,172 +1107,6 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		processTagsInNamespace(myTag, new String[]{ATTRIBUTE_TAG_NAME}, processor);
 
 		return processor.result.toArray(new XmlAttributeDescriptor[processor.result.size()]);
-	}
-
-	public static boolean processTagsInNamespace(@NotNull final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor)
-	{
-		return processTagsInNamespaceInner(rootTag, tagNames, processor, null);
-	}
-
-	private static boolean processTagsInNamespaceInner(@NotNull final XmlTag rootTag, final String[] tagNames, final PsiElementProcessor<XmlTag> processor, Set<XmlTag> visitedTags)
-	{
-		if(visitedTags == null)
-		{
-			visitedTags = new HashSet<XmlTag>(3);
-		}
-		else if(visitedTags.contains(rootTag))
-		{
-			return true;
-		}
-
-		visitedTags.add(rootTag);
-		XmlTag[] tags = rootTag.getSubTags();
-
-		NextTag:
-		for(XmlTag tag : tags)
-		{
-			for(String tagName : tagNames)
-			{
-				if(equalsToSchemaName(tag, tagName))
-				{
-					final String name = tag.getAttributeValue("name");
-
-					if(name != null)
-					{
-						if(!processor.execute(tag))
-						{
-							return false;
-						}
-					}
-
-					continue NextTag;
-				}
-			}
-
-			if(equalsToSchemaName(tag, INCLUDE_TAG_NAME))
-			{
-				final String schemaLocation = tag.getAttributeValue("schemaLocation");
-
-				if(schemaLocation != null)
-				{
-					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation);
-
-					if(xmlFile != null)
-					{
-						final XmlDocument includedDocument = xmlFile.getDocument();
-
-						if(includedDocument != null)
-						{
-							if(!processTagsInNamespaceInner(includedDocument.getRootTag(), tagNames, processor, visitedTags))
-							{
-								return false;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return true;
-	}
-
-	protected static boolean equalsToSchemaName(@NotNull XmlTag tag, @NonNls String schemaName)
-	{
-		return schemaName.equals(tag.getLocalName()) && checkSchemaNamespace(tag);
-	}
-
-	private static
-	@Nullable
-	XmlTag findSpecialTag(@NonNls String name, @NonNls String specialName, XmlTag rootTag, XmlNSDescriptorImpl descriptor, HashSet<XmlTag> visited)
-	{
-		XmlNSDescriptorImpl nsDescriptor = getNSDescriptorToSearchIn(rootTag, name, descriptor);
-
-		if(nsDescriptor != descriptor)
-		{
-			final XmlDocument document = nsDescriptor.getDescriptorFile() != null ? nsDescriptor.getDescriptorFile().getDocument() : null;
-			if(document == null)
-			{
-				return null;
-			}
-
-			return findSpecialTag(XmlUtil.findLocalNameByQualifiedName(name), specialName, document.getRootTag(), nsDescriptor, visited);
-		}
-
-		if(visited == null)
-		{
-			visited = new HashSet<XmlTag>(1);
-		}
-		else if(visited.contains(rootTag))
-		{
-			return null;
-		}
-		visited.add(rootTag);
-
-		XmlTag[] tags = rootTag.getSubTags();
-
-		return findSpecialTagIn(tags, specialName, name, rootTag, descriptor, visited);
-	}
-
-	private static XmlTag findSpecialTagIn(final XmlTag[] tags, final String specialName, final String name, final XmlTag rootTag, final XmlNSDescriptorImpl descriptor, final HashSet<XmlTag> visited)
-	{
-		for(XmlTag tag : tags)
-		{
-			if(equalsToSchemaName(tag, specialName))
-			{
-				String attribute = tag.getAttributeValue("name");
-
-				if(name.equals(attribute) || name.indexOf(":") >= 0 && name.substring(name.indexOf(":") + 1).equals(attribute))
-				{
-					return tag;
-				}
-			}
-			else if(equalsToSchemaName(tag, INCLUDE_TAG_NAME) || (equalsToSchemaName(tag, IMPORT_TAG_NAME) && rootTag.getNamespaceByPrefix(XmlUtil.findPrefixByQualifiedName(name)).equals(tag
-					.getAttributeValue("namespace"))))
-			{
-				final String schemaLocation = tag.getAttributeValue("schemaLocation");
-
-				if(schemaLocation != null)
-				{
-					final XmlFile xmlFile = XmlUtil.findNamespace(rootTag.getContainingFile(), schemaLocation);
-
-					if(xmlFile != null)
-					{
-						final XmlDocument document = xmlFile.getDocument();
-						if(document != null)
-						{
-							final XmlTag rTag = findSpecialTag(name, specialName, document.getRootTag(), descriptor, visited);
-
-							if(rTag != null)
-							{
-								return rTag;
-							}
-						}
-					}
-				}
-			}
-			else if(equalsToSchemaName(tag, REDEFINE_TAG_NAME))
-			{
-				XmlTag rTag = findSpecialTagIn(tag.getSubTags(), specialName, name, rootTag, descriptor, visited);
-				if(rTag != null)
-				{
-					return rTag;
-				}
-
-				final XmlNSDescriptorImpl nsDescriptor = getRedefinedElementDescriptor(tag);
-				if(nsDescriptor != null)
-				{
-					final XmlTag redefinedRootTag = ((XmlDocument) nsDescriptor.getDeclaration()).getRootTag();
-
-					rTag = findSpecialTagIn(redefinedRootTag.getSubTags(), specialName, name, redefinedRootTag, nsDescriptor, visited);
-					if(rTag != null)
-					{
-						return rTag;
-					}
-				}
-			}
-		}
-
-		return null;
 	}
 
 	@Nullable
@@ -1084,9 +1121,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return findSpecialTag(name, "attributeGroup", myTag, this, null);
 	}
 
-	private MultiMap<String, XmlTag> mySubstitutions;
-
-	public XmlElementDescriptor[] getSubstitutes(String localName, String namespace)
+	public synchronized XmlElementDescriptor[] getSubstitutes(String localName, String namespace)
 	{
 		if(!initSubstitutes())
 		{
@@ -1139,21 +1174,25 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return mySubstitutions != null;
 	}
 
+	@Override
 	public PsiElement getDeclaration()
 	{
 		return myFile.getDocument();
 	}
 
+	@Override
 	public String getName(PsiElement context)
 	{
 		return getName();
 	}
 
+	@Override
 	public String getName()
 	{
 		return "";
 	}
 
+	@Override
 	public void init(PsiElement element)
 	{
 		myFile = (XmlFile) element.getContainingFile();
@@ -1187,6 +1226,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		dependencies = ArrayUtil.toObjectArray(dependenciesSet);
 	}
 
+	@Override
 	public Object[] getDependences()
 	{
 		if(dependencies == null)
@@ -1247,6 +1287,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		UNDECLARED_STD_TYPES.add("anySimpleType");
 	}
 
+	@Override
 	public void validate(@NotNull XmlDocument context, @NotNull Validator.ValidationHost host)
 	{
 		ExternalDocumentValidator.doValidation(context, host);
@@ -1257,43 +1298,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return myTag;
 	}
 
-	public static XmlNSDescriptorImpl getRedefinedElementDescriptor(final XmlTag parentTag)
-	{
-		XmlFile file = getRedefinedElementDescriptorFile(parentTag);
-		if(file != null)
-		{
-			final XmlDocument document = file.getDocument();
-			final PsiMetaData metaData = document != null ? document.getMetaData() : null;
-			if(metaData instanceof XmlNSDescriptorImpl)
-			{
-				return (XmlNSDescriptorImpl) metaData;
-			}
-		}
-		return null;
-	}
-
-	public static XmlFile getRedefinedElementDescriptorFile(final XmlTag parentTag)
-	{
-		final String schemaL = parentTag.getAttributeValue(XmlUtil.SCHEMA_LOCATION_ATT);
-
-		if(schemaL != null)
-		{
-			final PsiReference[] references = parentTag.getAttribute(XmlUtil.SCHEMA_LOCATION_ATT, null).getValueElement().getReferences();
-
-			if(references.length > 0)
-			{
-				final PsiElement psiElement = references[references.length - 1].resolve();
-
-				if(psiElement instanceof XmlFile)
-				{
-					return ((XmlFile) psiElement);
-				}
-			}
-		}
-		return null;
-	}
-
-	public boolean hasSubstitutions()
+	public synchronized boolean hasSubstitutions()
 	{
 		initSubstitutes();
 		return mySubstitutions != null && mySubstitutions.size() > 0;
@@ -1302,5 +1307,13 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	public boolean isValid()
 	{
 		return myFile != null && getDeclaration().isValid();
+	}
+
+	static class QNameKey extends Pair<String, String>
+	{
+		QNameKey(String name, String namespace)
+		{
+			super(name, namespace);
+		}
 	}
 }

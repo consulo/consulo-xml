@@ -71,6 +71,9 @@
 		<component>
 			<implementation-class>com.intellij.javaee.DefaultHtmlDoctypeInitialConfigurator</implementation-class>
 		</component>
+		<component>
+			<implementation-class>com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer</implementation-class>
+		</component>
 	</application-components>
 
 	<project-components>
@@ -117,6 +120,9 @@
 
 		<extensionPoint name="xmlSuppressionProvider"
 						interface="com.intellij.codeInspection.XmlSuppressionProvider"/>
+
+		<extensionPoint name="nsColorProvider"
+						interface="com.intellij.codeInsight.daemon.impl.analysis.XmlNSColorProvider"/>
 
 		<extensionPoint name="breadcrumbsInfoProvider" interface="com.intellij.xml.breadcrumbs.BreadcrumbsInfoProvider"/>
 
@@ -220,6 +226,9 @@
 		<editorAppearanceConfigurable instance="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingConfigurable"/>
 
 		<highlightErrorFilter implementation="com.intellij.codeInsight.highlighting.HtmlClosingTagErrorFilter"/>
+
+		<applicationService serviceInterface="com.intellij.codeInspection.XmlQuickFixFactory"
+							serviceImplementation="com.intellij.codeInspection.XmlQuickFixFactoryImpl"/>
 
 		<applicationService serviceInterface="com.intellij.javaee.ExternalResourceManager"
 							serviceImplementation="com.intellij.javaee.ExternalResourceManagerImpl"/>
@@ -445,7 +454,7 @@
 						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="ERROR" runForWholeFile="true" unfair="true"
 						 implementationClass="com.intellij.xml.util.XmlInvalidIdInspection"/>
 
-		<localInspection language="XML" shortName="RequiredAttributes" bundle="messages.InspectionsBundle"
+		<localInspection language="XML" shortName="RequiredAttributes" bundle="messages.XmlBundle"
 						 key="inspection.required.attributes.display.name"
 						 groupName="HTML" enabledByDefault="true" level="WARNING"
 						 implementationClass="com.intellij.codeInspection.htmlInspections.RequiredAttributesInspection" unfair="true"/>
@@ -465,6 +474,10 @@
 						 groupName="HTML"
 						 enabledByDefault="true" level="WARNING"
 						 implementationClass="com.intellij.codeInspection.htmlInspections.HtmlUnknownAttributeInspection"/>
+		<localInspection language="XML" enabledByDefault="true" level="WARNING"
+						 bundle="messages.XmlBundle" key="html.inspections.unknown.boolean.attribute"
+						 groupBundle="messages.XmlBundle" groupKey="html.inspections.group.name"
+						 implementationClass="com.intellij.codeInspection.htmlInspections.HtmlUnknownBooleanAttributeInspection"/>
 		<localInspection language="XML" shortName="XmlUnboundNsPrefix" bundle="messages.XmlBundle" key="xml.inspections.unbound.prefix"
 						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="WARNING"
 						 implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlUnboundNsPrefixInspection"/>
@@ -596,6 +609,9 @@
 		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
+
+		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNsPrefixAnnotator"/>
+		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNamespaceAnnotator"/>
 
 		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor" />
 

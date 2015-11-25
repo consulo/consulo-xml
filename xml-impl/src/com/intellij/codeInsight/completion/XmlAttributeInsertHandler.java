@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,13 @@
  */
 package com.intellij.codeInsight.completion;
 
+import java.util.Collections;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.AutoPopupController;
 import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -34,119 +38,141 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.XmlNamespaceHelper;
-import com.intellij.xml.util.HtmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
 
 /**
  * @author peter
  */
-public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.XmlAttributeInsertHandler");
+public class XmlAttributeInsertHandler implements InsertHandler<LookupElement>
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.XmlAttributeInsertHandler");
 
-  public static final XmlAttributeInsertHandler INSTANCE = new XmlAttributeInsertHandler();
+	public static final XmlAttributeInsertHandler INSTANCE = new XmlAttributeInsertHandler();
 
-  private final String myNamespaceToInsert;
+	private final String myNamespaceToInsert;
 
-  public XmlAttributeInsertHandler() {
-    this(null);
-  }
+	public XmlAttributeInsertHandler()
+	{
+		this(null);
+	}
 
-  public XmlAttributeInsertHandler(@Nullable String namespaceToInsert) {
-    myNamespaceToInsert = namespaceToInsert;
-  }
+	public XmlAttributeInsertHandler(@Nullable String namespaceToInsert)
+	{
+		myNamespaceToInsert = namespaceToInsert;
+	}
 
-  public void handleInsert(final InsertionContext context, final LookupElement item) {
-    final Editor editor = context.getEditor();
+	@Override
+	public void handleInsert(final InsertionContext context, final LookupElement item)
+	{
+		final Editor editor = context.getEditor();
 
-    final Document document = editor.getDocument();
-    final int caretOffset = editor.getCaretModel().getOffset();
-    final PsiFile file = context.getFile();
-    if (file.getLanguage() == HTMLLanguage.INSTANCE &&
-        HtmlUtil.isSingleHtmlAttribute((String)item.getObject())) {
-      return;
-    }
+		final Document document = editor.getDocument();
+		final int caretOffset = editor.getCaretModel().getOffset();
+		final PsiFile file = context.getFile();
 
-    final CharSequence chars = document.getCharsSequence();
-    if (!CharArrayUtil.regionMatches(chars, caretOffset, "=\"") && !CharArrayUtil.regionMatches(chars, caretOffset, "='")) {
-      PsiElement fileContext = file.getContext();
-      String toInsert= "=\"\"";
+		final CharSequence chars = document.getCharsSequence();
+		final boolean insertQuotes = XmlEditorOptions.getInstance().isInsertQuotesForAttributeValue();
+		final boolean hasQuotes = CharArrayUtil.regionMatches(chars, caretOffset, "=\"");
+		if(!hasQuotes && !CharArrayUtil.regionMatches(chars, caretOffset, "='"))
+		{
+			PsiElement fileContext = file.getContext();
+			String toInsert = "=\"\"";
 
-      if(fileContext != null) {
-        if (fileContext.getText().startsWith("\"")) toInsert = "=''";
-      }
+			if(fileContext != null)
+			{
+				if(fileContext.getText().startsWith("\""))
+				{
+					toInsert = "=''";
+				}
+			}
 
-      if (caretOffset >= document.getTextLength() || "/> \n\t\r".indexOf(document.getCharsSequence().charAt(caretOffset)) < 0) {
-        document.insertString(caretOffset, toInsert + " ");
-      }
-      else {
-        document.insertString(caretOffset, toInsert);
-      }
+			if(!insertQuotes)
+			{
+				toInsert = "=";
+			}
 
-      if ('=' == context.getCompletionChar()) {
-        context.setAddCompletionChar(false); // IDEA-19449
-      }
-    }
+			if(caretOffset >= document.getTextLength() || "/> \n\t\r".indexOf(document.getCharsSequence().charAt(caretOffset)) < 0)
+			{
+				document.insertString(caretOffset, toInsert + " ");
+			}
+			else
+			{
+				document.insertString(caretOffset, toInsert);
+			}
 
-    editor.getCaretModel().moveToOffset(caretOffset + 2);
-    editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
-    editor.getSelectionModel().removeSelection();
-    AutoPopupController.getInstance(editor.getProject()).scheduleAutoPopup(editor);
+			if('=' == context.getCompletionChar())
+			{
+				context.setAddCompletionChar(false); // IDEA-19449
+			}
+		}
 
-    if (myNamespaceToInsert != null && file instanceof XmlFile) {
-      final PsiElement element = file.findElementAt(context.getStartOffset());
-      final XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
+		editor.getCaretModel().moveToOffset(caretOffset + (insertQuotes || hasQuotes ? 2 : 1));
+		editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
+		editor.getSelectionModel().removeSelection();
+		AutoPopupController.getInstance(editor.getProject()).scheduleAutoPopup(editor);
 
-      if (tag != null) {
-        String prefix = ExtendedTagInsertHandler.suggestPrefix((XmlFile)file, myNamespaceToInsert);
+		if(myNamespaceToInsert != null && file instanceof XmlFile)
+		{
+			final PsiElement element = file.findElementAt(context.getStartOffset());
+			final XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
 
-        if (prefix != null) {
-          prefix = makePrefixUnique(prefix, tag);
-          final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
+			if(tag != null)
+			{
+				String prefix = ExtendedTagInsertHandler.suggestPrefix((XmlFile) file, myNamespaceToInsert);
 
-          if (helper != null) {
-            final Project project = context.getProject();
-            PsiDocumentManager.getInstance(project).commitDocument(document);
-            qualifyWithPrefix(prefix, element);
-            helper.insertNamespaceDeclaration((XmlFile)file, editor, Collections.singleton(
-              myNamespaceToInsert), prefix, null);
-          }
-        }
-      }
-    }
-  }
+				if(prefix != null)
+				{
+					prefix = makePrefixUnique(prefix, tag);
+					final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
 
-  private static void qualifyWithPrefix(@NotNull String namespacePrefix, @NotNull PsiElement context) {
-    final PsiElement parent = context.getParent();
+					if(helper != null)
+					{
+						final Project project = context.getProject();
+						PsiDocumentManager.getInstance(project).commitDocument(document);
+						qualifyWithPrefix(prefix, element);
+						helper.insertNamespaceDeclaration((XmlFile) file, editor, Collections.singleton(myNamespaceToInsert), prefix, null);
+					}
+				}
+			}
+		}
+	}
 
-    if (parent instanceof XmlAttribute) {
-      final XmlAttribute attribute = (XmlAttribute)parent;
-      final String prefix = attribute.getNamespacePrefix();
+	private static void qualifyWithPrefix(@NotNull String namespacePrefix, @NotNull PsiElement context)
+	{
+		final PsiElement parent = context.getParent();
 
-      if (!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix)) {
-        final String name = namespacePrefix + ":" + attribute.getLocalName();
-        try {
-          attribute.setName(name);
-        }
-        catch (IncorrectOperationException e) {
-          LOG.error(e);
-        }
-      }
-    }
-  }
+		if(parent instanceof XmlAttribute)
+		{
+			final XmlAttribute attribute = (XmlAttribute) parent;
+			final String prefix = attribute.getNamespacePrefix();
 
-  @NotNull
-  private static String makePrefixUnique(@NotNull String basePrefix, @NotNull XmlTag context) {
-    if (context.getNamespaceByPrefix(basePrefix).isEmpty()) {
-      return basePrefix;
-    }
-    int i = 1;
+			if(!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix))
+			{
+				final String name = namespacePrefix + ":" + attribute.getLocalName();
+				try
+				{
+					attribute.setName(name);
+				}
+				catch(IncorrectOperationException e)
+				{
+					LOG.error(e);
+				}
+			}
+		}
+	}
 
-    while (!context.getNamespaceByPrefix(basePrefix + i).isEmpty()) {
-      i++;
-    }
-    return basePrefix + i;
-  }
+	@NotNull
+	private static String makePrefixUnique(@NotNull String basePrefix, @NotNull XmlTag context)
+	{
+		if(context.getNamespaceByPrefix(basePrefix).isEmpty())
+		{
+			return basePrefix;
+		}
+		int i = 1;
+
+		while(!context.getNamespaceByPrefix(basePrefix + i).isEmpty())
+		{
+			i++;
+		}
+		return basePrefix + i;
+	}
 }

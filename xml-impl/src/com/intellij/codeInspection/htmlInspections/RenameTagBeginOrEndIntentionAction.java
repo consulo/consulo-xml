@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 package com.intellij.codeInspection.htmlInspections;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -43,8 +43,6 @@ import com.intellij.xml.util.XmlTagUtil;
  */
 public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.RenameTagBeginOrEndIntentionAction");
-
 	private final boolean myStart;
 	private final String myTargetName;
 	private final String mySourceName;
@@ -119,28 +117,7 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 			else
 			{
 				// we're in the other
-				PsiElement parent = psiElement.getParent();
-				if(parent instanceof PsiErrorElement)
-				{
-					parent = parent.getParent();
-				}
-
-				if(parent instanceof XmlTag)
-				{
-					if(myStart)
-					{
-						target = XmlTagUtil.getStartTagNameElement((XmlTag) parent);
-					}
-					else
-					{
-						target = XmlTagUtil.getEndTagNameElement((XmlTag) parent);
-						if(target == null)
-						{
-							final PsiErrorElement errorElement = PsiTreeUtil.getChildOfType(parent, PsiErrorElement.class);
-							target = XmlWrongClosingTagNameInspection.findEndTagName(errorElement);
-						}
-					}
-				}
+				target = findOtherSide(psiElement, myStart);
 			}
 
 			if(target != null)
@@ -156,6 +133,35 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 		}
 	}
 
+	@Nullable
+	public static PsiElement findOtherSide(PsiElement psiElement, final boolean start)
+	{
+		PsiElement target = null;
+		PsiElement parent = psiElement.getParent();
+		if(parent instanceof PsiErrorElement)
+		{
+			parent = parent.getParent();
+		}
+
+		if(parent instanceof XmlTag)
+		{
+			if(start)
+			{
+				target = XmlTagUtil.getStartTagNameElement((XmlTag) parent);
+			}
+			else
+			{
+				target = XmlTagUtil.getEndTagNameElement((XmlTag) parent);
+				if(target == null)
+				{
+					final PsiErrorElement errorElement = PsiTreeUtil.getChildOfType(parent, PsiErrorElement.class);
+					target = XmlWrongClosingTagNameInspection.findEndTagName(errorElement);
+				}
+			}
+		}
+		return target;
+	}
+
 	@Override
 	public boolean startInWriteAction()
 	{
@@ -165,7 +171,6 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 	@NotNull
 	public String getName()
 	{
-		return myStart ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName) : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName,
-				myTargetName);
+		return myStart ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName) : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName, myTargetName);
 	}
 }

@@ -37,10 +37,8 @@ import com.intellij.xml.XmlBundle;
 		name = "XmlEditorOptions",
 		storages = {
 				@Storage(
-						file = StoragePathMacros.APP_CONFIG + "/editor.xml"
-				)
-		}
-)
+						file = StoragePathMacros.APP_CONFIG + "/editor.xml")
+		})
 public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>, ExportableComponent
 {
 	private boolean myBreadcrumbsEnabled = true;
@@ -49,6 +47,9 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 	private boolean myAutomaticallyInsertRequiredAttributes = true;
 	private boolean myAutomaticallyInsertRequiredSubTags = true;
 	private boolean myAutomaticallyStartAttribute = true;
+	private boolean mySyncTagEditing = true;
+
+	private boolean myInsertQuotesForAttributeValue = true;
 
 	private boolean myTagTreeHighlightingEnabled = true;
 	private int myTagTreeHighlightingLevelCount = 6;
@@ -152,6 +153,26 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 	public boolean isTagTreeHighlightingEnabled()
 	{
 		return myTagTreeHighlightingEnabled;
+	}
+
+	public boolean isSyncTagEditing()
+	{
+		return mySyncTagEditing;
+	}
+
+	public void setSyncTagEditing(boolean syncTagEditing)
+	{
+		mySyncTagEditing = syncTagEditing;
+	}
+
+	public boolean isInsertQuotesForAttributeValue()
+	{
+		return myInsertQuotesForAttributeValue;
+	}
+
+	public void setInsertQuotesForAttributeValue(boolean insertQuotesForAttributeValue)
+	{
+		myInsertQuotesForAttributeValue = insertQuotesForAttributeValue;
 	}
 
 	@NotNull

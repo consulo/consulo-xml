@@ -22,6 +22,7 @@
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
           <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <extension id="lombok" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
@@ -48,13 +49,14 @@
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
           <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
+          <extension id="lombok" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
-          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
           <orderEntry type="sourceFolder" />
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
           <orderEntry type="module" module-name="xml-api" exported="" />
           <orderEntry type="library" name="Xerces" level="project" />
           <orderEntry type="library" name="XmlBeans" level="project" />
@@ -119,4 +121,3 @@
     </modules>
   </component>
 </project>
-

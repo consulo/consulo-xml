@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2015 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.jetbrains.annotations.Nullable;
+import org.mustbe.consulo.RequiredDispatchThread;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.Lookup;
@@ -42,12 +43,14 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.RangeMarker;
 import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.html.HtmlTag;
+import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
@@ -63,19 +66,23 @@ import com.intellij.xml.util.XmlUtil;
 
 public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 {
-
+	public static final Key<Boolean> ENFORCING_TAG = Key.create("xml.insert.handler.enforcing.tag");
 	public static final XmlTagInsertHandler INSTANCE = new XmlTagInsertHandler();
 
+	@Override
+	@RequiredDispatchThread
 	public void handleInsert(InsertionContext context, LookupElement item)
 	{
 		Project project = context.getProject();
 		Editor editor = context.getEditor();
 		// Need to insert " " to prevent creating tags like <tagThis is my text
+		InjectedLanguageUtil.getTopLevelEditor(editor).getDocument().putUserData(ENFORCING_TAG, Boolean.TRUE);
 		final int offset = editor.getCaretModel().getOffset();
 		editor.getDocument().insertString(offset, " ");
 		PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
 		PsiElement current = context.getFile().findElementAt(context.getStartOffset());
 		editor.getDocument().deleteString(offset, offset + 1);
+		InjectedLanguageUtil.getTopLevelEditor(editor).getDocument().putUserData(ENFORCING_TAG, null);
 
 		final XmlTag tag = PsiTreeUtil.getContextOfType(current, XmlTag.class, true);
 
@@ -96,7 +103,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 
 			if(descriptor != null)
 			{
-				insertIncompleteTag(context.getCompletionChar(), editor, project, descriptor, tag);
+				insertIncompleteTag(context.getCompletionChar(), editor, tag);
 			}
 		}
 		else if(context.getCompletionChar() == Lookup.REPLACE_SELECT_CHAR)
@@ -122,7 +129,6 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 					int eOffset = sibling.getTextRange().getEndOffset();
 
 					editor.getDocument().deleteString(sOffset, eOffset);
-					assert otherTag != null;
 					editor.getDocument().insertString(sOffset, ((XmlTag) otherTag).getName());
 				}
 			}
@@ -141,8 +147,10 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 		tailType.processTail(editor, editor.getCaretModel().getOffset());
 	}
 
-	private static void insertIncompleteTag(char completionChar, final Editor editor, final Project project, XmlElementDescriptor descriptor, XmlTag tag)
+	public static void insertIncompleteTag(char completionChar, final Editor editor, XmlTag tag)
 	{
+		XmlElementDescriptor descriptor = tag.getDescriptor();
+		final Project project = editor.getProject();
 		TemplateManager templateManager = TemplateManager.getInstance(project);
 		Template template = templateManager.createTemplate("", "");
 
@@ -150,7 +158,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 
 		// temp code
 		PsiFile containingFile = tag.getContainingFile();
-		boolean htmlCode = HtmlUtil.hasHtml(containingFile);
+		boolean htmlCode = HtmlUtil.hasHtml(containingFile) || HtmlUtil.supportsXmlTypedHandlers(containingFile);
 		template.setToReformat(!htmlCode);
 
 		StringBuilder indirectRequiredAttrs = addRequiredAttributes(descriptor, tag, template, containingFile);
@@ -167,26 +175,29 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 				myAttrValueMarker = editor.getDocument().createRangeMarker(offset + 1, offset + 4);
 			}
 
+			@Override
 			public void templateFinished(final Template template, boolean brokenOff)
 			{
 				final int offset = editor.getCaretModel().getOffset();
 
-				if(chooseAttributeName && offset >= 3)
+				if(chooseAttributeName && offset > 0)
 				{
-					char c = editor.getDocument().getCharsSequence().charAt(offset - 3);
+					char c = editor.getDocument().getCharsSequence().charAt(offset - 1);
 					if(c == '/' || (c == ' ' && brokenOff))
 					{
 						new WriteCommandAction.Simple(project)
 						{
+							@Override
 							protected void run() throws Throwable
 							{
-								editor.getDocument().replaceString(offset - 2, offset + 1, ">");
+								editor.getDocument().replaceString(offset, offset + 3, ">");
 							}
 						}.execute();
 					}
 				}
 			}
 
+			@Override
 			public void templateCancelled(final Template template)
 			{
 				if(myAttrValueMarker == null)
@@ -206,6 +217,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 					final int endOffset = myAttrValueMarker.getEndOffset();
 					new WriteCommandAction.Simple(project)
 					{
+						@Override
 						protected void run() throws Throwable
 						{
 							editor.getDocument().replaceString(startOffset, endOffset, ">");
@@ -220,7 +232,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 	private static StringBuilder addRequiredAttributes(XmlElementDescriptor descriptor, @Nullable XmlTag tag, Template template, PsiFile containingFile)
 	{
 
-		boolean htmlCode = HtmlUtil.hasHtml(containingFile);
+		boolean htmlCode = HtmlUtil.hasHtml(containingFile) || HtmlUtil.supportsXmlTypedHandlers(containingFile);
 		Set<String> notRequiredAttributes = Collections.emptySet();
 
 		if(tag instanceof HtmlTag)
@@ -341,7 +353,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 		{
 			if(XmlEditorOptions.getInstance().isAutomaticallyInsertClosingTag() && isHtmlCode && HtmlUtil.isSingleHtmlTag(tag.getName()))
 			{
-				template.addTextSegment(tag instanceof HtmlTag ? ">" : "/>");
+				template.addTextSegment(HtmlUtil.isHtmlTag(tag) ? ">" : "/>");
 			}
 			else
 			{
