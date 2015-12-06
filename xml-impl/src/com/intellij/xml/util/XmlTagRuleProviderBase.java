@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2011 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@ package com.intellij.xml.util;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.codeInsight.daemon.impl.analysis.InsertRequiredAttributeFix;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.codeInspection.XmlQuickFixFactory;
 import com.intellij.codeInspection.htmlInspections.RemoveAttributeIntentionAction;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Condition;
@@ -138,9 +138,9 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 
 	// ---=== Classes ===---
 
-	public static abstract class Effect
+	public abstract static class Effect
 	{
-		public abstract void annotate(@NotNull XmlTag tag, ProblemsHolder holder);
+		public abstract void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder);
 	}
 
 	public static class InvalidAttrEffect extends Effect
@@ -157,7 +157,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, ProblemsHolder holder)
+		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
 		{
 			XmlAttribute attribute = tag.getAttribute(myAttrName);
 			if(attribute != null)
@@ -185,7 +185,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, ProblemsHolder holder)
+		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
 		{
 			for(XmlAttribute xmlAttribute : tag.getAttributes())
 			{
@@ -214,7 +214,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, ProblemsHolder holder)
+		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
 		{
 			if(myCondition.value(tag))
 			{
@@ -259,7 +259,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, ProblemsHolder holder)
+		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
 		{
 			for(String attributeName : myAttributeNames)
 			{
@@ -283,7 +283,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 			LocalQuickFix[] fixes = new LocalQuickFix[myAttributeNames.length];
 			for(int i = 0; i < myAttributeNames.length; i++)
 			{
-				fixes[i] = new InsertRequiredAttributeFix(tag, myAttributeNames[i], null);
+				fixes[i] = XmlQuickFixFactory.getInstance().insertRequiredAttributeFix(tag, myAttributeNames[i]);
 			}
 
 			holder.registerProblem(tagNameElement, "Tag should have one of following attributes: " + StringUtil.join(myAttributeNames, ", "), myProblemHighlightType, fixes);
