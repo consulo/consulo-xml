@@ -175,6 +175,7 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
+		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 		<internalFileTemplate name="Html"/>
 		<internalFileTemplate name="Html5"/>
 		<internalFileTemplate name="Xhtml"/>
@@ -613,9 +614,9 @@
 		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNsPrefixAnnotator"/>
 		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNamespaceAnnotator"/>
 
-		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor" />
+		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor"/>
 
-		<smartPointerAnchorProvider implementation="com.intellij.psi.impl.smartPointers.XmlAnchorProvider" />
+		<smartPointerAnchorProvider implementation="com.intellij.psi.impl.smartPointers.XmlAnchorProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
@@ -639,7 +640,7 @@
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
 		<standardResourceProvider implementation="com.intellij.javaee.InternalResourceProvider"/>
 
-		<psiPolicy key="HTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy" />
-		<psiPolicy key="XHTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy" />
+		<psiPolicy key="HTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
+		<psiPolicy key="XHTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
 	</extensions>
 </idea-plugin>
