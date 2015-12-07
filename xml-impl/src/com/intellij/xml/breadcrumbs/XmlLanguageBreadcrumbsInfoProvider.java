@@ -22,75 +22,88 @@
  */
 package com.intellij.xml.breadcrumbs;
 
+import java.util.StringTokenizer;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.Language;
-import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.StringTokenizer;
+public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider
+{
+	@NonNls
+	private static final String CLASS_ATTRIBUTE_NAME = "class";
+	@NonNls
+	private static final String ID_ATTRIBUTE_NAME = "id";
 
-public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider {
-  @NonNls private static final String CLASS_ATTRIBUTE_NAME = "class";
-  @NonNls private static final String ID_ATTRIBUTE_NAME = "id";
+	public boolean acceptElement(@NotNull final PsiElement e)
+	{
+		return e instanceof XmlTag && e.isValid();
+	}
 
-  public boolean acceptElement(@NotNull final PsiElement e) {
-    return e instanceof XmlTag && e.isValid();
-  }
+	@NotNull
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  public Language[] getLanguages() {
-    return new Language[]{XMLLanguage.INSTANCE, XHTMLLanguage.INSTANCE, HTMLLanguage.INSTANCE};
-  }
+	@NotNull
+	public String getElementInfo(@NotNull final PsiElement e)
+	{
+		final XmlTag tag = (XmlTag) e;
+		final StringBuilder sb = new StringBuilder();
 
-  @NotNull
-  public String getElementInfo(@NotNull final PsiElement e) {
-    final XmlTag tag = (XmlTag)e;
-    final StringBuffer sb = new StringBuffer();
+		sb.append(tag.getName());
 
-    sb.append(tag.getName());
+		final boolean addHtmlInfo = e.getContainingFile().getLanguage() != XMLLanguage.INSTANCE;
 
-    final boolean addHtmlInfo = e.getContainingFile().getLanguage() != XMLLanguage.INSTANCE;
+		if(addHtmlInfo)
+		{
+			final String id_value = tag.getAttributeValue(ID_ATTRIBUTE_NAME);
+			if(null != id_value)
+			{
+				sb.append("#").append(id_value);
+			}
 
-    if (addHtmlInfo) {
-      final String id_value = tag.getAttributeValue(ID_ATTRIBUTE_NAME);
-      if (null != id_value) {
-        sb.append("#").append(id_value);
-      }
+			final String class_value = tag.getAttributeValue(CLASS_ATTRIBUTE_NAME);
+			if(null != class_value)
+			{
+				final StringTokenizer tokenizer = new StringTokenizer(class_value, " ");
+				while(tokenizer.hasMoreTokens())
+				{
+					sb.append(".").append(tokenizer.nextToken());
+				}
+			}
+		}
 
-      final String class_value = tag.getAttributeValue(CLASS_ATTRIBUTE_NAME);
-      if (null != class_value) {
-        final StringTokenizer tokenizer = new StringTokenizer(class_value, " ");
-        while (tokenizer.hasMoreTokens()) {
-          sb.append(".").append(tokenizer.nextToken());
-        }
-      }
-    }
+		return sb.toString();
+	}
 
-    return sb.toString();
-  }
+	@Nullable
+	public String getElementTooltip(@NotNull final PsiElement e)
+	{
+		final XmlTag tag = (XmlTag) e;
+		final StringBuilder result = new StringBuilder("&lt;");
+		result.append(tag.getName());
+		final XmlAttribute[] attributes = tag.getAttributes();
+		for(final XmlAttribute each : attributes)
+		{
+			result.append(" ").append(each.getText());
+		}
 
-  @Nullable
-  public String getElementTooltip(@NotNull final PsiElement e) {
-    final XmlTag tag = (XmlTag)e;
-    final StringBuffer result = new StringBuffer("&lt;");
-    result.append(tag.getName());
-    final XmlAttribute[] attributes = tag.getAttributes();
-    for (final XmlAttribute each : attributes) {
-      result.append(" ").append(each.getText());
-    }
+		if(tag.isEmpty())
+		{
+			result.append("/&gt;");
+		}
+		else
+		{
+			result.append("&gt;...&lt;/").append(tag.getName()).append("&gt;");
+		}
 
-    if (tag.isEmpty()) {
-      result.append("/&gt;");
-    }
-    else {
-      result.append("&gt;...&lt;/").append(tag.getName()).append("&gt;");
-    }
-
-    return result.toString();
-  }
+		return result.toString();
+	}
 }
