@@ -22,13 +22,14 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import java.util.StringTokenizer;
-
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.mustbe.consulo.RequiredReadAction;
+import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
+import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
@@ -36,53 +37,41 @@ import com.intellij.psi.xml.XmlTag;
 public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider
 {
 	@NonNls
-	private static final String CLASS_ATTRIBUTE_NAME = "class";
+	protected static final String CLASS_ATTRIBUTE_NAME = "class";
 	@NonNls
-	private static final String ID_ATTRIBUTE_NAME = "id";
+	protected static final String ID_ATTRIBUTE_NAME = "id";
 
+	@RequiredReadAction
+	@Override
 	public boolean acceptElement(@NotNull final PsiElement e)
 	{
 		return e instanceof XmlTag && e.isValid();
 	}
 
+	@Override
+	public boolean validateFileProvider(@NotNull FileViewProvider fileViewProvider)
+	{
+		return fileViewProvider.getBaseLanguage() == XMLLanguage.INSTANCE && XmlEditorOptions.getInstance().isBreadcrumbsEnabledInXml();
+	}
+
+	@Override
 	@NotNull
 	public Language getLanguage()
 	{
 		return XMLLanguage.INSTANCE;
 	}
 
+	@RequiredReadAction
+	@Override
 	@NotNull
 	public String getElementInfo(@NotNull final PsiElement e)
 	{
 		final XmlTag tag = (XmlTag) e;
-		final StringBuilder sb = new StringBuilder();
-
-		sb.append(tag.getName());
-
-		final boolean addHtmlInfo = e.getContainingFile().getLanguage() != XMLLanguage.INSTANCE;
-
-		if(addHtmlInfo)
-		{
-			final String id_value = tag.getAttributeValue(ID_ATTRIBUTE_NAME);
-			if(null != id_value)
-			{
-				sb.append("#").append(id_value);
-			}
-
-			final String class_value = tag.getAttributeValue(CLASS_ATTRIBUTE_NAME);
-			if(null != class_value)
-			{
-				final StringTokenizer tokenizer = new StringTokenizer(class_value, " ");
-				while(tokenizer.hasMoreTokens())
-				{
-					sb.append(".").append(tokenizer.nextToken());
-				}
-			}
-		}
-
-		return sb.toString();
+		return tag.getName();
 	}
 
+	@RequiredReadAction
+	@Override
 	@Nullable
 	public String getElementTooltip(@NotNull final PsiElement e)
 	{

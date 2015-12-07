@@ -22,27 +22,57 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.PsiElement;
-import com.intellij.openapi.extensions.ExtensionPointName;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.mustbe.consulo.RequiredReadAction;
+import com.intellij.lang.Language;
+import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.extensions.Extensions;
+import com.intellij.psi.FileViewProvider;
+import com.intellij.psi.PsiElement;
 
-public abstract class BreadcrumbsInfoProvider {
-  public static final ExtensionPointName<BreadcrumbsInfoProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.breadcrumbsInfoProvider");
+public abstract class BreadcrumbsInfoProvider
+{
+	public static final ExtensionPointName<BreadcrumbsInfoProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.breadcrumbsInfoProvider");
 
-  public abstract Language[] getLanguages();
+	@Nullable
+	public static BreadcrumbsInfoProvider findProvider(@NotNull final Language language)
+	{
+		for(final BreadcrumbsInfoProvider provider : BreadcrumbsInfoProvider.EP_NAME.getExtensions())
+		{
+			Language providerLanguage = provider.getLanguage();
+			if(language.isKindOf(providerLanguage))
+			{
+				return provider;
+			}
+		}
 
-  public abstract boolean acceptElement(@NotNull final PsiElement e);
+		return null;
+	}
 
-  @Nullable
-  public PsiElement getParent(@NotNull final PsiElement e) {
-    return e.getParent();
-  }
+	@NotNull
+	public abstract Language getLanguage();
 
-  @NotNull
-  public abstract String getElementInfo(@NotNull final PsiElement e);
+	public boolean validateFileProvider(@NotNull FileViewProvider fileViewProvider)
+	{
+		return true;
+	}
 
-  @Nullable
-  public abstract String getElementTooltip(@NotNull final PsiElement e);
+	@RequiredReadAction
+	public abstract boolean acceptElement(@NotNull final PsiElement e);
+
+	@Nullable
+	@RequiredReadAction
+	public PsiElement getParent(@NotNull final PsiElement e)
+	{
+		return e.getParent();
+	}
+
+	@NotNull
+	@RequiredReadAction
+	public abstract String getElementInfo(@NotNull final PsiElement e);
+
+	@Nullable
+	@RequiredReadAction
+	public abstract String getElementTooltip(@NotNull final PsiElement e);
 }

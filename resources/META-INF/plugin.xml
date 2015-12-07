@@ -637,6 +637,8 @@
 		<structureViewBuilderProvider implementation="com.intellij.lang.html.structureView.HtmlStructureViewBuilderProvider"/>
 		<relatedToHtmlFilesContributor implementation="com.intellij.navigation.LinkedToHtmlFilesContributor"/>
 		<xmlSuppressionProvider implementation="com.intellij.codeInspection.DefaultXmlSuppressionProvider" order="last"/>
+		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XHtmlLanguageBreadcrumbsInfoProvider"/>
+		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.HtmlLanguageBreadcrumbsInfoProvider"/>
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
 		<standardResourceProvider implementation="com.intellij.javaee.InternalResourceProvider"/>
 
