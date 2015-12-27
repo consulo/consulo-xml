@@ -617,6 +617,14 @@
 		<psi.treeChangePreprocessor implementation="com.intellij.xml.XmlPsiTreeChangePreprocessor"/>
 
 		<smartPointerAnchorProvider implementation="com.intellij.psi.impl.smartPointers.XmlAnchorProvider"/>
+
+		<codeInsight.unresolvedReferenceQuickFixProvider
+				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.SchemaReferenceQuickFixProvider"/>
+		<codeInsight.unresolvedReferenceQuickFixProvider
+				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReferenceQuickFixProvider"/>
+		<codeInsight.unresolvedReferenceQuickFixProvider
+				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReferenceQuickFixProvider"/>
+
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
