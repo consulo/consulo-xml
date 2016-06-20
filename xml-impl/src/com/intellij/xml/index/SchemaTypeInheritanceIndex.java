@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2012 JetBrains s.r.o.
+ * Copyright 2000-2015 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,19 @@
  */
 package com.intellij.xml.index;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.PairConvertor;
@@ -30,150 +39,165 @@ import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.indexing.ID;
 import com.intellij.util.io.DataExternalizer;
+import com.intellij.util.io.DataInputOutputUtil;
+import com.intellij.util.io.IOUtil;
 import com.intellij.util.text.CharArrayUtil;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Irina.Chernushina
  * Date: 7/4/12
  * Time: 6:29 PM
- *
+ * <p/>
  * map: tag name->file url
  */
-public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
-  private static final ID<String, Set<SchemaTypeInfo>> NAME = ID.create("SchemaTypeInheritance");
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.index.SchemaTypeInheritanceIndex");
+public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
+{
+	private static final ID<String, Set<SchemaTypeInfo>> NAME = ID.create("SchemaTypeInheritance");
+	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.index.SchemaTypeInheritanceIndex");
 
-  private static List<Set<SchemaTypeInfo>> getDirectChildrenOfType(final Project project,
-                                                                  final String ns,
-                                                                  final String name) {
-    GlobalSearchScope filter = createFilter(project);
-    final List<Set<SchemaTypeInfo>>
-      list = FileBasedIndex.getInstance().getValues(NAME, NsPlusTag.INSTANCE.encode(Pair.create(ns, name)), filter);
-    return list;
-  }
+	private static List<Set<SchemaTypeInfo>> getDirectChildrenOfType(final Project project, final String ns, final String name)
+	{
+		GlobalSearchScope filter = createFilter(project);
+		return FileBasedIndex.getInstance().getValues(NAME, NsPlusTag.INSTANCE.encode(Pair.create(ns, name)), filter);
+	}
 
-  public static PairConvertor<String, String, List<Set<SchemaTypeInfo>>> getWorker(final Project project, final VirtualFile currentFile) {
-    return new MyWorker(currentFile, project);
-  }
+	public static PairConvertor<String, String, List<Set<SchemaTypeInfo>>> getWorker(final Project project, final VirtualFile currentFile)
+	{
+		return new MyWorker(currentFile, project);
+	}
 
-  private static class MyWorker implements PairConvertor<String, String, List<Set<SchemaTypeInfo>>> {
-    private final Project myProject;
-    private final VirtualFile myCurrentFile;
-    private final GlobalSearchScope myFilter;
-    private final boolean myShouldParseCurrent;
-    private MultiMap<SchemaTypeInfo,SchemaTypeInfo> myMap;
+	private static class MyWorker implements PairConvertor<String, String, List<Set<SchemaTypeInfo>>>
+	{
+		private final Project myProject;
+		private final VirtualFile myCurrentFile;
+		private final GlobalSearchScope myFilter;
+		private final boolean myShouldParseCurrent;
+		private MultiMap<SchemaTypeInfo, SchemaTypeInfo> myMap;
 
-    private MyWorker(VirtualFile currentFile, Project project) {
-      myCurrentFile = currentFile;
-      myProject = project;
+		private MyWorker(VirtualFile currentFile, Project project)
+		{
+			myCurrentFile = currentFile;
+			myProject = project;
 
-      myFilter = createFilter(project);
-      myShouldParseCurrent = (myCurrentFile != null && ! myFilter.contains(myCurrentFile));
-    }
+			myFilter = createFilter(project);
+			myShouldParseCurrent = (myCurrentFile != null && !myFilter.contains(myCurrentFile));
+		}
 
-    @Override
-    public List<Set<SchemaTypeInfo>> convert(String ns, String name) {
-      List<Set<SchemaTypeInfo>> type = getDirectChildrenOfType(myProject, ns, name);
-      if (myShouldParseCurrent) {
-        if (myMap == null) {
-          try {
-            myMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(VfsUtil.loadText(myCurrentFile)));
-            type.add(new HashSet<SchemaTypeInfo>(myMap.get(new SchemaTypeInfo(name, true, ns))));
-          }
-          catch (IOException e) {
-            LOG.info(e);
-          }
-        }
-      }
-      return type;
-    }
-  }
+		@Override
+		public List<Set<SchemaTypeInfo>> convert(String ns, String name)
+		{
+			List<Set<SchemaTypeInfo>> type = getDirectChildrenOfType(myProject, ns, name);
+			if(myShouldParseCurrent)
+			{
+				if(myMap == null)
+				{
+					try
+					{
+						myMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(VfsUtilCore.loadText(myCurrentFile)));
+						type.add(new HashSet<SchemaTypeInfo>(myMap.get(new SchemaTypeInfo(name, true, ns))));
+					}
+					catch(IOException e)
+					{
+						LOG.info(e);
+					}
+				}
+			}
+			return type;
+		}
+	}
 
-  @Override
-  public boolean dependsOnFileContent() {
-    return true;
-  }
+	@Override
+	public boolean dependsOnFileContent()
+	{
+		return true;
+	}
 
-  @Override
-  public int getVersion() {
-    return 0;
-  }
+	@Override
+	public int getVersion()
+	{
+		return 1;
+	}
 
-  @NotNull
-  @Override
-  public ID<String, Set<SchemaTypeInfo>> getName() {
-    return NAME;
-  }
+	@NotNull
+	@Override
+	public ID<String, Set<SchemaTypeInfo>> getName()
+	{
+		return NAME;
+	}
 
-  @NotNull
-  @Override
-  public DataIndexer<String, Set<SchemaTypeInfo>, FileContent> getIndexer() {
-    return new DataIndexer<String, Set<SchemaTypeInfo>, FileContent>() {
-      @NotNull
-      @Override
-      public Map<String, Set<SchemaTypeInfo>> map(FileContent inputData) {
-        final Map<String, Set<SchemaTypeInfo>> map = new HashMap<String, Set<SchemaTypeInfo>>();
-        final MultiMap<SchemaTypeInfo,SchemaTypeInfo> multiMap =
-          XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
-        for (SchemaTypeInfo key : multiMap.keySet()) {
-          map.put(NsPlusTag.INSTANCE.encode(Pair.create(key.getNamespaceUri(), key.getTagName())), new HashSet<SchemaTypeInfo>(multiMap.get(key)));
-        }
-        return map;
-      }
-    };
-  }
+	@NotNull
+	@Override
+	public DataIndexer<String, Set<SchemaTypeInfo>, FileContent> getIndexer()
+	{
+		return new DataIndexer<String, Set<SchemaTypeInfo>, FileContent>()
+		{
+			@NotNull
+			@Override
+			public Map<String, Set<SchemaTypeInfo>> map(@NotNull FileContent inputData)
+			{
+				final Map<String, Set<SchemaTypeInfo>> map = new HashMap<String, Set<SchemaTypeInfo>>();
+				final MultiMap<SchemaTypeInfo, SchemaTypeInfo> multiMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+				for(SchemaTypeInfo key : multiMap.keySet())
+				{
+					map.put(NsPlusTag.INSTANCE.encode(Pair.create(key.getNamespaceUri(), key.getTagName())), new HashSet<SchemaTypeInfo>(multiMap.get(key)));
+				}
+				return map;
+			}
+		};
+	}
 
-  @Override
-  public DataExternalizer<Set<SchemaTypeInfo>> getValueExternalizer() {
-    return new DataExternalizer<Set<SchemaTypeInfo>>() {
-      @Override
-      public void save(DataOutput out, Set<SchemaTypeInfo> value) throws IOException {
-        out.writeInt(value.size());
-        for (SchemaTypeInfo key : value) {
-          out.writeUTF(key.getNamespaceUri());
-          out.writeUTF(key.getTagName());
-          out.writeBoolean(key.isIsTypeName());
-        }
-      }
+	@NotNull
+	@Override
+	public DataExternalizer<Set<SchemaTypeInfo>> getValueExternalizer()
+	{
+		return new DataExternalizer<Set<SchemaTypeInfo>>()
+		{
+			@Override
+			public void save(@NotNull DataOutput out, Set<SchemaTypeInfo> value) throws IOException
+			{
+				DataInputOutputUtil.writeINT(out, value.size());
+				for(SchemaTypeInfo key : value)
+				{
+					IOUtil.writeUTF(out, key.getNamespaceUri());
+					IOUtil.writeUTF(out, key.getTagName());
+					out.writeBoolean(key.isIsTypeName());
+				}
+			}
 
-      @Override
-      public Set<SchemaTypeInfo> read(DataInput in) throws IOException {
-        final Set<SchemaTypeInfo> set = new HashSet<SchemaTypeInfo>();
-        final int size = in.readInt();
-        for (int i = 0; i < size; i++) {
-          final String nsUri = in.readUTF();
-          final String tagName = in.readUTF();
-          final boolean isType = in.readBoolean();
-          set.add(new SchemaTypeInfo(tagName, isType, nsUri));
-        }
-        return set;
-      }
-    };
-  }
+			@Override
+			public Set<SchemaTypeInfo> read(@NotNull DataInput in) throws IOException
+			{
+				final Set<SchemaTypeInfo> set = new HashSet<SchemaTypeInfo>();
+				final int size = DataInputOutputUtil.readINT(in);
+				for(int i = 0; i < size; i++)
+				{
+					final String nsUri = IOUtil.readUTF(in);
+					final String tagName = IOUtil.readUTF(in);
+					final boolean isType = in.readBoolean();
+					set.add(new SchemaTypeInfo(tagName, isType, nsUri));
+				}
+				return set;
+			}
+		};
+	}
 
-  private static class NsPlusTag implements EncoderDecoder<Pair<String, String>, String> {
-    private final static NsPlusTag INSTANCE = new NsPlusTag();
-    private final static char ourSeparator = ':';
+	private static class NsPlusTag implements EncoderDecoder<Pair<String, String>, String>
+	{
+		private final static NsPlusTag INSTANCE = new NsPlusTag();
+		private final static char ourSeparator = ':';
 
-    @Override
-    public String encode(Pair<String, String> pair) {
-      return pair.getFirst() + ourSeparator + pair.getSecond();
-    }
+		@Override
+		public String encode(Pair<String, String> pair)
+		{
+			return pair.getFirst() + ourSeparator + pair.getSecond();
+		}
 
-    @Override
-    public Pair<String, String> decode(String s) {
-      final int i = s.indexOf(ourSeparator);
-      return i <= 0 ? Pair.create("", s) : Pair.create(s.substring(0, i), s.substring(i + 1));
-    }
-  }
+		@Override
+		public Pair<String, String> decode(String s)
+		{
+			final int i = s.indexOf(ourSeparator);
+			return i <= 0 ? Pair.create("", s) : Pair.create(s.substring(0, i), s.substring(i + 1));
+		}
+	}
 }

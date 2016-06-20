@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,64 +15,79 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.HashMap;
-import com.intellij.util.indexing.*;
-import com.intellij.util.io.DataExternalizer;
-import com.intellij.util.text.CharArrayUtil;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.containers.HashMap;
+import com.intellij.util.indexing.DataIndexer;
+import com.intellij.util.indexing.FileBasedIndex;
+import com.intellij.util.indexing.FileContent;
+import com.intellij.util.indexing.ID;
+import com.intellij.util.indexing.ScalarIndexExtension;
+import com.intellij.util.io.DataExternalizer;
+import com.intellij.util.text.CharArrayUtil;
+import com.intellij.xml.util.XmlUtil;
+
 /**
  * @author Dmitry Avdeev
  */
-public class XmlTagNamesIndex extends XmlIndex<Void> {
+public class XmlTagNamesIndex extends XmlIndex<Void>
+{
 
-  public static Collection<VirtualFile> getFilesByTagName(String tagName, final Project project) {
-    return FileBasedIndex.getInstance().getContainingFiles(NAME, tagName, createFilter(project));
-  }
+	public static Collection<VirtualFile> getFilesByTagName(String tagName, final Project project)
+	{
+		return FileBasedIndex.getInstance().getContainingFiles(NAME, tagName, createFilter(project));
+	}
 
-  public static Collection<String> getAllTagNames(Project project) {
-    return FileBasedIndex.getInstance().getAllKeys(NAME, project);
-  }
+	public static Collection<String> getAllTagNames(Project project)
+	{
+		return FileBasedIndex.getInstance().getAllKeys(NAME, project);
+	}
 
-  static final ID<String,Void> NAME = ID.create("XmlTagNames");
+	static final ID<String, Void> NAME = ID.create("XmlTagNames");
 
-  @Override
-  @NotNull
-  public ID<String, Void> getName() {
-    return NAME;
-  }
+	@Override
+	@NotNull
+	public ID<String, Void> getName()
+	{
+		return NAME;
+	}
 
-  @Override
-  @NotNull
-  public DataIndexer<String, Void, FileContent> getIndexer() {
-    return new DataIndexer<String, Void, FileContent>() {
-      @Override
-      @NotNull
-      public Map<String, Void> map(final FileContent inputData) {
-        final Collection<String> tags = XsdTagNameBuilder.computeTagNames(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
-        if (tags != null && !tags.isEmpty()) {
-          final HashMap<String, Void> map = new HashMap<String, Void>(tags.size());
-          for (String tag : tags) {
-            map.put(tag, null);
-          }
-          return map;
-        }
-        else {
-          return Collections.emptyMap();
-        }
-      }
-    };
-  }
+	@Override
+	@NotNull
+	public DataIndexer<String, Void, FileContent> getIndexer()
+	{
+		return new DataIndexer<String, Void, FileContent>()
+		{
+			@Override
+			@NotNull
+			public Map<String, Void> map(@NotNull final FileContent inputData)
+			{
+				CharSequence text = inputData.getContentAsText();
+				if(StringUtil.indexOf(text, XmlUtil.XML_SCHEMA_URI) == -1)
+				{
+					return Collections.emptyMap();
+				}
+				Collection<String> tags = XsdTagNameBuilder.computeTagNames(CharArrayUtil.readerFromCharSequence(text));
+				Map<String, Void> map = new HashMap<String, Void>(tags.size());
+				for(String tag : tags)
+				{
+					map.put(tag, null);
+				}
+				return map;
+			}
+		};
+	}
 
-  @Override
-  public DataExternalizer<Void> getValueExternalizer() {
-    return ScalarIndexExtension.VOID_DATA_EXTERNALIZER;
-  }
-
+	@NotNull
+	@Override
+	public DataExternalizer<Void> getValueExternalizer()
+	{
+		return ScalarIndexExtension.VOID_DATA_EXTERNALIZER;
+	}
 }
