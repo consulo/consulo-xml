@@ -20,40 +20,44 @@ import javax.swing.JPanel;
 import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
 import com.intellij.openapi.project.Project;
 
-public class XmlTagPanel extends AbstractInjectionPanel<XmlTagInjection> {
+public class XmlTagPanel extends AbstractInjectionPanel<XmlTagInjection>
+{
 
-  // read by reflection
-  LanguagePanel myLanguagePanel;
-  TagPanel myPanel;
-  AdvancedXmlPanel myAdvancedPanel;
+	// read by reflection
+	LanguagePanel myLanguagePanel;
+	TagPanel myPanel;
+	AdvancedXmlPanel myAdvancedPanel;
 
-  private JPanel myRoot;
+	private JPanel myRoot;
 
-  public XmlTagPanel(XmlTagInjection injection, Project project) {
-    super(injection, project);
-    $$$setupUI$$$(); // see IDEA-9987
+	public XmlTagPanel(XmlTagInjection injection, Project project)
+	{
+		super(injection, project);
+		init(injection.copy());
+	}
 
-    init(injection.copy());
-  }
+	@Override
+	protected void apply(XmlTagInjection other)
+	{
+		// nothing to do, TagPanel.apply() already does this
+	}
 
-  protected void apply(XmlTagInjection other) {
-    // nothing to do, TagPanel.apply() already does this
-  }
+	@Override
+	protected void resetImpl()
+	{
+		// same here^
+	}
 
-  protected void resetImpl() {
-    // same here^
-  }
+	@Override
+	public JPanel getComponent()
+	{
+		return myRoot;
+	}
 
-  public JPanel getComponent() {
-    return myRoot;
-  }
-
-  private void createUIComponents() {
-    myLanguagePanel = new LanguagePanel(myProject, myOrigInjection);
-    myPanel = new TagPanel(myProject, myOrigInjection);
-    myAdvancedPanel = new AdvancedXmlPanel(myProject, myOrigInjection);
-  }
-
-  private void $$$setupUI$$$() {
-  }
+	private void createUIComponents()
+	{
+		myLanguagePanel = new LanguagePanel(myProject, myOrigInjection);
+		myPanel = new TagPanel(myProject, myOrigInjection);
+		myAdvancedPanel = new AdvancedXmlPanel(myProject, myOrigInjection);
+	}
 }

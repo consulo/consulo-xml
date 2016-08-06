@@ -15,67 +15,81 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
+import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
+import org.intellij.plugins.intelliLang.inject.config.XPathSupportProxy;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
-import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
-import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
-import org.intellij.plugins.intelliLang.inject.config.XPathSupportProxy;
 
-import javax.swing.*;
+public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjection>
+{
 
-public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjection> {
+	private JPanel myRoot;
 
-  private JPanel myRoot;
+	private EditorTextField myValuePattern;
+	private EditorTextField myXPathCondition;
+	private JLabel myXPathConditionLabel;
+	private JCheckBox mySingleFileCheckBox;
 
-  private EditorTextField myValuePattern;
-  private EditorTextField myXPathCondition;
-  private JLabel myXPathConditionLabel;
-  private JCheckBox mySingleFileCheckBox;
+	public AdvancedXmlPanel(Project project, AbstractTagInjection injection)
+	{
+		super(injection, project);
+	}
 
-  public AdvancedXmlPanel(Project project, AbstractTagInjection injection) {
-    super(injection, project);
-    $$$setupUI$$$(); // see IDEA-9987
-  }
+	@Override
+	protected void apply(AbstractTagInjection other)
+	{
+		other.setValuePattern(myValuePattern.getText());
+		other.setSingleFile(mySingleFileCheckBox.isSelected());
+		other.setXPathCondition(myXPathCondition.getText());
+	}
 
-  protected void apply(AbstractTagInjection other) {
-    other.setValuePattern(myValuePattern.getText());
-    other.setSingleFile(mySingleFileCheckBox.isSelected());
-    other.setXPathCondition(myXPathCondition.getText());
-  }
+	@Override
+	protected void resetImpl()
+	{
+		myValuePattern.setText(myOrigInjection.getValuePattern());
+		mySingleFileCheckBox.setSelected(myOrigInjection.isSingleFile());
+		myXPathCondition.setText(myOrigInjection.getXPathCondition());
+	}
 
-  protected void resetImpl() {
-    myValuePattern.setText(myOrigInjection.getValuePattern());
-    mySingleFileCheckBox.setSelected(myOrigInjection.isSingleFile());
-    myXPathCondition.setText(myOrigInjection.getXPathCondition());
-  }
+	@Override
+	public JPanel getComponent()
+	{
+		return myRoot;
+	}
 
-  public JPanel getComponent() {
-    return myRoot;
-  }
+	private void createUIComponents()
+	{
+		myValuePattern = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), myProject, myOrigInjection.getValuePattern(), new LanguageTextField.SimpleDocumentCreator()
+		{
+			@Override
+			public void customizePsiFile(PsiFile psiFile)
+			{
+				psiFile.putCopyableUserData(ValueRegExpAnnotator.KEY, Boolean.TRUE);
+			}
+		});
 
-  private void createUIComponents() {
-    myValuePattern = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), myProject, myOrigInjection.getValuePattern(), new LanguageTextField.SimpleDocumentCreator() {
-      public void customizePsiFile(PsiFile psiFile) {
-        psiFile.putCopyableUserData(ValueRegExpAnnotator.KEY, Boolean.TRUE);
-      }
-    });
-
-    // don't even bother to look up the language when xpath-evaluation isn't possible
-    final XPathSupportProxy proxy = XPathSupportProxy.getInstance();
-    myXPathCondition = new LanguageTextField(proxy != null ? InjectedLanguage.findLanguageById("XPath") : null, myProject,
-                                             myOrigInjection.getXPathCondition(), new LanguageTextField.SimpleDocumentCreator() {
-        public void customizePsiFile(PsiFile psiFile) {
-          // important to get proper validation & completion for Jaxen's built-in and PSI functions
-          // like lower-case(), file-type(), file-ext(), file-name(), etc.
-          if (proxy != null) {
-            proxy.attachContext(psiFile);
-          }
-        }
-      });
-  }
-
-  private void $$$setupUI$$$() {
-  }
+		// don't even bother to look up the language when xpath-evaluation isn't possible
+		final XPathSupportProxy proxy = XPathSupportProxy.getInstance();
+		myXPathCondition = new LanguageTextField(proxy != null ? InjectedLanguage.findLanguageById("XPath") : null, myProject, myOrigInjection.getXPathCondition(),
+				new LanguageTextField.SimpleDocumentCreator()
+		{
+					@Override
+					public void customizePsiFile(PsiFile psiFile)
+			{
+				// important to get proper validation & completion for Jaxen's built-in and PSI functions
+				// like lower-case(), file-type(), file-ext(), file-name(), etc.
+				if(proxy != null)
+				{
+					proxy.attachContext(psiFile);
+				}
+			}
+		});
+	}
 }

@@ -15,16 +15,17 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
+import org.consulo.util.pointers.NamedPointer;
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguagePointerUtil;
-import org.consulo.util.pointers.NamedPointer;
 
 /**
  * @author VISTALL
  * @since 7:54/31.05.13
- *
+ * <p/>
  * IDE can be without org.intellij.lang.regexp.RegExpLanguage class, and it ill produce ClassNotFoundException
  */
-public class RegExpLanguageDelegate {
-  public static final NamedPointer<Language> RegExp = LanguagePointerUtil.createPointer("RegExp");
+public class RegExpLanguageDelegate
+{
+	public static final NamedPointer<Language> RegExp = LanguagePointerUtil.createPointer("RegExp");
 }
