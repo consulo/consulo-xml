@@ -53,9 +53,9 @@ public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjectio
 	@Override
 	protected void resetImpl()
 	{
-		myValuePattern.setText(myOrigInjection.getValuePattern());
-		mySingleFileCheckBox.setSelected(myOrigInjection.isSingleFile());
-		myXPathCondition.setText(myOrigInjection.getXPathCondition());
+		myValuePattern.setText(getOrigInjection().getValuePattern());
+		mySingleFileCheckBox.setSelected(getOrigInjection().isSingleFile());
+		myXPathCondition.setText(getOrigInjection().getXPathCondition());
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjectio
 
 	private void createUIComponents()
 	{
-		myValuePattern = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), myProject, myOrigInjection.getValuePattern(), new LanguageTextField.SimpleDocumentCreator()
+		myValuePattern = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), getProject(), getOrigInjection().getValuePattern(), new LanguageTextField.SimpleDocumentCreator()
 		{
 			@Override
 			public void customizePsiFile(PsiFile psiFile)
@@ -77,7 +77,7 @@ public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjectio
 
 		// don't even bother to look up the language when xpath-evaluation isn't possible
 		final XPathSupportProxy proxy = XPathSupportProxy.getInstance();
-		myXPathCondition = new LanguageTextField(proxy != null ? InjectedLanguage.findLanguageById("XPath") : null, myProject, myOrigInjection.getXPathCondition(),
+		myXPathCondition = new LanguageTextField(proxy != null ? InjectedLanguage.findLanguageById("XPath") : null, getProject(), getOrigInjection().getXPathCondition(),
 				new LanguageTextField.SimpleDocumentCreator()
 		{
 					@Override

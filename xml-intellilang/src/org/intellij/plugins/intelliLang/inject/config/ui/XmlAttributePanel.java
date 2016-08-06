@@ -57,8 +57,8 @@ public class XmlAttributePanel extends AbstractInjectionPanel<XmlAttributeInject
 	@Override
 	protected void resetImpl()
 	{
-		myLocalName.setText(myOrigInjection.getAttributeName());
-		myNamespace.getEditor().setItem(myOrigInjection.getAttributeNamespace());
+		myLocalName.setText(getOrigInjection().getAttributeName());
+		myNamespace.getEditor().setItem(getOrigInjection().getAttributeNamespace());
 	}
 
 	@Override
@@ -76,11 +76,11 @@ public class XmlAttributePanel extends AbstractInjectionPanel<XmlAttributeInject
 
 	private void createUIComponents()
 	{
-		myLanguagePanel = new LanguagePanel(myProject, myOrigInjection);
-		myTagPanel = new TagPanel(myProject, myOrigInjection);
-		myAdvancedPanel = new AdvancedXmlPanel(myProject, myOrigInjection);
+		myLanguagePanel = new LanguagePanel(getProject(), getOrigInjection());
+		myTagPanel = new TagPanel(getProject(), getOrigInjection());
+		myAdvancedPanel = new AdvancedXmlPanel(getProject(), getOrigInjection());
 
-		myLocalName = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), myProject, myOrigInjection.getAttributeName());
+		myLocalName = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), getProject(), getOrigInjection().getAttributeName());
 
 		myNamespace = new ComboBox(200);
 	}

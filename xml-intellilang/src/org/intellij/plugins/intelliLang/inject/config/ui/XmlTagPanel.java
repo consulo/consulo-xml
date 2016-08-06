@@ -56,8 +56,8 @@ public class XmlTagPanel extends AbstractInjectionPanel<XmlTagInjection>
 
 	private void createUIComponents()
 	{
-		myLanguagePanel = new LanguagePanel(myProject, myOrigInjection);
-		myPanel = new TagPanel(myProject, myOrigInjection);
-		myAdvancedPanel = new AdvancedXmlPanel(myProject, myOrigInjection);
+		myLanguagePanel = new LanguagePanel(getProject(), getOrigInjection());
+		myPanel = new TagPanel(getProject(), getOrigInjection());
+		myAdvancedPanel = new AdvancedXmlPanel(getProject(), getOrigInjection());
 	}
 }

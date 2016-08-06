@@ -53,7 +53,7 @@ public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection>
 	{
 		super(injection, project);
 
-		myNamespace.setModel(createNamespaceUriModel(myProject));
+		myNamespace.setModel(createNamespaceUriModel(getProject()));
 		myLocalName.getDocument().addDocumentListener(new TreeUpdateListener());
 	}
 
@@ -110,13 +110,13 @@ public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection>
 	@Override
 	protected void resetImpl()
 	{
-		myLocalName.setText(myOrigInjection.getTagName());
-		myNamespace.getEditor().setItem(myOrigInjection.getTagNamespace());
-		final boolean isXmlTag = myOrigInjection instanceof XmlTagInjection;
+		myLocalName.setText(getOrigInjection().getTagName());
+		myNamespace.getEditor().setItem(getOrigInjection().getTagNamespace());
+		final boolean isXmlTag = getOrigInjection() instanceof XmlTagInjection;
 		myApplyRecursivelyCheckBox.setVisible(isXmlTag);
 		if(isXmlTag)
 		{
-			myApplyRecursivelyCheckBox.setSelected(((XmlTagInjection) myOrigInjection).isApplyToSubTagTexts());
+			myApplyRecursivelyCheckBox.setSelected(((XmlTagInjection) getOrigInjection()).isApplyToSubTagTexts());
 		}
 	}
 
@@ -139,7 +139,7 @@ public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection>
 
 	private void createUIComponents()
 	{
-		myLocalName = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), myProject, myOrigInjection.getTagName());
+		myLocalName = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), getProject(), getOrigInjection().getTagName());
 		myNamespace = new ComboBox(200);
 	}
 }
