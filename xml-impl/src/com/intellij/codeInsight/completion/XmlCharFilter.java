@@ -90,6 +90,7 @@ public class XmlCharFilter extends CharFilter {
     switch(c){
       case '-':
       case ':':
+      case '?':
         return Result.ADD_TO_PREFIX;
       case '/':
         if (isWithinTag(lookup)) {
