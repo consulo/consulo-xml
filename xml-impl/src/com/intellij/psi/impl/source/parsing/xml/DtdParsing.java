@@ -16,7 +16,10 @@
 package com.intellij.psi.impl.source.parsing.xml;
 
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.lang.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LanguageParserDefinitions;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilderFactory;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.lexer.DtdLexer;
 import com.intellij.lexer._DtdLexer;
@@ -31,8 +34,8 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.util.LanguageVersionUtil;
 import com.intellij.xml.XmlBundle;
+import consulo.lang.util.LanguageVersionUtil;
 
 /**
  * @author Mike

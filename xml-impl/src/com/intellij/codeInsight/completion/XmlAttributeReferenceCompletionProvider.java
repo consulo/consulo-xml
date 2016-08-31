@@ -15,6 +15,10 @@
  */
 package com.intellij.codeInsight.completion;
 
+import static com.intellij.codeInsight.completion.CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.diagnostic.Logger;
@@ -32,16 +36,14 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import consulo.codeInsight.completion.CompletionProvider;
 
-import static com.intellij.codeInsight.completion.CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;
-
-public class XmlAttributeReferenceCompletionProvider extends CompletionProvider<CompletionParameters> {
+public class XmlAttributeReferenceCompletionProvider implements CompletionProvider
+{
   private static final Logger LOG = Logger.getInstance(XmlAttributeReferenceCompletionProvider.class);
 
   @Override
-  protected void addCompletions(@NotNull CompletionParameters parameters,
+  public void addCompletions(@NotNull CompletionParameters parameters,
                                 ProcessingContext context,
                                 @NotNull CompletionResultSet result) {
     PsiReference reference = parameters.getPosition().getContainingFile().findReferenceAt(parameters.getOffset());

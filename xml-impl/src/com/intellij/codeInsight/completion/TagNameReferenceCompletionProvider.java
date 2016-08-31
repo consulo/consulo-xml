@@ -15,6 +15,10 @@
  */
 package com.intellij.codeInsight.completion;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy;
 import com.intellij.codeInsight.lookup.LookupElement;
@@ -30,15 +34,13 @@ import com.intellij.util.Consumer;
 import com.intellij.util.PairConsumer;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlTagNameProvider;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
+import consulo.codeInsight.completion.CompletionProvider;
 
 /**
  * @author yole
  */
-public class TagNameReferenceCompletionProvider extends CompletionProvider<CompletionParameters> {
+public class TagNameReferenceCompletionProvider implements CompletionProvider
+{
   public static LookupElement[] getTagNameVariants(final @NotNull XmlTag tag, final String prefix) {
     List<LookupElement> elements = new ArrayList<LookupElement>();
     for (XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensions()) {
@@ -48,7 +50,7 @@ public class TagNameReferenceCompletionProvider extends CompletionProvider<Compl
   }
 
   @Override
-  protected void addCompletions(@NotNull CompletionParameters parameters,
+  public void addCompletions(@NotNull CompletionParameters parameters,
                                 ProcessingContext context,
                                 @NotNull final CompletionResultSet result) {
     LegacyCompletionContributor.processReferences(parameters, result, new PairConsumer<PsiReference, CompletionResultSet>() {

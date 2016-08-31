@@ -19,20 +19,21 @@ import static com.intellij.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.lang.ASTLeafFactory;
-import com.intellij.lang.LanguageVersion;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.xml.XmlTokenImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.xml.IXmlLeafElementType;
+import consulo.lang.LanguageVersion;
+import consulo.psi.tree.ASTLeafFactory;
 
 /**
  * @author VISTALL
  * @since 2:41/02.04.13
  */
-public class XmlASTLeafFactory implements ASTLeafFactory {
+public class XmlASTLeafFactory implements ASTLeafFactory
+{
 
   static {
     PsiBuilderImpl.registerWhitespaceToken(XML_REAL_WHITE_SPACE);

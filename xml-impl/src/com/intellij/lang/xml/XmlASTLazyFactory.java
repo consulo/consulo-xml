@@ -15,23 +15,27 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.lang.ASTLazyFactory;
+import static com.intellij.psi.xml.XmlElementType.DTD_FILE;
+import static com.intellij.psi.xml.XmlElementType.HTML_FILE;
+import static com.intellij.psi.xml.XmlElementType.XHTML_FILE;
+import static com.intellij.psi.xml.XmlElementType.XML_FILE;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.impl.source.tree.HtmlFileElement;
 import com.intellij.psi.impl.source.tree.LazyParseableElement;
 import com.intellij.psi.impl.source.tree.XmlFileElement;
 import com.intellij.psi.templateLanguages.TemplateDataElementType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.ILazyParseableElementType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import static com.intellij.psi.xml.XmlElementType.*;
+import consulo.psi.tree.ASTLazyFactory;
 
 /**
  * @author VISTALL
  * @since 2:39/02.04.13
  */
-public class XmlASTLazyFactory implements ASTLazyFactory {
+public class XmlASTLazyFactory implements ASTLazyFactory
+{
   @NotNull
   @Override
   public LazyParseableElement createLazy(ILazyParseableElementType type, CharSequence text) {

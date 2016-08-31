@@ -19,10 +19,14 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import com.intellij.lang.*;
+import com.intellij.lang.LanguageParserDefinitions;
+import com.intellij.lang.ParserDefinition;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilderFactory;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.html.HtmlParsing;
-import com.intellij.util.LanguageVersionUtil;
+import consulo.lang.LanguageVersion;
+import consulo.lang.util.LanguageVersionUtil;
 
 public class HtmlBuilderDriver extends XmlBuilderDriver {
   public HtmlBuilderDriver(final CharSequence text) {
@@ -36,7 +40,7 @@ public class HtmlBuilderDriver extends XmlBuilderDriver {
 
     LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE);
     PsiBuilder b = PsiBuilderFactory.getInstance()
-      .createBuilder(htmlParserDef, htmlParserDef.createLexer(null, defaultVersion), defaultVersion, getText());
+      .createBuilder(htmlParserDef, htmlParserDef.createLexer(defaultVersion), defaultVersion, getText());
     new HtmlParsing(b).parseDocument();
     return b;
   }

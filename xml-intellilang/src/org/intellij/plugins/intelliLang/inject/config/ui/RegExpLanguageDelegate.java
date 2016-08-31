@@ -15,9 +15,9 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import org.consulo.util.pointers.NamedPointer;
 import com.intellij.lang.Language;
-import com.intellij.lang.LanguagePointerUtil;
+import consulo.lang.LanguagePointerUtil;
+import consulo.util.pointers.NamedPointer;
 
 /**
  * @author VISTALL

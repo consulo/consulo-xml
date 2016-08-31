@@ -23,8 +23,8 @@ import com.intellij.psi.impl.cache.impl.OccurrenceConsumer;
 import com.intellij.psi.search.UsageSearchContext;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
-import com.intellij.util.LanguageVersionUtil;
 import com.intellij.util.codeInsight.CommentUtilCore;
+import consulo.lang.util.LanguageVersionUtil;
 
 public class XHtmlFilterLexer extends BaseFilterLexer {
 

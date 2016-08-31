@@ -15,19 +15,17 @@
  */
 package com.intellij.lang.xhtml;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.LanguageVersion;
 import com.intellij.lang.xml.XMLParserDefinition;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlLexer;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.xml.XmlElementType;
-import com.intellij.util.LanguageVersionUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import consulo.lang.LanguageVersion;
+import consulo.lang.util.LanguageVersionUtil;
 
 /**
  * @author max
@@ -36,13 +34,13 @@ public class XHTMLParserDefinition extends XMLParserDefinition {
 
   @Override
   @NotNull
-  public Lexer createLexer(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
+  public Lexer createLexer(@NotNull LanguageVersion languageVersion) {
     return new XHtmlLexer();
   }
 
   @Override
   public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    final Lexer lexer = createLexer(null, LanguageVersionUtil.findDefaultVersion(XHTMLLanguage.INSTANCE));
+    final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XHTMLLanguage.INSTANCE));
     return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
   }
 

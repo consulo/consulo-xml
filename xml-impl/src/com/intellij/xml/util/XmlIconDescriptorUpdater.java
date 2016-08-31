@@ -15,20 +15,21 @@
  */
 package com.intellij.xml.util;
 
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IconDescriptor;
-import com.intellij.ide.IconDescriptorUpdater;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import consulo.ide.IconDescriptor;
+import consulo.ide.IconDescriptorUpdater;
 
 /**
  * @author VISTALL
  * @since 22:47/19.07.13
  */
-public class XmlIconDescriptorUpdater implements IconDescriptorUpdater {
+public class XmlIconDescriptorUpdater implements IconDescriptorUpdater
+{
   @NonNls
   private static final String XSD_FILE_EXTENSION = "xsd";
   @NonNls

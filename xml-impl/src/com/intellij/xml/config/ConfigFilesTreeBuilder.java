@@ -15,12 +15,26 @@
  */
 package com.intellij.xml.config;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.Icon;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IconDescriptorUpdaters;
 import com.intellij.ide.presentation.VirtualFilePresentation;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.ColoredTreeCellRenderer;
@@ -28,13 +42,8 @@ import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.TreeSpeedSearch;
 import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-import java.util.*;
+import consulo.ide.IconDescriptorUpdaters;
+import consulo.vfs.ArchiveFileSystem;
 
 public class ConfigFilesTreeBuilder {
 
@@ -188,9 +197,9 @@ public class ConfigFilesTreeBuilder {
       final VirtualFile virtualFile = psiFile.getVirtualFile();
       if (virtualFile != null) {
         String path = virtualFile.getPath();
-        final int i = path.indexOf(JarFileSystem.JAR_SEPARATOR);
+        final int i = path.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);
         if (i >= 0) {
-          path = path.substring(i + JarFileSystem.JAR_SEPARATOR.length());
+          path = path.substring(i + ArchiveFileSystem.ARCHIVE_SEPARATOR.length());
         }
         renderer.append(" (" + path + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
       }
@@ -200,9 +209,9 @@ public class ConfigFilesTreeBuilder {
       renderer.setIcon(VirtualFilePresentation.getIcon(file));
       renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
       String path = file.getPath();
-      final int i = path.indexOf(JarFileSystem.JAR_SEPARATOR);
+      final int i = path.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);
       if (i >= 0) {
-        path = path.substring(i + JarFileSystem.JAR_SEPARATOR.length());
+        path = path.substring(i + ArchiveFileSystem.ARCHIVE_SEPARATOR.length());
       }
       renderer.append(" (" + path + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
     }

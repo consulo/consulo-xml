@@ -15,19 +15,20 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.ide.IconDescriptor;
-import com.intellij.ide.IconDescriptorUpdater;
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
+import consulo.ide.IconDescriptor;
+import consulo.ide.IconDescriptorUpdater;
 
 /**
  * @author VISTALL
  * @since 1:16/19.07.13
  */
-public class DomIconDescriptorUpdater implements IconDescriptorUpdater {
+public class DomIconDescriptorUpdater implements IconDescriptorUpdater
+{
   @Override
   public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int flags) {
     if (element instanceof XmlFile) {

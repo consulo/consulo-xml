@@ -25,7 +25,6 @@ package com.intellij.xml.breadcrumbs;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mustbe.consulo.RequiredReadAction;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
@@ -33,6 +32,7 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import consulo.annotations.RequiredReadAction;
 
 public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider
 {

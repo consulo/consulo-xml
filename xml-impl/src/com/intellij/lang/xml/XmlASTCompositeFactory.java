@@ -15,7 +15,10 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.lang.ASTCompositeFactory;
+import static com.intellij.psi.xml.XmlElementType.*;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.impl.source.html.HtmlDocumentImpl;
 import com.intellij.psi.impl.source.html.HtmlTagImpl;
 import com.intellij.psi.impl.source.tree.CompositeElement;
@@ -24,16 +27,14 @@ import com.intellij.psi.impl.source.tree.XmlFileElement;
 import com.intellij.psi.impl.source.xml.*;
 import com.intellij.psi.templateLanguages.TemplateDataElementType;
 import com.intellij.psi.tree.IElementType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import static com.intellij.psi.xml.XmlElementType.*;
+import consulo.psi.tree.ASTCompositeFactory;
 
 /**
  * @author VISTALL
  * @since 2:41/02.04.13
  */
-public class XmlASTCompositeFactory implements ASTCompositeFactory {
+public class XmlASTCompositeFactory implements ASTCompositeFactory
+{
   @NotNull
   @Override
   public CompositeElement createComposite(IElementType type) {

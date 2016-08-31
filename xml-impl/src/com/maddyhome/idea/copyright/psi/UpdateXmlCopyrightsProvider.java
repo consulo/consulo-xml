@@ -18,7 +18,6 @@ package com.maddyhome.idea.copyright.psi;
 import javax.swing.JPanel;
 
 import org.jetbrains.annotations.NotNull;
-import org.mustbe.consulo.copyright.config.CopyrightFileConfig;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
@@ -34,6 +33,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.HtmlUtil;
 import com.maddyhome.idea.copyright.CopyrightProfile;
 import com.maddyhome.idea.copyright.ui.TemplateCommentPanel;
+import consulo.copyright.config.CopyrightFileConfig;
 
 /**
  * User: anna

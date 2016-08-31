@@ -16,9 +16,9 @@
 package com.intellij.codeInsight.editorActions.moveLeftRight;
 
 import org.jetbrains.annotations.NotNull;
-import org.mustbe.consulo.RequiredReadAction;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
+import consulo.annotations.RequiredReadAction;
 
 public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler
 {

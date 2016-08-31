@@ -15,10 +15,12 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.lang.*;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.ParserDefinition;
+import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XmlLexer;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -29,9 +31,8 @@ import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.LanguageVersionUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import consulo.lang.LanguageVersion;
+import consulo.lang.util.LanguageVersionUtil;
 
 /**
  * @author max
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 public class XMLParserDefinition implements ParserDefinition {
   @Override
   @NotNull
-  public Lexer createLexer(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
+  public Lexer createLexer(@NotNull LanguageVersion languageVersion) {
     return new XmlLexer();
   }
 
@@ -69,7 +70,7 @@ public class XMLParserDefinition implements ParserDefinition {
 
   @Override
   @NotNull
-  public PsiParser createParser(@NotNull Project project, @NotNull LanguageVersion languageVersion) {
+  public PsiParser createParser(@NotNull LanguageVersion languageVersion) {
     return new XmlParser();
   }
 
@@ -86,7 +87,7 @@ public class XMLParserDefinition implements ParserDefinition {
 
   @Override
   public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    final Lexer lexer = createLexer(null, LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE));
+    final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE));
     return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
   }
 

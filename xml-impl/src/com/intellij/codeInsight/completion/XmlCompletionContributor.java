@@ -15,6 +15,16 @@
  */
 package com.intellij.codeInsight.completion;
 
+import static com.intellij.patterns.PlatformPatterns.psiElement;
+
+import gnu.trove.THashSet;
+
+import java.util.List;
+import java.util.Set;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.lookup.InsertHandlerDecorator;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -39,15 +49,7 @@ import com.intellij.util.Consumer;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlExtension;
-import gnu.trove.THashSet;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.Set;
-
-import static com.intellij.patterns.PlatformPatterns.psiElement;
+import consulo.codeInsight.completion.CompletionProvider;
 
 /**
  * @author Dmitry Avdeev
@@ -81,9 +83,9 @@ public class XmlCompletionContributor extends CompletionContributor {
   public XmlCompletionContributor() {
     extend(CompletionType.BASIC,
            psiElement().inside(XmlPatterns.xmlAttributeValue()),
-           new CompletionProvider<CompletionParameters>() {
+           new CompletionProvider() {
              @Override
-             protected void addCompletions(@NotNull CompletionParameters parameters,
+             public void addCompletions(@NotNull CompletionParameters parameters,
                                            ProcessingContext context,
                                            @NotNull final CompletionResultSet result) {
                final XmlAttributeValue attributeValue = PsiTreeUtil.getParentOfType(parameters.getPosition(), XmlAttributeValue.class, false);

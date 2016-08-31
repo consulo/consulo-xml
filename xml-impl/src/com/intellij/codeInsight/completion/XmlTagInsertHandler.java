@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.jetbrains.annotations.Nullable;
-import org.mustbe.consulo.RequiredDispatchThread;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.Lookup;
@@ -63,6 +62,7 @@ import com.intellij.xml.actions.GenerateXmlTagAction;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotations.RequiredDispatchThread;
 
 public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 {

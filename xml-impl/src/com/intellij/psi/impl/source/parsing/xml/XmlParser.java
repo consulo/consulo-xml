@@ -19,7 +19,12 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import com.intellij.lang.*;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LighterASTNode;
+import com.intellij.lang.LighterASTTokenNode;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiParser;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.tree.IElementType;
@@ -30,7 +35,7 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.ThreeState;
 import com.intellij.util.TripleFunction;
 import com.intellij.util.diff.FlyweightCapableTreeStructure;
-import org.jetbrains.annotations.NotNull;
+import consulo.lang.LanguageVersion;
 
 public class XmlParser implements PsiParser {
   // tries to match an old and new XmlTag by name

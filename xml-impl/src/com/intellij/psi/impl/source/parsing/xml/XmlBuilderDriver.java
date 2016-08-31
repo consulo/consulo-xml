@@ -19,7 +19,13 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import com.intellij.lang.*;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.lang.LanguageParserDefinitions;
+import com.intellij.lang.LighterASTNode;
+import com.intellij.lang.ParserDefinition;
+import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilderFactory;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.util.Comparing;
@@ -29,12 +35,11 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.LanguageVersionUtil;
 import com.intellij.util.containers.Stack;
 import com.intellij.util.diff.FlyweightCapableTreeStructure;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import consulo.lang.LanguageVersion;
+import consulo.lang.util.LanguageVersionUtil;
 
 public class XmlBuilderDriver {
   private final Stack<String> myNamespacesStack = new Stack<String>();
@@ -139,7 +144,7 @@ public class XmlBuilderDriver {
     assert xmlParserDefinition != null;
 
     LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE);
-    PsiBuilder b = PsiBuilderFactory.getInstance().createBuilder(xmlParserDefinition, xmlParserDefinition.createLexer(null, defaultVersion),
+    PsiBuilder b = PsiBuilderFactory.getInstance().createBuilder(xmlParserDefinition, xmlParserDefinition.createLexer(defaultVersion),
                                                                  defaultVersion, myText);
     new XmlParsing(b).parseDocument();
     return b;

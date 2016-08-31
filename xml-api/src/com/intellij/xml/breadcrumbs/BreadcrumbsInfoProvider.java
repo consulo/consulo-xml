@@ -24,12 +24,11 @@ package com.intellij.xml.breadcrumbs;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mustbe.consulo.RequiredReadAction;
 import com.intellij.lang.Language;
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
+import consulo.annotations.RequiredReadAction;
 
 public abstract class BreadcrumbsInfoProvider
 {

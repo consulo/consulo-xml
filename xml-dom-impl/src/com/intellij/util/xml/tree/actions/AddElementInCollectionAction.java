@@ -16,7 +16,14 @@
 
 package com.intellij.util.xml.tree.actions;
 
-import com.intellij.ide.IconDescriptorUpdaters;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import javax.swing.Icon;
+import javax.swing.JComponent;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -36,12 +43,7 @@ import com.intellij.util.xml.tree.DomElementsGroupNode;
 import com.intellij.util.xml.tree.DomModelTreeView;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.lang.reflect.Type;
-import java.util.List;
+import consulo.ide.IconDescriptorUpdaters;
 
 /**
  * User: Sergey.Vasiliev

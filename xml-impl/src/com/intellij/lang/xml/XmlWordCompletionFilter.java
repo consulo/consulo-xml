@@ -20,11 +20,11 @@
 package com.intellij.lang.xml;
 
 import com.intellij.lang.DefaultWordCompletionFilter;
-import com.intellij.lang.LanguageVersion;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.lang.LanguageVersion;
 
 public class XmlWordCompletionFilter extends DefaultWordCompletionFilter {
   private final static TokenSet ENABLED_TOKENS = TokenSet.create(XmlElementType.XML_CDATA,
