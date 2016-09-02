@@ -78,7 +78,7 @@
       </module>
       <module name="xml-intellilang" dirurl="file://$PROJECT_DIR$/xml-intellilang" current-layer="Default">
         <module-layer name="Default">
-          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="file://$MODULE_DIR$/../dep" />
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
           <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
@@ -88,18 +88,12 @@
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
           <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
-          <orderEntry type="module-library">
-            <library name="consulo:IntelliLang">
-              <binaries>
-                <root url="jar://$MODULE_DIR$/../dep/intelliLang/lib/intelliLang.jar!/" />
-              </binaries>
-            </library>
-          </orderEntry>
+          <orderEntry type="library" name="consulo-plugin: org.intellij.intelliLang" level="project" />
         </module-layer>
       </module>
       <module name="xml-spellchecker" dirurl="file://$PROJECT_DIR$/xml-spellchecker" current-layer="Default">
         <module-layer name="Default">
-          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" custom-plugin-dir-url="F:\github.com\consulo\consulo-xml\dep" />
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" sdk-name="" />
           <extension id="java" sdk-module-name="consulo-xml" sdk-name="" language-level-module-name="consulo-xml" language-level-name="" special-dir-location="SOURCE_DIR" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
@@ -108,14 +102,8 @@
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
           <orderEntry type="sourceFolder" />
           <orderEntry type="module" module-name="xml-impl" />
-          <orderEntry type="module-library">
-            <library name="consulo:Spellchecker">
-              <binaries>
-                <root url="jar://$MODULE_DIR$/../dep/spellchecker/lib/spellchecker.jar!/" />
-              </binaries>
-            </library>
-          </orderEntry>
           <orderEntry type="module" module-name="xml-dom-impl" />
+          <orderEntry type="library" name="consulo-plugin: com.intellij.spellchecker" level="project" />
         </module-layer>
       </module>
     </modules>
