@@ -592,8 +592,11 @@
 		<definitionsScopedSearch implementation="com.intellij.xml.impl.schema.SchemaDefinitionsSearch"/>
 
 
-		<projectConfigurable instance="com.intellij.javaee.ExternalResourceConfigurable" key="display.name.edit.external.resource"
-							 bundle="messages.XmlBundle" id="preferences.externalResources">
+		<projectConfigurable instance="com.intellij.javaee.ExternalResourceConfigurable"
+							 key="display.name.edit.external.resource"
+							 bundle="messages.XmlBundle"
+							 parentId="editor"
+							 id="preferences.externalResources">
 			<configurable instance="com.intellij.javaee.XMLCatalogConfigurable" displayName="XML Catalog" id="xml.catalog"/>
 		</projectConfigurable>
 
@@ -605,8 +608,11 @@
 
 		<urlOpener implementation="com.intellij.ide.browsers.impl.DefaultUrlOpener" order="last"/>
 
-		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings" id="reference.settings.ide.settings.web.browsers"
-								 key="browsers.settings" bundle="messages.IdeBundle"/>
+		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings"
+								 id="reference.settings.ide.settings.web.browsers"
+								 parentId="general"
+								 key="browsers.settings"
+								 bundle="messages.IdeBundle"/>
 
 		<lang.syntaxHighlighterFactory key="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
