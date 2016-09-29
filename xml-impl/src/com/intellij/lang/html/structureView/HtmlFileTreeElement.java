@@ -15,20 +15,24 @@
  */
 package com.intellij.lang.html.structureView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.structureView.StructureViewFactoryEx;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
-import com.intellij.ide.util.FileStructurePopup;
 import com.intellij.ide.util.PropertiesComponent;
+import com.intellij.ide.util.treeView.smartTree.TreeStructureUtil;
 import com.intellij.psi.filters.XmlTagFilter;
 import com.intellij.psi.scope.processor.FilterElementProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
 
 class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
 
@@ -85,7 +89,7 @@ class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
     if (xmlFile == null) return false;
 
     if (myInStructureViewPopup) {
-      final String propertyName = FileStructurePopup.getPropertyName(Html5SectionsNodeProvider.HTML5_OUTLINE_PROVIDER_PROPERTY);
+      final String propertyName = TreeStructureUtil.getPropertyName(Html5SectionsNodeProvider.HTML5_OUTLINE_PROVIDER_PROPERTY);
       if (PropertiesComponent.getInstance().getBoolean(propertyName, false)) {
         return true;
       }
