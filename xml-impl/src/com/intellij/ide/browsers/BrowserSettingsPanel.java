@@ -385,7 +385,7 @@ final class BrowserSettingsPanel
 			return true;
 		}
 
-		return browsersEditor.isModified(browserManager.getList());
+		return browsersEditor.isModified();
 	}
 
 	public void apply()
