@@ -15,19 +15,32 @@
  */
 package com.intellij.util.xml.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.javaee.web.PsiReferenceConverter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.*;
+import com.intellij.psi.ElementManipulators;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLanguageInjectionHost;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.PsiReferenceFactory;
+import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import com.intellij.util.ProcessingContext;
-import com.intellij.util.ReflectionCache;
+import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
 
 /**
  * @author peter
@@ -137,7 +150,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
     final Class clazz = DomUtil.getGenericValueParameter(invocationHandler.getDomElementType());
     if (clazz == null) return PsiReference.EMPTY_ARRAY;
 
-    if (ReflectionCache.isAssignable(Integer.class, clazz)) {
+    if (ReflectionUtil.isAssignable(Integer.class, clazz)) {
       return new PsiReference[]{new GenericDomValueReference<Integer>((GenericDomValue<Integer>)domValue) {
         @NotNull
         public Object[] getVariants() {
@@ -145,7 +158,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
         }
       }};
     }
-    if (ReflectionCache.isAssignable(String.class, clazz)) {
+    if (ReflectionUtil.isAssignable(String.class, clazz)) {
       return PsiReference.EMPTY_ARRAY;
     }
     PsiReferenceFactory provider = myProviders.get(clazz);

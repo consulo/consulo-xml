@@ -19,7 +19,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.XmlTextFilter;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ReflectionCache;
+import com.intellij.util.ReflectionUtil;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,7 +38,7 @@ public class TargetNamespaceFilter extends XmlTextFilter {
   }
 
   public boolean isClassAcceptable(Class hintClass){
-    return ReflectionCache.isAssignable(XmlTag.class, hintClass) || ReflectionCache.isAssignable(XmlDocument.class, hintClass);
+    return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
   }
 
   public boolean isAcceptable(Object element, PsiElement context){

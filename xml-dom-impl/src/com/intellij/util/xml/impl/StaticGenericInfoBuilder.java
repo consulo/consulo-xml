@@ -15,26 +15,30 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.MultiValuesMap;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ReflectionCache;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.FactoryMap;
-import com.intellij.util.xml.*;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 import gnu.trove.TIntObjectHashMap;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.MultiValuesMap;
+import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.util.ReflectionUtil;
+import com.intellij.util.SmartList;
+import com.intellij.util.containers.FactoryMap;
+import com.intellij.util.xml.*;
 
 /**
  * @author peter
@@ -68,7 +72,7 @@ public class StaticGenericInfoBuilder {
 
     final Set<JavaMethod> methods = new THashSet<JavaMethod>();
     InvocationCache invocationCache = DomApplicationComponent.getInstance().getInvocationCache(myClass);
-    for (final Method method : ReflectionCache.getMethods(myClass)) {
+    for (final Method method : ReflectionUtil.getClassPublicMethods(myClass)) {
       methods.add(invocationCache.getInternedMethod(method));
     }
     for (final JavaMethod method : methods) {
@@ -81,7 +85,7 @@ public class StaticGenericInfoBuilder {
     {
       final Class implClass = DomApplicationComponent.getInstance().getImplementation(myClass);
       if (implClass != null) {
-        for (Method method : ReflectionCache.getMethods(implClass)) {
+        for (Method method : ReflectionUtil.getClassPublicMethods(implClass)) {
           final int modifiers = method.getModifiers();
           if (!Modifier.isAbstract(modifiers) &&
               !Modifier.isVolatile(modifiers) &&

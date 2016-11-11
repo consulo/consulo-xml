@@ -15,12 +15,16 @@
  */
 package com.intellij.psi.filters.position;
 
-import com.intellij.psi.filters.ElementFilter;
+import org.jetbrains.annotations.NonNls;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.*;
-import com.intellij.util.ReflectionCache;
-import org.jetbrains.annotations.NonNls;
+import com.intellij.psi.filters.ElementFilter;
+import com.intellij.psi.xml.XmlDoctype;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlProlog;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.util.ReflectionUtil;
 
 public class NamespaceFilter implements ElementFilter {
   private final String[] myNamespaces;
@@ -30,7 +34,7 @@ public class NamespaceFilter implements ElementFilter {
   }
 
   public boolean isClassAcceptable(Class hintClass){
-    return ReflectionCache.isAssignable(XmlTag.class, hintClass) || ReflectionCache.isAssignable(XmlDocument.class, hintClass);
+    return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
   }
 
   public boolean isAcceptable(Object element, PsiElement context){

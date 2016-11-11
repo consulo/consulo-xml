@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.util.ReflectionCache;
+import java.lang.reflect.Method;
+
+import org.jetbrains.annotations.NonNls;
+import com.intellij.util.ReflectionUtil;
 import com.intellij.util.containers.ConcurrentClassMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomReflectionUtil;
-import org.jetbrains.annotations.NonNls;
-
-import java.lang.reflect.Method;
 
 /**
  * @author peter
@@ -34,13 +34,13 @@ public class VisitorDescription {
 
   public VisitorDescription(final Class<? extends DomElementVisitor> visitorClass) {
     myVisitorClass = visitorClass;
-    for (final Method method : ReflectionCache.getMethods(visitorClass)) {
+    for (final Method method : ReflectionUtil.getClassPublicMethods(visitorClass)) {
       final Class<?>[] parameterTypes = method.getParameterTypes();
       if (parameterTypes.length != 1) {
         continue;
       }
       final Class<?> domClass = parameterTypes[0];
-      if (!ReflectionCache.isAssignable(DomElement.class, domClass)) {
+      if (!ReflectionUtil.isAssignable(DomElement.class, domClass)) {
         continue;
       }
       final String methodName = method.getName();

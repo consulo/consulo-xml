@@ -100,7 +100,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
     final Class<?> rawType = getRawType();
     myInvocationCache = manager.getApplicationComponent().getInvocationCache(rawType);
     Class<? extends DomElement> implementation = manager.getApplicationComponent().getImplementation(rawType);
-    final boolean isInterface = ReflectionCache.isInterface(rawType);
+    final boolean isInterface = rawType.isInterface();
     if (implementation == null && !isInterface) {
       implementation = (Class<? extends DomElement>)rawType;
     }
@@ -686,7 +686,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
   }
 
   public final String toString() {
-    if (ReflectionCache.isAssignable(GenericValue.class, getRawType())) {
+    if (ReflectionUtil.isAssignable(GenericValue.class, getRawType())) {
       return ((GenericValue)getProxy()).getStringValue();
     }
     return myType.toString() + " @" + hashCode();

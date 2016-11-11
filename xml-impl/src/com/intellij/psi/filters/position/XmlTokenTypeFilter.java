@@ -20,7 +20,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.ReflectionCache;
+import com.intellij.util.ReflectionUtil;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,7 +39,7 @@ public class XmlTokenTypeFilter implements ElementFilter{
   }
 
   public boolean isClassAcceptable(Class hintClass){
-    return ReflectionCache.isAssignable(XmlToken.class, hintClass);
+    return ReflectionUtil.isAssignable(XmlToken.class, hintClass);
   }
 
   public boolean isAcceptable(Object element, PsiElement context){

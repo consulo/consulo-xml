@@ -15,14 +15,15 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ReflectionCache;
-import com.intellij.util.ReflectionUtil;
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+import com.intellij.util.ArrayUtil;
+import com.intellij.util.ReflectionUtil;
 
 /**
  * @author peter
@@ -47,7 +48,7 @@ public class JavaMethodSignature {
   @Nullable
   public final Method findMethod(final Class aClass) {
     Method method = getDeclaredMethod(aClass);
-    if (method == null && ReflectionCache.isInterface(aClass)) {
+    if (method == null && aClass.isInterface()) {
       method = getDeclaredMethod(Object.class);
     }
     return method;
@@ -90,7 +91,7 @@ public class JavaMethodSignature {
   public final <T extends Annotation> Method findAnnotatedMethod(final Class<T> annotationClass, final Class startFrom) {
     for (Method method : getAllMethods(startFrom)) {
       final T annotation = method.getAnnotation(annotationClass);
-      if (annotation != null && ReflectionCache.isAssignable(method.getDeclaringClass(), startFrom)) {
+      if (annotation != null && ReflectionUtil.isAssignable(method.getDeclaringClass(), startFrom)) {
         return method;
       }
     }

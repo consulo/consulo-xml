@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionCache;
 import com.intellij.openapi.util.Comparing;
+import com.intellij.util.Function;
+import com.intellij.util.ReflectionUtil;
 
 /**
  * @author peter
@@ -47,7 +47,7 @@ public class NamedEnumUtil {
   }
 
   private static <T extends Enum> Function<Enum, String> getShow(final Class<T> enumClass) {
-    return ReflectionCache.isAssignable(NamedEnum.class, enumClass) ? NAMED_SHOW : SIMPLE_SHOW;
+    return ReflectionUtil.isAssignable(NamedEnum.class, enumClass) ? NAMED_SHOW : SIMPLE_SHOW;
   }
 
   public static <T extends Enum> String getEnumValueByElement(final T element) {

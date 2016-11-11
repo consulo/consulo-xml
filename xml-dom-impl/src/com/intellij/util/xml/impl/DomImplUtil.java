@@ -15,6 +15,20 @@
  */
 package com.intellij.util.xml.impl;
 
+import gnu.trove.THashSet;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.text.StringUtil;
@@ -23,20 +37,11 @@ import com.intellij.psi.PsiInvalidElementAccessException;
 import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ReflectionCache;
+import com.intellij.util.ReflectionUtil;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
-import gnu.trove.THashSet;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.lang.reflect.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author peter
@@ -77,9 +82,9 @@ public class DomImplUtil {
       if (method.getAnnotation(SubTag.class) != null) return false;
       if (method.getAnnotation(SubTagList.class) != null) return false;
       if (method.getAnnotation(Convert.class) != null || method.getAnnotation(Resolve.class) != null) {
-        return !ReflectionCache.isAssignable(GenericDomValue.class, method.getReturnType());
+        return !ReflectionUtil.isAssignable(GenericDomValue.class, method.getReturnType());
       }
-      if (ReflectionCache.isAssignable(DomElement.class, method.getReturnType())) return false;
+      if (ReflectionUtil.isAssignable(DomElement.class, method.getReturnType())) return false;
       return true;
     }
     return false;

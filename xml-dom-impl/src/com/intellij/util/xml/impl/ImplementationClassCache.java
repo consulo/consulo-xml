@@ -15,21 +15,20 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.Disposable;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.ReflectionCache;
-import com.intellij.util.containers.MultiMap;
-import com.intellij.util.xml.DomReflectionUtil;
-import com.intellij.util.xml.Implementation;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.Disposable;
+import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.util.Disposer;
+import com.intellij.util.NotNullFunction;
+import com.intellij.util.containers.MultiMap;
+import com.intellij.util.xml.DomReflectionUtil;
+import com.intellij.util.xml.Implementation;
 
 /**
  * @author peter
@@ -78,7 +77,7 @@ class ImplementationClassCache {
         return;
       }
     }
-    for (final Class aClass1 : ReflectionCache.getInterfaces(concreteInterface)) {
+    for (final Class aClass1 : concreteInterface.getInterfaces()) {
       findImplementationClassDFS(aClass1, results);
     }
   }

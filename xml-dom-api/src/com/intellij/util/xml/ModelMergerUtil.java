@@ -15,13 +15,18 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.util.Processor;
-import com.intellij.util.CommonProcessors;import com.intellij.util.ReflectionCache;
-import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import java.util.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.util.CommonProcessors;
+import com.intellij.util.Processor;
+import com.intellij.util.ReflectionUtil;
+import com.intellij.util.containers.ContainerUtil;
 
 /**
  * @author peter
@@ -59,7 +64,7 @@ public class ModelMergerUtil {
     if (element == null) return null;
     CommonProcessors.FindFirstProcessor<T> processor = new CommonProcessors.FindFirstProcessor<T>() {
       public boolean process(final T t) {
-        return !ReflectionCache.isAssignable(clazz, t.getClass()) || super.process(t);
+        return !ReflectionUtil.isAssignable(clazz, t.getClass()) || super.process(t);
       }
     };
     new ImplementationProcessor<T>(processor, true).process(element);
@@ -71,7 +76,7 @@ public class ModelMergerUtil {
     if (element == null) return Collections.emptyList();
     CommonProcessors.CollectProcessor<T> processor = new CommonProcessors.CollectProcessor<T>() {
       public boolean process(final T t) {
-        return !ReflectionCache.isAssignable(clazz, t.getClass()) || super.process(t);
+        return !ReflectionUtil.isAssignable(clazz, t.getClass()) || super.process(t);
       }
     };
     new ImplementationProcessor<T>(processor, true).process(element);
