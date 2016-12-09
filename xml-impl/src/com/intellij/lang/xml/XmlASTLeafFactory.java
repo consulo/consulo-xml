@@ -41,7 +41,7 @@ public class XmlASTLeafFactory implements ASTLeafFactory
 
   @NotNull
   @Override
-  public LeafElement createLeaf(@NotNull IElementType type, @NotNull LanguageVersion<?> languageVersion, @NotNull CharSequence text) {
+  public LeafElement createLeaf(@NotNull IElementType type, @NotNull LanguageVersion languageVersion, @NotNull CharSequence text) {
     if (type instanceof IXmlLeafElementType) {
       if (type == XML_REAL_WHITE_SPACE) {
         return new PsiWhiteSpaceImpl(text);
