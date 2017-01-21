@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2011 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package com.intellij.html.impl;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
@@ -24,31 +26,33 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor {
-  public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag) {
-    XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
+public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor
+{
+	@Override
+	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
+	{
+		XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
-    String namespace;
-    if (elementDescriptor == null && 
-        !((namespace = tag.getNamespace()).equals(XmlUtil.XHTML_URI))) {
-      return new AnyXmlElementDescriptor(
-        null, 
-        XmlUtil.HTML_URI.equals(namespace) ? this : tag.getNSDescriptor(tag.getNamespace(), true)
-      );
-    }
+		String namespace;
+		if(elementDescriptor == null && !((namespace = tag.getNamespace()).equals(XmlUtil.XHTML_URI)))
+		{
+			return new AnyXmlElementDescriptor(null, XmlUtil.HTML_URI.equals(namespace) ? this : tag.getNSDescriptor(tag.getNamespace(), true));
+		}
 
-    return elementDescriptor;
-  }
+		return elementDescriptor;
+	}
 
-  protected XmlElementDescriptor createElementDescriptor(final XmlTag tag) {
-    return new RelaxedHtmlFromSchemaElementDescriptor(tag);
-  }
+	@Override
+	protected XmlElementDescriptor createElementDescriptor(final XmlTag tag)
+	{
+		return new RelaxedHtmlFromSchemaElementDescriptor(tag);
+	}
 
-  @NotNull
-  public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
-    return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));
-  }
+	@Override
+	@NotNull
+	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc)
+	{
+		return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));
+	}
 }

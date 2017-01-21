@@ -15,98 +15,134 @@
  */
 package com.intellij.psi.xml;
 
+import java.util.Map;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 /**
  * @author Mike
  */
-public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTagChild {
-  XmlTag[] EMPTY = new XmlTag[0];
+public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTagChild
+{
+	XmlTag[] EMPTY = new XmlTag[0];
 
-  @NotNull @NonNls String getName();
-  @NotNull @NonNls String getNamespace();
-  @NotNull @NonNls String getLocalName();
+	@Override
+	@NotNull
+	@NonNls
+	String getName();
 
-  @Nullable XmlElementDescriptor getDescriptor();
+	@NotNull
+	@NonNls
+	String getNamespace();
 
-  @NotNull XmlAttribute[] getAttributes();
+	@NotNull
+	@NonNls
+	String getLocalName();
 
-  @Nullable XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace);
+	@Nullable
+	XmlElementDescriptor getDescriptor();
 
-  /**
-   * Returns a tag attribute by qualified name.
-   *
-   * @param qname qualified attribute name, like "ns:name" or "name".
-   * @return null if the attribute not exist.
-   * @see #getAttribute(String, String)
-   */
-  @Nullable XmlAttribute getAttribute(@NonNls String qname);
+	@NotNull
+	XmlAttribute[] getAttributes();
 
-  @Nullable String getAttributeValue(@NonNls String name, @NonNls String namespace);
+	@Nullable
+	XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace);
 
-  /**
-   * Returns a tag attribute value by qualified name.
-   *
-   * @param qname qualified attribute name, like "ns:name" or "name".
-   * @return null if the attribute not exist.
-   * @see #getAttributeValue(String, String)  
-   */
-  @Nullable String getAttributeValue(@NonNls String qname);
+	/**
+	 * Returns a tag attribute by qualified name.
+	 *
+	 * @param qname qualified attribute name, like "ns:name" or "name".
+	 * @return null if the attribute not exist.
+	 * @see #getAttribute(String, String)
+	 */
+	@Nullable
+	XmlAttribute getAttribute(@NonNls String qname);
 
-  XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value) throws IncorrectOperationException;
-  XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException;
+	@Nullable
+	String getAttributeValue(@NonNls String name, @NonNls String namespace);
 
-  /**
-   * Creates a new child tag
-   * @param localName new tag's name
-   * @param namespace new tag's namespace
-   * @param bodyText pass null to create collapsed tag, empty string means creating expanded one
-   * @param enforceNamespacesDeep if you pass some xml tags to <code>bodyText</code> parameter, this flag sets namespace prefixes for them
-   * @return created tag. Use {@link #addSubTag(XmlTag, boolean)}} to add it to parent
-   */
-  XmlTag createChildTag(@NonNls String localName, @NonNls String namespace, @Nullable @NonNls String bodyText, boolean enforceNamespacesDeep);
-  XmlTag addSubTag(XmlTag subTag, boolean first);
+	/**
+	 * Returns a tag attribute value by qualified name.
+	 *
+	 * @param qname qualified attribute name, like "ns:name" or "name".
+	 * @return null if the attribute not exist.
+	 * @see #getAttributeValue(String, String)
+	 */
+	@Nullable
+	String getAttributeValue(@NonNls String qname);
 
-  @NotNull XmlTag[] getSubTags();
-  @NotNull XmlTag[] findSubTags(@NonNls String qname);
+	XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value) throws IncorrectOperationException;
 
-  /**
-   * @param localName non-qualified tag name.
-   * @param namespace if null, name treated as qualified name to find.
-   */
-  @NotNull XmlTag[] findSubTags(@NonNls String localName, @Nullable String namespace);
+	XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException;
 
-  @Nullable XmlTag findFirstSubTag(@NonNls String qname);
+	/**
+	 * Creates a new child tag
+	 *
+	 * @param localName             new tag's name
+	 * @param namespace             new tag's namespace
+	 * @param bodyText              pass null to create collapsed tag, empty string means creating expanded one
+	 * @param enforceNamespacesDeep if you pass some xml tags to {@code bodyText} parameter, this flag sets namespace prefixes for them
+	 * @return created tag. Use {@link #addSubTag(XmlTag, boolean)}} to add it to parent
+	 */
+	XmlTag createChildTag(@NonNls String localName, @NonNls String namespace, @Nullable @NonNls String bodyText, boolean enforceNamespacesDeep);
 
-  @NotNull @NonNls String getNamespacePrefix();
-  @NotNull @NonNls String getNamespaceByPrefix(@NonNls String prefix);
-  @Nullable String getPrefixByNamespace(@NonNls String namespace);
-  String[] knownNamespaces();
+	XmlTag addSubTag(XmlTag subTag, boolean first);
 
-  boolean hasNamespaceDeclarations();
+	@NotNull
+	XmlTag[] getSubTags();
 
-  /**
-   * @return map keys: prefixes values: namespaces
-   */
-  @NotNull Map<String, String> getLocalNamespaceDeclarations();
+	@NotNull
+	XmlTag[] findSubTags(@NonNls String qname);
 
-  @NotNull XmlTagValue getValue();
+	/**
+	 * @param localName non-qualified tag name.
+	 * @param namespace if null, name treated as qualified name to find.
+	 */
+	@NotNull
+	XmlTag[] findSubTags(@NonNls String localName, @Nullable String namespace);
 
-  @Nullable XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict);
+	@Nullable
+	XmlTag findFirstSubTag(@NonNls String qname);
 
-  boolean isEmpty();
+	@NotNull
+	@NonNls
+	String getNamespacePrefix();
 
-  void collapseIfEmpty();
+	@NotNull
+	@NonNls
+	String getNamespaceByPrefix(@NonNls String prefix);
 
-  @Nullable @NonNls
-  String getSubTagText(@NonNls String qname);
+	@Nullable
+	String getPrefixByNamespace(@NonNls String namespace);
+
+	String[] knownNamespaces();
+
+	boolean hasNamespaceDeclarations();
+
+	/**
+	 * @return map keys: prefixes values: namespaces
+	 */
+	@NotNull
+	Map<String, String> getLocalNamespaceDeclarations();
+
+	@NotNull
+	XmlTagValue getValue();
+
+	@Nullable
+	XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict);
+
+	boolean isEmpty();
+
+	void collapseIfEmpty();
+
+	@Nullable
+	@NonNls
+	String getSubTagText(@NonNls String qname);
 }

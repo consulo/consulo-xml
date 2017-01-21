@@ -88,9 +88,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 		{
 			final XmlAttribute attr = PsiTreeUtil.getParentOfType(getElement(), XmlAttribute.class);
 
-			if(attr != null &&
-					attr.isNamespaceDeclaration() &&
-					attr.getNamespacePrefix().isEmpty() || ExternalResourceManagerEx.getInstanceEx().isIgnoredResource(canonicalText))
+			if(attr != null && attr.isNamespaceDeclaration() && attr.getNamespacePrefix().isEmpty() || ExternalResourceManagerEx.getInstanceEx().isIgnoredResource(canonicalText))
 			{
 				// Namespaces in XML 1.0 2nd edition, Section 6.2, last paragraph
 				// The attribute value in a default namespace declaration MAY be empty. This has the same effect, within the scope of the declaration,
@@ -164,29 +162,25 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 			}
 
 			final PsiElement[] result = new PsiElement[1];
-			processWsdlSchemas(rootTag, new Processor<XmlTag>()
+			processWsdlSchemas(rootTag, t ->
 			{
-				@Override
-				public boolean process(final XmlTag t)
+				if(canonicalText.equals(t.getAttributeValue(TARGET_NAMESPACE_ATTR_NAME)))
 				{
-					if(canonicalText.equals(t.getAttributeValue(TARGET_NAMESPACE_ATTR_NAME)))
+					result[0] = t;
+					return false;
+				}
+				for(XmlTag anImport : t.findSubTags("import", t.getNamespace()))
+				{
+					if(canonicalText.equals(anImport.getAttributeValue("namespace")))
 					{
-						result[0] = t;
-						return false;
-					}
-					for(XmlTag anImport : t.findSubTags("import", t.getNamespace()))
-					{
-						if(canonicalText.equals(anImport.getAttributeValue("namespace")))
+						final XmlAttribute location = anImport.getAttribute("schemaLocation");
+						if(location != null)
 						{
-							final XmlAttribute location = anImport.getAttribute("schemaLocation");
-							if(location != null)
-							{
-								result[0] = FileReferenceUtil.findFile(location.getValueElement());
-							}
+							result[0] = FileReferenceUtil.findFile(location.getValueElement());
 						}
 					}
-					return true;
 				}
+				return true;
 			});
 
 			return result[0];

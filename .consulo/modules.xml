@@ -16,6 +16,7 @@
           <orderEntry type="module" module-name="xml-dom-impl" />
           <orderEntry type="module" module-name="xml-intellilang" />
           <orderEntry type="module" module-name="xml-spellchecker" />
+          <orderEntry type="module" module-name="relaxng" />
         </module-layer>
       </module>
       <module name="xml-api" dirurl="file://$PROJECT_DIR$/xml-api" current-layer="Default">
@@ -104,6 +105,32 @@
           <orderEntry type="module" module-name="xml-impl" />
           <orderEntry type="module" module-name="xml-dom-impl" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.spellchecker" level="project" />
+        </module-layer>
+      </module>
+      <module name="relaxng" dirurl="file://$PROJECT_DIR$/relaxng" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-module-name="consulo-xml" />
+          <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="sourceFolder" />
+          <orderEntry type="module-library">
+            <library>
+              <binaries>
+                <root url="file://$MODULE_DIR$/lib" />
+              </binaries>
+              <sources>
+                <root url="zip://$MODULE_DIR$/lib/rngom-src.zip!/src" />
+              </sources>
+              <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+            </library>
+          </orderEntry>
+          <orderEntry type="module" module-name="xml-impl" />
+          <orderEntry type="module" module-name="xml-dom-api" />
         </module-layer>
       </module>
     </modules>

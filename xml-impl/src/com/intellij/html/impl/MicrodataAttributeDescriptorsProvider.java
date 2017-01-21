@@ -15,6 +15,20 @@
  */
 package com.intellij.html.impl;
 
+import static com.intellij.html.impl.util.MicrodataUtil.ITEM_ID;
+import static com.intellij.html.impl.util.MicrodataUtil.ITEM_PROP;
+import static com.intellij.html.impl.util.MicrodataUtil.ITEM_REF;
+import static com.intellij.html.impl.util.MicrodataUtil.ITEM_SCOPE;
+import static com.intellij.html.impl.util.MicrodataUtil.ITEM_TYPE;
+import static com.intellij.html.impl.util.MicrodataUtil.extractProperties;
+import static com.intellij.html.impl.util.MicrodataUtil.findScopeTag;
+import static com.intellij.html.impl.util.MicrodataUtil.hasScopeTag;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -27,113 +41,127 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;
 import com.intellij.xml.impl.schema.AnyXmlAttributeDescriptor;
 import com.intellij.xml.util.HtmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.intellij.html.impl.util.MicrodataUtil.*;
 
 /**
  * @author: Fedor.Korotkov
  */
-public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider {
-  @Override
-  public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag context) {
-    if (!HtmlUtil.isHtml5Context(context)) {
-      return XmlAttributeDescriptor.EMPTY;
-    }
-    final String tagName = context.getName();
-    List<XmlAttributeDescriptor> result = new ArrayList<XmlAttributeDescriptor>();
-    final boolean goodContextForProps =
-      "div".equalsIgnoreCase(tagName) || "span".equalsIgnoreCase(tagName) || "a".equalsIgnoreCase(tagName);
-    if (goodContextForProps && hasScopeTag(context)) {
-      result.add(new MicrodataPropertyAttributeDescriptor(context));
-    }
-    if (context.getAttribute(ITEM_SCOPE) == null) {
-      result.add(new AnyXmlAttributeDescriptor(ITEM_SCOPE));
-    }
-    else {
-      result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_ID));
-      result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_TYPE));
-      result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_REF));
-    }
-    return result.toArray(new XmlAttributeDescriptor[result.size()]);
-  }
+public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider
+{
+	@Override
+	public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag context)
+	{
+		if(!HtmlUtil.isHtml5Context(context))
+		{
+			return XmlAttributeDescriptor.EMPTY;
+		}
+		final String tagName = context.getName();
+		List<XmlAttributeDescriptor> result = new ArrayList<>();
+		final boolean goodContextForProps = "div".equalsIgnoreCase(tagName) || "span".equalsIgnoreCase(tagName) || "a".equalsIgnoreCase(tagName);
+		if(goodContextForProps && hasScopeTag(context))
+		{
+			result.add(new MicrodataPropertyAttributeDescriptor(context));
+		}
+		if(context.getAttribute(ITEM_SCOPE) == null)
+		{
+			result.add(new AnyXmlAttributeDescriptor(ITEM_SCOPE));
+		}
+		else
+		{
+			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_ID));
+			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_TYPE));
+			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_REF));
+		}
+		return result.toArray(new XmlAttributeDescriptor[result.size()]);
+	}
 
-  @Nullable
-  @Override
-  public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context) {
-    if (!HtmlUtil.isHtml5Context(context)) {
-      return null;
-    }
-    if (ITEM_SCOPE.equalsIgnoreCase(attributeName)) {
-      return new AnyXmlAttributeDescriptor(attributeName);
-    }
-    if (context.getAttribute(ITEM_SCOPE) != null &&
-        (ITEM_TYPE.equalsIgnoreCase(attributeName) || ITEM_ID.equalsIgnoreCase(attributeName) || ITEM_REF.equalsIgnoreCase(attributeName))) {
-      return new XmlAttributeDescriptorWithEmptyDefaultValue(attributeName);
-    }
-    if (ITEM_PROP.equalsIgnoreCase(attributeName) && hasScopeTag(context)) {
-      return new MicrodataPropertyAttributeDescriptor(context);
-    }
-    return null;
-  }
+	@Nullable
+	@Override
+	public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context)
+	{
+		if(!HtmlUtil.isHtml5Context(context))
+		{
+			return null;
+		}
+		if(ITEM_SCOPE.equalsIgnoreCase(attributeName))
+		{
+			return new AnyXmlAttributeDescriptor(attributeName);
+		}
+		if(context.getAttribute(ITEM_SCOPE) != null && (ITEM_TYPE.equalsIgnoreCase(attributeName) || ITEM_ID.equalsIgnoreCase(attributeName) || ITEM_REF.equalsIgnoreCase(attributeName)))
+		{
+			return new XmlAttributeDescriptorWithEmptyDefaultValue(attributeName);
+		}
+		if(ITEM_PROP.equalsIgnoreCase(attributeName) && hasScopeTag(context))
+		{
+			return new MicrodataPropertyAttributeDescriptor(context);
+		}
+		return null;
+	}
 
-  private static class XmlAttributeDescriptorWithEmptyDefaultValue extends AnyXmlAttributeDescriptor {
-    public XmlAttributeDescriptorWithEmptyDefaultValue(String name) {
-      super(name);
-    }
+	private static class XmlAttributeDescriptorWithEmptyDefaultValue extends AnyXmlAttributeDescriptor
+	{
+		public XmlAttributeDescriptorWithEmptyDefaultValue(String name)
+		{
+			super(name);
+		}
 
-    @Override
-    public String getDefaultValue() {
-      return "";
-    }
-  }
+		@Override
+		public String getDefaultValue()
+		{
+			return "";
+		}
+	}
 
-  private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor {
+	private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor
+	{
 
-    @NotNull
-    private final XmlTag myContext;
+		@NotNull
+		private final XmlTag myContext;
 
-    public MicrodataPropertyAttributeDescriptor(@NotNull XmlTag context) {
-      super(ITEM_PROP);
-      myContext = context;
-    }
+		public MicrodataPropertyAttributeDescriptor(@NotNull XmlTag context)
+		{
+			super(ITEM_PROP);
+			myContext = context;
+		}
 
-    @Override
-    public String getDefaultValue() {
-      return "";
-    }
+		@Override
+		public String getDefaultValue()
+		{
+			return "";
+		}
 
-    @Override
-    public boolean isEnumerated() {
-      final String[] enumeratedValues = getEnumeratedValues();
-      return enumeratedValues == null ? super.isEnumerated() : enumeratedValues.length > 0;
-    }
+		@Override
+		public boolean isEnumerated()
+		{
+			final String[] enumeratedValues = getEnumeratedValues();
+			return enumeratedValues == null ? super.isEnumerated() : enumeratedValues.length > 0;
+		}
 
-    @Override
-    public String[] getEnumeratedValues() {
-      final XmlTag scopeParent = findScopeTag(myContext);
-      return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
-    }
+		@Override
+		public String[] getEnumeratedValues()
+		{
+			final XmlTag scopeParent = findScopeTag(myContext);
+			return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
+		}
 
-    private static String[] findProperties(@NotNull XmlTag tag) {
-      final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
-      if (typeAttribute != null) {
-        final XmlAttributeValue valueElement = typeAttribute.getValueElement();
-        final PsiReference[] references = valueElement != null ? valueElement.getReferences() : PsiReference.EMPTY_ARRAY;
-        List<String> result = new ArrayList<String>();
-        for (PsiReference reference : references) {
-          final PsiElement target = reference != null ? reference.resolve() : null;
-          if (target instanceof PsiFile) {
-            result.addAll(extractProperties((PsiFile)target, StringUtil.stripQuotesAroundValue(reference.getCanonicalText())));
-          }
-        }
-        return ArrayUtil.toStringArray(result);
-      }
-      return ArrayUtil.EMPTY_STRING_ARRAY;
-    }
-  }
+		private static String[] findProperties(@NotNull XmlTag tag)
+		{
+			final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
+			if(typeAttribute != null)
+			{
+				final XmlAttributeValue valueElement = typeAttribute.getValueElement();
+				final PsiReference[] references = valueElement != null ? valueElement.getReferences() : PsiReference.EMPTY_ARRAY;
+				List<String> result = new ArrayList<>();
+				for(PsiReference reference : references)
+				{
+					final PsiElement target = reference != null ? reference.resolve() : null;
+					if(target instanceof PsiFile)
+					{
+						result.addAll(extractProperties((PsiFile) target, StringUtil.stripQuotesAroundValue(reference.getCanonicalText())));
+					}
+				}
+				return ArrayUtil.toStringArray(result);
+			}
+			return ArrayUtil.EMPTY_STRING_ARRAY;
+		}
+	}
 }

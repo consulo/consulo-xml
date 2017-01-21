@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2012 JetBrains s.r.o.
+ * Copyright 2000-2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,40 +15,24 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.application.options.PathMacrosImpl;
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
-import com.intellij.openapi.util.JDOMExternalizableAdapter;
-import org.jdom.Element;
-
 import java.util.Collections;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.StoragePathMacros;
+
 /**
-* @author Dmitry Avdeev
-*/
-@State(name = "ProjectResources", storages = {@Storage( file = StoragePathMacros.PROJECT_FILE)})
-public class ProjectResources extends ExternalResourceManagerImpl implements PersistentStateComponent<Element> {
-
-  private final JDOMExternalizableAdapter myAdapter;
-
-  public ProjectResources(PathMacrosImpl pathMacros) {
-    super(pathMacros);
-    myAdapter = new JDOMExternalizableAdapter(this, "ProjectResources");
-  }
-
-  @Override
-  protected Map<String, Map<String, Resource>> computeStdResources() {
-    return Collections.emptyMap();   
-  }
-
-  public Element getState() {
-    return myAdapter.getState();
-  }
-
-  public void loadState(Element state) {
-    myAdapter.loadState(state);
-  }
+ * @author Dmitry Avdeev
+ */
+@State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_FILE))
+public class ProjectResources extends ExternalResourceManagerExImpl
+{
+	@NotNull
+	@Override
+	protected Map<String, Map<String, Resource>> computeStdResources()
+	{
+		return Collections.emptyMap();
+	}
 }

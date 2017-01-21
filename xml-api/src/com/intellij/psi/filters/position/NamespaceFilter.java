@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,53 +26,84 @@ import com.intellij.psi.xml.XmlProlog;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ReflectionUtil;
 
-public class NamespaceFilter implements ElementFilter {
-  private final String[] myNamespaces;
+public class NamespaceFilter implements ElementFilter
+{
+	private final String[] myNamespaces;
 
-  public NamespaceFilter(@NonNls String... namespaces){
-    myNamespaces = namespaces;
-  }
+	public NamespaceFilter(@NonNls String... namespaces)
+	{
+		myNamespaces = namespaces;
+	}
 
-  public boolean isClassAcceptable(Class hintClass){
-    return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
-  }
+	@Override
+	public boolean isClassAcceptable(Class hintClass)
+	{
+		return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
+	}
 
-  public boolean isAcceptable(Object element, PsiElement context){
-    if(element instanceof XmlTag){
-      final XmlTag psiElement = (XmlTag)element;
-      if (!psiElement.isValid()) return false;
-      final String ns = psiElement.getNamespace();
+	@Override
+	public boolean isAcceptable(Object element, PsiElement context)
+	{
+		if(element instanceof XmlTag)
+		{
+			final XmlTag psiElement = (XmlTag) element;
+			if(!psiElement.isValid())
+			{
+				return false;
+			}
+			final String ns = psiElement.getNamespace();
 
-      if (isNamespaceAcceptable(ns)) return true;
+			if(isNamespaceAcceptable(ns))
+			{
+				return true;
+			}
 
-      final PsiFile psiFile = psiElement.getContainingFile();
-      if (psiFile instanceof XmlFile) {
-        // We use file references for as dtd namespace
-        // But we should also check PUBLIC ID for namespace
-        final XmlProlog prolog = ((XmlFile)psiFile).getDocument().getProlog();
+			final PsiFile psiFile = psiElement.getContainingFile();
+			if(psiFile instanceof XmlFile)
+			{
+				// We use file references for as dtd namespace
+				// But we should also check PUBLIC ID for namespace
+				XmlDocument document = ((XmlFile) psiFile).getDocument();
+				if(document == null)
+				{
+					return false;
+				}
+				final XmlProlog prolog = document.getProlog();
 
-        if (prolog != null) {
-          final XmlDoctype doctype = prolog.getDoctype();
-          if (doctype != null) {
-            final String publicId = doctype.getPublicId();
+				if(prolog != null)
+				{
+					final XmlDoctype doctype = prolog.getDoctype();
+					if(doctype != null)
+					{
+						final String publicId = doctype.getPublicId();
 
-            if (publicId != null) {
-              if (isNamespaceAcceptable(publicId)) return true;
-            }
-          }
-        }
-      }
-    }
-    else if(element instanceof XmlDocument){
-      return isAcceptable(((XmlDocument) element).getRootTag(), context);
-    }
-    return false;
-  }
+						if(publicId != null)
+						{
+							if(isNamespaceAcceptable(publicId))
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(element instanceof XmlDocument)
+		{
+			return isAcceptable(((XmlDocument) element).getRootTag(), context);
+		}
+		return false;
+	}
 
-  protected boolean isNamespaceAcceptable(String ns) {
-    for (String aMyValue : myNamespaces) {
-      if (aMyValue.equals(ns)) return true;
-    }
-    return false;
-  }
+	protected boolean isNamespaceAcceptable(String ns)
+	{
+		for(String aMyValue : myNamespaces)
+		{
+			if(aMyValue.equals(ns))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

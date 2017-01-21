@@ -65,7 +65,7 @@ public class XmlResourceResolver implements XMLEntityResolver
 	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.XmlResourceResolver");
 	private final XmlFile myFile;
 	private final Project myProject;
-	private final Map<String, String> myExternalResourcesMap = new HashMap<String, String>(1);
+	private final Map<String, String> myExternalResourcesMap = new HashMap<>(1);
 	private boolean myStopOnUnDeclaredResource;
 	@NonNls
 	public static final String HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY = "idea.xml.honour.all.schema.locations";
@@ -108,131 +108,127 @@ public class XmlResourceResolver implements XMLEntityResolver
 		final int length = XmlUtil.getPrefixLength(_systemId);
 		final String systemId = _systemId.substring(length);
 
-		final Computable<PsiFile> action = new Computable<PsiFile>()
+		final Computable<PsiFile> action = () ->
 		{
-			@Override
-			public PsiFile compute()
+
+			PsiFile baseFile = null;
+			if(baseSystemId != null)
 			{
+				baseFile = getBaseFile(baseSystemId);
+			}
+			if(baseFile == null)
+			{
+				baseFile = myFile;
+			}
 
-				PsiFile baseFile = null;
-				if(baseSystemId != null)
+			String version = null;
+			String tagName = null;
+			if(baseFile == myFile)
+			{
+				XmlTag rootTag = myFile.getRootTag();
+				if(rootTag != null)
 				{
-					baseFile = getBaseFile(baseSystemId);
+					tagName = rootTag.getLocalName();
+					version = rootTag.getAttributeValue("version");
 				}
-				if(baseFile == null)
+			}
+			String resource = ((ExternalResourceManagerEx) ExternalResourceManager.getInstance()).getUserResource(myProject, systemId, version);
+			if(resource != null)
+			{
+				XmlFile file = XmlUtil.findXmlFile(myFile, resource);
+				if(file != null)
 				{
-					baseFile = myFile;
+					return file;
 				}
+			}
 
-				String version = null;
-				String tagName = null;
-				if(baseFile == myFile)
-				{
-					XmlTag rootTag = myFile.getRootTag();
-					if(rootTag != null)
-					{
-						tagName = rootTag.getLocalName();
-						version = rootTag.getAttributeValue("version");
-					}
-				}
-				String resource = ((ExternalResourceManagerEx) ExternalResourceManager.getInstance()).getUserResource(myProject, systemId, version);
-				if(resource != null)
-				{
-					XmlFile file = XmlUtil.findXmlFile(myFile, resource);
-					if(file != null)
-					{
-						return file;
-					}
-				}
+			PsiFile byLocation = resolveByLocation(myFile, systemId);
+			if(byLocation != null)
+			{
+				return byLocation;
+			}
 
-				PsiFile byLocation = resolveByLocation(myFile, systemId);
-				if(byLocation != null)
-				{
-					return byLocation;
-				}
-
-				PsiFile psiFile = ExternalResourceManager.getInstance().getResourceLocation(systemId, baseFile, version);
+			PsiFile psiFile = ExternalResourceManager.getInstance().getResourceLocation(systemId, baseFile, version);
+			if(psiFile == null)
+			{
+				psiFile = XmlUtil.findXmlFile(baseFile, systemId);
+			}
+			// autodetection
+			if(psiFile == null)
+			{
+				psiFile = XmlNamespaceIndex.guessSchema(systemId, tagName, version, null, myFile);
 				if(psiFile == null)
 				{
-					psiFile = XmlUtil.findXmlFile(baseFile, systemId);
+					psiFile = XmlNamespaceIndex.guessDtd(systemId, myFile);
 				}
-				// autodetection
-				if(psiFile == null)
-				{
-					psiFile = XmlNamespaceIndex.guessSchema(systemId, tagName, version, null, myFile);
-					if(psiFile == null)
-					{
-						psiFile = XmlNamespaceIndex.guessDtd(systemId, myFile);
-					}
-				}
+			}
 
-				if(psiFile == null && baseSystemId != null)
+			if(psiFile == null && baseSystemId != null)
+			{
+				String fullUrl = baseSystemId.substring(0, baseSystemId.lastIndexOf('/') + 1) + systemId;
+				psiFile = XmlUtil.findXmlFile(baseFile, fullUrl);
+			}
+
+			if(LOG.isDebugEnabled())
+			{
+				LOG.debug("before relative file checking:" + psiFile + "," + systemId + "," + baseSystemId + ")");
+			}
+			if(psiFile == null && baseSystemId == null)
+			{ // entity file
+				File workingFile = new File("");
+				String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/') + "/";
+
+				String relativePath = StringUtil.replace(systemId, workingDir, "");
+
+				if(relativePath.equals(systemId))
 				{
-					String fullUrl = baseSystemId.substring(0, baseSystemId.lastIndexOf('/') + 1) + systemId;
-					psiFile = XmlUtil.findXmlFile(baseFile, fullUrl);
+					// on Windows systemId consisting of idea install path could become encoded DOS short name (e.g. idea%7f1.504)
+					// I am not aware how to get such name from 'workingDir' so let just pickup filename from there
+					relativePath = systemId.substring(systemId.lastIndexOf('/') + 1);
 				}
 
 				if(LOG.isDebugEnabled())
 				{
-					LOG.debug("before relative file checking:" + psiFile + "," + systemId + "," + baseSystemId + ")");
+					LOG.debug("next to relative file checking:" + relativePath + "," + myExternalResourcesMap.size() + ")");
 				}
-				if(psiFile == null && baseSystemId == null)
-				{ // entity file
-					File workingFile = new File("");
-					String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/') + "/";
 
-					String relativePath = StringUtil.replace(systemId, workingDir, "");
-
-					if(relativePath.equals(systemId))
-					{
-						// on Windows systemId consisting of idea install path could become encoded DOS short name (e.g. idea%7f1.504)
-						// I am not aware how to get such name from 'workingDir' so let just pickup filename from there
-						relativePath = systemId.substring(systemId.lastIndexOf('/') + 1);
-					}
-
+				for(String path : getResourcePaths())
+				{
 					if(LOG.isDebugEnabled())
 					{
-						LOG.debug("next to relative file checking:" + relativePath + "," + myExternalResourcesMap.size() + ")");
+						LOG.debug("Finding file by url:" + path);
 					}
-
-					for(String path : getResourcePaths())
+					VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(path);
+					if(file == null)
 					{
-						if(LOG.isDebugEnabled())
-						{
-							LOG.debug("Finding file by url:" + path);
-						}
-						VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(path);
-						if(file == null)
-						{
-							continue;
-						}
-						if(LOG.isDebugEnabled())
-						{
-							LOG.debug("Finding " + relativePath + " relative to:" + file.getPath());
-						}
-						final VirtualFile relativeFile = UriUtil.findRelativeFile(relativePath, file);
-						if(LOG.isDebugEnabled())
-						{
-							LOG.debug("Found " + (relativeFile != null ? relativeFile.getPath() : "null"));
-						}
+						continue;
+					}
+					if(LOG.isDebugEnabled())
+					{
+						LOG.debug("Finding " + relativePath + " relative to:" + file.getPath());
+					}
+					final VirtualFile relativeFile = UriUtil.findRelativeFile(relativePath, file);
+					if(LOG.isDebugEnabled())
+					{
+						LOG.debug("Found " + (relativeFile != null ? relativeFile.getPath() : "null"));
+					}
 
-						if(relativeFile != null)
+					if(relativeFile != null)
+					{
+						psiFile = PsiManager.getInstance(myProject).findFile(relativeFile);
+						if(psiFile != null)
 						{
-							psiFile = PsiManager.getInstance(myProject).findFile(relativeFile);
-							if(psiFile != null)
-							{
-								break;
-							}
+							break;
 						}
 					}
 				}
-
-				if(LOG.isDebugEnabled())
-				{
-					LOG.debug("resolveEntity: psiFile='" + (psiFile != null ? psiFile.getVirtualFile() : null) + "'");
-				}
-				return psiFile;
 			}
+
+			if(LOG.isDebugEnabled())
+			{
+				LOG.debug("resolveEntity: psiFile='" + (psiFile != null ? psiFile.getVirtualFile() : null) + "'");
+			}
+			return psiFile;
 		};
 
 		final PsiFile psiFile = ApplicationManager.getApplication().runReadAction(action);

@@ -17,15 +17,12 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiBundle;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceProvider;
@@ -47,8 +44,6 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 {
 	@NonNls
 	private static final String VALUE_ATTR_NAME = "value";
-	@NonNls
-	private static final String PATTERN_TAG_NAME = "pattern";
 	@NonNls
 	static final String NAME_ATTR_NAME = "name";
 
@@ -91,61 +86,6 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 				VALUE_ATTR_NAME,
 				ITEM_TYPE_ATTR_NAME
 		};
-	}
-
-	static class RegExpReference extends BasicAttributeValueReference implements EmptyResolveMessageProvider
-	{
-		private String message;
-
-		public RegExpReference(final PsiElement element)
-		{
-			super(element);
-		}
-
-		private static final Pattern pattern = Pattern.compile("^(?:\\\\i|\\\\l)");
-		private static final Pattern pattern2 = Pattern.compile("([^\\\\])(?:\\\\i|\\\\l)");
-
-		@Override
-		@Nullable
-		public PsiElement resolve()
-		{
-			try
-			{
-				String text = getCanonicalText();
-
-				// \i and \l are special classes that does not present in java reg exps, so replace their occurences with more usable \w
-				text = pattern2.matcher(pattern.matcher(text).replaceFirst("\\\\w")).replaceAll("$1\\\\w");
-
-				Pattern.compile(text);
-				message = null;
-				return myElement;
-			}
-			catch(Exception e)
-			{
-				message = PsiBundle.message("invalid.regular.expression.message", getCanonicalText());
-				return null;
-			}
-		}
-
-		@Override
-		@NotNull
-		public Object[] getVariants()
-		{
-			return ArrayUtil.EMPTY_OBJECT_ARRAY;
-		}
-
-		@Override
-		public boolean isSoft()
-		{
-			return false;
-		}
-
-		@Override
-		@NotNull
-		public String getUnresolvedMessagePattern()
-		{
-			return message;
-		}
 	}
 
 	public static class NameReference implements PsiReference
@@ -229,14 +169,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 
 		if(VALUE_ATTR_NAME.equals(attrName))
 		{
-			if(PATTERN_TAG_NAME.equals(((XmlAttribute) parent).getParent().getLocalName()))
-			{
-				return new PsiReference[]{new RegExpReference(element)};
-			}
-			else
-			{
-				return PsiReference.EMPTY_ARRAY;
-			}
+			return PsiReference.EMPTY_ARRAY;
 		}
 		else if(NAME_ATTR_NAME.equals(attrName))
 		{
@@ -244,7 +177,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 		else if(MEMBER_TYPES_ATTR_NAME.equals(attrName))
 		{
-			final List<PsiReference> result = new ArrayList<PsiReference>(1);
+			final List<PsiReference> result = new ArrayList<>(1);
 			final String text = element.getText();
 			int lastIndex = 1;
 			final int testLength = text.length();
@@ -278,12 +211,12 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(final PsiElement element)
+	public static PsiReference createTypeOrElementOrAttributeReference(@NotNull final PsiElement element)
 	{
 		return createTypeOrElementOrAttributeReference(element, null);
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(final PsiElement element, String ns)
+	public static PsiReference createTypeOrElementOrAttributeReference(@NotNull final PsiElement element, String ns)
 	{
 		final int length = element.getTextLength();
 		int offset = (element instanceof XmlAttributeValue) ? XmlUtil.findPrefixByQualifiedName(((XmlAttributeValue) element).getValue()).length() : 0;

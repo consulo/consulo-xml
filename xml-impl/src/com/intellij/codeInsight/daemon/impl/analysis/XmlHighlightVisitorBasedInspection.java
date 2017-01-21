@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,84 +15,94 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
-import com.intellij.codeInsight.daemon.impl.HighlightInfoFilter;
-import com.intellij.codeInspection.*;
+import com.intellij.codeInspection.GlobalInspectionContext;
+import com.intellij.codeInspection.GlobalInspectionUtil;
+import com.intellij.codeInspection.GlobalSimpleInspectionTool;
+import com.intellij.codeInspection.InspectionManager;
+import com.intellij.codeInspection.InspectionProfileEntry;
+import com.intellij.codeInspection.ProblemDescriptionsProcessor;
+import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlRecursiveElementVisitor;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author yole
  */
-public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool {
-  @NotNull
-  @Override
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.ERROR;
-  }
+public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool
+{
+	@NotNull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
 
-  @Override
-  public void checkFile(@NotNull final PsiFile file,
-                        @NotNull final InspectionManager manager,
-                        @NotNull ProblemsHolder problemsHolder,
-                        @NotNull final GlobalInspectionContext globalContext,
-                        @NotNull final ProblemDescriptionsProcessor problemDescriptionsProcessor) {
-    HighlightInfoHolder myHolder = new HighlightInfoHolder(file, HighlightInfoFilter.EMPTY_ARRAY) {
-      @Override
-      public boolean add(@Nullable HighlightInfo info) {
-        if (info != null) {
-          GlobalInspectionUtil.createProblem(
-            file,
-            info,
-            new TextRange(info.startOffset, info.endOffset),
-            null,
-            manager,
-            problemDescriptionsProcessor,
-            globalContext
-          );
-        }
-        return true;
-      }
-    };
-    final XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
-    highlightVisitor.analyze(file, true, myHolder, new Runnable() {
-      @Override
-      public void run() {
-        file.accept(new XmlRecursiveElementVisitor() {
-          @Override
-          public void visitElement(PsiElement element) {
-            highlightVisitor.visit(element);
-            super.visitElement(element);
-          }
-        });
-      }
-    });
+	@Override
+	public void checkFile(@NotNull final PsiFile file,
+			@NotNull final InspectionManager manager,
+			@NotNull ProblemsHolder problemsHolder,
+			@NotNull final GlobalInspectionContext globalContext,
+			@NotNull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
+	{
+		HighlightInfoHolder myHolder = new HighlightInfoHolder(file)
+		{
+			@Override
+			public boolean add(@Nullable HighlightInfo info)
+			{
+				if(info != null)
+				{
+					GlobalInspectionUtil.createProblem(file, info, new TextRange(info.startOffset, info.endOffset), null, manager, problemDescriptionsProcessor, globalContext);
+				}
+				return true;
+			}
+		};
+		final XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
+		highlightVisitor.analyze(file, true, myHolder, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				file.accept(new XmlRecursiveElementVisitor()
+				{
+					@Override
+					public void visitElement(PsiElement element)
+					{
+						highlightVisitor.visit(element);
+						super.visitElement(element);
+					}
+				});
+			}
+		});
 
-  }
+	}
 
-  @Nls
-  @NotNull
-  @Override
-  public String getGroupDisplayName() {
-    return InspectionProfileEntry.GENERAL_GROUP_NAME;
-  }
+	@Nls
+	@NotNull
+	@Override
+	public String getGroupDisplayName()
+	{
+		return InspectionProfileEntry.GENERAL_GROUP_NAME;
+	}
 
-  @Nls
-  @NotNull
-  @Override
-  public String getDisplayName() {
-    return "XML highlighting";
-  }
+	@Nls
+	@NotNull
+	@Override
+	public String getDisplayName()
+	{
+		return "XML highlighting";
+	}
 
-  @NotNull
-  @Override
-  public String getShortName() {
-    return "XmlHighlighting";
-  }
+	@NotNull
+	@Override
+	public String getShortName()
+	{
+		return "XmlHighlighting";
+	}
 }

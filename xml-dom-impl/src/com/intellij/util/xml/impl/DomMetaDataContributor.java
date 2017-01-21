@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2010 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,24 +27,33 @@ import com.intellij.util.xml.DomMetaData;
 /**
  * @author yole
  */
-public class DomMetaDataContributor implements MetaDataContributor {
-  @Override
-  public void contributeMetaData(MetaDataRegistrar registrar) {
-    registrar.registerMetaData(new ElementFilter() {
-      public boolean isAcceptable(Object element, PsiElement context) {
-        if (element instanceof XmlTag) {
-          final XmlTag tag = (XmlTag)element;
-          final DomElement domElement = DomManager.getDomManager(tag.getProject()).getDomElement(tag);
-          if (domElement != null) {
-            return domElement.getGenericInfo().getNameDomElement(domElement) != null;
-          }
-        }
-        return false;
-      }
+public class DomMetaDataContributor implements MetaDataContributor
+{
+	@Override
+	public void contributeMetaData(MetaDataRegistrar registrar)
+	{
+		registrar.registerMetaData(new ElementFilter()
+		{
+			@Override
+			public boolean isAcceptable(Object element, PsiElement context)
+			{
+				if(element instanceof XmlTag)
+				{
+					final XmlTag tag = (XmlTag) element;
+					final DomElement domElement = DomManager.getDomManager(tag.getProject()).getDomElement(tag);
+					if(domElement != null)
+					{
+						return domElement.getGenericInfo().getNameDomElement(domElement) != null;
+					}
+				}
+				return false;
+			}
 
-      public boolean isClassAcceptable(Class hintClass) {
-        return XmlTag.class.isAssignableFrom(hintClass);
-      }
-    }, DomMetaData.class);
-  }
+			@Override
+			public boolean isClassAcceptable(Class hintClass)
+			{
+				return XmlTag.class.isAssignableFrom(hintClass);
+			}
+		}, DomMetaData.class);
+	}
 }

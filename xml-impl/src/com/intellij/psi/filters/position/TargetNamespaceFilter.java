@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,31 +28,45 @@ import com.intellij.util.ReflectionUtil;
  * Time: 4:13:57
  * To change this template use Options | File Templates.
  */
-public class TargetNamespaceFilter extends XmlTextFilter {
-  public TargetNamespaceFilter(String str){
-    super(str);
-  }
+public class TargetNamespaceFilter extends XmlTextFilter
+{
+	public TargetNamespaceFilter(String str)
+	{
+		super(str);
+	}
 
-  public TargetNamespaceFilter(String[] strs){
-    super(strs);
-  }
+	public TargetNamespaceFilter(String[] strs)
+	{
+		super(strs);
+	}
 
-  public boolean isClassAcceptable(Class hintClass){
-    return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
-  }
+	@Override
+	public boolean isClassAcceptable(Class hintClass)
+	{
+		return ReflectionUtil.isAssignable(XmlTag.class, hintClass) || ReflectionUtil.isAssignable(XmlDocument.class, hintClass);
+	}
 
-  public boolean isAcceptable(Object element, PsiElement context){
-    if(element instanceof XmlTag){
-      final String attributeValue = ((XmlTag)element).getAttributeValue("targetNamespace");
-      if(attributeValue != null){
-        for (String aMyValue : myValue) {
-          if (aMyValue.equals(attributeValue)) return true;
-        }
-      }
-    }
-    else if(element instanceof XmlDocument){
-      return isAcceptable(((XmlDocument) element).getRootTag(), context);
-    }
-    return false;
-  }
+	@Override
+	public boolean isAcceptable(Object element, PsiElement context)
+	{
+		if(element instanceof XmlTag)
+		{
+			final String attributeValue = ((XmlTag) element).getAttributeValue("targetNamespace");
+			if(attributeValue != null)
+			{
+				for(String aMyValue : myValue)
+				{
+					if(aMyValue.equals(attributeValue))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		else if(element instanceof XmlDocument)
+		{
+			return isAcceptable(((XmlDocument) element).getRootTag(), context);
+		}
+		return false;
+	}
 }

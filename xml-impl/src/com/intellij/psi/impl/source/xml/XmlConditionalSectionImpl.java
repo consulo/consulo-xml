@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,61 +21,91 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlConditionalSection;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.psi.xml.XmlEntityDecl;
+import com.intellij.psi.xml.XmlEntityRef;
+import com.intellij.psi.xml.XmlTokenType;
 
 /**
  * @author maxim.mossienko
  */
-public class XmlConditionalSectionImpl extends XmlElementImpl implements XmlConditionalSection {
-  public XmlConditionalSectionImpl() {
-    super(XmlElementType.XML_CONDITIONAL_SECTION);
-  }
+public class XmlConditionalSectionImpl extends XmlElementImpl implements XmlConditionalSection
+{
+	public XmlConditionalSectionImpl()
+	{
+		super(XmlElementType.XML_CONDITIONAL_SECTION);
+	}
 
-  public boolean isIncluded(PsiFile targetFile) {
-    ASTNode child = findChildByType(XmlTokenType.XML_CONDITIONAL_SECTION_START);
+	@Override
+	public boolean isIncluded(PsiFile targetFile)
+	{
+		ASTNode child = findChildByType(XmlTokenType.XML_CONDITIONAL_SECTION_START);
 
-    if (child != null) {
-      child = child.getTreeNext();
+		if(child != null)
+		{
+			child = child.getTreeNext();
 
-      if (child != null && child.getElementType() == TokenType.WHITE_SPACE) {
-        child = child.getTreeNext();
-      }
+			if(child != null && child.getElementType() == TokenType.WHITE_SPACE)
+			{
+				child = child.getTreeNext();
+			}
 
-      if (child != null) {
-        IElementType elementType = child.getElementType();
-        if (elementType == XmlTokenType.XML_CONDITIONAL_INCLUDE) return true;
-        if (elementType == XmlTokenType.XML_CONDITIONAL_IGNORE) return false;
+			if(child != null)
+			{
+				IElementType elementType = child.getElementType();
+				if(elementType == XmlTokenType.XML_CONDITIONAL_INCLUDE)
+				{
+					return true;
+				}
+				if(elementType == XmlTokenType.XML_CONDITIONAL_IGNORE)
+				{
+					return false;
+				}
 
-        if (elementType == XmlElementType.XML_ENTITY_REF) {
-          XmlEntityRef xmlEntityRef = (XmlEntityRef)child.getPsi();
+				if(elementType == XmlElementType.XML_ENTITY_REF)
+				{
+					XmlEntityRef xmlEntityRef = (XmlEntityRef) child.getPsi();
 
-          final String text = xmlEntityRef.getText();
-          String name = text.substring(1,text.length() - 1);
+					final String text = xmlEntityRef.getText();
+					String name = text.substring(1, text.length() - 1);
 
-          PsiElement psiElement = targetFile != null ? XmlEntityRefImpl.getCachedEntity( targetFile, name): null;
+					PsiElement psiElement = targetFile != null ? XmlEntityCache.getCachedEntity(targetFile, name) : null;
 
-          if (psiElement instanceof XmlEntityDecl) {
-            final XmlEntityDecl decl = (XmlEntityDecl)psiElement;
-            
-            if(decl.isInternalReference()) {
-              for (ASTNode e = decl.getNode().getFirstChildNode(); e != null; e = e.getTreeNext()) {
-                if (e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE) {
-                  final boolean b = StringUtil.stripQuotesAroundValue(e.getText()).equals("INCLUDE");
-                  return b;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    return false;
-  }
+					if(psiElement instanceof XmlEntityDecl)
+					{
+						final XmlEntityDecl decl = (XmlEntityDecl) psiElement;
 
-  public PsiElement getBodyStart() {
-    ASTNode child = findChildByType(XmlTokenType.XML_MARKUP_START);
-    if (child != null) child = child.getTreeNext();
-    if (child != null) return child.getPsi();
-    return null;
-  }
+						if(decl.isInternalReference())
+						{
+							for(ASTNode e = decl.getNode().getFirstChildNode(); e != null; e = e.getTreeNext())
+							{
+								if(e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE)
+								{
+									final boolean b = StringUtil.stripQuotesAroundValue(e.getText()).equals("INCLUDE");
+									return b;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public PsiElement getBodyStart()
+	{
+		ASTNode child = findChildByType(XmlTokenType.XML_MARKUP_START);
+		if(child != null)
+		{
+			child = child.getTreeNext();
+		}
+		if(child != null)
+		{
+			return child.getPsi();
+		}
+		return null;
+	}
 }

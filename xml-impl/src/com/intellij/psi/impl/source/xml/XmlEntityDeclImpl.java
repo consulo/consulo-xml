@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.pom.Navigatable;
@@ -24,171 +26,230 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.impl.source.SourceTreeToPsiMap;
 import com.intellij.psi.impl.source.parsing.xml.DtdParsing;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.URIReferenceProvider;
 import com.intellij.psi.tree.xml.IXmlLeafElementType;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlElementContentSpec;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.psi.xml.XmlEntityDecl;
+import com.intellij.psi.xml.XmlEntityRef;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author mike
  */
-public class XmlEntityDeclImpl extends XmlElementImpl implements XmlEntityDecl, XmlElementType {
-  public XmlEntityDeclImpl() {
-    super(XML_ENTITY_DECL);
-  }
+public class XmlEntityDeclImpl extends XmlElementImpl implements XmlEntityDecl, XmlElementType
+{
+	public XmlEntityDeclImpl()
+	{
+		super(XML_ENTITY_DECL);
+	}
 
-  public PsiElement getNameElement() {
-    for (ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext()) {
-      if (e instanceof XmlTokenImpl) {
-        XmlTokenImpl xmlToken = (XmlTokenImpl)e;
+	@Override
+	public PsiElement getNameElement()
+	{
+		for(ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext())
+		{
+			if(e instanceof XmlTokenImpl)
+			{
+				XmlTokenImpl xmlToken = (XmlTokenImpl) e;
 
-        if (xmlToken.getTokenType() == XmlTokenType.XML_NAME) return xmlToken;
-      }
-    }
+				if(xmlToken.getTokenType() == XmlTokenType.XML_NAME)
+				{
+					return xmlToken;
+				}
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public XmlAttributeValue getValueElement() {
-    if (isInternalReference()) {
-      for (ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext()) {
-        if (e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE) {
-          return (XmlAttributeValue)SourceTreeToPsiMap.treeElementToPsi(e);
-        }
-      }
-    }
-    else {
-      for (ASTNode e = getLastChildNode(); e != null; e = e.getTreePrev()) {
-        if (e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE) {
-          return (XmlAttributeValue)SourceTreeToPsiMap.treeElementToPsi(e);
-        }
-      }
-    }
+	@Override
+	public XmlAttributeValue getValueElement()
+	{
+		if(isInternalReference())
+		{
+			for(ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext())
+			{
+				if(e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE)
+				{
+					return (XmlAttributeValue) SourceTreeToPsiMap.treeElementToPsi(e);
+				}
+			}
+		}
+		else
+		{
+			for(ASTNode e = getLastChildNode(); e != null; e = e.getTreePrev())
+			{
+				if(e.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE)
+				{
+					return (XmlAttributeValue) SourceTreeToPsiMap.treeElementToPsi(e);
+				}
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public String getName() {
-    PsiElement nameElement = getNameElement();
-    return nameElement != null ? nameElement.getText() : "";
-  }
+	@Override
+	public String getName()
+	{
+		PsiElement nameElement = getNameElement();
+		return nameElement != null ? nameElement.getText() : "";
+	}
 
-  public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-    final PsiElement nameElement = getNameElement();
+	@Override
+	public PsiElement setName(@NotNull String name) throws IncorrectOperationException
+	{
+		final PsiElement nameElement = getNameElement();
 
-    if (nameElement != null) {
-      return ElementManipulators.getManipulator(nameElement).handleContentChange(
-        nameElement,
-        new TextRange(0,nameElement.getTextLength()),
-        name
-      );
-    }
-    return null;
-  }
+		if(nameElement != null)
+		{
+			return ElementManipulators.getManipulator(nameElement).handleContentChange(nameElement, new TextRange(0, nameElement.getTextLength()), name);
+		}
+		return null;
+	}
 
-  public PsiElement parse(PsiFile baseFile, EntityContextType contextType, final XmlEntityRef originalElement) {
-    PsiElement dep = XmlElement.DEPENDING_ELEMENT.get(getParent());
-    PsiElement dependsOnElement = getValueElement(dep instanceof PsiFile ? (PsiFile)dep : baseFile);
-    String value = null;
-    if (dependsOnElement instanceof XmlAttributeValue) {
-      XmlAttributeValue attributeValue = (XmlAttributeValue)dependsOnElement;
-      value = attributeValue.getValue();
-    }
-    else if (dependsOnElement instanceof PsiFile) {
-      PsiFile file = (PsiFile)dependsOnElement;
-      value = file.getText();
-    }
+	@Override
+	public PsiElement parse(PsiFile baseFile, EntityContextType contextType, final XmlEntityRef originalElement)
+	{
+		PsiElement dep = XmlElement.DEPENDING_ELEMENT.get(getParent());
+		PsiElement dependsOnElement = getValueElement(dep instanceof PsiFile ? (PsiFile) dep : baseFile);
+		String value = null;
+		if(dependsOnElement instanceof XmlAttributeValue)
+		{
+			XmlAttributeValue attributeValue = (XmlAttributeValue) dependsOnElement;
+			value = attributeValue.getValue();
+		}
+		else if(dependsOnElement instanceof PsiFile)
+		{
+			PsiFile file = (PsiFile) dependsOnElement;
+			value = file.getText();
+		}
 
-    if (value == null) return null;
+		if(value == null)
+		{
+			return null;
+		}
 
-    DtdParsing dtdParsing = new DtdParsing(value, XML_ELEMENT_DECL, contextType, baseFile);
-    PsiElement generated = dtdParsing.parse().getPsi().getFirstChild();
-    if (contextType == EntityContextType.ELEMENT_CONTENT_SPEC && generated instanceof XmlElementContentSpec) {
-      generated = generated.getFirstChild();
-    }
-    setDependsOnElement(generated, dependsOnElement);
-    return setOriginalElement(generated, originalElement);
-  }
+		DtdParsing dtdParsing = new DtdParsing(value, XML_ELEMENT_DECL, contextType, baseFile);
+		PsiElement generated = dtdParsing.parse().getPsi().getFirstChild();
+		if(contextType == EntityContextType.ELEMENT_CONTENT_SPEC && generated instanceof XmlElementContentSpec)
+		{
+			generated = generated.getFirstChild();
+		}
+		setDependsOnElement(generated, dependsOnElement);
+		return setOriginalElement(generated, originalElement);
+	}
 
-  private PsiElement setDependsOnElement(PsiElement generated, PsiElement dependsOnElement) {
-    PsiElement e = generated;
-    while (e != null) {
-      e.putUserData(XmlElement.DEPENDING_ELEMENT, dependsOnElement);
-      e = e.getNextSibling();
-    }
-    return generated;
-  }
+	private PsiElement setDependsOnElement(PsiElement generated, PsiElement dependsOnElement)
+	{
+		PsiElement e = generated;
+		while(e != null)
+		{
+			e.putUserData(XmlElement.DEPENDING_ELEMENT, dependsOnElement);
+			e = e.getNextSibling();
+		}
+		return generated;
+	}
 
-  private PsiElement setOriginalElement(PsiElement element, PsiElement valueElement) {
-    PsiElement e = element;
-    while (e != null) {
-      e.putUserData(XmlElement.INCLUDING_ELEMENT, (XmlElement)valueElement);
-      e = e.getNextSibling();
-    }
-    return element;
-  }
+	private PsiElement setOriginalElement(PsiElement element, PsiElement valueElement)
+	{
+		PsiElement e = element;
+		while(e != null)
+		{
+			e.putUserData(XmlElement.INCLUDING_ELEMENT, (XmlElement) valueElement);
+			e = e.getNextSibling();
+		}
+		return element;
+	}
 
-  @Nullable
-  private PsiElement getValueElement(PsiFile baseFile) {
-    final XmlAttributeValue attributeValue = getValueElement();
-    if (isInternalReference()) return attributeValue;
+	@Nullable
+	private PsiElement getValueElement(PsiFile baseFile)
+	{
+		final XmlAttributeValue attributeValue = getValueElement();
+		if(isInternalReference())
+		{
+			return attributeValue;
+		}
 
-    if (attributeValue != null) {
-      final String value = attributeValue.getValue();
-      if (value != null) {
-        XmlFile xmlFile = XmlUtil.findNamespaceByLocation(baseFile, value);
-        if (xmlFile != null) {
-          return xmlFile;
-        }
+		if(attributeValue != null)
+		{
+			final String value = attributeValue.getValue();
+			if(value != null)
+			{
+				XmlFile xmlFile = XmlUtil.findNamespaceByLocation(baseFile, value);
+				if(xmlFile != null)
+				{
+					return xmlFile;
+				}
 
-        final int i = URIReferenceProvider.getPrefixLength(value);
-        if (i > 0) {
-          return XmlUtil.findNamespaceByLocation(baseFile, value.substring(i));
-        }
-      }
-    }
+				final int i = XmlUtil.getPrefixLength(value);
+				if(i > 0)
+				{
+					return XmlUtil.findNamespaceByLocation(baseFile, value.substring(i));
+				}
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public boolean isInternalReference() {
-    for (ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext()) {
-      if (e.getElementType() instanceof IXmlLeafElementType) {
-        XmlToken token = (XmlToken)SourceTreeToPsiMap.treeElementToPsi(e);
-        if (token.getTokenType() == XmlTokenType.XML_DOCTYPE_PUBLIC ||
-            token.getTokenType() == XmlTokenType.XML_DOCTYPE_SYSTEM) {
-          return false;
-        }
-      }
-    }
+	@Override
+	public boolean isInternalReference()
+	{
+		for(ASTNode e = getFirstChildNode(); e != null; e = e.getTreeNext())
+		{
+			if(e.getElementType() instanceof IXmlLeafElementType)
+			{
+				XmlToken token = (XmlToken) SourceTreeToPsiMap.treeElementToPsi(e);
+				if(token.getTokenType() == XmlTokenType.XML_DOCTYPE_PUBLIC || token.getTokenType() == XmlTokenType.XML_DOCTYPE_SYSTEM)
+				{
+					return false;
+				}
+			}
+		}
 
-    return true;
-  }
+		return true;
+	}
 
-  @NotNull
-  public PsiElement getNavigationElement() {
-    return getNameElement();
-  }
+	@Override
+	@NotNull
+	public PsiElement getNavigationElement()
+	{
+		return getNameElement();
+	}
 
-  public int getTextOffset() {
-    final PsiElement name = getNameElement();
-    return name != null ? name.getTextOffset() : super.getTextOffset();
-  }
+	@Override
+	public int getTextOffset()
+	{
+		final PsiElement name = getNameElement();
+		return name != null ? name.getTextOffset() : super.getTextOffset();
+	}
 
-  public boolean canNavigate() {
-    if (isPhysical()) return super.canNavigate();
-    final PsiNamedElement psiNamedElement = XmlUtil.findRealNamedElement(this);
-    return psiNamedElement != null;
-  }
+	@Override
+	public boolean canNavigate()
+	{
+		if(isPhysical())
+		{
+			return super.canNavigate();
+		}
+		final PsiNamedElement psiNamedElement = XmlUtil.findRealNamedElement(this);
+		return psiNamedElement != null;
+	}
 
-  public void navigate(final boolean requestFocus) {
-    if (!isPhysical()) {
-      ((Navigatable)XmlUtil.findRealNamedElement(this)).navigate(requestFocus);
-      return;
-    }
-    super.navigate(requestFocus);
-  }
+	@Override
+	public void navigate(final boolean requestFocus)
+	{
+		if(!isPhysical())
+		{
+			((Navigatable) XmlUtil.findRealNamedElement(this)).navigate(requestFocus);
+			return;
+		}
+		super.navigate(requestFocus);
+	}
 }

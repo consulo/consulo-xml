@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2011 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,19 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import com.intellij.psi.impl.source.tree.TreeElement;
@@ -28,220 +35,277 @@ import com.intellij.psi.tree.ChildRoleBase;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
 import com.intellij.util.ArrayUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Mike
  */
-public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.xml.XmlDoctypeImpl");
+public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.xml.XmlDoctypeImpl");
 
-  public XmlDoctypeImpl() {
-    super(XmlElementType.XML_DOCTYPE);
-  }
+	public XmlDoctypeImpl()
+	{
+		super(XmlElementType.XML_DOCTYPE);
+	}
 
-  public void clearCaches() {
-    final XmlDocument doc = getContainingDocument();
-    if (doc != null) {
-      final XmlTag rootTag = doc.getRootTag();
-      if (rootTag instanceof TreeElement) {
-        ((TreeElement)rootTag).clearCaches();
-      }
-    }
-    super.clearCaches();
-  }
+	@Override
+	public void clearCaches()
+	{
+		final XmlDocument doc = getContainingDocument();
+		if(doc != null)
+		{
+			final XmlTag rootTag = doc.getRootTag();
+			if(rootTag instanceof TreeElement)
+			{
+				((TreeElement) rootTag).clearCaches();
+			}
+		}
+		super.clearCaches();
+	}
 
-  private XmlDocument getContainingDocument() {
-    for (PsiElement elem = getParent(); elem != null; elem = elem.getParent()) {
-      if (elem instanceof XmlDocument) {
-        return (XmlDocument)elem;
-      }
-      if (elem instanceof PsiFile) {
-        break; // optimization
-      }
-    }
-    return null;
-  }
-  
-  public int getChildRole(ASTNode child) {
-    LOG.assertTrue(child.getTreeParent() == this);
-    IElementType i = child.getElementType();
-    if (i == XmlTokenType.XML_DOCTYPE_PUBLIC) {
-      return XmlChildRole.XML_DOCTYPE_PUBLIC;
-    }
-    else if (i == XmlTokenType.XML_DOCTYPE_SYSTEM) {
-      return XmlChildRole.XML_DOCTYPE_SYSTEM;
-    }
-    else if (i == XmlTokenType.XML_NAME) {
-      return XmlChildRole.XML_NAME;
-    }
-    else {
-      return ChildRoleBase.NONE;
-    }
-  }
+	private XmlDocument getContainingDocument()
+	{
+		for(PsiElement elem = getParent(); elem != null; elem = elem.getParent())
+		{
+			if(elem instanceof XmlDocument)
+			{
+				return (XmlDocument) elem;
+			}
+			if(elem instanceof PsiFile)
+			{
+				break; // optimization
+			}
+		}
+		return null;
+	}
 
-  @Nullable
-  public String getDtdUri() {
-    final PsiElement dtdUrlElement = getDtdUrlElement();
-    if (dtdUrlElement == null || dtdUrlElement.getTextLength() == 0) return null;
-    return extractValue(dtdUrlElement);
-  }
+	@Override
+	public int getChildRole(ASTNode child)
+	{
+		LOG.assertTrue(child.getTreeParent() == this);
+		IElementType i = child.getElementType();
+		if(i == XmlTokenType.XML_DOCTYPE_PUBLIC)
+		{
+			return XmlChildRole.XML_DOCTYPE_PUBLIC;
+		}
+		else if(i == XmlTokenType.XML_DOCTYPE_SYSTEM)
+		{
+			return XmlChildRole.XML_DOCTYPE_SYSTEM;
+		}
+		else if(i == XmlTokenType.XML_NAME)
+		{
+			return XmlChildRole.XML_NAME;
+		}
+		else
+		{
+			return ChildRoleBase.NONE;
+		}
+	}
 
-  private static String extractValue(PsiElement element) {
-    String text = element.getText();
-    
-    if (!text.startsWith("\"") && !text.startsWith("\'")) {
-      if (hasInjectedEscapingQuotes(element, text)) return stripInjectedEscapingQuotes(text);
-    }
-    return StringUtil.stripQuotesAroundValue(text);
-  }
+	@Override
+	@Nullable
+	public String getDtdUri()
+	{
+		final PsiElement dtdUrlElement = getDtdUrlElement();
+		if(dtdUrlElement == null || dtdUrlElement.getTextLength() == 0)
+		{
+			return null;
+		}
+		return extractValue(dtdUrlElement);
+	}
 
-  // TODO: share common code
-  private static String stripInjectedEscapingQuotes(String text) {
-    return text.substring(2, text.length() - 2);
-  }
+	private static String extractValue(PsiElement element)
+	{
+		String text = element.getText();
 
-  private static boolean hasInjectedEscapingQuotes(PsiElement element, String text) {
-    if (text.startsWith("\\") && text.length() >= 4) {
-      char escapedChar = text.charAt(1);
-      PsiElement context =
-        InjectedLanguageManager.getInstance(element.getContainingFile().getProject()).getInjectionHost(element.getContainingFile());
-      
-      if (context != null && 
-          context.textContains(escapedChar) && 
-          context.getText().startsWith(String.valueOf(escapedChar)) &&
-          text.endsWith("\\"+escapedChar)
-        ) {
-        return true;
-      }
-    }
-    return false;
-  }
+		if(!text.startsWith("\"") && !text.startsWith("\'"))
+		{
+			if(hasInjectedEscapingQuotes(element, text))
+			{
+				return stripInjectedEscapingQuotes(text);
+			}
+		}
+		return StringUtil.stripQuotesAroundValue(text);
+	}
 
-  @Nullable
-  public PsiElement getDtdUrlElement() {
-    PsiElement docTypePublic = findChildByRoleAsPsiElement(XmlChildRole.XML_DOCTYPE_PUBLIC);
+	// TODO: share common code
+	private static String stripInjectedEscapingQuotes(String text)
+	{
+		return text.substring(2, text.length() - 2);
+	}
 
-    if (docTypePublic != null){
-      PsiElement element = docTypePublic.getNextSibling();
+	private static boolean hasInjectedEscapingQuotes(PsiElement element, String text)
+	{
+		if(text.startsWith("\\") && text.length() >= 4)
+		{
+			char escapedChar = text.charAt(1);
+			PsiElement context = InjectedLanguageManager.getInstance(element.getContainingFile().getProject()).getInjectionHost(element.getContainingFile());
 
-      while(element instanceof PsiWhiteSpace || element instanceof XmlComment){
-        element = element.getNextSibling();
-      }
+			if(context != null && context.textContains(escapedChar) && context.getText().startsWith(String.valueOf(escapedChar)) && text.endsWith("\\" + escapedChar))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-      //element = element.getNextSibling(); // pass qoutes
-      if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN){
-        element = element.getNextSibling();
+	@Override
+	@Nullable
+	public PsiElement getDtdUrlElement()
+	{
+		PsiElement docTypePublic = findChildByRoleAsPsiElement(XmlChildRole.XML_DOCTYPE_PUBLIC);
 
-        while(element instanceof PsiWhiteSpace || element instanceof XmlComment){
-          element = element.getNextSibling();
-        }
+		if(docTypePublic != null)
+		{
+			PsiElement element = docTypePublic.getNextSibling();
 
-        if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN){
-          return (XmlElement)element;
-        }
-      }
-    }
+			while(element instanceof PsiWhiteSpace || element instanceof XmlComment)
+			{
+				element = element.getNextSibling();
+			}
 
-    PsiElement docTypeSystem = findChildByRoleAsPsiElement(XmlChildRole.XML_DOCTYPE_SYSTEM);
+			//element = element.getNextSibling(); // pass qoutes
+			if(element instanceof XmlToken && ((XmlToken) element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
+			{
+				element = element.getNextSibling();
 
-    if (docTypeSystem != null){
-      PsiElement element = docTypeSystem.getNextSibling();
+				while(element instanceof PsiWhiteSpace || element instanceof XmlComment)
+				{
+					element = element.getNextSibling();
+				}
 
-      //element = element.getNextSibling(); // pass qoutes
-      while(element instanceof PsiWhiteSpace || element instanceof XmlComment){
-        element = element.getNextSibling();
-      }
+				if(element instanceof XmlToken && ((XmlToken) element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
+				{
+					return (XmlElement) element;
+				}
+			}
+		}
 
-      if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN){
-        return (XmlElement)element;
-      }
-    }
+		PsiElement docTypeSystem = findChildByRoleAsPsiElement(XmlChildRole.XML_DOCTYPE_SYSTEM);
 
-    return null;
-  }
+		if(docTypeSystem != null)
+		{
+			PsiElement element = docTypeSystem.getNextSibling();
 
-  public XmlElement getNameElement() {
-    return (XmlElement)findChildByRoleAsPsiElement(XmlChildRole.XML_NAME);
-  }
+			//element = element.getNextSibling(); // pass qoutes
+			while(element instanceof PsiWhiteSpace || element instanceof XmlComment)
+			{
+				element = element.getNextSibling();
+			}
 
-  @Nullable
-  public String getPublicId() {
-    return getSomeId(XmlChildRole.XML_DOCTYPE_PUBLIC);
-  }
+			if(element instanceof XmlToken && ((XmlToken) element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
+			{
+				return (XmlElement) element;
+			}
+		}
 
-  public String getSystemId() {
-    return getSomeId(XmlChildRole.XML_DOCTYPE_SYSTEM);
-  }
+		return null;
+	}
 
-  private String getSomeId(final int role) {
-    PsiElement docTypeSystem = findChildByRoleAsPsiElement(role);
+	@Override
+	public XmlElement getNameElement()
+	{
+		return (XmlElement) findChildByRoleAsPsiElement(XmlChildRole.XML_NAME);
+	}
 
-    if (docTypeSystem != null) {
-      PsiElement element = docTypeSystem.getNextSibling();
+	@Override
+	@Nullable
+	public String getPublicId()
+	{
+		return getSomeId(XmlChildRole.XML_DOCTYPE_PUBLIC);
+	}
 
-      while (element instanceof PsiWhiteSpace || element instanceof XmlComment) {
-        element = element.getNextSibling();
-      }
+	@Override
+	public String getSystemId()
+	{
+		return getSomeId(XmlChildRole.XML_DOCTYPE_SYSTEM);
+	}
 
-      //element = element.getNextSibling(); // pass qoutes
-      if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN) {
-        if (element.getTextLength() != 0) {
-          return extractValue(element);
-        }
-      }
-    }
-    return null;
-  }
+	private String getSomeId(final int role)
+	{
+		PsiElement docTypeSystem = findChildByRoleAsPsiElement(role);
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof XmlElementVisitor) {
-      ((XmlElementVisitor)visitor).visitXmlDoctype(this);
-    }
-    else {
-      visitor.visitElement(this);
-    }
-  }
+		if(docTypeSystem != null)
+		{
+			PsiElement element = docTypeSystem.getNextSibling();
 
-  public XmlMarkupDecl getMarkupDecl() {
-    for(PsiElement child = getFirstChild(); child != null; child = child.getNextSibling()){
-      if (child instanceof XmlMarkupDecl){
-        return (XmlMarkupDecl)child;
-      }
-    }
+			while(element instanceof PsiWhiteSpace || element instanceof XmlComment)
+			{
+				element = element.getNextSibling();
+			}
 
-    return null;
-  }
+			//element = element.getNextSibling(); // pass qoutes
+			if(element instanceof XmlToken && ((XmlToken) element).getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
+			{
+				if(element.getTextLength() != 0)
+				{
+					return extractValue(element);
+				}
+			}
+		}
+		return null;
+	}
 
-  @NotNull
-  public PsiReference[] getReferences() {
-    final PsiElement dtdUrlElement = getDtdUrlElement();
+	@Override
+	public void accept(@NotNull PsiElementVisitor visitor)
+	{
+		if(visitor instanceof XmlElementVisitor)
+		{
+			((XmlElementVisitor) visitor).visitXmlDoctype(this);
+		}
+		else
+		{
+			visitor.visitElement(this);
+		}
+	}
 
-    PsiReference uriRef = null;
-    if (dtdUrlElement != null) {
-      uriRef = createUrlReference(dtdUrlElement);
-    }
+	@Override
+	public XmlMarkupDecl getMarkupDecl()
+	{
+		for(PsiElement child = getFirstChild(); child != null; child = child.getNextSibling())
+		{
+			if(child instanceof XmlMarkupDecl)
+			{
+				return (XmlMarkupDecl) child;
+			}
+		}
 
-    final PsiReference[] refs = ReferenceProvidersRegistry.getReferencesFromProviders(this);
+		return null;
+	}
 
-    return uriRef == null ? refs : ArrayUtil.mergeArrays(new PsiReference[] {uriRef}, refs);
-  }
+	@Override
+	@NotNull
+	public PsiReference[] getReferences()
+	{
+		final PsiElement dtdUrlElement = getDtdUrlElement();
 
-  protected PsiReference createUrlReference(final PsiElement dtdUrlElement) {
-    return new URLReference(XmlDoctypeImpl.this) {
-      @NotNull
-      public Object[] getVariants() {
-        return findChildByRoleAsPsiElement(XmlChildRole.XML_DOCTYPE_PUBLIC) != null ?
-               super.getVariants(): EMPTY_ARRAY;
-      }
-      @NotNull
-      public String getCanonicalText() {
-        return extractValue(dtdUrlElement);
-      }
-      public TextRange getRangeInElement() {
-        return TextRange.from(dtdUrlElement.getTextRange().getStartOffset() - getTextRange().getStartOffset() + 1, Math.max(dtdUrlElement.getTextRange().getLength() - 2, 0));
-      }
-    };
-  }
+		PsiReference uriRef = null;
+		if(dtdUrlElement != null)
+		{
+			uriRef = createUrlReference(dtdUrlElement);
+		}
+
+		final PsiReference[] refs = ReferenceProvidersRegistry.getReferencesFromProviders(this);
+
+		return uriRef == null ? refs : ArrayUtil.mergeArrays(new PsiReference[]{uriRef}, refs);
+	}
+
+	protected PsiReference createUrlReference(final PsiElement dtdUrlElement)
+	{
+		return new URLReference(XmlDoctypeImpl.this)
+		{
+			@Override
+			@NotNull
+			public String getCanonicalText()
+			{
+				return extractValue(dtdUrlElement);
+			}
+
+			@Override
+			public TextRange getRangeInElement()
+			{
+				return TextRange.from(dtdUrlElement.getTextRange().getStartOffset() - getTextRange().getStartOffset() + 1, Math.max(dtdUrlElement.getTextRange().getLength() - 2, 0));
+			}
+		};
+	}
 }

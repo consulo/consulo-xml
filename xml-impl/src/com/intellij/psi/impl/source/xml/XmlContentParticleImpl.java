@@ -17,7 +17,7 @@ package com.intellij.psi.impl.source.xml;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.DtdReferencesProvider;
+import com.intellij.psi.impl.source.resolve.reference.impl.providers.DtdResolveUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlContentParticle;
 import com.intellij.psi.xml.XmlToken;
@@ -27,52 +27,64 @@ import com.intellij.xml.XmlElementDescriptor;
 /**
  * @author Dmitry Avdeev
  */
-public class XmlContentParticleImpl implements XmlContentParticle, XmlTokenType {
+public class XmlContentParticleImpl implements XmlContentParticle, XmlTokenType
+{
 
-  private final XmlToken myToken;
+	private final XmlToken myToken;
 
-  public XmlContentParticleImpl(XmlToken token) {
-    myToken = token;
-  }
+	public XmlContentParticleImpl(XmlToken token)
+	{
+		myToken = token;
+	}
 
-  @Override
-  public Type getType() {
-    return Type.ELEMENT;
-  }
+	@Override
+	public Type getType()
+	{
+		return Type.ELEMENT;
+	}
 
-  @Override
-  public Quantifier getQuantifier() {
-    return getQuantifierImpl(myToken);
-  }
+	@Override
+	public Quantifier getQuantifier()
+	{
+		return getQuantifierImpl(myToken);
+	}
 
-  public static Quantifier getQuantifierImpl(PsiElement element) {
-    PsiElement nextSibling = element.getNextSibling();
-    while (nextSibling instanceof PsiWhiteSpace) {
-      nextSibling = nextSibling.getNextSibling();
-    }
+	public static Quantifier getQuantifierImpl(PsiElement element)
+	{
+		PsiElement nextSibling = element.getNextSibling();
+		while(nextSibling instanceof PsiWhiteSpace)
+		{
+			nextSibling = nextSibling.getNextSibling();
+		}
 
-    if (nextSibling instanceof XmlToken) {
-      IElementType tokenType = ((XmlToken)nextSibling).getTokenType();
-      if (tokenType == XML_PLUS) {
-        return Quantifier.ONE_OR_MORE;
-      }
-      else if (tokenType == XML_STAR) {
-        return Quantifier.ZERO_OR_MORE;
-      }
-      else if (tokenType == XML_QUESTION) {
-        return Quantifier.OPTIONAL;
-      }
-    }
-    return Quantifier.REQUIRED;
-  }
+		if(nextSibling instanceof XmlToken)
+		{
+			IElementType tokenType = ((XmlToken) nextSibling).getTokenType();
+			if(tokenType == XML_PLUS)
+			{
+				return Quantifier.ONE_OR_MORE;
+			}
+			else if(tokenType == XML_STAR)
+			{
+				return Quantifier.ZERO_OR_MORE;
+			}
+			else if(tokenType == XML_QUESTION)
+			{
+				return Quantifier.OPTIONAL;
+			}
+		}
+		return Quantifier.REQUIRED;
+	}
 
-  @Override
-  public XmlContentParticle[] getSubParticles() {
-    return new XmlContentParticle[0];
-  }
+	@Override
+	public XmlContentParticle[] getSubParticles()
+	{
+		return new XmlContentParticle[0];
+	}
 
-  @Override
-  public XmlElementDescriptor getElementDescriptor() {
-    return DtdReferencesProvider.resolveElementReference(myToken.getText(), myToken);
-  }
+	@Override
+	public XmlElementDescriptor getElementDescriptor()
+	{
+		return DtdResolveUtil.resolveElementReference(myToken.getText(), myToken);
+	}
 }

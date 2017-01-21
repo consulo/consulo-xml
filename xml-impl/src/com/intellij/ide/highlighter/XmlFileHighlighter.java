@@ -37,8 +37,8 @@ public class XmlFileHighlighter extends SyntaxHighlighterBase
 
 	static
 	{
-		keys1 = new HashMap<IElementType, TextAttributesKey>();
-		keys2 = new HashMap<IElementType, TextAttributesKey>();
+		keys1 = new HashMap<>();
+		keys2 = new HashMap<>();
 
 		keys1.put(XmlTokenType.XML_DATA_CHARACTERS, XmlHighlighterColors.XML_TAG_DATA);
 

@@ -21,6 +21,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -30,6 +31,7 @@ import com.intellij.codeInspection.XmlQuickFixFactory;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import com.intellij.psi.xml.XmlFile;
@@ -113,9 +115,8 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 
 		XmlElementDescriptor ownDescriptor = isAbstractDescriptor(descriptorFromContext) ? tag.getDescriptor() : descriptorFromContext;
 
-		if(isAbstractDescriptor(ownDescriptor) || (parentDescriptor instanceof HtmlElementDescriptorImpl &&
-				ownDescriptor instanceof HtmlElementDescriptorImpl &&
-				isAbstractDescriptor(descriptorFromContext)))
+		if(isAbstractDescriptor(ownDescriptor) || (parentDescriptor instanceof HtmlElementDescriptorImpl && ownDescriptor instanceof HtmlElementDescriptorImpl && isAbstractDescriptor
+				(descriptorFromContext)))
 		{
 
 			final String name = tag.getName();
@@ -132,20 +133,20 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 				assert startTagName != null;
 				final PsiElement endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
-				List<LocalQuickFix> quickfixes = new ArrayList<LocalQuickFix>();
+				List<LocalQuickFix> quickfixes = new ArrayList<>();
 				quickfixes.add(action);
 				if(isOnTheFly)
 				{
-					LocalQuickFix fix;
-					if(startTagName.getContainingFile() instanceof XmlFile)
+					PsiFile file = startTagName.getContainingFile();
+					if(file instanceof XmlFile)
 					{
-						fix = XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(startTagName, "", null);
+						quickfixes.add(XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(startTagName, "", null));
 					}
-					else
-					{
-						fix = null;
-					}
-					ContainerUtil.addIfNotNull(fix, quickfixes);
+
+					// People using non-HTML as their template data language (but having not changed this in the IDE)
+					// will most likely see 'unknown html tag' error, because HTML is usually the default.
+					// So if they check quick fixes for this error they'll discover Change Template Data Language feature.
+					ContainerUtil.addIfNotNull(quickfixes, createChangeTemplateDataFix(file));
 				}
 				if(HtmlUtil.isHtml5Tag(name) && !HtmlUtil.hasNonHtml5Doctype(tag))
 				{
@@ -163,5 +164,11 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 				}
 			}
 		}
+	}
+
+	@Nullable
+	protected LocalQuickFix createChangeTemplateDataFix(PsiFile file)
+	{
+		return null;
 	}
 }

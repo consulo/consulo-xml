@@ -1,4 +1,4 @@
-<idea-plugin version="2" xmlns:xi="http://www.w3.org/2001/XInclude">
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
 	<id>com.intellij.xml</id>
 	<name>XML</name>
 	<version>SNAPSHOT</version>
@@ -8,6 +8,7 @@
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
 	<xi:include href="/META-INF/XmlDom.xml" xpointer="xpointer(/idea-plugin/*)"/>
+	<xi:include href="/META-INF/relaxng-plugin.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
 	<actions>
 
@@ -22,6 +23,18 @@
 
 			<add-to-group group-id="ToolsMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
 		</group>
+
+		<action id="EscapeEntities" class="com.intellij.xml.actions.EscapeEntitiesAction"
+				text="Encode XML/HTML Special Characters"
+				description="Escape XML/HTML special characters with entities">
+			<add-to-group group-id="EditMenu" anchor="last"/>
+		</action>
+
+		<action id="ConvertSchemaAction" class="org.intellij.plugins.relaxNG.convert.ConvertSchemaAction"
+				text="Convert Schema..."
+				description="Converts the selected Schema document (RNG, RNC, XSD, DTD) into another format">
+			<add-to-group group-id="ToolsXmlGroup" anchor="after" relative-to-action="GenerateDTD"/>
+		</action>
 
 		<group id="XmlGenerateToolsGroup">
 			<separator/>
@@ -175,7 +188,6 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 		<internalFileTemplate name="Html"/>
 		<internalFileTemplate name="Html5"/>
 		<internalFileTemplate name="Xhtml"/>
@@ -198,11 +210,14 @@
 		<completion.contributor language="any" implementationClass="com.intellij.codeInsight.completion.XmlNonFirstCompletionContributor"
 								id="xmlNonFirst" order="after xml"/>
 
+		<completion.contributor language="any" implementationClass="com.intellij.codeInsight.completion.HtmlCompletionContributor" id="html"/>
+
 		<completion.contributor language="XML" implementationClass="com.intellij.codeInsight.completion.XmlNoVariantsDelegator"
 								order="before xmlNonFirst"/>
+		<completion.contributor language="DTD" implementationClass="com.intellij.codeInsight.completion.DtdCompletionContributor" id="dtd" />
 
-		<completion.confidence language="XML" implementationClass="com.intellij.codeInsight.completion.XmlNameCompletionConfidence" id="xml"/>
-		<completion.confidence language="HTML" implementationClass="com.intellij.codeInsight.completion.XmlNameCompletionConfidence" id="html"/>
+		<completion.confidence language="HTML" implementationClass="com.intellij.codeInsight.completion.HtmlTextCompletionConfidence" id="htmlText"/>
+		<completion.confidence language="XHTML" implementationClass="com.intellij.codeInsight.completion.HtmlTextCompletionConfidence" id="xhtmlText"/>
 
 		<lookup.charFilter implementation="com.intellij.codeInsight.completion.XmlCharFilter" id="xml"/>
 
@@ -232,9 +247,9 @@
 							serviceImplementation="com.intellij.codeInspection.XmlQuickFixFactoryImpl"/>
 
 		<applicationService serviceInterface="com.intellij.javaee.ExternalResourceManager"
-							serviceImplementation="com.intellij.javaee.ExternalResourceManagerImpl"/>
+							serviceImplementation="com.intellij.javaee.ExternalResourceManagerExImpl"/>
 
-		<projectService serviceInterface="com.intellij.javaee.ProjectResources"
+		<projectService serviceInterface="com.intellij.javaee.ExternalResourceManagerExImpl"
 						serviceImplementation="com.intellij.javaee.ProjectResources"/>
 
 		<roots.watchedRootsProvider implementation="com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction"/>
@@ -349,11 +364,6 @@
 		<quoteHandler fileType="XML" className="com.intellij.codeInsight.editorActions.XmlQuoteHandler"/>
 		<quoteHandler fileType="HTML" className="com.intellij.codeInsight.editorActions.HtmlQuoteHandler"/>
 		<quoteHandler fileType="XHTML" className="com.intellij.codeInsight.editorActions.HtmlQuoteHandler"/>
-
-		<completionData fileType="XML" className="com.intellij.codeInsight.completion.XmlCompletionData"/>
-		<completionData fileType="HTML" className="com.intellij.codeInsight.completion.HtmlCompletionData"/>
-		<completionData fileType="XHTML" className="com.intellij.codeInsight.completion.XHtmlCompletionData"/>
-		<completionData fileType="DTD" className="com.intellij.codeInsight.completion.DtdCompletionData"/>
 
 		<psi.referenceContributor implementation="com.intellij.xml.util.XmlReferenceContributor"/>
 		<!--<pom.declarationSearcher implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.IdDeclarationSearcher"/>-->
@@ -632,7 +642,6 @@
 				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReferenceQuickFixProvider"/>
 		<codeInsight.unresolvedReferenceQuickFixProvider
 				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReferenceQuickFixProvider"/>
-
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
@@ -660,5 +669,9 @@
 
 		<psiPolicy key="HTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
 		<psiPolicy key="XHTML" implementationClass="com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
+
+		<xmlExtension implementation="com.intellij.xml.HtmlXmlExtension"/>
+
+		<fileNSInfoProvider implementation="com.intellij.xml.util.HtmlFileNSInfoProvider" />
 	</extensions>
 </idea-plugin>

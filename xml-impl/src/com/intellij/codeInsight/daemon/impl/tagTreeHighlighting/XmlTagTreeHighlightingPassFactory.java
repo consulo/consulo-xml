@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2011 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPassFactory;
@@ -24,25 +25,36 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeHighlightingPassFactory extends AbstractProjectComponent implements TextEditorHighlightingPassFactory {
+public class XmlTagTreeHighlightingPassFactory extends AbstractProjectComponent implements TextEditorHighlightingPassFactory
+{
+	public XmlTagTreeHighlightingPassFactory(Project project, TextEditorHighlightingPassRegistrar registrar)
+	{
+		super(project);
+		registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
+	}
 
-  public XmlTagTreeHighlightingPassFactory(Project project, TextEditorHighlightingPassRegistrar registrar) {
-    super(project);
-    registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
-  }
+	@Override
+	public TextEditorHighlightingPass createHighlightingPass(@NotNull final PsiFile file, @NotNull final Editor editor)
+	{
+		if(editor.isOneLineMode())
+		{
+			return null;
+		}
 
-  public TextEditorHighlightingPass createHighlightingPass(@NotNull final PsiFile file, @NotNull final Editor editor) {
-    if (editor.isOneLineMode()) return null;
+		if(!XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file))
+		{
+			return null;
+		}
+		if(!(editor instanceof EditorEx))
+		{
+			return null;
+		}
 
-    if (!XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)) return null;
-    if (!(editor instanceof EditorEx)) return null;
-
-    return new XmlTagTreeHighlightingPass(file, (EditorEx)editor);
-  }
+		return new XmlTagTreeHighlightingPass(file, (EditorEx) editor);
+	}
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,6 @@ import java.util.StringTokenizer;
 
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -32,99 +30,110 @@ import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 
 /**
  * @by Maxim.Mossienko
  */
-public class URIReferenceProvider extends PsiReferenceProvider {
+public class URIReferenceProvider extends PsiReferenceProvider
+{
 
-  public static final ElementFilter ELEMENT_FILTER = new ElementFilter() {
-    public boolean isAcceptable(Object element, PsiElement context) {
-      final PsiElement parent = context.getParent();
-      if (parent instanceof XmlAttribute) {
-        final XmlAttribute attribute = ((XmlAttribute)parent);
-        return attribute.isNamespaceDeclaration();
-      }
-      return false;
-    }
+	public static final ElementFilter ELEMENT_FILTER = new ElementFilter()
+	{
+		@Override
+		public boolean isAcceptable(Object element, PsiElement context)
+		{
+			final PsiElement parent = context.getParent();
+			if(parent instanceof XmlAttribute)
+			{
+				final XmlAttribute attribute = ((XmlAttribute) parent);
+				return attribute.isNamespaceDeclaration();
+			}
+			return false;
+		}
 
-    public boolean isClassAcceptable(Class hintClass) {
-      return true;
-    }
-  };
-  @NonNls private static final String URN = "urn:";
-  @NonNls private static final String FILE = "file:";
-  @NonNls private static final String CLASSPATH = "classpath:/";
-  @NonNls
-  private static final String NAMESPACE_ATTR_NAME = "namespace";
+		@Override
+		public boolean isClassAcceptable(Class hintClass)
+		{
+			return true;
+		}
+	};
+	@NonNls
+	private static final String NAMESPACE_ATTR_NAME = "namespace";
 
+	@Override
 	@NotNull
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context) {
-    final String text = element.getText();
-    String s = StringUtil.stripQuotesAroundValue(text);
-    final PsiElement parent = element.getParent();
+	public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context)
+	{
+		final String text = element.getText();
+		String s = StringUtil.unquoteString(text);
+		final PsiElement parent = element.getParent();
 
-    if (parent instanceof XmlAttribute &&
-        XmlUtil.SCHEMA_LOCATION_ATT.equals(((XmlAttribute)parent).getLocalName()) &&
-        XmlUtil.XML_SCHEMA_INSTANCE_URI.equals(((XmlAttribute)parent).getNamespace())) {
-      final List<PsiReference> refs = new ArrayList<PsiReference>(2);
-      final StringTokenizer tokenizer = new StringTokenizer(s);
+		if(parent instanceof XmlAttribute && XmlUtil.SCHEMA_LOCATION_ATT.equals(((XmlAttribute) parent).getLocalName()) && XmlUtil.XML_SCHEMA_INSTANCE_URI.equals(((XmlAttribute) parent).getNamespace
+				()))
+		{
+			final List<PsiReference> refs = new ArrayList<>(2);
+			final StringTokenizer tokenizer = new StringTokenizer(s);
 
-      while(tokenizer.hasMoreElements()) {
-        final String namespace = tokenizer.nextToken();
-        int offset = text.indexOf(namespace);
-        final URLReference urlReference = new URLReference(element, new TextRange(offset, offset + namespace.length()), true);
-        refs.add(urlReference);
-        if (!tokenizer.hasMoreElements()) break;
-        String url = tokenizer.nextToken();
+			while(tokenizer.hasMoreElements())
+			{
+				final String namespace = tokenizer.nextToken();
+				int offset = text.indexOf(namespace);
+				TextRange range = new TextRange(offset, offset + namespace.length());
+				final URLReference urlReference = new URLReference(element, range, true)
+				{
+					@Override
+					public boolean isSchemaLocation()
+					{
+						return true;
+					}
+				};
+				refs.add(urlReference);
+				if(!tokenizer.hasMoreElements())
+				{
+					break;
+				}
+				String url = tokenizer.nextToken();
 
-        offset = text.indexOf(url);
-        if (isUrlText(url, element.getProject())) refs.add(new DependentNSReference(element, new TextRange(offset,offset + url.length()), urlReference));
-        else {
-          ContainerUtil.addAll(refs, new FileReferenceSet(url, element, offset, this, false).getAllReferences());
-        }
-      }
+				offset = text.indexOf(url);
+				refs.add(new DependentNSReference(element, new TextRange(offset, offset + url.length()), urlReference));
+				if(!XmlUtil.isUrlText(url, element.getProject()))
+				{
+					ContainerUtil.addAll(refs, new FileReferenceSet(url, element, offset, this, false).getAllReferences());
+				}
+			}
 
-      return refs.toArray(new PsiReference[refs.size()]);
-    }
+			return refs.toArray(new PsiReference[refs.size()]);
+		}
+
+		PsiReference reference = getUrlReference(element, s);
+		if(reference != null)
+		{
+			return new PsiReference[]{reference};
+		}
+
+		s = s.substring(XmlUtil.getPrefixLength(s));
+		return new FileReferenceSet(s, element, text.indexOf(s), this, true).getAllReferences();
+	}
 
 
-    if (isUrlText(s, element.getProject()) ||
-        (parent instanceof XmlAttribute &&
-          ( ((XmlAttribute)parent).isNamespaceDeclaration() ||
-            NAMESPACE_ATTR_NAME.equals(((XmlAttribute)parent).getName())
-          )
-         )
-      ) {
-      if (!s.startsWith(XmlUtil.TAG_DIR_NS_PREFIX)) {
-        boolean namespaceSoftRef = parent instanceof XmlAttribute &&
-          NAMESPACE_ATTR_NAME.equals(((XmlAttribute)parent).getName()) &&
-          ((XmlAttribute)parent).getParent().getAttributeValue("schemaLocation") != null;
-        if (!namespaceSoftRef && parent instanceof XmlAttribute && ((XmlAttribute)parent).isNamespaceDeclaration()) {
-          namespaceSoftRef = parent.getContainingFile().getContext() != null;
-        }
-        return new URLReference[] { new URLReference(element, null, namespaceSoftRef)};
-      }
-    }
-
-    s = s.substring(getPrefixLength(s));
-    return new FileReferenceSet(s,element,text.indexOf(s), this,true).getAllReferences();
-  }
-
-  public static int getPrefixLength(@NotNull final String s) {
-    if (s.startsWith(XmlUtil.TAG_DIR_NS_PREFIX)) return XmlUtil.TAG_DIR_NS_PREFIX.length();
-    if (s.startsWith(FILE)) return FILE.length();
-    if (s.startsWith(CLASSPATH)) return CLASSPATH.length();
-    return 0;
-  }
-
-  static boolean isUrlText(final String s, Project project) {
-    final boolean surelyUrl = HtmlUtil.hasHtmlPrefix(s) || s.startsWith(URN);
-    if (surelyUrl) return surelyUrl;
-    int protocolIndex = s.indexOf(":/");
-    if (protocolIndex > 1 && !s.regionMatches(0,"classpath",0,protocolIndex)) return true;
-    return ExternalResourceManager.getInstance().getResourceLocation(s, project) != s;
-  }
+	static PsiReference getUrlReference(PsiElement element, String s)
+	{
+		PsiElement parent = element.getParent();
+		if(XmlUtil.isUrlText(s, element.getProject()) || (parent instanceof XmlAttribute && (((XmlAttribute) parent).isNamespaceDeclaration() || NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent)
+				.getName()))))
+		{
+			if(!s.startsWith(XmlUtil.TAG_DIR_NS_PREFIX))
+			{
+				boolean namespaceSoftRef = parent instanceof XmlAttribute && NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent).getName()) && ((XmlAttribute) parent).getParent().getAttributeValue
+						(XmlUtil.SCHEMA_LOCATION_ATT) != null;
+				if(!namespaceSoftRef && parent instanceof XmlAttribute && ((XmlAttribute) parent).isNamespaceDeclaration())
+				{
+					namespaceSoftRef = parent.getContainingFile().getContext() != null;
+				}
+				return new URLReference(element, null, namespaceSoftRef);
+			}
+		}
+		return null;
+	}
 }

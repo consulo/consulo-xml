@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2013 JetBrains s.r.o.
+ * Copyright 2000-2014 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,6 @@ import java.util.Set;
 
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
@@ -38,6 +35,8 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.XmlRecursiveElementVisitor;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
@@ -47,7 +46,7 @@ import com.intellij.util.text.StringTokenizer;
 import com.intellij.xml.util.HtmlUtil;
 
 /**
- * @author Fedor.Korotkov
+ * @author: Fedor.Korotkov
  */
 public class MicrodataUtil
 {
@@ -74,7 +73,7 @@ public class MicrodataUtil
 			{
 				return tag;
 			}
-			final String id = getStripedAttributeValue(tag, "id");
+			final String id = getStripedAttributeValue(tag, HtmlUtil.ID_ATTRIBUTE_NAME);
 			if(id != null && id2tag.containsKey(id))
 			{
 				return id2tag.get(id);
@@ -84,36 +83,39 @@ public class MicrodataUtil
 		return null;
 	}
 
-	private static Map<String, XmlTag> findScopesWithItemRef(@Nullable PsiFile file)
+	private static Map<String, XmlTag> findScopesWithItemRef(@Nullable final PsiFile file)
 	{
 		if(!(file instanceof XmlFile))
 		{
 			return Collections.emptyMap();
 		}
-		final Map<String, XmlTag> result = new THashMap<String, XmlTag>();
-		file.accept(new XmlRecursiveElementVisitor()
+		return CachedValuesManager.getCachedValue(file, new CachedValueProvider<Map<String, XmlTag>>()
 		{
+			@Nullable
 			@Override
-			public void visitXmlTag(final XmlTag tag)
+			public Result<Map<String, XmlTag>> compute()
 			{
-				super.visitXmlTag(tag);
-				XmlAttribute refAttr = tag.getAttribute(ITEM_REF);
-				if(refAttr != null && tag.getAttribute(ITEM_SCOPE) != null)
+				final Map<String, XmlTag> result = new THashMap<>();
+				file.accept(new XmlRecursiveElementVisitor()
 				{
-					getReferencesForAttributeValue(refAttr.getValueElement(), new PairFunction<String, Integer, PsiReference>()
+					@Override
+					public void visitXmlTag(final XmlTag tag)
 					{
-						@Nullable
-						@Override
-						public PsiReference fun(String t, Integer v)
+						super.visitXmlTag(tag);
+						XmlAttribute refAttr = tag.getAttribute(ITEM_REF);
+						if(refAttr != null && tag.getAttribute(ITEM_SCOPE) != null)
 						{
-							result.put(t, tag);
-							return null;
+							getReferencesForAttributeValue(refAttr.getValueElement(), (t, v) ->
+							{
+								result.put(t, tag);
+								return null;
+							});
 						}
-					});
-				}
+					}
+				});
+				return Result.create(result, file);
 			}
 		});
-		return result;
 	}
 
 	public static List<String> extractProperties(PsiFile file, String type)
@@ -150,20 +152,15 @@ public class MicrodataUtil
 
 	public static PsiReference[] getUrlReferencesForAttributeValue(final XmlAttributeValue element)
 	{
-		return getReferencesForAttributeValue(element, new PairFunction<String, Integer, PsiReference>()
+		return getReferencesForAttributeValue(element, (token, offset) ->
 		{
-			@Nullable
-			@Override
-			public PsiReference fun(String token, Integer offset)
+			if(HtmlUtil.hasHtmlPrefix(token))
 			{
-				if(HtmlUtil.hasHtmlPrefix(token))
-				{
-					final TextRange range = TextRange.from(offset, token.length());
-					final URLReference urlReference = new URLReference(element, range, true);
-					return new DependentNSReference(element, range, urlReference, true);
-				}
-				return null;
+				final TextRange range = TextRange.from(offset, token.length());
+				final URLReference urlReference = new URLReference(element, range, true);
+				return new DependentNSReference(element, range, urlReference, true);
 			}
+			return null;
 		});
 	}
 
@@ -174,9 +171,9 @@ public class MicrodataUtil
 			return PsiReference.EMPTY_ARRAY;
 		}
 		String text = element.getText();
-		String urls = StringUtil.stripQuotesAroundValue(text);
+		String urls = StringUtil.unquoteString(text);
 		StringTokenizer tokenizer = new StringTokenizer(urls);
-		List<PsiReference> result = new ArrayList<PsiReference>();
+		List<PsiReference> result = new ArrayList<>();
 		while(tokenizer.hasMoreTokens())
 		{
 			String token = tokenizer.nextToken();
@@ -194,16 +191,16 @@ public class MicrodataUtil
 	public static String getStripedAttributeValue(@Nullable XmlTag tag, @Nls String attributeName)
 	{
 		String value = tag != null ? tag.getAttributeValue(attributeName) : null;
-		return value != null ? StringUtil.stripQuotesAroundValue(value) : null;
+		return value != null ? StringUtil.unquoteString(value) : null;
 	}
 
 	private static class CollectNamesVisitor extends XmlRecursiveElementVisitor
 	{
-		protected final Set<String> myValues = new THashSet<String>();
+		protected final Set<String> myValues = new THashSet<>();
 
 		public List<String> getValues()
 		{
-			return new ArrayList<String>(myValues);
+			return new ArrayList<>(myValues);
 		}
 	}
 
@@ -247,23 +244,14 @@ public class MicrodataUtil
 		public void visitXmlTag(XmlTag tag)
 		{
 			super.visitXmlTag(tag);
-			if("prop-nam".equalsIgnoreCase(getStripedAttributeValue(tag, "class")))
+			if("prop-nam".equalsIgnoreCase(getStripedAttributeValue(tag, HtmlUtil.CLASS_ATTRIBUTE_NAME)))
 			{
 				final String code = tag.getSubTagText("code");
 				if(code != null)
 				{
-					myValues.add(code);
+					myValues.add(StringUtil.stripHtml(code, false));
 				}
 			}
-		}
-	}
-
-	private static class FetchMicrodataResourceAction extends FetchExtResourceAction
-	{
-		@Override
-		protected boolean resultIsValid(Project project, ProgressIndicator indicator, String resourceUrl, FetchExtResourceAction.FetchResult result)
-		{
-			return true;
 		}
 	}
 }

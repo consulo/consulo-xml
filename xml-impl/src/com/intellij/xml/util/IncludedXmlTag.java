@@ -15,6 +15,11 @@
  */
 package com.intellij.xml.util;
 
+import java.util.Map;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlTagValueImpl;
@@ -26,232 +31,263 @@ import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 /**
  * @author peter
  */
-public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.IncludedXmlTag");
-  public IncludedXmlTag(@NotNull XmlTag original, @Nullable PsiElement parent) {
-    super(original, parent);
-  }
+public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.IncludedXmlTag");
 
-  @Override
-  @Nullable
-  public XmlTag getParentTag() {
-    return getParent() instanceof XmlTag ? (XmlTag)getParent() : null;
-  }
+	public IncludedXmlTag(@NotNull XmlTag original, @Nullable PsiElement parent)
+	{
+		super(original, parent);
+	}
 
-  @Override
-  @NotNull
-  @NonNls
-  public String getName() {
-    return getOriginal().getName();
-  }
+	@Override
+	@Nullable
+	public XmlTag getParentTag()
+	{
+		return getParent() instanceof XmlTag ? (XmlTag) getParent() : null;
+	}
 
-  @Override
-  public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included tags");
-  }
+	@Override
+	@NotNull
+	@NonNls
+	public String getName()
+	{
+		return getOriginal().getName();
+	}
 
-  @Override
-  @NotNull
-  @NonNls
-  public String getNamespace() {
-    XmlTag original = getOriginal();
-    LOG.assertTrue(original.isValid());
-    return original.getNamespace();
-  }
+	@Override
+	public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException
+	{
+		throw new UnsupportedOperationException("Can't modify included tags");
+	}
 
-  @Override
-  @NotNull
-  @NonNls
-  public String getLocalName() {
-    return getOriginal().getLocalName();
-  }
+	@Override
+	@NotNull
+	@NonNls
+	public String getNamespace()
+	{
+		XmlTag original = getOriginal();
+		LOG.assertTrue(original.isValid());
+		return original.getNamespace();
+	}
 
-  @Override
-  @Nullable
-  public XmlElementDescriptor getDescriptor() {
-    return getOriginal().getDescriptor();
-  }
+	@Override
+	@NotNull
+	@NonNls
+	public String getLocalName()
+	{
+		return getOriginal().getLocalName();
+	}
 
-  @Override
-  @NotNull
-  public XmlAttribute[] getAttributes() {
-    XmlAttribute[] original = getOriginal().getAttributes();
-    XmlAttribute[] attributes = new XmlAttribute[original.length];
-    for (int i = 0; i < original.length; i++) {
-      XmlAttribute attribute = original[i];
-      attributes[i] = new IncludedXmlAttribute(attribute, this);
-    }
-    return attributes;
-  }
+	@Override
+	@Nullable
+	public XmlElementDescriptor getDescriptor()
+	{
+		return getOriginal().getDescriptor();
+	}
 
-  @Override
-  @Nullable
-  public XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace) {
-    XmlAttribute attribute = getOriginal().getAttribute(name, namespace);
-    return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
-  }
+	@Override
+	@NotNull
+	public XmlAttribute[] getAttributes()
+	{
+		XmlAttribute[] original = getOriginal().getAttributes();
+		XmlAttribute[] attributes = new XmlAttribute[original.length];
+		for(int i = 0; i < original.length; i++)
+		{
+			XmlAttribute attribute = original[i];
+			attributes[i] = new IncludedXmlAttribute(attribute, this);
+		}
+		return attributes;
+	}
 
-  @Override
-  @Nullable
-  public XmlAttribute getAttribute(@NonNls String qname) {
-    XmlAttribute attribute = getOriginal().getAttribute(qname);
-    return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
-  }
+	@Override
+	@Nullable
+	public XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace)
+	{
+		XmlAttribute attribute = getOriginal().getAttribute(name, namespace);
+		return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
+	}
 
-  @Override
-  @Nullable
-  public String getAttributeValue(@NonNls String name, @NonNls String namespace) {
-    return getOriginal().getAttributeValue(name, namespace);
-  }
+	@Override
+	@Nullable
+	public XmlAttribute getAttribute(@NonNls String qname)
+	{
+		XmlAttribute attribute = getOriginal().getAttribute(qname);
+		return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
+	}
 
-  @Override
-  @Nullable
-  public String getAttributeValue(@NonNls String qname) {
-    return getOriginal().getAttributeValue(qname);
-  }
+	@Override
+	@Nullable
+	public String getAttributeValue(@NonNls String name, @NonNls String namespace)
+	{
+		return getOriginal().getAttributeValue(name, namespace);
+	}
 
-  @Override
-  public XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value) throws IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included tags");
-  }
+	@Override
+	@Nullable
+	public String getAttributeValue(@NonNls String qname)
+	{
+		return getOriginal().getAttributeValue(qname);
+	}
 
-  @Override
-  public XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included tags");
-  }
+	@Override
+	public XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value) throws IncorrectOperationException
+	{
+		throw new UnsupportedOperationException("Can't modify included tags");
+	}
 
-  @Override
-  public XmlTag createChildTag(@NonNls String localName,
-                               @NonNls String namespace,
-                               @Nullable @NonNls String bodyText,
-                               boolean enforceNamespacesDeep) {
-    return getOriginal().createChildTag(localName, namespace, bodyText, enforceNamespacesDeep);
-  }
+	@Override
+	public XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException
+	{
+		throw new UnsupportedOperationException("Can't modify included tags");
+	}
 
-  @Override
-  public XmlTag addSubTag(XmlTag subTag, boolean first) {
-    throw new UnsupportedOperationException("Can't modify included tags");
-  }
+	@Override
+	public XmlTag createChildTag(@NonNls String localName, @NonNls String namespace, @Nullable @NonNls String bodyText, boolean enforceNamespacesDeep)
+	{
+		return getOriginal().createChildTag(localName, namespace, bodyText, enforceNamespacesDeep);
+	}
 
-  @Override
-  @NotNull
-  public XmlTag[] getSubTags() {
-    return wrapTags(getOriginal().getSubTags());
-  }
+	@Override
+	public XmlTag addSubTag(XmlTag subTag, boolean first)
+	{
+		throw new UnsupportedOperationException("Can't modify included tags");
+	}
 
-  private XmlTag[] wrapTags(XmlTag[] original) {
-    XmlTag[] result = new XmlTag[original.length];
-    for (int i = 0; i < original.length; i++) {
-      result[i] = new IncludedXmlTag(original[i], this);
-    }
-    return result;
-  }
+	@Override
+	@NotNull
+	public XmlTag[] getSubTags()
+	{
+		return wrapTags(getOriginal().getSubTags());
+	}
 
-  @Override
-  @NotNull
-  public XmlTag[] findSubTags(@NonNls String qname) {
-    return wrapTags(getOriginal().findSubTags(qname));
-  }
+	private XmlTag[] wrapTags(XmlTag[] original)
+	{
+		XmlTag[] result = new XmlTag[original.length];
+		for(int i = 0; i < original.length; i++)
+		{
+			result[i] = new IncludedXmlTag(original[i], this);
+		}
+		return result;
+	}
 
-  @Override
-  @NotNull
-  public XmlTag[] findSubTags(@NonNls String localName, @NonNls String namespace) {
-    return wrapTags(getOriginal().findSubTags(localName, namespace));
-  }
+	@Override
+	@NotNull
+	public XmlTag[] findSubTags(@NonNls String qname)
+	{
+		return wrapTags(getOriginal().findSubTags(qname));
+	}
 
-  @Override
-  @Nullable
-  public XmlTag findFirstSubTag(@NonNls String qname) {
-    XmlTag tag = getOriginal().findFirstSubTag(qname);
-    return tag == null ? null : new IncludedXmlTag(tag, this);
-  }
+	@Override
+	@NotNull
+	public XmlTag[] findSubTags(@NonNls String localName, @NonNls String namespace)
+	{
+		return wrapTags(getOriginal().findSubTags(localName, namespace));
+	}
 
-  @Override
-  @NotNull
-  @NonNls
-  public String getNamespacePrefix() {
-    return getOriginal().getNamespacePrefix();
-  }
+	@Override
+	@Nullable
+	public XmlTag findFirstSubTag(@NonNls String qname)
+	{
+		XmlTag tag = getOriginal().findFirstSubTag(qname);
+		return tag == null ? null : new IncludedXmlTag(tag, this);
+	}
 
-  @Override
-  @NotNull
-  @NonNls
-  public String getNamespaceByPrefix(@NonNls String prefix) {
-    return getOriginal().getNamespaceByPrefix(prefix);
-  }
+	@Override
+	@NotNull
+	@NonNls
+	public String getNamespacePrefix()
+	{
+		return getOriginal().getNamespacePrefix();
+	}
 
-  @Override
-  @Nullable
-  public String getPrefixByNamespace(@NonNls String namespace) {
-    return getOriginal().getPrefixByNamespace(namespace);
-  }
+	@Override
+	@NotNull
+	@NonNls
+	public String getNamespaceByPrefix(@NonNls String prefix)
+	{
+		return getOriginal().getNamespaceByPrefix(prefix);
+	}
 
-  @Override
-  public String[] knownNamespaces() {
-    return getOriginal().knownNamespaces();
-  }
+	@Override
+	@Nullable
+	public String getPrefixByNamespace(@NonNls String namespace)
+	{
+		return getOriginal().getPrefixByNamespace(namespace);
+	}
 
-  @Override
-  public boolean hasNamespaceDeclarations() {
-    return getOriginal().hasNamespaceDeclarations();
-  }
+	@Override
+	public String[] knownNamespaces()
+	{
+		return getOriginal().knownNamespaces();
+	}
 
-  @Override
-  @NotNull
-  public Map<String, String> getLocalNamespaceDeclarations() {
-    return getOriginal().getLocalNamespaceDeclarations();
-  }
+	@Override
+	public boolean hasNamespaceDeclarations()
+	{
+		return getOriginal().hasNamespaceDeclarations();
+	}
 
-  @Override
-  @NotNull
-  public XmlTagValue getValue() {
-    return XmlTagValueImpl.createXmlTagValue(this);
-  }
+	@Override
+	@NotNull
+	public Map<String, String> getLocalNamespaceDeclarations()
+	{
+		return getOriginal().getLocalNamespaceDeclarations();
+	}
 
-  @Override
-  @Nullable
-  public XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict) {
-    return getOriginal().getNSDescriptor(namespace, strict);
-  }
+	@Override
+	@NotNull
+	public XmlTagValue getValue()
+	{
+		return XmlTagValueImpl.createXmlTagValue(this);
+	}
 
-  @Override
-  public boolean isEmpty() {
-    return getOriginal().isEmpty();
-  }
+	@Override
+	@Nullable
+	public XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict)
+	{
+		return getOriginal().getNSDescriptor(namespace, strict);
+	}
 
-  @Override
-  public void collapseIfEmpty() {
-    throw new UnsupportedOperationException("Can't modify included tags");
-  }
+	@Override
+	public boolean isEmpty()
+	{
+		return getOriginal().isEmpty();
+	}
 
-  @Override
-  @Nullable
-  @NonNls
-  public String getSubTagText(@NonNls String qname) {
-    return getOriginal().getSubTagText(qname);
-  }
+	@Override
+	public void collapseIfEmpty()
+	{
+		throw new UnsupportedOperationException("Can't modify included tags");
+	}
 
-  @Override
-  public PsiMetaData getMetaData() {
-    return null;
-  }
+	@Override
+	@Nullable
+	@NonNls
+	public String getSubTagText(@NonNls String qname)
+	{
+		return getOriginal().getSubTagText(qname);
+	}
 
-  @Override
-  public XmlTagChild getNextSiblingInTag() {
-    return null;
-  }
+	@Override
+	public PsiMetaData getMetaData()
+	{
+		return null;
+	}
 
-  @Override
-  public XmlTagChild getPrevSiblingInTag() {
-    return null;
-  }
+	@Override
+	public XmlTagChild getNextSiblingInTag()
+	{
+		return null;
+	}
+
+	@Override
+	public XmlTagChild getPrevSiblingInTag()
+	{
+		return null;
+	}
 }

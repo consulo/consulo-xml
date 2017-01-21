@@ -124,7 +124,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 				{
 					builder = XsdNamespaceBuilder.computeNamespace(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
 				}
-				final HashMap<String, XsdNamespaceBuilder> map = new HashMap<String, XsdNamespaceBuilder>(2);
+				final HashMap<String, XsdNamespaceBuilder> map = new HashMap<>(2);
 				String namespace = builder.getNamespace();
 				if(namespace != null)
 				{
@@ -199,34 +199,30 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 			return resources.get(0);
 		}
 		final String fileName = schemaLocation == null ? null : new File(schemaLocation).getName();
-		IndexedRelevantResource<String, XsdNamespaceBuilder> resource = Collections.max(resources, new Comparator<IndexedRelevantResource<String, XsdNamespaceBuilder>>()
+		IndexedRelevantResource<String, XsdNamespaceBuilder> resource = Collections.max(resources, (o1, o2) ->
 		{
-			@Override
-			public int compare(IndexedRelevantResource<String, XsdNamespaceBuilder> o1, IndexedRelevantResource<String, XsdNamespaceBuilder> o2)
+			if(fileName != null)
 			{
-				if(fileName != null)
-				{
-					int i = Comparing.compare(fileName.equals(o1.getFile().getName()), fileName.equals(o2.getFile().getName()));
-					if(i != 0)
-					{
-						return i;
-					}
-				}
-				if(tagName != null)
-				{
-					int i = Comparing.compare(o1.getValue().hasTag(tagName), o2.getValue().hasTag(tagName));
-					if(i != 0)
-					{
-						return i;
-					}
-				}
-				int i = o1.compareTo(o2);
+				int i = Comparing.compare(fileName.equals(o1.getFile().getName()), fileName.equals(o2.getFile().getName()));
 				if(i != 0)
 				{
 					return i;
 				}
-				return o1.getValue().getRating(tagName, version) - o2.getValue().getRating(tagName, version);
 			}
+			if(tagName != null)
+			{
+				int i = Comparing.compare(o1.getValue().hasTag(tagName), o2.getValue().hasTag(tagName));
+				if(i != 0)
+				{
+					return i;
+				}
+			}
+			int i = o1.compareTo(o2);
+			if(i != 0)
+			{
+				return i;
+			}
+			return o1.getValue().getRating(tagName, version) - o2.getValue().getRating(tagName, version);
 		});
 		if(tagName != null && !resource.getValue().hasTag(tagName))
 		{
@@ -263,9 +259,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 	public static XmlFile guessDtd(String dtdUri, @NotNull PsiFile baseFile)
 	{
 
-		if(!dtdUri.endsWith(".dtd") ||
-				DumbService.isDumb(baseFile.getProject()) ||
-				XmlUtil.isStubBuilding())
+		if(!dtdUri.endsWith(".dtd") || DumbService.isDumb(baseFile.getProject()) || XmlUtil.isStubBuilding())
 		{
 			return null;
 		}
