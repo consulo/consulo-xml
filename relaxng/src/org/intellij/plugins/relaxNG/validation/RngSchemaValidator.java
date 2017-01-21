@@ -16,7 +16,6 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -260,7 +258,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 	{
 		try
 		{
-			return VfsUtil.findFileByURL(new URL(systemId));
+			return VfsUtilCore.findRelativeFile(systemId, null);
 		}
 		catch(Exception e)
 		{
