@@ -17,15 +17,20 @@ package com.intellij.codeInspection;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
-import consulo.lombok.annotations.ApplicationService;
 
-@ApplicationService
 public abstract class XmlQuickFixFactory
 {
+	@NotNull
+	public static XmlQuickFixFactory getInstance()
+	{
+		return ServiceManager.getService(XmlQuickFixFactory.class);
+	}
+
 	@NotNull
 	public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@NotNull XmlTag tag, @NotNull String attrName, @NotNull String... values);
 

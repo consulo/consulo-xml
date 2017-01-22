@@ -15,12 +15,28 @@
  */
 package com.intellij.codeInsight.daemon;
 
-import consulo.lombok.annotations.Bundle;
+import org.jetbrains.annotations.PropertyKey;
+import com.intellij.AbstractBundle;
 
 /**
  * @author max
  */
-@Bundle
-public class XmlErrorMessages
+public class XmlErrorMessages extends AbstractBundle
 {
+	private static final XmlErrorMessages ourInstance = new XmlErrorMessages();
+
+	private XmlErrorMessages()
+	{
+		super("messages.XmlErrorMessages");
+	}
+
+	public static String message(@PropertyKey(resourceBundle = "messages.XmlErrorMessages") String key)
+	{
+		return ourInstance.getMessage(key);
+	}
+
+	public static String message(@PropertyKey(resourceBundle = "messages.XmlErrorMessages") String key, Object... params)
+	{
+		return ourInstance.getMessage(key, params);
+	}
 }

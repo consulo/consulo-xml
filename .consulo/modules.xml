@@ -23,7 +23,6 @@
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-module-name="consulo-xml" />
           <extension id="java" sdk-module-name="consulo-xml" language-level-module-name="consulo-xml" />
-          <extension id="lombok" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
@@ -50,7 +49,6 @@
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-module-name="consulo-xml" />
           <extension id="java" sdk-module-name="consulo-xml" language-level-module-name="consulo-xml" />
-          <extension id="lombok" />
           <content url="file://$MODULE_DIR$">
             <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />

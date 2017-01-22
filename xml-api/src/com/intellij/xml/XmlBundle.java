@@ -15,13 +15,29 @@
  */
 package com.intellij.xml;
 
-import consulo.lombok.annotations.Bundle;
+import org.jetbrains.annotations.PropertyKey;
+import com.intellij.AbstractBundle;
 
 /**
  * @author lesya
  */
-@Bundle
-public class XmlBundle
+public class XmlBundle extends AbstractBundle
 {
 	public static final String PATH_TO_BUNDLE = "messages.XmlBundle";
+	private static final XmlBundle ourInstance = new XmlBundle();
+
+	private XmlBundle()
+	{
+		super(PATH_TO_BUNDLE);
+	}
+
+	public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key)
+	{
+		return ourInstance.getMessage(key);
+	}
+
+	public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, Object... params)
+	{
+		return ourInstance.getMessage(key, params);
+	}
 }
