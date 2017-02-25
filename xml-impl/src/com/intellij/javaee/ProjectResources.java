@@ -26,7 +26,7 @@ import com.intellij.openapi.components.StoragePathMacros;
 /**
  * @author Dmitry Avdeev
  */
-@State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_FILE))
+@State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/misc.xml"))
 public class ProjectResources extends ExternalResourceManagerExImpl
 {
 	@NotNull
