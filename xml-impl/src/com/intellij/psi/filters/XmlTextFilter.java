@@ -15,11 +15,11 @@
  */
 package com.intellij.psi.filters;
 
+import org.jetbrains.annotations.NonNls;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NonNls;
  * Time: 13:57:35
  * To change this template use Options | File Templates.
  */
-public class XmlTextFilter implements ElementFilter, InitializableFilter{
+public class XmlTextFilter implements ElementFilter{
   protected String[] myValue;
   private boolean myCaseInsensitiveFlag = false;
 
