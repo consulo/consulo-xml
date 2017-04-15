@@ -387,9 +387,6 @@
 		<copyPastePreProcessor implementation="com.intellij.codeInsight.editorActions.XmlCopyPastePreProcessor"/>
 		-->
 
-		<syntaxHighlighter key="CONSULO_PROJECT" implementationClass="com.intellij.ide.highlighter.XmlFileHighlighter"/>
-		<syntaxHighlighter key="CONSULO_MODULE" implementationClass="com.intellij.ide.highlighter.XmlFileHighlighter"/>
-		<syntaxHighlighter key="CONSULO_WORKSPACE" implementationClass="com.intellij.ide.highlighter.XmlFileHighlighter"/>
 		<syntaxHighlighter key="GUI_DESIGNER_FORM" implementationClass="com.intellij.ide.highlighter.XmlFileHighlighter"/>
 
 		<enterHandlerDelegate implementation="com.intellij.codeInsight.editorActions.EnterBetweenXmlTagsHandler" id="xmlEnter"/>
@@ -624,10 +621,10 @@
 								 key="browsers.settings"
 								 bundle="messages.IdeBundle"/>
 
-		<lang.syntaxHighlighterFactory key="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory key="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory key="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory key="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory language="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory language="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory language="HTML" implementationClass="com.intellij.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
+		<lang.syntaxHighlighterFactory language="XHTML" implementationClass="com.intellij.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
 
 		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNsPrefixAnnotator"/>
 		<annotator language="XML" implementationClass="com.intellij.codeInsight.daemon.impl.analysis.XmlNamespaceAnnotator"/>
