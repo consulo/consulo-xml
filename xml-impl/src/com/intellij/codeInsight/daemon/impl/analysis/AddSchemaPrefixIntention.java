@@ -61,6 +61,12 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 	}
 
 	@Override
+	public boolean startInWriteAction()
+	{
+		return false;
+	}
+
+	@Override
 	public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException
 	{
 		final XmlAttribute xmlns = getXmlnsDeclaration(element);
