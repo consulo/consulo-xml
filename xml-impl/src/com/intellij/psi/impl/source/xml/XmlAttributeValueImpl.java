@@ -15,13 +15,22 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.ItemPresentationWithSeparator;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
+import com.intellij.psi.LiteralTextEscaper;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiLanguageInjectionHost;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.XmlElementFactory;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.CheckUtil;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.impl.source.tree.injected.XmlAttributeLiteralEscaper;
@@ -34,9 +43,6 @@ import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 
 /**
  * @author Mike
@@ -50,6 +56,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     super(XmlElementType.XML_ATTRIBUTE_VALUE);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlAttributeValue(this);
@@ -59,6 +66,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     }
   }
 
+  @Override
   public String getValue() {
     // it is more correct way to strip quotes since injected xml may have quotes encoded
     String text = getText();
@@ -73,6 +81,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     return text;
   }
 
+  @Override
   public TextRange getValueTextRange() {
     final TextRange range = getTextRange();
     final String value = getValue();
@@ -84,11 +93,13 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     return new TextRange(start, end);
   }
 
+  @Override
   public void clearCaches() {
     super.clearCaches();
     myCachedReferences = null;
   }
 
+  @Override
   @NotNull
   public PsiReference[] getReferences() {
     PsiReference[] cachedReferences = myCachedReferences;
@@ -96,12 +107,13 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     if (cachedReferences != null && myModCount == curModCount) {
       return cachedReferences;
     }
-    cachedReferences = ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlAttributeValue.class);
+    cachedReferences = ReferenceProvidersRegistry.getReferencesFromProviders(this);
     myCachedReferences = cachedReferences;
     myModCount = curModCount;
     return cachedReferences;
   }
 
+  @Override
   public PsiReference getReference() {
     final PsiReference[] refs = getReferences();
     if (refs.length > 0) return refs[0];
@@ -109,6 +121,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
 
+  @Override
   public int getTextOffset() {
     return getTextRange().getStartOffset() + 1;
   }
@@ -118,6 +131,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     return getParent() instanceof XmlAttributeImpl;
   }
 
+  @Override
   public PsiLanguageInjectionHost updateText(@NotNull String text) {
     try {
       final String quoteChar = getTextLength() > 0 ? getText().substring(0, 1) : "";
@@ -135,30 +149,37 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
     return this;
   }
 
+  @Override
   @NotNull
   public LiteralTextEscaper<XmlAttributeValueImpl> createLiteralTextEscaper() {
     return new XmlAttributeLiteralEscaper(this);
   }
 
+  @Override
   public PsiMetaData getMetaData() {
     return this;
   }
 
+  @Override
   public PsiElement getDeclaration() {
     return this;
   }
 
+  @Override
   public String getName(final PsiElement context) {
     return getValue();
   }
 
+  @Override
   public String getName() {
     return getValue();
   }
 
+  @Override
   public void init(final PsiElement element) {
   }
 
+  @Override
   public Object[] getDependences() {
     return ArrayUtil.EMPTY_OBJECT_ARRAY;
   }
