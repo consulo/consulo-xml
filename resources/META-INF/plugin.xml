@@ -188,9 +188,9 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<internalFileTemplate name="Html"/>
-		<internalFileTemplate name="Html5"/>
-		<internalFileTemplate name="Xhtml"/>
+		<internalFileTemplate name="HTML File"/>
+		<internalFileTemplate name="HTML4 File"/>
+		<internalFileTemplate name="XHTML File"/>
 
 		<fileTypeFactory implementation="com.intellij.xml.XmlFileTypeFactory"/>
 		<bidiRegionsSeparator language="XML" implementationClass="com.intellij.openapi.editor.bidi.XmlBidiRegionsSeparator"/>
