@@ -55,7 +55,7 @@ public class DomApplicationComponent
 	private final ImplementationClassCache myCachedImplementationClasses = new ImplementationClassCache(DomImplementationClassEP.EP_NAME);
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	final ReflectionAssignabilityCache assignabilityCache = new ReflectionAssignabilityCache();
-	private final FactoryMap<Class, DomElementsAnnotator> myClass2Annotator = new ConcurrentFactoryMap<Class, DomElementsAnnotator>()
+	private final Map<Class, DomElementsAnnotator> myClass2Annotator = new ConcurrentFactoryMap<Class, DomElementsAnnotator>()
 	{
 
 		@Override

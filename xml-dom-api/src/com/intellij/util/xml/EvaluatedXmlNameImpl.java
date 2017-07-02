@@ -15,29 +15,32 @@
  */
 package com.intellij.util.xml;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.ConcurrentHashMap;
-import com.intellij.util.containers.FactoryMap;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author peter
  */
 public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
-  private static final Key<CachedValue<FactoryMap<String,List<String>>>> NAMESPACE_PROVIDER_KEY = Key.create("NamespaceProvider");
+  private static final Key<CachedValue<Map<String,List<String>>>> NAMESPACE_PROVIDER_KEY = Key.create("NamespaceProvider");
   private static final Map<EvaluatedXmlNameImpl,EvaluatedXmlNameImpl> ourInterned = new ConcurrentHashMap<EvaluatedXmlNameImpl,EvaluatedXmlNameImpl>();
 
   private final XmlName myXmlName;
@@ -102,11 +105,11 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
 
   @NotNull
   private List<String> getAllowedNamespaces(final XmlFile file) {
-    CachedValue<FactoryMap<String, List<String>>> value = file.getUserData(NAMESPACE_PROVIDER_KEY);
+    CachedValue<Map<String, List<String>>> value = file.getUserData(NAMESPACE_PROVIDER_KEY);
     if (value == null) {
-      file.putUserData(NAMESPACE_PROVIDER_KEY, value = CachedValuesManager.getManager(file.getProject()).createCachedValue(new CachedValueProvider<FactoryMap<String, List<String>>>() {
-          public Result<FactoryMap<String, List<String>>> compute() {
-            final FactoryMap<String, List<String>> map = new ConcurrentFactoryMap<String, List<String>>() {
+      file.putUserData(NAMESPACE_PROVIDER_KEY, value = CachedValuesManager.getManager(file.getProject()).createCachedValue(new CachedValueProvider<Map<String, List<String>>>() {
+          public Result<Map<String, List<String>>> compute() {
+            final Map<String, List<String>> map = new ConcurrentFactoryMap<String, List<String>>() {
               protected List<String> create(final String key) {
                 final DomFileDescription<?> description = DomManager.getDomManager(file.getProject()).getDomFileDescription(file);
                 if (description == null) return Collections.emptyList();
