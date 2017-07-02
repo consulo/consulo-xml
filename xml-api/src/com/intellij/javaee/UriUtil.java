@@ -21,7 +21,8 @@ package com.intellij.javaee;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFileSystemItem;
 
@@ -38,13 +39,20 @@ public class UriUtil
 	@Nullable
 	public static VirtualFile findRelativeFile(String uri, VirtualFile base)
 	{
-		return VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
+		return VfsUtilCore.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
 	}
 
 	@Nullable
 	public static VirtualFile findRelative(String uri, @NotNull PsiFileSystemItem base)
 	{
 		String location = ExternalResourceManager.getInstance().getResourceLocation(uri, base.getProject());
-		return VfsUtil.findRelativeFile(location, base.getVirtualFile());
+		return VfsUtilCore.findRelativeFile(location, base.getVirtualFile());
+	}
+
+	// cannot use UriUtil.SLASH_MATCHER.trimFrom - we don't depend on guava
+	@NotNull
+	public static String trimSlashFrom(@NotNull String path)
+	{
+		return StringUtil.trimStart(StringUtil.trimEnd(path, "/"), "/");
 	}
 }
