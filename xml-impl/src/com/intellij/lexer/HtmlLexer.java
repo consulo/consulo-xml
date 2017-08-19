@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,35 +15,40 @@
  */
 package com.intellij.lexer;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.HtmlInlineScriptTokenTypesProvider;
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
+import com.intellij.lang.LanguageUtil;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.TokenType;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.lang.LanguageVersion;
 
 /**
  * @author Maxim.Mossienko
  */
 public class HtmlLexer extends BaseHtmlLexer
 {
-	private static IElementType ourStyleElementType;
-	private static IElementType ourInlineStyleElementType;
-	private static IElementType ourInlineScriptElementType;
+	private static final IElementType ourInlineStyleElementType;
+	private static final IElementType ourInlineScriptElementType;
+
+	public static final String INLINE_STYLE_NAME = "css-ruleset-block";
 
 	static
 	{
-		HtmlEmbeddedTokenTypesProvider[] extensions = Extensions.getExtensions(HtmlEmbeddedTokenTypesProvider.EXTENSION_POINT_NAME);
-		for(HtmlEmbeddedTokenTypesProvider extension : extensions)
+		EmbeddedTokenTypesProvider[] extensions = Extensions.getExtensions(EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME);
+		IElementType inlineStyleElementType = null;
+		for(EmbeddedTokenTypesProvider extension : extensions)
 		{
-			if("style".equals(extension.getName()))
+			if(INLINE_STYLE_NAME.equals(extension.getName()))
 			{
-				ourStyleElementType = extension.getElementType();
-				ourInlineStyleElementType = extension.getInlineElementType();
+				inlineStyleElementType = extension.getElementType();
+				break;
 			}
 		}
+		ourInlineStyleElementType = inlineStyleElementType;
 		// At the moment only JS.
 		HtmlInlineScriptTokenTypesProvider provider = LanguageHtmlInlineScriptTokenTypesProvider.getInlineScriptProvider(ourDefaultLanguage);
 		ourInlineScriptElementType = provider != null ? provider.getElementType() : null;
@@ -54,18 +59,20 @@ public class HtmlLexer extends BaseHtmlLexer
 	private int myTokenEnd;
 
 	@Override
-	public void start(CharSequence buffer, int startOffset, int endOffset, int initialState)
+	public void start(@NotNull CharSequence buffer, int startOffset, int endOffset, int initialState)
 	{
 		myTokenType = null;
 		super.start(buffer, startOffset, endOffset, initialState);
 	}
 
+	@Override
 	public void advance()
 	{
 		myTokenType = null;
 		super.advance();
 	}
 
+	@Override
 	public IElementType getTokenType()
 	{
 		if(myTokenType != null)
@@ -79,10 +86,11 @@ public class HtmlLexer extends BaseHtmlLexer
 
 		if(hasSeenStyle())
 		{
-			if(hasSeenTag() && ourStyleElementType != null && isStartOfEmbeddmentTagContent(tokenType))
+			if(hasSeenTag() && isStartOfEmbeddmentTagContent(tokenType))
 			{
 				myTokenEnd = skipToTheEndOfTheEmbeddment();
-				tokenType = ourStyleElementType;
+				IElementType currentStylesheetElementType = getCurrentStylesheetElementType();
+				tokenType = currentStylesheetElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentStylesheetElementType;
 			}
 			else if(ourInlineStyleElementType != null && isStartOfEmbeddmentAttributeValue(tokenType) && hasSeenAttribute())
 			{
@@ -91,13 +99,15 @@ public class HtmlLexer extends BaseHtmlLexer
 		}
 		else if(hasSeenScript())
 		{
-			Language scriptLanguage = getScriptLanguage();
-			boolean canInject = scriptLanguage == null || InjectedLanguageUtil.isInjectableLanguage(scriptLanguage);
-			if(hasSeenTag() && isStartOfEmbeddmentTagContent(tokenType) && canInject)
+			if(hasSeenTag() && isStartOfEmbeddmentTagContent(tokenType))
 			{
-				myTokenEnd = skipToTheEndOfTheEmbeddment();
-				IElementType currentScriptElementType = getCurrentScriptElementType();
-				tokenType = currentScriptElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentScriptElementType;
+				Language scriptLanguage = getScriptLanguage();
+				if(scriptLanguage == null || LanguageUtil.isInjectableLanguage(scriptLanguage))
+				{
+					myTokenEnd = skipToTheEndOfTheEmbeddment();
+					IElementType currentScriptElementType = getCurrentScriptElementType();
+					tokenType = currentScriptElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentScriptElementType;
+				}
 			}
 			else if(hasSeenAttribute() && isStartOfEmbeddmentAttributeValue(tokenType) && ourInlineScriptElementType != null)
 			{
@@ -130,11 +140,13 @@ public class HtmlLexer extends BaseHtmlLexer
 		super(_baseLexer, _caseInsensitive);
 	}
 
+	@Override
 	protected boolean isHtmlTagState(int state)
 	{
 		return state == _HtmlLexer.START_TAG_NAME || state == _HtmlLexer.END_TAG_NAME;
 	}
 
+	@Override
 	public int getTokenStart()
 	{
 		if(myTokenType != null)
@@ -144,6 +156,7 @@ public class HtmlLexer extends BaseHtmlLexer
 		return super.getTokenStart();
 	}
 
+	@Override
 	public int getTokenEnd()
 	{
 		if(myTokenType != null)
