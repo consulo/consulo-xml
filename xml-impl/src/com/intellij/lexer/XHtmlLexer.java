@@ -18,16 +18,21 @@ package com.intellij.lexer;
 /**
  * @author Maxim.Mossienko
  */
-public class XHtmlLexer extends HtmlLexer {
-  public XHtmlLexer(Lexer baseLexer) {
-    super(baseLexer, false);
-  }
+public class XHtmlLexer extends HtmlLexer
+{
+	public XHtmlLexer(Lexer baseLexer)
+	{
+		super(baseLexer, false);
+	}
 
-  public XHtmlLexer() {
-    this(new XmlLexer(true));
-  }
+	public XHtmlLexer()
+	{
+		this(new XmlLexer(true));
+	}
 
-  protected boolean isHtmlTagState(int state) {
-    return state == __XmlLexer.TAG || state == __XmlLexer.END_TAG;
-  }
+	@Override
+	protected boolean isHtmlTagState(int state)
+	{
+		return state == __XmlLexer.TAG || state == __XmlLexer.END_TAG;
+	}
 }

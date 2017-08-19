@@ -27,105 +27,129 @@ import com.intellij.psi.xml.XmlTokenType;
 /**
  * @author Maxim.Mossienko
  */
-public class HtmlLexer extends BaseHtmlLexer {
-  private static IElementType ourStyleElementType;
-  private static IElementType ourInlineStyleElementType;
-  private static IElementType ourInlineScriptElementType;
+public class HtmlLexer extends BaseHtmlLexer
+{
+	private static IElementType ourStyleElementType;
+	private static IElementType ourInlineStyleElementType;
+	private static IElementType ourInlineScriptElementType;
 
-  static {
-    HtmlEmbeddedTokenTypesProvider[] extensions = Extensions.getExtensions(HtmlEmbeddedTokenTypesProvider.EXTENSION_POINT_NAME);
-    for (HtmlEmbeddedTokenTypesProvider extension : extensions) {
-      if ("style".equals(extension.getName())) {
-        ourStyleElementType = extension.getElementType();
-        ourInlineStyleElementType = extension.getInlineElementType();
-      }
-    }
-    // At the moment only JS.
-    HtmlInlineScriptTokenTypesProvider provider =
-      LanguageHtmlInlineScriptTokenTypesProvider.getInlineScriptProvider(ourDefaultLanguage);
-    ourInlineScriptElementType = provider != null ? provider.getElementType() : null;
-  }
+	static
+	{
+		HtmlEmbeddedTokenTypesProvider[] extensions = Extensions.getExtensions(HtmlEmbeddedTokenTypesProvider.EXTENSION_POINT_NAME);
+		for(HtmlEmbeddedTokenTypesProvider extension : extensions)
+		{
+			if("style".equals(extension.getName()))
+			{
+				ourStyleElementType = extension.getElementType();
+				ourInlineStyleElementType = extension.getInlineElementType();
+			}
+		}
+		// At the moment only JS.
+		HtmlInlineScriptTokenTypesProvider provider = LanguageHtmlInlineScriptTokenTypesProvider.getInlineScriptProvider(ourDefaultLanguage);
+		ourInlineScriptElementType = provider != null ? provider.getElementType() : null;
+	}
 
-  private IElementType myTokenType;
-  private int myTokenStart;
-  private int myTokenEnd;
+	private IElementType myTokenType;
+	private int myTokenStart;
+	private int myTokenEnd;
 
-  @Override
-  public void start(CharSequence buffer, int startOffset, int endOffset, int initialState) {
-    myTokenType = null;
-    super.start(buffer, startOffset, endOffset, initialState);
-  }
+	@Override
+	public void start(CharSequence buffer, int startOffset, int endOffset, int initialState)
+	{
+		myTokenType = null;
+		super.start(buffer, startOffset, endOffset, initialState);
+	}
 
-  public void advance() {
-    myTokenType = null;
-    super.advance();
-  }
+	public void advance()
+	{
+		myTokenType = null;
+		super.advance();
+	}
 
-  public IElementType getTokenType() {
-    if (myTokenType!=null) return myTokenType;
-    IElementType tokenType = super.getTokenType();
+	public IElementType getTokenType()
+	{
+		if(myTokenType != null)
+		{
+			return myTokenType;
+		}
+		IElementType tokenType = super.getTokenType();
 
-    myTokenStart = super.getTokenStart();
-    myTokenEnd = super.getTokenEnd();
+		myTokenStart = super.getTokenStart();
+		myTokenEnd = super.getTokenEnd();
 
-    if (hasSeenStyle()) {
-      if (hasSeenTag() && ourStyleElementType!=null && isStartOfEmbeddmentTagContent(tokenType)) {
-        myTokenEnd = skipToTheEndOfTheEmbeddment();
-        tokenType = ourStyleElementType;
-      } else if (ourInlineStyleElementType!=null && isStartOfEmbeddmentAttributeValue(tokenType) && hasSeenAttribute()) {
-        tokenType = ourInlineStyleElementType;
-      }
-    } else if (hasSeenScript()) {
-      Language scriptLanguage = getScriptLanguage();
-      boolean canInject = scriptLanguage == null || InjectedLanguageUtil.isInjectableLanguage(scriptLanguage);
-      if (hasSeenTag() && isStartOfEmbeddmentTagContent(tokenType) && canInject) {
-        myTokenEnd = skipToTheEndOfTheEmbeddment();
-        IElementType currentScriptElementType = getCurrentScriptElementType();
-        tokenType = currentScriptElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentScriptElementType;
-      } else if (hasSeenAttribute() && isStartOfEmbeddmentAttributeValue(tokenType) && ourInlineScriptElementType!=null) {
-        myTokenEnd = skipToTheEndOfTheEmbeddment();
-        tokenType = ourInlineScriptElementType;
-      }
-    }
+		if(hasSeenStyle())
+		{
+			if(hasSeenTag() && ourStyleElementType != null && isStartOfEmbeddmentTagContent(tokenType))
+			{
+				myTokenEnd = skipToTheEndOfTheEmbeddment();
+				tokenType = ourStyleElementType;
+			}
+			else if(ourInlineStyleElementType != null && isStartOfEmbeddmentAttributeValue(tokenType) && hasSeenAttribute())
+			{
+				tokenType = ourInlineStyleElementType;
+			}
+		}
+		else if(hasSeenScript())
+		{
+			Language scriptLanguage = getScriptLanguage();
+			boolean canInject = scriptLanguage == null || InjectedLanguageUtil.isInjectableLanguage(scriptLanguage);
+			if(hasSeenTag() && isStartOfEmbeddmentTagContent(tokenType) && canInject)
+			{
+				myTokenEnd = skipToTheEndOfTheEmbeddment();
+				IElementType currentScriptElementType = getCurrentScriptElementType();
+				tokenType = currentScriptElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentScriptElementType;
+			}
+			else if(hasSeenAttribute() && isStartOfEmbeddmentAttributeValue(tokenType) && ourInlineScriptElementType != null)
+			{
+				myTokenEnd = skipToTheEndOfTheEmbeddment();
+				tokenType = ourInlineScriptElementType;
+			}
+		}
 
-    return myTokenType = tokenType;
-  }
+		return myTokenType = tokenType;
+	}
 
-  private static boolean isStartOfEmbeddmentAttributeValue(final IElementType tokenType) {
-    return tokenType == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;
-  }
+	private static boolean isStartOfEmbeddmentAttributeValue(final IElementType tokenType)
+	{
+		return tokenType == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;
+	}
 
-  private static boolean isStartOfEmbeddmentTagContent(final IElementType tokenType) {
-    return (tokenType == XmlTokenType.XML_DATA_CHARACTERS ||
-            tokenType == XmlTokenType.XML_CDATA_START ||
-            tokenType == XmlTokenType.XML_COMMENT_START ||
-            tokenType == XmlTokenType.XML_REAL_WHITE_SPACE || tokenType == TokenType.WHITE_SPACE
-    );
-  }
+	private static boolean isStartOfEmbeddmentTagContent(final IElementType tokenType)
+	{
+		return (tokenType == XmlTokenType.XML_DATA_CHARACTERS || tokenType == XmlTokenType.XML_CDATA_START || tokenType == XmlTokenType.XML_COMMENT_START || tokenType == XmlTokenType
+				.XML_REAL_WHITE_SPACE || tokenType == TokenType.WHITE_SPACE);
+	}
 
-  public HtmlLexer() {
-    this(new MergingLexerAdapter(new FlexAdapter(new _HtmlLexer()), TOKENS_TO_MERGE),true);
-  }
+	public HtmlLexer()
+	{
+		this(new MergingLexerAdapter(new FlexAdapter(new _HtmlLexer()), TOKENS_TO_MERGE), true);
+	}
 
-  protected HtmlLexer(Lexer _baseLexer, boolean _caseInsensitive) {
-    super(_baseLexer,_caseInsensitive);
-  }
+	protected HtmlLexer(Lexer _baseLexer, boolean _caseInsensitive)
+	{
+		super(_baseLexer, _caseInsensitive);
+	}
 
-  protected boolean isHtmlTagState(int state) {
-    return state == _HtmlLexer.START_TAG_NAME || state == _HtmlLexer.END_TAG_NAME;
-  }
+	protected boolean isHtmlTagState(int state)
+	{
+		return state == _HtmlLexer.START_TAG_NAME || state == _HtmlLexer.END_TAG_NAME;
+	}
 
-  public int getTokenStart() {
-    if (myTokenType!=null) {
-      return myTokenStart;
-    }
-    return super.getTokenStart();
-  }
+	public int getTokenStart()
+	{
+		if(myTokenType != null)
+		{
+			return myTokenStart;
+		}
+		return super.getTokenStart();
+	}
 
-  public int getTokenEnd() {
-    if (myTokenType!=null) {
-      return myTokenEnd;
-    }
-    return super.getTokenEnd();
-  }
+	public int getTokenEnd()
+	{
+		if(myTokenType != null)
+		{
+			return myTokenEnd;
+		}
+		return super.getTokenEnd();
+	}
 }
