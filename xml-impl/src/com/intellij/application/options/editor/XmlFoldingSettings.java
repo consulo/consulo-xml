@@ -17,64 +17,55 @@
 package com.intellij.application.options.editor;
 
 import com.intellij.lang.XmlCodeFoldingSettings;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 
-@State(
-  name="XmlFoldingSettings",
-  storages= {
-    @Storage(
-      file = StoragePathMacros.APP_CONFIG + "/editor.codeinsight.xml"
-    )}
-)
-public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings>, ExportableComponent {
+@State(name = "XmlFoldingSettings", storages = @Storage("editor.codeinsight.xml"))
+public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings>
+{
+	public static XmlFoldingSettings getInstance()
+	{
+		return ServiceManager.getService(XmlFoldingSettings.class);
+	}
 
-  public static XmlFoldingSettings getInstance() {
-    return ServiceManager.getService(XmlFoldingSettings.class);
-  }
+	@Override
+	public boolean isCollapseXmlTags()
+	{
+		return COLLAPSE_XML_TAGS;
+	}
 
-  @Override
-  public boolean isCollapseXmlTags() {
-    return COLLAPSE_XML_TAGS;
-  }
+	public void setCollapseXmlTags(boolean value)
+	{
+		COLLAPSE_XML_TAGS = value;
+	}
 
-  public void setCollapseXmlTags(boolean value) {
-    COLLAPSE_XML_TAGS = value;
-  }
+	@Override
+	public boolean isCollapseHtmlStyleAttribute()
+	{
+		return COLLAPSE_HTML_STYLE_ATTRIBUTE;
+	}
 
-  @Override
-  public boolean isCollapseHtmlStyleAttribute() {
-    return COLLAPSE_HTML_STYLE_ATTRIBUTE;
-  }
+	public void setCollapseHtmlStyleAttribute(boolean value)
+	{
+		this.COLLAPSE_HTML_STYLE_ATTRIBUTE = value;
+	}
 
-  public void setCollapseHtmlStyleAttribute(boolean value) {
-    this.COLLAPSE_HTML_STYLE_ATTRIBUTE = value;
-  }
+	public boolean COLLAPSE_XML_TAGS = false;
+	public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
 
-  @SuppressWarnings({"WeakerAccess"}) public boolean COLLAPSE_XML_TAGS = false;
-  @SuppressWarnings({"WeakerAccess"}) public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
+	@Override
+	public XmlFoldingSettings getState()
+	{
+		return this;
+	}
 
-  @NotNull
-  public File[] getExportFiles() {
-    return new File[]{PathManager.getOptionsFile("editor.codeinsight")};
-  }
-
-  @NotNull
-  public String getPresentableName() {
-    return XmlBundle.message("xml.folding.settings");
-  }
-
-  public XmlFoldingSettings getState() {
-    return this;
-  }
-
-  public void loadState(final XmlFoldingSettings state) {
-    XmlSerializerUtil.copyBean(state, this);
-  }
+	@Override
+	public void loadState(final XmlFoldingSettings state)
+	{
+		XmlSerializerUtil.copyBean(state, this);
+	}
 }

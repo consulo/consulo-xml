@@ -21,25 +21,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.components.ExportableComponent;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.xml.XmlBundle;
 
 /**
  * @author spleaner
  */
-@State(
-		name = "XmlEditorOptions",
-		storages = {
-				@Storage(
-						file = StoragePathMacros.APP_CONFIG + "/editor.xml")
-		})
-public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>, ExportableComponent
+@State(name = "XmlEditorOptions", storages = @Storage("editor.xml"))
+public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>
 {
 	private boolean myBreadcrumbsEnabled = true;
 	private boolean myBreadcrumbsEnabledInXml = false;

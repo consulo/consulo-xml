@@ -263,17 +263,12 @@
 
 		<applicationService serviceInterface="com.intellij.application.options.editor.XmlEditorOptions"
 							serviceImplementation="com.intellij.application.options.editor.XmlEditorOptions"/>
-		<exportable serviceInterface="com.intellij.application.options.editor.XmlEditorOptions"/>
-
 
 		<applicationService serviceInterface="com.intellij.application.options.editor.XmlFoldingSettings"
 							serviceImplementation="com.intellij.application.options.editor.XmlFoldingSettings"/>
 
-		<exportable serviceInterface="com.intellij.application.options.editor.XmlFoldingSettings"/>
-
 		<applicationService serviceInterface="com.intellij.application.options.XmlSettings"
 							serviceImplementation="com.intellij.application.options.XmlSettings"/>
-		<exportable serviceInterface="com.intellij.application.options.XmlSettings"/>
 
 		<projectService serviceInterface="com.intellij.psi.XmlElementFactory"
 						serviceImplementation="com.intellij.psi.XmlElementFactoryImpl"/>
