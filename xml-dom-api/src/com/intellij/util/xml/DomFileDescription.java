@@ -38,8 +38,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ConstantFunction;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.SmartList;
-import com.intellij.util.containers.ConcurrentHashMap;
 import com.intellij.util.containers.ConcurrentInstanceMap;
+import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 import consulo.annotations.DeprecationInfo;
 
@@ -51,17 +51,15 @@ public class DomFileDescription<T>
 {
 	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.fileDescription");
 
-	private final ConcurrentInstanceMap<ScopeProvider> myScopeProviders = new ConcurrentInstanceMap<ScopeProvider>();
+	private final ConcurrentInstanceMap<ScopeProvider> myScopeProviders = new ConcurrentInstanceMap<>();
 	protected final Class<T> myRootElementClass;
 	protected final String myRootTagName;
 	private final String[] myAllPossibleRootTagNamespaces;
 	private volatile boolean myInitialized;
-	private final Map<Class<? extends DomElement>, Class<? extends DomElement>> myImplementations = new HashMap<Class<? extends DomElement>,
-			Class<? extends DomElement>>();
+	private final Map<Class<? extends DomElement>, Class<? extends DomElement>> myImplementations = new HashMap<>();
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
-	private final List<DomReferenceInjector> myInjectors = new SmartList<DomReferenceInjector>();
-	private final Map<String, NotNullFunction<XmlTag, List<String>>> myNamespacePolicies = new ConcurrentHashMap<String, NotNullFunction<XmlTag,
-			List<String>>>();
+	private final List<DomReferenceInjector> myInjectors = new SmartList<>();
+	private final Map<String, NotNullFunction<XmlTag, List<String>>> myNamespacePolicies = ContainerUtil.newConcurrentMap();
 
 	public DomFileDescription(final Class<T> rootElementClass, @NonNls final String rootTagName,
 			@NonNls final String... allPossibleRootTagNamespaces)
@@ -97,7 +95,7 @@ public class DomFileDescription<T>
 	 * @deprecated use {@link #registerNamespacePolicy(String, String...)} or override {@link #getAllowedNamespaces(String,
 	 * com.intellij.psi.xml.XmlFile)} instead
 	 */
-	protected final void registerNamespacePolicy(String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
+	protected final void registerNamespacePolicy(@NotNull String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
 	{
 		myNamespacePolicies.put(namespaceKey, policy);
 	}
@@ -107,9 +105,9 @@ public class DomFileDescription<T>
 	 * @param namespaces   XML namespace or DTD public or system id value for the given namespaceKey
 	 * @see com.intellij.util.xml.Namespace
 	 */
-	public final void registerNamespacePolicy(String namespaceKey, final String... namespaces)
+	public final void registerNamespacePolicy(@NotNull  String namespaceKey, final String... namespaces)
 	{
-		registerNamespacePolicy(namespaceKey, new ConstantFunction<XmlTag, List<String>>(Arrays.asList(namespaces)));
+		registerNamespacePolicy(namespaceKey, new ConstantFunction<>(Arrays.asList(namespaces)));
 	}
 
 	/**
@@ -241,7 +239,7 @@ public class DomFileDescription<T>
 		if(namespace != null)
 		{
 			final String key = namespace.value();
-			Set<String> allNs = new HashSet<String>(getAllowedNamespaces(key, file));
+			Set<String> allNs = new HashSet<>(getAllowedNamespaces(key, file));
 			if(allNs.isEmpty())
 			{
 				return false;
