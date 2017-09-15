@@ -202,7 +202,12 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	@Nullable
 	protected Language getScriptLanguage()
 	{
-		Collection<Language> instancesByMimeType = Language.findInstancesByMimeType(scriptType != null ? scriptType.trim() : null);
+		String mimeType = scriptType != null ? scriptType.trim() : null;
+		if(mimeType == null)
+		{
+			return null;
+		}
+		Collection<Language> instancesByMimeType = Language.findInstancesByMimeType(mimeType);
 		return instancesByMimeType.isEmpty() ? null : instancesByMimeType.iterator().next();
 	}
 
