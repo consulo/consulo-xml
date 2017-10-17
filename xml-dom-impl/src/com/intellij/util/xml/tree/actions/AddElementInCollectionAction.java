@@ -61,7 +61,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
   protected DomModelTreeView getTreeView(AnActionEvent e) {
     if (myTreeView != null) return myTreeView;
 
-    return DomModelTreeView.DATA_KEY.getData(e.getDataContext());
+    return e.getData(DomModelTreeView.DATA_KEY);
   }
 
   protected boolean isEnabled(final AnActionEvent e) {

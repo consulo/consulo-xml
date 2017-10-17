@@ -16,8 +16,25 @@
 
 package com.intellij.util.xml.ui.actions;
 
+import java.awt.Component;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.Icon;
+import javax.swing.JComponent;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.ActionButtonComponent;
+import com.intellij.openapi.actionSystem.ActionGroup;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.AnSeparator;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -30,14 +47,6 @@ import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.TypeChooser;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.DomCollectionControl;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.awt.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Sergey.Vasiliev
@@ -115,7 +124,7 @@ public abstract class AddDomElementAction extends AnAction {
 
   @NotNull
   public AnAction[] getChildren(@Nullable AnActionEvent e) {
-    Project project = e == null ? null : CommonDataKeys.PROJECT.getData(e.getDataContext());
+    Project project = e == null ? null : e.getData(CommonDataKeys.PROJECT);
     if (project == null) return AnAction.EMPTY_ARRAY;
 
     DomCollectionChildDescription[] descriptions = getDomCollectionChildDescriptions(e);

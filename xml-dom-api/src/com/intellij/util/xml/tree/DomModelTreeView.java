@@ -16,12 +16,29 @@
 
 package com.intellij.util.xml.tree;
 
+import java.awt.BorderLayout;
+
+import javax.swing.ToolTipManager;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.util.treeView.AbstractTreeBuilder;
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.ActionGroup;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.DataProvider;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.xml.XmlElement;
@@ -34,23 +51,16 @@ import com.intellij.ui.treeStructure.WeightBasedComparator;
 import com.intellij.ui.treeStructure.actions.CollapseAllAction;
 import com.intellij.ui.treeStructure.actions.ExpandAllAction;
 import com.intellij.util.ui.tree.TreeUtil;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.DomChangeAdapter;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.MergedObject;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeSelectionModel;
-import java.awt.*;
 
 public class DomModelTreeView extends Wrapper implements DataProvider, Disposable {
-  public static final DataKey<DomModelTreeView> DATA_KEY = DataKey.create("DOM_MODEL_TREE_VIEW_KEY");
-  @Deprecated @NonNls public static String DOM_MODEL_TREE_VIEW_KEY = DATA_KEY.getName();
+  public static final Key<DomModelTreeView> DATA_KEY = Key.create("DOM_MODEL_TREE_VIEW_KEY");
   @NonNls public static String DOM_MODEL_TREE_VIEW_POPUP = "DOM_MODEL_TREE_VIEW_POPUP";
 
   private final SimpleTree myTree;
@@ -181,16 +191,17 @@ public class DomModelTreeView extends Wrapper implements DataProvider, Disposabl
     return group;
   }
 
+  @Override
   @Nullable
-  public Object getData(String dataId) {
-    if (DomModelTreeView.DATA_KEY.is(dataId)) {
+  public Object getData(@NotNull Key<?> dataId) {
+    if (DomModelTreeView.DATA_KEY == dataId) {
       return this;
     }
     final SimpleNode simpleNode = getTree().getSelectedNode();
     if (simpleNode instanceof AbstractDomElementNode) {
       final DomElement domElement = ((AbstractDomElementNode)simpleNode).getDomElement();
       if (domElement != null && domElement.isValid()) {
-        if (PlatformDataKeys.NAVIGATABLE_ARRAY.is(dataId)) {
+        if (PlatformDataKeys.NAVIGATABLE_ARRAY == dataId) {
           final XmlElement tag = domElement.getXmlElement();
           if (tag instanceof Navigatable) {
             return new Navigatable[] { (Navigatable)tag };

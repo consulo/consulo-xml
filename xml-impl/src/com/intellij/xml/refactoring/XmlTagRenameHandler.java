@@ -22,6 +22,8 @@
  */
 package com.intellij.xml.refactoring;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.ide.TitledHandler;
 import com.intellij.lang.Language;
@@ -43,124 +45,152 @@ import com.intellij.refactoring.rename.PsiElementRenameHandler;
 import com.intellij.refactoring.rename.RenameHandler;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.refactoring.XmlTagRenameHandler");
+public class XmlTagRenameHandler implements RenameHandler, TitledHandler
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.refactoring.XmlTagRenameHandler");
 
 
-  public boolean isAvailableOnDataContext(final DataContext dataContext) {
-    final PsiElement element = getElement(dataContext);
-    if (element == null || PsiElementRenameHandler.isVetoed(element)) return false;
-    PsiElement parent = element.getParent();
-    if (!(parent instanceof XmlTag)) {
-      return false;
-    }
-    XmlTag tag = (XmlTag)parent;
-    String prefix = tag.getNamespacePrefix();
-    if (StringUtil.isNotEmpty(prefix)) {
-      Editor editor = getEditor(dataContext);
-      assert editor != null;
-      int offset = editor.getCaretModel().getOffset();
-      if (offset <= element.getTextRange().getStartOffset() + prefix.length()) {
-        return false;
-      }
-    }
-    //noinspection ConstantConditions
-    return isDeclarationOutOfProjectOrAbsent(element.getProject(), dataContext);
-  }
+	public boolean isAvailableOnDataContext(final DataContext dataContext)
+	{
+		final PsiElement element = getElement(dataContext);
+		if(element == null || PsiElementRenameHandler.isVetoed(element))
+		{
+			return false;
+		}
+		PsiElement parent = element.getParent();
+		if(!(parent instanceof XmlTag))
+		{
+			return false;
+		}
+		XmlTag tag = (XmlTag) parent;
+		String prefix = tag.getNamespacePrefix();
+		if(StringUtil.isNotEmpty(prefix))
+		{
+			Editor editor = getEditor(dataContext);
+			assert editor != null;
+			int offset = editor.getCaretModel().getOffset();
+			if(offset <= element.getTextRange().getStartOffset() + prefix.length())
+			{
+				return false;
+			}
+		}
+		//noinspection ConstantConditions
+		return isDeclarationOutOfProjectOrAbsent(element.getProject(), dataContext);
+	}
 
-  public boolean isRenaming(final DataContext dataContext) {
-    return isAvailableOnDataContext(dataContext);
-  }
+	public boolean isRenaming(final DataContext dataContext)
+	{
+		return isAvailableOnDataContext(dataContext);
+	}
 
-  @Override
-  public String getActionTitle() {
-    return "Rename XML tag";
-  }
+	@Override
+	public String getActionTitle()
+	{
+		return "Rename XML tag";
+	}
 
-  private static boolean isInplaceRenameAvailable(final Editor editor) {
-    return editor.getSettings().isVariableInplaceRenameEnabled();
-  }
+	private static boolean isInplaceRenameAvailable(final Editor editor)
+	{
+		return editor.getSettings().isVariableInplaceRenameEnabled();
+	}
 
-  private static boolean isDeclarationOutOfProjectOrAbsent(@NotNull final Project project, final DataContext context) {
-    final PsiElement[] elements = BaseRefactoringAction.getPsiElementArray(context);
-    return elements.length == 0 || elements.length == 1 && shouldBeRenamedInplace(project, elements);
-  }
+	private static boolean isDeclarationOutOfProjectOrAbsent(@NotNull final Project project, final DataContext context)
+	{
+		final PsiElement[] elements = BaseRefactoringAction.getPsiElementArray(context);
+		return elements.length == 0 || elements.length == 1 && shouldBeRenamedInplace(project, elements);
+	}
 
-  private static boolean shouldBeRenamedInplace(Project project, PsiElement[] elements) {
-    boolean inProject = PsiManager.getInstance(project).isInProject(elements[0]);
-    if (inProject && elements[0] instanceof XmlTag) {
-      XmlElementDescriptor descriptor = ((XmlTag)elements[0]).getDescriptor();
-      return descriptor instanceof AnyXmlElementDescriptor;
-    }
-    return !inProject;
-  }
+	private static boolean shouldBeRenamedInplace(Project project, PsiElement[] elements)
+	{
+		boolean inProject = PsiManager.getInstance(project).isInProject(elements[0]);
+		if(inProject && elements[0] instanceof XmlTag)
+		{
+			XmlElementDescriptor descriptor = ((XmlTag) elements[0]).getDescriptor();
+			return descriptor instanceof AnyXmlElementDescriptor;
+		}
+		return !inProject;
+	}
 
-  @Nullable
-  private static Editor getEditor(@Nullable DataContext context) {
-    return PlatformDataKeys.EDITOR.getData(context);
-  }
+	@Nullable
+	private static Editor getEditor(@Nullable DataContext context)
+	{
+		return context == null ? null : context.getData(PlatformDataKeys.EDITOR);
+	}
 
-  @Nullable
-  private static PsiElement getElement(@Nullable final DataContext context) {
-    if (context != null) {
-      final Editor editor = getEditor(context);
-      if (editor != null) {
-        final int offset = editor.getCaretModel().getOffset();
-        final PsiFile file = LangDataKeys.PSI_FILE.getData(context);
-        if (file instanceof XmlFile) {
-          return file.getViewProvider().findElementAt(offset);
-        }
-        if (file != null) {
-          final Language language = PsiUtilCore.getLanguageAtOffset(file, offset);
-          if (language != file.getLanguage()) {
-            final PsiFile psiAtOffset = file.getViewProvider().getPsi(language);
-            if (psiAtOffset instanceof XmlFile) {
-              return psiAtOffset.findElementAt(offset);
-            }
-          }
-        }
-      }
-    }
+	@Nullable
+	private static PsiElement getElement(@Nullable final DataContext context)
+	{
+		if(context != null)
+		{
+			final Editor editor = getEditor(context);
+			if(editor != null)
+			{
+				final int offset = editor.getCaretModel().getOffset();
+				final PsiFile file = context.getData(LangDataKeys.PSI_FILE);
+				if(file instanceof XmlFile)
+				{
+					return file.getViewProvider().findElementAt(offset);
+				}
+				if(file != null)
+				{
+					final Language language = PsiUtilCore.getLanguageAtOffset(file, offset);
+					if(language != file.getLanguage())
+					{
+						final PsiFile psiAtOffset = file.getViewProvider().getPsi(language);
+						if(psiAtOffset instanceof XmlFile)
+						{
+							return psiAtOffset.findElementAt(offset);
+						}
+					}
+				}
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  private void invoke(@Nullable final Editor editor, @NotNull final PsiElement element, @Nullable final DataContext context) {
-    if (!isRenaming(context)) {
-      return;
-    }
+	private void invoke(@Nullable final Editor editor, @NotNull final PsiElement element, @Nullable final DataContext context)
+	{
+		if(!isRenaming(context))
+		{
+			return;
+		}
 
-    FeatureUsageTracker.getInstance().triggerFeatureUsed("refactoring.rename");
+		FeatureUsageTracker.getInstance().triggerFeatureUsed("refactoring.rename");
 
-    if (isInplaceRenameAvailable(editor)) {
-      XmlTagInplaceRenamer.rename(editor, (XmlTag)element.getParent());
-    }
-    else {
-      XmlTagRenameDialog.renameXmlTag(editor, element, (XmlTag)element.getParent());
-    }
-  }
+		if(isInplaceRenameAvailable(editor))
+		{
+			XmlTagInplaceRenamer.rename(editor, (XmlTag) element.getParent());
+		}
+		else
+		{
+			XmlTagRenameDialog.renameXmlTag(editor, element, (XmlTag) element.getParent());
+		}
+	}
 
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext) {
-    if (!isRenaming(dataContext)) {
-      return;
-    }
+	public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext)
+	{
+		if(!isRenaming(dataContext))
+		{
+			return;
+		}
 
-    final PsiElement element = getElement(dataContext);
-    assert element != null;
+		final PsiElement element = getElement(dataContext);
+		assert element != null;
 
-    invoke(editor, element, dataContext);
-  }
+		invoke(editor, element, dataContext);
+	}
 
-  public void invoke(@NotNull final Project project, @NotNull final PsiElement[] elements, @Nullable final DataContext dataContext) {
-    PsiElement element = elements.length == 1 ? elements[0] : null;
-    if (element == null) {
-      element = getElement(dataContext);
-    }
+	public void invoke(@NotNull final Project project, @NotNull final PsiElement[] elements, @Nullable final DataContext dataContext)
+	{
+		PsiElement element = elements.length == 1 ? elements[0] : null;
+		if(element == null)
+		{
+			element = getElement(dataContext);
+		}
 
-    LOG.assertTrue(element != null);
-    invoke(getEditor(dataContext), element, dataContext);
-  }
+		LOG.assertTrue(element != null);
+		invoke(getEditor(dataContext), element, dataContext);
+	}
 }

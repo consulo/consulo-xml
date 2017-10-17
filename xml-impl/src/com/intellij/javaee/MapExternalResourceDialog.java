@@ -35,7 +35,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.DataManager;
@@ -46,7 +45,6 @@ import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorFontType;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -256,16 +254,22 @@ public class MapExternalResourceDialog extends DialogWrapper
 	public String getResourceLocation()
 	{
 		if(myLocation != null)
+		{
 			return myLocation;
+		}
 
 		if(myTabs.getSelectedIndex() == 0)
 		{
 			TreePath path = mySchemasTree.getSelectionPath();
 			if(path == null)
+			{
 				return null;
+			}
 			Object object = ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject();
 			if(!(object instanceof PsiFile))
+			{
 				return null;
+			}
 			return FileUtil.toSystemIndependentName(((PsiFile) object).getVirtualFile().getPath());
 		}
 		else
@@ -278,22 +282,17 @@ public class MapExternalResourceDialog extends DialogWrapper
 	private void createUIComponents()
 	{
 		myExplorerPanel = new JPanel(new BorderLayout());
-		DataManager.registerDataProvider(myExplorerPanel, new DataProvider()
+		DataManager.registerDataProvider(myExplorerPanel, dataId ->
 		{
-			@Nullable
-			@Override
-			public Object getData(@NonNls String dataId)
+			if(CommonDataKeys.VIRTUAL_FILE_ARRAY == dataId)
 			{
-				if(CommonDataKeys.VIRTUAL_FILE_ARRAY.is(dataId))
-				{
-					return myExplorer.getSelectedFiles();
-				}
-				else if(FileSystemTree.DATA_KEY.is(dataId))
-				{
-					return myExplorer;
-				}
-				return null;
+				return myExplorer.getSelectedFiles();
 			}
+			else if(FileSystemTree.DATA_KEY == dataId)
+			{
+				return myExplorer;
+			}
+			return null;
 		});
 	}
 }

@@ -15,16 +15,20 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.actionSystem.*;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.DataSink;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.TypeSafeDataProvider;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Key;
+import com.intellij.util.SmartList;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import com.intellij.util.SmartList;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * @author peter
@@ -44,7 +48,7 @@ public class DomTableView extends AbstractTableView<DomElement> {
     myCustomDataProviders.add(provider);
   }
 
-  public void calcData(final DataKey key, final DataSink sink) {
+  public void calcData(final Key<?> key, final DataSink sink) {
     super.calcData(key, sink);
     for (final TypeSafeDataProvider customDataProvider : myCustomDataProviders) {
       customDataProvider.calcData(key, sink);

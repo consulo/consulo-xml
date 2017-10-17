@@ -130,13 +130,13 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	@Nullable
 	public static OpenInBrowserRequest createRequest(@NotNull DataContext context)
 	{
-		final Editor editor = CommonDataKeys.EDITOR.getData(context);
+		final Editor editor = context.getData(CommonDataKeys.EDITOR);
 		if(editor != null)
 		{
 			Project project = editor.getProject();
 			if(project != null && project.isInitialized())
 			{
-				PsiFile psiFile = CommonDataKeys.PSI_FILE.getData(context);
+				PsiFile psiFile = context.getData(CommonDataKeys.PSI_FILE);
 				if(psiFile == null)
 				{
 					psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
@@ -163,9 +163,9 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 		}
 		else
 		{
-			PsiFile psiFile = CommonDataKeys.PSI_FILE.getData(context);
-			VirtualFile virtualFile = CommonDataKeys.VIRTUAL_FILE.getData(context);
-			Project project = CommonDataKeys.PROJECT.getData(context);
+			PsiFile psiFile = context.getData(CommonDataKeys.PSI_FILE);
+			VirtualFile virtualFile = context.getData(CommonDataKeys.VIRTUAL_FILE);
+			Project project = context.getData(CommonDataKeys.PROJECT);
 			if(virtualFile != null && !virtualFile.isDirectory() && virtualFile.isValid() && project != null && project.isInitialized())
 			{
 				psiFile = PsiManager.getInstance(project).findFile(virtualFile);

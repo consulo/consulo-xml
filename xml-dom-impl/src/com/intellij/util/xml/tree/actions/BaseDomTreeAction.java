@@ -47,7 +47,7 @@ abstract public class BaseDomTreeAction extends AnAction {
   protected DomModelTreeView getTreeView(AnActionEvent e) {
     if (myTreeView != null) return myTreeView;
 
-    return DomModelTreeView.DATA_KEY.getData(e.getDataContext());
+    return e.getData(DomModelTreeView.DATA_KEY);
   }
 
   final public void actionPerformed(AnActionEvent e) {

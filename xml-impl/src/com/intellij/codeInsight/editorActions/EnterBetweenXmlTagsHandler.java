@@ -15,6 +15,7 @@
  */
 package com.intellij.codeInsight.editorActions;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -32,13 +33,12 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NotNull;
 
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
   public Result preprocessEnter(@NotNull final PsiFile file, @NotNull final Editor editor, @NotNull final Ref<Integer> caretOffset, @NotNull final Ref<Integer> caretAdvance,
                                 @NotNull final DataContext dataContext, final EditorActionHandler originalHandler) {
-    final Project project = CommonDataKeys.PROJECT.getData(dataContext);
-    
+    final Project project = dataContext.getData(CommonDataKeys.PROJECT);
+
     if (file instanceof XmlFile && isBetweenXmlTags(project, editor, file, caretOffset.get().intValue())) {
       originalHandler.execute(editor, dataContext);
       return Result.DefaultForceIndent;

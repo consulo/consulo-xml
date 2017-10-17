@@ -15,8 +15,23 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
+import gnu.trove.THashMap;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -33,16 +48,6 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
-import gnu.trove.THashMap;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Konstantin Bulenkov
@@ -50,7 +55,7 @@ import java.util.List;
 public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
   @Override
   public void update(AnActionEvent e) {
-    final VirtualFile file = PlatformDataKeys.VIRTUAL_FILE.getData(e.getDataContext());
+    final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
     final boolean enabled = isAcceptableFile(file);
     e.getPresentation().setEnabled(enabled);
     if (ActionPlaces.isPopupPlace(e.getPlace())) {
@@ -59,8 +64,8 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
   }
 
   public void actionPerformed(AnActionEvent e) {
-    final Project project = CommonDataKeys.PROJECT.getData(e.getDataContext());
-    final VirtualFile file = PlatformDataKeys.VIRTUAL_FILE.getData(e.getDataContext());
+    final Project project = e.getData(CommonDataKeys.PROJECT);
+    final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
 
     final GenerateInstanceDocumentFromSchemaDialog dialog = new GenerateInstanceDocumentFromSchemaDialog(project, file);
     dialog.setOkAction(new Runnable() {
