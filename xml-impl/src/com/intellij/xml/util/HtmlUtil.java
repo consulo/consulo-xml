@@ -30,7 +30,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.htmlInspections.XmlEntitiesInspection;
 import com.intellij.ide.highlighter.HtmlFileType;
@@ -39,14 +38,10 @@ import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.registry.Registry;
-import com.intellij.openapi.util.registry.RegistryValue;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -449,23 +444,7 @@ public class HtmlUtil
 
 	public static boolean isShortNotationOfBooleanAttributePreferred()
 	{
-		return Registry.is("html.prefer.short.notation.of.boolean.attributes", true);
-	}
-
-	@TestOnly
-	public static void setShortNotationOfBooleanAttributeIsPreferred(boolean value, Disposable parent)
-	{
-		final boolean oldValue = isShortNotationOfBooleanAttributePreferred();
-		final RegistryValue registryValue = Registry.get("html.prefer.short.notation.of.boolean.attributes");
-		registryValue.setValue(value);
-		Disposer.register(parent, new Disposable()
-		{
-			@Override
-			public void dispose()
-			{
-				registryValue.setValue(oldValue);
-			}
-		});
+		return true;
 	}
 
 	public static boolean isBooleanAttribute(@NotNull XmlAttributeDescriptor descriptor, @Nullable PsiElement context)
