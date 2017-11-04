@@ -34,8 +34,6 @@ import com.intellij.xml.XmlBundle;
 @State(name = "XmlEditorOptions", storages = @Storage("editor.xml"))
 public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>
 {
-	private boolean myBreadcrumbsEnabled = true;
-	private boolean myBreadcrumbsEnabledInXml = false;
 	private boolean myAutomaticallyInsertClosingTag = true;
 	private boolean myAutomaticallyInsertRequiredAttributes = true;
 	private boolean myAutomaticallyInsertRequiredSubTags = true;
@@ -56,26 +54,6 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 	public XmlEditorOptions()
 	{
 		setTagTreeHighlightingEnabled(!ApplicationManager.getApplication().isUnitTestMode());
-	}
-
-	public void setBreadcrumbsEnabled(boolean b)
-	{
-		myBreadcrumbsEnabled = b;
-	}
-
-	public boolean isBreadcrumbsEnabled()
-	{
-		return myBreadcrumbsEnabled;
-	}
-
-	public void setBreadcrumbsEnabledInXml(boolean b)
-	{
-		myBreadcrumbsEnabledInXml = b;
-	}
-
-	public boolean isBreadcrumbsEnabledInXml()
-	{
-		return myBreadcrumbsEnabledInXml;
 	}
 
 	public boolean isAutomaticallyInsertClosingTag()

@@ -15,6 +15,15 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditor;
@@ -24,12 +33,8 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.UnnamedConfigurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.ui.breadcrumbs.BreadcrumbsWrapper;
 import com.intellij.util.ui.UIUtil;
-import com.intellij.xml.breadcrumbs.BreadcrumbsXmlWrapper;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Eugene.Kudelevsky
@@ -104,9 +109,9 @@ public class XmlTagTreeHighlightingConfigurable implements UnnamedConfigurable {
           final Editor editor = ((TextEditor)fileEditor).getEditor();
           XmlTagTreeHighlightingPass.clearHighlightingAndLineMarkers(editor, project);
 
-          final BreadcrumbsXmlWrapper breadcrumbsXmlWrapper = BreadcrumbsXmlWrapper.getBreadcrumbsComponent(editor);
+          final BreadcrumbsWrapper breadcrumbsXmlWrapper = BreadcrumbsWrapper.getBreadcrumbsComponent(editor);
           if (breadcrumbsXmlWrapper != null) {
-            breadcrumbsXmlWrapper.queueUpdate(editor);
+            breadcrumbsXmlWrapper.queueUpdate();
           }
         }
       }

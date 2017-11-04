@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2011 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,19 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import org.jetbrains.annotations.NotNull;
+import java.awt.Color;
+
+import com.intellij.ui.breadcrumbs.BreadcrumbsComponent;
+import com.intellij.ui.breadcrumbs.CrumbPresentation;
 
 /**
- * @author spleaner
+ * @author Eugene.Kudelevsky
  */
-public interface BreadcrumbsItemListener<T extends BreadcrumbsItem> {
-
-  void itemSelected(@NotNull final T item, final int modifiers);
-
+public class DefaultCrumbsPresentation extends CrumbPresentation
+{
+	@Override
+	public Color getBackgroundColor(boolean selected, boolean hovered, boolean light)
+	{
+		return BreadcrumbsComponent.ButtonSettings.getBackgroundColor(selected, hovered, light, false);
+	}
 }

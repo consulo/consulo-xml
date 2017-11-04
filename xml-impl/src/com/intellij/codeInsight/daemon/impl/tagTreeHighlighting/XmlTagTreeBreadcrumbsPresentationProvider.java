@@ -15,66 +15,75 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
+import java.awt.Color;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.breadcrumbs.BreadcrumbsPresentationProvider;
-import com.intellij.xml.breadcrumbs.CrumbPresentation;
+import com.intellij.ui.breadcrumbs.BreadcrumbsPresentationProvider;
+import com.intellij.ui.breadcrumbs.CrumbPresentation;
 import com.intellij.xml.breadcrumbs.DefaultCrumbsPresentation;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.awt.*;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresentationProvider {
-  private static boolean isMyContext(@NotNull PsiElement deepestElement) {
-    final PsiFile file = deepestElement.getContainingFile();
-    if (file == null || !XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)) {
-      return false;
-    }
-    return true;
-  }
+public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresentationProvider
+{
+	private static boolean isMyContext(@NotNull PsiElement deepestElement)
+	{
+		final PsiFile file = deepestElement.getContainingFile();
+		if(file == null || !XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file))
+		{
+			return false;
+		}
+		return true;
+	}
 
-  @Override
-  public CrumbPresentation[] getCrumbPresentations(@NotNull PsiElement[] elements) {
-    if (elements.length == 0 || !isMyContext(elements[elements.length - 1])) {
-      return null;
-    }
+	@Override
+	public CrumbPresentation[] getCrumbPresentations(@NotNull PsiElement[] elements)
+	{
+		if(elements.length == 0 || !isMyContext(elements[elements.length - 1]))
+		{
+			return null;
+		}
 
-    if (!XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements)) {
-      return null;
-    }
+		if(!XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements))
+		{
+			return null;
+		}
 
-    final CrumbPresentation[] result = new CrumbPresentation[elements.length];
-    final Color[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
-    int index = 0;
+		final CrumbPresentation[] result = new CrumbPresentation[elements.length];
+		final Color[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
+		int index = 0;
 
-    for (int i = result.length - 1; i >= 0; i--) {
-      if (elements[i] instanceof XmlTag) {
-        final Color color = baseColors[index % baseColors.length];
-        result[i] = new MyCrumbPresentation(color);
-        index++;
-      }
-    }
-    return result;
-  }
+		for(int i = result.length - 1; i >= 0; i--)
+		{
+			if(elements[i] instanceof XmlTag)
+			{
+				final Color color = baseColors[index % baseColors.length];
+				result[i] = new MyCrumbPresentation(color);
+				index++;
+			}
+		}
+		return result;
+	}
 
-  private static class MyCrumbPresentation extends DefaultCrumbsPresentation {
-    private final Color myColor;
+	private static class MyCrumbPresentation extends DefaultCrumbsPresentation
+	{
+		private final Color myColor;
 
-    private MyCrumbPresentation(@Nullable Color color) {
-      myColor = color;
-    }
+		private MyCrumbPresentation(@Nullable Color color)
+		{
+			myColor = color;
+		}
 
-    @Override
-    public Color getBackgroundColor(boolean selected, boolean hovered, boolean light) {
-      final Color baseColor = super.getBackgroundColor(selected, hovered, light);
-      return myColor != null
-             ? XmlTagTreeHighlightingUtil.makeTransparent(myColor, baseColor, 0.1)
-             : baseColor;
-    }
-  }
+		@Override
+		public Color getBackgroundColor(boolean selected, boolean hovered, boolean light)
+		{
+			final Color baseColor = super.getBackgroundColor(selected, hovered, light);
+			return myColor != null ? XmlTagTreeHighlightingUtil.makeTransparent(myColor, baseColor, 0.1) : baseColor;
+		}
+	}
 }

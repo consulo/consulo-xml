@@ -25,16 +25,15 @@ package com.intellij.xml.breadcrumbs;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
 import consulo.annotations.RequiredReadAction;
 
-public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider
+public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider
 {
 	@NonNls
 	protected static final String CLASS_ATTRIBUTE_NAME = "class";
@@ -46,12 +45,6 @@ public class XmlLanguageBreadcrumbsInfoProvider extends BreadcrumbsInfoProvider
 	public boolean acceptElement(@NotNull final PsiElement e)
 	{
 		return e instanceof XmlTag && e.isValid();
-	}
-
-	@Override
-	public boolean validateFileProvider(@NotNull FileViewProvider fileViewProvider)
-	{
-		return fileViewProvider.getBaseLanguage() == XMLLanguage.INSTANCE && XmlEditorOptions.getInstance().isBreadcrumbsEnabledInXml();
 	}
 
 	@Override

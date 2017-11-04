@@ -3,10 +3,8 @@ package com.intellij.xml.breadcrumbs;
 import java.util.StringTokenizer;
 
 import org.jetbrains.annotations.NotNull;
-import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import consulo.annotations.RequiredReadAction;
@@ -17,12 +15,6 @@ import consulo.annotations.RequiredReadAction;
  */
 public class HtmlLanguageBreadcrumbsInfoProvider extends XmlLanguageBreadcrumbsInfoProvider
 {
-	@Override
-	public boolean validateFileProvider(@NotNull FileViewProvider fileViewProvider)
-	{
-		return XmlEditorOptions.getInstance().isBreadcrumbsEnabled();
-	}
-
 	@RequiredReadAction
 	@Override
 	@NotNull
