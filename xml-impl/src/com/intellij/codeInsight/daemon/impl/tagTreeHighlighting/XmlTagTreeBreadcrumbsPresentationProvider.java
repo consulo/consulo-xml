@@ -83,7 +83,7 @@ public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresen
 		public Color getBackgroundColor(boolean selected, boolean hovered, boolean light)
 		{
 			final Color baseColor = super.getBackgroundColor(selected, hovered, light);
-			return myColor != null ? XmlTagTreeHighlightingUtil.makeTransparent(myColor, baseColor, 0.1) : baseColor;
+			return baseColor == null ? XmlTagTreeHighlightingPass.toLineMarkerColor(0x92, myColor) : myColor != null ? XmlTagTreeHighlightingUtil.makeTransparent(myColor, baseColor, 0.1) : baseColor;
 		}
 	}
 }

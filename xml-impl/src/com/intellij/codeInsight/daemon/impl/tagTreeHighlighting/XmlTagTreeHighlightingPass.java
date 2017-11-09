@@ -17,8 +17,6 @@ package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,6 @@ import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.ex.MarkupModelEx;
 import com.intellij.openapi.editor.impl.DocumentMarkupModel;
 import com.intellij.openapi.editor.markup.HighlighterTargetArea;
-import com.intellij.openapi.editor.markup.LineMarkerRenderer;
 import com.intellij.openapi.editor.markup.MarkupModel;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.editor.markup.TextAttributes;
@@ -57,7 +54,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.ui.Gray;
 import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
 import com.intellij.ui.breadcrumbs.BreadcrumbsWrapper;
 import consulo.annotations.RequiredReadAction;
@@ -228,8 +224,9 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		final MarkupModel markupModel = myEditor.getMarkupModel();
 
 		final Color[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
-		final Color[] colorsForEditor = count > 1 ? toColorsForEditor(baseColors) : new Color[]{myEditor.getColorsScheme().getAttributes(CodeInsightColors.MATCHED_BRACE_ATTRIBUTES)
-				.getBackgroundColor()};
+		final Color[] colorsForEditor = count > 1 ? toColorsForEditor(baseColors) : new Color[]{
+				myEditor.getColorsScheme().getAttributes(CodeInsightColors.MATCHED_BRACE_ATTRIBUTES).getBackgroundColor()
+		};
 		final Color[] colorsForLineMarkers = toColorsForLineMarkers(baseColors);
 
 		final List<RangeHighlighter> newHighlighters = new ArrayList<>();
@@ -309,48 +306,33 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 	{
 		final RangeHighlighter highlighter = mm.addRangeHighlighter(range.getStartOffset(), range.getEndOffset(), 0, null, HighlighterTargetArea.LINES_IN_RANGE);
 
-		highlighter.setLineMarkerRenderer(new LineMarkerRenderer()
+		highlighter.setLineMarkerRenderer((editor, g, r) ->
 		{
-			@Override
-			public void paint(Editor editor, Graphics g, Rectangle r)
-			{
-				g.setColor(color);
-				g.fillRect(r.x - 1, r.y, 2, r.height);
-			}
+			g.setColor(color);
+			g.fillRect(r.x - 1, r.y, 2, r.height);
 		});
 		return highlighter;
 	}
 
+	static Color toLineMarkerColor(int gray, Color color)
+	{
+		//noinspection UseJBColor
+		return color == null ? null : new Color(toLineMarkerColor(gray, color.getRed()), toLineMarkerColor(gray, color.getGreen()), toLineMarkerColor(gray, color.getBlue()));
+	}
+
+	private static int toLineMarkerColor(int gray, int color)
+	{
+		int value = (int) (gray * 0.6 + 0.32 * color);
+		return value < 0 ? 0 : value > 255 ? 255 : value;
+	}
 
 	private static Color[] toColorsForLineMarkers(Color[] baseColors)
 	{
 		final Color[] colors = new Color[baseColors.length];
-		final Color tagBackground = Gray._239;
-		final double transparency = 0.4;
-		final double factor = 0.8;
-
 		for(int i = 0; i < colors.length; i++)
 		{
-			final Color color = baseColors[i];
-
-			if(color == null)
-			{
-				colors[i] = null;
-				continue;
-			}
-
-			int r = (int) (color.getRed() * factor);
-			int g = (int) (color.getGreen() * factor);
-			int b = (int) (color.getBlue() * factor);
-
-			r = (int) (tagBackground.getRed() * (1 - transparency) + r * transparency);
-			g = (int) (tagBackground.getGreen() * (1 - transparency) + g * transparency);
-			b = (int) (tagBackground.getBlue() * (1 - transparency) + b * transparency);
-
-			//noinspection UseJBColor
-			colors[i] = new Color(r, g, b);
+			colors[i] = toLineMarkerColor(239, baseColors[i]);
 		}
-
 		return colors;
 	}
 
