@@ -15,6 +15,7 @@
             <element id="module-production-resource-output" name="xml-intellilang" />
             <element id="module-output" name="xml-spellchecker" />
             <element id="module-production-resource-output" name="xml-api" />
+            <element id="module-production-resource-output" name="xml-dom-api" />
           </element>
           <element id="dir-copy" path="$PROJECT_DIR$/lib" />
           <element id="zip-archive" name="relaxng.jar">

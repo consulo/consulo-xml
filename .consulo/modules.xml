@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
+<project>
   <component name="ModuleManager">
     <modules>
       <module name="consulo-xml" dirurl="file://$PROJECT_DIR$" current-layer="Default">
@@ -37,6 +37,7 @@
           <extension id="consulo-plugin" sdk-module-name="xml-api" />
           <extension id="java" sdk-module-name="consulo-xml" language-level-module-name="consulo-xml" />
           <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION_RESOURCE" url="file://$MODULE_DIR$/resources" />
             <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
           </content>
           <orderEntry type="module-extension-sdk" extension-id="java" />
