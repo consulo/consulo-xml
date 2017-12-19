@@ -79,6 +79,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.dom.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>com.intellij.xml-xml.dom.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -87,11 +92,33 @@
 			<artifactId>com.intellij.xml-xml.analysis.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>xmlbeans</groupId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.structure.view.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!--runtime dependencies-->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.11.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
-			<version>2.3.0</version>
+			<version>2.6.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>stax</groupId>
+					<artifactId>stax-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>xml-resolver</groupId>

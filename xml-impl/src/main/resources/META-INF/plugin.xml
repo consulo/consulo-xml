@@ -8,7 +8,7 @@
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
 	<xi:include href="/META-INF/XmlDom.xml" xpointer="xpointer(/idea-plugin/*)"/>
-	<xi:include href="/META-INF/relaxng-plugin.xml" xpointer="xpointer(/idea-plugin/*)"/>
+	<!--<xi:include href="/META-INF/relaxng-plugin.xml" xpointer="xpointer(/idea-plugin/*)"/>-->
 
 	<actions>
 
