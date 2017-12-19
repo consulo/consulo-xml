@@ -23,8 +23,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
-import java.net.URL;
-import java.security.CodeSource;
 import java.util.LinkedList;
 
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
