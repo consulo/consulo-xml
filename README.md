@@ -1,1 +1,1 @@
-[![Build Status](http://must-be.org/jenkins/job/consulo-xml/badge/icon)](http://must-be.org/jenkins/job/consulo-xml/)
+[![Build Status](https://ci.consulo.io/job/consulo-xml/badge/icon)](https://ci.consulo.io/job/consulo-xml/)
