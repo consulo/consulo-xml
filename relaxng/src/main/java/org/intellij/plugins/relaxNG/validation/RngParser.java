@@ -19,6 +19,8 @@ package org.intellij.plugins.relaxNG.validation;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.xml.transform.sax.SAXSource;
+
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.jetbrains.annotations.NotNull;
@@ -36,13 +38,14 @@ import org.kohsuke.rngom.dt.DoNothingDatatypeLibraryFactoryImpl;
 import org.kohsuke.rngom.dt.builtin.BuiltinDatatypeLibraryFactory;
 import org.kohsuke.rngom.parse.IllegalSchemaException;
 import org.kohsuke.rngom.parse.Parseable;
-import org.kohsuke.rngom.parse.compact.CompactParseable;
+import org.kohsuke.rngom.parse.compact.CompactParseable2;
 import org.kohsuke.rngom.parse.xml.SAXParseable;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -62,12 +65,18 @@ import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl;
-import com.thaiopensource.relaxng.impl.SchemaReaderImpl;
+import com.thaiopensource.relaxng.pattern.AnnotationsImpl;
+import com.thaiopensource.relaxng.pattern.CommentListImpl;
+import com.thaiopensource.relaxng.pattern.NameClass;
+import com.thaiopensource.relaxng.pattern.Pattern;
+import com.thaiopensource.resolver.Input;
+import com.thaiopensource.resolver.xml.sax.SAX;
+import com.thaiopensource.resolver.xml.sax.SAXResolver;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.xml.sax.Sax2XMLReaderCreator;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.validate.rng.impl.SchemaReaderImpl;
 
 /*
 * Created by IntelliJ IDEA.
@@ -192,7 +201,7 @@ public class RngParser
 
 		if(file.getFileType() == RncFileType.getInstance())
 		{
-			return new CompactParseable(source, eh)
+			return new CompactParseable2(source, eh)
 			{
 				@Override
 				public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException
@@ -284,15 +293,19 @@ public class RngParser
 		}
 
 		@Override
-		protected com.thaiopensource.relaxng.parse.Parseable createParseable(XMLReaderCreator xmlReaderCreator, InputSource inputSource, ErrorHandler errorHandler)
+		protected com.thaiopensource.relaxng.parse.Parseable<Pattern, NameClass, Locator, VoidValue, CommentListImpl, AnnotationsImpl> createParseable(SAXSource source,
+				SAXResolver resolver,
+				ErrorHandler errorHandler,
+				PropertyMap properties) throws SAXException
 		{
+			Input inputSource = SAX.createInput(source.getInputSource());
 			if(myDescriptorFile.getFileType() == RncFileType.getInstance())
 			{
-				return new com.thaiopensource.relaxng.parse.compact.CompactParseable(inputSource, errorHandler);
+				return new com.thaiopensource.relaxng.parse.compact.CompactParseable<>(inputSource, resolver.getResolver(), errorHandler);
 			}
 			else
 			{
-				return new com.thaiopensource.relaxng.parse.sax.SAXParseable(new Sax2XMLReaderCreator(), inputSource, errorHandler);
+				return new com.thaiopensource.relaxng.parse.sax.SAXParseable<>(source, resolver, errorHandler);
 			}
 		}
 	}

@@ -16,18 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.lexer;
 
-import com.intellij.lexer.LexerBase;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.util.text.CharArrayCharSequence;
-import com.intellij.util.text.CharArrayUtil;
 import gnu.trove.TIntIntHashMap;
-import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.kohsuke.rngom.parse.compact.*;
 
 import java.io.CharArrayReader;
 import java.io.FileReader;
@@ -38,6 +27,23 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.Arrays;
 import java.util.LinkedList;
+
+import org.apache.velocity.runtime.parser.CharStream;
+import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
+import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
+import org.kohsuke.rngom.parse.compact.JavaCharStream;
+import org.kohsuke.rngom.parse.compact.Token;
+import org.kohsuke.rngom.parse.compact.TokenMgrError;
+import com.intellij.lexer.LexerBase;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.psi.TokenType;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.util.text.CharArrayCharSequence;
+import com.intellij.util.text.CharArrayUtil;
 
 /**
  * An adapter to use the lexer ("TokenManager") generated from a javacc grammar.
@@ -205,7 +211,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase {
 
   private static CompactSyntaxTokenManager createTokenManager(int initialState, EscapePreprocessor preprocessor) {
     try {
-      return new CompactSyntaxTokenManager(new SimpleCharStream(preprocessor, 1, 1), initialState);
+      return new CompactSyntaxTokenManager(new JavaCharStream(preprocessor, 1, 1), initialState);
     } catch (NoSuchMethodError e) {
       final Class<CompactSyntaxTokenManager> managerClass = CompactSyntaxTokenManager.class;
       LOG.error("Unsupported version of RNGOM in classpath. Please check your IDEA and JDK installation.", e,

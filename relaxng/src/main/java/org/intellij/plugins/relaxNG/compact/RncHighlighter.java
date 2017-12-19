@@ -16,18 +16,17 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.intellij.plugins.relaxNG.compact.lexer.CompactSyntaxLexerAdapter;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
-import com.intellij.openapi.editor.colors.CodeInsightColors;
+import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
-import org.intellij.plugins.relaxNG.compact.lexer.CompactSyntaxLexerAdapter;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.

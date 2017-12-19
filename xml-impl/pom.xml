@@ -89,6 +89,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.analysis.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>com.intellij.xml-xml.analysis.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -97,7 +102,13 @@
 			<artifactId>com.intellij.xml-xml.structure.view.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!--runtime dependencies-->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>consulo.relaxng</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!--runtime dependencies just copy from other projects-->
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
@@ -124,6 +135,21 @@
 			<groupId>xml-resolver</groupId>
 			<artifactId>xml-resolver</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kohsuke.rngom</groupId>
+			<artifactId>rngom</artifactId>
+			<version>201605</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thaiopensource</groupId>
+			<artifactId>jing</artifactId>
+			<version>20091111</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thaiopensource</groupId>
+			<artifactId>trang</artifactId>
+			<version>20091111</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -18,11 +18,12 @@ package org.intellij.plugins.relaxNG.compact.lexer;
 
 import gnu.trove.TIntArrayList;
 import gnu.trove.TIntIntHashMap;
-import org.kohsuke.rngom.util.Utf16;
 
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
+
+import org.kohsuke.rngom.util.Utf16;
 
 /**
  * A reader that deals with escape sequences in RNC files (\x{xx}) and keeps track of their positions to build correct

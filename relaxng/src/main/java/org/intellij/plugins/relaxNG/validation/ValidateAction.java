@@ -16,6 +16,17 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.concurrent.Future;
+
+import javax.swing.SwingUtilities;
+
+import org.intellij.plugins.relaxNG.compact.RncFileType;
+import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import com.intellij.ide.errorTreeView.NewErrorTreeViewPanel;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -40,18 +51,8 @@ import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
-import com.thaiopensource.validate.rng.RngProperty;
-import org.intellij.plugins.relaxNG.compact.RncFileType;
-import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import javax.swing.*;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.concurrent.Future;
 
 /**
  * Created by IntelliJ IDEA.
@@ -197,7 +198,7 @@ public class ValidateAction extends AnAction {
       } catch (IOException e1) {
         eh.fatalError(new SAXParseException(e1.getMessage(), null, UriOrFile.fileToUri(schemaPath), -1, -1, e1));
       }
-    } catch (SAXException | MalformedURLException e1) {
+    } catch (SAXException e1) {
       // huh?
       Logger.getInstance(ValidateAction.class.getName()).error(e1);
     }

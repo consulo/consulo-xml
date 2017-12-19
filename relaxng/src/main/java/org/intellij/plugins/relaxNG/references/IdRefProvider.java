@@ -16,6 +16,13 @@
 
 package org.intellij.plugins.relaxNG.references;
 
+import static com.intellij.patterns.XmlPatterns.xmlAttribute;
+import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PatternCondition;
@@ -32,13 +39,6 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
 
 public class IdRefProvider extends PsiReferenceProvider {
   public static final HasIdRefTypeCondition HAS_ID_REF_TYPE = new HasIdRefTypeCondition();
