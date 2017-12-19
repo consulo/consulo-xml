@@ -25,9 +25,9 @@
 	</parent>
 
 	<groupId>consulo.plugin</groupId>
-	<artifactId>com.intellij.xml-xml.impl</artifactId>
+	<artifactId>com.intellij.xml</artifactId>
 	<version>2-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>consulo-plugin</packaging>
 
 	<repositories>
 		<repository>
@@ -39,4 +39,64 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>consulo.maven</groupId>
+				<artifactId>consulo-maven-plugin</artifactId>
+				<version>2-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<configuration>
+					<repositoryChannel>nightly</repositoryChannel>
+					<packaging>
+						<skip>${dev.mode}</skip>
+						<version>${build.number}</version>
+					</packaging>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>workspace</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.psi.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.psi.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.dom.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.analysis.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>xml-resolver</groupId>
+			<artifactId>xml-resolver</artifactId>
+			<version>1.2</version>
+		</dependency>
+	</dependencies>
 </project>

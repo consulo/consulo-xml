@@ -43,7 +43,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.api</artifactId>
+			<artifactId>com.intellij.xml-xml.psi.api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

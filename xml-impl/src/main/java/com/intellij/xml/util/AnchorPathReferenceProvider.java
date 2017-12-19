@@ -66,8 +66,8 @@ public class AnchorPathReferenceProvider implements PathReferenceProvider {
     catch (StringIndexOutOfBoundsException e) {      
       throw new RuntimeException(elementText, e);
     }
-    final AnchorReference anchorReference = new AnchorReference(anchor, fileReference, psiElement, anchorOffset + 1, soft);
-    references.add(anchorReference);
+    final AnchorReferenceImpl anchorReferenceImpl = new AnchorReferenceImpl(anchor, fileReference, psiElement, anchorOffset + 1, soft);
+    references.add(anchorReferenceImpl);
     return false;
   }
 

@@ -15,22 +15,19 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.NullableComputable;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.actions.validate.ErrorReporter;
-import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+
 import org.apache.xerces.impl.Constants;
+import org.apache.xerces.impl.xs.SchemaGrammar;
 import org.apache.xerces.impl.xs.SubstitutionGroupHandler;
 import org.apache.xerces.impl.xs.XSComplexTypeDecl;
 import org.apache.xerces.impl.xs.XSElementDecl;
+import org.apache.xerces.impl.xs.XSElementDeclHelper;
 import org.apache.xerces.impl.xs.XSGrammarBucket;
 import org.apache.xerces.impl.xs.models.CMBuilder;
 import org.apache.xerces.impl.xs.models.CMNodeFactory;
@@ -47,172 +44,233 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.util.Condition;
+import com.intellij.openapi.util.NullableComputable;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.util.Function;
+import com.intellij.util.containers.ContainerUtil;
+import com.intellij.xml.XmlElementDescriptor;
+import com.intellij.xml.actions.validate.ErrorReporter;
+import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 
 /**
  * @author Dmitry Avdeev
  */
-class XsContentDFA extends XmlContentDFA {
+class XsContentDFA extends XmlContentDFA
+{
+	private static class MyXSElementDeclHelper implements XSElementDeclHelper
+	{
+		private final XSGrammarBucket myBucket = new XSGrammarBucket();
 
-  private final XSCMValidator myContentModel;
-  private final SubstitutionGroupHandler myHandler;
-  private final int[] myState;
-  private final XmlElementDescriptor[] myElementDescriptors;
+		@Override
+		public XSElementDecl getGlobalElementDecl(QName name)
+		{
+			SchemaGrammar grammar = myBucket.getGrammar(name.uri);
+			return grammar == null ? null : grammar.getGlobalElementDecl(name.localpart, name.prefix);
+		}
+	}
 
-  @Nullable
-  public static XmlContentDFA createContentDFA(@NotNull XmlTag parentTag) {
-    final PsiFile file = parentTag.getContainingFile().getOriginalFile();
-    if (!(file instanceof XmlFile)) return null;
-    XSModel xsModel = ApplicationManager.getApplication().runReadAction(new NullableComputable<XSModel>() {
-      @Override
-      public XSModel compute() {
-        return getXSModel((XmlFile)file);
-      }
-    });
-    if (xsModel == null) {
-      return null;
-    }
+	private final XSCMValidator myContentModel;
+	private final SubstitutionGroupHandler myHandler;
+	private final int[] myState;
+	private final XmlElementDescriptor[] myElementDescriptors;
 
-    XSElementDeclaration decl = getElementDeclaration(parentTag, xsModel);
-    if (decl == null) {
-      return null;
-    }
-    return new XsContentDFA(decl, parentTag);
-  }
+	@Nullable
+	public static XmlContentDFA createContentDFA(@NotNull XmlTag parentTag)
+	{
+		final PsiFile file = parentTag.getContainingFile().getOriginalFile();
+		if(!(file instanceof XmlFile))
+		{
+			return null;
+		}
+		XSModel xsModel = ApplicationManager.getApplication().runReadAction(new NullableComputable<XSModel>()
+		{
+			@Override
+			public XSModel compute()
+			{
+				return getXSModel((XmlFile) file);
+			}
+		});
+		if(xsModel == null)
+		{
+			return null;
+		}
 
-  public XsContentDFA(@NotNull XSElementDeclaration decl, final XmlTag parentTag) {
-    XSComplexTypeDecl definition = (XSComplexTypeDecl)decl.getTypeDefinition();
-    myContentModel = definition.getContentModel(new CMBuilder(new CMNodeFactory()));
-    myHandler = new SubstitutionGroupHandler(new XSGrammarBucket());
-    myState = myContentModel.startContentModel();
-    myElementDescriptors = ApplicationManager.getApplication().runReadAction(new Computable<XmlElementDescriptor[]>() {
+		XSElementDeclaration decl = getElementDeclaration(parentTag, xsModel);
+		if(decl == null)
+		{
+			return null;
+		}
+		return new XsContentDFA(decl, parentTag);
+	}
 
-      @Override
-      public XmlElementDescriptor[] compute() {
-        XmlElementDescriptor parentTagDescriptor = parentTag.getDescriptor();
-        assert parentTagDescriptor != null;
-        return parentTagDescriptor.getElementsDescriptors(parentTag);
-      }
-    });
-  }
+	public XsContentDFA(@NotNull XSElementDeclaration decl, final XmlTag parentTag)
+	{
+		XSComplexTypeDecl definition = (XSComplexTypeDecl) decl.getTypeDefinition();
+		myContentModel = definition.getContentModel(new CMBuilder(new CMNodeFactory()));
+		myHandler = new SubstitutionGroupHandler(new MyXSElementDeclHelper());
+		myState = myContentModel.startContentModel();
+		myElementDescriptors = ApplicationManager.getApplication().runReadAction(new Computable<XmlElementDescriptor[]>()
+		{
 
-  @Override
-  public List<XmlElementDescriptor> getPossibleElements() {
-    final List vector = myContentModel.whatCanGoHere(myState);
-    ArrayList<XmlElementDescriptor> list = new ArrayList<XmlElementDescriptor>();
-    for (Object o : vector) {
-      if (o instanceof XSElementDecl) {
-        final XSElementDecl elementDecl = (XSElementDecl)o;
-        XmlElementDescriptor descriptor = ContainerUtil.find(myElementDescriptors, new Condition<XmlElementDescriptor>() {
-          @Override
-          public boolean value(XmlElementDescriptor elementDescriptor) {
-            return elementDecl.getName().equals(elementDescriptor.getName());
-          }
-        });
-        ContainerUtil.addIfNotNull(descriptor, list);
-      }
-    }
-    return list;
-  }
+			@Override
+			public XmlElementDescriptor[] compute()
+			{
+				XmlElementDescriptor parentTagDescriptor = parentTag.getDescriptor();
+				assert parentTagDescriptor != null;
+				return parentTagDescriptor.getElementsDescriptors(parentTag);
+			}
+		});
+	}
 
-  @Override
-  public void transition(XmlTag xmlTag) {
-    myContentModel.oneTransition(createQName(xmlTag), myState, myHandler);
-  }
+	@Override
+	public List<XmlElementDescriptor> getPossibleElements()
+	{
+		final List vector = myContentModel.whatCanGoHere(myState);
+		ArrayList<XmlElementDescriptor> list = new ArrayList<XmlElementDescriptor>();
+		for(Object o : vector)
+		{
+			if(o instanceof XSElementDecl)
+			{
+				final XSElementDecl elementDecl = (XSElementDecl) o;
+				XmlElementDescriptor descriptor = ContainerUtil.find(myElementDescriptors, new Condition<XmlElementDescriptor>()
+				{
+					@Override
+					public boolean value(XmlElementDescriptor elementDescriptor)
+					{
+						return elementDecl.getName().equals(elementDescriptor.getName());
+					}
+				});
+				ContainerUtil.addIfNotNull(list, descriptor);
+			}
+		}
+		return list;
+	}
 
-  private static QName createQName(XmlTag tag) {
-    //todo don't use intern to not pollute PermGen
-    String namespace = tag.getNamespace();
-    return new QName(tag.getNamespacePrefix().intern(),
-                     tag.getLocalName().intern(),
-                     tag.getName().intern(),
-                     namespace.length() == 0 ? null : namespace.intern());
-  }
+	@Override
+	public void transition(XmlTag xmlTag)
+	{
+		myContentModel.oneTransition(createQName(xmlTag), myState, myHandler);
+	}
 
-  @Nullable
-  private static XSElementDeclaration getElementDeclaration(XmlTag tag, XSModel xsModel) {
+	private static QName createQName(XmlTag tag)
+	{
+		//todo don't use intern to not pollute PermGen
+		String namespace = tag.getNamespace();
+		return new QName(tag.getNamespacePrefix().intern(), tag.getLocalName().intern(), tag.getName().intern(), namespace.length() == 0 ? null : namespace.intern());
+	}
 
-    List<XmlTag> ancestors = new ArrayList<XmlTag>();
-    for (XmlTag t = tag; t != null; t = t.getParentTag()) {
-      ancestors.add(t);
-    }
-    Collections.reverse(ancestors);
-    XSElementDeclaration declaration = null;
-    SubstitutionGroupHandler fSubGroupHandler = new SubstitutionGroupHandler(new XSGrammarBucket());
-    CMBuilder cmBuilder = new CMBuilder(new CMNodeFactory());
-    for (XmlTag ancestor : ancestors) {
-      if (declaration == null) {
-        declaration = xsModel.getElementDeclaration(ancestor.getLocalName(), ancestor.getNamespace());
-        if (declaration == null) return null;
-        else continue;
-      }
-      XSTypeDefinition typeDefinition = declaration.getTypeDefinition();
-      if (!(typeDefinition instanceof XSComplexTypeDecl)) {
-        return null;
-      }
+	@Nullable
+	private static XSElementDeclaration getElementDeclaration(XmlTag tag, XSModel xsModel)
+	{
 
-      XSCMValidator model = ((XSComplexTypeDecl)typeDefinition).getContentModel(cmBuilder);
-      int[] ints = model.startContentModel();
-      for (XmlTag subTag : ancestor.getParentTag().getSubTags()) {
-        QName qName = createQName(subTag);
-        Object o = model.oneTransition(qName, ints, fSubGroupHandler);
-        if (subTag == ancestor) {
-          if (o instanceof XSElementDecl) {
-            declaration = (XSElementDecl)o;
-            break;
-          }
-          else return null;
-        }
-      }
-    }
-    return declaration;
-  }
+		List<XmlTag> ancestors = new ArrayList<XmlTag>();
+		for(XmlTag t = tag; t != null; t = t.getParentTag())
+		{
+			ancestors.add(t);
+		}
+		Collections.reverse(ancestors);
+		XSElementDeclaration declaration = null;
+		SubstitutionGroupHandler fSubGroupHandler = new SubstitutionGroupHandler(new MyXSElementDeclHelper());
+		CMBuilder cmBuilder = new CMBuilder(new CMNodeFactory());
+		for(XmlTag ancestor : ancestors)
+		{
+			if(declaration == null)
+			{
+				declaration = xsModel.getElementDeclaration(ancestor.getLocalName(), ancestor.getNamespace());
+				if(declaration == null)
+				{
+					return null;
+				}
+				else
+				{
+					continue;
+				}
+			}
+			XSTypeDefinition typeDefinition = declaration.getTypeDefinition();
+			if(!(typeDefinition instanceof XSComplexTypeDecl))
+			{
+				return null;
+			}
 
-  @Nullable
-  private static XSModel getXSModel(XmlFile file) {
+			XSCMValidator model = ((XSComplexTypeDecl) typeDefinition).getContentModel(cmBuilder);
+			int[] ints = model.startContentModel();
+			for(XmlTag subTag : ancestor.getParentTag().getSubTags())
+			{
+				QName qName = createQName(subTag);
+				Object o = model.oneTransition(qName, ints, fSubGroupHandler);
+				if(subTag == ancestor)
+				{
+					if(o instanceof XSElementDecl)
+					{
+						declaration = (XSElementDecl) o;
+						break;
+					}
+					else
+					{
+						return null;
+					}
+				}
+			}
+		}
+		return declaration;
+	}
 
-    ValidateXmlActionHandler handler = new ValidateXmlActionHandler(false) {
-      @Override
-      protected SAXParser createParser() throws SAXException, ParserConfigurationException {
-        SAXParser parser = super.createParser();
-        parser.getXMLReader().setFeature(Constants.XERCES_FEATURE_PREFIX + Constants.CONTINUE_AFTER_FATAL_ERROR_FEATURE, true);
-        return parser;
-      }
-    };
-    handler.setErrorReporter(new ErrorReporter(handler) {
+	@Nullable
+	private static XSModel getXSModel(XmlFile file)
+	{
 
-      int count;
-      @Override
-      public void processError(SAXParseException ex, ValidateXmlActionHandler.ProblemType warning) throws SAXException {
-        if (warning != ValidateXmlActionHandler.ProblemType.WARNING && count++ > 100) {
-          throw new SAXException(ex);
-        }
-      }
+		ValidateXmlActionHandler handler = new ValidateXmlActionHandler(false)
+		{
+			@Override
+			protected SAXParser createParser() throws SAXException, ParserConfigurationException
+			{
+				SAXParser parser = super.createParser();
+				parser.getXMLReader().setFeature(Constants.XERCES_FEATURE_PREFIX + Constants.CONTINUE_AFTER_FATAL_ERROR_FEATURE, true);
+				return parser;
+			}
+		};
+		handler.setErrorReporter(new ErrorReporter(handler)
+		{
 
-      @Override
-      public boolean isUniqueProblem(SAXParseException e) {
-        return true;
-      }
-    });
+			int count;
 
-    handler.doValidate(file);
-    XMLGrammarPool grammarPool = ValidateXmlActionHandler.getGrammarPool(file);
-    if (grammarPool == null) {
-      return null;
-    }
-    Grammar[] grammars = grammarPool.retrieveInitialGrammarSet(XMLGrammarDescription.XML_SCHEMA);
+			@Override
+			public void processError(SAXParseException ex, ValidateXmlActionHandler.ProblemType warning) throws SAXException
+			{
+				if(warning != ValidateXmlActionHandler.ProblemType.WARNING && count++ > 100)
+				{
+					throw new SAXException(ex);
+				}
+			}
 
-    return grammars.length == 0 ? null : ((XSGrammar)grammars[0]).toXSModel(ContainerUtil.map(grammars, new Function<Grammar, XSGrammar>() {
-      @Override
-      public XSGrammar fun(Grammar grammar) {
-        return (XSGrammar)grammar;
-      }
-    }, new XSGrammar[0]));
-  }
+			@Override
+			public boolean isUniqueProblem(SAXParseException e)
+			{
+				return true;
+			}
+		});
+
+		handler.doValidate(file);
+		XMLGrammarPool grammarPool = ValidateXmlActionHandler.getGrammarPool(file);
+		if(grammarPool == null)
+		{
+			return null;
+		}
+		Grammar[] grammars = grammarPool.retrieveInitialGrammarSet(XMLGrammarDescription.XML_SCHEMA);
+
+		return grammars.length == 0 ? null : ((XSGrammar) grammars[0]).toXSModel(ContainerUtil.map(grammars, new Function<Grammar, XSGrammar>()
+		{
+			@Override
+			public XSGrammar fun(Grammar grammar)
+			{
+				return (XSGrammar) grammar;
+			}
+		}, new XSGrammar[0]));
+	}
 
 }

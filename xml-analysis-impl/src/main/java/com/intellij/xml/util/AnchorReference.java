@@ -13,29 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.codeInsight.daemon.impl.analysis;
+package com.intellij.xml.util;
 
-import com.intellij.psi.PsiReference;
-import com.intellij.xml.util.AnchorReferenceImpl;
-import org.jetbrains.annotations.NotNull;
-
-/**
- * @author Eugene.Kudelevsky
- */
-public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
-  @NotNull
-  @Override
-  public String getShortName() {
-    return "HtmlUnknownAnchorTarget";
-  }
-
-  @Override
-  protected boolean isForHtml() {
-    return true;
-  }
-
-  @Override
-  protected boolean needToCheckRef(PsiReference reference) {
-    return reference instanceof AnchorReferenceImpl;
-  }
+public interface AnchorReference
+{
 }

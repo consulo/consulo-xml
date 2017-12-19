@@ -17,20 +17,34 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>consulo</groupId>
+		<artifactId>arch.ide-provided</artifactId>
+		<version>2-SNAPSHOT</version>
+		<relativePath/>
+	</parent>
 
 	<groupId>consulo.plugin</groupId>
-	<artifactId>com.intellij.xml.parent</artifactId>
+	<artifactId>com.intellij.xml-xml.analysis.api</artifactId>
 	<version>2-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<modules>
-		<module>xml-analysis-api</module>
-		<module>xml-analysis-impl</module>
-		<module>xml-psi-api</module>
-		<module>xml-psi-impl</module>
-		<module>xml-dom-api</module>
-		<module>xml-dom-impl</module>
-		<module>xml-structure-view-impl</module>
-		<module>xml-impl</module>
-	</modules>
+	<repositories>
+		<repository>
+			<id>consulo</id>
+			<url>https://maven.consulo.io/repository/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>interval:60</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml-xml.psi.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

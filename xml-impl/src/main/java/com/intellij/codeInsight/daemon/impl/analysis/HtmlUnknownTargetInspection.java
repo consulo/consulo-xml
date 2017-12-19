@@ -16,7 +16,7 @@
 package com.intellij.codeInsight.daemon.impl.analysis;
 
 import com.intellij.psi.PsiReference;
-import com.intellij.xml.util.AnchorReference;
+import com.intellij.xml.util.AnchorReferenceImpl;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -36,6 +36,6 @@ public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
 
   @Override
   protected boolean needToCheckRef(PsiReference reference) {
-    return !(reference instanceof AnchorReference);
+    return !(reference instanceof AnchorReferenceImpl);
   }
 }
