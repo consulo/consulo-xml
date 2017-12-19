@@ -137,9 +137,9 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.kohsuke.rngom</groupId>
+			<groupId>consulo.internal</groupId>
 			<artifactId>rngom</artifactId>
-			<version>201605</version>
+			<version>20051226</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thaiopensource</groupId>

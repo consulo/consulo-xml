@@ -38,7 +38,7 @@ import org.kohsuke.rngom.dt.DoNothingDatatypeLibraryFactoryImpl;
 import org.kohsuke.rngom.dt.builtin.BuiltinDatatypeLibraryFactory;
 import org.kohsuke.rngom.parse.IllegalSchemaException;
 import org.kohsuke.rngom.parse.Parseable;
-import org.kohsuke.rngom.parse.compact.CompactParseable2;
+import org.kohsuke.rngom.parse.compact.CompactParseable;
 import org.kohsuke.rngom.parse.xml.SAXParseable;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
@@ -201,7 +201,7 @@ public class RngParser
 
 		if(file.getFileType() == RncFileType.getInstance())
 		{
-			return new CompactParseable2(source, eh)
+			return new CompactParseable(source, eh)
 			{
 				@Override
 				public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException
