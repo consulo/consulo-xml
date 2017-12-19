@@ -52,6 +52,7 @@
 					<dependencies>
 						<dependency>com.intellij.spellchecker</dependency>
 						<dependency>org.intellij.intelliLang</dependency>
+						<dependency>com.intellij.regexp</dependency>
 					</dependencies>
 					<packaging>
 						<skip>${dev.mode}</skip>
@@ -120,6 +121,13 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>com.intellij.xml-xml.spellchecker</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>consulo</groupId>
+			<artifactId>consulo-lang-impl-testing</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!--runtime dependencies just copy from other projects-->

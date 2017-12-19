@@ -66,6 +66,12 @@
 			<artifactId>com.intellij.xml-xml.structure.view.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>consulo</groupId>
+			<artifactId>consulo-lang-impl-testing</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!--provided -->
 		<dependency>

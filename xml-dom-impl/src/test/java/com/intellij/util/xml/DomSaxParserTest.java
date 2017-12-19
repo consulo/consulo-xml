@@ -4,22 +4,22 @@
  */
 package com.intellij.util.xml;
 
+import java.io.IOException;
+
+import org.jetbrains.annotations.Nullable;
+import org.xml.sax.SAXException;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
-import org.jetbrains.annotations.Nullable;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
+import com.intellij.testFramework.LightPlatformTestCase;
 
 /**
  * @author peter
  */
-public class DomSaxParserTest extends LightCodeInsightFixtureTestCase {
-
+public class DomSaxParserTest extends LightPlatformTestCase
+{
   public void testGetRootTagNameWithoutNamespace() throws Throwable {
     assertData("<root>", "root", null, null, null);
   }

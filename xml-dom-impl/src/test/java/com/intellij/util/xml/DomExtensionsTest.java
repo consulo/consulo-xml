@@ -3,18 +3,23 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.util.Key;
-import com.intellij.testFramework.IdeaTestUtil;
-import com.intellij.util.Consumer;
-import com.intellij.util.ParameterizedTypeImpl;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.xml.reflect.*;
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.util.Key;
+import com.intellij.util.Consumer;
+import com.intellij.util.ParameterizedTypeImpl;
+import com.intellij.util.ReflectionUtil;
+import com.intellij.util.xml.reflect.DomAttributeChildDescription;
+import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import com.intellij.util.xml.reflect.DomExtender;
+import com.intellij.util.xml.reflect.DomExtenderEP;
+import com.intellij.util.xml.reflect.DomExtension;
+import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
+import com.intellij.util.xml.reflect.DomExtensionsRegistrarImpl;
+import com.intellij.util.xml.reflect.DomFixedChildDescription;
 
 /**
  * @author peter
@@ -199,7 +204,7 @@ public class DomExtensionsTest extends DomTestCase {
     final DomExtenderEP extenderEP = new DomExtenderEP();
     extenderEP.domClassName = domClass.getName();
     extenderEP.extenderClassName = extenderClass.getName();
-    IdeaTestUtil.registerExtension(Extensions.getRootArea(), DomExtenderEP.EP_NAME, extenderEP, myTestRootDisposable);
+    //TODO [VISTALL] IdeaTestUtil.registerExtension(Extensions.getRootArea(), DomExtenderEP.EP_NAME, extenderEP, myTestRootDisposable);
   }
 
 

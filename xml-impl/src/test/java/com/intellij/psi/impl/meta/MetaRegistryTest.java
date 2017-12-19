@@ -4,6 +4,7 @@
 
 package com.intellij.psi.impl.meta;
 
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiElement;
@@ -13,7 +14,6 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testFramework.LightPlatformTestCase;
 import com.intellij.testFramework.UsefulTestCase;
-import org.jetbrains.annotations.NonNls;
 
 /**
 * @author peter

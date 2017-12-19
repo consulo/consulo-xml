@@ -3,16 +3,19 @@
  */
 package com.intellij.util.xml;
 
+import java.util.Arrays;
+
 import com.intellij.codeInspection.InspectionManager;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.highlighting.*;
-
-import java.util.Arrays;
+import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import com.intellij.util.xml.highlighting.DomElementProblemDescriptorImpl;
+import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import com.intellij.util.xml.highlighting.DomElementsProblemsHolderImpl;
+import com.intellij.util.xml.highlighting.MockDomInspection;
 
 /**
  * @author peter
@@ -59,7 +62,7 @@ public class DomAnnotationsTest extends DomTestCase{
   }
 
   public interface MyElement extends DomElement{
-    GenericDomValue<PsiClass> getMyClass();
+    GenericDomValue<String> getMyClass();
   }
 
 }
