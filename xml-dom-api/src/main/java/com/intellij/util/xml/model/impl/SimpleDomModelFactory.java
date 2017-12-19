@@ -16,6 +16,12 @@
 
 package com.intellij.util.xml.model.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
@@ -23,12 +29,6 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.SimpleModelFactory;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -44,7 +44,7 @@ public abstract class SimpleDomModelFactory<T extends DomElement, M extends DomM
   public DomFileElement<T> createMergedModelRoot(Set<XmlFile> configFiles) {
     List<DomFileElement<T>> configs = new ArrayList<DomFileElement<T>>(configFiles.size());
     for (XmlFile configFile : configFiles) {
-      ContainerUtil.addIfNotNull(getDomRoot(configFile), configs);
+      ContainerUtil.addIfNotNull(configs, getDomRoot(configFile));
     }
     return configs.isEmpty() ? null : getModelMerger().mergeModels(DomFileElement.class, configs);
   }
