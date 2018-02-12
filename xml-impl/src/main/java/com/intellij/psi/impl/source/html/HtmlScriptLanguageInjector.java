@@ -15,18 +15,18 @@
  */
 package com.intellij.psi.impl.source.html;
 
+import java.util.Collection;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.Language;
+import com.intellij.lang.LanguageUtil;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
 
 public class HtmlScriptLanguageInjector implements MultiHostInjector {
   @Override
@@ -41,7 +41,7 @@ public class HtmlScriptLanguageInjector implements MultiHostInjector {
     String mimeType = scriptTag.getAttributeValue("type");
     Collection<Language> languages = Language.findInstancesByMimeType(mimeType);
     Language language = languages.isEmpty() ? null : languages.iterator().next();
-    if (language != null && InjectedLanguageUtil.isInjectableLanguage(language)) {
+    if (language != null && LanguageUtil.isInjectableLanguage(language)) {
       registrar
         .startInjecting(language)
         .addPlace(null, null, (PsiLanguageInjectionHost)host, TextRange.create(0, host.getTextLength()))
