@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2014 JetBrains s.r.o.
+ * Copyright 2000-2009 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,13 @@ package com.intellij.pom.xml.impl;
 
 import java.util.Collections;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.ASTNode;
 import com.intellij.pom.PomModel;
+import com.intellij.pom.PomModelAspect;
 import com.intellij.pom.event.PomModelEvent;
 import com.intellij.pom.tree.TreeAspect;
 import com.intellij.pom.tree.events.ChangeInfo;
+import com.intellij.pom.tree.events.ReplaceChangeInfo;
 import com.intellij.pom.tree.events.TreeChange;
 import com.intellij.pom.tree.events.TreeChangeEvent;
 import com.intellij.pom.tree.events.impl.ChangeInfoImpl;
@@ -38,9 +39,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
@@ -60,10 +59,9 @@ public class XmlAspectImpl implements XmlAspect
 	{
 		myModel = model;
 		myTreeAspect = aspect;
-		myModel.registerAspect(XmlAspect.class, this, Collections.singleton(myTreeAspect));
+		myModel.registerAspect(XmlAspect.class, this, Collections.singleton((PomModelAspect) myTreeAspect));
 	}
 
-	@Override
 	public void update(PomModelEvent event)
 	{
 		if(!event.getChangedAspects().contains(myTreeAspect))
@@ -88,12 +86,20 @@ public class XmlAspectImpl implements XmlAspect
 		final CharTable table = ((FileElement) changeSet.getRootElement()).getCharTable();
 		for(ASTNode changedElement : changedElements)
 		{
-			TreeChangeImpl changesByElement = (TreeChangeImpl) changeSet.getChangesByElement(changedElement);
-			PsiElement psiElement;
-			while((psiElement = changedElement.getPsi()) == null)
+			TreeChange changesByElement = changeSet.getChangesByElement(changedElement);
+			PsiElement psiElement = null;
+			while(changedElement != null && (psiElement = changedElement.getPsi()) == null)
 			{
-				changesByElement = createChildrenChangedInfo(changedElement);
-				changedElement = changesByElement.getChangedParent();
+				final ASTNode parent = changedElement.getTreeParent();
+				final ChangeInfoImpl changeInfo = ChangeInfoImpl.create(ChangeInfo.CONTENTS_CHANGED, changedElement);
+				changeInfo.compactChange(changesByElement);
+				changesByElement = new TreeChangeImpl(parent);
+				changesByElement.addChange(changedElement, changeInfo);
+				changedElement = parent;
+			}
+			if(changedElement == null)
+			{
+				continue;
 			}
 			final TreeChange finalChangedElement = changesByElement;
 			psiElement.accept(new XmlElementVisitor()
@@ -103,8 +109,20 @@ public class XmlAspectImpl implements XmlAspect
 				@Override
 				public void visitElement(PsiElement element)
 				{
-					myChange = createChildrenChangedInfo(element.getNode());
-					element.getParent().accept(this);
+					final ASTNode child = element.getNode();
+					final ASTNode treeParent = child.getTreeParent();
+					if(treeParent == null)
+					{
+						return;
+					}
+					final PsiElement parent = treeParent.getPsi();
+					final ChangeInfoImpl changeInfo = ChangeInfoImpl.create(ChangeInfo.CONTENTS_CHANGED, child);
+
+					changeInfo.compactChange(myChange);
+					myChange = new TreeChangeImpl(treeParent);
+
+					myChange.addChange(child, changeInfo);
+					parent.accept(this);
 				}
 
 				@Override
@@ -125,7 +143,7 @@ public class XmlAspectImpl implements XmlAspect
 							}
 							else if(changeType == ChangeInfo.REPLACE)
 							{
-								oldName = getReplacedNode(changeByChild).getText();
+								oldName = ((ReplaceChangeInfo) changeByChild).getReplaced().getText();
 							}
 						}
 						if(treeElement.getElementType() == XmlElementType.XML_ATTRIBUTE_VALUE)
@@ -136,7 +154,7 @@ public class XmlAspectImpl implements XmlAspect
 							}
 							else if(changeType == ChangeInfo.REPLACE)
 							{
-								oldValue = getReplacedNode(changeByChild).getText();
+								oldValue = ((ReplaceChangeInfo) changeByChild).getReplaced().getText();
 							}
 						}
 					}
@@ -155,18 +173,21 @@ public class XmlAspectImpl implements XmlAspect
 					}
 				}
 
-				private TreeElement getReplacedNode(ChangeInfo info)
-				{
-					return ((ChangeInfoImpl) info).getOldChild();
-				}
-
 				@Override
 				public void visitXmlTag(XmlTag tag)
 				{
-					ASTNode[] affectedChildren = myChange.getAffectedChildren();
+					ASTNode[] affectedChildren = shortenChange(myChange.getAffectedChildren(), changeSet);
 
 					for(final ASTNode treeElement : affectedChildren)
 					{
+			/*final IElementType type = treeElement.getElementType();
+            if (type == ElementType.WHITE_SPACE) continue;
+            if (type == ElementType.XML_NAME) {
+              if (myChange.getChangeByChild(treeElement).getChangeType() == ChangeInfo.REPLACE) {
+                continue;
+              }
+            }*/
+
 						if(!(treeElement.getPsi() instanceof XmlTagChild))
 						{
 							visitElement(tag);
@@ -183,6 +204,13 @@ public class XmlAspectImpl implements XmlAspect
 						{
 							continue;
 						}
+            /*
+            if (type == ElementType.XML_NAME) {
+              final XmlToken xmlToken = (XmlToken)((ReplaceChangeInfo)changeByChild).getReplaced();
+              xmlChangeSet.add(new XmlTagNameChangedImpl(tag, xmlToken.getText()));
+              continue;
+            }
+            */
 
 						final PsiElement element = treeElement.getPsi();
 
@@ -199,7 +227,7 @@ public class XmlAspectImpl implements XmlAspect
 								xmlChangeSet.add(new XmlTagChildChangedImpl(tag, (XmlTagChild) element));
 								break;
 							case ChangeInfo.REPLACE:
-								final PsiElement psi = getReplacedNode(changeByChild).getPsi();
+								final PsiElement psi = ((ReplaceChangeInfo) changeByChild).getReplaced().getPsi();
 								if(psi instanceof XmlTagChild)
 								{
 									final XmlTagChild replaced = (XmlTagChild) psi;
@@ -234,12 +262,9 @@ public class XmlAspectImpl implements XmlAspect
 		}
 	}
 
-	@NotNull
-	private static TreeChangeImpl createChildrenChangedInfo(ASTNode changedElement)
+	private ASTNode[] shortenChange(ASTNode[] affectedChildren, TreeChangeEvent event)
 	{
-		ASTNode parent = changedElement.getTreeParent();
-		TreeChangeImpl changesByElement = new TreeChangeImpl((CompositeElement) parent);
-		changesByElement.markChildChanged((TreeElement) changedElement, 0); // nobody cares about lengths here
-		return changesByElement;
+		// TODO
+		return affectedChildren;
 	}
 }
