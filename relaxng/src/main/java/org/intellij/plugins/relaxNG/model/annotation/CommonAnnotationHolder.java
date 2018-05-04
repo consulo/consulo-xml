@@ -22,7 +22,7 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 abstract class CommonAnnotationHolder<C> {
   public static <T extends DomElement> CommonAnnotationHolder<T> create(DomElementAnnotationHolder holder) {
@@ -33,7 +33,7 @@ abstract class CommonAnnotationHolder<C> {
     return new HolderAdapter<>(holder);
   }
 
-  public abstract Annotation createAnnotation(C element, @NotNull HighlightSeverity severity, String message);
+  public abstract Annotation createAnnotation(C element, @Nonnull HighlightSeverity severity, String message);
 
   private static class DomHolderAdapter<T extends DomElement> extends CommonAnnotationHolder<T> {
     private final DomElementAnnotationHolder myHolder;
@@ -43,7 +43,7 @@ abstract class CommonAnnotationHolder<C> {
     }
 
     @Override
-    public Annotation createAnnotation(DomElement element, @NotNull HighlightSeverity severity, String message) {
+    public Annotation createAnnotation(DomElement element, @Nonnull HighlightSeverity severity, String message) {
       final Annotation annotation = myHolder.createAnnotation(element, severity, message);
       annotation.setTooltip(message);  // no tooltip by default??
       return annotation;
@@ -58,7 +58,7 @@ abstract class CommonAnnotationHolder<C> {
     }
 
     @Override
-    public Annotation createAnnotation(T element, @NotNull HighlightSeverity severity, String message) {
+    public Annotation createAnnotation(T element, @Nonnull HighlightSeverity severity, String message) {
       if (severity == HighlightSeverity.ERROR) {
         return myHolder.createErrorAnnotation(element, message);
       } else if (severity == HighlightSeverity.WARNING) {

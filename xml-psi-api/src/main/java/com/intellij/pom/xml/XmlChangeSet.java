@@ -19,22 +19,22 @@ import com.intellij.pom.PomModelAspect;
 import com.intellij.pom.event.PomChangeSet;
 import com.intellij.pom.xml.events.XmlChange;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
 public interface XmlChangeSet extends PomChangeSet {
   List<XmlChange> getChanges();
 
-  @NotNull
+  @Nonnull
   PomModelAspect getAspect();
 
   void add(XmlChange xmlChange);
 
   void clear();
 
-  @NotNull
+  @Nonnull
   Iterable<XmlFile> getChangedFiles();
 
-  void addChangedFile(@NotNull XmlFile xmlFile);
+  void addChangedFile(@Nonnull XmlFile xmlFile);
 }

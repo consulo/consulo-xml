@@ -16,6 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -31,8 +34,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +45,7 @@ abstract class RncFileReferenceImpl extends RncElementImpl implements RncFileRef
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   @SuppressWarnings({ "SSBasedInspection" })
   public PsiReference[] getReferences() {
@@ -90,7 +91,7 @@ abstract class RncFileReferenceImpl extends RncElementImpl implements RncFileRef
   }
 
   @Override
-  public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState substitutor, PsiElement lastParent, @NotNull PsiElement place) {
+  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
     final FollowFileHint hint = processor.getHint(FollowFileHint.KEY);
     final RncFile file = getReferencedFile();
     if (file != null && hint != null && hint.doFollow(file)) {

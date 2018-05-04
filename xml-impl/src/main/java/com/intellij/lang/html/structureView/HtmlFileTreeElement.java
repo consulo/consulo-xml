@@ -21,8 +21,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.structureView.StructureViewFactoryEx;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
@@ -43,7 +43,7 @@ class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
     myInStructureViewPopup = inStructureViewPopup;
   }
 
-  @NotNull
+  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     if (isHtml5SectionsMode()) {
       return Collections.emptyList(); // Html5SectionsNodeProvider will return its structure

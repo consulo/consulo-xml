@@ -12,16 +12,16 @@ import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
  */
 public class XmlPrefixReferenceProvider extends PsiReferenceProvider {
 
-  @NotNull
+  @Nonnull
   @Override
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
     XmlAttributeValue attributeValue = (XmlAttributeValue)element;
     PsiElement parent = attributeValue.getParent();
     if (parent instanceof XmlAttribute && !XmlNSDescriptorImpl.checkSchemaNamespace(((XmlAttribute)parent).getParent())) {

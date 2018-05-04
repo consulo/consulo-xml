@@ -18,8 +18,9 @@ package com.intellij.psi.impl.source.html;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -70,7 +71,7 @@ public class ScriptSupportUtil {
 
               if (document != null) {
                 PsiElementProcessor psiElementProcessor = new PsiElementProcessor() {
-                  public boolean execute(@NotNull final PsiElement element) {
+                  public boolean execute(@Nonnull final PsiElement element) {
                     if (element instanceof XmlTag) {
                       final XmlTag tag = (XmlTag)element;
 

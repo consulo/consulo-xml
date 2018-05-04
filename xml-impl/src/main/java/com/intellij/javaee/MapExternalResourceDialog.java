@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -35,8 +36,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.ActionGroup;
@@ -90,7 +90,7 @@ public class MapExternalResourceDialog extends DialogWrapper
 	private final FileSystemTreeImpl myExplorer;
 	private String myLocation;
 
-	public MapExternalResourceDialog(String uri, @NotNull Project project, @Nullable PsiFile file, @Nullable String location)
+	public MapExternalResourceDialog(String uri, @Nonnull Project project, @Nullable PsiFile file, @Nullable String location)
 	{
 		super(project);
 		setTitle("Map External Resource");
@@ -101,7 +101,7 @@ public class MapExternalResourceDialog extends DialogWrapper
 		ConfigFileSearcher searcher = new ConfigFileSearcher(file == null ? null : ModuleUtilCore.findModuleForPsiElement(file), project)
 		{
 			@Override
-			public Set<PsiFile> search(@Nullable Module module, @NotNull Project project)
+			public Set<PsiFile> search(@Nullable Module module, @Nonnull Project project)
 			{
 				List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources = XmlNamespaceIndex.getAllResources(module, project, null);
 

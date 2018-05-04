@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.xml.namespace.QName;
 
 import org.intellij.plugins.relaxNG.ApplicationLoader;
@@ -29,8 +30,8 @@ import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.validation.RngParser;
 import org.intellij.plugins.relaxNG.validation.XmlInstanceValidator;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;
 import org.kohsuke.rngom.nc.NameClass;
@@ -81,7 +82,7 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
 
   @Override
   @Nullable
-  public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag) {
+  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
     if (myPattern == null) {
       return null;
     }
@@ -178,7 +179,7 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable XmlDocument document) {
     if (myPattern == null) {
       return XmlElementDescriptor.EMPTY_ARRAY;
@@ -216,12 +217,12 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
     return result.toArray(new XmlElementDescriptor[result.size()]);
   }
 
-  protected XmlElementDescriptor initDescriptor(@NotNull XmlElementDescriptor descriptor) {
+  protected XmlElementDescriptor initDescriptor(@Nonnull XmlElementDescriptor descriptor) {
     return descriptor;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlFile getDescriptorFile() {
     return myFile;
   }
@@ -287,7 +288,7 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   }
 
   @Override
-  public void validate(@NotNull PsiElement context, @NotNull final ValidationHost host) {
+  public void validate(@Nonnull PsiElement context, @Nonnull final ValidationHost host) {
     final XmlDocument doc = PsiTreeUtil.getContextOfType(context, XmlDocument.class, false);
     if (doc == null) {
       return;

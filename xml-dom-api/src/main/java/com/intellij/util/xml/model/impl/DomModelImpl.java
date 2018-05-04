@@ -22,7 +22,7 @@ import com.intellij.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.model.DomModel;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,24 +43,24 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
    * @return
    */
   @Deprecated
-  public DomModelImpl(T mergedModel, @NotNull Set<XmlFile> configFiles) {
+  public DomModelImpl(T mergedModel, @Nonnull Set<XmlFile> configFiles) {
     myMergedModel = DomUtil.getFileElement(mergedModel);
     myConfigFiles = configFiles;
   }
 
-  public DomModelImpl(DomFileElement<T> mergedModel, @NotNull Set<XmlFile> configFiles) {
+  public DomModelImpl(DomFileElement<T> mergedModel, @Nonnull Set<XmlFile> configFiles) {
     myMergedModel = DomUtil.getFileElement(mergedModel);
     myConfigFiles = configFiles;
   }
 
-  public DomModelImpl(@NotNull Set<XmlFile> configFiles, Class<T> clazz, Project project) {
+  public DomModelImpl(@Nonnull Set<XmlFile> configFiles, Class<T> clazz, Project project) {
     myProject = project;
     myMergedModel = null;
     myConfigFiles = configFiles;
     myClass = clazz;
   }
 
-  @NotNull
+  @Nonnull
   public T getMergedModel() {
     if (myMergedModel == null) {
       final DomManager domManager = DomManager.getDomManager(myProject);
@@ -74,12 +74,12 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
     return myMergedModel.getRootElement();
   }
 
-  @NotNull
+  @Nonnull
   public Set<XmlFile> getConfigFiles() {
     return myConfigFiles;
   }
 
-  @NotNull
+  @Nonnull
   public List<DomFileElement<T>> getRoots() {
     if (myMergedModel == null) {
       return ContainerUtil.mapNotNull(myConfigFiles, new NullableFunction<XmlFile, DomFileElement<T>>() {
@@ -91,7 +91,7 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
     return myMergedModel instanceof MergedObject ? ((MergedObject) myMergedModel).getImplementations() : Collections.singletonList(myMergedModel);
   }
 
-  @NotNull
+  @Nonnull
   public Project getProject() {
     return myProject;
   }

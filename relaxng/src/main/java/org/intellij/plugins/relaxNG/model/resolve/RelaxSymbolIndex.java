@@ -29,8 +29,8 @@ import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.navigation.ColoredItemPresentation;
 import com.intellij.navigation.ItemPresentation;
@@ -101,19 +101,19 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
     return result.toArray(new NavigationItem[result.size()]);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public ID<String, Void> getName() {
     return NAME;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public DataIndexer<String, Void, FileContent> getIndexer() {
     return new DataIndexer<String, Void, FileContent>() {
       @Override
-      @NotNull
-      public Map<String, Void> map(@NotNull FileContent inputData) {
+      @Nonnull
+      public Map<String, Void> map(@Nonnull FileContent inputData) {
         final HashMap<String, Void> map = new HashMap<>();
         if (inputData.getFileType() == XmlFileType.INSTANCE) {
           CharSequence inputDataContentAsText = inputData.getContentAsText();
@@ -175,18 +175,18 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
     };
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public KeyDescriptor<String> getKeyDescriptor() {
     return EnumeratorStringDescriptor.INSTANCE;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public FileBasedIndex.InputFilter getInputFilter() {
     return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, RncFileType.getInstance()) {
       @Override
-      public boolean acceptInput(@Nullable Project project, @NotNull VirtualFile file) {
+      public boolean acceptInput(@Nullable Project project, @Nonnull VirtualFile file) {
         return !(file.getFileSystem() instanceof ArchiveFileSystem);
       }
     };
@@ -206,7 +206,7 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
     private final NavigationItem myItem;
     private final ItemPresentation myPresentation;
 
-    private MyNavigationItem(NavigationItem item, @NotNull final ItemPresentation presentation) {
+    private MyNavigationItem(NavigationItem item, @Nonnull final ItemPresentation presentation) {
       myItem = item;
       myPresentation = presentation;
     }

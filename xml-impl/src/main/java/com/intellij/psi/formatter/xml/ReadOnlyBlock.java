@@ -19,7 +19,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.formatting.Block;
 import com.intellij.formatting.Spacing;
 import com.intellij.psi.formatter.common.AbstractBlock;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ReadOnlyBlock extends AbstractBlock {
     super(node, null, null);
   }
 
-  public Spacing getSpacing(Block child1, @NotNull Block child2) {
+  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
     return null;
   }
 

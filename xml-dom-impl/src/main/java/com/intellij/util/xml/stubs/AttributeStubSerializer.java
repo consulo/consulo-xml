@@ -19,7 +19,7 @@ import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.ObjectStubSerializer;
 import com.intellij.psi.stubs.StubInputStream;
 import com.intellij.psi.stubs.StubOutputStream;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.IOException;
 
@@ -31,27 +31,27 @@ public class AttributeStubSerializer implements ObjectStubSerializer<AttributeSt
 
   final static ObjectStubSerializer INSTANCE = new AttributeStubSerializer();
 
-  @NotNull
+  @Nonnull
   @Override
   public String getExternalId() {
     return "AttributeStub";
   }
 
   @Override
-  public void serialize(@NotNull AttributeStub stub, @NotNull StubOutputStream dataStream) throws IOException {
+  public void serialize(@Nonnull AttributeStub stub, @Nonnull StubOutputStream dataStream) throws IOException {
     dataStream.writeName(stub.getName());
     dataStream.writeName(stub.getNamespaceKey());
     dataStream.writeUTFFast(stub.getValue() == null ? "" : stub.getValue());
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public AttributeStub deserialize(@NotNull StubInputStream dataStream, ElementStub parentStub) throws IOException {
+  public AttributeStub deserialize(@Nonnull StubInputStream dataStream, ElementStub parentStub) throws IOException {
     return new AttributeStub(parentStub, dataStream.readName(), dataStream.readName(), dataStream.readUTFFast());
   }
 
   @Override
-  public void indexStub(@NotNull AttributeStub stub, @NotNull IndexSink sink) {
+  public void indexStub(@Nonnull AttributeStub stub, @Nonnull IndexSink sink) {
   }
 
   @Override

@@ -24,9 +24,9 @@ import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -40,7 +40,7 @@ public class ErrorableTableCellRenderer<T extends DomElement> extends DefaultTab
   private final T myCellValueDomElement;
   private final DomElement myRoot;
 
-  public ErrorableTableCellRenderer(@Nullable final T cellValueDomElement, final TableCellRenderer renderer, @NotNull final DomElement rowDomElement) {
+  public ErrorableTableCellRenderer(@Nullable final T cellValueDomElement, final TableCellRenderer renderer, @Nonnull final DomElement rowDomElement) {
     myCellValueDomElement = cellValueDomElement;
     myRenderer = renderer;
     myRowDomElement = rowDomElement;

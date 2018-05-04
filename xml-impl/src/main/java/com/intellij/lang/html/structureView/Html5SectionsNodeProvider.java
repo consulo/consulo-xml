@@ -29,7 +29,7 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,12 +41,12 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
   public static final String ACTION_ID = "HTML5_OUTLINE_MODE";
   public static final String HTML5_OUTLINE_PROVIDER_PROPERTY = "html5.sections.node.provider";
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return ACTION_ID;
   }
 
-  @NotNull
+  @Nonnull
   public ActionPresentation getPresentation() {
     return new ActionPresentationData(XmlBundle.message("html5.outline.mode"), null, AllIcons.Xml.Html5);
   }
@@ -59,7 +59,7 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
     return KeymapManager.getInstance().getActiveKeymap().getShortcuts("FileStructurePopup");
   }
 
-  @NotNull
+  @Nonnull
   public String getPropertyName() {
     return HTML5_OUTLINE_PROVIDER_PROPERTY;
   }

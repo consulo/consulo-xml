@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.ide.structureView.StructureViewTreeElement;
@@ -43,7 +43,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 
 	private static final Sorter HTML_ALPHA_SORTER = new Sorter()
 	{
-		@NotNull
+		@Nonnull
 		@Override
 		public Comparator getComparator()
 		{
@@ -89,7 +89,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public ActionPresentation getPresentation()
 		{
 			return new ActionPresentationData(IdeBundle.message("action.sort.alphabetically"), IdeBundle.message("action.sort.alphabetically"),
@@ -97,7 +97,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getName()
 		{
 			return ALPHA_SORTER_ID;
@@ -114,7 +114,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	public void setPlace(@NotNull final String place)
+	public void setPlace(@Nonnull final String place)
 	{
 		myStructureViewPlace = place;
 	}
@@ -126,7 +126,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Sorter[] getSorters()
 	{
 		if(TreeStructureUtil.isInStructureViewPopup(this))
@@ -138,14 +138,14 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Collection<NodeProvider> getNodeProviders()
 	{
 		return myNodeProviders;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		return new HtmlFileTreeElement(TreeStructureUtil.isInStructureViewPopup(this), (XmlFile) getPsiFile());

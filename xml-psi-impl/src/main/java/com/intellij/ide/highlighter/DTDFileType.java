@@ -15,9 +15,9 @@
  */
 package com.intellij.ide.highlighter;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.dtd.DTDLanguage;
@@ -30,17 +30,17 @@ public class DTDFileType extends LanguageFileType {
     super(DTDLanguage.INSTANCE);
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return "DTD";
   }
 
-  @NotNull
+  @Nonnull
   public String getDescription() {
     return IdeBundle.message("filetype.description.dtd");
   }
 
-  @NotNull
+  @Nonnull
   public String getDefaultExtension() {
     return "dtd";
   }

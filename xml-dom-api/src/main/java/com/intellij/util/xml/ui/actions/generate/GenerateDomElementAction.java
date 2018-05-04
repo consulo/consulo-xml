@@ -25,8 +25,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 
@@ -37,7 +37,7 @@ public class GenerateDomElementAction extends CodeInsightAction {
 
   protected final GenerateDomElementProvider myProvider;
 
-  public GenerateDomElementAction(@NotNull final GenerateDomElementProvider generateProvider, @Nullable Icon icon) {
+  public GenerateDomElementAction(@Nonnull final GenerateDomElementProvider generateProvider, @Nullable Icon icon) {
     getTemplatePresentation().setDescription(generateProvider.getDescription());
     getTemplatePresentation().setText(generateProvider.getDescription());
     getTemplatePresentation().setIcon(icon);
@@ -50,10 +50,10 @@ public class GenerateDomElementAction extends CodeInsightAction {
       this(generateProvider, null);
   }
 
-  @NotNull
+  @Nonnull
   protected CodeInsightActionHandler getHandler() {
     return new CodeInsightActionHandler() {
-      public void invoke(@NotNull final Project project, @NotNull final Editor editor, @NotNull final PsiFile file) {
+      public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
         final Runnable runnable = new Runnable() {
           public void run() {
             final DomElement element = myProvider.generate(project, editor, file);
@@ -83,7 +83,7 @@ public class GenerateDomElementAction extends CodeInsightAction {
     return true;
   }
 
-  protected boolean isValidForFile(@NotNull final Project project, @NotNull final Editor editor, @NotNull final PsiFile file) {
+  protected boolean isValidForFile(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
     final DomElement element = DomUtil.getContextElement(editor);
     return element != null && myProvider.isAvailableForElement(element);
   }

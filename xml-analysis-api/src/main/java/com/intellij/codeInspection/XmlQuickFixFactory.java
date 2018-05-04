@@ -15,8 +15,9 @@
  */
 package com.intellij.codeInspection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
@@ -25,18 +26,18 @@ import com.intellij.psi.xml.XmlToken;
 
 public abstract class XmlQuickFixFactory
 {
-	@NotNull
+	@Nonnull
 	public static XmlQuickFixFactory getInstance()
 	{
 		return ServiceManager.getService(XmlQuickFixFactory.class);
 	}
 
-	@NotNull
-	public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@NotNull XmlTag tag, @NotNull String attrName, @NotNull String... values);
+	@Nonnull
+	public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values);
 
-	@NotNull
-	public abstract LocalQuickFix createNSDeclarationIntentionFix(@NotNull final PsiElement element, @NotNull String namespacePrefix, @Nullable final XmlToken token);
+	@Nonnull
+	public abstract LocalQuickFix createNSDeclarationIntentionFix(@Nonnull final PsiElement element, @Nonnull String namespacePrefix, @Nullable final XmlToken token);
 
-	@NotNull
-	public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@NotNull XmlAttribute attribute);
+	@Nonnull
+	public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute);
 }

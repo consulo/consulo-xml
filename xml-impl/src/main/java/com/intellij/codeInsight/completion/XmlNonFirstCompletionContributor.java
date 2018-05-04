@@ -21,7 +21,7 @@ import static com.intellij.patterns.XmlPatterns.xmlAttribute;
 import static com.intellij.patterns.XmlPatterns.xmlTag;
 import static com.intellij.psi.filters.getters.XmlAttributeValueGetter.getEnumeratedValues;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.patterns.XmlPatterns;
 import com.intellij.psi.PsiElement;
@@ -44,7 +44,7 @@ public class XmlNonFirstCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlAttributeValue()), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				PsiElement position = parameters.getPosition();
 				if(position.getNode().getElementType() != XmlElementType.XML_ATTRIBUTE_VALUE_TOKEN)

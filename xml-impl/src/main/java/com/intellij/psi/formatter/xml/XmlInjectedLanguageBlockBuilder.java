@@ -26,7 +26,7 @@ import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.formatter.common.InjectedLanguageBlockBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
 * @author nik

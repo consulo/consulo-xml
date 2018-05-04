@@ -18,7 +18,8 @@ package com.intellij.codeInsight.editorActions;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.completion.XmlTagInsertHandler;
 import com.intellij.codeInsight.lookup.LookupManager;
@@ -91,7 +92,7 @@ public class XmlTagNameSynchronizer extends CommandAdapter implements NamedCompo
 		editorFactory.addEditorFactoryListener(new EditorFactoryAdapter()
 		{
 			@Override
-			public void editorCreated(@NotNull EditorFactoryEvent event)
+			public void editorCreated(@Nonnull EditorFactoryEvent event)
 			{
 				installSynchronizer(event.getEditor());
 			}
@@ -132,14 +133,14 @@ public class XmlTagNameSynchronizer extends CommandAdapter implements NamedCompo
 		return null;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getComponentName()
 	{
 		return "XmlTagNameSynchronizer";
 	}
 
-	@NotNull
+	@Nonnull
 	private static TagNameSynchronizer[] findSynchronizers(final Document document)
 	{
 		if(!XmlEditorOptions.getInstance().isSyncTagEditing() || document == null)

@@ -17,7 +17,7 @@ package com.intellij.util.xml.ui;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

@@ -16,12 +16,13 @@
 
 package org.intellij.plugins.relaxNG.config;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,12 +31,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class NoNamespaceConfig implements ProjectComponent {
   @Nullable
-  public abstract String getMapping(@NotNull PsiFile file);
-  public abstract VirtualFile getMappedFile(@NotNull PsiFile file);
+  public abstract String getMapping(@Nonnull PsiFile file);
+  public abstract VirtualFile getMappedFile(@Nonnull PsiFile file);
 
-  public abstract void setMapping(@NotNull PsiFile file, @Nullable String location);
+  public abstract void setMapping(@Nonnull PsiFile file, @Nullable String location);
 
-  public static NoNamespaceConfig getInstance(@NotNull Project project) {
+  public static NoNamespaceConfig getInstance(@Nonnull Project project) {
     return project.getComponent(NoNamespaceConfig.class);
   }
 }

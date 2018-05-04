@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Should be stateless, since its instances are cached.
@@ -33,6 +33,6 @@ public abstract class ScopeProvider {
    * Searches within all children of returned element.
    */
   @Nullable
-  public abstract DomElement getScope(@NotNull DomElement element);
+  public abstract DomElement getScope(@Nonnull DomElement element);
 
 }

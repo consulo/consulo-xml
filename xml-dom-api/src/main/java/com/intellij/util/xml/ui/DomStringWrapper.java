@@ -17,7 +17,7 @@ package com.intellij.util.xml.ui;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -31,7 +31,7 @@ public class DomStringWrapper extends DomWrapper<String>{
     myDomElement = domElement;
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getExistingDomElement() {
     return myDomElement;
   }

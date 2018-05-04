@@ -27,9 +27,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -106,7 +108,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	{
 	}
 
-	private static void collectDependencies(@Nullable XmlTag myTag, @NotNull XmlFile myFile, @NotNull Set<PsiFile> visited)
+	private static void collectDependencies(@Nullable XmlTag myTag, @Nonnull XmlFile myFile, @Nonnull Set<PsiFile> visited)
 	{
 		if(visited.contains(myFile))
 		{
@@ -196,7 +198,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return XmlUtil.XML_SCHEMA_URI.equals(namespace) || XmlUtil.XML_SCHEMA_URI2.equals(namespace) || XmlUtil.XML_SCHEMA_URI3.equals(namespace);
 	}
 
-	public static boolean checkSchemaNamespace(@NotNull XmlTag context)
+	public static boolean checkSchemaNamespace(@Nonnull XmlTag context)
 	{
 		LOG.assertTrue(context.isValid());
 		final String namespace = context.getNamespace();
@@ -208,7 +210,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	static
-	@NotNull
+	@Nonnull
 	XmlNSDescriptorImpl getNSDescriptorToSearchIn(XmlTag rootTag, final String name, XmlNSDescriptorImpl defaultNSDescriptor)
 	{
 		if(name == null)
@@ -246,12 +248,12 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return elementDescriptor;
 	}
 
-	public static boolean processTagsInNamespace(@NotNull final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor)
+	public static boolean processTagsInNamespace(@Nonnull final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor)
 	{
 		return processTagsInNamespaceInner(rootTag, tagNames, processor, null);
 	}
 
-	private static boolean processTagsInNamespaceInner(@NotNull final XmlTag rootTag, final String[] tagNames, final PsiElementProcessor<XmlTag> processor, Set<XmlTag> visitedTags)
+	private static boolean processTagsInNamespaceInner(@Nonnull final XmlTag rootTag, final String[] tagNames, final PsiElementProcessor<XmlTag> processor, Set<XmlTag> visitedTags)
 	{
 		if(visitedTags == null)
 		{
@@ -313,7 +315,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return true;
 	}
 
-	public static boolean equalsToSchemaName(@NotNull XmlTag tag, @NonNls String schemaName)
+	public static boolean equalsToSchemaName(@Nonnull XmlTag tag, @NonNls String schemaName)
 	{
 		return schemaName.equals(tag.getLocalName()) && checkSchemaNamespace(tag);
 	}
@@ -914,7 +916,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		return null;
 	}
 
-	private boolean isSameName(@NotNull String name, String namespace, String nameAttribute)
+	private boolean isSameName(@Nonnull String name, String namespace, String nameAttribute)
 	{
 		return nameAttribute != null && (nameAttribute.equals(name) || (name.contains(":") && nameAttribute.equals(name.substring(name.indexOf(":") + 1)))) && (namespace == null || namespace.length
 				() == 0 || namespace.equals(getDefaultNamespace()));
@@ -965,7 +967,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	@Override
-	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
+	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
 	{
 		PsiElement parent = tag.getParent();
 		final String namespace = tag.getNamespace();
@@ -1015,7 +1017,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc)
 	{
 		class CollectElementsProcessor implements PsiElementProcessor<XmlTag>
@@ -1023,7 +1025,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			final List<XmlElementDescriptor> result = new ArrayList<>();
 
 			@Override
-			public boolean execute(@NotNull final XmlTag element)
+			public boolean execute(@Nonnull final XmlTag element)
 			{
 				ContainerUtil.addIfNotNull(result, getElementDescriptor(element.getAttributeValue("name"), getDefaultNamespace()));
 				return true;
@@ -1033,7 +1035,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 		CollectElementsProcessor processor = new CollectElementsProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull final XmlTag element)
+			public boolean execute(@Nonnull final XmlTag element)
 			{
 				if(!XmlElementDescriptorImpl.isAbstractDeclaration(element))
 				{
@@ -1054,7 +1056,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			final List<XmlAttributeDescriptor> result = new ArrayList<>();
 
 			@Override
-			public boolean execute(@NotNull final XmlTag element)
+			public boolean execute(@Nonnull final XmlTag element)
 			{
 				result.add(createAttributeDescriptor(element));
 				return true;
@@ -1246,7 +1248,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	@Override
-	public void validate(@NotNull XmlDocument context, @NotNull Validator.ValidationHost host)
+	public void validate(@Nonnull XmlDocument context, @Nonnull Validator.ValidationHost host)
 	{
 		ExternalDocumentValidator.doValidation(context, host);
 	}

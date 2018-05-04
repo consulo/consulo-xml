@@ -21,7 +21,7 @@ import org.intellij.plugins.relaxNG.compact.parser.RncParser;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncElementImpl;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncFileImpl;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
@@ -46,7 +46,7 @@ public class RncParserDefinition implements ParserDefinition {
   private static final TokenSet myCommentTypes = TokenSet.orSet(RncTokenTypes.COMMENTS, RncTokenTypes.DOC_TOKENS);
 
   @Override
-  @NotNull
+  @Nonnull
   public Lexer createLexer(LanguageVersion languageVersion) {
     return new CompactSyntaxLexerAdapter();
   }
@@ -62,25 +62,25 @@ public class RncParserDefinition implements ParserDefinition {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TokenSet getWhitespaceTokens(LanguageVersion languageVersion) {
     return TokenSet.create(TokenType.WHITE_SPACE);
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TokenSet getCommentTokens(LanguageVersion languageVersion) {
     return myCommentTypes;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
     return TokenSet.create(RncTokenTypes.LITERAL);
   }
 
   @Override
-  @NotNull
+  @Nonnull
   @SuppressWarnings({ "unchecked" })
   public PsiElement createElement(ASTNode node) {
     final IElementType type = node.getElementType();
@@ -108,7 +108,7 @@ public class RncParserDefinition implements ParserDefinition {
     }
 
     @Override
-    public void accept(@NotNull RncElementVisitor visitor) {
+    public void accept(@Nonnull RncElementVisitor visitor) {
       visitor.visitElement(this);
     }
   }

@@ -37,8 +37,8 @@ import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -48,7 +48,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   private final String myDelimiters;
 
-  public DelimitedListConverter(@NonNls @NotNull String delimiters) {
+  public DelimitedListConverter(@NonNls @Nonnull String delimiters) {
 
     myDelimiters = delimiters;
   }
@@ -67,7 +67,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   protected abstract String getUnresolvedMessage(String value);
 
-  @NotNull
+  @Nonnull
   public Collection<? extends List<T>> getVariants(final ConvertContext context) {
     return Collections.emptyList();
   }
@@ -121,7 +121,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     return buffer.toString();
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue<List<T>> genericDomValue,
                                          final PsiElement element,
                                          final ConvertContext context) {
@@ -140,7 +140,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     return references.toArray(new PsiReference[references.size()]);
   }
 
-  @NotNull
+  @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
                                             int start,
                                             int end,
@@ -190,7 +190,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       return resolveReference(convertString(value, myContext), myContext);
     }
 
-    @NotNull
+    @Nonnull
     public Object[] getVariants() {
       return getReferenceVariants(myContext, myGenericDomValue);
     }
@@ -207,7 +207,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
     @Override
-    public PsiElement bindToElement(@NotNull final PsiElement element) throws IncorrectOperationException {
+    public PsiElement bindToElement(@Nonnull final PsiElement element) throws IncorrectOperationException {
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
       PsiElement bindElement =  referenceBindToElement(this, element, getSuperBindToElementFunction(ref), getSuperElementRenameFunction(ref));
       if (!ref.isNull()) {
@@ -251,7 +251,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
 
-    @NotNull
+    @Nonnull
     public String getUnresolvedMessagePattern() {
       return getUnresolvedMessage(getValue());
     }

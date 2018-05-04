@@ -17,8 +17,8 @@ package com.intellij.codeInsight.folding.impl;
 
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -31,7 +31,7 @@ import com.intellij.psi.xml.XmlTag;
 public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
   private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.folding.impl.XmlElementSignatureProvider");
 
-  public String getSignature(@NotNull PsiElement element) {
+  public String getSignature(@Nonnull PsiElement element) {
     if (element instanceof XmlTag) {
       XmlTag tag = (XmlTag)element;
       PsiElement parent = tag.getParent();
@@ -56,10 +56,10 @@ public class XmlElementSignatureProvider extends AbstractElementSignatureProvide
   }
 
   @Override
-  protected PsiElement restoreBySignatureTokens(@NotNull PsiFile file,
-                                                @NotNull PsiElement parent,
-                                                @NotNull String type,
-                                                @NotNull StringTokenizer tokenizer,
+  protected PsiElement restoreBySignatureTokens(@Nonnull PsiFile file,
+                                                @Nonnull PsiElement parent,
+                                                @Nonnull String type,
+                                                @Nonnull StringTokenizer tokenizer,
                                                 @Nullable StringBuilder processingInfoStorage)
   {
     if (type.equals("tag")) {

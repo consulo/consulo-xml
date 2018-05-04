@@ -19,9 +19,11 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtilCore;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
@@ -299,7 +301,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static String findNamespacePrefixByURI(XmlFile file, @NotNull @NonNls String uri)
+	public static String findNamespacePrefixByURI(XmlFile file, @Nonnull @NonNls String uri)
 	{
 		final XmlTag tag = file.getRootTag();
 		if(tag == null)
@@ -365,7 +367,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static XmlFile findNamespace(@NotNull PsiFile base, @NotNull String nsLocation)
+	public static XmlFile findNamespace(@Nonnull PsiFile base, @Nonnull String nsLocation)
 	{
 		final String location = ExternalResourceManager.getInstance().getResourceLocation(nsLocation, base.getProject());
 		if(!location.equals(nsLocation))
@@ -377,7 +379,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static XmlFile findNamespaceByLocation(@NotNull PsiFile base, @NotNull String nsLocation)
+	public static XmlFile findNamespaceByLocation(@Nonnull PsiFile base, @Nonnull String nsLocation)
 	{
 		final String location = ExternalResourceManager.getInstance().getResourceLocation(nsLocation, base.getProject());
 		return findXmlFile(base, location);
@@ -395,7 +397,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static XmlFile findXmlFile(PsiFile base, @NotNull String uri)
+	public static XmlFile findXmlFile(PsiFile base, @Nonnull String uri)
 	{
 		PsiFile result = null;
 
@@ -482,7 +484,7 @@ public class XmlUtil
 		return XmlPsiUtil.processXmlElementChildren(element, processor, deepFlag);
 	}
 
-	public static boolean tagFromTemplateFramework(@NotNull final XmlTag tag)
+	public static boolean tagFromTemplateFramework(@Nonnull final XmlTag tag)
 	{
 		final String ns = tag.getNamespace();
 		return nsFromTemplateFramework(ns);
@@ -493,7 +495,7 @@ public class XmlUtil
 		return XSLT_URI.equals(ns) || XINCLUDE_URI.equals(ns);
 	}
 
-	public static char getCharFromEntityRef(@NonNls @NotNull String text)
+	public static char getCharFromEntityRef(@NonNls @Nonnull String text)
 	{
 		try
 		{
@@ -553,7 +555,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static XmlTag getSchemaSimpleContent(@NotNull XmlTag tag)
+	public static XmlTag getSchemaSimpleContent(@Nonnull XmlTag tag)
 	{
 		XmlElementDescriptor descriptor = tag.getDescriptor();
 
@@ -568,7 +570,7 @@ public class XmlUtil
 				processXmlElements(((ComplexTypeDescriptor) type).getDeclaration(), new PsiElementProcessor()
 				{
 					@Override
-					public boolean execute(@NotNull final PsiElement element)
+					public boolean execute(@Nonnull final PsiElement element)
 					{
 						if(element instanceof XmlTag)
 						{
@@ -775,7 +777,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static XmlElementDescriptor getDescriptorFromContext(@NotNull XmlTag tag)
+	public static XmlElementDescriptor getDescriptorFromContext(@Nonnull XmlTag tag)
 	{
 		PsiElement parent = tag.getParent();
 		if(parent instanceof XmlTag)
@@ -791,7 +793,7 @@ public class XmlUtil
 		return null;
 	}
 
-	public static void expandTag(@NotNull XmlTag tag)
+	public static void expandTag(@Nonnull XmlTag tag)
 	{
 		XmlTag newTag = XmlElementFactory.getInstance(tag.getProject()).createTagFromText('<' + tag.getName() + "></" + tag.getName() + '>');
 
@@ -936,7 +938,7 @@ public class XmlUtil
 			return null;
 		}
 
-		@NotNull final XmlFileNSInfoProvider[] nsProviders = Extensions.getExtensions(XmlFileNSInfoProvider.EP_NAME);
+		@Nonnull final XmlFileNSInfoProvider[] nsProviders = Extensions.getExtensions(XmlFileNSInfoProvider.EP_NAME);
 		if(file != null)
 		{
 
@@ -1435,7 +1437,7 @@ public class XmlUtil
 		return Pair.create(first, last);
 	}
 
-	public static boolean isSimpleValue(@NotNull final String unquotedValue, final PsiElement context)
+	public static boolean isSimpleValue(@Nonnull final String unquotedValue, final PsiElement context)
 	{
 		for(int i = 0; i < unquotedValue.length(); ++i)
 		{
@@ -1471,7 +1473,7 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static PsiNamedElement findRealNamedElement(@NotNull final PsiNamedElement _element)
+	public static PsiNamedElement findRealNamedElement(@Nonnull final PsiNamedElement _element)
 	{
 		PsiElement currentElement = _element;
 		final XmlEntityRef lastEntityRef = PsiTreeUtil.getParentOfType(currentElement, XmlEntityRef.class);
@@ -1507,7 +1509,7 @@ public class XmlUtil
 			processXmlElements((XmlFile) currentElement, new PsiElementProcessor()
 			{
 				@Override
-				public boolean execute(@NotNull final PsiElement element)
+				public boolean execute(@Nonnull final PsiElement element)
 				{
 					if(element instanceof PsiNamedElement)
 					{
@@ -1531,7 +1533,7 @@ public class XmlUtil
 		return null;
 	}
 
-	public static int getPrefixLength(@NotNull final String s)
+	public static int getPrefixLength(@Nonnull final String s)
 	{
 		if(s.startsWith(TAG_DIR_NS_PREFIX))
 		{
@@ -1664,8 +1666,8 @@ public class XmlUtil
 		return contextTag.getNamespaceByPrefix(prefix);
 	}
 
-	@NotNull
-	public static String findPrefixByQualifiedName(@NotNull String name)
+	@Nonnull
+	public static String findPrefixByQualifiedName(@Nonnull String name)
 	{
 		final int prefixEnd = name.indexOf(':');
 		if(prefixEnd > 0)
@@ -1829,13 +1831,13 @@ public class XmlUtil
 	}
 
 	@Nullable
-	public static String extractXmlEncodingFromProlog(@NotNull byte[] content)
+	public static String extractXmlEncodingFromProlog(@Nonnull byte[] content)
 	{
 		return XmlCharsetDetector.extractXmlEncodingFromProlog(content);
 	}
 
 	@Nullable
-	public static String extractXmlEncodingFromProlog(@NotNull CharSequence text)
+	public static String extractXmlEncodingFromProlog(@Nonnull CharSequence text)
 	{
 		return XmlCharsetDetector.extractXmlEncodingFromProlog(text);
 	}
@@ -1843,7 +1845,7 @@ public class XmlUtil
 	public static void registerXmlAttributeValueReferenceProvider(PsiReferenceRegistrar registrar,
 			@Nullable @NonNls String[] attributeNames,
 			@Nullable ElementFilter elementFilter,
-			@NotNull PsiReferenceProvider provider)
+			@Nonnull PsiReferenceProvider provider)
 	{
 		registerXmlAttributeValueReferenceProvider(registrar, attributeNames, elementFilter, true, provider);
 	}
@@ -1852,7 +1854,7 @@ public class XmlUtil
 			@Nullable @NonNls String[] attributeNames,
 			@Nullable ElementFilter elementFilter,
 			boolean caseSensitive,
-			@NotNull PsiReferenceProvider provider)
+			@Nonnull PsiReferenceProvider provider)
 	{
 		registerXmlAttributeValueReferenceProvider(registrar, attributeNames, elementFilter, caseSensitive, provider, PsiReferenceRegistrar.DEFAULT_PRIORITY);
 	}
@@ -1861,7 +1863,7 @@ public class XmlUtil
 			@Nullable @NonNls String[] attributeNames,
 			@Nullable ElementFilter elementFilter,
 			boolean caseSensitive,
-			@NotNull PsiReferenceProvider provider,
+			@Nonnull PsiReferenceProvider provider,
 			double priority)
 	{
 		if(attributeNames == null)
@@ -1878,7 +1880,7 @@ public class XmlUtil
 			@NonNls String[] names,
 			@Nullable ElementFilter elementFilter,
 			boolean caseSensitive,
-			@NotNull PsiReferenceProvider provider)
+			@Nonnull PsiReferenceProvider provider)
 	{
 		if(names == null)
 		{
@@ -1891,7 +1893,7 @@ public class XmlUtil
 		registrar.registerReferenceProvider(XmlPatterns.xmlTag().withLocalName(namePattern).and(new FilterPattern(elementFilter)), provider, PsiReferenceRegistrar.DEFAULT_PRIORITY);
 	}
 
-	public static XmlFile findDescriptorFile(@NotNull XmlTag tag, @NotNull XmlFile containingFile)
+	public static XmlFile findDescriptorFile(@Nonnull XmlTag tag, @Nonnull XmlFile containingFile)
 	{
 		final XmlElementDescriptor descriptor = tag.getDescriptor();
 		final XmlNSDescriptor nsDescriptor = descriptor != null ? descriptor.getNSDescriptor() : null;
@@ -1906,13 +1908,13 @@ public class XmlUtil
 	public interface DuplicationInfoProvider<T extends PsiElement>
 	{
 		@Nullable
-		String getName(@NotNull T t);
+		String getName(@Nonnull T t);
 
-		@NotNull
-		String getNameKey(@NotNull T t, @NotNull String name);
+		@Nonnull
+		String getNameKey(@Nonnull T t, @Nonnull String name);
 
-		@NotNull
-		PsiElement getNodeForMessage(@NotNull T t);
+		@Nonnull
+		PsiElement getNodeForMessage(@Nonnull T t);
 	}
 
 	private static class MyAttributeInfo implements Comparable

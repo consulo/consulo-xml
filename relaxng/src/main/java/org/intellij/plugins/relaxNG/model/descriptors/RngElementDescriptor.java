@@ -28,7 +28,7 @@ import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.validation.RngSchemaValidator;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.kohsuke.rngom.digested.DAttributePattern;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DEmptyPattern;

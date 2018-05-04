@@ -15,9 +15,10 @@
  */
 package com.intellij.util.xml.events;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -28,7 +29,7 @@ public class DomEvent {
   private final DomElement myElement;
   private final boolean myDefined;
 
-  public DomEvent(@NotNull final DomElement element, boolean defined) {
+  public DomEvent(@Nonnull final DomElement element, boolean defined) {
     myDefined = defined;
     myElement = DomUtil.getFileElement(element);
   }

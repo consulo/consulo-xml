@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -50,7 +50,7 @@ public abstract class BasicAttributeValueReference implements PsiReference {
     return myRange;
   }
 
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     final String s = myElement.getText();
     if (myRange.getStartOffset() < s.length() && myRange.getEndOffset() <= s.length()) {
@@ -67,7 +67,7 @@ public abstract class BasicAttributeValueReference implements PsiReference {
     );
   }
 
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     return null;
   }
 

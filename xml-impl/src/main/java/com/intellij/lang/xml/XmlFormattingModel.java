@@ -34,7 +34,7 @@ import com.intellij.psi.impl.source.tree.TreeUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public class XmlFormattingModel extends PsiBasedFormattingModel {
   private static final Logger LOG =

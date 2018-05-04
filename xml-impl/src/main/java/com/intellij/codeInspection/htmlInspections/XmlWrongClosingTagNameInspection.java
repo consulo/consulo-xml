@@ -36,8 +36,8 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
@@ -82,10 +82,10 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
     }
   }
 
-  private static void registerProblem(@NotNull final AnnotationHolder holder,
-                                      @NotNull final XmlTag tag,
+  private static void registerProblem(@Nonnull final AnnotationHolder holder,
+                                      @Nonnull final XmlTag tag,
                                       @Nullable final XmlToken start,
-                                      @NotNull final XmlToken end) {
+                                      @Nonnull final XmlToken end) {
     PsiElement context = tag.getContainingFile().getContext();
     if (context != null) {
       ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(context.getLanguage());

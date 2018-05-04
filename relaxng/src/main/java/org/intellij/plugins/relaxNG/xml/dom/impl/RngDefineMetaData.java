@@ -22,8 +22,8 @@ import com.intellij.util.xml.DomMetaData;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 
 /**

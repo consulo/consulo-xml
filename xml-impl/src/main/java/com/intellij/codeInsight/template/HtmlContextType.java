@@ -15,7 +15,7 @@
  */
 package com.intellij.codeInsight.template;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.lang.Language;
@@ -32,7 +32,7 @@ public class HtmlContextType extends FileTypeBasedContextType {
   }
 
   @Override
-  public boolean isInContext(@NotNull PsiFile file, int offset) {
+  public boolean isInContext(@Nonnull PsiFile file, int offset) {
     return isMyLanguage(file.getLanguage()) && !XmlContextType.isEmbeddedContent(file, offset);
   }
 

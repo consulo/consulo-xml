@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.javaee.web.PsiReferenceConverter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -55,8 +55,8 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
     myProviders.put(clazz, provider);
   }
 
-  @NotNull
-  public final PsiReference[] getReferencesByElement(@NotNull PsiElement psiElement, @NotNull final ProcessingContext context) {
+  @Nonnull
+  public final PsiReference[] getReferencesByElement(@Nonnull PsiElement psiElement, @Nonnull final ProcessingContext context) {
     final DomManager domManager = DomManager.getDomManager(psiElement.getProject());
 
     final DomElement domElement;
@@ -126,7 +126,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
     return result.toArray(new PsiReference[result.size()]);
   }
 
-  @NotNull
+  @Nonnull
   private PsiReference[] doCreateReferences(GenericDomValue domValue, XmlElement psiElement, Object converter, ConvertContext context) {
     if (converter instanceof CustomReferenceConverter) {
       final PsiReference[] references =
@@ -152,7 +152,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
 
     if (ReflectionUtil.isAssignable(Integer.class, clazz)) {
       return new PsiReference[]{new GenericDomValueReference<Integer>((GenericDomValue<Integer>)domValue) {
-        @NotNull
+        @Nonnull
         public Object[] getVariants() {
           return new Object[]{"0"};
         }

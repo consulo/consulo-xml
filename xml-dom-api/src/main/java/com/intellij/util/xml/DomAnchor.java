@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.xml.util.PsiElementPointer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Gregory.Shrago
@@ -29,6 +30,6 @@ public interface DomAnchor<T extends DomElement> extends PsiElementPointer {
   @Nullable
   T retrieveDomElement();
 
-  @NotNull
+  @Nonnull
   XmlFile getContainingFile();
 }

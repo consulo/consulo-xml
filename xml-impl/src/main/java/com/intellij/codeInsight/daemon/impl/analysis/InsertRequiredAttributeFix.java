@@ -15,9 +15,10 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.intention.HighPriorityAction;
@@ -58,7 +59,7 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
 	@NonNls
 	private static final String NAME_TEMPLATE_VARIABLE = "name";
 
-	public InsertRequiredAttributeFix(@NotNull XmlTag tag, @NotNull String attrName, @NotNull String... values)
+	public InsertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values)
 	{
 		super(tag);
 		myAttrName = attrName;
@@ -66,25 +67,25 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getText()
 	{
 		return XmlErrorMessages.message("insert.required.attribute.quickfix.text", myAttrName);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName()
 	{
 		return XmlErrorMessages.message("insert.required.attribute.quickfix.family");
 	}
 
 	@Override
-	public void invoke(@NotNull final Project project,
-			@NotNull PsiFile file,
+	public void invoke(@Nonnull final Project project,
+			@Nonnull PsiFile file,
 			@Nullable("is null when called from inspection") final Editor editor,
-			@NotNull PsiElement startElement,
-			@NotNull PsiElement endElement)
+			@Nonnull PsiElement startElement,
+			@Nonnull PsiElement endElement)
 	{
 		if(!FileModificationService.getInstance().prepareFileForWrite(file))
 		{

@@ -10,8 +10,8 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.ElementStub;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -42,7 +42,7 @@ public class IndexedElementInvocationHandler extends DomInvocationHandler<FixedC
     return super.hashCode() * 239 + myIndex;
   }
 
-  protected XmlElement recomputeXmlElement(@NotNull final DomInvocationHandler parentHandler) {
+  protected XmlElement recomputeXmlElement(@Nonnull final DomInvocationHandler parentHandler) {
     final XmlTag tag = parentHandler.getXmlTag();
     if (tag == null) return null;
 

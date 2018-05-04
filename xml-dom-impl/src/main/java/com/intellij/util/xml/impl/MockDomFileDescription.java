@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.impl;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileDescription;
 
@@ -33,7 +33,7 @@ public class MockDomFileDescription<T> extends DomFileDescription<T>
 	}
 
 	@Override
-	public boolean isMyFile(@NotNull final XmlFile xmlFile)
+	public boolean isMyFile(@Nonnull final XmlFile xmlFile)
 	{
 		return myFile == xmlFile;
 	}

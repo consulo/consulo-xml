@@ -15,33 +15,35 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
  */
 public interface DomFileElement<T extends DomElement> extends DomElement, UserDataHolder, ModificationTracker {
-  @NotNull
+  @Nonnull
   XmlFile getFile();
 
-  @NotNull
+  @Nonnull
   XmlFile getOriginalFile();
 
   @Nullable
   XmlTag getRootTag();
 
-  @NotNull
+  @Nonnull
   T getRootElement();
 
-  @NotNull
+  @Nonnull
   Class<T> getRootElementClass();
 
-  @NotNull
+  @Nonnull
   DomFileDescription<T> getFileDescription();
 
 }

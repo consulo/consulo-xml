@@ -2,8 +2,8 @@ package com.intellij.ide.browsers;
 
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -15,7 +15,7 @@ public abstract class OpenInBrowserRequest
 	private Collection<Url> result;
 	protected PsiFile file;
 
-	public OpenInBrowserRequest(@NotNull PsiFile file)
+	public OpenInBrowserRequest(@Nonnull PsiFile file)
 	{
 		this.file = file;
 	}
@@ -25,7 +25,7 @@ public abstract class OpenInBrowserRequest
 	}
 
 	@Nullable
-	public static OpenInBrowserRequest create(@NotNull final PsiElement element)
+	public static OpenInBrowserRequest create(@Nonnull final PsiElement element)
 	{
 		PsiFile psiFile = element.isValid() ? element.getContainingFile() : null;
 		if(psiFile == null || psiFile.getVirtualFile() == null)
@@ -35,7 +35,7 @@ public abstract class OpenInBrowserRequest
 
 		return new OpenInBrowserRequest(psiFile)
 		{
-			@NotNull
+			@Nonnull
 			@Override
 			public PsiElement getElement()
 			{
@@ -44,28 +44,28 @@ public abstract class OpenInBrowserRequest
 		};
 	}
 
-	@NotNull
+	@Nonnull
 	public PsiFile getFile()
 	{
 		return file;
 	}
 
-	@NotNull
+	@Nonnull
 	public VirtualFile getVirtualFile()
 	{
 		return file.getVirtualFile();
 	}
 
-	@NotNull
+	@Nonnull
 	public Project getProject()
 	{
 		return file.getProject();
 	}
 
-	@NotNull
+	@Nonnull
 	public abstract PsiElement getElement();
 
-	public void setResult(@NotNull Collection<Url> result)
+	public void setResult(@Nonnull Collection<Url> result)
 	{
 		this.result = result;
 	}

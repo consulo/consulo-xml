@@ -15,13 +15,14 @@
  */
 package com.intellij.javaee;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.openapi.components.AbstractProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.Disposable;
 import com.intellij.psi.impl.PsiManagerEx;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author yole
@@ -46,7 +47,7 @@ public class PsiExternalResourceNotifier extends AbstractProjectComponent {
     });
   }
 
-  @NotNull
+  @Nonnull
   public String getComponentName() {
     return "PsiExternalResourceNotifier";
   }

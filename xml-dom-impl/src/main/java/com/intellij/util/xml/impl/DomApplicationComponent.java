@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.extensions.Extensions;
@@ -68,7 +68,7 @@ public class DomApplicationComponent
 
 	private final SofterCache<Type, StaticGenericInfo> myGenericInfos = SofterCache.create(new NotNullFunction<Type, StaticGenericInfo>()
 	{
-		@NotNull
+		@Nonnull
 		@Override
 		public StaticGenericInfo fun(Type type)
 		{
@@ -77,7 +77,7 @@ public class DomApplicationComponent
 	});
 	private final SofterCache<Class, InvocationCache> myInvocationCaches = SofterCache.create(new NotNullFunction<Class, InvocationCache>()
 	{
-		@NotNull
+		@Nonnull
 		@Override
 		public InvocationCache fun(Class key)
 		{
@@ -87,7 +87,7 @@ public class DomApplicationComponent
 	private final ConcurrentFactoryMap<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions = new
 			ConcurrentFactoryMap<Class<? extends DomElementVisitor>, VisitorDescription>()
 	{
-		@NotNull
+		@Nonnull
 		protected VisitorDescription create(final Class<? extends DomElementVisitor> key)
 		{
 			return new VisitorDescription(key);

@@ -18,8 +18,8 @@ package org.intellij.plugins.relaxNG.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -45,7 +45,7 @@ class NoNamespaceConfigImpl extends NoNamespaceConfig implements PersistentState
     myProject = project;
   }
 
-  private VirtualFilePointer getMappedPointer(@NotNull PsiFile file) {
+  private VirtualFilePointer getMappedPointer(@Nonnull PsiFile file) {
     final VirtualFile virtualFile = file.getVirtualFile();
     if (virtualFile == null) return null;
 
@@ -60,19 +60,19 @@ class NoNamespaceConfigImpl extends NoNamespaceConfig implements PersistentState
 
   @Override
   @Nullable
-  public String getMapping(@NotNull PsiFile file) {
+  public String getMapping(@Nonnull PsiFile file) {
     final VirtualFilePointer pointer = getMappedPointer(file);
     return pointer != null ? pointer.getUrl() : null;
   }
 
   @Override
-  public VirtualFile getMappedFile(@NotNull PsiFile file) {
+  public VirtualFile getMappedFile(@Nonnull PsiFile file) {
     final VirtualFilePointer url = getMappedPointer(file);
     return url != null ? url.getFile() : null;
   }
 
   @Override
-  public void setMapping(@NotNull PsiFile file, String location) {
+  public void setMapping(@Nonnull PsiFile file, String location) {
     final VirtualFile virtualFile = file.getVirtualFile();
     assert virtualFile != null;
 
@@ -105,7 +105,7 @@ class NoNamespaceConfigImpl extends NoNamespaceConfig implements PersistentState
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getComponentName() {
     return "RELAX-NG.NoNamespaceConfig";
   }
@@ -160,7 +160,7 @@ class NoNamespaceConfigImpl extends NoNamespaceConfig implements PersistentState
   public static class HectorProvider implements HectorComponentPanelsProvider {
     @Override
     @Nullable
-    public HectorComponentPanel createConfigurable(@NotNull PsiFile file) {
+    public HectorComponentPanel createConfigurable(@Nonnull PsiFile file) {
       if (file instanceof XmlFile) {
         try {
           final XmlTag rootTag = ((XmlFile)file).getDocument().getRootTag();

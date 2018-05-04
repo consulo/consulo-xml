@@ -17,7 +17,7 @@
 package org.intellij.plugins.relaxNG.compact.parser;
 
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
@@ -32,7 +32,7 @@ import consulo.lang.LanguageVersion;
 public class RncParser implements PsiParser {
 
   @Override
-  @NotNull
+  @Nonnull
   public ASTNode parse(IElementType root, PsiBuilder builder, LanguageVersion languageVersion) {
     final PsiBuilder.Marker fileMarker = builder.mark();
     final PsiBuilder.Marker docMarker = builder.mark();

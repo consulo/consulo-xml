@@ -15,21 +15,23 @@
  */
 package com.intellij.patterns;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.PairProcessor;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
  */
 public abstract class XmlNamedElementPattern<T extends XmlElement & PsiNamedElement,Self extends XmlNamedElementPattern<T,Self>> extends XmlElementPattern<T,Self>{
 
-  public XmlNamedElementPattern(@NotNull final InitialPatternCondition<T> condition) {
+  public XmlNamedElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
     super(condition);
   }
 
@@ -46,7 +48,7 @@ public abstract class XmlNamedElementPattern<T extends XmlElement & PsiNamedElem
 
   public Self withLocalName(final ElementPattern<String> localName) {
     return with(new PsiNamePatternCondition<T>("withLocalName", localName) {
-      public String getPropertyValue(@NotNull final Object o) {
+      public String getPropertyValue(@Nonnull final Object o) {
         return o instanceof XmlElement ? getLocalName((T)o) : null;
       }
     });

@@ -35,8 +35,8 @@ import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.reflect.*;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,14 +50,15 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
   private static final Key<SoftReference<ConcurrentHashMap<ChildrenDescriptionsHolder, ChildrenDescriptionsHolder>>> HOLDERS_CACHE = Key.create("DOM_CHILDREN_HOLDERS_CACHE");
   private static final RecursionGuard ourGuard = RecursionManager.createGuard("dynamicGenericInfo");
   private final StaticGenericInfo myStaticGenericInfo;
-  @NotNull private final DomInvocationHandler myInvocationHandler;
+  @Nonnull
+  private final DomInvocationHandler myInvocationHandler;
   private volatile boolean myInitialized;
   private volatile ChildrenDescriptionsHolder<AttributeChildDescriptionImpl> myAttributes;
   private volatile ChildrenDescriptionsHolder<FixedChildDescriptionImpl> myFixeds;
   private volatile ChildrenDescriptionsHolder<CollectionChildDescriptionImpl> myCollections;
   private volatile List<CustomDomChildrenDescriptionImpl> myCustomChildren;
 
-  public DynamicGenericInfo(@NotNull final DomInvocationHandler handler, final StaticGenericInfo staticGenericInfo) {
+  public DynamicGenericInfo(@Nonnull final DomInvocationHandler handler, final StaticGenericInfo staticGenericInfo) {
     myInvocationHandler = handler;
     myStaticGenericInfo = staticGenericInfo;
 
@@ -183,7 +184,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.getNameDomElement(element);
   }
 
-  @NotNull
+  @Nonnull
   public List<? extends CustomDomChildrenDescription> getCustomNameChildrenDescription() {
     checkInitialized();
     if (myCustomChildren != null) return myCustomChildren;
@@ -194,7 +195,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.getElementName(element);
   }
 
-  @NotNull
+  @Nonnull
   public List<AbstractDomChildDescriptionImpl> getChildrenDescriptions() {
     checkInitialized();
     final ArrayList<AbstractDomChildDescriptionImpl> list = new ArrayList<AbstractDomChildDescriptionImpl>();
@@ -205,13 +206,13 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return list;
   }
 
-  @NotNull
+  @Nonnull
   public final List<FixedChildDescriptionImpl> getFixedChildrenDescriptions() {
     checkInitialized();
     return myFixeds.getDescriptions();
   }
 
-  @NotNull
+  @Nonnull
   public final List<CollectionChildDescriptionImpl> getCollectionChildrenDescriptions() {
     checkInitialized();
     return myCollections.getDescriptions();
@@ -252,7 +253,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.isTagValueElement();
   }
 
-  @NotNull
+  @Nonnull
   public List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions() {
     checkInitialized();
     return myAttributes.getDescriptions();

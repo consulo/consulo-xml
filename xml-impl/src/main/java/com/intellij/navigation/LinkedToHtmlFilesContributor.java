@@ -22,7 +22,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.Processor;
 import com.intellij.xml.util.HtmlLinkUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Set;
 
@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class LinkedToHtmlFilesContributor extends RelatedToHtmlFilesContributor {
   @Override
-  public void fillRelatedFiles(@NotNull final XmlFile xmlFile, @NotNull final Set<PsiFile> resultSet) {
+  public void fillRelatedFiles(@Nonnull final XmlFile xmlFile, @Nonnull final Set<PsiFile> resultSet) {
     HtmlLinkUtil.processLinks(xmlFile, new Processor<XmlTag>() {
       @Override
       public boolean process(XmlTag tag) {

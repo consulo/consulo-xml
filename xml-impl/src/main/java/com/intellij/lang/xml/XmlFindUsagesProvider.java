@@ -15,7 +15,8 @@
  */
 package com.intellij.lang.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.find.impl.HelpID;
 import com.intellij.lang.LangBundle;
 import com.intellij.lang.cacheBuilder.WordsScanner;
@@ -39,15 +40,15 @@ import com.intellij.psi.xml.XmlTag;
 public class XmlFindUsagesProvider implements FindUsagesProvider
 {
 	@Override
-	public boolean canFindUsagesFor(@NotNull PsiElement element)
+	public boolean canFindUsagesFor(@Nonnull PsiElement element)
 	{
 		return element instanceof XmlElementDecl || element instanceof XmlAttributeDecl || element instanceof XmlEntityDecl || element instanceof XmlTag || element instanceof XmlAttributeValue ||
 				element instanceof PsiFile || element instanceof XmlComment;
 	}
 
 	@Override
-	@NotNull
-	public String getType(@NotNull PsiElement element)
+	@Nonnull
+	public String getType(@Nonnull PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{
@@ -86,14 +87,14 @@ public class XmlFindUsagesProvider implements FindUsagesProvider
 	}
 
 	@Override
-	public String getHelpId(@NotNull PsiElement element)
+	public String getHelpId(@Nonnull PsiElement element)
 	{
 		return HelpID.FIND_OTHER_USAGES;
 	}
 
 	@Override
-	@NotNull
-	public String getDescriptiveName(@NotNull PsiElement element)
+	@Nonnull
+	public String getDescriptiveName(@Nonnull PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{
@@ -113,8 +114,8 @@ public class XmlFindUsagesProvider implements FindUsagesProvider
 	}
 
 	@Override
-	@NotNull
-	public String getNodeText(@NotNull PsiElement element, boolean useFullName)
+	@Nonnull
+	public String getNodeText(@Nonnull PsiElement element, boolean useFullName)
 	{
 		if(element instanceof XmlTag)
 		{

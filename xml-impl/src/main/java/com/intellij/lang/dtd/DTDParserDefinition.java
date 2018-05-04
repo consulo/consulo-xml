@@ -15,7 +15,8 @@
  */
 package com.intellij.lang.dtd;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageUtil;
 import com.intellij.lang.PsiBuilder;
@@ -45,27 +46,27 @@ public class DTDParserDefinition extends XMLParserDefinition {
     return new XmlFileImpl(viewProvider, XmlElementType.DTD_FILE);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public PsiParser createParser(@NotNull LanguageVersion languageVersion) {
+  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
     return new PsiParser() {
-      @NotNull
+      @Nonnull
       @Override
-      public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder, @NotNull LanguageVersion languageVersion) {
+      public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
         return new DtdParsing(root, XmlEntityDecl.EntityContextType.GENERIC_XML, builder).parse();
       }
     };
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public IFileElementType getFileNodeType() {
     return XmlElementType.DTD_FILE;
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Lexer createLexer(@NotNull LanguageVersion languageVersion) {
+  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
     return new DtdLexer(false);
   }
 }

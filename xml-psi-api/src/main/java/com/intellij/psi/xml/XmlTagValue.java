@@ -15,24 +15,25 @@
  */
 package com.intellij.psi.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.TextRange;
 
 public interface XmlTagValue
 {
-	@NotNull
+	@Nonnull
 	XmlTagChild[] getChildren();
 
-	@NotNull
+	@Nonnull
 	XmlText[] getTextElements();
 
-	@NotNull
+	@Nonnull
 	String getText();
 
-	@NotNull
+	@Nonnull
 	TextRange getTextRange();
 
-	@NotNull
+	@Nonnull
 	String getTrimmedText();
 
 	void setText(String value);

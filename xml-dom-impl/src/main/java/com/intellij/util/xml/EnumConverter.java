@@ -5,8 +5,8 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +18,7 @@ import java.util.HashSet;
  */
 public class EnumConverter<T extends Enum> extends ResolvingConverter<T>{
   private static final ConcurrentFactoryMap<Class,EnumConverter> ourCache = new ConcurrentFactoryMap<Class, EnumConverter>() {
-    @NotNull
+    @Nonnull
     protected EnumConverter create(final Class key) {
       return new EnumConverter(key);
     }
@@ -49,7 +49,7 @@ public class EnumConverter<T extends Enum> extends ResolvingConverter<T>{
     return CodeInsightBundle.message("error.unknown.enum.value.message", s);
   }
 
-  @NotNull
+  @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
     final XmlElement element = context.getXmlElement();
     if (element instanceof XmlTag) {

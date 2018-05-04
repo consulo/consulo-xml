@@ -38,8 +38,8 @@ import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Map;
 import java.util.Set;
@@ -68,7 +68,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public ResolveResult[] multiResolve(boolean incompleteCode) {
     final RngGrammar scope = getScope();
     if (scope == null) {
@@ -101,7 +101,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     final RngGrammar scope = getScope();
     if (scope == null) {
@@ -143,7 +143,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getUnresolvedMessagePattern() {
     return "Unresolved pattern reference ''{0}''";
   }

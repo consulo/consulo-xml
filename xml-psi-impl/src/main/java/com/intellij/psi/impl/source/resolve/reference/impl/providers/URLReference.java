@@ -15,9 +15,11 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.javaee.ExternalResourceManager;
@@ -189,7 +191,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getCanonicalText()
 	{
 		final String text = myElement.getText();
@@ -216,7 +218,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 	}
 
 	@Override
-	public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		assert element instanceof PsiFile;
 
@@ -237,7 +239,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Object[] getVariants()
 	{
 		return EMPTY_ARRAY;
@@ -255,7 +257,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getUnresolvedMessagePattern()
 	{
 		return XmlErrorMessages.message(myIncorrectResourceMapped ? "registered.resource.is.not.recognized" : "uri.is.not.registered");

@@ -17,8 +17,9 @@ package com.intellij.application.options.editor;
 
 import java.io.File;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -146,13 +147,13 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 		myInsertQuotesForAttributeValue = insertQuotesForAttributeValue;
 	}
 
-	@NotNull
+	@Nonnull
 	public File[] getExportFiles()
 	{
 		return new File[]{PathManager.getOptionsFile("editor")};
 	}
 
-	@NotNull
+	@Nonnull
 	public String getPresentableName()
 	{
 		return XmlBundle.message("xml.options");

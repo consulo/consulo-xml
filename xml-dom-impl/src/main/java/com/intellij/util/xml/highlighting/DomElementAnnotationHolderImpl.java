@@ -30,8 +30,8 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.ConvertContextFactory;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -49,31 +49,31 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     return myOnTheFly;
   }
 
-  @NotNull
-  public DomElementProblemDescriptor createProblem(@NotNull DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
+  @Nonnull
+  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
     return createProblem(domElement, HighlightSeverity.ERROR, message, fixes);
   }
 
-  @NotNull
-  public DomElementProblemDescriptor createProblem(@NotNull DomElement domElement,
+  @Nonnull
+  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement,
                                                    DomCollectionChildDescription childDescription,
                                                    @Nullable String message) {
     return addProblem(new DomCollectionProblemDescriptorImpl(domElement, message, HighlightSeverity.ERROR, childDescription));
   }
 
-  @NotNull
-  public final DomElementProblemDescriptor createProblem(@NotNull DomElement domElement, HighlightSeverity highlightType, String message) {
+  @Nonnull
+  public final DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message) {
     return createProblem(domElement, highlightType, message, LocalQuickFix.EMPTY_ARRAY);
   }
 
-  public DomElementProblemDescriptor createProblem(@NotNull final DomElement domElement,
+  public DomElementProblemDescriptor createProblem(@Nonnull final DomElement domElement,
                                                    final HighlightSeverity highlightType,
                                                    final String message,
                                                    final LocalQuickFix[] fixes) {
     return createProblem(domElement, highlightType, message, null, fixes);
   }
 
-  public DomElementProblemDescriptor createProblem(@NotNull final DomElement domElement,
+  public DomElementProblemDescriptor createProblem(@Nonnull final DomElement domElement,
                                                    final HighlightSeverity highlightType,
                                                    final String message,
                                                    final TextRange textRange,
@@ -81,7 +81,7 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     return addProblem(new DomElementProblemDescriptorImpl(domElement, message, highlightType, textRange, null, fixes));
   }
 
-  public DomElementProblemDescriptor createProblem(@NotNull DomElement domElement,
+  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement,
                                                    ProblemHighlightType highlightType,
                                                    String message,
                                                    @Nullable TextRange textRange,
@@ -89,13 +89,13 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     return addProblem(new DomElementProblemDescriptorImpl(domElement, message, HighlightSeverity.ERROR, textRange, highlightType, fixes));
   }
 
-  @NotNull
-  public DomElementResolveProblemDescriptor createResolveProblem(@NotNull GenericDomValue element, @NotNull PsiReference reference) {
+  @Nonnull
+  public DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference) {
     return addProblem(new DomElementResolveProblemDescriptorImpl(element, reference, getQuickFixes(element, reference)));
   }
 
-  @NotNull
-  public Annotation createAnnotation(@NotNull DomElement element, HighlightSeverity severity, @Nullable String message) {
+  @Nonnull
+  public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nullable String message) {
     final XmlElement xmlElement = element.getXmlElement();
     LOG.assertTrue(xmlElement != null, "No XML element for " + element);
     final TextRange range = xmlElement.getTextRange();

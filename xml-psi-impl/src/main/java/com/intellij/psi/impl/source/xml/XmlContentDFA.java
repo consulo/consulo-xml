@@ -18,8 +18,8 @@ package com.intellij.psi.impl.source.xml;
 import com.intellij.psi.templateLanguages.TemplateLanguageUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public abstract class XmlContentDFA {
   public abstract void transition(XmlTag xmlTag);
 
   @Nullable
-  public static XmlContentDFA getContentDFA(@NotNull XmlTag parentTag) {
+  public static XmlContentDFA getContentDFA(@Nonnull XmlTag parentTag) {
 
     if (TemplateLanguageUtil.isInsideTemplateFile(parentTag)) return null;
 

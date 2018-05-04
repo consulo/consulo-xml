@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.util.EditSourceUtil;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.*;
@@ -25,7 +27,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.xml.IDTDElementType;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author ik
@@ -39,7 +40,7 @@ public class XmlTokenImpl extends LeafPsiElement implements XmlToken, Navigatabl
     return false;
   }
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
+  public void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlToken(this);
     }
@@ -61,7 +62,7 @@ public class XmlTokenImpl extends LeafPsiElement implements XmlToken, Navigatabl
     return getElementType();
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     final IElementType elementType = getElementType();
 

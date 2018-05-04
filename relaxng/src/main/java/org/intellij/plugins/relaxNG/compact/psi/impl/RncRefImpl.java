@@ -16,6 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiReference;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
@@ -23,8 +26,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncRef;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -56,7 +57,7 @@ public class RncRefImpl extends RncElementImpl implements RncRef {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitRef(this);
   }
 

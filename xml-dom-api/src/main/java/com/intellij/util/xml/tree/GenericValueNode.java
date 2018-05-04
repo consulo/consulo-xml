@@ -20,7 +20,7 @@ import com.intellij.ui.treeStructure.SimpleNode;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.DomElement;
 import com.intellij.ui.SimpleTextAttributes;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class GenericValueNode extends AbstractDomElementNode {
   protected GenericDomValue myModelElement;
@@ -67,7 +67,7 @@ public class GenericValueNode extends AbstractDomElementNode {
     return NO_CHILDREN;
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getEqualityObjects() {
     return new Object[]{myModelElement};
   }

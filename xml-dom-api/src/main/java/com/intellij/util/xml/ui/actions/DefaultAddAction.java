@@ -27,9 +27,9 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.lang.reflect.Type;
 
@@ -63,7 +63,7 @@ public abstract class DefaultAddAction<T extends DomElement> extends AnAction {
 
   protected abstract DomElement getParentDomElement();
 
-  protected void afterAddition(@NotNull T newElement) {
+  protected void afterAddition(@Nonnull T newElement) {
   }
 
   public final void actionPerformed(final AnActionEvent e) {

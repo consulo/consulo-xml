@@ -17,8 +17,8 @@ package com.intellij.xml;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.extensions.ExtensionPointName;
@@ -45,7 +45,7 @@ public abstract class XmlExtension
 {
 	public static final ExtensionPointName<XmlExtension> EP_NAME = new ExtensionPointName<>("com.intellij.xml.xmlExtension");
 
-	public static XmlExtension getExtension(@NotNull final PsiFile file)
+	public static XmlExtension getExtension(@Nonnull final PsiFile file)
 	{
 		return CachedValuesManager.getCachedValue(file, () -> CachedValueProvider.Result.create(calcExtension(file), PsiModificationTracker.MODIFICATION_COUNT));
 	}
@@ -94,8 +94,8 @@ public abstract class XmlExtension
 		}
 	}
 
-	@NotNull
-	public abstract List<TagInfo> getAvailableTagNames(@NotNull final XmlFile file, @NotNull final XmlTag context);
+	@Nonnull
+	public abstract List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context);
 
 	@Nullable
 	public TagNameReference createTagNameReference(final ASTNode nameElement, final boolean startTagFlag)

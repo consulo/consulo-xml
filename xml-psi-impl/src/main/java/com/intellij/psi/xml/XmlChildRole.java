@@ -15,6 +15,9 @@
  */
 package com.intellij.psi.xml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.extensions.Extensions;
@@ -24,8 +27,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.RoleFinder;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface XmlChildRole {
 
@@ -36,7 +37,7 @@ public interface XmlChildRole {
   ExtensionPointName<StartTagEndTokenProvider> EP_NAME = new ExtensionPointName<StartTagEndTokenProvider>("com.intellij.xml.startTagEndToken");
 
   RoleFinder START_TAG_NAME_FINDER = new RoleFinder() {
-    public ASTNode findChild(@NotNull ASTNode parent) {
+    public ASTNode findChild(@Nonnull ASTNode parent) {
       final PsiElement element = XmlTagUtil.getStartTagNameElement((XmlTag)parent.getPsi());
       return element == null ? null : element.getNode();
     }
@@ -44,14 +45,14 @@ public interface XmlChildRole {
 
   RoleFinder CLOSING_TAG_NAME_FINDER = new RoleFinder() {
     @Nullable
-    public ASTNode findChild(@NotNull ASTNode parent) {
+    public ASTNode findChild(@Nonnull ASTNode parent) {
       final PsiElement element = XmlTagUtil.getEndTagNameElement((XmlTag)parent.getPsi());
       return element == null ? null : element.getNode();
     }
   };
 
   RoleFinder DOCUMENT_FINDER = new RoleFinder() {
-    public ASTNode findChild(@NotNull ASTNode parent) {
+    public ASTNode findChild(@Nonnull ASTNode parent) {
       ASTNode oldDocument = parent.findChildByType(XmlElementType.XML_DOCUMENT);
       if(oldDocument == null) oldDocument = parent.findChildByType(XmlElementType.HTML_DOCUMENT);
       return oldDocument;

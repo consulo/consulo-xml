@@ -22,7 +22,8 @@ import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PatternCondition;
@@ -45,8 +46,8 @@ public class IdRefProvider extends PsiReferenceProvider {
   public static final HasIdTypeCondition HAS_ID_TYPE = new HasIdTypeCondition();
 
   @Override
-  @NotNull
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+  @Nonnull
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
     final XmlAttributeValue value = (XmlAttributeValue)element;
 
     if (hasIdRefType(value)) {
@@ -104,7 +105,7 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Object[] getVariants() {
       final ProcessingContext context = new ProcessingContext();
       context.put(VARIANTS, new HashSet<>());
@@ -139,7 +140,7 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    public boolean accepts(@NotNull XmlAttributeValue xmlAttributeValue, ProcessingContext context) {
+    public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue, ProcessingContext context) {
       return hasIdType(xmlAttributeValue);
     }
   }
@@ -150,7 +151,7 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    public boolean accepts(@NotNull XmlAttributeValue xmlAttributeValue,  ProcessingContext context) {
+    public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue,  ProcessingContext context) {
       return hasIdRefType(xmlAttributeValue);
     }
   }

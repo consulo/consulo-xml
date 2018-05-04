@@ -19,6 +19,7 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
@@ -33,8 +34,8 @@ import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -58,7 +59,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitDefine(this);
   }
 
@@ -78,7 +79,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
     return getNameNode().getPsi();
   }
 
-  @NotNull
+  @Nonnull
   public ASTNode getNameNode() {
     final ASTNode node = getNode().findChildByType(RncTokenTypes.IDENTIFIERS);
     assert node != null;
@@ -86,7 +87,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
   }
 
   @Override
-  public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
     final ASTNode node = getNameNode();
     node.getTreeParent().replaceChild(node, RenameUtil.createIdentifierNode(getManager(), name));
     return this;
@@ -109,7 +110,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Object[] getVariants() {
           final RncInclude parent = (RncInclude)getParent();
           final RncFile referencedFile = parent.getReferencedFile();

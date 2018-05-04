@@ -25,7 +25,7 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -39,17 +39,17 @@ public class SyntheticBlock extends AbstractSyntheticBlock implements Block, Rea
     myChildIndent = childIndent;
   }
 
-  @NotNull
+  @Nonnull
   public TextRange getTextRange() {
     return calculateTextRange(mySubBlocks);
   }
 
-  @NotNull
+  @Nonnull
   public List<Block> getSubBlocks() {
     return mySubBlocks;
   }
 
-  public Spacing getSpacing(Block child1, @NotNull Block child2) {
+  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
     if (child1 instanceof ReadOnlyBlock || child2 instanceof ReadOnlyBlock) {
       return Spacing.getReadOnlySpacing();
     }
@@ -203,7 +203,7 @@ public class SyntheticBlock extends AbstractSyntheticBlock implements Block, Rea
       ;
   }
 
-  @NotNull
+  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (isOuterLanguageBlock()) return ChildAttributes.DELEGATE_TO_NEXT_CHILD;
     final List<Block> subBlocks = getSubBlocks();

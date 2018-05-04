@@ -19,8 +19,8 @@ package org.intellij.plugins.relaxNG.convert;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -57,7 +57,7 @@ public class ConvertSchemaDialog extends DialogWrapper implements PropertyChange
     getOKAction().setEnabled(mySettings.getOutputDestination().trim().length() > 0);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected Action[] createLeftSideActions() {
     return new Action[]{

@@ -35,8 +35,8 @@ import com.intellij.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -80,7 +80,7 @@ public class XmlRefCountHolder {
   }
 
 
-  public boolean isDuplicateIdAttributeValue(@NotNull final XmlAttributeValue value) {
+  public boolean isDuplicateIdAttributeValue(@Nonnull final XmlAttributeValue value) {
     return myPossiblyDuplicateIds.contains(value);
   }
 
@@ -88,15 +88,15 @@ public class XmlRefCountHolder {
     return !myDoNotValidateParentsList.contains(element);
   }
 
-  public boolean hasIdDeclaration(@NotNull final String idRef) {
+  public boolean hasIdDeclaration(@Nonnull final String idRef) {
     return myId2AttributeListMap.get(idRef) != null || myAdditionallyDeclaredIds.contains(idRef);
   }
 
-  public boolean isIdReferenceValue(@NotNull final XmlAttributeValue value) {
+  public boolean isIdReferenceValue(@Nonnull final XmlAttributeValue value) {
     return myIdReferences.contains(value);
   }
 
-  private void registerId(@NotNull final String id, @NotNull final XmlAttributeValue attributeValue, final boolean soft) {
+  private void registerId(@Nonnull final String id, @Nonnull final XmlAttributeValue attributeValue, final boolean soft) {
     List<Pair<XmlAttributeValue, Boolean>> list = myId2AttributeListMap.get(id);
     if (list == null) {
       list = new ArrayList<Pair<XmlAttributeValue, Boolean>>();
@@ -119,15 +119,15 @@ public class XmlRefCountHolder {
     list.add(new Pair<XmlAttributeValue, Boolean>(attributeValue, soft));
   }
 
-  private void registerAdditionalId(@NotNull final String id) {
+  private void registerAdditionalId(@Nonnull final String id) {
     myAdditionallyDeclaredIds.add(id);
   }
 
-  private void registerIdReference(@NotNull final XmlAttributeValue value) {
+  private void registerIdReference(@Nonnull final XmlAttributeValue value) {
     myIdReferences.add(value);
   }
 
-  private void registerOuterLanguageElement(@NotNull final PsiElement element) {
+  private void registerOuterLanguageElement(@Nonnull final PsiElement element) {
     PsiElement parent = element.getParent();
 
     if (parent instanceof XmlText) {
@@ -148,7 +148,7 @@ public class XmlRefCountHolder {
   private static class IdGatheringRecursiveVisitor extends XmlRecursiveElementVisitor {
     private final XmlRefCountHolder myHolder;
 
-    private IdGatheringRecursiveVisitor(@NotNull XmlRefCountHolder holder) {
+    private IdGatheringRecursiveVisitor(@Nonnull XmlRefCountHolder holder) {
       super(true);
       myHolder = holder;
     }
@@ -162,7 +162,7 @@ public class XmlRefCountHolder {
       super.visitElement(element);
     }
 
-    private void visitOuterLanguageElement(@NotNull final PsiElement element) {
+    private void visitOuterLanguageElement(@Nonnull final PsiElement element) {
       myHolder.registerOuterLanguageElement(element);
       PsiReference[] references = element.getReferences();
       for (PsiReference reference : references) {
@@ -264,7 +264,7 @@ public class XmlRefCountHolder {
       }
     }
 
-    private void updateMap(@NotNull final XmlAttribute attribute, @NotNull final XmlAttributeValue value, final boolean soft) {
+    private void updateMap(@Nonnull final XmlAttribute attribute, @Nonnull final XmlAttributeValue value, final boolean soft) {
       final String id = XmlHighlightVisitor.getUnquotedValue(value, attribute.getParent());
       if (XmlUtil.isSimpleValue(id, value) &&
           PsiTreeUtil.getChildOfType(value, OuterLanguageElement.class) == null) {

@@ -25,7 +25,7 @@ import com.intellij.util.xml.Referencing;
 import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:parentRefElemType interface.
@@ -38,7 +38,7 @@ public interface RngParentRef extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the name child.
    */
-  @NotNull
+  @Nonnull
   @Required
   @Referencing(RngReferenceConverter.class)
   GenericAttributeValue<String> getName();

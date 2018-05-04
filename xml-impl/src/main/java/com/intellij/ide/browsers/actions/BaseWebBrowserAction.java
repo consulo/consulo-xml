@@ -15,8 +15,8 @@
  */
 package com.intellij.ide.browsers.actions;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.browsers.WebBrowser;
 import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -25,7 +25,7 @@ final class BaseWebBrowserAction extends BaseOpenInBrowserAction
 {
 	private final WebBrowser browser;
 
-	public BaseWebBrowserAction(@NotNull WebBrowser browser)
+	public BaseWebBrowserAction(@Nonnull WebBrowser browser)
 	{
 		super(browser);
 
@@ -34,7 +34,7 @@ final class BaseWebBrowserAction extends BaseOpenInBrowserAction
 
 	@Nullable
 	@Override
-	protected WebBrowser getBrowser(@NotNull AnActionEvent event)
+	protected WebBrowser getBrowser(@Nonnull AnActionEvent event)
 	{
 		return WebBrowserManager.getInstance().isActive(browser) && browser.getPath() != null ? browser : null;
 	}

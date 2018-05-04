@@ -29,8 +29,8 @@ import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Collection;
@@ -40,12 +40,12 @@ class OverriddenDefineRenderer extends GutterIconRenderer implements DumbAware {
 
   private final Define myDefine;
 
-  public OverriddenDefineRenderer(@NotNull Define define) {
+  public OverriddenDefineRenderer(@Nonnull Define define) {
     myDefine = define;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public Icon getIcon() {
     return AllIcons.Gutter.OverridenMethod;
   }

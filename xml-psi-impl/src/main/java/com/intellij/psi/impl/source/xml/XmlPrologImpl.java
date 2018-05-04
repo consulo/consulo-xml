@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElementVisitor;
@@ -39,7 +40,7 @@ public class XmlPrologImpl extends XmlElementImpl implements XmlProlog, XmlEleme
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{

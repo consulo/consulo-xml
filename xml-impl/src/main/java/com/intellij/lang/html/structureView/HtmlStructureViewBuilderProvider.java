@@ -15,8 +15,9 @@
  */
 package com.intellij.lang.html.structureView;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.ide.structureView.StructureViewModel;
@@ -29,7 +30,7 @@ public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilder
 {
 	@Override
 	@Nullable
-	public StructureViewBuilder createStructureViewBuilder(@NotNull final XmlFile file)
+	public StructureViewBuilder createStructureViewBuilder(@Nonnull final XmlFile file)
 	{
 		if(file.getViewProvider().getVirtualFile().getFileType() != HtmlFileType.INSTANCE)
 		{
@@ -45,7 +46,7 @@ public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilder
 			}
 
 			@Override
-			@NotNull
+			@Nonnull
 			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 			{
 				return new HtmlStructureViewTreeModel(file, editor);

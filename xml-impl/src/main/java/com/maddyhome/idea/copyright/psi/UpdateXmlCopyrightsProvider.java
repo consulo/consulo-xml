@@ -15,9 +15,9 @@
  */
 package com.maddyhome.idea.copyright.psi;
 
+import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
@@ -48,7 +48,7 @@ public class UpdateXmlCopyrightsProvider extends UpdateCopyrightsProvider
 
 	public static class UpdateXmlFileCopyright extends UpdatePsiFileCopyright
 	{
-		protected UpdateXmlFileCopyright(@NotNull PsiFile psiFile, @NotNull CopyrightProfile copyrightProfile)
+		protected UpdateXmlFileCopyright(@Nonnull PsiFile psiFile, @Nonnull CopyrightProfile copyrightProfile)
 		{
 			super(psiFile, copyrightProfile);
 		}
@@ -204,14 +204,14 @@ public class UpdateXmlCopyrightsProvider extends UpdateCopyrightsProvider
 		private static final Logger logger = Logger.getInstance(UpdateXmlFileCopyright.class.getName());
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public UpdatePsiFileCopyright createInstance(@NotNull PsiFile file, @NotNull CopyrightProfile copyrightProfile)
+	public UpdatePsiFileCopyright createInstance(@Nonnull PsiFile file, @Nonnull CopyrightProfile copyrightProfile)
 	{
 		return new UpdateXmlFileCopyright(file, copyrightProfile);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public CopyrightFileConfig createDefaultOptions()
 	{
@@ -220,14 +220,14 @@ public class UpdateXmlCopyrightsProvider extends UpdateCopyrightsProvider
 		return copyrightFileConfig;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public TemplateCommentPanel createConfigurable(@NotNull Project project, @NotNull TemplateCommentPanel parentPane, @NotNull FileType fileType)
+	public TemplateCommentPanel createConfigurable(@Nonnull Project project, @Nonnull TemplateCommentPanel parentPane, @Nonnull FileType fileType)
 	{
 		return new TemplateCommentPanel(fileType, parentPane, project)
 		{
 			@Override
-			public void addAdditionalComponents(@NotNull JPanel additionalPanel)
+			public void addAdditionalComponents(@Nonnull JPanel additionalPanel)
 			{
 				addLocationInFile(LOCATIONS_IN_FILE);
 			}

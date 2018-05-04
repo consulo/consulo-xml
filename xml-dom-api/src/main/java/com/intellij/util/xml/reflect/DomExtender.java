@@ -17,7 +17,7 @@
 package com.intellij.util.xml.reflect;
 
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Register DOM extenders via dom.extender extension point. Specify 2 attributes:
@@ -32,5 +32,5 @@ public abstract class DomExtender<T extends DomElement> {
    * @param t DOM element where new children may be added to
    * @param registrar a place to register your own DOM children descriptions
    */
-  public abstract void registerExtensions(@NotNull T t, @NotNull final DomExtensionsRegistrar registrar);
+  public abstract void registerExtensions(@Nonnull T t, @Nonnull final DomExtensionsRegistrar registrar);
 }

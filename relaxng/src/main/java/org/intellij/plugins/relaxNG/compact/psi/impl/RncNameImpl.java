@@ -16,6 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.CodeInsightUtilCore;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.lookup.LookupItem;
@@ -46,8 +49,6 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -73,14 +74,14 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getLocalPart() {
     final String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
     return parts.length == 1 ? parts[0] : parts[1];
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitName(this);
   }
 
@@ -117,7 +118,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     return getRangeInElement().substring(getText());
   }
@@ -131,7 +132,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
   }
 
   @Override
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     throw new UnsupportedOperationException();
   }
 
@@ -141,7 +142,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     return ArrayUtil.EMPTY_OBJECT_ARRAY;
   }
@@ -153,7 +154,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getUnresolvedMessagePattern() {
     return "Unresolved namespace prefix ''{0}''";
   }
@@ -178,7 +179,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     }
 
     @Override
-    public boolean execute(@NotNull PsiElement element, @NotNull ResolveState substitutor) {
+    public boolean execute(@Nonnull PsiElement element, @Nonnull ResolveState substitutor) {
       final ASTNode node = element.getNode();
       if (node == null) return true;
 
@@ -217,19 +218,19 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getName() {
       return getFamilyName() + " '" + myReference.getPrefix() + "'";
     }
 
     @Override
-    @NotNull
+    @Nonnull
       public String getFamilyName() {
       return "Create " + myReference.getKind().name().toLowerCase() + " declaration";
     }
 
     @Override
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
       final String prefix = myReference.getPrefix();
       final PsiFileFactory factory = PsiFileFactory.getInstance(myReference.getProject());
       final RncFile psiFile = (RncFile)factory.createFileFromText("dummy.rnc",

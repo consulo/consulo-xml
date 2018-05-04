@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.tree.injected;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.CodeDocumentationAwareCommenter;
 import com.intellij.lang.Commenter;
 import com.intellij.lang.LanguageCommenters;
@@ -28,17 +29,17 @@ import com.intellij.psi.impl.source.xml.XmlCommentImpl;
  * @author spleaner
  */
 public class XmlCommentLiteralEscaper extends LiteralTextEscaper<XmlCommentImpl> {
-  public XmlCommentLiteralEscaper(@NotNull XmlCommentImpl host) {
+  public XmlCommentLiteralEscaper(@Nonnull XmlCommentImpl host) {
     super(host);
   }
 
-  public boolean decode(@NotNull final TextRange rangeInsideHost, @NotNull final StringBuilder outChars) {
+  public boolean decode(@Nonnull final TextRange rangeInsideHost, @Nonnull final StringBuilder outChars) {
     ProperTextRange.assertProperRange(rangeInsideHost);
     outChars.append(myHost.getText(), rangeInsideHost.getStartOffset(), rangeInsideHost.getEndOffset());
     return true;
   }
 
-  public int getOffsetInHost(final int offsetInDecoded, @NotNull final TextRange rangeInsideHost) {
+  public int getOffsetInHost(final int offsetInDecoded, @Nonnull final TextRange rangeInsideHost) {
     int offset = offsetInDecoded + rangeInsideHost.getStartOffset();
     if (offset < rangeInsideHost.getStartOffset()) offset = rangeInsideHost.getStartOffset();
     if (offset > rangeInsideHost.getEndOffset()) offset = rangeInsideHost.getEndOffset();

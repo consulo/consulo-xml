@@ -15,9 +15,10 @@
  */
 package com.intellij.psi;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.Language;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
@@ -45,8 +46,8 @@ public abstract class XmlElementFactory
 	 * @return the created element.
 	 * @throws com.intellij.util.IncorrectOperationException if the creation failed for some reason.
 	 */
-	@NotNull
-	public abstract XmlText createDisplayText(@NotNull @NonNls String s) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlText createDisplayText(@Nonnull @NonNls String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XHTML tag with the specified text.
@@ -55,8 +56,8 @@ public abstract class XmlElementFactory
 	 * @return the created tag instance.
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 */
-	@NotNull
-	public abstract XmlTag createXHTMLTagFromText(@NotNull @NonNls String s) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlTag createXHTMLTagFromText(@Nonnull @NonNls String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an HTML tag with the specified text.
@@ -65,8 +66,8 @@ public abstract class XmlElementFactory
 	 * @return the created tag instance.
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 */
-	@NotNull
-	public abstract XmlTag createHTMLTagFromText(@NotNull @NonNls String s) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlTag createHTMLTagFromText(@Nonnull @NonNls String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XML tag with the specified text.
@@ -76,8 +77,8 @@ public abstract class XmlElementFactory
 	 * @throws com.intellij.util.IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence text, Language language)
 	 */
-	@NotNull
-	public abstract XmlTag createTagFromText(@NotNull @NonNls CharSequence text) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlTag createTagFromText(@Nonnull @NonNls CharSequence text) throws IncorrectOperationException;
 
 	/**
 	 * Creates XML like tag with the specified text and language.
@@ -88,8 +89,8 @@ public abstract class XmlElementFactory
 	 * @throws com.intellij.util.IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence)
 	 */
-	@NotNull
-	public abstract XmlTag createTagFromText(@NotNull @NonNls CharSequence text, @NotNull Language language) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlTag createTagFromText(@Nonnull @NonNls CharSequence text, @Nonnull Language language) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XML attribute with the specified name and value.
@@ -99,8 +100,8 @@ public abstract class XmlElementFactory
 	 * @return the created attribute instance.
 	 * @throws IncorrectOperationException if either {@code name} or {@code value} are not valid.
 	 */
-	@NotNull
-	public abstract XmlAttribute createXmlAttribute(@NotNull @NonNls String name, @NotNull String value) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlAttribute createXmlAttribute(@Nonnull @NonNls String name, @Nonnull String value) throws IncorrectOperationException;
 
 	/**
 	 * Creates an attribute with the specified name and value  with given context.
@@ -111,6 +112,6 @@ public abstract class XmlElementFactory
 	 * @return the created attribute instance.
 	 * @throws IncorrectOperationException if either {@code name} or {@code value} are not valid.
 	 */
-	@NotNull
-	public abstract XmlAttribute createAttribute(@NotNull @NonNls String name, @NotNull String value, @Nullable PsiElement context) throws IncorrectOperationException;
+	@Nonnull
+	public abstract XmlAttribute createAttribute(@Nonnull @NonNls String name, @Nonnull String value, @Nullable PsiElement context) throws IncorrectOperationException;
 }

@@ -33,8 +33,8 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.ui.TooltipUtils;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
@@ -165,7 +165,7 @@ public class BaseDomElementNode extends AbstractDomElementNode {
     return -1;
   }
 
-  @NotNull
+  @Nonnull
   public List<DomCollectionChildDescription> getConsolidatedChildrenDescriptions() {
     if (!myDomElement.isValid()) return Collections.emptyList();
 
@@ -178,7 +178,7 @@ public class BaseDomElementNode extends AbstractDomElementNode {
     return consolidated;
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getEqualityObjects() {
     return new Object[]{myDomElement};
   }

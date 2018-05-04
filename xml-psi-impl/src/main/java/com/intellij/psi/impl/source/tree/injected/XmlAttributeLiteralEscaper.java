@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.tree.injected;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.LiteralTextEscaper;
 import com.intellij.psi.PsiElement;
@@ -38,7 +39,7 @@ public class XmlAttributeLiteralEscaper extends LiteralTextEscaper<XmlAttributeV
 	}
 
 	@Override
-	public boolean decode(@NotNull final TextRange rangeInsideHost, @NotNull StringBuilder outChars)
+	public boolean decode(@Nonnull final TextRange rangeInsideHost, @Nonnull StringBuilder outChars)
 	{
 		TextRange valueTextRange = myXmlAttribute.getValueTextRange();
 		int startInDecoded = myXmlAttribute.physicalToDisplay(rangeInsideHost.getStartOffset() - valueTextRange.getStartOffset());
@@ -56,7 +57,7 @@ public class XmlAttributeLiteralEscaper extends LiteralTextEscaper<XmlAttributeV
 	}
 
 	@Override
-	public int getOffsetInHost(final int offsetInDecoded, @NotNull final TextRange rangeInsideHost)
+	public int getOffsetInHost(final int offsetInDecoded, @Nonnull final TextRange rangeInsideHost)
 	{
 		TextRange valueTextRange = myXmlAttribute.getValueTextRange();
 		int displayStart = myXmlAttribute.physicalToDisplay(rangeInsideHost.getStartOffset());

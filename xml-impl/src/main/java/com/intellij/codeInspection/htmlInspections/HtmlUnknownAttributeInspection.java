@@ -16,9 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
-
-import org.jetbrains.annotations.Nullable;
 
 public class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspectionBase
 {

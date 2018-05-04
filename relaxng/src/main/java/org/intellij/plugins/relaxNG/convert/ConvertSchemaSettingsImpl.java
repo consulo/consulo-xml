@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -36,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 
 import org.intellij.plugins.relaxNG.compact.RncFileType;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -85,7 +85,7 @@ public class ConvertSchemaSettingsImpl implements ConvertSchemaSettings {
 
   private TextFieldWithBrowseButton myOutputDestination;
 
-  public ConvertSchemaSettingsImpl(Project project, @NotNull SchemaType inputType, VirtualFile firstFile) {
+  public ConvertSchemaSettingsImpl(Project project, @Nonnull SchemaType inputType, VirtualFile firstFile) {
     myProject = project;
     myInputType = inputType;
     
@@ -178,7 +178,7 @@ public class ConvertSchemaSettingsImpl implements ConvertSchemaSettings {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public SchemaType getOutputType() {
     if (myOutputRng.isSelected()) {
       return SchemaType.RNG;

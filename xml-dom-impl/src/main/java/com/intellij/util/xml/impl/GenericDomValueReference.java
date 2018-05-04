@@ -33,8 +33,8 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.*;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,12 +137,12 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return value == null ? null : resolveInner(value);
   }
 
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     return StringUtil.notNullize(getStringValue());
   }
 
-  @NotNull
+  @Nonnull
   public String getUnresolvedMessagePattern() {
     final ConvertContext context = getConvertContext();
     return getConverter().getErrorMessage(getStringValue(), context);
@@ -161,7 +161,7 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return super.handleElementRename(newElementName);
   }
 
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     final Converter<T> converter = getConverter();
     if (converter instanceof ResolvingConverter) {
       ((ResolvingConverter)converter).bindReference(myGenericValue, getConvertContext(), element);
@@ -180,7 +180,7 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     final Converter<T> converter = getConverter();
     if (converter instanceof EnumConverter || converter == ResolvingConverter.BOOLEAN_CONVERTER) {

@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.editorActions;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
@@ -22,7 +24,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlAttribute;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
   private boolean needToInsertQuotes = false;
@@ -45,7 +46,7 @@ public class XmlEqTypedHandler extends TypedHandlerDelegate {
   }
 
   @Override
-  public Result charTyped(char c, Project project, Editor editor, @NotNull PsiFile file) {
+  public Result charTyped(char c, Project project, Editor editor, @Nonnull PsiFile file) {
     if (needToInsertQuotes) {
       int offset = editor.getCaretModel().getOffset();
       editor.getDocument().insertString(offset, "\"\"");

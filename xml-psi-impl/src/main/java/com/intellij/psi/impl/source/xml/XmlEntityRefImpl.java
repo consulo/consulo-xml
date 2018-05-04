@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Key;
@@ -126,7 +126,7 @@ public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef
 				PsiElementProcessor processor = new PsiElementProcessor()
 				{
 					@Override
-					public boolean execute(@NotNull PsiElement element)
+					public boolean execute(@Nonnull PsiElement element)
 					{
 						if(element instanceof XmlDoctype)
 						{
@@ -260,14 +260,14 @@ public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public PsiReference[] getReferences()
 	{
 		return ReferenceProvidersRegistry.getReferencesFromProviders(this);
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{

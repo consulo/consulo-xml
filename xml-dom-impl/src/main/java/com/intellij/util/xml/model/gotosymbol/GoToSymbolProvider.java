@@ -31,9 +31,9 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,19 +45,19 @@ import java.util.Set;
  */
 public abstract class GoToSymbolProvider implements ChooseByNameContributor {
 
-  protected abstract void addNames(@NotNull Module module, Set<String> result);
+  protected abstract void addNames(@Nonnull Module module, Set<String> result);
 
-  protected abstract void addItems(@NotNull Module module, String name, List<NavigationItem> result);
+  protected abstract void addItems(@Nonnull Module module, String name, List<NavigationItem> result);
 
   protected abstract boolean acceptModule(final Module module);
 
-  protected static void addNewNames(@NotNull final List<? extends DomElement> elements, final Set<String> existingNames) {
+  protected static void addNewNames(@Nonnull final List<? extends DomElement> elements, final Set<String> existingNames) {
     for (DomElement name : elements) {
       existingNames.add(name.getGenericInfo().getElementName(name));
     }
   }
 
-  @NotNull
+  @Nonnull
   public String[] getNames(final Project project, boolean includeNonProjectItems) {
     Set<String> result = new HashSet<String>();
     Module[] modules = ModuleManager.getInstance(project).getModules();
@@ -70,7 +70,7 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
     return ArrayUtil.toStringArray(result);
   }
 
-  @NotNull
+  @Nonnull
   public NavigationItem[] getItemsByName(final String name, final String pattern, final Project project, boolean includeNonProjectItems) {
     List<NavigationItem> result = new ArrayList<NavigationItem>();
     Module[] modules = ModuleManager.getInstance(project).getModules();
@@ -96,9 +96,9 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
     return createNavigationItem(psiElement, value, icon);
   }
 
-  @NotNull
-  protected static NavigationItem createNavigationItem(@NotNull final PsiElement element,
-                                                       @NotNull @NonNls final String text,
+  @Nonnull
+  protected static NavigationItem createNavigationItem(@Nonnull final PsiElement element,
+                                                       @Nonnull @NonNls final String text,
                                                        @Nullable final Icon icon) {
     return new BaseNavigationItem(element, text, icon);
   }
@@ -120,13 +120,13 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
      * @param text       Text to show for this element.
      * @param icon       Icon to show for this element.
      */
-    public BaseNavigationItem(@NotNull PsiElement psiElement, @NotNull @NonNls String text, @Nullable Icon icon) {
+    public BaseNavigationItem(@Nonnull PsiElement psiElement, @Nonnull @NonNls String text, @Nullable Icon icon) {
       myPsiElement = psiElement;
       myText = text;
       myIcon = icon;
     }
 
-    @NotNull
+    @Nonnull
     public PsiElement getNavigationElement() {
       return myPsiElement;
     }
@@ -158,7 +158,7 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
       return myPsiElement.getParent();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Project getProject() {
       return myPsiElement.getProject();

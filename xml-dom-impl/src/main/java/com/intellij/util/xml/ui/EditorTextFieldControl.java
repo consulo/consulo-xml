@@ -35,7 +35,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +75,7 @@ public abstract class EditorTextFieldControl<T extends JComponent> extends BaseM
     this(domWrapper, false);
   }
 
-  protected abstract EditorTextField getEditorTextField(@NotNull T component);
+  protected abstract EditorTextField getEditorTextField(@Nonnull T component);
 
   protected void doReset() {
     final EditorTextField textField = getEditorTextField(getComponent());
@@ -104,7 +104,7 @@ public abstract class EditorTextFieldControl<T extends JComponent> extends BaseM
 
   protected abstract T createMainComponent(T boundedComponent, Project project);
 
-  @NotNull
+  @Nonnull
   protected String getValue() {
     return getEditorTextField(getComponent()).getText();
   }

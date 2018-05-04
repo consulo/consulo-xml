@@ -17,8 +17,9 @@ package com.intellij.xml.actions;
 
 import gnu.trove.TIntObjectHashMap;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.codeInsight.actions.BaseCodeInsightAction;
 import com.intellij.openapi.application.ApplicationManager;
@@ -60,7 +61,7 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 			XmlUtil.processXmlElements(file, new PsiElementProcessor()
 			{
 				@Override
-				public boolean execute(@NotNull PsiElement element)
+				public boolean execute(@Nonnull PsiElement element)
 				{
 					if(element instanceof XmlEntityDecl)
 					{
@@ -142,12 +143,12 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 	}
 
 	@Override
-	protected boolean isValidForFile(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file)
+	protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file)
 	{
 		return file instanceof XmlFile;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected CodeInsightActionHandler getHandler()
 	{
@@ -155,7 +156,7 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 	}
 
 	@Override
-	public void invoke(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file)
+	public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file)
 	{
 		int[] starts = editor.getSelectionModel().getBlockSelectionStarts();
 		int[] ends = editor.getSelectionModel().getBlockSelectionEnds();

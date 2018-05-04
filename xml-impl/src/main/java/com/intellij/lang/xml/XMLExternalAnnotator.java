@@ -29,8 +29,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
 public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator.MyHost, XMLExternalAnnotator.MyHost> {
   @Nullable
   @Override
-  public MyHost collectInformation(@NotNull PsiFile file) {
+  public MyHost collectInformation(@Nonnull PsiFile file) {
     if (!(file instanceof XmlFile)) return null;
     final XmlDocument document = ((XmlFile)file).getDocument();
     if (document == null) return null;
@@ -64,7 +64,7 @@ public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator
   }
 
   @Override
-  public void apply(@NotNull PsiFile file, MyHost annotationResult, @NotNull AnnotationHolder holder) {
+  public void apply(@Nonnull PsiFile file, MyHost annotationResult, @Nonnull AnnotationHolder holder) {
     annotationResult.apply(holder);
   }
 
@@ -83,7 +83,7 @@ public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator
     }
 
     @Override
-    public void addMessage(PsiElement context, String message, @NotNull ErrorType type) {
+    public void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
       messages.add(Trinity.create(context, message, type));
     }
 
@@ -97,9 +97,9 @@ public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator
 
   public static void addMessageWithFixes(final PsiElement context,
                                          final String message,
-                                         @NotNull final Validator.ValidationHost.ErrorType type,
+                                         @Nonnull final Validator.ValidationHost.ErrorType type,
                                          AnnotationHolder myHolder,
-                                         @NotNull final IntentionAction... fixes) {
+                                         @Nonnull final IntentionAction... fixes) {
     if (message != null && !message.isEmpty()) {
       if (context instanceof XmlTag) {
         addMessagesForTag((XmlTag)context, message, type, myHolder, fixes);

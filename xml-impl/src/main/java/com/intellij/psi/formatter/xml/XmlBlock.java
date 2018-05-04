@@ -31,8 +31,8 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.SmartList;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class XmlBlock extends AbstractXmlBlock {
     myTextRange = textRange;
   }
 
-  @NotNull
+  @Nonnull
   public TextRange getTextRange() {
     if (myTextRange != null && !(isCDATAStart() || isCDATAEnd())) {
       return myTextRange;
@@ -235,7 +235,7 @@ public class XmlBlock extends AbstractXmlBlock {
     }
   }
 
-  public Spacing getSpacing(Block child1, @NotNull Block child2) {
+  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
     if (!(child1 instanceof AbstractBlock) || !(child2 instanceof AbstractBlock)) {
       return null;
     }
@@ -313,7 +313,7 @@ public class XmlBlock extends AbstractXmlBlock {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (myNode.getPsi() instanceof PsiFile) {
       return new ChildAttributes(Indent.getNoneIndent(), null);

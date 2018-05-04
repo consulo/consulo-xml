@@ -4,7 +4,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.util.xml.AbstractConvertContext;
 import com.intellij.util.xml.DomElement;
 import com.intellij.openapi.module.Module;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
@@ -20,7 +20,7 @@ public class ConvertContextImpl extends AbstractConvertContext {
     this(DomManagerImpl.getDomInvocationHandler(element));
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getInvocationElement() {
     return myHandler.getProxy();
   }

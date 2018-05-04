@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public class RootScopeProvider extends ScopeProvider{
 
-  public DomElement getScope(@NotNull DomElement element) {
+  public DomElement getScope(@Nonnull DomElement element) {
     return DomUtil.getRoot(element);
   }
 }

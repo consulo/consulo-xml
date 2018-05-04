@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
@@ -31,7 +32,7 @@ import com.intellij.xml.util.XmlTagUtil;
 public class XmlNamespaceAnnotator implements Annotator
 {
 	@Override
-	public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder)
+	public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder)
 	{
 		if(element instanceof XmlTag)
 		{

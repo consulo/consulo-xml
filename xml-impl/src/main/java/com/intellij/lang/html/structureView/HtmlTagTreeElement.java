@@ -24,7 +24,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -37,7 +37,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     super(tag);
   }
 
-  @NotNull
+  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     final XmlTag tag = getElement();
     if (tag == null || !tag.isValid()) return Collections.emptyList();
@@ -68,7 +68,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     return true;
   }
 
-  public static String getTagPresentation(final @NotNull XmlTag tag) {
+  public static String getTagPresentation(final @Nonnull XmlTag tag) {
     final String id = XmlTagTreeElement.toCanonicalForm(tag.getAttributeValue("id"));
 
     final String classValue = tag.getAttributeValue("class");
@@ -87,8 +87,8 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     return text.toString();
   }
 
-  @NotNull
-  public static String normalizeSpacesAndShortenIfLong(final @NotNull String text) {
+  @Nonnull
+  public static String normalizeSpacesAndShortenIfLong(final @Nonnull String text) {
     return shortenTextIfLong(normalizeSpaces(text));
   }
 

@@ -16,7 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -31,10 +32,10 @@ public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
 {
 	private final String myName;
 	private final String myText;
-	@NotNull
+	@Nonnull
 	private final Key<HtmlUnknownElementInspection> myInspectionKey;
 
-	public AddCustomHtmlElementIntentionAction(@NotNull Key<HtmlUnknownElementInspection> inspectionKey, String name, String text)
+	public AddCustomHtmlElementIntentionAction(@Nonnull Key<HtmlUnknownElementInspection> inspectionKey, String name, String text)
 	{
 		myInspectionKey = inspectionKey;
 		myName = name;
@@ -42,21 +43,21 @@ public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return myText;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName()
 	{
 		return XmlBundle.message("fix.html.family");
 	}
 
 	@Override
-	public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor)
+	public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
 	{
 		final PsiElement element = descriptor.getPsiElement();
 

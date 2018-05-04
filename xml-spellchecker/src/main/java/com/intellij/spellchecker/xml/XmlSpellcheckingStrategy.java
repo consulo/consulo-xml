@@ -1,6 +1,7 @@
 package com.intellij.spellchecker.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.SuppressQuickFix;
 import com.intellij.psi.PsiElement;
 import com.intellij.spellchecker.tokenizer.SuppressibleSpellcheckingStrategy;
@@ -13,7 +14,7 @@ import com.intellij.util.xml.DomUtil;
 public class XmlSpellcheckingStrategy extends SuppressibleSpellcheckingStrategy {
 
   @Override
-  public boolean isSuppressedFor(@NotNull PsiElement element, @NotNull String name) {
+  public boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String name) {
     DomElement domElement = DomUtil.getDomElement(element);
     if (domElement != null) {
       if (domElement.getAnnotation(NoSpellchecking.class) != null) {
@@ -25,7 +26,7 @@ public class XmlSpellcheckingStrategy extends SuppressibleSpellcheckingStrategy 
   }
 
   @Override
-  public SuppressQuickFix[] getSuppressActions(@NotNull PsiElement element, @NotNull String name) {
+  public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, @Nonnull String name) {
     return SuppressQuickFix.EMPTY_ARRAY;
   }
 }

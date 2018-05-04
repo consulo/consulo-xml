@@ -17,9 +17,11 @@ package com.intellij.ide.structureView.impl.xml;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
@@ -32,7 +34,7 @@ public class XmlTagTreeElement extends AbstractXmlTagTreeElement<XmlTag>{
     super(tag);
   }
 
- @NotNull
+ @Nonnull
  public Collection<StructureViewTreeElement> getChildrenBase() {
     return getStructureViewTreeElements(getElement().getSubTags());
   }

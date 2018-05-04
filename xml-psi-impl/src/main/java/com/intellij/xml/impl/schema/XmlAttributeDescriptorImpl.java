@@ -27,8 +27,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashSet;
 
@@ -170,7 +170,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
     final String[] enumeratedValues;
     final boolean exaustive;
 
-    EnumerationData(@NotNull String[] _values, boolean _exaustive) {
+    EnumerationData(@Nonnull String[] _values, boolean _exaustive) {
       enumeratedValues = _values;
       exaustive = _exaustive;
     }

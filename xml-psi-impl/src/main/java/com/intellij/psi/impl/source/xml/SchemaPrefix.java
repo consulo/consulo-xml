@@ -24,8 +24,8 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.PlatformIcons;
 import com.intellij.xml.XmlExtension;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 
@@ -84,7 +84,7 @@ public class SchemaPrefix extends RenameableFakePsiElement {
     return TextRange.from(getTextOffset(), getTextLength());
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public SearchScope getUseScope() {
     return XmlExtension.getExtension(getContainingFile()).getNsPrefixScope(getDeclaration());

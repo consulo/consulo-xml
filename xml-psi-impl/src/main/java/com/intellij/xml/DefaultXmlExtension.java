@@ -21,9 +21,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -50,8 +52,8 @@ public class DefaultXmlExtension extends XmlExtension
 	}
 
 	@Override
-	@NotNull
-	public List<TagInfo> getAvailableTagNames(@NotNull final XmlFile file, @NotNull final XmlTag context)
+	@Nonnull
+	public List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context)
 	{
 
 		final Set<String> namespaces = new HashSet<>(Arrays.asList(context.knownNamespaces()));
@@ -114,7 +116,7 @@ public class DefaultXmlExtension extends XmlExtension
 		return set;
 	}
 
-	private static boolean hasTag(@NotNull XmlElementDescriptor elementDescriptor, String tagName, Set<XmlElementDescriptor> visited)
+	private static boolean hasTag(@Nonnull XmlElementDescriptor elementDescriptor, String tagName, Set<XmlElementDescriptor> visited)
 	{
 		final String name = elementDescriptor.getDefaultName();
 		if(name == null)

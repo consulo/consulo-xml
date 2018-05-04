@@ -15,7 +15,7 @@
  */
 package com.intellij.lang;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class LanguageHtmlScriptContentProvider extends LanguageExtension<HtmlScriptContentProvider> {
   public final static LanguageHtmlScriptContentProvider INSTANCE = new LanguageHtmlScriptContentProvider();
@@ -24,7 +24,7 @@ public class LanguageHtmlScriptContentProvider extends LanguageExtension<HtmlScr
     super("com.intellij.xml.html.scriptContentProvider");
   }
 
-  public static HtmlScriptContentProvider getScriptContentProvider(@NotNull Language language) {
+  public static HtmlScriptContentProvider getScriptContentProvider(@Nonnull Language language) {
     return INSTANCE.forLanguage(language);
   }
 }

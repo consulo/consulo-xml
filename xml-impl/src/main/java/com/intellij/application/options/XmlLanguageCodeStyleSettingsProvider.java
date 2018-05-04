@@ -15,23 +15,24 @@
  */
 package com.intellij.application.options;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Rustam Vishnyakov
  */
 public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
-  @NotNull
+  @Nonnull
   @Override
   public Language getLanguage() {
     return XMLLanguage.INSTANCE;
   }
 
   @Override
-  public String getCodeSample(@NotNull SettingsType settingsType) {
+  public String getCodeSample(@Nonnull SettingsType settingsType) {
     if (settingsType == SettingsType.INDENT_SETTINGS) {
       return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
     }

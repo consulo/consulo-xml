@@ -19,8 +19,8 @@ import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.openapi.util.Computable;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
@@ -37,7 +37,7 @@ class Html5SectionTreeElement extends PsiTreeElementBase<XmlTag> {
     myHeader = header;
   }
 
-  @NotNull
+  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     return myChildrenComputable.compute();
   }

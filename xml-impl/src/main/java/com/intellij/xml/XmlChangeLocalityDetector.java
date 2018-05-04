@@ -15,16 +15,17 @@
  */
 package com.intellij.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.ChangeLocalityDetector;
 import com.intellij.codeInspection.DefaultXmlSuppressionProvider;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlChangeLocalityDetector implements ChangeLocalityDetector {
   @Override
-  public PsiElement getChangeHighlightingDirtyScopeFor(@NotNull PsiElement changedElement) {
+  public PsiElement getChangeHighlightingDirtyScopeFor(@Nonnull PsiElement changedElement) {
     // rehighlight everything when inspection suppress comment changed
     if (changedElement.getLanguage() instanceof XMLLanguage
         && changedElement instanceof PsiComment

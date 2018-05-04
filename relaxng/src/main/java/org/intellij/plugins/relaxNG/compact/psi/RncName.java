@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,6 +28,6 @@ public interface RncName extends RncElement {
   @Nullable
   String getPrefix();
 
-  @NotNull
+  @Nonnull
   String getLocalPart();
 }

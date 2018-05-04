@@ -22,8 +22,9 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.util.xml.NanoXmlUtil;
 
 /**

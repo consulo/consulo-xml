@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.template;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiErrorElement;
@@ -24,7 +26,6 @@ import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -35,7 +36,7 @@ public class HtmlTextContextType extends TemplateContextType {
   }
 
   @Override
-  public boolean isInContext(@NotNull PsiFile file, int offset) {
+  public boolean isInContext(@Nonnull PsiFile file, int offset) {
     if (!HtmlContextType.isMyLanguage(file.getLanguage())) {
       return false;
     }
@@ -43,7 +44,7 @@ public class HtmlTextContextType extends TemplateContextType {
     return element == null || isInContext(element);
   }
 
-  public static boolean isInContext(@NotNull PsiElement element) {
+  public static boolean isInContext(@Nonnull PsiElement element) {
     if (PsiTreeUtil.getParentOfType(element, XmlComment.class) != null) {
       return false;
     }

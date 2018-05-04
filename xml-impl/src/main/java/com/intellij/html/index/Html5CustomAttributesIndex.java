@@ -18,7 +18,8 @@ package com.intellij.html.index;
 import java.util.Collections;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.lang.Language;
@@ -53,7 +54,7 @@ public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
 
   private final DataIndexer<String, Void, FileContent> myIndexer = new DataIndexer<String, Void, FileContent>() {
     @Override
-    @NotNull
+    @Nonnull
     public Map<String, Void> map(FileContent inputData) {
       CharSequence input = inputData.getContentAsText();
       Language language = ((LanguageFileType)inputData.getFileType()).getLanguage();
@@ -94,13 +95,13 @@ public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
     }
   };
 
-  @NotNull
+  @Nonnull
   @Override
   public ID<String, Void> getName() {
     return INDEX_ID;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public DataIndexer<String, Void, FileContent> getIndexer() {
     return myIndexer;

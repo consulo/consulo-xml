@@ -17,7 +17,7 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.ItemPresentationWithSeparator;
@@ -57,7 +57,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  public void accept(@NotNull PsiElementVisitor visitor) {
+  public void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlAttributeValue(this);
     }
@@ -100,7 +100,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     PsiReference[] cachedReferences = myCachedReferences;
     final long curModCount = getManager().getModificationTracker().getModificationCount();
@@ -132,7 +132,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  public PsiLanguageInjectionHost updateText(@NotNull String text) {
+  public PsiLanguageInjectionHost updateText(@Nonnull String text) {
     try {
       final String quoteChar = getTextLength() > 0 ? getText().substring(0, 1) : "";
       String contents = StringUtil.containsAnyChar(quoteChar, "'\"") ?
@@ -150,7 +150,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public LiteralTextEscaper<XmlAttributeValueImpl> createLiteralTextEscaper() {
     return new XmlAttributeLiteralEscaper(this);
   }

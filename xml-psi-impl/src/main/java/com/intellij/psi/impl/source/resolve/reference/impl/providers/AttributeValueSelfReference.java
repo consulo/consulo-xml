@@ -15,8 +15,9 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ArrayUtil;
@@ -42,7 +43,7 @@ public class AttributeValueSelfReference extends BasicAttributeValueReference {
     return myElement;
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     return ArrayUtil.EMPTY_OBJECT_ARRAY;
   }

@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
@@ -47,13 +48,13 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
   private final String myNamespaceKey;
   private final boolean myEqualToParent;
 
-  private EvaluatedXmlNameImpl(@NotNull final XmlName xmlName, @Nullable final String namespaceKey, final boolean equalToParent) {
+  private EvaluatedXmlNameImpl(@Nonnull final XmlName xmlName, @Nullable final String namespaceKey, final boolean equalToParent) {
     myXmlName = xmlName;
     myNamespaceKey = namespaceKey;
     myEqualToParent = equalToParent;
   }
 
-  @NotNull
+  @Nonnull
   public final String getLocalName() {
     return myXmlName.getLocalName();
   }
@@ -62,7 +63,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
     return myXmlName;
   }
 
-  public final EvaluatedXmlName evaluateChildName(@NotNull final XmlName name) {
+  public final EvaluatedXmlName evaluateChildName(@Nonnull final XmlName name) {
     String namespaceKey = name.getNamespaceKey();
     final boolean equalToParent = Comparing.equal(namespaceKey, myNamespaceKey);
     if (namespaceKey == null) {
@@ -103,7 +104,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
     return isNamespaceAllowed(namespace, getAllowedNamespaces(file));
   }
 
-  @NotNull
+  @Nonnull
   private List<String> getAllowedNamespaces(final XmlFile file) {
     CachedValue<Map<String, List<String>>> value = file.getUserData(NAMESPACE_PROVIDER_KEY);
     if (value == null) {
@@ -135,8 +136,9 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
     return myNamespaceKey == null || myEqualToParent && !qualified || isNamespaceAllowed(namespace, getNamespaceList(file));
   }
 
-  @NotNull @NonNls
-  public final String getNamespace(@NotNull XmlElement parentElement, final XmlFile file) {
+  @Nonnull
+  @NonNls
+  public final String getNamespace(@Nonnull XmlElement parentElement, final XmlFile file) {
     final String xmlElementNamespace = getXmlElementNamespace(parentElement);
     if (myNamespaceKey != null && !myEqualToParent) {
       final List<String> strings = getAllowedNamespaces(file);
@@ -171,7 +173,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName {
     return getAllowedNamespaces(file);
   }
 
-  public static EvaluatedXmlNameImpl createEvaluatedXmlName(@NotNull final XmlName xmlName, @Nullable final String namespaceKey, boolean equalToParent) {
+  public static EvaluatedXmlNameImpl createEvaluatedXmlName(@Nonnull final XmlName xmlName, @Nullable final String namespaceKey, boolean equalToParent) {
     final EvaluatedXmlNameImpl name = new EvaluatedXmlNameImpl(xmlName, namespaceKey, equalToParent);
     final EvaluatedXmlNameImpl interned = ourInterned.get(name);
     if (interned != null) {

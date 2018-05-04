@@ -34,12 +34,12 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 class XmlMover extends LineMover {
   //private static final Logger LOG = Logger.getInstance("#com.intellij.openapi.editor.actions.moveUpDown.XmlMover");
 
-  public boolean checkAvailable(@NotNull final Editor editor, @NotNull final PsiFile file, @NotNull final MoveInfo info, final boolean down) {
+  public boolean checkAvailable(@Nonnull final Editor editor, @Nonnull final PsiFile file, @Nonnull final MoveInfo info, final boolean down) {
     if (!(file instanceof XmlFile)) {
       return false;
     }
@@ -232,7 +232,7 @@ class XmlMover extends LineMover {
     return false;
   }
 
-  private static void updatedMovedIntoEnd(final Document document, @NotNull final MoveInfo info, final int offset) {
+  private static void updatedMovedIntoEnd(final Document document, @Nonnull final MoveInfo info, final int offset) {
     if (offset + 1 < document.getTextLength()) {
       final int line = document.getLineNumber(offset + 1);
       final LineRange toMove2 = info.toMove2;
@@ -244,7 +244,7 @@ class XmlMover extends LineMover {
   private static int updateMovedRegionStart(final Document document,
                                             int movedLineStart,
                                             final int offset,
-                                            @NotNull final MoveInfo info,
+                                            @Nonnull final MoveInfo info,
                                             final boolean down) {
     final int line = document.getLineNumber(offset);
     final LineRange toMove = info.toMove;
@@ -263,7 +263,7 @@ class XmlMover extends LineMover {
   private static int updateMovedRegionEnd(final Document document,
                                           int movedLineStart,
                                           final int valueStart,
-                                          @NotNull final MoveInfo info,
+                                          @Nonnull final MoveInfo info,
                                           final boolean down) {
     final int line = document.getLineNumber(valueStart);
     final LineRange toMove = info.toMove;

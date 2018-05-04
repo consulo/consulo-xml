@@ -16,18 +16,19 @@
 
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Provides basic inspection functionality (resolving, required values, duplicate names, custom annotations).
  */
 public abstract class BasicDomElementsInspection<T extends DomElement> extends DomElementsInspection<T> {
 
-  public BasicDomElementsInspection(@NotNull Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
+  public BasicDomElementsInspection(@Nonnull Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
     super(domClass, additionalClasses);
   }
 

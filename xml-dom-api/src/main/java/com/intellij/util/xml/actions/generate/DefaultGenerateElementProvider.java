@@ -31,9 +31,10 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.actions.generate.GenerateDomElementProvider;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * User: Sergey.Vasiliev

@@ -22,10 +22,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.openapi.util.Comparing;
@@ -51,7 +51,7 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Collection<StructureViewTreeElement> getChildrenBase()
 	{
 		return collectElements(getElement().getDocument());
@@ -64,7 +64,7 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 		XmlUtil.processXmlElements(element, new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull final PsiElement element)
+			public boolean execute(@Nonnull final PsiElement element)
 			{
 				if(element instanceof XmlElementDecl || element instanceof XmlEntityDecl)
 				{
@@ -103,7 +103,7 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Collection<StructureViewTreeElement> getChildrenBase()
 		{
 			return Collections.emptyList();

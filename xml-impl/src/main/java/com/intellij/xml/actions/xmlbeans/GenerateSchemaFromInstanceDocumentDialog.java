@@ -23,7 +23,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -217,7 +217,7 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
     return null;
   }
 
-  @NotNull
+  @Nonnull
   protected String getHelpId() {
     return "webservices.GenerateSchemaFromInstanceDocument";
   }

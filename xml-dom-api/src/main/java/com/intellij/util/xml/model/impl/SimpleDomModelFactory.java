@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
@@ -36,7 +36,7 @@ import com.intellij.util.xml.model.SimpleModelFactory;
 public abstract class SimpleDomModelFactory<T extends DomElement, M extends DomModel<T>> extends DomModelFactoryHelper<T> implements
                                                                                                                          SimpleModelFactory<T, M> {
 
-  public SimpleDomModelFactory(@NotNull Class<T> aClass, @NotNull ModelMerger modelMerger) {
+  public SimpleDomModelFactory(@Nonnull Class<T> aClass, @Nonnull ModelMerger modelMerger) {
     super(aClass, modelMerger);
   }
 

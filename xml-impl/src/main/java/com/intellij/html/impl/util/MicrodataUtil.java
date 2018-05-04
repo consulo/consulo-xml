@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;

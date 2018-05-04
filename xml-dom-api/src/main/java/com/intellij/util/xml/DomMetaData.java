@@ -22,7 +22,7 @@ import com.intellij.psi.meta.PsiWritableMetaData;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 

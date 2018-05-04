@@ -17,7 +17,7 @@ package com.intellij.psi.xml;
 
 import com.intellij.psi.FileResolveScopeProvider;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author Mike

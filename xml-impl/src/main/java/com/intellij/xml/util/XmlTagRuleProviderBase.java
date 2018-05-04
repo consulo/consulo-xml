@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -140,7 +140,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 
 	public abstract static class Effect
 	{
-		public abstract void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder);
+		public abstract void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder);
 	}
 
 	public static class InvalidAttrEffect extends Effect
@@ -157,7 +157,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
+		public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder)
 		{
 			XmlAttribute attribute = tag.getAttribute(myAttrName);
 			if(attribute != null)
@@ -185,7 +185,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
+		public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder)
 		{
 			for(XmlAttribute xmlAttribute : tag.getAttributes())
 			{
@@ -214,7 +214,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
+		public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder)
 		{
 			if(myCondition.value(tag))
 			{
@@ -229,7 +229,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 	public static class ShouldHaveParams extends Rule
 	{
 		@Override
-		public boolean needAtLeastOneAttribute(@NotNull XmlTag tag)
+		public boolean needAtLeastOneAttribute(@Nonnull XmlTag tag)
 		{
 			return true;
 		}
@@ -246,7 +246,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 			myProblemHighlightType = ProblemHighlightType.GENERIC_ERROR_OR_WARNING;
 		}
 
-		public RequireAttributeOneOf(@NotNull ProblemHighlightType problemHighlightType, String... attributeNames)
+		public RequireAttributeOneOf(@Nonnull ProblemHighlightType problemHighlightType, String... attributeNames)
 		{
 			assert attributeNames.length > 0;
 			myAttributeNames = attributeNames;
@@ -259,7 +259,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider
 		}
 
 		@Override
-		public void annotate(@NotNull XmlTag tag, @NotNull ProblemsHolder holder)
+		public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder)
 		{
 			for(String attributeName : myAttributeNames)
 			{

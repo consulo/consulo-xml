@@ -35,7 +35,7 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +52,13 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     return KEY;
   }
 
-  protected void doInvoke(@NotNull final PsiFile file, final int offset, @NotNull final String uri, final Editor editor) throws IncorrectOperationException {
+  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
     final XmlTag tag = PsiTreeUtil.getParentOfType(file.findElementAt(offset), XmlTag.class);
     if (tag == null) return;
     final List<String> schemaLocations = new ArrayList<String>();
 
     CreateNSDeclarationIntentionFix.processExternalUris(new CreateNSDeclarationIntentionFix.TagMetaHandler(tag.getLocalName()), file, new CreateNSDeclarationIntentionFix.ExternalUriProcessor() {
-      public void process(@NotNull final String currentUri, final String url) {
+      public void process(@Nonnull final String currentUri, final String url) {
         if (currentUri.equals(uri) && url != null) schemaLocations.add(url);
       }
 
@@ -66,7 +66,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
 
     CreateNSDeclarationIntentionFix.runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
       ArrayUtil.toStringArray(schemaLocations), file.getProject(), new CreateNSDeclarationIntentionFix.StringToAttributeProcessor() {
-        public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@NotNull final String attrName) throws IncorrectOperationException {
+        public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String attrName) throws IncorrectOperationException {
           doIt(file, editor, uri, tag, attrName);
         }
       }, XmlErrorMessages.message("select.namespace.location.title"), this, editor);
@@ -100,7 +100,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     if (!(file instanceof XmlFile)) return false;
 
     PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());

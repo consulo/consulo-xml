@@ -19,7 +19,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Map;
 
@@ -34,6 +34,6 @@ public abstract class DomTemplateRunner {
   
   public abstract <T extends DomElement> void  runTemplate(final T t, final String mappingId, final Editor editor);
 
-  public abstract <T extends DomElement> void  runTemplate(final T t, final String mappingId, final Editor editor,@NotNull Map<String, String> predefinedVars);
+  public abstract <T extends DomElement> void  runTemplate(final T t, final String mappingId, final Editor editor,@Nonnull Map<String, String> predefinedVars);
 
 }

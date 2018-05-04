@@ -18,6 +18,7 @@ package com.intellij.xml.actions.validate;
 import java.io.StringReader;
 import java.util.Arrays;
 
+import javax.annotation.Nullable;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -28,7 +29,6 @@ import org.apache.xerces.jaxp.SAXParserFactoryImpl;
 import org.apache.xerces.util.XMLGrammarPoolImpl;
 import org.apache.xerces.xni.grammars.XMLGrammarPool;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;

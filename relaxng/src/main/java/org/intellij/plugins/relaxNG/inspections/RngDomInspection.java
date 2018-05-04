@@ -21,7 +21,7 @@ import com.intellij.util.xml.highlighting.BasicDomElementsInspection;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,7 +33,7 @@ public class RngDomInspection extends BasicDomElementsInspection<RngDomElement> 
     super(RngDomElement.class);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
@@ -46,21 +46,21 @@ public class RngDomInspection extends BasicDomElementsInspection<RngDomElement> 
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return BaseInspection.getRngGroupDisplayName();
   }
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return "Unresolved References";
   }
 
   @Override
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "UnresolvedReference";
   }

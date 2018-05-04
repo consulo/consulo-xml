@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,8 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.TagNameReferenceCompletionProvider;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupManager;
@@ -73,7 +73,7 @@ public class XmlTagRenameDialog extends RefactoringDialog
 	private final XmlTag myTag;
 	private NameSuggestionsField.DataChanged myNameChangedListener;
 
-	public XmlTagRenameDialog(@NotNull final Editor editor, @NotNull final PsiElement element, @NotNull final XmlTag tag)
+	public XmlTagRenameDialog(@Nonnull final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag)
 	{
 		super(element.getProject(), true);
 
@@ -104,13 +104,13 @@ public class XmlTagRenameDialog extends RefactoringDialog
 		return false;
 	}
 
-	private static String getFullName(@NotNull final XmlTag tag)
+	private static String getFullName(@Nonnull final XmlTag tag)
 	{
 		final String name = DescriptiveNameUtil.getDescriptiveName(tag);
 		return (UsageViewUtil.getType(tag) + " " + name).trim();
 	}
 
-	public static void renameXmlTag(final Editor editor, @NotNull final PsiElement element, @NotNull final XmlTag tag)
+	public static void renameXmlTag(final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag)
 	{
 		final XmlTagRenameDialog dialog = new XmlTagRenameDialog(editor, element, tag);
 		dialog.show();

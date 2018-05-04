@@ -8,8 +8,8 @@ import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.ElementStub;
 import com.intellij.util.xml.stubs.StubParentStrategy;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class CollectionElementInvocationHandler extends DomInvocationHandler<AbstractDomChildDescriptionImpl, ElementStub>{
 
-  public CollectionElementInvocationHandler(final Type type, @NotNull final XmlTag tag,
+  public CollectionElementInvocationHandler(final Type type, @Nonnull final XmlTag tag,
                                             final AbstractCollectionChildDescription description,
                                             final DomInvocationHandler parent,
                                             @Nullable ElementStub stub) {
@@ -27,7 +27,7 @@ public class CollectionElementInvocationHandler extends DomInvocationHandler<Abs
           (AbstractDomChildDescriptionImpl)description, parent.getManager(), true, stub);
   }
 
-  public CollectionElementInvocationHandler(@NotNull EvaluatedXmlName tagName,
+  public CollectionElementInvocationHandler(@Nonnull EvaluatedXmlName tagName,
                                             AbstractDomChildDescriptionImpl childDescription,
                                             DomManagerImpl manager,
                                             ElementStub stub) {
@@ -35,7 +35,7 @@ public class CollectionElementInvocationHandler extends DomInvocationHandler<Abs
 
   }
 
-  protected Type narrowType(@NotNull final Type nominalType) {
+  protected Type narrowType(@Nonnull final Type nominalType) {
     return getStub() == null ? getManager().getTypeChooserManager().getTypeChooser(nominalType).chooseType(getXmlTag()) : nominalType;
   }
 

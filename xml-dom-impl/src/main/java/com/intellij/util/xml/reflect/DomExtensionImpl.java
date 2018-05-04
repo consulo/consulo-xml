@@ -28,7 +28,7 @@ import com.intellij.util.xml.impl.ConvertAnnotationImpl;
 import com.intellij.util.xml.impl.DomAnchorImpl;
 import com.intellij.util.xml.impl.DomChildDescriptionImpl;
 import gnu.trove.THashMap;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -73,38 +73,38 @@ public class DomExtensionImpl implements DomExtension {
     myAttributesDescriptor = attributesDescriptor;
   }
 
-  @NotNull
+  @Nonnull
   public XmlName getXmlName() {
     return myXmlName;
   }
 
-  @NotNull
+  @Nonnull
   public Type getType() {
     return myType;
   }
 
-  public DomExtension setDeclaringElement(@NotNull DomElement declaringElement) {
+  public DomExtension setDeclaringElement(@Nonnull DomElement declaringElement) {
     putUserData(KEY_DOM_DECLARATION, DomAnchorImpl.createAnchor(declaringElement, true));
     return this;
   }
 
   @Override
-  public DomExtension setDeclaringElement(@NotNull PsiElement declaringElement) {
+  public DomExtension setDeclaringElement(@Nonnull PsiElement declaringElement) {
     putUserData(DECLARING_ELEMENT_KEY, SmartPointerManager.getInstance(declaringElement.getProject()).createSmartPsiElementPointer(declaringElement));
     return this;
   }
 
-  public DomExtension setConverter(@NotNull Converter converter) {
+  public DomExtension setConverter(@Nonnull Converter converter) {
     return setConverter(converter, false);
   }
 
-  public final DomExtension setConverter(@NotNull final Converter converter, final boolean soft) {
+  public final DomExtension setConverter(@Nonnull final Converter converter, final boolean soft) {
     myConverter = converter;
     mySoft = soft;
     return this;
   }
 
-  public DomExtension addCustomAnnotation(@NotNull final Annotation anno) {
+  public DomExtension addCustomAnnotation(@Nonnull final Annotation anno) {
     myCustomAnnos.add(anno);
     return this;
   }

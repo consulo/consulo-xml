@@ -16,13 +16,14 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.fileTypes.FileType;
@@ -52,13 +53,13 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public FileType getFileType() {
     return RncFileType.getInstance();
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlDocument getDocument() {
     // this needs to be a seperate child element because of com.intellij.util.xml.impl.ExternalChangeProcessor.visitDocumentChanged()
     final XmlDocument document = findChildByClass(XmlDocument.class);
@@ -72,7 +73,7 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState substitutor, PsiElement lastParent, @NotNull PsiElement place) {
+  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
     //processor.handleEvent(JavaScopeProcessorEvent.SET_CURRENT_FILE_CONTEXT, this);
     try {
       final ASTNode docNode = getDocument().getNode();
@@ -96,17 +97,17 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  public PsiElement add(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement add(@Nonnull PsiElement element) throws IncorrectOperationException {
     return getDocument().add(element);
   }
 
   @Override
-  public PsiElement addAfter(@NotNull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addAfter(@Nonnull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
     return getDocument().addAfter(element, anchor);
   }
 
   @Override
-  public PsiElement addBefore(@NotNull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addBefore(@Nonnull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
     return getDocument().addBefore(element, anchor);
   }
 
@@ -115,7 +116,7 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
     return false;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public GlobalSearchScope getFileResolveScope() {
     return ProjectScope.getAllScope(getProject());

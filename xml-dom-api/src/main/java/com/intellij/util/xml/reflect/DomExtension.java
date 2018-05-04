@@ -20,7 +20,7 @@ import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -30,18 +30,18 @@ import java.lang.reflect.Type;
  */
 public interface DomExtension {
 
-  @NotNull
+  @Nonnull
   Type getType();
 
-  DomExtension setDeclaringElement(@NotNull DomElement declaringElement);
+  DomExtension setDeclaringElement(@Nonnull DomElement declaringElement);
 
-  DomExtension setDeclaringElement(@NotNull PsiElement declaringElement);
+  DomExtension setDeclaringElement(@Nonnull PsiElement declaringElement);
 
-  DomExtension setConverter(@NotNull Converter converter);
+  DomExtension setConverter(@Nonnull Converter converter);
 
-  DomExtension setConverter(@NotNull Converter converter, boolean soft);
+  DomExtension setConverter(@Nonnull Converter converter, boolean soft);
 
-  DomExtension addCustomAnnotation(@NotNull Annotation anno);
+  DomExtension addCustomAnnotation(@Nonnull Annotation anno);
 
   <T> void putUserData(Key<T> key, T value);
 

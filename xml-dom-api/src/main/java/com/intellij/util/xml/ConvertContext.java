@@ -23,15 +23,15 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
  */
 public abstract class ConvertContext {
 
-  @NotNull
+  @Nonnull
   public abstract DomElement getInvocationElement();
 
   @Nullable
@@ -52,7 +52,7 @@ public abstract class ConvertContext {
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public abstract XmlFile getFile();
 
   @Nullable

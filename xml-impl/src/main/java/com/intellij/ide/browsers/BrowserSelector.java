@@ -20,12 +20,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.ui.ComboBox;
@@ -57,7 +57,7 @@ public class BrowserSelector
 		});
 	}
 
-	public BrowserSelector(@NotNull final Condition<WebBrowser> browserCondition)
+	public BrowserSelector(@Nonnull final Condition<WebBrowser> browserCondition)
 	{
 		myModel = createBrowsersComboModel(browserCondition);
 		myBrowserComboWithBrowse = new ComboboxWithBrowseButton(new ComboBox(myModel));
@@ -111,7 +111,7 @@ public class BrowserSelector
 		return myBrowserComboWithBrowse;
 	}
 
-	private static MutableCollectionComboBoxModel<WebBrowser> createBrowsersComboModel(@NotNull Condition<WebBrowser> browserCondition)
+	private static MutableCollectionComboBoxModel<WebBrowser> createBrowsersComboModel(@Nonnull Condition<WebBrowser> browserCondition)
 	{
 		List<WebBrowser> list = new ArrayList<WebBrowser>();
 		if(browserCondition.value(null))
@@ -140,7 +140,7 @@ public class BrowserSelector
 		myBrowserComboWithBrowse.getComboBox().setSelectedItem(selectedItem);
 	}
 
-	public boolean addAndSelect(@NotNull WebBrowser browser)
+	public boolean addAndSelect(@Nonnull WebBrowser browser)
 	{
 		if(myModel.contains(browser))
 		{

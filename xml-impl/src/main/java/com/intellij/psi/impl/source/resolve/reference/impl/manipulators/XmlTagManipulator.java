@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.AbstractElementManipulator;
 import com.intellij.psi.xml.XmlTag;
@@ -29,7 +30,7 @@ import com.intellij.util.IncorrectOperationException;
 public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 {
 	@Override
-	public XmlTag handleContentChange(@NotNull XmlTag tag, @NotNull TextRange range, String newContent) throws IncorrectOperationException
+	public XmlTag handleContentChange(@Nonnull XmlTag tag, @Nonnull TextRange range, String newContent) throws IncorrectOperationException
 	{
 		final StringBuilder replacement = new StringBuilder(tag.getValue().getText());
 		final int valueOffset = tag.getValue().getTextRange().getStartOffset() - tag.getTextOffset();
@@ -40,8 +41,8 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 	}
 
 	@Override
-	@NotNull
-	public TextRange getRangeInElement(@NotNull final XmlTag tag)
+	@Nonnull
+	public TextRange getRangeInElement(@Nonnull final XmlTag tag)
 	{
 		if(tag.getSubTags().length > 0)
 		{
@@ -72,7 +73,7 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 		return trimmed.isEmpty() ? new TextRange(start, start) : new TextRange(start, xmlText.displayToPhysical(i + trimmed.length() - 1) + offset + 1);
 	}
 
-	public static TextRange[] getValueRanges(@NotNull final XmlTag tag)
+	public static TextRange[] getValueRanges(@Nonnull final XmlTag tag)
 	{
 		final XmlTagValue value = tag.getValue();
 		final XmlText[] texts = value.getTextElements();

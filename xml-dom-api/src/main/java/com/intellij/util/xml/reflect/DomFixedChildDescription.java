@@ -16,9 +16,10 @@
 package com.intellij.util.xml.reflect;
 
 import com.intellij.util.xml.JavaMethod;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter

@@ -24,8 +24,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;

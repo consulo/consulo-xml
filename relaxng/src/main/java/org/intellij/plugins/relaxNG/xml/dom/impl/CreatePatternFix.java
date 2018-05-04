@@ -16,6 +16,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -32,7 +34,6 @@ import com.intellij.psi.xml.XmlText;
 import com.intellij.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,25 +49,25 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getText() {
     return "Create Pattern '" + myReference.getCanonicalText() + "'";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return "Create Pattern";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getName() {
     return getText();
   }
 
   @Override
-  public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
     if (!isAvailable()) {
       return;
     }
@@ -78,7 +79,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     return isAvailable();
   }
 
@@ -97,7 +98,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
     doFix();
   }
 

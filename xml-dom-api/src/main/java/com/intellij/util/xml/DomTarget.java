@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -44,7 +44,7 @@ public class DomTarget extends DelegatePsiTarget implements PsiDeclaredTarget, P
   }
 
   @Nullable
-  public static DomTarget getTarget(@NotNull DomElement element) {
+  public static DomTarget getTarget(@Nonnull DomElement element) {
     final GenericDomValue nameElement = element.getGenericInfo().getNameDomElement(element);
     if (nameElement == null) {
       return null;
@@ -89,7 +89,7 @@ public class DomTarget extends DelegatePsiTarget implements PsiDeclaredTarget, P
     return getNavigationElement().isWritable();
   }
 
-  public Object setName(@NotNull String newName) {
+  public Object setName(@Nonnull String newName) {
     myNameDomElement.setStringValue(newName);
     return myDomElement;
   }

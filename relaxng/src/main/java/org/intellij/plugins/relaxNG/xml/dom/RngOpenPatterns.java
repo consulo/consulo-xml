@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.xml.dom;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.SubTagList;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of element children.
    */
-  @NotNull
+  @Nonnull
   List<RngElement> getElements();
 
   /**
@@ -50,7 +50,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of attribute children.
    */
-  @NotNull
+  @Nonnull
   List<RngAttribute> getAttributes();
 
   /**
@@ -65,7 +65,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of group children.
    */
-  @NotNull
+  @Nonnull
   List<RngGroup> getGroups();
 
   /**
@@ -80,7 +80,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of interleave children.
    */
-  @NotNull
+  @Nonnull
   @SubTagList(value = "interleave")
   List<RngInterleave> getInterleaves();
 
@@ -96,7 +96,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of choice children.
    */
-  @NotNull
+  @Nonnull
   List<RngChoice> getChoices();
 
   /**
@@ -111,7 +111,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of optional children.
    */
-  @NotNull
+  @Nonnull
   List<RngOptional> getOptionals();
 
   /**
@@ -126,7 +126,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of zeroOrMore children.
    */
-  @NotNull
+  @Nonnull
   List<RngZeroOrMore> getZeroOrMores();
 
   /**
@@ -141,7 +141,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of oneOrMore children.
    */
-  @NotNull
+  @Nonnull
   List<RngOneOrMore> getOneOrMores();
 
   /**
@@ -156,7 +156,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of list children.
    */
-  @NotNull
+  @Nonnull
   List<List> getLists();
 
   /**
@@ -171,7 +171,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of mixed children.
    */
-  @NotNull
+  @Nonnull
   List<RngMixed> getMixeds();
 
   /**
@@ -186,7 +186,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of ref children.
    */
-  @NotNull
+  @Nonnull
   List<RngRef> getRefs();
 
   /**
@@ -201,7 +201,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of parentRef children.
    */
-  @NotNull
+  @Nonnull
   List<RngParentRef> getParentRefs();
 
   /**
@@ -216,7 +216,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of empty children.
    */
-  @NotNull
+  @Nonnull
   List<RngEmpty> getEmpties();
 
   /**
@@ -231,7 +231,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of text children.
    */
-  @NotNull
+  @Nonnull
   List<RngText> getTexts();
 
   /**
@@ -246,7 +246,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of value children.
    */
-  @NotNull
+  @Nonnull
   List<RngValue> getValues();
 
   /**
@@ -261,7 +261,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of data children.
    */
-  @NotNull
+  @Nonnull
   List<RngData> getDatas();
 
   /**
@@ -276,7 +276,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of notAllowed children.
    */
-  @NotNull
+  @Nonnull
   List<RngNotAllowed> getNotAlloweds();
 
   /**
@@ -291,7 +291,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of externalRef children.
    */
-  @NotNull
+  @Nonnull
   List<RngExternalRef> getExternalRefs();
 
   /**
@@ -306,7 +306,7 @@ public interface RngOpenPatterns extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of grammar children.
    */
-  @NotNull
+  @Nonnull
   List<RngGrammar> getGrammars();
 
   /**

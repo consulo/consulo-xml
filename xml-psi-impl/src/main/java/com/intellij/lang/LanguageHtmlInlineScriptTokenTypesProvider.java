@@ -15,7 +15,7 @@
  */
 package com.intellij.lang;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public class LanguageHtmlInlineScriptTokenTypesProvider extends LanguageExtension<HtmlInlineScriptTokenTypesProvider> {
   public final static LanguageHtmlInlineScriptTokenTypesProvider INSTANCE = new LanguageHtmlInlineScriptTokenTypesProvider();

@@ -20,8 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -644,7 +644,7 @@ public class XmlElementDescriptorImpl extends XsdEnumerationDescriptor<XmlTag> i
 	}
 
 	@Override
-	public void validate(@NotNull XmlTag context, @NotNull ValidationHost host)
+	public void validate(@Nonnull XmlTag context, @Nonnull ValidationHost host)
 	{
 		Validator<XmlTag> validator = myValidator;
 		if(validator != null)
@@ -654,7 +654,7 @@ public class XmlElementDescriptorImpl extends XsdEnumerationDescriptor<XmlTag> i
 	}
 
 	@Override
-	public PsiReference[] getValueReferences(XmlTag xmlTag, @NotNull String text)
+	public PsiReference[] getValueReferences(XmlTag xmlTag, @Nonnull String text)
 	{
 		XmlTagValue value = xmlTag.getValue();
 		XmlText[] elements = value.getTextElements();

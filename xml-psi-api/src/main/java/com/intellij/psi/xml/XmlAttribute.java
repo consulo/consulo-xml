@@ -15,13 +15,14 @@
  */
 package com.intellij.psi.xml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Mike
@@ -30,15 +31,19 @@ public interface XmlAttribute extends XmlElement, PsiNamedElement {
   XmlAttribute[] EMPTY_ARRAY = new XmlAttribute[0];
 
   @Override
-  @NonNls @NotNull String getName();
+  @NonNls @Nonnull
+  String getName();
 
-  @NonNls @NotNull String getLocalName();
+  @NonNls @Nonnull
+  String getLocalName();
 
   XmlElement getNameElement();
 
-  @NonNls @NotNull String getNamespace();
+  @NonNls @Nonnull
+  String getNamespace();
 
-  @NonNls @NotNull String getNamespacePrefix();
+  @NonNls @Nonnull
+  String getNamespacePrefix();
 
   @Override
   XmlTag getParent();
@@ -77,7 +82,8 @@ public interface XmlAttribute extends XmlElement, PsiNamedElement {
    */
   boolean isNamespaceDeclaration();
 
-  @Nullable XmlAttributeDescriptor getDescriptor();
+  @Nullable
+  XmlAttributeDescriptor getDescriptor();
 
   // In this case function is also used to get references from attribute value
   @Nullable

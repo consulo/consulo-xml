@@ -9,8 +9,8 @@ import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -61,8 +61,8 @@ public class FixedChildDescriptionImpl extends DomChildDescriptionImpl implement
     return myCount;
   }
 
-  @NotNull
-  public List<? extends DomElement> getValues(@NotNull final DomElement element) {
+  @Nonnull
+  public List<? extends DomElement> getValues(@Nonnull final DomElement element) {
     final List<DomElement> result = new SmartList<DomElement>();
     final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(element);
     if (handler != null) {
@@ -80,8 +80,8 @@ public class FixedChildDescriptionImpl extends DomChildDescriptionImpl implement
     return result;
   }
 
-  @NotNull
-  public String getCommonPresentableName(@NotNull DomNameStrategy strategy) {
+  @Nonnull
+  public String getCommonPresentableName(@Nonnull DomNameStrategy strategy) {
     return StringUtil.capitalizeWords(strategy.splitIntoWords(getXmlElementName()), true);
   }
 

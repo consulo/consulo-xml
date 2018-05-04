@@ -15,11 +15,12 @@
  */
 package com.intellij.ide.structureView.xml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
@@ -28,5 +29,5 @@ public interface XmlStructureViewElementProvider {
   ExtensionPointName<XmlStructureViewElementProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.structureViewElementProvider");
 
   @Nullable
-  StructureViewTreeElement createCustomXmlTagTreeElement(@NotNull XmlTag tag);
+  StructureViewTreeElement createCustomXmlTagTreeElement(@Nonnull XmlTag tag);
 }

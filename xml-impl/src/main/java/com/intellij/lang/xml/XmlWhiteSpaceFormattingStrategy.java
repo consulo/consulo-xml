@@ -27,7 +27,7 @@ import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.CharTable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author Denis Zhdanov
@@ -67,7 +67,7 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
     }
   }
 
-  protected boolean isInsideTagBody(@NotNull ASTNode place) {
+  protected boolean isInsideTagBody(@Nonnull ASTNode place) {
     final ASTNode treeParent = place.getTreeParent();
     if(treeParent.getElementType() != XmlElementType.XML_TAG
        && treeParent.getElementType() != XmlElementType.HTML_TAG) return false;
@@ -78,7 +78,7 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
     return false;
   }
 
-  public boolean addWhitespace(@NotNull final ASTNode treePrev, @NotNull final LeafElement whiteSpaceElement) {
+  public boolean addWhitespace(@Nonnull final ASTNode treePrev, @Nonnull final LeafElement whiteSpaceElement) {
     if (isInsideTagBody(treePrev)) {
       addWhitespaceToTagBody(treePrev, whiteSpaceElement);
       return true;
@@ -87,7 +87,7 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
     return false;
   }
 
-  public boolean containsWhitespacesOnly(@NotNull final ASTNode node) {
+  public boolean containsWhitespacesOnly(@Nonnull final ASTNode node) {
     return (node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) &&
            node.getText().trim().length() == 0;
   }

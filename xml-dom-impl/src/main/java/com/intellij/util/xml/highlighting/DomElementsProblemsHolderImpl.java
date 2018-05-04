@@ -31,8 +31,8 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -79,7 +79,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     myPassedInspections.add(inspectionClass);
   }
 
-  public final boolean isInspectionCompleted(@NotNull final DomElementsInspection inspection) {
+  public final boolean isInspectionCompleted(@Nonnull final DomElementsInspection inspection) {
     return isInspectionCompleted(inspection.getClass());
   }
 
@@ -99,7 +99,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     myCachedChildrenErrors.clear();
   }
 
-  @NotNull
+  @Nonnull
   public synchronized List<DomElementProblemDescriptor> getProblems(DomElement domElement) {
     if (domElement == null || !domElement.isValid()) return Collections.emptyList();
     return myDomProblemsGetter.fun(domElement);
@@ -135,7 +135,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
 
   }
 
-  @NotNull
+  @Nonnull
   private Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> getProblemsMap(final DomElement domElement) {
     final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> map = myCachedChildrenErrors.get(domElement);
     if (map != null) {
@@ -173,7 +173,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     return getProblems(myElement, false, true);
   }
 
-  public List<DomElementProblemDescriptor> getAllProblems(@NotNull DomElementsInspection inspection) {
+  public List<DomElementProblemDescriptor> getAllProblems(@Nonnull DomElementsInspection inspection) {
     if (!myElement.isValid()) {
       return Collections.emptyList();
     }

@@ -17,7 +17,7 @@ package com.intellij.xml.impl.dtd;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.psi.xml.XmlContentParticle;
 import com.intellij.util.Function;
@@ -33,7 +33,7 @@ public class XmlElementsGroupImpl implements XmlElementsGroup {
   private final XmlContentParticle myParticle;
   private final XmlElementsGroup myParent;
   private final NotNullLazyValue<List<XmlElementsGroup>> mySubGroups = new NotNullLazyValue<List<XmlElementsGroup>>() {
-    @NotNull
+    @Nonnull
     @Override
     protected List<XmlElementsGroup> compute() {
       return ContainerUtil.map(myParticle.getSubParticles(), new Function<XmlContentParticle, XmlElementsGroup>() {
@@ -45,7 +45,7 @@ public class XmlElementsGroupImpl implements XmlElementsGroup {
     }
   };
 
-  public XmlElementsGroupImpl(@NotNull XmlContentParticle particle, XmlElementsGroup parent) {
+  public XmlElementsGroupImpl(@Nonnull XmlContentParticle particle, XmlElementsGroup parent) {
     myParticle = particle;
     myParent = parent;
   }

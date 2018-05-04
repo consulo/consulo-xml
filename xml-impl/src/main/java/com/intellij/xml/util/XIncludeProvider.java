@@ -17,7 +17,8 @@ package com.intellij.xml.util;
 
 import java.util.ArrayList;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -33,7 +34,7 @@ import com.intellij.util.xml.NanoXmlUtil;
  */
 public class XIncludeProvider extends FileIncludeProvider
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public String getId()
 	{
@@ -47,12 +48,12 @@ public class XIncludeProvider extends FileIncludeProvider
 	}
 
 	@Override
-	public void registerFileTypesUsedForIndexing(@NotNull Consumer<FileType> fileTypeSink)
+	public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink)
 	{
 		fileTypeSink.consume(XmlFileType.INSTANCE);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public FileIncludeInfo[] getIncludeInfos(FileContent content)
 	{

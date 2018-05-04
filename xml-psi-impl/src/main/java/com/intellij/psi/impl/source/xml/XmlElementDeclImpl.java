@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.pom.Navigatable;
@@ -29,7 +31,6 @@ import com.intellij.psi.tree.ChildRoleBase;
 import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Mike
@@ -72,13 +73,13 @@ public class XmlElementDeclImpl extends XmlElementImpl implements XmlElementDecl
     return MetaRegistry.getMeta(this);
   }
 
-  public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
     XmlElementChangeUtil.doNameReplacement(this, getNameElement(), name);
 
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this,XmlElementDecl.class);
   }
@@ -138,7 +139,7 @@ public class XmlElementDeclImpl extends XmlElementImpl implements XmlElementDecl
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public PsiElement getNavigationElement() {
     return this;
   }

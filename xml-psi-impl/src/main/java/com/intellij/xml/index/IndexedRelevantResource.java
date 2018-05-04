@@ -20,8 +20,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -41,7 +41,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
   public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getResources(ID<K, V> indexId,
                                                                                            final K key,
                                                                                            @Nullable final Module module,
-                                                                                           @NotNull Project project,
+                                                                                           @Nonnull Project project,
                                                                                            @Nullable final GlobalSearchScope additionalScope) {
 
     if (project.isDefault()) return Collections.emptyList();
@@ -61,7 +61,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
 
   public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getAllResources(ID<K, V> indexId,
                                                                                               @Nullable final Module module,
-                                                                                              @NotNull Project project,
+                                                                                              @Nonnull Project project,
                                                                                               @Nullable NullableFunction<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser) {
     ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<IndexedRelevantResource<K, V>>();
     Collection<K> allKeys = FileBasedIndex.getInstance().getAllKeys(indexId, project);

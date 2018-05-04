@@ -22,8 +22,8 @@
  */
 package com.intellij.xml.refactoring;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.ide.TitledHandler;
 import com.intellij.lang.Language;
@@ -95,7 +95,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 		return editor.getSettings().isVariableInplaceRenameEnabled();
 	}
 
-	private static boolean isDeclarationOutOfProjectOrAbsent(@NotNull final Project project, final DataContext context)
+	private static boolean isDeclarationOutOfProjectOrAbsent(@Nonnull final Project project, final DataContext context)
 	{
 		final PsiElement[] elements = BaseRefactoringAction.getPsiElementArray(context);
 		return elements.length == 0 || elements.length == 1 && shouldBeRenamedInplace(project, elements);
@@ -150,7 +150,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 		return null;
 	}
 
-	private void invoke(@Nullable final Editor editor, @NotNull final PsiElement element, @Nullable final DataContext context)
+	private void invoke(@Nullable final Editor editor, @Nonnull final PsiElement element, @Nullable final DataContext context)
 	{
 		if(!isRenaming(context))
 		{
@@ -169,7 +169,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 		}
 	}
 
-	public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext)
+	public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext)
 	{
 		if(!isRenaming(dataContext))
 		{
@@ -182,7 +182,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 		invoke(editor, element, dataContext);
 	}
 
-	public void invoke(@NotNull final Project project, @NotNull final PsiElement[] elements, @Nullable final DataContext dataContext)
+	public void invoke(@Nonnull final Project project, @Nonnull final PsiElement[] elements, @Nullable final DataContext dataContext)
 	{
 		PsiElement element = elements.length == 1 ? elements[0] : null;
 		if(element == null)

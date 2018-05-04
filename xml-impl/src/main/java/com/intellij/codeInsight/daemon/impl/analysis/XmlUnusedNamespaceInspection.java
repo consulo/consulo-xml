@@ -15,9 +15,11 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.ImplicitUsageProvider;
@@ -57,9 +59,9 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
 
   private static final String NAMESPACE_LOCATION_IS_NEVER_USED = "Namespace location is never used";
 
-  @NotNull
+  @Nonnull
   @Override
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
 
     return new XmlElementVisitor() {
 
@@ -212,7 +214,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
     return reference.getRangeInElement().substring(reference.getElement().getText());
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.WARNING;
   }
@@ -222,20 +224,20 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   @Override
   public String getGroupDisplayName() {
     return XmlBundle.message("xml.inspections.group.name");
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   @Override
   public String getDisplayName() {
     return "Unused XML schema declaration";
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getShortName() {
     return "XmlUnusedNamespaceDeclaration";
@@ -253,17 +255,17 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
       myLocationFix = locationFix;
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
       return NAME;
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return XmlBundle.message("xml.inspections.group.name");
     }
 
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
       doFix(project, descriptor, true);
     }
 
@@ -363,7 +365,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
       super(namespace, true);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getName() {
       return NAME;

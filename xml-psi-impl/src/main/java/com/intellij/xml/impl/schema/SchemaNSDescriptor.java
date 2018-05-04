@@ -23,7 +23,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.HashMap;
 
@@ -42,7 +42,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
   @NonNls private static final String NAME_ATTR_NAME = "name";
 
   private static final Validator<XmlTag> ELEMENT_VALIDATOR = new Validator<XmlTag>() {
-    public void validate(@NotNull final XmlTag tag, @NotNull ValidationHost host) {
+    public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
       if (!isFromSchemaNs(tag)) return;
       final boolean hasRefAttribute = tag.getAttributeValue(REF_ATTR_NAME) != null;
 
@@ -95,7 +95,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
   };
 
   private static final Validator<XmlTag> ATTRIBUTE_VALIDATOR = new Validator<XmlTag>() {
-    public void validate(@NotNull final XmlTag tag, @NotNull ValidationHost host) {
+    public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
       if (!isFromSchemaNs(tag)) return;
 
       if (tag.getAttributeValue(REF_ATTR_NAME) == null && tag.getAttributeValue(NAME_ATTR_NAME) == null) {
@@ -123,23 +123,23 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
   };
 
   private static final XmlUtil.DuplicationInfoProvider<XmlTag> SCHEMA_ATTR_DUP_INFO_PROVIDER = new XmlUtil.DuplicationInfoProvider<XmlTag>() {
-    public String getName(@NotNull final XmlTag t) {
+    public String getName(@Nonnull final XmlTag t) {
       return t.getAttributeValue(NAME_ATTR_NAME);
     }
 
-    @NotNull
-    public String getNameKey(@NotNull final XmlTag t, @NotNull String name) {
+    @Nonnull
+    public String getNameKey(@Nonnull final XmlTag t, @Nonnull String name) {
       return name;
     }
 
-    @NotNull
-    public PsiElement getNodeForMessage(@NotNull final XmlTag t) {
+    @Nonnull
+    public PsiElement getNodeForMessage(@Nonnull final XmlTag t) {
       return t.getAttribute(NAME_ATTR_NAME, null).getValueElement();
     }
   };
 
   private static final Validator<XmlTag> ELEMENT_AND_ATTR_VALIDATOR = new Validator<XmlTag>() {
-    public void validate(@NotNull final XmlTag tag, @NotNull ValidationHost host) {
+    public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
       if (!isFromSchemaNs(tag)) return;
       final String nsPrefix = tag.getNamespacePrefix();
       final XmlTag[] attrDeclTags = tag.findSubTags((nsPrefix.length() > 0 ? nsPrefix + ":" : "") + "attribute");

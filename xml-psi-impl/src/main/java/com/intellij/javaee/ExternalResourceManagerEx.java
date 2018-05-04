@@ -15,9 +15,11 @@
  */
 package com.intellij.javaee;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.MultiMap;
@@ -37,9 +39,9 @@ public abstract class ExternalResourceManagerEx extends ExternalResourceManager
 		return (ExternalResourceManagerEx) getInstance();
 	}
 
-	public abstract void removeResource(String url, @NotNull Project project);
+	public abstract void removeResource(String url, @Nonnull Project project);
 
-	public abstract void addResource(@NonNls String url, @NonNls String location, @NotNull Project project);
+	public abstract void addResource(@NonNls String url, @NonNls String location, @Nonnull Project project);
 
 	public abstract String[] getAvailableUrls();
 
@@ -49,11 +51,11 @@ public abstract class ExternalResourceManagerEx extends ExternalResourceManager
 
 	public abstract void clearAllResources(Project project);
 
-	public abstract void addIgnoredResource(@NotNull String url);
+	public abstract void addIgnoredResource(@Nonnull String url);
 
-	public abstract void removeIgnoredResource(@NotNull String url);
+	public abstract void removeIgnoredResource(@Nonnull String url);
 
-	public abstract boolean isIgnoredResource(@NotNull String url);
+	public abstract boolean isIgnoredResource(@Nonnull String url);
 
 	public abstract String[] getIgnoredResources();
 
@@ -69,22 +71,22 @@ public abstract class ExternalResourceManagerEx extends ExternalResourceManager
 	public abstract String getUserResource(Project project, String url, String version);
 
 	@Nullable
-	public abstract String getStdResource(@NotNull String url, @Nullable String version);
+	public abstract String getStdResource(@Nonnull String url, @Nullable String version);
 
-	@NotNull
-	public abstract String getDefaultHtmlDoctype(@NotNull Project project);
+	@Nonnull
+	public abstract String getDefaultHtmlDoctype(@Nonnull Project project);
 
-	public abstract void setDefaultHtmlDoctype(@NotNull String defaultHtmlDoctype, @NotNull Project project);
+	public abstract void setDefaultHtmlDoctype(@Nonnull String defaultHtmlDoctype, @Nonnull Project project);
 
-	public abstract XMLSchemaVersion getXmlSchemaVersion(@NotNull Project project);
+	public abstract XMLSchemaVersion getXmlSchemaVersion(@Nonnull Project project);
 
-	public abstract void setXmlSchemaVersion(XMLSchemaVersion version, @NotNull Project project);
+	public abstract void setXmlSchemaVersion(XMLSchemaVersion version, @Nonnull Project project);
 
 	public abstract String getCatalogPropertiesFile();
 
 	public abstract void setCatalogPropertiesFile(@Nullable String filePath);
 
-	public abstract long getModificationCount(@NotNull Project project);
+	public abstract long getModificationCount(@Nonnull Project project);
 
 	public abstract MultiMap<String, String> getUrlsByNamespace(Project project);
 }

@@ -23,7 +23,7 @@ import javax.xml.transform.sax.SAXSource;
 
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.kohsuke.rngom.ast.builder.BuildException;
 import org.kohsuke.rngom.ast.builder.IncludedGrammar;
 import org.kohsuke.rngom.ast.builder.SchemaBuilder;
@@ -89,7 +89,7 @@ public class RngParser
 
 	private static final NotNullLazyValue<DatatypeLibraryFactory> DT_LIBRARY_FACTORY = new AtomicNotNullLazyValue<DatatypeLibraryFactory>()
 	{
-		@NotNull
+		@Nonnull
 		@Override
 		protected DatatypeLibraryFactory compute()
 		{

@@ -28,11 +28,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.SwingUtilities;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
@@ -163,7 +163,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Set<String> getRootsToWatch()
 	{
 		final File path = new File(getExternalResourcesPath());
@@ -186,7 +186,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 	}
 
 	@Override
-	protected void doInvoke(@NotNull final PsiFile file, final int offset, @NotNull final String uri, final Editor editor) throws IncorrectOperationException
+	protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException
 	{
 		final String url = findUrl(file, offset, uri);
 		final Project project = file.getProject();
@@ -194,7 +194,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 		ProgressManager.getInstance().run(new Task.Backgroundable(project, XmlBundle.message("fetching.resource.title"))
 		{
 			@Override
-			public void run(@NotNull ProgressIndicator indicator)
+			public void run(@Nonnull ProgressIndicator indicator)
 			{
 				while(true)
 				{
@@ -518,7 +518,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 		XmlUtil.processXmlElements(file, new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull PsiElement element)
+			public boolean execute(@Nonnull PsiElement element)
 			{
 				if(element instanceof XmlEntityDecl)
 				{
@@ -628,7 +628,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 			return HttpRequests.request(dtdUrl).accept("text/xml,application/xml,text/html,*/*").connect(new HttpRequests.RequestProcessor<FetchResult>()
 			{
 				@Override
-				public FetchResult process(@NotNull HttpRequests.Request request) throws IOException
+				public FetchResult process(@Nonnull HttpRequests.Request request) throws IOException
 				{
 					FetchResult result = new FetchResult();
 					result.bytes = request.readBytes(indicator);

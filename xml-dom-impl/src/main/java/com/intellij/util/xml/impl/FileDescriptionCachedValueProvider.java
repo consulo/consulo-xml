@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -95,7 +95,7 @@ class FileDescriptionCachedValueProvider<T extends DomElement> implements SemEle
 	}
 
 	@Nullable
-	private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents, @NotNull final XmlFileHeader rootTagName, @Nullable StringBuilder sb)
+	private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents, @Nonnull final XmlFileHeader rootTagName, @Nullable StringBuilder sb)
 	{
 		if(sb != null)
 		{

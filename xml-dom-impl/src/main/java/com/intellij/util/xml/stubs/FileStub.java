@@ -17,7 +17,8 @@ package com.intellij.util.xml.stubs;
 
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.stubs.ObjectStubSerializer;
 import com.intellij.psi.stubs.Stub;
 import com.intellij.util.io.StringRef;

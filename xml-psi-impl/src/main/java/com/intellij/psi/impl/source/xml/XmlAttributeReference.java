@@ -28,8 +28,8 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XmlAttributeReference implements PsiReference {
   private final NullableLazyValue<XmlAttributeDescriptor> myDescriptor = new NullableLazyValue<XmlAttributeDescriptor>() {
@@ -64,7 +64,7 @@ public class XmlAttributeReference implements PsiReference {
     return descriptor != null ? descriptor.getDeclaration() : null;
   }
 
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     return myAttribute.getName();
   }
@@ -82,7 +82,7 @@ public class XmlAttributeReference implements PsiReference {
     return myAttribute.setName(newName);
   }
 
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     if (element instanceof PsiMetaOwner) {
       final PsiMetaOwner owner = (PsiMetaOwner)element;
       if (owner.getMetaData() instanceof XmlElementDescriptor) {
@@ -96,7 +96,7 @@ public class XmlAttributeReference implements PsiReference {
     return myAttribute.getManager().areElementsEquivalent(element, resolve());
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     return ArrayUtil.EMPTY_OBJECT_ARRAY;  // moved to XmlCompletionContributor.addAttributeReferenceCompletionVariants()
   }

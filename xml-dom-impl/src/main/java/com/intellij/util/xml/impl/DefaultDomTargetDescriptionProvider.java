@@ -24,13 +24,13 @@ import com.intellij.usageView.UsageViewTypeLocation;
 import com.intellij.usageView.UsageViewLongNameLocation;
 import com.intellij.util.xml.*;
 import com.intellij.codeInsight.highlighting.HighlightUsagesDescriptionLocation;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public class DefaultDomTargetDescriptionProvider extends PomDescriptionProvider {
-  public String getElementDescription(@NotNull PomTarget element, @NotNull ElementDescriptionLocation location) {
+  public String getElementDescription(@Nonnull PomTarget element, @Nonnull ElementDescriptionLocation location) {
     if (!(element instanceof DomTarget)) return null;
 
     final DomTarget target = (DomTarget)element;

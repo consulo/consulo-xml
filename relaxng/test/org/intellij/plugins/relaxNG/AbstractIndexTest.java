@@ -16,9 +16,10 @@
 
 package org.intellij.plugins.relaxNG;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture;
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
-import org.jetbrains.annotations.NotNull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -28,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractIndexTest extends HighlightingTestBase {
 
   @Override
-  protected final CodeInsightTestFixture createFixture(@NotNull IdeaTestFixtureFactory factory) {
+  protected final CodeInsightTestFixture createFixture(@Nonnull IdeaTestFixtureFactory factory) {
     return createContentFixture(factory);
   }
 }

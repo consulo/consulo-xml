@@ -34,7 +34,7 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -51,8 +51,8 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
     return true;
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override public void visitXmlTag(final XmlTag tag) {
         if (!isTagWithEmptyEndNotAllowed(tag)) {
@@ -85,29 +85,29 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
            language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.HTML_INSPECTIONS;
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("html.inspections.check.empty.tag");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return "CheckEmptyScriptTag";
   }
 
   private static class MyLocalQuickFix implements LocalQuickFix {
-    @NotNull
+    @Nonnull
     public String getName() {
       return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
     }
 
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
       final XmlTag tag = (XmlTag)descriptor.getPsiElement();
       if (tag == null) return;
       final PsiFile psiFile = tag.getContainingFile();
@@ -124,7 +124,7 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
     }
 
     //to appear in "Apply Fix" statement when multiple Quick Fixes exist
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return getName();
     }

@@ -6,8 +6,8 @@ import com.intellij.psi.codeStyle.arrangement.DefaultArrangementEntry;
 import com.intellij.psi.codeStyle.arrangement.NameAwareArrangementEntry;
 import com.intellij.psi.codeStyle.arrangement.TypeAwareArrangementEntry;
 import com.intellij.psi.codeStyle.arrangement.std.ArrangementSettingsToken;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
@@ -22,8 +22,8 @@ public class XmlElementArrangementEntry extends DefaultArrangementEntry
   private final String                   myName;
 
   public XmlElementArrangementEntry(@Nullable ArrangementEntry parent,
-                                    @NotNull TextRange range,
-                                    @NotNull ArrangementSettingsToken type,
+                                    @Nonnull TextRange range,
+                                    @Nonnull ArrangementSettingsToken type,
                                     @Nullable String name,
                                     boolean canBeMatched)
   {
@@ -38,7 +38,7 @@ public class XmlElementArrangementEntry extends DefaultArrangementEntry
     return myName;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Set<ArrangementSettingsToken> getTypes() {
     return Collections.singleton(myType);

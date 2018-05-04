@@ -21,7 +21,7 @@ import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +34,15 @@ public class DomElementPattern<T extends DomElement,Self extends DomElementPatte
     super(aClass);
   }
 
-  protected DomElementPattern(@NotNull final InitialPatternCondition<T> condition) {
+  protected DomElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
     super(condition);
   }
 
-  protected DomElement getParent(@NotNull DomElement t) {
+  protected DomElement getParent(@Nonnull DomElement t) {
     return t.getParent();
   }
 
-  protected DomElement[] getChildren(@NotNull final DomElement domElement) {
+  protected DomElement[] getChildren(@Nonnull final DomElement domElement) {
     final List<DomElement> children = new ArrayList<DomElement>();
     domElement.acceptChildren(new DomElementVisitor() {
       public void visitDomElement(final DomElement element) {
@@ -59,9 +59,9 @@ public class DomElementPattern<T extends DomElement,Self extends DomElementPatte
 
   }
 
-  public Self withChild(@NonNls @NotNull final String localName, final ElementPattern pattern) {
+  public Self withChild(@NonNls @Nonnull final String localName, final ElementPattern pattern) {
     return with(new PatternCondition<T>("withChild") {
-      public boolean accepts(@NotNull final T t, final ProcessingContext context) {
+      public boolean accepts(@Nonnull final T t, final ProcessingContext context) {
         for (final AbstractDomChildrenDescription description : t.getGenericInfo().getChildrenDescriptions()) {
           if (!(description instanceof DomChildrenDescription) || localName.equals(((DomChildrenDescription)description).getXmlElementName())) {
             for (final DomElement element : description.getValues(t)) {

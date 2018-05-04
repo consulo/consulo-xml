@@ -19,13 +19,15 @@ package org.intellij.plugins.relaxNG.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -66,7 +68,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 
 	@Nullable
 	@Override
-	public MyValidationMessageConsumer collectInformation(@NotNull final PsiFile file)
+	public MyValidationMessageConsumer collectInformation(@Nonnull final PsiFile file)
 	{
 		final FileType type = file.getFileType();
 		if(type != XmlFileType.INSTANCE && type != RncFileType.getInstance())
@@ -128,7 +130,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 	}
 
 	@Override
-	public void apply(@NotNull PsiFile file, MyValidationMessageConsumer annotationResult, @NotNull AnnotationHolder holder)
+	public void apply(@Nonnull PsiFile file, MyValidationMessageConsumer annotationResult, @Nonnull AnnotationHolder holder)
 	{
 		annotationResult.apply(holder);
 	}

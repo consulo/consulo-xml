@@ -22,7 +22,7 @@ import com.intellij.util.Function;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * This SHOULD NOT be subclassed!
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 public final class DomStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {
 
   @Override
-  public StructureViewBuilder createStructureViewBuilder(@NotNull XmlFile file) {
+  public StructureViewBuilder createStructureViewBuilder(@Nonnull XmlFile file) {
     if (DomManager.getDomManager(file.getProject()).getDomFileDescription(file) != null) {
       return new DomStructureViewBuilder(file, DESCRIPTOR);
     }

@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -25,16 +27,15 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
  */
 public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool {
 
-  @NotNull
+  @Nonnull
   @Override
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override
       public void visitXmlAttributeValue(final XmlAttributeValue value) {

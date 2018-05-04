@@ -15,20 +15,20 @@
  */
 package com.intellij.refactoring.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.ElementDescriptionLocation;
 import com.intellij.psi.ElementDescriptionProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author yole
  */
 public class XmlNonCodeSearchElementDescriptionProvider implements ElementDescriptionProvider {
-  public String getElementDescription(@NotNull final PsiElement element, @NotNull final ElementDescriptionLocation location) {
+  public String getElementDescription(@Nonnull final PsiElement element, @Nonnull final ElementDescriptionLocation location) {
     if (!(location instanceof NonCodeSearchDescriptionLocation)) return null;
     final NonCodeSearchDescriptionLocation ncdLocation = (NonCodeSearchDescriptionLocation)location;
     if (ncdLocation.isNonJava()) return null;

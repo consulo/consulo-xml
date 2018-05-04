@@ -16,7 +16,7 @@
 package com.intellij.xml.util;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -36,7 +36,7 @@ public class XmlIconDescriptorUpdater implements IconDescriptorUpdater
   private static final String WSDL_FILE_EXTENSION = "wsdl";
 
   @Override
-  public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int flags) {
+  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
     if (element instanceof XmlFile) {
       final VirtualFile vf = ((XmlFile)element).getVirtualFile();
       if (vf != null) {

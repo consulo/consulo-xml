@@ -17,7 +17,7 @@
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import org.intellij.plugins.relaxNG.model.Ref;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.

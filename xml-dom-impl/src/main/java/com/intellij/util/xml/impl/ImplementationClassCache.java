@@ -20,8 +20,9 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.Disposer;
@@ -46,7 +47,7 @@ class ImplementationClassCache {
 
   private final MultiMap<String, DomImplementationClassEP> myImplementationClasses = new MultiMap<String, DomImplementationClassEP>();
   private final SofterCache<Class, Class> myCache = SofterCache.create(new NotNullFunction<Class, Class>() {
-    @NotNull
+    @Nonnull
     @Override
     public Class fun(Class dom) {
       return calcImplementationClass(dom);

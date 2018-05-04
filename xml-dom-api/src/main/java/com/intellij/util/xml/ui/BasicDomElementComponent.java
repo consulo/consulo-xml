@@ -31,7 +31,7 @@ import com.intellij.util.xml.reflect.DomChildrenDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.lang.reflect.Field;
@@ -62,7 +62,7 @@ public abstract class BasicDomElementComponent<T extends DomElement> extends Abs
     if (domElement == null) return;
 
     DomElementAnnotationsManager.getInstance(domElement.getManager().getProject()).addHighlightingListener(new DomElementAnnotationsManager.DomHighlightingListener() {
-      public void highlightingFinished(@NotNull final DomFileElement element) {
+      public void highlightingFinished(@Nonnull final DomFileElement element) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
           public void run() {
             if (getComponent().isShowing() && element.isValid()) {

@@ -19,8 +19,9 @@ package org.intellij.plugins.relaxNG.compact;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.compact.lexer.CompactSyntaxLexerAdapter;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -35,7 +36,7 @@ import com.intellij.psi.tree.IElementType;
  */
 public class RncHighlighter extends SyntaxHighlighterBase {
   @Override
-  @NotNull
+  @Nonnull
   public Lexer getHighlightingLexer() {
     return new CompactSyntaxLexerAdapter();
   }
@@ -70,7 +71,7 @@ public class RncHighlighter extends SyntaxHighlighterBase {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
     return pack(ourMap1.get(tokenType));
   }

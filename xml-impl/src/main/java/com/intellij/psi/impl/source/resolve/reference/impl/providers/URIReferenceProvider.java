@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -62,8 +63,8 @@ public class URIReferenceProvider extends PsiReferenceProvider
 	private static final String NAMESPACE_ATTR_NAME = "namespace";
 
 	@Override
-	@NotNull
-	public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context)
+	@Nonnull
+	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context)
 	{
 		final String text = element.getText();
 		String s = StringUtil.unquoteString(text);

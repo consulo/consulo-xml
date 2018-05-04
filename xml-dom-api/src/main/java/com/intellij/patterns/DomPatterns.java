@@ -23,7 +23,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomTarget;
 import com.intellij.pom.PomTargetPsiElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
@@ -52,7 +52,7 @@ public class DomPatterns {
 
   public static XmlElementPattern.Capture withDom(final ElementPattern<? extends DomElement> pattern) {
     return new XmlElementPattern.Capture().with(new PatternCondition<XmlElement>("tagWithDom") {
-      public boolean accepts(@NotNull final XmlElement xmlElement, final ProcessingContext context) {
+      public boolean accepts(@Nonnull final XmlElement xmlElement, final ProcessingContext context) {
         final DomManager manager = DomManager.getDomManager(xmlElement.getProject());
         if (xmlElement instanceof XmlAttribute) {
           return pattern.getCondition().accepts(manager.getDomElement((XmlAttribute)xmlElement), context);
@@ -77,7 +77,7 @@ public class DomPatterns {
   public static ElementPattern<DomTarget> withDomTarget(final ElementPattern<? extends DomElement> pattern) {
     return new ObjectPattern.Capture<DomTarget>(DomTarget.class).with(new PatternCondition<DomTarget>("withDomTarget") {
       @Override
-      public boolean accepts(@NotNull final DomTarget target, final ProcessingContext context) {
+      public boolean accepts(@Nonnull final DomTarget target, final ProcessingContext context) {
         return pattern.accepts(target.getDomElement(), context);
       }
     });

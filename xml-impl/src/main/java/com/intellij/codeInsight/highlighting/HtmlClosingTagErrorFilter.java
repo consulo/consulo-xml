@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiErrorElement;
@@ -22,14 +24,13 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
  */
 public class HtmlClosingTagErrorFilter extends HighlightErrorFilter {
 
-  public boolean shouldHighlightErrorElement(@NotNull final PsiErrorElement element) {
+  public boolean shouldHighlightErrorElement(@Nonnull final PsiErrorElement element) {
     final PsiFile psiFile = element.getContainingFile();
     if (psiFile == null || (psiFile.getViewProvider().getBaseLanguage() != HTMLLanguage.INSTANCE
                             && HTMLLanguage.INSTANCE != element.getLanguage())) return true;

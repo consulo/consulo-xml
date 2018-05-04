@@ -25,8 +25,8 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Collection;
@@ -38,13 +38,13 @@ import java.util.Collections;
  */
 public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuilder<T> {
   public static final NotNullFunction<DomElement,Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR = new NotNullFunction<DomElement, Collection<? extends PsiElement>>() {
-    @NotNull
+    @Nonnull
     public Collection<? extends PsiElement> fun(final DomElement o) {
       return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
     }
   };
   public static final NotNullFunction<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER = new NotNullFunction<DomElement, Collection<? extends GotoRelatedItem>>() {
-    @NotNull
+    @Nonnull
     @Override
     public Collection<? extends GotoRelatedItem> fun(DomElement dom) {
       if (dom.getXmlElement() != null) {
@@ -54,33 +54,33 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
     }
   };
 
-  public static DomNavigationGutterIconBuilder<PsiElement> create(@NotNull final Icon icon) {
+  public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull final Icon icon) {
     return create(icon, DEFAULT_PSI_CONVERTOR, PSI_GOTO_RELATED_ITEM_PROVIDER);
   }
 
-  public static <T> DomNavigationGutterIconBuilder<T> create(@NotNull final Icon icon,
-                                                          @NotNull NotNullFunction<T, Collection<? extends PsiElement>> converter) {
+  public static <T> DomNavigationGutterIconBuilder<T> create(@Nonnull final Icon icon,
+                                                          @Nonnull NotNullFunction<T, Collection<? extends PsiElement>> converter) {
     return create(icon, converter, null);
   }
 
-  public static <T> DomNavigationGutterIconBuilder<T> create(@NotNull final Icon icon,
-                                                          @NotNull NotNullFunction<T, Collection<? extends PsiElement>> converter,
+  public static <T> DomNavigationGutterIconBuilder<T> create(@Nonnull final Icon icon,
+                                                          @Nonnull NotNullFunction<T, Collection<? extends PsiElement>> converter,
                                                           final @Nullable NotNullFunction<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider) {
     return new DomNavigationGutterIconBuilder<T>(icon, converter, gotoRelatedItemProvider);
   }
 
-  protected DomNavigationGutterIconBuilder(@NotNull Icon icon, @NotNull NotNullFunction<T, Collection<? extends PsiElement>> converter) {
+  protected DomNavigationGutterIconBuilder(@Nonnull Icon icon, @Nonnull NotNullFunction<T, Collection<? extends PsiElement>> converter) {
     super(icon, converter);
   }
 
-  protected DomNavigationGutterIconBuilder(@NotNull Icon icon,
-                                        @NotNull NotNullFunction<T, Collection<? extends PsiElement>> converter,
+  protected DomNavigationGutterIconBuilder(@Nonnull Icon icon,
+                                        @Nonnull NotNullFunction<T, Collection<? extends PsiElement>> converter,
                                         @Nullable NotNullFunction<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider) {
     super(icon, converter, gotoRelatedItemProvider);
   }
 
   @Nullable
-  public Annotation install(@NotNull DomElementAnnotationHolder holder, @Nullable DomElement element) {
+  public Annotation install(@Nonnull DomElementAnnotationHolder holder, @Nullable DomElement element) {
     if (!myLazy && myTargets.getValue().isEmpty() || element == null) return null;
     return doInstall(holder.createAnnotation(element, HighlightSeverity.INFORMATION, null), element.getManager().getProject());
   }

@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElementVisitor;
@@ -27,7 +29,6 @@ import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlElementContentGroup;
 import com.intellij.psi.xml.XmlElementContentSpec;
 import com.intellij.psi.xml.XmlElementType;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Mike
@@ -78,12 +79,12 @@ public class XmlElementContentSpecImpl extends XmlElementImpl implements XmlElem
     return (XmlElementContentGroup)findElementByTokenType(XML_ELEMENT_CONTENT_GROUP);
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this,XmlElementContentSpec.class);
   }
 
-  public void accept(@NotNull final PsiElementVisitor visitor) {
+  public void accept(@Nonnull final PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlElement(this);
     }

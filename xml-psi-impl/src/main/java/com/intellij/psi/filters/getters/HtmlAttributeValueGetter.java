@@ -21,8 +21,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.nio.charset.Charset;
 
@@ -100,7 +100,7 @@ public class HtmlAttributeValueGetter extends XmlAttributeValueGetter {
   }
 
   @Nullable
-  private XmlAttribute getAttribute(@NotNull XmlTag tag, @NotNull String attributeName) {
+  private XmlAttribute getAttribute(@Nonnull XmlTag tag, @Nonnull String attributeName) {
     if (myCaseSensitive) {
       return tag.getAttribute(attributeName);
     }

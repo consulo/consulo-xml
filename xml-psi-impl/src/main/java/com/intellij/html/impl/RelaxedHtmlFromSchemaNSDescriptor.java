@@ -15,8 +15,9 @@
  */
 package com.intellij.html.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
@@ -30,7 +31,7 @@ import com.intellij.xml.util.XmlUtil;
 public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor
 {
 	@Override
-	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
+	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
 	{
 		XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
@@ -50,7 +51,7 @@ public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl imple
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc)
 	{
 		return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));

@@ -15,15 +15,15 @@
  */
 package com.intellij.util.xml.ui;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
  */
 public class CommittableUtil {
 
-  public void commit(@NotNull Committable committable) {
+  public void commit(@Nonnull Committable committable) {
     committable.commit();
   }
 

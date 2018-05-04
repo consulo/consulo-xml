@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtilCore;
 import com.intellij.lang.HtmlScriptContentProvider;
 import com.intellij.lang.Language;
@@ -354,7 +354,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	}
 
 	@Override
-	public void start(@NotNull final CharSequence buffer, final int startOffset, final int endOffset, final int initialState)
+	public void start(@Nonnull final CharSequence buffer, final int startOffset, final int endOffset, final int initialState)
 	{
 		initState(initialState);
 		super.start(buffer, startOffset, endOffset, initialState & BASE_STATE_MASK);

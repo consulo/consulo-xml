@@ -18,7 +18,7 @@ package com.intellij.psi.impl.source.xml;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author yole

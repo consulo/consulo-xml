@@ -22,8 +22,9 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -69,8 +70,8 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
     return true;
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override public void visitXmlTag(final XmlTag tag) {
         if (SCRIPT_TAG_NAME.equals(tag.getName()) ||
@@ -136,17 +137,17 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
     };
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.HTML_INSPECTIONS;
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("html.inspections.check.valid.script.tag");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return "CheckValidXmlInScriptTagBody";
@@ -163,7 +164,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
       this.startInElement = startInElement;
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
       final String character = getXmlCharacter();
 
@@ -175,12 +176,12 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
       );
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return getName();
     }
 
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor problemDescriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor) {
       if (!FileModificationService.getInstance().prepareFileForWrite(psiFile)) return;
       final TextRange range = psiElement.getTextRange();
       OpenFileDescriptor descriptor = new OpenFileDescriptor(
@@ -208,7 +209,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
     }
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }

@@ -18,9 +18,11 @@ package com.intellij.xml.util.documentation;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.Language;
 import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.lang.documentation.DocumentationUtil;
@@ -210,7 +212,7 @@ public class XmlDocumentationProvider implements DocumentationProvider {
     return enumerationTag.get();
   }
 
-  static String generateHtmlAdditionalDocTemplate(@NotNull PsiElement element) {
+  static String generateHtmlAdditionalDocTemplate(@Nonnull PsiElement element) {
     StringBuilder buf = new StringBuilder();
     final PsiFile containingFile = element.getContainingFile();
     if (containingFile != null) {
@@ -446,7 +448,7 @@ public class XmlDocumentationProvider implements DocumentationProvider {
     return null;
   }
 
-  public static PsiElement findDeclWithName(final String name, final @NotNull PsiElement element) {
+  public static PsiElement findDeclWithName(final String name, final @Nonnull PsiElement element) {
     final XmlFile containingXmlFile = XmlUtil.getContainingFile(element);
     final XmlTag nearestTag = PsiTreeUtil.getParentOfType(element, XmlTag.class, false);
     final XmlFile xmlFile = nearestTag != null? XmlUtil.findDescriptorFile(nearestTag, containingXmlFile):containingXmlFile;
@@ -457,7 +459,7 @@ public class XmlDocumentationProvider implements DocumentationProvider {
       XmlUtil.processXmlElements(
         xmlFile,
         new PsiElementProcessor() {
-          public boolean execute(@NotNull final PsiElement element) {
+          public boolean execute(@Nonnull final PsiElement element) {
             if (element instanceof XmlEntityDecl) {
               final XmlEntityDecl entityDecl = (XmlEntityDecl)element;
               if (entityDecl.isInternalReference() && name.equals(entityDecl.getName())) {
@@ -494,7 +496,7 @@ public class XmlDocumentationProvider implements DocumentationProvider {
     private @NonNls static final String CDATA_PREFIX = "<![CDATA[";
     private @NonNls static final String CDATA_SUFFIX = "]]>";
 
-    public boolean execute(@NotNull PsiElement element) {
+    public boolean execute(@Nonnull PsiElement element) {
       if (element instanceof XmlTag &&
           ((XmlTag)element).getLocalName().equals(DOCUMENTATION_ELEMENT_LOCAL_NAME)
       ) {

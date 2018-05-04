@@ -17,7 +17,7 @@ package org.intellij.plugins.relaxNG.model.resolve;
 
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
@@ -48,7 +48,7 @@ public class RelaxIncludeIndex {
     return processRelatedFiles(file, files, processor);
   }
 
-  public static boolean processBackwardDependencies(@NotNull XmlFile file, PsiElementProcessor<XmlFile> processor) {
+  public static boolean processBackwardDependencies(@Nonnull XmlFile file, PsiElementProcessor<XmlFile> processor) {
     VirtualFile virtualFile = file.getVirtualFile();
     if (virtualFile == null) {
       return processor.execute(file);

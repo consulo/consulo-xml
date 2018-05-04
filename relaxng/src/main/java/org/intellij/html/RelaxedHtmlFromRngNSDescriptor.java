@@ -17,9 +17,10 @@ package org.intellij.html;
 
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.xml.XmlDocument;
@@ -37,7 +38,7 @@ public class RelaxedHtmlFromRngNSDescriptor extends RngNsDescriptor implements R
   private static final Logger LOG = Logger.getInstance("#org.intellij.html.RelaxedHtmlFromRngNSDescriptor");
 
   @Override
-  public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag) {
+  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
     XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
     if (LOG.isDebugEnabled()) {
@@ -60,12 +61,12 @@ public class RelaxedHtmlFromRngNSDescriptor extends RngNsDescriptor implements R
   }
 
   @Override
-  protected XmlElementDescriptor initDescriptor(@NotNull XmlElementDescriptor descriptor) {
+  protected XmlElementDescriptor initDescriptor(@Nonnull XmlElementDescriptor descriptor) {
     return new RelaxedHtmlFromRngElementDescriptor(descriptor);
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
     final XmlElementDescriptor[] descriptors = super.getRootElementsDescriptors(doc);
     /**

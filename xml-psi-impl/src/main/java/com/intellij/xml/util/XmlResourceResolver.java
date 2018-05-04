@@ -29,7 +29,7 @@ import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;

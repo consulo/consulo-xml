@@ -16,6 +16,8 @@
 
 package org.intellij.plugins.relaxNG.inspections;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
@@ -25,7 +27,6 @@ import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -64,21 +65,21 @@ public class UnusedDefineInspection extends BaseInspection {
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return "Unused Define";
   }
 
   @Override
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "UnusedDefine";
   }
 
   @Override
-  @NotNull
-  public RncElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public RncElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
     return new MyElementVisitor(holder);
   }
 
@@ -211,13 +212,13 @@ public class UnusedDefineInspection extends BaseInspection {
       }
 
       @Override
-      @NotNull
+      @Nonnull
       public String getFamilyName() {
         return "Remove define";
       }
 
       @Override
-      public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+      public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
         try {
           if (myTag.isValid()) {
             myTag.delete();

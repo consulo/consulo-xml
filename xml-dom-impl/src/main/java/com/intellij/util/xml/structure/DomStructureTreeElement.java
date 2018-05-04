@@ -21,8 +21,8 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.Function;
 import com.intellij.util.xml.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class DomStructureTreeElement implements StructureViewTreeElement, ItemPr
   private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
   private final DomElementNavigationProvider myNavigationProvider;
 
-  public DomStructureTreeElement(@NotNull final DomElement element,
-                                 @NotNull final Function<DomElement,DomService.StructureViewMode> descriptor,
+  public DomStructureTreeElement(@Nonnull final DomElement element,
+                                 @Nonnull final Function<DomElement,DomService.StructureViewMode> descriptor,
                                  @Nullable final DomElementNavigationProvider navigationProvider) {
     myElement = element;
     myDescriptor = descriptor;

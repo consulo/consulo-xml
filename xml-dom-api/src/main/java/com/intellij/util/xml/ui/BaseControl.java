@@ -22,8 +22,8 @@ import com.intellij.openapi.util.Comparing;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.util.EventDispatcher;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;

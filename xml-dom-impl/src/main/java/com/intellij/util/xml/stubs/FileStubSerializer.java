@@ -17,7 +17,8 @@ package com.intellij.util.xml.stubs;
 
 import java.io.IOException;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.ObjectStubSerializer;
 import com.intellij.psi.stubs.Stub;
@@ -34,7 +35,7 @@ public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 
 	public static FileStubSerializer INSTANCE = new FileStubSerializer();
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getExternalId()
 	{
@@ -42,7 +43,7 @@ public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 	}
 
 	@Override
-	public void serialize(@NotNull FileStub stub, @NotNull StubOutputStream dataStream) throws IOException
+	public void serialize(@Nonnull FileStub stub, @Nonnull StubOutputStream dataStream) throws IOException
 	{
 		XmlFileHeader header = stub.getHeader();
 		dataStream.writeName(header.getRootTagLocalName());
@@ -51,15 +52,15 @@ public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 		dataStream.writeName(header.getSystemId());
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public FileStub deserialize(@NotNull StubInputStream dataStream, Stub parentStub) throws IOException
+	public FileStub deserialize(@Nonnull StubInputStream dataStream, Stub parentStub) throws IOException
 	{
 		return new FileStub(dataStream.readName(), dataStream.readName(), dataStream.readName(), dataStream.readName());
 	}
 
 	@Override
-	public void indexStub(@NotNull FileStub stub, @NotNull IndexSink sink)
+	public void indexStub(@Nonnull FileStub stub, @Nonnull IndexSink sink)
 	{
 	}
 

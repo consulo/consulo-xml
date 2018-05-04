@@ -16,6 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -24,7 +26,6 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncInclude;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,7 +38,7 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState substitutor, PsiElement lastParent, @NotNull PsiElement place) {
+  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
     final PsiElement[] children = getChildren();
     for (PsiElement child : children) {
       if (!processor.execute(child, substitutor)) {
@@ -48,7 +49,7 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitInclude(this);
   }
 
@@ -63,7 +64,7 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public RncDefine[] getOverrides() {
     // TODO: DIVs?
     return findChildrenByClass(RncDefine.class);

@@ -16,8 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.intention.IntentionAction;
@@ -47,7 +47,7 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 	private final String myTargetName;
 	private final String mySourceName;
 
-	RenameTagBeginOrEndIntentionAction(@NotNull final String targetName, @NotNull final String sourceName, final boolean start)
+	RenameTagBeginOrEndIntentionAction(@Nonnull final String targetName, @Nonnull final String sourceName, final boolean start)
 	{
 		myTargetName = targetName;
 		mySourceName = sourceName;
@@ -55,27 +55,27 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName()
 	{
 		return getName();
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getText()
 	{
 		return getName();
 	}
 
 	@Override
-	public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file)
+	public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file)
 	{
 		return true;
 	}
 
 	@Override
-	public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException
+	public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException
 	{
 		final int offset = editor.getCaretModel().getOffset();
 		PsiElement psiElement = file.findElementAt(offset);
@@ -168,7 +168,7 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 		return true;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return myStart ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName) : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName, myTargetName);

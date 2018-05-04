@@ -21,8 +21,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,7 +203,7 @@ public class XmlTagBlock extends AbstractXmlBlock{
     return createSyntheticBlock(localResult, null);
   }
 
-  public Spacing getSpacing(Block child1, @NotNull Block child2) {
+  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
     if (isPreserveSpace()) return Spacing.getReadOnlySpacing();
     if(child1 instanceof AbstractSyntheticBlock && child2 instanceof AbstractSyntheticBlock) {
       return getSpacing((AbstractSyntheticBlock)child1, (AbstractSyntheticBlock)child2);
@@ -304,7 +304,7 @@ public class XmlTagBlock extends AbstractXmlBlock{
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (isAfterAttribute(newChildIndex)) {
       List<Block> subBlocks = getSubBlocks();

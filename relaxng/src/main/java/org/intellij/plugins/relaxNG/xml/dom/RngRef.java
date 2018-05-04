@@ -19,6 +19,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Referencing;
@@ -26,14 +28,13 @@ import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Ref;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:refElemType interface.
  */
 public interface RngRef extends RngDomElement, Ref<Define, XmlElement> {
 
-  @NotNull
+  @Nonnull
   @Required
   @Referencing(RngReferenceConverter.class)
   GenericAttributeValue<String> getName();

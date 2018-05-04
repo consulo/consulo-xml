@@ -16,8 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.model.Include;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,6 +27,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface RncInclude extends RncFileReference, Include<RncElement, RncDefine> {
   @Override
-  @NotNull
+  @Nonnull
   RncDefine[] getOverrides();
 }

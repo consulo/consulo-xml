@@ -18,8 +18,8 @@ package com.intellij.ide.browsers.impl;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.browsers.OpenInBrowserRequest;
 import com.intellij.ide.browsers.WebBrowserService;
 import com.intellij.ide.browsers.WebBrowserUrlProvider;
@@ -35,9 +35,9 @@ import com.intellij.xml.util.HtmlUtil;
 
 public class WebBrowserServiceImpl extends WebBrowserService
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public Collection<Url> getUrlsToOpen(@NotNull OpenInBrowserRequest request, boolean preferLocalUrl) throws WebBrowserUrlProvider.BrowserException
+	public Collection<Url> getUrlsToOpen(@Nonnull OpenInBrowserRequest request, boolean preferLocalUrl) throws WebBrowserUrlProvider.BrowserException
 	{
 		VirtualFile virtualFile = request.getVirtualFile();
 		if(virtualFile instanceof HttpVirtualFile)
@@ -77,7 +77,7 @@ public class WebBrowserServiceImpl extends WebBrowserService
 	}
 
 	@Nullable
-	public static WebBrowserUrlProvider getProvider(@NotNull OpenInBrowserRequest request)
+	public static WebBrowserUrlProvider getProvider(@Nonnull OpenInBrowserRequest request)
 	{
 		DumbService dumbService = DumbService.getInstance(request.getProject());
 		for(WebBrowserUrlProvider urlProvider : WebBrowserUrlProvider.EP_NAME.getExtensions())
@@ -91,7 +91,7 @@ public class WebBrowserServiceImpl extends WebBrowserService
 	}
 
 	@Nullable
-	public static Url getUrlForContext(@NotNull PsiElement sourceElement)
+	public static Url getUrlForContext(@Nonnull PsiElement sourceElement)
 	{
 		Url url;
 		try

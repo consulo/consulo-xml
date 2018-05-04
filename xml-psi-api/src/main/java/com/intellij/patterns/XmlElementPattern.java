@@ -19,8 +19,8 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlEntityRef;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.util.ProcessingContext;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -30,7 +30,7 @@ public class XmlElementPattern<T extends XmlElement,Self extends XmlElementPatte
     super(aClass);
   }
 
-  public XmlElementPattern(@NotNull final InitialPatternCondition<T> condition) {
+  public XmlElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
     super(condition);
   }
 

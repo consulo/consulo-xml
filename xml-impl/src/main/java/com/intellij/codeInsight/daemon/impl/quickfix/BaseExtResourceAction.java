@@ -15,6 +15,9 @@
  */
 package com.intellij.codeInsight.daemon.impl.quickfix;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -26,15 +29,13 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReferenc
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author mike
  */
 abstract class BaseExtResourceAction extends BaseIntentionAction {
 
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     if (!(file instanceof XmlFile)) return false;
 
     int offset = editor.getCaretModel().getOffset();
@@ -51,12 +52,12 @@ abstract class BaseExtResourceAction extends BaseIntentionAction {
 
   protected abstract String getQuickFixKeyId();
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlBundle.message(getQuickFixKeyId());
   }
 
-  public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
     int offset = editor.getCaretModel().getOffset();
 
     PsiDocumentManager.getInstance(project).commitAllDocuments();
@@ -67,7 +68,7 @@ abstract class BaseExtResourceAction extends BaseIntentionAction {
     doInvoke(file, offset, uri, editor);
   }
 
-  protected abstract void doInvoke(final @NotNull PsiFile file, final int offset, final @NotNull String uri, final Editor editor)
+  protected abstract void doInvoke(final @Nonnull PsiFile file, final int offset, final @Nonnull String uri, final Editor editor)
     throws IncorrectOperationException;
 
   @Nullable

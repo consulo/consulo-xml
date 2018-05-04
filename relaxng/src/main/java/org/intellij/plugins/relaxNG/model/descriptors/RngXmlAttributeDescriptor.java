@@ -24,18 +24,18 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
 import gnu.trove.THashSet;
 import gnu.trove.TObjectHashingStrategy;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import org.kohsuke.rngom.digested.DAttributePattern;
 import org.xml.sax.Locator;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
 
@@ -215,7 +215,7 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
   }
 
   @Override
-  public PsiReference[] getValueReferences(final XmlElement element, @NotNull String text) {
+  public PsiReference[] getValueReferences(final XmlElement element, @Nonnull String text) {
     return new PsiReference[] { new XmlEnumeratedValueReference(element, this) {
       @Nullable
       @Override

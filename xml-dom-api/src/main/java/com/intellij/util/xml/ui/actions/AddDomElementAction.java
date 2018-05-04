@@ -21,11 +21,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.ActionButtonComponent;
 import com.intellij.openapi.actionSystem.ActionGroup;
@@ -122,7 +122,7 @@ public abstract class AddDomElementAction extends AnAction {
     }
   }
 
-  @NotNull
+  @Nonnull
   public AnAction[] getChildren(@Nullable AnActionEvent e) {
     Project project = e == null ? null : e.getData(CommonDataKeys.PROJECT);
     if (project == null) return AnAction.EMPTY_ARRAY;
@@ -147,7 +147,7 @@ public abstract class AddDomElementAction extends AnAction {
     }
     if (actions.size() > 1 && showAsPopup()) {
       ActionGroup group = new ActionGroup() {
-        @NotNull
+        @Nonnull
         public AnAction[] getChildren(@Nullable AnActionEvent e) {
           return actions.toArray(new AnAction[actions.size()]);
         }
@@ -170,7 +170,7 @@ public abstract class AddDomElementAction extends AnAction {
                                                  final Type type,
                                                  final DomCollectionChildDescription description);
 
-  @NotNull
+  @Nonnull
   protected abstract DomCollectionChildDescription[] getDomCollectionChildDescriptions(final AnActionEvent e);
 
   @Nullable

@@ -18,9 +18,11 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -117,7 +119,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getCanonicalText()
 		{
 			String text = myElement.getText();
@@ -131,7 +133,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+		public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 		{
 			return null;
 		}
@@ -143,7 +145,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Object[] getVariants()
 		{
 			return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -157,8 +159,8 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 	}
 
 	@Override
-	@NotNull
-	public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context)
+	@Nonnull
+	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context)
 	{
 		final PsiElement parent = element.getParent();
 		if(!(parent instanceof XmlAttribute))
@@ -211,12 +213,12 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(@NotNull final PsiElement element)
+	public static PsiReference createTypeOrElementOrAttributeReference(@Nonnull final PsiElement element)
 	{
 		return createTypeOrElementOrAttributeReference(element, null);
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(@NotNull final PsiElement element, String ns)
+	public static PsiReference createTypeOrElementOrAttributeReference(@Nonnull final PsiElement element, String ns)
 	{
 		final int length = element.getTextLength();
 		int offset = (element instanceof XmlAttributeValue) ? XmlUtil.findPrefixByQualifiedName(((XmlAttributeValue) element).getValue()).length() : 0;

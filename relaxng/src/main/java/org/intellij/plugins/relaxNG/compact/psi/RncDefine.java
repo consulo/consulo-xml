@@ -16,9 +16,10 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
+import javax.annotation.Nullable;
+
 import com.intellij.psi.PsiNamedElement;
 import org.intellij.plugins.relaxNG.model.Define;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.

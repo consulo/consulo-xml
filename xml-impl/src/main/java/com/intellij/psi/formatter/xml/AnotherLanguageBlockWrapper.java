@@ -22,8 +22,8 @@ import com.intellij.formatting.Spacing;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.formatter.common.InjectedLanguageBlockWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -61,17 +61,17 @@ public class AnotherLanguageBlockWrapper extends AbstractXmlBlock{
     return myInjectedBlock.getSubBlocks();
   }
 
-  @NotNull
+  @Nonnull
   public TextRange getTextRange() {
     return myInjectedBlock.getTextRange();
   }
 
   @Nullable
-  public Spacing getSpacing(Block child1, @NotNull Block child2) {
+  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
     return myInjectedBlock.getSpacing(child1,  child2);
   }
 
-  @NotNull
+  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     return myInjectedBlock.getChildAttributes(newChildIndex);
   }

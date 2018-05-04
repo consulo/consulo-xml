@@ -27,7 +27,7 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.jdom.Verifier;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.Set;
@@ -50,7 +50,7 @@ public class RenameUtil {
   private RenameUtil() {
   }
 
-  @NotNull
+  @Nonnull
   public static ASTNode createIdentifierNode(PsiManager manager, String name) throws IncorrectOperationException {
     if (isKeyword(name)) {
       name = "\\" + name;
@@ -104,7 +104,7 @@ public class RenameUtil {
     return astNode;
   }
 
-  @NotNull
+  @Nonnull
   private static ASTNode findFirstGrammarNode(RncFile file) {
     final RncGrammar grammar = file.getGrammar();
     assert grammar != null;

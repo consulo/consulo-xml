@@ -20,10 +20,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.impl.SeverityRegistrar;
 import com.intellij.codeInsight.daemon.impl.TrafficLightRenderer;
 import com.intellij.icons.AllIcons;
@@ -186,14 +186,14 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 
 	private class DomElementsTrafficLightRenderer extends TrafficLightRenderer
 	{
-		public DomElementsTrafficLightRenderer(@NotNull XmlFile xmlFile)
+		public DomElementsTrafficLightRenderer(@Nonnull XmlFile xmlFile)
 		{
 			super(xmlFile.getProject(), PsiDocumentManager.getInstance(xmlFile.getProject()).getDocument(xmlFile), xmlFile);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@NotNull SeverityRegistrar severityRegistrar)
+		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@Nonnull SeverityRegistrar severityRegistrar)
 		{
 			final DaemonCodeAnalyzerStatus status = super.getDaemonCodeAnalyzerStatus(severityRegistrar);
 			if(isInspectionCompleted())
@@ -204,7 +204,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 		}
 
 		@Override
-		protected void fillDaemonCodeAnalyzerErrorsStatus(@NotNull DaemonCodeAnalyzerStatus status, @NotNull SeverityRegistrar severityRegistrar)
+		protected void fillDaemonCodeAnalyzerErrorsStatus(@Nonnull DaemonCodeAnalyzerStatus status, @Nonnull SeverityRegistrar severityRegistrar)
 		{
 			for(int i = 0; i < status.errorCount.length; i++)
 			{

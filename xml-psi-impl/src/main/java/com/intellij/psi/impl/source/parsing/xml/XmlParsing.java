@@ -23,8 +23,8 @@ import com.intellij.psi.tree.ILazyParseableElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.containers.Stack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.intellij.psi.xml.XmlElementType.*;
 
@@ -279,7 +279,7 @@ public class XmlParsing {
     return tt == XML_COMMENT_START;
   }
 
-  @NotNull
+  @Nonnull
   private PsiBuilder.Marker startText(@Nullable PsiBuilder.Marker xmlText) {
     if (xmlText == null) {
       xmlText = mark();

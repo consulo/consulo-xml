@@ -19,6 +19,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.Convert;
@@ -26,7 +28,6 @@ import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Include;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngHrefConverter;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:includeElemType interface.
@@ -38,7 +39,7 @@ public interface RngInclude extends RngIncludeContent, Include<XmlElement, RngDe
    *
    * @return the value of the href child.
    */
-  @NotNull
+  @Nonnull
   @Required
   @Convert(RngHrefConverter.class)
   @com.intellij.util.xml.Attribute("href")

@@ -17,8 +17,8 @@ package com.intellij.util.xml.stubs;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.stubs.ObjectStubSerializer;
 import com.intellij.util.SmartList;
@@ -38,7 +38,7 @@ public class ElementStub extends DomStub
 	@Nullable
 	private final StringRef myElementClass;
 
-	public ElementStub(@Nullable ElementStub parent, @NotNull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
+	public ElementStub(@Nullable ElementStub parent, @Nonnull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
 			@Nullable StringRef elementClass)
 	{
 		super(parent, name, namespace);

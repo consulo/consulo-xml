@@ -19,7 +19,8 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LighterASTNode;
 import com.intellij.lang.LighterASTTokenNode;
@@ -63,8 +64,8 @@ public class XmlParser implements PsiParser {
       }
     };
 
-  @NotNull
-  public ASTNode parse(@NotNull final IElementType root, @NotNull final PsiBuilder builder, @NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public ASTNode parse(@Nonnull final IElementType root, @Nonnull final PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
     builder.putUserDataUnprotected(PsiBuilderImpl.CUSTOM_COMPARATOR, REPARSE_XML_TAG_BY_NAME);
     final PsiBuilder.Marker file = builder.mark();

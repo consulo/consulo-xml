@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.index;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.openapi.module.Module;

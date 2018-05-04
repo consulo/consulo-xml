@@ -22,7 +22,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import org.intellij.plugins.relaxNG.model.CommonElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,7 +36,7 @@ public interface RngDomElement extends DomElement, CommonElement<XmlElement> {
    *
    * @return the value of the ns child.
    */
-  @NotNull
+  @Nonnull
   @Attribute("ns")
   GenericAttributeValue<String> getNamespace();
 
@@ -45,6 +45,6 @@ public interface RngDomElement extends DomElement, CommonElement<XmlElement> {
    *
    * @return the value of the datatypeLibrary child.
    */
-  @NotNull
+  @Nonnull
   GenericAttributeValue<String> getDatatypeLibrary();
 }

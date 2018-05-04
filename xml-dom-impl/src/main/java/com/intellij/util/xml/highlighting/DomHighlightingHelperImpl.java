@@ -41,8 +41,8 @@ import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,7 +63,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
     }
   }
 
-  @NotNull
+  @Nonnull
   public List<DomElementProblemDescriptor> checkRequired(final DomElement element, final DomElementAnnotationHolder holder) {
     final Required required = element.getAnnotation(Required.class);
     if (required != null) {
@@ -105,7 +105,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
     return Collections.emptyList();
   }
 
-  @NotNull
+  @Nonnull
   public List<DomElementProblemDescriptor> checkResolveProblems(GenericDomValue element, final DomElementAnnotationHolder holder) {
     if (StringUtil.isEmpty(element.getStringValue())) {
       final Required required = element.getAnnotation(Required.class);
@@ -156,7 +156,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
            converter instanceof ResolvingConverter && ((ResolvingConverter)converter).getAdditionalVariants(domReference.getConvertContext()).contains(element.getStringValue());
   }
 
-  @NotNull
+  @Nonnull
   public List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, final DomElementAnnotationHolder holder) {
     final String elementName = ElementPresentationManager.getElementName(element);
     if (StringUtil.isNotEmpty(elementName)) {
@@ -237,32 +237,32 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
     private final String tagNamespace;
     private final XmlTag parentTag;
 
-    public AddRequiredSubtagFix(@NotNull String _tagName, @NotNull String _tagNamespace, @NotNull XmlTag _parentTag) {
+    public AddRequiredSubtagFix(@Nonnull String _tagName, @Nonnull String _tagNamespace, @Nonnull XmlTag _parentTag) {
       tagName = _tagName;
       tagNamespace = _tagNamespace;
       parentTag = _parentTag;
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
       return XmlBundle.message("insert.required.tag.fix", tagName);
     }
 
-    @NotNull
+    @Nonnull
     public String getText() {
       return getName();
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return getName();
     }
 
-    public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
+    public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
       return true;
     }
 
-    public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
       doFix();
     }
 
@@ -270,7 +270,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
       return true;
     }
 
-    public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
       doFix();
     }
 

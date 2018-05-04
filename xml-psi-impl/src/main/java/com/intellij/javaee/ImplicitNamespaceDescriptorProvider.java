@@ -15,9 +15,11 @@
  */
 package com.intellij.javaee;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.module.Module;
 import com.intellij.psi.PsiFile;
@@ -27,5 +29,5 @@ public interface ImplicitNamespaceDescriptorProvider {
   @NonNls ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.implicitNamespaceDescriptorProvider");
 
   @Nullable
-  XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, @NotNull final String ns, @Nullable PsiFile file);
+  XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, @Nonnull final String ns, @Nullable PsiFile file);
 }

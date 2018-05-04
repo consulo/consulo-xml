@@ -19,11 +19,12 @@ package com.intellij.util.xml.tree.actions;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -88,7 +89,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
     }
   }
 
-  @NotNull
+  @Nonnull
   protected DomCollectionChildDescription[] getDomCollectionChildDescriptions(final AnActionEvent e) {
     final DomModelTreeView view = getTreeView(e);
 

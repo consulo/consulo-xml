@@ -14,8 +14,8 @@ import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.stubs.ElementStub;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
 
   public DomRootInvocationHandler(final Class aClass,
                                   final RootDomParentStrategy strategy,
-                                  @NotNull final DomFileElementImpl fileElement,
-                                  @NotNull final EvaluatedXmlName tagName,
+                                  @Nonnull final DomFileElementImpl fileElement,
+                                  @Nonnull final EvaluatedXmlName tagName,
                                   @Nullable ElementStub stub
   ) {
     super(aClass, strategy, tagName, new AbstractDomChildDescriptionImpl(aClass) {
-      @NotNull
-      public List<? extends DomElement> getValues(@NotNull final DomElement parent) {
+      @Nonnull
+      public List<? extends DomElement> getValues(@Nonnull final DomElement parent) {
         throw new UnsupportedOperationException();
       }
 
@@ -70,7 +70,7 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return myParent.hashCode();
   }
 
-  @NotNull
+  @Nonnull
   public String getXmlElementNamespace() {
     return getXmlName().getNamespace(getFile(), getFile());
   }
@@ -90,7 +90,7 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public DomFileElementImpl getParent() {
     return myParent;
   }
@@ -123,7 +123,7 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return result[0];
   }
 
-  @NotNull
+  @Nonnull
   public final DomNameStrategy getNameStrategy() {
     final Class<?> rawType = getRawType();
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(rawType, isAttribute());

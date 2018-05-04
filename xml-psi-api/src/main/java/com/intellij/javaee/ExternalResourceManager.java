@@ -15,9 +15,11 @@
  */
 package com.intellij.javaee;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
@@ -31,26 +33,26 @@ public abstract class ExternalResourceManager extends SimpleModificationTracker
 		return ServiceManager.getService(ExternalResourceManager.class);
 	}
 
-	public abstract void addResource(@NotNull @NonNls String url, @NonNls String location);
+	public abstract void addResource(@Nonnull @NonNls String url, @NonNls String location);
 
-	public abstract void addResource(@NotNull @NonNls String url, @NonNls @Nullable String version, @NonNls String location);
+	public abstract void addResource(@Nonnull @NonNls String url, @NonNls @Nullable String version, @NonNls String location);
 
-	public abstract void removeResource(@NotNull String url);
+	public abstract void removeResource(@Nonnull String url);
 
-	public abstract void removeResource(@NotNull String url, @Nullable String version);
+	public abstract void removeResource(@Nonnull String url, @Nullable String version);
 
 	/**
 	 * @see #getResourceLocation(String, Project)
 	 */
 	@Deprecated
-	public abstract String getResourceLocation(@NotNull @NonNls String url);
+	public abstract String getResourceLocation(@Nonnull @NonNls String url);
 
-	public abstract String getResourceLocation(@NotNull @NonNls String url, @Nullable String version);
+	public abstract String getResourceLocation(@Nonnull @NonNls String url, @Nullable String version);
 
-	public abstract String getResourceLocation(@NotNull @NonNls String url, @NotNull Project project);
+	public abstract String getResourceLocation(@Nonnull @NonNls String url, @Nonnull Project project);
 
 	@Nullable
-	public abstract PsiFile getResourceLocation(@NotNull @NonNls String url, @NotNull PsiFile baseFile, @Nullable String version);
+	public abstract PsiFile getResourceLocation(@Nonnull @NonNls String url, @Nonnull PsiFile baseFile, @Nullable String version);
 
 	public abstract String[] getResourceUrls(@Nullable FileType fileType, boolean includeStandard);
 

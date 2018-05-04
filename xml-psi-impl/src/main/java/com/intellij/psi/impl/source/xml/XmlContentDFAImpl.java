@@ -19,8 +19,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ class XmlContentDFAImpl extends XmlContentDFA {
     return new XmlContentDFAImpl(topGroup);
   }
 
-  private XmlContentDFAImpl(@NotNull XmlElementsGroup group) {
+  private XmlContentDFAImpl(@Nonnull XmlElementsGroup group) {
     myGroup = group;
   }
 
@@ -97,7 +97,7 @@ class XmlContentDFAImpl extends XmlContentDFA {
     }
   }
 
-  private Result doTransition(@NotNull XmlElementDescriptor element) {
+  private Result doTransition(@Nonnull XmlElementDescriptor element) {
     if (myGroup.getGroupType() == XmlElementsGroup.Type.LEAF) {
       if (element.equals(myGroup.getLeafDescriptor())) {
         return consume();

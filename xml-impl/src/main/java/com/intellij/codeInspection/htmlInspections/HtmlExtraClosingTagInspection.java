@@ -28,7 +28,7 @@ import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -37,26 +37,26 @@ public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("html.inspection.extra.closing.tag");
   }
 
   @Override
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "HtmlExtraClosingTag";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
   @Override
-  protected void checkTag(@NotNull final XmlTag tag, @NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
     if (endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName())) {

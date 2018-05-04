@@ -15,19 +15,19 @@
  */
 package com.intellij.codeInspection;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.PsiElement;
 
 public class XmlInspectionSuppressor implements InspectionSuppressor
 {
 	@Override
-	public boolean isSuppressedFor(@NotNull PsiElement element, String toolId)
+	public boolean isSuppressedFor(@Nonnull PsiElement element, String toolId)
 	{
 		return XmlSuppressionProvider.isSuppressed(element, toolId);
 	}
 
 	@Override
-	public SuppressQuickFix[] getSuppressActions(@NotNull PsiElement element, String toolShortName)
+	public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, String toolShortName)
 	{
 		return XmlSuppressableInspectionTool.getSuppressFixes(toolShortName);
 	}

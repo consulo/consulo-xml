@@ -26,8 +26,8 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.model.DomModel;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +36,7 @@ import java.util.Set;
 
 public abstract class DomModelFactory<T extends DomElement, M extends DomModel<T>, C extends PsiElement> extends BaseDomModelFactory<Module, T, M, C> {
 
-  protected DomModelFactory(@NotNull Class<T> aClass, final Project project, @NonNls String name) {
+  protected DomModelFactory(@Nonnull Class<T> aClass, final Project project, @NonNls String name) {
     super(aClass, project, name);
   }
 
@@ -45,7 +45,7 @@ public abstract class DomModelFactory<T extends DomElement, M extends DomModel<T
     return ModuleUtil.findModuleForPsiElement(file);
   }
 
-  @NotNull
+  @Nonnull
   public Set<XmlFile> getConfigFiles(@Nullable C context) {
     if (context == null) {
       return Collections.emptySet();

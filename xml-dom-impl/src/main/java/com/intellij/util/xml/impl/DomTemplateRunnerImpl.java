@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.actions.generate.DomTemplateRunner;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Map;
 
@@ -46,7 +46,7 @@ public class DomTemplateRunnerImpl extends DomTemplateRunner {
 
   @Override
   public <T extends DomElement> void runTemplate(T t, String mappingId, Editor editor,
-                                                 @NotNull Map<String, String> predefinedVars) {
+                                                 @Nonnull Map<String, String> predefinedVars) {
     final Template template = getTemplate(mappingId);
     runTemplate(t, editor, template, predefinedVars);
   }

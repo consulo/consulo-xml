@@ -15,7 +15,7 @@
  */
 package com.intellij.ide.browsers.actions;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.GeneralSettings;
 import com.intellij.ide.browsers.OpenInBrowserRequest;
 import com.intellij.ide.browsers.WebBrowser;

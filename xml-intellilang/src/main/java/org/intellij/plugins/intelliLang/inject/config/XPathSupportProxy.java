@@ -16,13 +16,14 @@
 
 package org.intellij.plugins.intelliLang.inject.config;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiFile;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Proxy class that allows to avoid a hard compile time dependency on the XPathView plugin.
@@ -33,10 +34,10 @@ public abstract class XPathSupportProxy {
   public static final Object UNSUPPORTED = "UNSUPPORTED";
   public static final Object INVALID = "INVALID";
 
-  @NotNull
+  @Nonnull
   public abstract XPath createXPath(String expression) throws JaxenException;
 
-  public abstract void attachContext(@NotNull PsiFile file);
+  public abstract void attachContext(@Nonnull PsiFile file);
 
   private static XPathSupportProxy ourInstance;
   private static boolean isInitialized;

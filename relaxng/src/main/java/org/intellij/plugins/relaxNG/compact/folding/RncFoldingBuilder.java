@@ -30,8 +30,8 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -42,8 +42,8 @@ import java.util.ArrayList;
  */
 public class RncFoldingBuilder implements FoldingBuilder {
   @Override
-  @NotNull
-  public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
+  @Nonnull
+  public FoldingDescriptor[] buildFoldRegions(@Nonnull ASTNode node, @Nonnull Document document) {
 
     final ArrayList<FoldingDescriptor> regions = new ArrayList<>();
     process(node, document, regions);
@@ -54,7 +54,7 @@ public class RncFoldingBuilder implements FoldingBuilder {
   }
 
   @Override
-  public String getPlaceholderText(@NotNull ASTNode node) {
+  public String getPlaceholderText(@Nonnull ASTNode node) {
     final IElementType type = node.getElementType();
     if (type == RncTokenTypes.LBRACE) {
       return "{ ... }";
@@ -82,7 +82,7 @@ public class RncFoldingBuilder implements FoldingBuilder {
   }
 
   @Override
-  public boolean isCollapsedByDefault(@NotNull ASTNode node) {
+  public boolean isCollapsedByDefault(@Nonnull ASTNode node) {
     return isCommentLike(node.getElementType()) && CodeFoldingSettings.getInstance().COLLAPSE_DOC_COMMENTS;
   }
 

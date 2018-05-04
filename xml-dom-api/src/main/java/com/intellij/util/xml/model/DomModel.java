@@ -19,7 +19,7 @@ package com.intellij.util.xml.model;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Set;
@@ -33,11 +33,11 @@ public interface DomModel<T extends DomElement> {
    * Using this method may result in a large memory usage, since it will keep all the DOM and PSI for all the config files
    * @return
    */
-  @NotNull
+  @Nonnull
   @Deprecated
   T getMergedModel();
 
-  @NotNull
+  @Nonnull
   Set<XmlFile> getConfigFiles();
   
   List<DomFileElement<T>> getRoots();

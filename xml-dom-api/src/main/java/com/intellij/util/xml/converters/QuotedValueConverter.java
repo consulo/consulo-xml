@@ -28,8 +28,8 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.util.xml.*;
 import com.intellij.xml.util.XmlTagTextUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -55,12 +55,12 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
   protected abstract Object[] getReferenceVariants(final ConvertContext context, GenericDomValue<T> genericDomValue,
                                                    final TextRange rangeInElement);
 
-  @NotNull
+  @Nonnull
   protected abstract ResolveResult[] multiResolveReference(@Nullable final T t, final ConvertContext context);
 
   protected abstract String getUnresolvedMessage(String value);
 
-  @NotNull
+  @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
     return Collections.emptyList();
   }
@@ -75,7 +75,7 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     return delimiter > 0? delimiter + s+ delimiter : s;
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue<T> genericDomValue,
                                          final PsiElement element,
                                          final ConvertContext context) {
@@ -112,7 +112,7 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     return StringUtil.isNotEmpty(str) && str.charAt(0) != str.charAt(str.length()-1);
   }
 
-  @NotNull
+  @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
                                             int start, int end,
                                             final boolean isSoft,
@@ -136,19 +136,19 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
       myBadQuotation = badQuotation;
     }
 
-    @NotNull
+    @Nonnull
     public ResolveResult[] multiResolve(final boolean incompleteCode) {
       if (myBadQuotation) return ResolveResult.EMPTY_ARRAY;
       final String value = getValue();
       return multiResolveReference(convertString(value, myContext), myContext);
     }
 
-    @NotNull
+    @Nonnull
     public Object[] getVariants() {
       return getReferenceVariants(myContext, myGenericDomValue, getRangeInElement());
     }
 
-    @NotNull
+    @Nonnull
     public String getUnresolvedMessagePattern() {
       return myBadQuotation? DomBundle.message("message.invalid.value.quotation") : getUnresolvedMessage(getValue());
     }

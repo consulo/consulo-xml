@@ -18,7 +18,8 @@ package com.intellij.ide.highlighter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lexer.HtmlHighlightingLexer;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -82,14 +83,14 @@ public class HtmlFileHighlighter extends SyntaxHighlighterBase
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Lexer getHighlightingLexer()
 	{
 		return new HtmlHighlightingLexer();
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public TextAttributesKey[] getTokenHighlights(IElementType tokenType)
 	{
 		return SyntaxHighlighterBase.pack(XmlHighlighterColors.HTML_CODE, pack(keys1.get(tokenType), keys2.get(tokenType)));

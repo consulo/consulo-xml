@@ -16,13 +16,14 @@
 
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
 import com.intellij.codeInspection.ex.UnfairLocalInspectionTool;
 import com.intellij.xml.XmlBundle;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Maxim Mossienko
@@ -35,22 +36,22 @@ public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableIn
     return true;
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.XML_INSPECTIONS;
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("xml.inspections.check.file.with.xerces");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return SHORT_NAME;

@@ -26,8 +26,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -399,7 +399,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
       return DomCollectionControl.getDomCollectionControl(e);
     }
 
-    @NotNull
+    @Nonnull
     protected DomCollectionChildDescription[] getDomCollectionChildDescriptions(final AnActionEvent e) {
       return new DomCollectionChildDescription[] {getDomCollectionControl(e).getChildDescription()};
     }
@@ -412,7 +412,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
       return getDomCollectionControl(e).getComponent();
     }
 
-    @NotNull
+    @Nonnull
     public AnAction[] getChildren(final AnActionEvent e) {
       final DomCollectionControl control = getDomCollectionControl(e);
       AnAction[] actions = control.createAdditionActions();

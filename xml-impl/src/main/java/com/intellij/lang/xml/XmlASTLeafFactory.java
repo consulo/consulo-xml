@@ -17,8 +17,8 @@ package com.intellij.lang.xml;
 
 import static com.intellij.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
@@ -39,9 +39,9 @@ public class XmlASTLeafFactory implements ASTLeafFactory
     PsiBuilderImpl.registerWhitespaceToken(XML_REAL_WHITE_SPACE);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public LeafElement createLeaf(@NotNull IElementType type, @NotNull LanguageVersion languageVersion, @NotNull CharSequence text) {
+  public LeafElement createLeaf(@Nonnull IElementType type, @Nonnull LanguageVersion languageVersion, @Nonnull CharSequence text) {
     if (type instanceof IXmlLeafElementType) {
       if (type == XML_REAL_WHITE_SPACE) {
         return new PsiWhiteSpaceImpl(text);

@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.command.undo.UndoUtil;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
@@ -30,8 +32,8 @@ import com.intellij.psi.xml.*;
 import com.intellij.refactoring.util.CommonRefactoringUtil;
 import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -41,18 +43,18 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
   public static final String SUPPRESS_MARK = "suppress";
 
   @Override
-  public boolean isProviderAvailable(@NotNull PsiFile file) {
+  public boolean isProviderAvailable(@Nonnull PsiFile file) {
     return true;
   }
 
   @Override
-  public boolean isSuppressedFor(@NotNull PsiElement element, @NotNull String inspectionId) {
+  public boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId) {
     final XmlTag tag = element instanceof XmlFile ? ((XmlFile)element).getRootTag() : PsiTreeUtil.getContextOfType(element, XmlTag.class, false);
     return tag != null && findSuppression(tag, inspectionId, element) != null;
   }
 
   @Override
-  public void suppressForFile(@NotNull PsiElement element, @NotNull String inspectionId) {
+  public void suppressForFile(@Nonnull PsiElement element, @Nonnull String inspectionId) {
     final PsiFile file = element.getContainingFile();
     final XmlDocument document = ((XmlFile)file).getDocument();
     final PsiElement anchor = document != null ? document.getRootTag() : file.findElementAt(0);
@@ -61,7 +63,7 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
   }
 
   @Override
-  public void suppressForTag(@NotNull PsiElement element, @NotNull String inspectionId) {
+  public void suppressForTag(@Nonnull PsiElement element, @Nonnull String inspectionId) {
     final XmlTag tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
     assert tag != null;
     suppress(element.getContainingFile(), findSuppressionLeaf(tag, null, 0), inspectionId, tag.getTextRange().getStartOffset());

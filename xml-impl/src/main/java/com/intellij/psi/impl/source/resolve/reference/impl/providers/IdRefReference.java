@@ -27,8 +27,8 @@ import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.util.XmlDeclareIdInCommentAction;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -129,12 +129,12 @@ public class IdRefReference extends BasicAttributeValueReference {
     }
   };
 
-  private static boolean isDeclarationComment(@NotNull final PsiComment comment) {
+  private static boolean isDeclarationComment(@Nonnull final PsiComment comment) {
     return comment.getText().contains("@declare id=");
   }
 
   @Nullable
-  private static String getImplicitIdValue(@NotNull final PsiComment comment) {
+  private static String getImplicitIdValue(@Nonnull final PsiComment comment) {
     return XmlDeclareIdInCommentAction.getImplicitlyDeclaredId(comment);
   }
 
@@ -155,7 +155,7 @@ public class IdRefReference extends BasicAttributeValueReference {
     process(new PsiElementProcessor<PsiElement>() {
       String canonicalText = getCanonicalText();
 
-      public boolean execute(@NotNull final PsiElement element) {
+      public boolean execute(@Nonnull final PsiElement element) {
         final String idValue = getIdValue(element);
         if (idValue != null && idValue.equals(canonicalText)) {
           result[0] = getIdValueElement(element);
@@ -168,12 +168,12 @@ public class IdRefReference extends BasicAttributeValueReference {
     return result[0];
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     final List<String> result = new LinkedList<String>();
 
     process(new PsiElementProcessor<PsiElement>() {
-      public boolean execute(@NotNull final PsiElement element) {
+      public boolean execute(@Nonnull final PsiElement element) {
         String value = getIdValue(element);
         if (value != null) {
           result.add(value);

@@ -16,10 +16,11 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncExternalRef;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,7 +33,7 @@ public class RncExternalRefImpl extends RncFileReferenceImpl implements RncExter
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitExternalRef(this);
   }
 }

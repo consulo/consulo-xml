@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.editorActions;
 
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -31,7 +33,6 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlText;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev

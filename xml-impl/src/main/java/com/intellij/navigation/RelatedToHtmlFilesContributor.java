@@ -18,7 +18,7 @@ package com.intellij.navigation;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Set;
 
@@ -29,6 +29,6 @@ public abstract class RelatedToHtmlFilesContributor {
   public static final ExtensionPointName<RelatedToHtmlFilesContributor> EP_NAME =
     ExtensionPointName.create("com.intellij.xml.relatedToHtmlFilesContributor");
 
-  public abstract void fillRelatedFiles(@NotNull XmlFile xmlFile, @NotNull Set<PsiFile> resultSet);
+  public abstract void fillRelatedFiles(@Nonnull XmlFile xmlFile, @Nonnull Set<PsiFile> resultSet);
   public abstract String getGroupName();
 }

@@ -16,6 +16,8 @@
 
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -30,7 +32,6 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Function;
 import com.intellij.xml.util.XmlStringUtil;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * User: Sergey.Vasiliev

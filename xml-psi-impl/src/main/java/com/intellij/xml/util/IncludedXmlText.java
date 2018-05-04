@@ -15,8 +15,9 @@
  */
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagChild;
@@ -27,7 +28,7 @@ import com.intellij.util.IncorrectOperationException;
  * @author peter
  */
 public class IncludedXmlText extends IncludedXmlElement<XmlText> implements XmlText {
-  public IncludedXmlText(@NotNull XmlText original, @Nullable XmlTag parent) {
+  public IncludedXmlText(@Nonnull XmlText original, @Nullable XmlTag parent) {
     super(original, parent);
   }
 

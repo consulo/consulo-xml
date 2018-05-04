@@ -18,7 +18,7 @@ package com.intellij.javaee.web;
 
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Can be implemented by {@link com.intellij.util.xml.Converter} instance
@@ -34,6 +34,6 @@ public interface PsiReferenceConverter {
    * @param soft true if created references should be soft ({@link com.intellij.psi.PsiReference#isSoft()})
    * @return empty array if the converter cannot get any references
    */
-  @NotNull
-  PsiReference[] createReferences(@NotNull PsiElement psiElement, final boolean soft);
+  @Nonnull
+  PsiReference[] createReferences(@Nonnull PsiElement psiElement, final boolean soft);
 }

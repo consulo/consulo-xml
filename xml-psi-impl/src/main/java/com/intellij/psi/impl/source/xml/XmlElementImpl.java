@@ -24,8 +24,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
 import com.intellij.psi.PsiElement;
@@ -60,7 +60,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     result[0] = null;
 
     processElements(new PsiElementProcessor(){
-      public boolean execute(@NotNull PsiElement element){
+      public boolean execute(@Nonnull PsiElement element){
         if(element instanceof TreeElement && ((ASTNode)element).getElementType() == type){
           result[0] = (XmlElement)element;
           return false;
@@ -82,7 +82,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return super.getParent();
   }
 
-  @NotNull
+  @Nonnull
   public PsiElement getNavigationElement() {
     if (!isPhysical()) {
       final XmlElement including = getUserData(INCLUDING_ELEMENT);
@@ -101,7 +101,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return getContext();
   }
 
-  @NotNull
+  @Nonnull
   public Language getLanguage() {
     return getContainingFile().getLanguage();
   }
@@ -120,7 +120,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
       final StringBuilder builder = new StringBuilder();
 
       ((XmlElement)name.getPsi()).processElements(new PsiElementProcessor() {
-        public boolean execute(@NotNull final PsiElement element) {
+        public boolean execute(@Nonnull final PsiElement element) {
           builder.append(element.getText());
           return true;
         }
@@ -130,7 +130,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public SearchScope getUseScope() {
     return GlobalSearchScope.allScope(getProject());
   }

@@ -15,14 +15,15 @@
  */
 package com.intellij.spellchecker.tokenizer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlText;
 
 public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy {
-	@NotNull
+	@Nonnull
 	@Override
 	public Tokenizer getTokenizer(PsiElement element) {
 		if (element instanceof PsiComment) return myCommentTokenizer;

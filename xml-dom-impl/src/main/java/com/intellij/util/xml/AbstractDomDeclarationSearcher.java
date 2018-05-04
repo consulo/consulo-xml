@@ -23,8 +23,8 @@ import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
 import com.intellij.util.Consumer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Eugene Zhuravlev
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class AbstractDomDeclarationSearcher extends PomDeclarationSearcher {
 
-  public void findDeclarationsAt(@NotNull PsiElement psiElement, int offsetInElement, Consumer<PomTarget> consumer) {
+  public void findDeclarationsAt(@Nonnull PsiElement psiElement, int offsetInElement, Consumer<PomTarget> consumer) {
     if (!(psiElement instanceof XmlToken)) return;
 
     final IElementType tokenType = ((XmlToken)psiElement).getTokenType();

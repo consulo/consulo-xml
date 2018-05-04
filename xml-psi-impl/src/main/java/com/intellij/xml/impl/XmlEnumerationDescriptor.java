@@ -1,7 +1,7 @@
 package com.intellij.xml.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -43,7 +43,7 @@ public abstract class XmlEnumerationDescriptor<T extends XmlElement>
 
 	protected abstract PsiElement getDefaultValueDeclaration();
 
-	public PsiReference[] getValueReferences(T element, @NotNull String text)
+	public PsiReference[] getValueReferences(T element, @Nonnull String text)
 	{
 		return new PsiReference[]{new XmlEnumeratedValueReference(element, this)};
 	}

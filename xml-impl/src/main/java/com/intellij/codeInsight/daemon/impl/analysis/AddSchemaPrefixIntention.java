@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -53,7 +54,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 		setText(NAME);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getFamilyName()
 	{
@@ -67,7 +68,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 	}
 
 	@Override
-	public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException
+	public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		final XmlAttribute xmlns = getXmlnsDeclaration(element);
 		if(xmlns == null)
@@ -171,7 +172,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 	}
 
 	@Override
-	public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element)
+	public boolean isAvailable(@Nonnull Project project, Editor editor, @Nonnull PsiElement element)
 	{
 		return getXmlnsDeclaration(element) != null;
 	}

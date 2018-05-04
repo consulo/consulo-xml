@@ -16,6 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
@@ -25,7 +27,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -77,7 +78,7 @@ public class RncDeclImpl extends RncElementImpl implements RncDecl {
   }
 
   @Override
-  public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
     final ASTNode node = findIdentifierNode();
     if (node == null) return this;
     node.getTreeParent().replaceChild(node, RenameUtil.createIdentifierNode(getManager(), name));
@@ -85,7 +86,7 @@ public class RncDeclImpl extends RncElementImpl implements RncDecl {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitElement(this);
   }
 }

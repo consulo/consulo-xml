@@ -20,8 +20,8 @@ import gnu.trove.THashMap;
 import java.util.Collection;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.ide.TypePresentationService;
@@ -44,14 +44,14 @@ import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
  */
 public class DomResolveConverter<T extends DomElement> extends ResolvingConverter<T>{
   private static final ConcurrentFactoryMap<Class<? extends DomElement>,DomResolveConverter> ourCache = new ConcurrentFactoryMap<Class<? extends DomElement>, DomResolveConverter>() {
-    @NotNull
+    @Nonnull
     protected DomResolveConverter create(final Class<? extends DomElement> key) {
       return new DomResolveConverter(key);
     }
   };
   private final boolean myAttribute;
   private final SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>> myResolveCache = new SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>>() {
-    @NotNull
+    @Nonnull
     protected CachedValue<Map<String, DomElement>> create(final DomElement scope) {
       final DomManager domManager = scope.getManager();
       final Project project = domManager.getProject();
@@ -104,7 +104,7 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
   }
 
   @Override
-  public boolean isReferenceTo(@NotNull PsiElement element, String stringValue, @Nullable T resolveResult, ConvertContext context) {
+  public boolean isReferenceTo(@Nonnull PsiElement element, String stringValue, @Nullable T resolveResult, ConvertContext context) {
     return resolveResult != null && element.getManager().areElementsEquivalent(element, resolveResult.getXmlElement());
   }
 
@@ -123,7 +123,7 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
     return ElementPresentationManager.getElementName(t);
   }
 
-  @NotNull
+  @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
     final DomElement reference = context.getInvocationElement();
     final DomElement scope = reference.getManager().getResolvingScope((GenericDomValue)reference);

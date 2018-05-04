@@ -25,13 +25,12 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
 import com.intellij.ui.awt.RelativePoint;
-import com.intellij.util.Function;
 import com.intellij.util.OpenSourceUtil;
 import com.intellij.util.containers.ContainerUtil;
 import org.intellij.plugins.relaxNG.model.Define;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -48,7 +47,7 @@ class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public Icon getIcon() {
     return AllIcons.Gutter.OverridingMethod;
   }

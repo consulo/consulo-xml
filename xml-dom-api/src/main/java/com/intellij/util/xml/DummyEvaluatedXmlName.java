@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -27,11 +28,11 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
   private final XmlName myXmlName;
   private final String myNamespace;
 
-  public DummyEvaluatedXmlName(final String localName, @NotNull final String namespace) {
+  public DummyEvaluatedXmlName(final String localName, @Nonnull final String namespace) {
     this(new XmlName(localName), namespace);
   }
 
-  public DummyEvaluatedXmlName(final XmlName xmlName, @NotNull final String namespace) {
+  public DummyEvaluatedXmlName(final XmlName xmlName, @Nonnull final String namespace) {
     myXmlName = xmlName;
     myNamespace = namespace;
   }
@@ -40,7 +41,7 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
     return myXmlName;
   }
 
-  public EvaluatedXmlName evaluateChildName(@NotNull final XmlName name) {
+  public EvaluatedXmlName evaluateChildName(@Nonnull final XmlName name) {
     String namespaceKey = name.getNamespaceKey();
     if (namespaceKey == null) {
       return new DummyEvaluatedXmlName(name.getLocalName(), myNamespace);
@@ -52,9 +53,9 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
     return namespace.equals(myNamespace);
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
-  public String getNamespace(@NotNull final XmlElement parentElement, final XmlFile file) {
+  public String getNamespace(@Nonnull final XmlElement parentElement, final XmlFile file) {
     return myNamespace;
   }
 

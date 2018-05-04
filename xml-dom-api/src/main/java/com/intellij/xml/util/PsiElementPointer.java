@@ -1,6 +1,6 @@
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.psi.PsiElement;
 
 /**

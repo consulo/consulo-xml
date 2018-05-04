@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
@@ -27,7 +29,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
   @NonNls private static final String AMP_ENTITY = "&amp;";
@@ -42,21 +43,21 @@ public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
     final String text = element.getErrorDescription();
     if (text != null && text.startsWith(XmlErrorMessages.message("unescaped.ampersand"))) {
       QuickFixAction.registerQuickFixAction(highlightInfo, new IntentionAction() {
-        @NotNull
+        @Nonnull
         public String getText() {
           return XmlErrorMessages.message("escape.ampersand.quickfix");
         }
 
-        @NotNull
+        @Nonnull
         public String getFamilyName() {
           return getText();
         }
 
-        public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+        public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
           return true;
         }
 
-        public void invoke(@NotNull Project project, Editor editor, PsiFile file) {
+        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) {
           if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
           final int textOffset = element.getTextOffset();
           editor.getDocument().replaceString(textOffset,textOffset + 1,AMP_ENTITY);

@@ -30,7 +30,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.presentation.VirtualFilePresentation;
 import com.intellij.openapi.fileTypes.FileType;
@@ -154,7 +154,7 @@ public class ConfigFilesTreeBuilder {
     return nonEmptyGroups > 1;
   }
 
-  private void addChildrenFiles(@NotNull Set<PsiFile> psiFiles, DefaultMutableTreeNode parentNode, @NotNull List<PsiFile> moduleFiles) {
+  private void addChildrenFiles(@Nonnull Set<PsiFile> psiFiles, DefaultMutableTreeNode parentNode, @Nonnull List<PsiFile> moduleFiles) {
     Collections.sort(moduleFiles, FILE_COMPARATOR);
     for (PsiFile file : moduleFiles) {
       final DefaultMutableTreeNode fileNode = createFileNode(file);

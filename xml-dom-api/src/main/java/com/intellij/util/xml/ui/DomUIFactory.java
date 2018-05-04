@@ -30,9 +30,9 @@ import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.Required;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.table.TableCellEditor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -49,12 +49,12 @@ public abstract class DomUIFactory {
   public static Method GET_STRING_METHOD = ReflectionUtil.getMethod(GenericDomValue.class, "getStringValue");
   public static Method SET_STRING_METHOD = findMethod(GenericDomValue.class, "setStringValue");
 
-  @NotNull
+  @Nonnull
   public static DomUIControl<GenericDomValue> createControl(GenericDomValue element) {
     return createControl(element, false);
   }
 
-  @NotNull
+  @Nonnull
   public static DomUIControl<GenericDomValue> createControl(GenericDomValue element, boolean commitOnEveryChange) {
     return createGenericValueControl(DomUtil.getGenericValueParameter(element.getDomElementType()), element, commitOnEveryChange);
   }
@@ -67,7 +67,7 @@ public abstract class DomUIFactory {
     return getDomUIFactory().createTextControl(new DomCollectionWrapper<String>(parent, parent.getGenericInfo().getCollectionChildDescription("description")), commitOnEveryChange);
   }
 
-  @NotNull
+  @Nonnull
   private static BaseControl createGenericValueControl(final Type type, final GenericDomValue<?> element, boolean commitOnEveryChange) {
     final DomStringWrapper stringWrapper = new DomStringWrapper(element);
     final Class rawType = ReflectionUtil.getRawType(type);

@@ -33,7 +33,7 @@ import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngXmlAttributeDescriptor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.kohsuke.rngom.digested.DElementPattern;
 
 import java.util.Collection;

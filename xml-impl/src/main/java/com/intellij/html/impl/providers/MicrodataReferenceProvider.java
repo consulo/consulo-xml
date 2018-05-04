@@ -15,7 +15,8 @@
  */
 package com.intellij.html.impl.providers;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.html.impl.util.MicrodataUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -28,9 +29,9 @@ import com.intellij.util.ProcessingContext;
  */
 public class MicrodataReferenceProvider extends PsiReferenceProvider
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context)
+	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
 	{
 		return element instanceof XmlAttributeValue ? MicrodataUtil.getUrlReferencesForAttributeValue((XmlAttributeValue) element) : PsiReference.EMPTY_ARRAY;
 	}

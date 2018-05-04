@@ -19,13 +19,13 @@ import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
  */
 public class HtmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
-  @NotNull
+  @Nonnull
   public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
     return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.html")) {
       protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {

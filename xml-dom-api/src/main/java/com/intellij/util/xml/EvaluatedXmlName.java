@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -27,10 +28,11 @@ public interface EvaluatedXmlName {
 
   XmlName getXmlName();
 
-  EvaluatedXmlName evaluateChildName(@NotNull XmlName name);
+  EvaluatedXmlName evaluateChildName(@Nonnull XmlName name);
 
   boolean isNamespaceAllowed(String namespace, final XmlFile file, boolean qualified);
 
-  @NotNull @NonNls
-  String getNamespace(@NotNull XmlElement parentElement, final XmlFile file);
+  @Nonnull
+  @NonNls
+  String getNamespace(@Nonnull XmlElement parentElement, final XmlFile file);
 }

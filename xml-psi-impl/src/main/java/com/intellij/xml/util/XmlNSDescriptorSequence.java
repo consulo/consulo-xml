@@ -18,8 +18,9 @@ package com.intellij.xml.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -57,7 +58,7 @@ public class XmlNSDescriptorSequence implements XmlNSDescriptor
 	}
 
 	@Override
-	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
+	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
 	{
 		for(XmlNSDescriptor descriptor : sequence)
 		{
@@ -71,7 +72,7 @@ public class XmlNSDescriptorSequence implements XmlNSDescriptor
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document)
 	{
 		final List<XmlElementDescriptor> descriptors = new ArrayList<XmlElementDescriptor>();

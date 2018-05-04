@@ -21,7 +21,7 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.RncPattern;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
@@ -37,7 +37,7 @@ public class RncGrammarImpl extends RncElementImpl implements RncGrammar {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitGrammar(this);
   }
 
@@ -53,7 +53,7 @@ public class RncGrammarImpl extends RncElementImpl implements RncGrammar {
   }
 
   @Override
-  public PsiElement add(@NotNull PsiElement psiElement) throws IncorrectOperationException {
+  public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
     final PsiElement rbrace = findChildByType(RncTokenTypes.RBRACE);
     // TODO: fix block psi
     if (rbrace != null) {

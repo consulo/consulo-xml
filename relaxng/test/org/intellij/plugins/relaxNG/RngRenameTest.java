@@ -16,9 +16,10 @@
 
 package org.intellij.plugins.relaxNG;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture;
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class RngRenameTest extends HighlightingTestBase {
   @Override
-  protected CodeInsightTestFixture createFixture(@NotNull IdeaTestFixtureFactory factory) {
+  protected CodeInsightTestFixture createFixture(@Nonnull IdeaTestFixtureFactory factory) {
     return createContentFixture(factory);
   }
 

@@ -23,9 +23,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.containers.SoftFactoryMap;
 import com.intellij.util.ui.EmptyIcon;
@@ -49,7 +49,7 @@ public class ColorIconCache {
     return INSTANCE;
   }
 
-  public Icon getIcon(@NotNull final Color color, final int size) {
+  public Icon getIcon(@Nonnull final Color color, final int size) {
     Icon icon = ourCache.get(color).get(size);
     if (icon == null) {
       icon = new ColorIcon(size, color);

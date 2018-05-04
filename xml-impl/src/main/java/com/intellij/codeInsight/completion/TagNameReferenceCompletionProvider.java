@@ -18,7 +18,8 @@ package com.intellij.codeInsight.completion;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy;
 import com.intellij.codeInsight.lookup.LookupElement;
@@ -40,7 +41,7 @@ import consulo.codeInsight.completion.CompletionProvider;
  */
 public class TagNameReferenceCompletionProvider implements CompletionProvider
 {
-	public static LookupElement[] getTagNameVariants(final @NotNull XmlTag tag, final String prefix)
+	public static LookupElement[] getTagNameVariants(final @Nonnull XmlTag tag, final String prefix)
 	{
 		List<LookupElement> elements = new ArrayList<>();
 		for(XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensions())
@@ -51,7 +52,7 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider
 	}
 
 	@Override
-	public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull final CompletionResultSet result)
+	public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull final CompletionResultSet result)
 	{
 		LegacyCompletionContributor.processReferences(parameters, result, (reference, set) ->
 		{

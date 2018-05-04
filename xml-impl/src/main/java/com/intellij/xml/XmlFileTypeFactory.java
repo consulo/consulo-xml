@@ -23,13 +23,13 @@ import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
  */
 public class XmlFileTypeFactory extends FileTypeFactory {
-  public void createFileTypes(@NotNull final FileTypeConsumer consumer) {
+  public void createFileTypes(@Nonnull final FileTypeConsumer consumer) {
     consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
     consumer.consume(XHtmlFileType.INSTANCE, "xhtml");
     consumer.consume(DTDFileType.INSTANCE, "dtd;ent;mod;elt");

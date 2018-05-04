@@ -15,7 +15,7 @@
  */
 package com.intellij.lexer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.tree.IElementType;
 import consulo.lang.LanguageVersion;
@@ -27,13 +27,13 @@ public interface EmbeddedTokenTypesProvider
 	/**
 	 * @return name of provider, doesn't related to language name.
 	 */
-	@NotNull
+	@Nonnull
 	String getName();
 
-	@NotNull
+	@Nonnull
 	IElementType getElementType();
 
-	default boolean isMyVersion(@NotNull LanguageVersion languageVersion)
+	default boolean isMyVersion(@Nonnull LanguageVersion languageVersion)
 	{
 		return getElementType().getLanguage() == languageVersion.getLanguage();
 	}

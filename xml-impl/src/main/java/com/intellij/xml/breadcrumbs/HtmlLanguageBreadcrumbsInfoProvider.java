@@ -2,7 +2,8 @@ package com.intellij.xml.breadcrumbs;
 
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.psi.PsiElement;
@@ -17,8 +18,8 @@ public class HtmlLanguageBreadcrumbsInfoProvider extends XmlLanguageBreadcrumbsI
 {
 	@RequiredReadAction
 	@Override
-	@NotNull
-	public String getElementInfo(@NotNull final PsiElement e)
+	@Nonnull
+	public String getElementInfo(@Nonnull final PsiElement e)
 	{
 		final XmlTag tag = (XmlTag) e;
 		final StringBuilder sb = new StringBuilder();
@@ -44,7 +45,7 @@ public class HtmlLanguageBreadcrumbsInfoProvider extends XmlLanguageBreadcrumbsI
 		return sb.toString();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

@@ -15,8 +15,9 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 import com.intellij.codeInsight.template.Template;
 import com.intellij.codeInsight.template.TemplateManager;
@@ -48,7 +49,7 @@ public class AddDtdDeclarationFix implements LocalQuickFix
 	private final String myElementDeclarationName;
 	private final String myReference;
 
-	public AddDtdDeclarationFix(@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey, @NotNull String elementDeclarationName, @NotNull PsiReference reference)
+	public AddDtdDeclarationFix(@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey, @Nonnull String elementDeclarationName, @Nonnull PsiReference reference)
 	{
 		myMessageKey = messageKey;
 		myElementDeclarationName = elementDeclarationName;
@@ -56,14 +57,14 @@ public class AddDtdDeclarationFix implements LocalQuickFix
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName()
 	{
 		return XmlBundle.message(myMessageKey, myReference);
 	}
 
 	@Override
-	public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor)
+	public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
 	{
 		final PsiElement element = descriptor.getPsiElement();
 		final PsiFile containingFile = element.getContainingFile();

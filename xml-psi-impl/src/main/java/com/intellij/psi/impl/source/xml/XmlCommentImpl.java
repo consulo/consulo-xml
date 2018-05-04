@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.*;
 import com.intellij.psi.impl.meta.MetaRegistry;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
@@ -24,8 +26,8 @@ import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Mike
@@ -39,7 +41,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return XML_COMMENT;
   }
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
+  public void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlComment(this);
     }
@@ -68,7 +70,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlComment.class);
   }
@@ -78,7 +80,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return MetaRegistry.getMetaBase(this);
   }
 
-  public PsiLanguageInjectionHost updateText(@NotNull final String text) {
+  public PsiLanguageInjectionHost updateText(@Nonnull final String text) {
     final PsiFile psiFile = getContainingFile();
 
     final XmlDocument document =
@@ -93,7 +95,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return this;
   }
 
-  @NotNull
+  @Nonnull
   public LiteralTextEscaper<? extends PsiLanguageInjectionHost> createLiteralTextEscaper() {
     return new XmlCommentLiteralEscaper(this);
   }

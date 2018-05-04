@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
@@ -34,7 +36,6 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
@@ -43,9 +44,9 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
 
   @NonNls private static final String XML = "xml";
 
-  @NotNull
+  @Nonnull
   @Override
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     return new XmlElementVisitor() {
 
       private Boolean isXml;
@@ -174,7 +175,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
   }
 
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.WARNING;
   }
@@ -183,17 +184,17 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
     return true;
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlBundle.message("xml.inspections.group.name");
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("xml.inspections.unbound.prefix");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return "XmlUnboundNsPrefix";

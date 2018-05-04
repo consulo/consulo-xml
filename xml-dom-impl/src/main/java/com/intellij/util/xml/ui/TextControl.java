@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextArea;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.fileTypes.PlainTextFileType;
@@ -51,7 +51,7 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 	}
 
 	@Override
-	protected EditorTextField getEditorTextField(@NotNull final TextPanel panel)
+	protected EditorTextField getEditorTextField(@Nonnull final TextPanel panel)
 	{
 		final Component component = panel.getComponent(0);
 		if(component instanceof ReferenceEditorWithBrowseButton)

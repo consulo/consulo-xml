@@ -15,11 +15,12 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
 
 public class ModuleContentRootSearchScope extends GlobalSearchScope {
   private final ModuleRootManager myRootManager;
@@ -39,7 +40,7 @@ public class ModuleContentRootSearchScope extends GlobalSearchScope {
     return 0;
   }
 
-  public boolean isSearchInModuleContent(@NotNull final Module aModule) {
+  public boolean isSearchInModuleContent(@Nonnull final Module aModule) {
     return aModule == myModule;
   }
 

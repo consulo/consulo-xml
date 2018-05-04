@@ -15,6 +15,8 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.JDOMExternalizer;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -24,39 +26,40 @@ import org.intellij.plugins.intelliLang.inject.InjectorUtils;
 import org.intellij.plugins.intelliLang.util.StringMatcher;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlAttributeInjection extends AbstractTagInjection {
 
-  @NotNull @NonNls
+  @Nonnull
+  @NonNls
   private StringMatcher myAttributeNameMatcher = StringMatcher.NONE;
-  @NotNull @NonNls
+  @Nonnull
+  @NonNls
   private String myAttributeNamespace = "";
 
-  @NotNull
+  @Nonnull
   public String getAttributeName() {
     return myAttributeNameMatcher.getPattern();
   }
 
-  public void setAttributeName(@NotNull String attributeName) {
+  public void setAttributeName(@Nonnull String attributeName) {
     myAttributeNameMatcher = StringMatcher.create(attributeName);
   }
 
-  @NotNull
+  @Nonnull
   public String getAttributeNamespace() {
     return myAttributeNamespace;
   }
 
-  public void setAttributeNamespace(@NotNull String attributeNamespace) {
+  public void setAttributeNamespace(@Nonnull String attributeNamespace) {
     myAttributeNamespace = attributeNamespace;
   }
 
-  public boolean isApplicable(@NotNull XmlAttributeValue value) {
+  public boolean isApplicable(@Nonnull XmlAttributeValue value) {
     final PsiElement element = value.getParent();
     return element instanceof XmlAttribute && matches((XmlAttribute)element);
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     final String tag = getTagName();
     final String attributeName = getAttributeName();
@@ -76,7 +79,7 @@ public class XmlAttributeInjection extends AbstractTagInjection {
     setInjectionPlaces(new InjectionPlace(getCompiler().createElementPattern(getPatternString(this), getDisplayName()), true));
   }
 
-  private boolean matches(@NotNull XmlAttribute attr) {
+  private boolean matches(@Nonnull XmlAttribute attr) {
     // mind IDEA-5206
     final boolean b = myAttributeNameMatcher.matches(attr.getLocalName()) &&
                       (attr.getName().indexOf(':') == -1 || myAttributeNamespace.equals(attr.getNamespace())) &&
@@ -91,7 +94,7 @@ public class XmlAttributeInjection extends AbstractTagInjection {
   }
 
   @Override
-  public XmlAttributeInjection copyFrom(@NotNull BaseInjection o) {
+  public XmlAttributeInjection copyFrom(@Nonnull BaseInjection o) {
     super.copyFrom(o);
     if (o instanceof XmlAttributeInjection) {
       final XmlAttributeInjection other = (XmlAttributeInjection)o;

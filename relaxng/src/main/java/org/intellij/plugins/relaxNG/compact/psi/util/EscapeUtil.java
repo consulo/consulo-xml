@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.compact.psi.util;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EscapeUtil {
   @SuppressWarnings({ "SSBasedInspection" })
-  public static String unescapeText(@NotNull PsiElement element) {
+  public static String unescapeText(@Nonnull PsiElement element) {
     final ASTNode node = element.getNode();
     if (node != null) {
       return unescapeText(node);
@@ -38,7 +38,7 @@ public class EscapeUtil {
   }
 
   @SuppressWarnings({ "SSBasedInspection" })
-  public static String unescapeText(@NotNull ASTNode node) {
+  public static String unescapeText(@Nonnull ASTNode node) {
     final String text = node.getText();
 
     // TODO: unescape \x{xx} sequences

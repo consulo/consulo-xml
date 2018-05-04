@@ -3,7 +3,7 @@ package com.intellij.util.xml.impl;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.Type;
 
@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 public abstract class DomChildDescriptionImpl extends AbstractDomChildDescriptionImpl implements DomChildrenDescription {
   private final XmlName myTagName;
 
-  protected DomChildDescriptionImpl(final XmlName tagName, @NotNull final Type type) {
+  protected DomChildDescriptionImpl(final XmlName tagName, @Nonnull final Type type) {
     super(type);
     myTagName = tagName;
   }
@@ -22,18 +22,18 @@ public abstract class DomChildDescriptionImpl extends AbstractDomChildDescriptio
     return myTagName.getLocalName();
   }
 
-  @NotNull
+  @Nonnull
   public String getXmlElementName() {
     return myTagName.getLocalName();
   }
 
-  @NotNull
+  @Nonnull
   public final XmlName getXmlName() {
     return myTagName;
   }
 
-  @NotNull
-  public String getCommonPresentableName(@NotNull DomElement parent) {
+  @Nonnull
+  public String getCommonPresentableName(@Nonnull DomElement parent) {
     return getCommonPresentableName(getDomNameStrategy(parent));
   }
 

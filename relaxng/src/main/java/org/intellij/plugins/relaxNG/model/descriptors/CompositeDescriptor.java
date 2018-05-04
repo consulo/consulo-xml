@@ -16,15 +16,14 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.openapi.util.Condition;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.Nullable;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.Arrays;

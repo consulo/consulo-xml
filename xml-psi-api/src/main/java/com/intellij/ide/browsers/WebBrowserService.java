@@ -18,7 +18,8 @@ package com.intellij.ide.browsers;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Url;
@@ -30,12 +31,12 @@ public abstract class WebBrowserService
 		return ServiceManager.getService(WebBrowserService.class);
 	}
 
-	@NotNull
-	public abstract Collection<Url> getUrlsToOpen(@NotNull OpenInBrowserRequest request, boolean preferLocalUrl) throws WebBrowserUrlProvider
+	@Nonnull
+	public abstract Collection<Url> getUrlsToOpen(@Nonnull OpenInBrowserRequest request, boolean preferLocalUrl) throws WebBrowserUrlProvider
 			.BrowserException;
 
-	@NotNull
-	public Collection<Url> getUrlsToOpen(@NotNull final PsiElement element, boolean preferLocalUrl) throws WebBrowserUrlProvider.BrowserException
+	@Nonnull
+	public Collection<Url> getUrlsToOpen(@Nonnull final PsiElement element, boolean preferLocalUrl) throws WebBrowserUrlProvider.BrowserException
 	{
 		OpenInBrowserRequest request = OpenInBrowserRequest.create(element);
 		return request == null ? Collections.<Url>emptyList() : getUrlsToOpen(request, preferLocalUrl);

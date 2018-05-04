@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.annotation.Annotation;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter

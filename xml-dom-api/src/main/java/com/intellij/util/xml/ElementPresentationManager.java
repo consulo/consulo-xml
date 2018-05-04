@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.util.Comparing;
@@ -64,17 +64,17 @@ public abstract class ElementPresentationManager {
     return ServiceManager.getService(ElementPresentationManager.class);
   }
 
-  @NotNull
+  @Nonnull
   public <T> Object[] createVariants(Collection<T> elements) {
     return createVariants(elements, (Function<T, String>)DEFAULT_NAMER);
   }
 
-  @NotNull
+  @Nonnull
   public <T> Object[] createVariants(Collection<T> elements, int iconFlags) {
     return createVariants(elements, (Function<T, String>)DEFAULT_NAMER, iconFlags);
   }
 
-  @NotNull
+  @Nonnull
   public <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer) {
     return createVariants(elements, namer, 0);
   }
@@ -85,7 +85,7 @@ public abstract class ElementPresentationManager {
   @Deprecated
   public abstract Object createVariant(final Object variant, final String name, final PsiElement psiElement);
 
-  @NotNull
+  @Nonnull
   public abstract <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags);
 
 
@@ -189,7 +189,7 @@ public abstract class ElementPresentationManager {
     return TypePresentationService.getDefaultTypeName(o.getClass());
   }
 
-  public static Icon getIcon(@NotNull Object o) {
+  public static Icon getIcon(@Nonnull Object o) {
     for (final Function<Object, Icon> function : ourIconProviders) {
       final Icon icon = function.fun(o);
       if (icon != null) {

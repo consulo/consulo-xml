@@ -15,6 +15,9 @@
  */
 package com.intellij.codeInsight.actions;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -35,8 +38,6 @@ import com.intellij.psi.xml.XmlProlog;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,10 +47,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public class GenerateDTDAction extends BaseCodeInsightAction{
   private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.actions.GenerateDTDAction");
-  @NotNull
+  @Nonnull
   protected CodeInsightActionHandler getHandler(){
     return new CodeInsightActionHandler(){
-      public void invoke(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+      public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
         final XmlDocument document = findSuitableXmlDocument(file);
         if (document != null) {
           final @NonNls StringBuffer buffer = new StringBuffer();
@@ -102,7 +103,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction{
     }
   }
 
-  protected boolean isValidForFile(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file){
+  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file){
     return file.getLanguage() == XMLLanguage.INSTANCE && findSuitableXmlDocument(file) != null;
   }
 }

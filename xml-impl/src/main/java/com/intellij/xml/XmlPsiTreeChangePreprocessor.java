@@ -1,6 +1,7 @@
 package com.intellij.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
@@ -10,19 +11,19 @@ import com.intellij.psi.xml.XmlFile;
 
 public class XmlPsiTreeChangePreprocessor extends PsiTreeChangePreprocessorBase
 {
-	public XmlPsiTreeChangePreprocessor(@NotNull PsiManager psiManager)
+	public XmlPsiTreeChangePreprocessor(@Nonnull PsiManager psiManager)
 	{
 		super(psiManager);
 	}
 
 	@Override
-	protected boolean acceptsEvent(@NotNull PsiTreeChangeEventImpl event)
+	protected boolean acceptsEvent(@Nonnull PsiTreeChangeEventImpl event)
 	{
 		return event.getFile() instanceof XmlFile;
 	}
 
 	@Override
-	protected boolean isOutOfCodeBlock(@NotNull PsiElement element)
+	protected boolean isOutOfCodeBlock(@Nonnull PsiElement element)
 	{
 		// any xml element isn't inside a "code block"
 		// cause we display even attributes and tag values in structure view

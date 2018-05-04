@@ -15,8 +15,9 @@
  */
 package com.intellij.codeInspection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import com.intellij.codeInsight.daemon.impl.analysis.InsertRequiredAttributeFix;
 import com.intellij.codeInspection.htmlInspections.AddAttributeValueIntentionFix;
@@ -27,23 +28,23 @@ import com.intellij.psi.xml.XmlToken;
 
 public class XmlQuickFixFactoryImpl extends XmlQuickFixFactory
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@NotNull XmlTag tag, @NotNull String attrName, @NotNull String... values)
+	public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values)
 	{
 		return new InsertRequiredAttributeFix(tag, attrName, values);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public LocalQuickFix createNSDeclarationIntentionFix(@NotNull PsiElement element, @NotNull String namespacePrefix, @Nullable XmlToken token)
+	public LocalQuickFix createNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix, @Nullable XmlToken token)
 	{
 		return new CreateNSDeclarationIntentionFix(element, namespacePrefix, token);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@NotNull XmlAttribute attribute)
+	public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute)
 	{
 		return new AddAttributeValueIntentionFix(attribute);
 	}

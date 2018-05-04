@@ -21,8 +21,8 @@ import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -80,7 +80,7 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     return s;
   }
 
-  @NotNull
+  @Nonnull
   public Collection<? extends String> getVariants(final ConvertContext context) {
     return Arrays.asList(VARIANTS);
   }

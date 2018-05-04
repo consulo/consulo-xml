@@ -19,8 +19,8 @@ import gnu.trove.TIntArrayList;
 
 import java.util.Arrays;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTFactory;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
@@ -459,7 +459,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -516,7 +516,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	public PsiLanguageInjectionHost updateText(@NotNull final String text)
+	public PsiLanguageInjectionHost updateText(@Nonnull final String text)
 	{
 		try
 		{
@@ -653,7 +653,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public LiteralTextEscaper<XmlTextImpl> createLiteralTextEscaper()
 	{
 		return new XmlTextLiteralEscaper(this);

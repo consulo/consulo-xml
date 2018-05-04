@@ -15,9 +15,10 @@
  */
 package com.intellij.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
 
 public interface XmlElementDescriptorWithCDataContent {
-  boolean requiresCdataBracesInContext(@NotNull XmlTag context);
+  boolean requiresCdataBracesInContext(@Nonnull XmlTag context);
 }

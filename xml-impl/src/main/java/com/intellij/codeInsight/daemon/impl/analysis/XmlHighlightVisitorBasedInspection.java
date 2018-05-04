@@ -15,9 +15,10 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
 import com.intellij.codeInspection.GlobalInspectionContext;
@@ -37,7 +38,7 @@ import com.intellij.psi.XmlRecursiveElementVisitor;
  */
 public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public HighlightDisplayLevel getDefaultLevel()
 	{
@@ -45,11 +46,11 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 	}
 
 	@Override
-	public void checkFile(@NotNull final PsiFile file,
-			@NotNull final InspectionManager manager,
-			@NotNull ProblemsHolder problemsHolder,
-			@NotNull final GlobalInspectionContext globalContext,
-			@NotNull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
+	public void checkFile(@Nonnull final PsiFile file,
+			@Nonnull final InspectionManager manager,
+			@Nonnull ProblemsHolder problemsHolder,
+			@Nonnull final GlobalInspectionContext globalContext,
+			@Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
 	{
 		HighlightInfoHolder myHolder = new HighlightInfoHolder(file)
 		{
@@ -84,7 +85,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 	}
 
 	@Nls
-	@NotNull
+	@Nonnull
 	@Override
 	public String getGroupDisplayName()
 	{
@@ -92,14 +93,14 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 	}
 
 	@Nls
-	@NotNull
+	@Nonnull
 	@Override
 	public String getDisplayName()
 	{
 		return "XML highlighting";
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getShortName()
 	{

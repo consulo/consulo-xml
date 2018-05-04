@@ -20,8 +20,8 @@ import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -34,7 +34,7 @@ public class NumberValueConverter extends ResolvingConverter<String> {
   private final boolean myAllowEmpty;
 
 
-  public NumberValueConverter(@NotNull final Class numberClass, final boolean allowEmpty) {
+  public NumberValueConverter(@Nonnull final Class numberClass, final boolean allowEmpty) {
     myNumberClass = numberClass;
     myAllowEmpty = allowEmpty;
   }
@@ -59,14 +59,14 @@ public class NumberValueConverter extends ResolvingConverter<String> {
           DomBundle.message("value.converter.format.exception", s, myNumberClass.getName());
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Collection<? extends String> getVariants(ConvertContext context) {
     return Collections.emptySet();
   }
 
   @Nullable
-  public static Number parseNumber(@NotNull String text, @NotNull Class targetClass) {
+  public static Number parseNumber(@Nonnull String text, @Nonnull Class targetClass) {
     try {
       String trimmed = text.trim();
 

@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -28,7 +29,7 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
   private long myModCount;
   private final PsiFile myModificationTracker;
 
-  public VirtualDomParentStrategy(@NotNull final DomInvocationHandler parentHandler) {
+  public VirtualDomParentStrategy(@Nonnull final DomInvocationHandler parentHandler) {
     myParentHandler = parentHandler;
     myModificationTracker = parentHandler.getFile();
     myModCount = getModCount();
@@ -38,7 +39,7 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return myModificationTracker.getModificationStamp();
   }
 
-  @NotNull
+  @Nonnull
   public DomInvocationHandler getParentHandler() {
     return myParentHandler;
   }
@@ -47,7 +48,7 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return null;
   }
 
-  @NotNull
+  @Nonnull
   public synchronized DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     if (!myParentHandler.isValid()) return this;
 
@@ -62,12 +63,12 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return this;
   }
 
-  @NotNull
-  public DomParentStrategy setXmlElement(@NotNull final XmlElement element) {
+  @Nonnull
+  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
     return new PhysicalDomParentStrategy(element, DomManagerImpl.getDomManager(element.getProject()));
   }
 
-  @NotNull
+  @Nonnull
   public synchronized DomParentStrategy clearXmlElement() {
     myModCount = getModCount();
     return this;

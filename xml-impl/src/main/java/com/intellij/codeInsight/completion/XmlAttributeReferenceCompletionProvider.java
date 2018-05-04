@@ -17,8 +17,8 @@ package com.intellij.codeInsight.completion;
 
 import static com.intellij.codeInsight.completion.CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.diagnostic.Logger;
@@ -45,7 +45,7 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
 	private static final Logger LOG = Logger.getInstance(XmlAttributeReferenceCompletionProvider.class);
 
 	@Override
-	public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+	public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 	{
 		PsiReference reference = parameters.getPosition().getContainingFile().findReferenceAt(parameters.getOffset());
 		if(reference instanceof XmlAttributeReference)
@@ -131,7 +131,7 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
 		}
 	}
 
-	private static boolean isValidVariant(XmlAttribute attribute, @NotNull XmlAttributeDescriptor descriptor, final XmlAttribute[] attributes, final XmlExtension extension)
+	private static boolean isValidVariant(XmlAttribute attribute, @Nonnull XmlAttributeDescriptor descriptor, final XmlAttribute[] attributes, final XmlExtension extension)
 	{
 		if(extension.isIndirectSyntax(descriptor))
 		{

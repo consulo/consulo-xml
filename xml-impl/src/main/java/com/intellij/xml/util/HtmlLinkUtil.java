@@ -9,15 +9,15 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
 public class HtmlLinkUtil {
   @NonNls public static final String LINK = "link";
 
-  public static void processLinks(@NotNull final XmlFile xhtmlFile,
-                                  @NotNull Processor<XmlTag> tagProcessor) {
+  public static void processLinks(@Nonnull final XmlFile xhtmlFile,
+                                  @Nonnull Processor<XmlTag> tagProcessor) {
     final XmlDocument doc = HtmlUtil.getRealXmlDocument(xhtmlFile.getDocument());
     if (doc == null) return;
 
@@ -32,8 +32,8 @@ public class HtmlLinkUtil {
     }
   }
 
-  public static void findLinkStylesheets(@NotNull final XmlTag tag,
-                                         @NotNull Processor<XmlTag> tagProcessor) {
+  public static void findLinkStylesheets(@Nonnull final XmlTag tag,
+                                         @Nonnull Processor<XmlTag> tagProcessor) {
     processInjectedContent(tag, tagProcessor);
 
     for (XmlTag subTag : tag.getSubTags()) {
@@ -46,10 +46,10 @@ public class HtmlLinkUtil {
   }
 
   public static void processInjectedContent(final XmlTag element,
-                                            @NotNull final Processor<XmlTag> tagProcessor) {
+                                            @Nonnull final Processor<XmlTag> tagProcessor) {
     final PsiLanguageInjectionHost.InjectedPsiVisitor injectedPsiVisitor = new PsiLanguageInjectionHost.InjectedPsiVisitor() {
       @Override
-      public void visit(@NotNull PsiFile injectedPsi, @NotNull List<PsiLanguageInjectionHost.Shred> places) {
+      public void visit(@Nonnull PsiFile injectedPsi, @Nonnull List<PsiLanguageInjectionHost.Shred> places) {
         if (injectedPsi instanceof XmlFile) {
           final XmlDocument injectedDocument = ((XmlFile)injectedPsi).getDocument();
           if (injectedDocument != null) {

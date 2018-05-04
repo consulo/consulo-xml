@@ -16,16 +16,17 @@
 
 package com.intellij.util.xml.model;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.UserDataHolder;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -41,7 +42,7 @@ public abstract class DomModelCache<T, H extends UserDataHolder> {
   }
 
   @Nullable
-  public T getCachedValue(final @NotNull H dataHolder) {
+  public T getCachedValue(final @Nonnull H dataHolder) {
     CachedValue<T> cachedValue = dataHolder.getUserData(myKey);
     if (cachedValue == null) {
       final CachedValueProvider<T> myProvider = new CachedValueProvider<T>() {
@@ -57,6 +58,6 @@ public abstract class DomModelCache<T, H extends UserDataHolder> {
     return cachedValue.getValue();
   }
 
-  @NotNull
-  protected abstract CachedValueProvider.Result<T> computeValue(@NotNull H dataHolder);
+  @Nonnull
+  protected abstract CachedValueProvider.Result<T> computeValue(@Nonnull H dataHolder);
 }

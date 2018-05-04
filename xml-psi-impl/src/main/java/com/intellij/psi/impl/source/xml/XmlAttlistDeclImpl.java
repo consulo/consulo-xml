@@ -24,7 +24,7 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import com.intellij.psi.scope.processor.FilterElementProcessor;
 import com.intellij.psi.tree.ChildRoleBase;
 import com.intellij.psi.xml.*;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class XmlAttlistDeclImpl extends XmlElementImpl implements XmlAttlistDecl
   public XmlAttributeDecl[] getAttributeDecls() {
     final List<XmlAttributeDecl> result = new ArrayList<XmlAttributeDecl>();
     processElements(new FilterElementProcessor(new ClassFilter(XmlAttributeDecl.class), result) {
-      public boolean execute(@NotNull final PsiElement element) {
+      public boolean execute(@Nonnull final PsiElement element) {
         if (element instanceof XmlAttributeDecl) {
           if (element.getNextSibling() == null && element.getChildren().length == 1) {
             return true;
@@ -69,7 +69,7 @@ public class XmlAttlistDeclImpl extends XmlElementImpl implements XmlAttlistDecl
     return result.toArray(new XmlAttributeDecl[result.size()]);
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this,XmlAttlistDecl.class);
   }

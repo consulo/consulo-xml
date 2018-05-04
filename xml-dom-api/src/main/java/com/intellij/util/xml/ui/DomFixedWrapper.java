@@ -17,7 +17,7 @@ package com.intellij.util.xml.ui;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -44,7 +44,7 @@ public class DomFixedWrapper<T> extends DomWrapper<T>{
     return element.isValid() ? (T)DomUIFactory.GET_VALUE_METHOD.invoke(element) : null;
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getExistingDomElement() {
     return myDomElement;
   }

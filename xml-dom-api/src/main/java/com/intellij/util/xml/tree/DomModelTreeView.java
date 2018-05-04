@@ -18,6 +18,8 @@ package com.intellij.util.xml.tree;
 
 import java.awt.BorderLayout;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.ToolTipManager;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
@@ -26,8 +28,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.util.treeView.AbstractTreeBuilder;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionGroup;
@@ -66,9 +66,10 @@ public class DomModelTreeView extends Wrapper implements DataProvider, Disposabl
   private final SimpleTree myTree;
   private final AbstractTreeBuilder myBuilder;
   private DomManager myDomManager;
-  @Nullable private DomElement myRootElement;
+  @Nullable
+  private DomElement myRootElement;
 
-  public DomModelTreeView(@NotNull DomElement rootElement) {
+  public DomModelTreeView(@Nonnull DomElement rootElement) {
     this(rootElement, rootElement.getManager(), new DomModelTreeStructure(rootElement));
   }
 
@@ -193,7 +194,7 @@ public class DomModelTreeView extends Wrapper implements DataProvider, Disposabl
 
   @Override
   @Nullable
-  public Object getData(@NotNull Key<?> dataId) {
+  public Object getData(@Nonnull Key<?> dataId) {
     if (DomModelTreeView.DATA_KEY == dataId) {
       return this;
     }

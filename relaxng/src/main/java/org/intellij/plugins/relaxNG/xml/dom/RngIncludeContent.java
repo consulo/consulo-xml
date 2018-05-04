@@ -20,7 +20,7 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import com.intellij.util.xml.SubTag;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public interface RngIncludeContent extends RngDomElement {
    *
    * @return the list of start children.
    */
-  @NotNull
+  @Nonnull
   @SubTag("start")
   RngStart getStartElement();
 
@@ -43,7 +43,7 @@ public interface RngIncludeContent extends RngDomElement {
    *
    * @return the list of define children.
    */
-  @NotNull
+  @Nonnull
   List<RngDefine> getDefines();
 
   /**
@@ -59,7 +59,7 @@ public interface RngIncludeContent extends RngDomElement {
    *
    * @return the list of div children.
    */
-  @NotNull
+  @Nonnull
   List<RngDiv> getDivs();
 
   /**

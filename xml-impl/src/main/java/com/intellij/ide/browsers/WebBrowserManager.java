@@ -26,8 +26,8 @@ import com.intellij.util.SmartList;
 import com.intellij.util.xmlb.SkipDefaultValuesSerializationFilters;
 import com.intellij.util.xmlb.XmlSerializer;
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -63,7 +63,7 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		return ServiceManager.getService(WebBrowserManager.class);
 	}
 
-	boolean isPredefinedBrowser(@NotNull ConfigurableWebBrowser browser)
+	boolean isPredefinedBrowser(@Nonnull ConfigurableWebBrowser browser)
 	{
 		UUID id = browser.getId();
 		return id.equals(DEFAULT_CHROME_ID) ||
@@ -78,7 +78,7 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		SYSTEM, FIRST, ALTERNATIVE
 	}
 
-	@NotNull
+	@Nonnull
 	public DefaultBrowser getDefaultBrowserMode()
 	{
 		return defaultBrowser;
@@ -150,7 +150,7 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 	}
 
 	@Nullable
-	private static UUID readId(String value, @NotNull BrowserFamily family, @NotNull List<ConfigurableWebBrowser> existingBrowsers)
+	private static UUID readId(String value, @Nonnull BrowserFamily family, @Nonnull List<ConfigurableWebBrowser> existingBrowsers)
 	{
 		if(StringUtil.isEmpty(value))
 		{
@@ -261,38 +261,38 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		setList(list);
 	}
 
-	@NotNull
+	@Nonnull
 	public List<WebBrowser> getBrowsers()
 	{
 		return Collections.<WebBrowser>unmodifiableList(browsers);
 	}
 
-	@NotNull
+	@Nonnull
 	List<ConfigurableWebBrowser> getList()
 	{
 		return browsers;
 	}
 
-	void setList(@NotNull List<ConfigurableWebBrowser> value)
+	void setList(@Nonnull List<ConfigurableWebBrowser> value)
 	{
 		browsers = value;
 		incModificationCount();
 	}
 
-	@NotNull
+	@Nonnull
 	public List<WebBrowser> getActiveBrowsers()
 	{
 		return getBrowsers(Conditions.<WebBrowser>alwaysTrue(), true);
 	}
 
-	@NotNull
-	public List<WebBrowser> getBrowsers(@NotNull Condition<WebBrowser> condition)
+	@Nonnull
+	public List<WebBrowser> getBrowsers(@Nonnull Condition<WebBrowser> condition)
 	{
 		return getBrowsers(condition, true);
 	}
 
-	@NotNull
-	public List<WebBrowser> getBrowsers(@NotNull Condition<WebBrowser> condition, boolean onlyActive)
+	@Nonnull
+	public List<WebBrowser> getBrowsers(@Nonnull Condition<WebBrowser> condition, boolean onlyActive)
 	{
 		List<WebBrowser> result = new SmartList<WebBrowser>();
 		for(ConfigurableWebBrowser browser : browsers)
@@ -305,18 +305,18 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		return result;
 	}
 
-	public void setBrowserSpecificSettings(@NotNull WebBrowser browser, @NotNull BrowserSpecificSettings specificSettings)
+	public void setBrowserSpecificSettings(@Nonnull WebBrowser browser, @Nonnull BrowserSpecificSettings specificSettings)
 	{
 		((ConfigurableWebBrowser) browser).setSpecificSettings(specificSettings);
 	}
 
-	public void setBrowserPath(@NotNull WebBrowser browser, @Nullable String path, boolean isActive)
+	public void setBrowserPath(@Nonnull WebBrowser browser, @Nullable String path, boolean isActive)
 	{
 		((ConfigurableWebBrowser) browser).setPath(path);
 		((ConfigurableWebBrowser) browser).setActive(isActive);
 	}
 
-	public WebBrowser addBrowser(final @NotNull UUID id, final @NotNull BrowserFamily family, final @NotNull String name,
+	public WebBrowser addBrowser(final @Nonnull UUID id, final @Nonnull BrowserFamily family, final @Nonnull String name,
 			final @Nullable String path, final boolean active, final BrowserSpecificSettings specificSettings)
 	{
 		final ConfigurableWebBrowser browser = new ConfigurableWebBrowser(id, family, name, path, active, specificSettings);
@@ -326,7 +326,7 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 	}
 
 	@Nullable
-	private static UUID parseUuid(@NotNull String id)
+	private static UUID parseUuid(@Nonnull String id)
 	{
 		if(id.indexOf('-') == -1)
 		{
@@ -377,8 +377,8 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		return null;
 	}
 
-	@NotNull
-	public WebBrowser getFirstBrowser(@NotNull BrowserFamily family)
+	@Nonnull
+	public WebBrowser getFirstBrowser(@Nonnull BrowserFamily family)
 	{
 		for(ConfigurableWebBrowser browser : browsers)
 		{
@@ -399,7 +399,7 @@ public class WebBrowserManager extends SimpleModificationTracker implements Pers
 		throw new IllegalStateException("Must be at least one browser per family");
 	}
 
-	public boolean isActive(@NotNull WebBrowser browser)
+	public boolean isActive(@Nonnull WebBrowser browser)
 	{
 		return !(browser instanceof ConfigurableWebBrowser) || ((ConfigurableWebBrowser) browser).isActive();
 	}

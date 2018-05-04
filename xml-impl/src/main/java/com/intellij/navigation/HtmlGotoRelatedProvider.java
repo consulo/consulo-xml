@@ -22,7 +22,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.containers.HashSet;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,9 +36,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
-  @NotNull
+  @Nonnull
   @Override
-  public List<? extends GotoRelatedItem> getItems(@NotNull PsiElement context) {
+  public List<? extends GotoRelatedItem> getItems(@Nonnull PsiElement context) {
     final PsiFile file = context.getContainingFile();
     if (file == null || !isAvailable(file)) {
       return Collections.emptyList();
@@ -47,7 +47,7 @@ public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
     return getRelatedFiles(file);
   }
 
-  private static boolean isAvailable(@NotNull PsiFile psiFile) {
+  private static boolean isAvailable(@Nonnull PsiFile psiFile) {
     for (PsiFile file : psiFile.getViewProvider().getAllFiles()) {
       Language language = file.getLanguage();
       if (language.isKindOf(HTMLLanguage.INSTANCE) || language.isKindOf(XHTMLLanguage.INSTANCE)) {
@@ -57,7 +57,7 @@ public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
     return false;
   }
 
-  private static List<? extends GotoRelatedItem> getRelatedFiles(@NotNull PsiFile file) {
+  private static List<? extends GotoRelatedItem> getRelatedFiles(@Nonnull PsiFile file) {
     List<GotoRelatedItem> items = new ArrayList<GotoRelatedItem>();
 
     for (PsiFile psiFile : file.getViewProvider().getAllFiles()) {

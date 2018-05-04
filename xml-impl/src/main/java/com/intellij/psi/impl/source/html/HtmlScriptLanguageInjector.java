@@ -17,7 +17,8 @@ package com.intellij.psi.impl.source.html;
 
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageUtil;
 import com.intellij.lang.injection.MultiHostInjector;
@@ -30,7 +31,7 @@ import com.intellij.psi.xml.XmlText;
 
 public class HtmlScriptLanguageInjector implements MultiHostInjector {
   @Override
-  public void injectLanguages(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement host) {
+  public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host) {
     if (!(host instanceof XmlText)) {
       return;
     }

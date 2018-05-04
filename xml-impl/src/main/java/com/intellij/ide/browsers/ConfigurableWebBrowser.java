@@ -2,10 +2,10 @@ package com.intellij.ide.browsers;
 
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.text.StringUtil;
@@ -15,9 +15,9 @@ import com.intellij.xml.XmlIcons;
 final class ConfigurableWebBrowser extends WebBrowser
 {
 	private final UUID id;
-	@NotNull
+	@Nonnull
 	private BrowserFamily family;
-	@NotNull
+	@Nonnull
 	private String name;
 	private boolean active;
 	private String path;
@@ -30,12 +30,12 @@ final class ConfigurableWebBrowser extends WebBrowser
 		this(UUID.randomUUID(), BrowserFamily.CHROME);
 	}
 
-	public ConfigurableWebBrowser(@NotNull UUID id, @NotNull BrowserFamily family)
+	public ConfigurableWebBrowser(@Nonnull UUID id, @Nonnull BrowserFamily family)
 	{
 		this(id, family, family.getName(), family.getExecutionPath(), true, family.createBrowserSpecificSettings());
 	}
 
-	public ConfigurableWebBrowser(@NotNull UUID id, @NotNull BrowserFamily family, @NotNull String name, @Nullable String path, boolean active,
+	public ConfigurableWebBrowser(@Nonnull UUID id, @Nonnull BrowserFamily family, @Nonnull String name, @Nullable String path, boolean active,
 			@Nullable BrowserSpecificSettings specificSettings)
 	{
 		this.id = id;
@@ -47,17 +47,17 @@ final class ConfigurableWebBrowser extends WebBrowser
 		this.specificSettings = specificSettings;
 	}
 
-	public void setName(@NotNull String value)
+	public void setName(@Nonnull String value)
 	{
 		name = value;
 	}
 
-	public void setFamily(@NotNull BrowserFamily value)
+	public void setFamily(@Nonnull BrowserFamily value)
 	{
 		family = value;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Icon getIcon()
 	{
@@ -87,7 +87,7 @@ final class ConfigurableWebBrowser extends WebBrowser
 		return family.getIcon();
 	}
 
-	private boolean checkNameAndPath(@NotNull String what)
+	private boolean checkNameAndPath(@Nonnull String what)
 	{
 		if(StringUtil.containsIgnoreCase(name, what))
 		{
@@ -163,28 +163,28 @@ final class ConfigurableWebBrowser extends WebBrowser
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return name;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public final UUID getId()
 	{
 		return id;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public BrowserFamily getFamily()
 	{
 		return family;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getBrowserNotFoundMessage()
 	{
 		return IdeBundle.message("error.0.browser.path.not.specified", getName());

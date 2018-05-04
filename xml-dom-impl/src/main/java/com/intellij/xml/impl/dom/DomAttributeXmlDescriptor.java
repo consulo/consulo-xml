@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.impl.dom;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -27,8 +29,8 @@ import com.intellij.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.xml.NamespaceAwareXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author mike
@@ -116,7 +118,7 @@ public class DomAttributeXmlDescriptor implements NamespaceAwareXmlAttributeDesc
   }
 
   @Nullable
-  public String getNamespace(@NotNull XmlTag context) {
+  public String getNamespace(@Nonnull XmlTag context) {
     final DomInvocationHandler handler = DomManagerImpl.getDomManager(myProject).getDomHandler(context);
 
     if (handler == null) {

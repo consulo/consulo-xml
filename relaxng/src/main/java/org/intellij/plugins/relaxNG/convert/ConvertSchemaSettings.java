@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import java.util.List;
  * Date: 17.11.2007
  */
 public interface ConvertSchemaSettings {
-  @NotNull
+  @Nonnull
   SchemaType getOutputType();
 
   String getOutputEncoding();

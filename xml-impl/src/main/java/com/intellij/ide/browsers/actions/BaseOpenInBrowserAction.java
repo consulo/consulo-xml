@@ -18,11 +18,11 @@ package com.intellij.ide.browsers.actions;
 import java.awt.event.InputEvent;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.swing.JList;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.ide.browsers.BrowserLauncher;
@@ -65,7 +65,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 {
 	private static final Logger LOG = Logger.getInstance(BaseOpenInBrowserAction.class);
 
-	protected BaseOpenInBrowserAction(@NotNull WebBrowser browser)
+	protected BaseOpenInBrowserAction(@Nonnull WebBrowser browser)
 	{
 		super(browser.getName(), null, browser.getIcon());
 	}
@@ -77,7 +77,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	}
 
 	@Nullable
-	protected abstract WebBrowser getBrowser(@NotNull AnActionEvent event);
+	protected abstract WebBrowser getBrowser(@Nonnull AnActionEvent event);
 
 	@Override
 	public final void update(AnActionEvent e)
@@ -128,7 +128,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	}
 
 	@Nullable
-	public static OpenInBrowserRequest createRequest(@NotNull DataContext context)
+	public static OpenInBrowserRequest createRequest(@Nonnull DataContext context)
 	{
 		final Editor editor = context.getData(CommonDataKeys.EDITOR);
 		if(editor != null)
@@ -147,7 +147,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 					{
 						private PsiElement element;
 
-						@NotNull
+						@Nonnull
 						@Override
 						public PsiElement getElement()
 						{
@@ -180,7 +180,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	}
 
 	@Nullable
-	public static Pair<OpenInBrowserRequest, WebBrowserUrlProvider> doUpdate(@NotNull AnActionEvent event)
+	public static Pair<OpenInBrowserRequest, WebBrowserUrlProvider> doUpdate(@Nonnull AnActionEvent event)
 	{
 		OpenInBrowserRequest request = createRequest(event.getDataContext());
 		boolean applicable = false;
@@ -199,7 +199,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 		return applicable ? Pair.create(request, provider) : null;
 	}
 
-	public static void open(@NotNull AnActionEvent event, @Nullable WebBrowser browser)
+	public static void open(@Nonnull AnActionEvent event, @Nullable WebBrowser browser)
 	{
 		open(createRequest(event.getDataContext()), (event.getModifiers() & InputEvent.SHIFT_MASK) != 0, browser);
 	}
@@ -237,8 +237,8 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 		}
 	}
 
-	@NotNull
-	private static AsyncResult<Url> chooseUrl(@NotNull Collection<Url> urls)
+	@Nonnull
+	private static AsyncResult<Url> chooseUrl(@Nonnull Collection<Url> urls)
 	{
 		if(urls.size() == 1)
 		{

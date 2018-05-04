@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.MultiValuesMap;
 import com.intellij.openapi.util.Pair;
@@ -319,7 +319,7 @@ public class StaticGenericInfoBuilder {
     return StringUtil.getPropertyName(method.getMethodName());
   }
 
-  @NotNull
+  @Nonnull
   private DomNameStrategy getNameStrategy(boolean isAttribute) {
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(ReflectionUtil.getRawType(myClass), isAttribute);
     return strategy != null ? strategy : DomNameStrategy.HYPHEN_STRATEGY;

@@ -16,10 +16,11 @@
 
 package org.intellij.plugins.relaxNG.references;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.patterns.PatternCondition;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.ProcessingContext;
-import org.jetbrains.annotations.NotNull;
 
 class AttributeValueCondition extends PatternCondition<XmlAttributeValue> {
   private final String myRef;
@@ -30,7 +31,7 @@ class AttributeValueCondition extends PatternCondition<XmlAttributeValue> {
   }
 
   @Override
-  public boolean accepts(@NotNull XmlAttributeValue value, ProcessingContext context) {
+  public boolean accepts(@Nonnull XmlAttributeValue value, ProcessingContext context) {
     return myRef.equals(value.getValue());
   }
 }

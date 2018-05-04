@@ -16,6 +16,9 @@
 
 package com.intellij.util.xml.converters;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.CustomReferenceConverter;
@@ -25,8 +28,6 @@ import com.intellij.openapi.paths.PathReference;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -43,13 +44,13 @@ public class PathReferenceConverter extends Converter<PathReference> implements 
     return t == null ? null : t.getPath();
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue genericDomValue, final PsiElement element, final ConvertContext context) {
     return createReferences(element, true);
   }
 
-  @NotNull
-  public PsiReference[] createReferences(@NotNull final PsiElement psiElement, final boolean soft) {
+  @Nonnull
+  public PsiReference[] createReferences(@Nonnull final PsiElement psiElement, final boolean soft) {
     return PathReferenceManager.getInstance().createReferences(psiElement, soft);
   }
 }

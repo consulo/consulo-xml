@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -57,7 +58,7 @@ import com.intellij.xml.util.XmlUtil;
 public class SchemaDefinitionsSearch implements QueryExecutor<PsiElement, DefinitionsScopedSearch.SearchParameters>
 {
 	@Override
-	public boolean execute(@NotNull final DefinitionsScopedSearch.SearchParameters parameters, @NotNull final Processor<PsiElement> consumer)
+	public boolean execute(@Nonnull final DefinitionsScopedSearch.SearchParameters parameters, @Nonnull final Processor<PsiElement> consumer)
 	{
 		PsiElement queryParameters = parameters.getElement();
 		if(queryParameters instanceof XmlTagImpl)
@@ -134,7 +135,7 @@ public class SchemaDefinitionsSearch implements QueryExecutor<PsiElement, Defini
 										final PsiElementProcessor processor = new PsiElementProcessor()
 										{
 											@Override
-											public boolean execute(@NotNull PsiElement element)
+											public boolean execute(@Nonnull PsiElement element)
 											{
 												if(element instanceof XmlTagImpl)
 												{

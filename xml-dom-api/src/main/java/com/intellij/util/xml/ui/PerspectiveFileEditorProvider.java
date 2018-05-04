@@ -15,27 +15,28 @@
  */
 package com.intellij.util.xml.ui;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
  */
 public abstract class PerspectiveFileEditorProvider extends WeighedFileEditorProvider {
-  @NotNull
-  public abstract PerspectiveFileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file);
+  @Nonnull
+  public abstract PerspectiveFileEditor createEditor(@Nonnull Project project, @Nonnull VirtualFile file);
 
-  public void disposeEditor(@NotNull FileEditor editor) {
+  public void disposeEditor(@Nonnull FileEditor editor) {
     Disposer.dispose(editor);
   }
 
-  @NotNull
-  public FileEditorState readState(@NotNull Element sourceElement, @NotNull Project project, @NotNull VirtualFile file) {
+  @Nonnull
+  public FileEditorState readState(@Nonnull Element sourceElement, @Nonnull Project project, @Nonnull VirtualFile file) {
     return new FileEditorState() {
       public boolean canBeMergedWith(FileEditorState otherState, FileEditorStateLevel level) {
         return true;
@@ -43,16 +44,16 @@ public abstract class PerspectiveFileEditorProvider extends WeighedFileEditorPro
     };
   }
 
-  public void writeState(@NotNull FileEditorState state, @NotNull Project project, @NotNull Element targetElement) {
+  public void writeState(@Nonnull FileEditorState state, @Nonnull Project project, @Nonnull Element targetElement) {
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public final String getEditorTypeId() {
     return getComponentName();
   }
 
-  @NotNull
+  @Nonnull
   public final FileEditorPolicy getPolicy() {
     return FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR;
   }

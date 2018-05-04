@@ -24,20 +24,21 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.xml.*;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlProcessingInstruction {
   public XmlProcessingInstructionImpl() {
     super(XmlElementType.XML_PROCESSING_INSTRUCTION);
   }
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
+  public void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlProcessingInstruction(this);
     }
@@ -64,7 +65,7 @@ public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlP
     return null;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlProcessingInstruction.class);

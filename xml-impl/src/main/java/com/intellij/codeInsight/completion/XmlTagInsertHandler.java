@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.lookup.Lookup;

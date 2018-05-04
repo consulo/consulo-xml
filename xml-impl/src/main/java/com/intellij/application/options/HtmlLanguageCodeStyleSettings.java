@@ -15,24 +15,25 @@
  */
 package com.intellij.application.options;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Rustam Vishnyakov
  */
 public class HtmlLanguageCodeStyleSettings extends LanguageCodeStyleSettingsProvider {
-  @NotNull
+  @Nonnull
   @Override
   public Language getLanguage() {
     return HTMLLanguage.INSTANCE;
   }
 
   @Override
-  public String getCodeSample(@NotNull SettingsType settingsType) {
+  public String getCodeSample(@Nonnull SettingsType settingsType) {
     return CodeStyleAbstractPanel.readFromFile(this.getClass(), "preview.html.template");
   }
 

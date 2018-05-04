@@ -15,10 +15,10 @@
  */
 package com.intellij.ide.browsers;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
@@ -29,7 +29,7 @@ public class BrowserSettings implements SearchableConfigurable, Configurable.NoS
 	private BrowserSettingsPanel myPanel;
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getId()
 	{
 		return getHelpTopic();
@@ -49,7 +49,7 @@ public class BrowserSettings implements SearchableConfigurable, Configurable.NoS
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getHelpTopic()
 	{
 		return "reference.settings.ide.settings.web.browsers";
@@ -95,7 +95,7 @@ public class BrowserSettings implements SearchableConfigurable, Configurable.NoS
 		myPanel = null;
 	}
 
-	public void selectBrowser(@NotNull WebBrowser browser)
+	public void selectBrowser(@Nonnull WebBrowser browser)
 	{
 		createComponent();
 		myPanel.selectBrowser(browser);

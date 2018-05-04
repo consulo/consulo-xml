@@ -21,9 +21,11 @@ import gnu.trove.TIntArrayList;
 
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
@@ -144,7 +146,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getNamespace()
 	{
 		final String name = getName();
@@ -159,7 +161,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 
 	@Override
 	@NonNls
-	@NotNull
+	@Nonnull
 	public String getNamespacePrefix()
 	{
 		return XmlUtil.findPrefixByQualifiedName(getName());
@@ -173,14 +175,14 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getLocalName()
 	{
 		return XmlUtil.findLocalNameByQualifiedName(getName());
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -357,7 +359,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 		return displayIndex + shift;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public TextRange getValueTextRange()
 	{
@@ -376,7 +378,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		XmlElement element = getNameElement();
@@ -391,7 +393,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	public PsiElement setName(@NotNull final String nameText) throws IncorrectOperationException
+	public PsiElement setName(@Nonnull final String nameText) throws IncorrectOperationException
 	{
 		final ASTNode name = XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild(this);
 		final String oldName = name.getText();
@@ -429,7 +431,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	public boolean shouldAskParentForReferences(@NotNull PsiReferenceService.Hints hints)
+	public boolean shouldAskParentForReferences(@Nonnull PsiReferenceService.Hints hints)
 	{
 		return false;
 	}
@@ -438,7 +440,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	 * Use {@link #getReferences(PsiReferenceService.Hints)} instead of calling or overriding this method.
 	 */
 	@Deprecated
-	@NotNull
+	@Nonnull
 	@Override
 	public final PsiReference[] getReferences()
 	{
@@ -446,9 +448,9 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@RequiredReadAction
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiReference[] getReferences(@NotNull PsiReferenceService.Hints hints)
+	public PsiReference[] getReferences(@Nonnull PsiReferenceService.Hints hints)
 	{
 		if(hints.offsetInElement != null)
 		{

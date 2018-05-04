@@ -17,7 +17,7 @@ package com.intellij.util.xml;
 
 import com.intellij.util.SmartFMap;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -101,7 +101,8 @@ public final class JavaMethod implements AnnotatedElement{
     return annotation == NONE ? null : (T)annotation;
   }
 
-  @NotNull private Object findAnnotation(Class<? extends Annotation> annotationClass) {
+  @Nonnull
+  private Object findAnnotation(Class<? extends Annotation> annotationClass) {
     for (Method method : mySignature.getAllMethods(myDeclaringClass)) {
       final Annotation annotation = method.getAnnotation(annotationClass);
       if (annotation != null) {

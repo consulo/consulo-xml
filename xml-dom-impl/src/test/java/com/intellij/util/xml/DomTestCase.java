@@ -2,8 +2,9 @@ package com.intellij.util.xml;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiFileFactory;

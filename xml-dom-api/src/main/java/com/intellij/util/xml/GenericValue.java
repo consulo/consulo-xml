@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * This interface may be interpreted as a reference, whose text is {@link #getStringValue()}, and resolving to

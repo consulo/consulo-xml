@@ -15,7 +15,7 @@
  */
 package com.intellij.pom.xml.impl.events;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.pom.PomModel;
 import com.intellij.pom.event.PomModelEvent;
 import com.intellij.pom.xml.XmlAspect;
@@ -28,7 +28,7 @@ import com.intellij.psi.xml.XmlFile;
 public class XmlDocumentChangedImpl implements XmlDocumentChanged {
   private final XmlDocument myDocument;
 
-  public XmlDocumentChangedImpl(@NotNull XmlDocument document) {
+  public XmlDocumentChangedImpl(@Nonnull XmlDocument document) {
     myDocument = document;
   }
 

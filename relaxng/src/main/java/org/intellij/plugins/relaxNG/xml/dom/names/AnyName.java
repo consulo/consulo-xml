@@ -19,8 +19,9 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.names;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:anyNameElemType interface.
@@ -33,6 +34,6 @@ public interface AnyName extends RngDomElement {
    *
    * @return the list of except children.
    */
-  @NotNull
+  @Nonnull
   OpenNameClasses getExcept();
 }

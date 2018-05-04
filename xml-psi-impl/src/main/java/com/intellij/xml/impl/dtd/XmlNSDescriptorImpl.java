@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.lang.dtd.DTDLanguage;
@@ -86,21 +86,21 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	private static final XmlUtil.DuplicationInfoProvider<XmlElementDecl> XML_ELEMENT_DECL_PROVIDER = new XmlUtil.DuplicationInfoProvider<XmlElementDecl>()
 	{
 		@Override
-		public String getName(@NotNull final XmlElementDecl psiElement)
+		public String getName(@Nonnull final XmlElementDecl psiElement)
 		{
 			return psiElement.getName();
 		}
 
 		@Override
-		@NotNull
-		public String getNameKey(@NotNull final XmlElementDecl psiElement, @NotNull final String name)
+		@Nonnull
+		public String getNameKey(@Nonnull final XmlElementDecl psiElement, @Nonnull final String name)
 		{
 			return name;
 		}
 
 		@Override
-		@NotNull
-		public PsiElement getNodeForMessage(@NotNull final XmlElementDecl psiElement)
+		@Nonnull
+		public PsiElement getNodeForMessage(@Nonnull final XmlElementDecl psiElement)
 		{
 			return psiElement.getNameElement();
 		}
@@ -164,14 +164,14 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	@Override
-	public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag)
+	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
 	{
 		String name = tag.getName();
 		return getElementDescriptor(name);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document)
 	{
 		// Suggest more appropriate variant if DOCTYPE <element_name> exists
@@ -245,7 +245,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	}
 
 	@Override
-	public void validate(@NotNull XmlDocument document, @NotNull ValidationHost host)
+	public void validate(@Nonnull XmlDocument document, @Nonnull ValidationHost host)
 	{
 		if(document.getLanguage() == DTDLanguage.INSTANCE)
 		{
@@ -254,7 +254,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			XmlUtil.processXmlElements(document, new PsiElementProcessor()
 			{
 				@Override
-				public boolean execute(@NotNull final PsiElement element)
+				public boolean execute(@Nonnull final PsiElement element)
 				{
 					if(element instanceof XmlElementDecl)
 					{

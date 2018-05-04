@@ -15,12 +15,13 @@
  */
 package com.intellij.lexer;
 
+import javax.annotation.Nullable;
+
 import com.intellij.lang.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.Nullable;
 
 public class HtmlHighlightingLexer extends BaseHtmlLexer {
   private static final Logger LOG = Logger.getInstance("#com.intellij.lexer.HtmlHighlightingLexer");

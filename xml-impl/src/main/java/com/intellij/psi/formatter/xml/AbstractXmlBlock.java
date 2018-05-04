@@ -18,8 +18,8 @@ package com.intellij.psi.formatter.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.formatting.Alignment;
 import com.intellij.formatting.Block;
 import com.intellij.formatting.DelegatingFormattingModelBuilder;
@@ -262,7 +262,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   private static XmlTag[] collectSubTags(final XmlElement node) {
     final List<XmlTag> result = new ArrayList<XmlTag>();
     node.processElements(new PsiElementProcessor() {
-      public boolean execute(@NotNull final PsiElement element) {
+      public boolean execute(@Nonnull final PsiElement element) {
         if (element instanceof XmlTag) {
           result.add((XmlTag)element);
         }
@@ -288,7 +288,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   }
 
   private ASTNode processAllChildrenFrom(final List<Block> result,
-                                         final @NotNull ASTNode child,
+                                         final @Nonnull ASTNode child,
                                          final Wrap wrap,
                                          final Alignment alignment,
                                          final Indent indent) {
@@ -425,7 +425,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   }
 
   @Nullable
-  protected static ASTNode findChildAfter(@NotNull final ASTNode child, final int endOffset) {
+  protected static ASTNode findChildAfter(@Nonnull final ASTNode child, final int endOffset) {
     TreeElement fileNode = TreeUtil.getFileElement((TreeElement)child);
     final LeafElement leaf = fileNode.findLeafElementAt(endOffset);
     if (leaf != null && leaf.getStartOffset() == endOffset && endOffset > 0) {

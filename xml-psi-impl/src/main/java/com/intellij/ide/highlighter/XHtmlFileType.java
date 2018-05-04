@@ -15,9 +15,9 @@
  */
 package com.intellij.ide.highlighter;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.xhtml.XHTMLLanguage;
@@ -29,17 +29,17 @@ public class XHtmlFileType extends HtmlFileType {
     super(XHTMLLanguage.INSTANCE);
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return "XHTML";
   }
 
-  @NotNull
+  @Nonnull
   public String getDescription() {
     return IdeBundle.message("filetype.description.xhtml");
   }
 
-  @NotNull
+  @Nonnull
   public String getDefaultExtension() {
     return "xhtml";
   }

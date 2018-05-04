@@ -15,6 +15,9 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.PsiAnchor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -26,8 +29,6 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.reference.SoftReference;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
@@ -37,7 +38,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
   private SoftReference<T> myRef;
   private final PsiElement myParent;
 
-  public IncludedXmlElement(@NotNull T original, @Nullable PsiElement parent) {
+  public IncludedXmlElement(@Nonnull T original, @Nullable PsiElement parent) {
     super(original.getManager(), original.getLanguage());
     //noinspection unchecked
     T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>)original).getOriginal() : original;
@@ -90,7 +91,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
     return element;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public T getNavigationElement() {
     return getOriginal();
@@ -117,7 +118,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
     return getOriginal().processElements(new PsiElementProcessor() {
       @SuppressWarnings("unchecked")
       @Override
-      public boolean execute(@NotNull PsiElement element) {
+      public boolean execute(@Nonnull PsiElement element) {
         if (element instanceof XmlTag) {
           XmlTag theirParent = ((XmlTag)element).getParentTag();
           PsiElement parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;

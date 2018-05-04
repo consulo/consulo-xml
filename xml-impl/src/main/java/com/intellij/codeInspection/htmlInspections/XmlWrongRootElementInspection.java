@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
@@ -33,7 +35,6 @@ import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
@@ -42,33 +43,33 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.XML_INSPECTIONS;
   }
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("xml.inspection.wrong.root.element");
   }
 
   @Override
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     return "XmlWrongRootElement";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
   @Override
-  protected void checkTag(@NotNull final XmlTag tag, @NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     if (!(tag.getParent() instanceof XmlTag)) {
       final PsiFile psiFile = tag.getContainingFile();
       if (!(psiFile instanceof XmlFile)) {
@@ -140,19 +141,19 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getName() {
       return XmlBundle.message("change.root.element.to", myText);
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return getName();
     }
 
     @Override
-    public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
       final XmlTag myTag = PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), XmlTag.class);
 
       if (!FileModificationService.getInstance().prepareFileForWrite(myTag.getContainingFile())) {

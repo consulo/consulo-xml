@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml.reflect;
 
+import javax.annotation.Nullable;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.JavaMethod;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter

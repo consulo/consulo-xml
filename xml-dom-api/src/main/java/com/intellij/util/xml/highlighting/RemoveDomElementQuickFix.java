@@ -16,6 +16,8 @@
 
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.project.Project;
@@ -24,7 +26,6 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
@@ -34,24 +35,24 @@ public class RemoveDomElementQuickFix implements LocalQuickFix {
   private final boolean myIsTag;
   private final String myName;
 
-  public RemoveDomElementQuickFix(@NotNull DomElement element) {
+  public RemoveDomElementQuickFix(@Nonnull DomElement element) {
     myIsTag = element.getXmlElement() instanceof XmlTag;
     myName = element.getXmlElementName();
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return myIsTag ?
            DomBundle.message("remove.element.fix.name", myName) :
            DomBundle.message("remove.attribute.fix.name", myName);
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return DomBundle.message("quick.fixes.family");
   }
 
-  public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
     if (myIsTag) {
       final XmlTag tag = (XmlTag)descriptor.getPsiElement();
       final XmlTag parentTag = tag.getParentTag();

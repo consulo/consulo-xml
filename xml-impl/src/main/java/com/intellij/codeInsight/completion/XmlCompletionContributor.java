@@ -24,9 +24,11 @@ import gnu.trove.THashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.InsertHandlerDecorator;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -117,7 +119,7 @@ public class XmlCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlFile()), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				PsiElement position = parameters.getPosition();
 				IElementType type = position.getNode().getElementType();
@@ -145,7 +147,7 @@ public class XmlCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlAttributeValue()), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull final CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull final CompletionResultSet result)
 			{
 				final PsiElement position = parameters.getPosition();
 				if(!position.getLanguage().isKindOf(XMLLanguage.INSTANCE))
@@ -184,7 +186,7 @@ public class XmlCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement().withElementType(XmlTokenType.XML_DATA_CHARACTERS), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				XmlTag tag = PsiTreeUtil.getParentOfType(parameters.getPosition(), XmlTag.class, false);
 				if(tag != null && !hasEnumerationReference(parameters, result))
@@ -225,7 +227,7 @@ public class XmlCompletionContributor extends CompletionContributor
 	}
 
 	@Override
-	public void fillCompletionVariants(@NotNull final CompletionParameters parameters, @NotNull final CompletionResultSet result)
+	public void fillCompletionVariants(@Nonnull final CompletionParameters parameters, @Nonnull final CompletionResultSet result)
 	{
 		super.fillCompletionVariants(parameters, result);
 		if(result.isStopped())
@@ -298,7 +300,7 @@ public class XmlCompletionContributor extends CompletionContributor
 	}
 
 	@Override
-	public String advertise(@NotNull final CompletionParameters parameters)
+	public String advertise(@Nonnull final CompletionParameters parameters)
 	{
 		if(isXmlNameCompletion(parameters) && parameters.getCompletionType() == CompletionType.BASIC)
 		{
@@ -312,7 +314,7 @@ public class XmlCompletionContributor extends CompletionContributor
 	}
 
 	@Override
-	public void beforeCompletion(@NotNull final CompletionInitializationContext context)
+	public void beforeCompletion(@Nonnull final CompletionInitializationContext context)
 	{
 		final int offset = context.getStartOffset();
 		final PsiFile file = context.getFile();
@@ -389,7 +391,7 @@ public class XmlCompletionContributor extends CompletionContributor
 			final PsiElementProcessor processor = new PsiElementProcessor()
 			{
 				@Override
-				public boolean execute(@NotNull final PsiElement element)
+				public boolean execute(@Nonnull final PsiElement element)
 				{
 					if(element instanceof XmlEntityDecl)
 					{
@@ -421,7 +423,7 @@ public class XmlCompletionContributor extends CompletionContributor
 	}
 
 	@Nullable
-	private static LookupElementBuilder buildEntityLookupItem(@NotNull final XmlEntityDecl decl)
+	private static LookupElementBuilder buildEntityLookupItem(@Nonnull final XmlEntityDecl decl)
 	{
 		final String name = decl.getName();
 		if(name == null)

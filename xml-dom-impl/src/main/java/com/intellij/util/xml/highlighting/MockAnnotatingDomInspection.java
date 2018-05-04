@@ -15,9 +15,10 @@
  */
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.NonNls;
 
 /**
@@ -36,19 +37,19 @@ public class MockAnnotatingDomInspection<T extends DomElement> extends BasicDomE
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     throw new UnsupportedOperationException("Method getGroupDisplayName is not yet implemented in " + getClass().getName());
   }
 
   @Nls
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     throw new UnsupportedOperationException("Method getDisplayName is not yet implemented in " + getClass().getName());
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getShortName() {
     throw new UnsupportedOperationException("Method getShortName is not yet implemented in " + getClass().getName());
   }

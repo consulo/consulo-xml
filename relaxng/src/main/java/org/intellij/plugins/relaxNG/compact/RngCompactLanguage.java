@@ -31,8 +31,8 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -96,7 +96,7 @@ public class RngCompactLanguage extends Language {
     }
 
     @Override
-    public boolean isPairedBracesAllowedBeforeType(@NotNull IElementType lbraceType, @Nullable IElementType contextType) {
+    public boolean isPairedBracesAllowedBeforeType(@Nonnull IElementType lbraceType, @Nullable IElementType contextType) {
       return false;
     }
 
@@ -109,12 +109,12 @@ public class RngCompactLanguage extends Language {
 
   public static class MyNamesValidator implements NamesValidator {
     @Override
-    public boolean isKeyword(@NotNull String name, Project project) {
+    public boolean isKeyword(@Nonnull String name, Project project) {
       return RenameUtil.isKeyword(name);
     }
 
     @Override
-    public boolean isIdentifier(@NotNull String name, Project project) {
+    public boolean isIdentifier(@Nonnull String name, Project project) {
       return RenameUtil.isIdentifier(name);
     }
   }
@@ -171,7 +171,7 @@ public class RngCompactLanguage extends Language {
 
   public static class MySyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlighterFactory {
     @Override
-    @NotNull
+    @Nonnull
     protected SyntaxHighlighter createHighlighter() {
       return new RncHighlighter();
     }

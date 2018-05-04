@@ -30,8 +30,8 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.Function;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -80,7 +80,7 @@ public class XmlParameterInfoHandler implements ParameterInfoHandler<XmlTag,XmlE
     return tag;
   }
 
-  public void showParameterInfo(final @NotNull XmlTag element, final CreateParameterInfoContext context) {
+  public void showParameterInfo(final @Nonnull XmlTag element, final CreateParameterInfoContext context) {
     context.showHint(element, element.getTextRange().getStartOffset() + 1, this);
   }
 
@@ -94,7 +94,7 @@ public class XmlParameterInfoHandler implements ParameterInfoHandler<XmlTag,XmlE
     return null;
   }
 
-  public void updateParameterInfo(@NotNull final XmlTag o, final UpdateParameterInfoContext context) {
+  public void updateParameterInfo(@Nonnull final XmlTag o, final UpdateParameterInfoContext context) {
     if (context.getParameterOwner() == null || o.equals(context.getParameterOwner())) {
       context.setParameterOwner( o );
     } else {

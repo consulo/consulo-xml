@@ -31,7 +31,7 @@ import com.intellij.ui.ColorPickerListener;
 import com.intellij.ui.ColorPickerListenerFactory;
 import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import java.awt.*;
 

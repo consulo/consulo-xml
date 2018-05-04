@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -38,7 +39,7 @@ public class HtmlTagImpl extends XmlTagImpl implements HtmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] findSubTags(String name, String namespace)
 	{
 		final XmlTag[] subTags = getSubTags();
@@ -103,7 +104,7 @@ public class HtmlTagImpl extends XmlTagImpl implements HtmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getNamespace()
 	{
 		final String xmlNamespace = super.getNamespace();

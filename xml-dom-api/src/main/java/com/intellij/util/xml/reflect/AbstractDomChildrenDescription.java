@@ -24,8 +24,8 @@ import com.intellij.util.xml.AnnotatedElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.ElementPresentationTemplate;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -34,17 +34,17 @@ import java.util.List;
  * @author peter
  */
 public interface AbstractDomChildrenDescription extends AnnotatedElement, PomTarget {
-  @NotNull
-  List<? extends DomElement> getValues(@NotNull DomElement parent);
+  @Nonnull
+  List<? extends DomElement> getValues(@Nonnull DomElement parent);
 
-  @NotNull
-  List<? extends DomElement> getStableValues(@NotNull DomElement parent);
+  @Nonnull
+  List<? extends DomElement> getStableValues(@Nonnull DomElement parent);
 
-  @NotNull
+  @Nonnull
   Type getType();
 
-  @NotNull
-  DomNameStrategy getDomNameStrategy(@NotNull DomElement parent);
+  @Nonnull
+  DomNameStrategy getDomNameStrategy(@Nonnull DomElement parent);
 
   <T> T getUserData(Key<T> key);
 

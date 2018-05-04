@@ -15,7 +15,7 @@
  */
 package com.intellij.lexer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.HtmlInlineScriptTokenTypesProvider;
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
@@ -24,7 +24,6 @@ import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import consulo.lang.LanguageVersion;
 
 /**
  * @author Maxim.Mossienko
@@ -59,7 +58,7 @@ public class HtmlLexer extends BaseHtmlLexer
 	private int myTokenEnd;
 
 	@Override
-	public void start(@NotNull CharSequence buffer, int startOffset, int endOffset, int initialState)
+	public void start(@Nonnull CharSequence buffer, int startOffset, int endOffset, int initialState)
 	{
 		myTokenType = null;
 		super.start(buffer, startOffset, endOffset, initialState);

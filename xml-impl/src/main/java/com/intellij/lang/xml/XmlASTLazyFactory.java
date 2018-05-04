@@ -20,8 +20,8 @@ import static com.intellij.psi.xml.XmlElementType.HTML_FILE;
 import static com.intellij.psi.xml.XmlElementType.XHTML_FILE;
 import static com.intellij.psi.xml.XmlElementType.XML_FILE;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.impl.source.tree.HtmlFileElement;
 import com.intellij.psi.impl.source.tree.LazyParseableElement;
 import com.intellij.psi.impl.source.tree.XmlFileElement;
@@ -36,7 +36,7 @@ import consulo.psi.tree.ASTLazyFactory;
  */
 public class XmlASTLazyFactory implements ASTLazyFactory
 {
-  @NotNull
+  @Nonnull
   @Override
   public LazyParseableElement createLazy(ILazyParseableElementType type, CharSequence text) {
     if (type == XML_FILE) {

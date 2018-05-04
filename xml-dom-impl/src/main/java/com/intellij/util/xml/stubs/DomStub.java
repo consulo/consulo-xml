@@ -18,8 +18,8 @@ package com.intellij.util.xml.stubs;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.stubs.ObjectStubBase;
 import com.intellij.util.SmartList;
@@ -43,7 +43,7 @@ public abstract class DomStub extends ObjectStubBase<DomStub>
 	private final StringRef myNamespace;
 	private DomInvocationHandler myHandler;
 
-	public DomStub(DomStub parent, @NotNull StringRef localName, StringRef namespace)
+	public DomStub(DomStub parent, @Nonnull StringRef localName, StringRef namespace)
 	{
 		super(parent);
 		myNamespace = namespace;

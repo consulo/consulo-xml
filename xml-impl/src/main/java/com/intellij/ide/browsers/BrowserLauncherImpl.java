@@ -25,8 +25,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.AppUIUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -67,7 +67,7 @@ final class BrowserLauncherImpl extends BrowserLauncherAppless
 
 	@Override
 	protected void checkCreatedProcess(@Nullable final WebBrowser browser, @Nullable final Project project,
-			@NotNull final GeneralCommandLine commandLine, @NotNull final Process process, @Nullable final Runnable launchTask)
+			@Nonnull final GeneralCommandLine commandLine, @Nonnull final Process process, @Nullable final Runnable launchTask)
 	{
 		if(isOpenCommandUsed(commandLine))
 		{

@@ -17,8 +17,8 @@ package com.intellij.util.xml.stubs;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
@@ -35,7 +35,7 @@ import com.intellij.util.xml.impl.VirtualDomParentStrategy;
 public class StubParentStrategy implements DomParentStrategy
 {
 
-	public static StubParentStrategy createAttributeStrategy(@Nullable AttributeStub stub, @NotNull final DomStub parent)
+	public static StubParentStrategy createAttributeStrategy(@Nullable AttributeStub stub, @Nonnull final DomStub parent)
 	{
 		if(stub == null)
 		{
@@ -63,7 +63,7 @@ public class StubParentStrategy implements DomParentStrategy
 
 	protected final DomStub myStub;
 
-	public StubParentStrategy(@NotNull DomStub stub)
+	public StubParentStrategy(@Nonnull DomStub stub)
 	{
 		myStub = stub;
 	}
@@ -110,21 +110,21 @@ public class StubParentStrategy implements DomParentStrategy
 		return null;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public DomParentStrategy refreshStrategy(DomInvocationHandler handler)
 	{
 		return this;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public DomParentStrategy setXmlElement(@NotNull XmlElement element)
+	public DomParentStrategy setXmlElement(@Nonnull XmlElement element)
 	{
 		return new PhysicalDomParentStrategy(element, DomManagerImpl.getDomManager(element.getProject()));
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public DomParentStrategy clearXmlElement()
 	{

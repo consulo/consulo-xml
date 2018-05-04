@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.tree.injected;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.LiteralTextEscaper;
 import com.intellij.psi.impl.source.xml.XmlTextImpl;
@@ -31,7 +31,7 @@ public class XmlTextLiteralEscaper extends LiteralTextEscaper<XmlTextImpl>
 	}
 
 	@Override
-	public boolean decode(@NotNull final TextRange rangeInsideHost, @NotNull StringBuilder outChars)
+	public boolean decode(@Nonnull final TextRange rangeInsideHost, @Nonnull StringBuilder outChars)
 	{
 		int startInDecoded = myHost.physicalToDisplay(rangeInsideHost.getStartOffset());
 		int endInDecoded = myHost.physicalToDisplay(rangeInsideHost.getEndOffset());
@@ -40,7 +40,7 @@ public class XmlTextLiteralEscaper extends LiteralTextEscaper<XmlTextImpl>
 	}
 
 	@Override
-	public int getOffsetInHost(final int offsetInDecoded, @NotNull final TextRange rangeInsideHost)
+	public int getOffsetInHost(final int offsetInDecoded, @Nonnull final TextRange rangeInsideHost)
 	{
 		final int rangeInsideHostStartOffset = rangeInsideHost.getStartOffset();
 		int displayStart = myHost.physicalToDisplay(rangeInsideHostStartOffset);
@@ -59,7 +59,7 @@ public class XmlTextLiteralEscaper extends LiteralTextEscaper<XmlTextImpl>
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public TextRange getRelevantTextRange()
 	{
 		return myHost.getCDATAInterior();

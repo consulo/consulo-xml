@@ -17,9 +17,9 @@ package com.intellij.openapi.options.colors.pages;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.XmlFileHighlighter;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.editor.XmlHighlighterColors;
@@ -42,7 +42,7 @@ public class XMLColorsPage implements ColorSettingsPage {
     new AttributesDescriptor(OptionsBundle.message("options.xml.attribute.descriptor.descriptor.entity,reference"), XmlHighlighterColors.XML_ENTITY_REFERENCE),
   };
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return OptionsBundle.message("options.xml.display.name");
   }
@@ -51,22 +51,22 @@ public class XMLColorsPage implements ColorSettingsPage {
     return XmlFileType.INSTANCE.getIcon();
   }
 
-  @NotNull
+  @Nonnull
   public AttributesDescriptor[] getAttributeDescriptors() {
     return ATTRS;
   }
 
-  @NotNull
+  @Nonnull
   public ColorDescriptor[] getColorDescriptors() {
     return ColorDescriptor.EMPTY_ARRAY;                       
   }
 
-  @NotNull
+  @Nonnull
   public SyntaxHighlighter getHighlighter() {
     return new XmlFileHighlighter();
   }
 
-  @NotNull
+  @Nonnull
   public String getDemoText() {
     return "<?xml version='1.0' encoding='ISO-8859-1'  ?>\n" +
            "<!DOCTYPE index>\n" +

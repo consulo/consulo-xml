@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -29,8 +31,8 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
@@ -40,22 +42,22 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
 
   private final String myId;
 
-  public XmlDeclareIdInCommentAction(@NotNull final String id) {
+  public XmlDeclareIdInCommentAction(@Nonnull final String id) {
     myId = id;
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return XmlErrorMessages.message("declare.id.in.comment.quickfix");
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return getName();
   }
 
   @Nullable
-  public static String getImplicitlyDeclaredId(@NotNull final PsiComment comment) {
+  public static String getImplicitlyDeclaredId(@Nonnull final PsiComment comment) {
     final String text = getUncommentedText(comment);
     if (text == null) return null;
 
@@ -68,7 +70,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
   }
 
   @Nullable
-  private static String getUncommentedText(@NotNull final PsiComment comment) {
+  private static String getUncommentedText(@Nonnull final PsiComment comment) {
     final PsiFile psiFile = comment.getContainingFile();
     final Language language = psiFile.getViewProvider().getBaseLanguage();
     final Commenter commenter = LanguageCommenters.INSTANCE.forLanguage(language);
@@ -88,7 +90,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
     return null;
   }
 
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     final PsiElement psiElement = descriptor.getPsiElement();
     final PsiFile psiFile = psiElement.getContainingFile();
 

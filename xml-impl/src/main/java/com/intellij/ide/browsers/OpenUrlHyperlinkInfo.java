@@ -18,8 +18,8 @@ package com.intellij.ide.browsers;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.execution.filters.HyperlinkWithPopupMenuInfo;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionGroup;
@@ -37,22 +37,22 @@ public final class OpenUrlHyperlinkInfo implements HyperlinkWithPopupMenuInfo
 	private final WebBrowser browser;
 	private final Condition<WebBrowser> browserCondition;
 
-	public OpenUrlHyperlinkInfo(@NotNull String url)
+	public OpenUrlHyperlinkInfo(@Nonnull String url)
 	{
 		this(url, Conditions.<WebBrowser>alwaysTrue(), null);
 	}
 
-	public OpenUrlHyperlinkInfo(@NotNull String url, @Nullable WebBrowser browser)
+	public OpenUrlHyperlinkInfo(@Nonnull String url, @Nullable WebBrowser browser)
 	{
 		this(url, null, browser);
 	}
 
-	public OpenUrlHyperlinkInfo(@NotNull String url, @NotNull Condition<WebBrowser> browserCondition)
+	public OpenUrlHyperlinkInfo(@Nonnull String url, @Nonnull Condition<WebBrowser> browserCondition)
 	{
 		this(url, browserCondition, null);
 	}
 
-	private OpenUrlHyperlinkInfo(@NotNull String url, @Nullable Condition<WebBrowser> browserCondition, @Nullable WebBrowser browser)
+	private OpenUrlHyperlinkInfo(@Nonnull String url, @Nullable Condition<WebBrowser> browserCondition, @Nullable WebBrowser browser)
 	{
 		this.url = url;
 		this.browserCondition = browserCondition;
@@ -60,7 +60,7 @@ public final class OpenUrlHyperlinkInfo implements HyperlinkWithPopupMenuInfo
 	}
 
 	@Override
-	public ActionGroup getPopupMenuGroup(@NotNull MouseEvent event)
+	public ActionGroup getPopupMenuGroup(@Nonnull MouseEvent event)
 	{
 		DefaultActionGroup group = new DefaultActionGroup();
 		for(final WebBrowser browser : WebBrowserManager.getInstance().getActiveBrowsers())

@@ -34,7 +34,7 @@ import com.intellij.ui.ColorChooser;
 import com.intellij.ui.ColorUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,18 +47,18 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
     setText(CodeInsightBundle.message("intention.color.chooser.dialog"));
   }
 
-  public boolean isAvailable(@NotNull final Project project, final Editor editor, @NotNull final PsiElement element) {
+  public boolean isAvailable(@Nonnull final Project project, final Editor editor, @Nonnull final PsiElement element) {
     final PsiElement parent = element.getParent();
     return parent instanceof XmlAttributeValue && ColorUtil.fromHex(((XmlAttributeValue)parent).getValue(), null) != null;
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return getText();
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
     chooseColor(editor.getComponent(), element, getText(), false);
   }
 

@@ -15,6 +15,9 @@
  */
 package com.intellij.refactoring.rename;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileFactory;
@@ -29,13 +32,11 @@ import com.intellij.refactoring.listeners.RefactoringElementListener;
 import com.intellij.usageView.UsageInfo;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.Queue;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
   private static final Logger LOG = Logger.getInstance("#com.intellij.refactoring.rename.RenameXmlAttributeProcessor");
 
-  public boolean canProcessElement(@NotNull final PsiElement element) {
+  public boolean canProcessElement(@Nonnull final PsiElement element) {
     return element instanceof XmlAttribute || element instanceof XmlAttributeValue;
   }
 
@@ -65,7 +66,7 @@ public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
     }
   }
 
-  private static void doRenameXmlAttributeValue(@NotNull XmlAttributeValue value,
+  private static void doRenameXmlAttributeValue(@Nonnull XmlAttributeValue value,
                                                 String newName,
                                                 UsageInfo[] infos,
                                                 @Nullable RefactoringElementListener listener)

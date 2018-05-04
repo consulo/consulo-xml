@@ -18,7 +18,7 @@ package com.intellij.util.xml;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,10 +35,10 @@ public abstract class MergingFileDescription<T extends DomElement> extends DomFi
     super(rootElementClass, rootTagName);
   }
 
-  @NotNull
+  @Nonnull
   protected abstract Set<XmlFile> getFilesToMerge(DomElement element);
 
-  @NotNull
+  @Nonnull
   public DomElement getResolveScope(GenericDomValue<?> reference) {
     final DomElement annotation = getScopeFromAnnotation(reference);
     if (annotation != null) return annotation;
@@ -82,7 +82,7 @@ public abstract class MergingFileDescription<T extends DomElement> extends DomFi
     return myMerger.mergeModels(getRootElementClass(), roots);
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getIdentityScope(DomElement element) {
     final DomElement annotation = getScopeFromAnnotation(element);
     if (annotation != null) return annotation;

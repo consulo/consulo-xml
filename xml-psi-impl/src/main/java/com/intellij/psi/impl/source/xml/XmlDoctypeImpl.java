@@ -15,8 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -247,7 +247,7 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -274,7 +274,7 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public PsiReference[] getReferences()
 	{
 		final PsiElement dtdUrlElement = getDtdUrlElement();
@@ -295,7 +295,7 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 		return new URLReference(XmlDoctypeImpl.this)
 		{
 			@Override
-			@NotNull
+			@Nonnull
 			public String getCanonicalText()
 			{
 				return extractValue(dtdUrlElement);

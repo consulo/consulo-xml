@@ -23,7 +23,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.completion.CompletionContributor;
 import com.intellij.codeInsight.completion.CompletionParameters;
@@ -81,7 +81,7 @@ public class RncCompletionContributor extends CompletionContributor
 		CompletionProvider provider = new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				String[] keywords = getKeywords(parameters.getPosition());
 				for(String keyword : keywords)

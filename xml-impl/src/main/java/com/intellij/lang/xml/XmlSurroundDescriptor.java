@@ -29,7 +29,7 @@ import com.intellij.psi.xml.XmlTagChild;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,8 @@ import java.util.List;
  * @author ven
  */
 public class XmlSurroundDescriptor implements SurroundDescriptor {
-  @NotNull public PsiElement[] getElementsToSurround(PsiFile file, int startOffset, int endOffset) {
+  @Nonnull
+  public PsiElement[] getElementsToSurround(PsiFile file, int startOffset, int endOffset) {
     final Pair<XmlTagChild, XmlTagChild> childrenInRange = XmlUtil.findTagChildrenInRange(file, startOffset, endOffset);
     if (childrenInRange == null) {
       final PsiElement elementAt = file.findElementAt(startOffset);
@@ -60,7 +61,8 @@ public class XmlSurroundDescriptor implements SurroundDescriptor {
     return PsiUtilBase.toPsiElementArray(result);
   }
 
-  @NotNull public Surrounder[] getSurrounders() {
+  @Nonnull
+  public Surrounder[] getSurrounders() {
     return new Surrounder[0]; //everything is in live templates now
   }
 

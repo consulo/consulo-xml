@@ -45,7 +45,7 @@ import com.intellij.util.ArrayUtil;
 import org.intellij.plugins.relaxNG.inspections.RngDomInspection;
 import org.intellij.plugins.testUtil.IdeaCodeInsightTestCase;
 import org.intellij.plugins.testUtil.ResourceUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 
@@ -77,7 +77,7 @@ public abstract class HighlightingTestBase extends UsefulTestCase implements Ide
 
     new WriteAction() {
       @Override
-      protected void run(@NotNull Result result) throws Throwable {
+      protected void run(@Nonnull Result result) throws Throwable {
         ResourceUtil.copyFiles(HighlightingTestBase.this);
         init();
       }
@@ -92,7 +92,7 @@ public abstract class HighlightingTestBase extends UsefulTestCase implements Ide
     return PlatformTestUtil.getCommunityPath() + "/xml/relaxng/testData/";
   }
 
-  protected CodeInsightTestFixture createFixture(@NotNull IdeaTestFixtureFactory factory) {
+  protected CodeInsightTestFixture createFixture(@Nonnull IdeaTestFixtureFactory factory) {
     final TestFixtureBuilder<IdeaProjectTestFixture> builder = factory.createLightFixtureBuilder();
     final IdeaProjectTestFixture fixture = builder.getFixture();
 
@@ -164,7 +164,7 @@ public abstract class HighlightingTestBase extends UsefulTestCase implements Ide
     data.checkResult(highlights1, doc.getText());
   }
 
-  @NotNull
+  @Nonnull
   protected Collection<HighlightInfo> doHighlighting(final Boolean externalToolPass) {
     final Project project = myTestFixture.getProject();
     PsiDocumentManager.getInstance(project).commitAllDocuments();

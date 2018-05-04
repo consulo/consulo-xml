@@ -18,7 +18,7 @@ package com.intellij.util.xml;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.IdeBundle;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * Base DOM class to convert objects of a definite type into {@link String} and back. Most often used with

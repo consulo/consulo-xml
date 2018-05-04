@@ -15,11 +15,12 @@
  */
 package com.intellij.util.xml.converters.values;
 
+import javax.annotation.Nullable;
+
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomBundle;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 
 public class CharacterValueConverter extends Converter<String> {
   @NonNls private static final String UNICODE_PREFIX = "\\u";

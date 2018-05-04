@@ -15,27 +15,28 @@
  */
 package com.intellij.util.xml.reflect;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.pom.PomNamedTarget;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.XmlName;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
  */
 public interface DomChildrenDescription extends AbstractDomChildrenDescription, PomNamedTarget {
 
-  @NotNull
+  @Nonnull
   XmlName getXmlName();
 
-  @NotNull
+  @Nonnull
   String getXmlElementName();
 
-  @NotNull
-  String getCommonPresentableName(@NotNull DomNameStrategy strategy);
+  @Nonnull
+  String getCommonPresentableName(@Nonnull DomNameStrategy strategy);
 
-  @NotNull
-  String getCommonPresentableName(@NotNull DomElement parent);
+  @Nonnull
+  String getCommonPresentableName(@Nonnull DomElement parent);
 
 }

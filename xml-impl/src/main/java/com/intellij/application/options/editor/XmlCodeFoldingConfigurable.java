@@ -21,7 +21,7 @@
 package com.intellij.application.options.editor;
 
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;

@@ -20,7 +20,7 @@ import com.intellij.util.xml.impl.DomFileElementImpl;
 import com.intellij.util.xml.reflect.DomExtender;
 import com.intellij.util.xml.reflect.DomExtenderEP;
 import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Random;
@@ -149,7 +149,7 @@ public class DomConcurrencyStressTest extends DomTestCase {
     private final Random myRandom = new Random();
 
     @Override
-    public void registerExtensions(@NotNull MyElement myElement, @NotNull DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull MyElement myElement, @Nonnull DomExtensionsRegistrar registrar) {
       for (MyElement element : myElement.getFooElements()) {
           element.getFooElements();
         }
@@ -207,7 +207,7 @@ public class DomConcurrencyStressTest extends DomTestCase {
 
   public static class MyAllCustomExtender extends DomExtender<MyAllCustomElement> {
     @Override
-    public void registerExtensions(@NotNull MyAllCustomElement element, @NotNull DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull MyAllCustomElement element, @Nonnull DomExtensionsRegistrar registrar) {
       try {
         DomElement parent = element;
         while (parent != null) {

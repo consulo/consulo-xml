@@ -19,7 +19,8 @@ import static com.intellij.patterns.XmlPatterns.xmlAttribute;
 import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
 import static com.intellij.patterns.XmlPatterns.xmlTag;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
 import com.intellij.html.impl.providers.MicrodataReferenceProvider;
 import com.intellij.html.impl.util.MicrodataUtil;
@@ -58,7 +59,7 @@ import com.intellij.util.ProcessingContext;
 public class XmlReferenceContributor extends PsiReferenceContributor
 {
 	@Override
-	public void registerReferenceProviders(@NotNull final PsiReferenceRegistrar registrar)
+	public void registerReferenceProviders(@Nonnull final PsiReferenceRegistrar registrar)
 	{
 
 		final IdReferenceProvider idReferenceProvider = new IdReferenceProvider();
@@ -113,9 +114,9 @@ public class XmlReferenceContributor extends PsiReferenceContributor
 		registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("source").withSuperParent(2, xmlTag().withLocalName("documentation").withNamespace(XmlUtil.SCHEMA_URIS)), new
 				PsiReferenceProvider()
 		{
-			@NotNull
+			@Nonnull
 			@Override
-			public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context)
+			public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
 			{
 				return new PsiReference[]{new WebReference(element)};
 			}

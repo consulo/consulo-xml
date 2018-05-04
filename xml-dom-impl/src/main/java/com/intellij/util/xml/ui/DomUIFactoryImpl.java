@@ -41,8 +41,8 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManagerImpl;
 import com.intellij.util.xml.highlighting.DomElementsErrorPanel;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -146,7 +146,7 @@ public class DomUIFactoryImpl extends DomUIFactory {
 
   public BackgroundEditorHighlighter createDomHighlighter(final Project project, final PerspectiveFileEditor editor, final DomElement element) {
     return new BackgroundEditorHighlighter() {
-      @NotNull
+      @Nonnull
       public HighlightingPass[] createPassesForEditor() {
         if (!element.isValid()) return HighlightingPass.EMPTY_ARRAY;
 
@@ -168,7 +168,7 @@ public class DomUIFactoryImpl extends DomUIFactory {
         return new HighlightingPass[]{ghp, lip};
       }
 
-      @NotNull
+      @Nonnull
       public HighlightingPass[] createPassesForVisibleArea() {
         return createPassesForEditor();
       }

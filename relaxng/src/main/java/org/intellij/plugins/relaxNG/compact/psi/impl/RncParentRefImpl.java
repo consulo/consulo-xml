@@ -24,8 +24,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.RncParentRef;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +44,7 @@ public class RncParentRefImpl extends RncRefImpl implements RncParentRef {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitParentRef(this);
   }
 

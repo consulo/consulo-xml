@@ -16,9 +16,11 @@
 
 package com.intellij.psi.xml;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 
 /**
@@ -37,7 +39,7 @@ public interface XmlFileNSInfoProvider {
    */
   @Nullable
   @NonNls
-  String[][] getDefaultNamespaces(@NotNull XmlFile file);
+  String[][] getDefaultNamespaces(@Nonnull XmlFile file);
 
-  boolean overrideNamespaceFromDocType(@NotNull XmlFile file);
+  boolean overrideNamespaceFromDocType(@Nonnull XmlFile file);
 }

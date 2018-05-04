@@ -19,10 +19,10 @@ package com.intellij.util.xml.highlighting;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -71,26 +71,26 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
     myTypeName = typeName;
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return DomBundle.message("create.new.element", myTypeName, myNewName);
   }
 
-  @NotNull
+  @Nonnull
   public String getText() {
     return getName();
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return DomBundle.message("quick.fixes.family");
   }
 
-  public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
+  public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
     return true;
   }
 
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
     applyFix();
   }
 
@@ -98,7 +98,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
     return false;
   }
 
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     applyFix();
   }
 
@@ -140,7 +140,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
             return IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0);
           }
 
-          @NotNull
+          @Nonnull
           public String getTextFor(final DomElement value) {
             final String name = DomUtil.getFile(value).getName();
             assert name != null;

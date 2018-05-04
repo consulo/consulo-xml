@@ -1,6 +1,6 @@
 package com.intellij.xml.arrangement;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,12 @@ public class XmlArrangementParseInfo {
 
   private final List<XmlElementArrangementEntry> myEntries = new ArrayList<XmlElementArrangementEntry>();
 
-  @NotNull
+  @Nonnull
   public List<XmlElementArrangementEntry> getEntries() {
     return myEntries;
   }
 
-  public void addEntry(@NotNull XmlElementArrangementEntry entry) {
+  public void addEntry(@Nonnull XmlElementArrangementEntry entry) {
     myEntries.add(entry);
   }
 }

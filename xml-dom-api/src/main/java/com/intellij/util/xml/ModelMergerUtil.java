@@ -21,8 +21,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.util.CommonProcessors;
 import com.intellij.util.Processor;
 import com.intellij.util.ReflectionUtil;
@@ -71,7 +71,7 @@ public class ModelMergerUtil {
     return (V)processor.getFoundValue();
   }
 
-  @NotNull
+  @Nonnull
   public static <T, V> Collection<V> getImplementations(final T element, final Class<V> clazz) {
     if (element == null) return Collections.emptyList();
     CommonProcessors.CollectProcessor<T> processor = new CommonProcessors.CollectProcessor<T>() {
@@ -83,7 +83,7 @@ public class ModelMergerUtil {
     return (Collection<V>)processor.getResults();
   }
 
-  @NotNull
+  @Nonnull
   public static <T> List<T> getImplementations(T element) {
     if (element instanceof MergedObject) {
       final MergedObject<T> mergedObject = (MergedObject<T>)element;
@@ -97,7 +97,7 @@ public class ModelMergerUtil {
     }
   }
 
-  @NotNull
+  @Nonnull
   public static <T> List<T> getFilteredImplementations(final T element) {
     if (element == null) return Collections.emptyList();
     final CommonProcessors.CollectProcessor<T> processor = new CommonProcessors.CollectProcessor<T>(new ArrayList<T>());
@@ -105,7 +105,7 @@ public class ModelMergerUtil {
     return (List<T>)processor.getResults();
   }
 
-  @NotNull
+  @Nonnull
   public static <T> Processor<T> createFilteringProcessor(final Processor<T> processor) {
     return new ImplementationProcessor<T>(processor, false);
   }

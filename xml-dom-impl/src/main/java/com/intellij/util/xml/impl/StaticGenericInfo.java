@@ -7,8 +7,8 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.*;
 import gnu.trove.THashMap;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
 import java.lang.reflect.Type;
@@ -32,7 +32,8 @@ public class StaticGenericInfo extends DomGenericInfoEx {
   private final Map<JavaMethodSignature, Set<CollectionChildDescriptionImpl>> myCompositeChildrenMethods = new THashMap<JavaMethodSignature, Set<CollectionChildDescriptionImpl>>();
   private final Map<JavaMethodSignature, Pair<CollectionChildDescriptionImpl, Set<CollectionChildDescriptionImpl>>> myCompositeCollectionAdditionMethods = new THashMap<JavaMethodSignature, Pair<CollectionChildDescriptionImpl, Set<CollectionChildDescriptionImpl>>>();
 
-  @Nullable private JavaMethod myNameValueGetter;
+  @Nullable
+  private JavaMethod myNameValueGetter;
   private boolean myValueElement;
   private boolean myInitialized;
   private CustomDomChildrenDescriptionImpl myCustomDescription;
@@ -71,7 +72,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
       }
 
       final NotNullFunction<String, CollectionChildDescriptionImpl> mapper = new NotNullFunction<String, CollectionChildDescriptionImpl>() {
-        @NotNull
+        @Nonnull
         public CollectionChildDescriptionImpl fun(final String xmlName) {
           return ObjectUtils.assertNotNull(myCollections.findDescription(xmlName));
         }
@@ -215,7 +216,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return o instanceof GenericDomValue ? (GenericDomValue)o : null;
   }
 
-  @NotNull
+  @Nonnull
   public List<? extends CustomDomChildrenDescriptionImpl> getCustomNameChildrenDescription() {
     return myCustomDescription == null ? Collections.<CustomDomChildrenDescriptionImpl>emptyList() : Collections.singletonList(myCustomDescription);
   }
@@ -232,7 +233,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return o == null || o instanceof String ? (String)o : ((GenericValue)o).getStringValue();
   }
 
-  @NotNull
+  @Nonnull
   public List<AbstractDomChildDescriptionImpl> getChildrenDescriptions() {
     buildMethodMaps();
     final ArrayList<AbstractDomChildDescriptionImpl> list = new ArrayList<AbstractDomChildDescriptionImpl>();
@@ -243,13 +244,13 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return list;
   }
 
-  @NotNull
+  @Nonnull
   public List<? extends DomFixedChildDescription> getFixedChildrenDescriptions() {
     buildMethodMaps();
     return myFixed.getDescriptions();
   }
 
-  @NotNull
+  @Nonnull
   public List<? extends DomCollectionChildDescription> getCollectionChildrenDescriptions() {
     buildMethodMaps();
     return myCollections.getDescriptions();
@@ -260,7 +261,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return myValueElement;
   }
 
-  @NotNull
+  @Nonnull
   public List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions() {
     buildMethodMaps();
     return new ArrayList<AttributeChildDescriptionImpl>(myAttributeChildrenMethods.values());

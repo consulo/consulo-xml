@@ -16,7 +16,7 @@
 package com.intellij.psi.xml;
 
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public interface XmlText extends XmlTagChild {
   String getText();

@@ -17,8 +17,8 @@ package com.intellij.ide.browsers;
 
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -40,7 +40,7 @@ public abstract class WebBrowserUrlProvider
 		}
 	}
 
-	public boolean canHandleElement(@NotNull OpenInBrowserRequest request)
+	public boolean canHandleElement(@Nonnull OpenInBrowserRequest request)
 	{
 		try
 		{
@@ -59,19 +59,19 @@ public abstract class WebBrowserUrlProvider
 	}
 
 	@Nullable
-	protected Url getUrl(@NotNull OpenInBrowserRequest request, @NotNull VirtualFile virtualFile) throws BrowserException
+	protected Url getUrl(@Nonnull OpenInBrowserRequest request, @Nonnull VirtualFile virtualFile) throws BrowserException
 	{
 		return null;
 	}
 
-	@NotNull
-	public Collection<Url> getUrls(@NotNull OpenInBrowserRequest request) throws BrowserException
+	@Nonnull
+	public Collection<Url> getUrls(@Nonnull OpenInBrowserRequest request) throws BrowserException
 	{
 		return ContainerUtil.createMaybeSingletonList(getUrl(request, request.getVirtualFile()));
 	}
 
 	@Nullable
-	public String getOpenInBrowserActionDescription(@NotNull PsiFile file)
+	public String getOpenInBrowserActionDescription(@Nonnull PsiFile file)
 	{
 		return null;
 	}

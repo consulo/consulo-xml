@@ -19,9 +19,11 @@
  */
 package com.intellij.lang.html;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtil;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.lang.PsiBuilder;
@@ -404,7 +406,7 @@ public class HtmlParsing {
   }
 
 
-  @NotNull
+  @Nonnull
   private PsiBuilder.Marker startText(@Nullable PsiBuilder.Marker xmlText) {
     if (xmlText == null) {
       xmlText = mark();

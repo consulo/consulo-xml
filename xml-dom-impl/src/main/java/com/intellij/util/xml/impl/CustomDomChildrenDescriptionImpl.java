@@ -22,8 +22,8 @@ import com.intellij.util.NotNullFunction;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomExtensionImpl;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -33,9 +33,10 @@ import java.util.List;
  * @author peter
  */
 public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptionImpl implements CustomDomChildrenDescription, AbstractCollectionChildDescription {
-  @Nullable private final JavaMethod myGetter;
+  @Nullable
+  private final JavaMethod myGetter;
   public static final NotNullFunction<DomInvocationHandler,List<XmlTag>> CUSTOM_TAGS_GETTER = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
-    @NotNull
+    @Nonnull
     public List<XmlTag> fun(final DomInvocationHandler handler) {
       return DomImplUtil.getCustomSubTags(handler, handler.getXmlTag().getSubTags(), handler.getFile());
     }
@@ -45,7 +46,7 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
   private final AttributeDescriptor myAttributeDescriptor;
 
 
-  public CustomDomChildrenDescriptionImpl(@NotNull final JavaMethod getter) {
+  public CustomDomChildrenDescriptionImpl(@Nonnull final JavaMethod getter) {
     this(getter, DomReflectionUtil.extractCollectionElementType(getter.getGenericReturnType()),
          TagNameDescriptor.EMPTY, TagNameDescriptor.EMPTY);
   }
@@ -54,7 +55,7 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
     this(null, custom.getType(), custom.getTagNameDescriptor(), custom.getAttributesDescriptor());
   }
 
-  private CustomDomChildrenDescriptionImpl(@Nullable final JavaMethod getter, @NotNull Type type,
+  private CustomDomChildrenDescriptionImpl(@Nullable final JavaMethod getter, @Nonnull Type type,
                                           @Nullable TagNameDescriptor descriptor,
                                           @Nullable AttributeDescriptor attributesDescriptor) {
     super(type);
@@ -63,20 +64,21 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
     myAttributeDescriptor = attributesDescriptor;
   }
 
-  @Nullable public JavaMethod getGetterMethod() {
+  @Nullable
+  public JavaMethod getGetterMethod() {
     return myGetter;
   }
 
-  @NotNull
-  public List<? extends DomElement> getValues(@NotNull final DomInvocationHandler parent) {
+  @Nonnull
+  public List<? extends DomElement> getValues(@Nonnull final DomInvocationHandler parent) {
     if (!parent.getGenericInfo().checkInitialized()) {
       return Collections.emptyList();
     }
     return parent.getCollectionChildren(this, CUSTOM_TAGS_GETTER);
   }
 
-  @NotNull
-  public List<? extends DomElement> getValues(@NotNull final DomElement parent) {
+  @Nonnull
+  public List<? extends DomElement> getValues(@Nonnull final DomElement parent) {
     final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(parent);
     if (handler != null) return getValues(handler);
 

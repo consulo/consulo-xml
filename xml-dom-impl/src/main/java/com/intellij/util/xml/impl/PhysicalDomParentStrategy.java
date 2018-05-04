@@ -15,6 +15,9 @@
  */
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.diagnostic.LogMessageEx;
 import com.intellij.openapi.diagnostic.Attachment;
 import com.intellij.openapi.diagnostic.Logger;
@@ -24,8 +27,6 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlEntityRef;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
@@ -35,7 +36,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
   private XmlElement myElement;
   private final DomManagerImpl myDomManager;
 
-  public PhysicalDomParentStrategy(@NotNull final XmlElement element, DomManagerImpl domManager) {
+  public PhysicalDomParentStrategy(@Nonnull final XmlElement element, DomManagerImpl domManager) {
     myElement = element;
     myDomManager = domManager;
   }
@@ -55,18 +56,18 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return parent instanceof XmlEntityRef ? parent.getParent() : parent;
   }
 
-  @NotNull
+  @Nonnull
   public final XmlElement getXmlElement() {
     return myElement;
   }
 
-  @NotNull
+  @Nonnull
   public DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     return this;
   }
 
-  @NotNull
-  public DomParentStrategy setXmlElement(@NotNull final XmlElement element) {
+  @Nonnull
+  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
     myElement = element;
     return this;
   }
@@ -76,7 +77,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return "Physical:" + myElement;
   }
 
-  @NotNull
+  @Nonnull
   public DomParentStrategy clearXmlElement() {
     final DomInvocationHandler parent = getParentHandler();
     assert parent != null : "write operations should be performed on the DOM having a parent, your DOM may be not very fresh";
@@ -147,7 +148,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return cur;
   }
 
-  private static boolean xmlElementsEqual(@NotNull final PsiElement fst, @NotNull final PsiElement snd) {
+  private static boolean xmlElementsEqual(@Nonnull final PsiElement fst, @Nonnull final PsiElement snd) {
     if (fst.equals(snd)) return true;
 
     if (fst.isValid() && fst.isPhysical() || snd.isValid() && snd.isPhysical()) return false;

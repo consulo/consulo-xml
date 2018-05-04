@@ -19,7 +19,7 @@ import javax.xml.namespace.QName;
 
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.kohsuke.rngom.digested.DElementPattern;
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import com.intellij.psi.PsiElement;
@@ -159,7 +159,7 @@ public class RelaxedHtmlFromRngElementDescriptor implements XmlElementDescriptor
   }
 
   @Override
-  public int compareTo(@NotNull Object o) {
+  public int compareTo(@Nonnull Object o) {
     if (!(o instanceof RelaxedHtmlFromRngElementDescriptor)) return 1;
     final RelaxedHtmlFromRngElementDescriptor other = (RelaxedHtmlFromRngElementDescriptor)o;
     if (other.isHtml && !isHtml) return -1;

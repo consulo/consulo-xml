@@ -18,7 +18,8 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
@@ -49,9 +50,9 @@ public class XmlBaseReferenceProvider extends PsiReferenceProvider
 		myAcceptSelf = acceptSelf;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiReference[] getReferencesByElement(@NotNull final PsiElement element, @NotNull ProcessingContext context)
+	public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull ProcessingContext context)
 	{
 		PsiReference reference = URIReferenceProvider.getUrlReference(element, ElementManipulators.getValueText(element));
 		if(reference != null)

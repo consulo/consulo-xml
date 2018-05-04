@@ -15,7 +15,8 @@
  */
 package com.intellij.lang.html;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
@@ -39,43 +40,43 @@ import consulo.lang.util.LanguageVersionUtil;
  */
 public class HTMLParserDefinition implements ParserDefinition {
   @Override
-  @NotNull
-  public Lexer createLexer(@NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
     return new HtmlLexer();
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public IFileElementType getFileNodeType() {
     return XmlElementType.HTML_FILE;
   }
 
   @Override
-  @NotNull
-  public TokenSet getWhitespaceTokens(@NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion) {
     return XmlTokenType.WHITESPACES;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TokenSet getCommentTokens(LanguageVersion languageVersion) {
     return XmlTokenType.COMMENTS;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
     return TokenSet.EMPTY;
   }
 
   @Override
-  @NotNull
-  public PsiParser createParser(@NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
     return new HTMLParser();
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public PsiElement createElement(ASTNode node) {
     return PsiUtilCore.NULL_PSI_ELEMENT;
   }

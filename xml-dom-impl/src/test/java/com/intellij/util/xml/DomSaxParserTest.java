@@ -6,7 +6,8 @@ package com.intellij.util.xml;
 
 import java.io.IOException;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
+
 import org.xml.sax.SAXException;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;

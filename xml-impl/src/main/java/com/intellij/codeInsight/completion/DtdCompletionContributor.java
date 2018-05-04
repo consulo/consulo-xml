@@ -17,7 +17,8 @@ package com.intellij.codeInsight.completion;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.psi.PsiElement;
@@ -86,7 +87,7 @@ public class DtdCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement(), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				PsiElement position = parameters.getPosition();
 				PsiElement prev = PsiTreeUtil.prevVisibleLeaf(position);
@@ -102,8 +103,8 @@ public class DtdCompletionContributor extends CompletionContributor
 		});
 	}
 
-	@NotNull
-	private static String keywordPrefix(@NotNull PsiElement position, @NotNull String prefix)
+	@Nonnull
+	private static String keywordPrefix(@Nonnull PsiElement position, @Nonnull String prefix)
 	{
 		final PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
 		final PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
@@ -126,7 +127,7 @@ public class DtdCompletionContributor extends CompletionContributor
 
 	}
 
-	private static void addKeywordCompletions(@NotNull CompletionResultSet result)
+	private static void addKeywordCompletions(@Nonnull CompletionResultSet result)
 	{
 		for(String keyword : KEYWORDS)
 		{
@@ -134,12 +135,12 @@ public class DtdCompletionContributor extends CompletionContributor
 		}
 	}
 
-	private static void addEntityCompletions(@NotNull final CompletionResultSet result, PsiElement position)
+	private static void addEntityCompletions(@Nonnull final CompletionResultSet result, PsiElement position)
 	{
 		final PsiElementProcessor processor = new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull final PsiElement element)
+			public boolean execute(@Nonnull final PsiElement element)
 			{
 				if(element instanceof XmlEntityDecl)
 				{
@@ -156,7 +157,7 @@ public class DtdCompletionContributor extends CompletionContributor
 		XmlUtil.processXmlElements((XmlFile) position.getContainingFile().getOriginalFile(), processor, true);
 	}
 
-	private static boolean hasDtdKeywordCompletion(@NotNull PsiElement prev)
+	private static boolean hasDtdKeywordCompletion(@Nonnull PsiElement prev)
 	{
 		return prev.textMatches("#") || prev.textMatches("!") || prev.textMatches("(") || prev.textMatches(",") || prev.textMatches("|") || prev.textMatches("[") || prev.getNode().getElementType() == XmlTokenType.XML_NAME;
 	}

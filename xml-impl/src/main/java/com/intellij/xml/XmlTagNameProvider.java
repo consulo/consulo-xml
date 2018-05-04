@@ -18,7 +18,7 @@ package com.intellij.xml;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -30,5 +30,5 @@ import java.util.List;
 public interface XmlTagNameProvider {
   ExtensionPointName<XmlTagNameProvider> EP_NAME = new ExtensionPointName<XmlTagNameProvider>("com.intellij.xml.tagNameProvider");
 
-  void addTagNameVariants(List<LookupElement> elements, @NotNull XmlTag tag, String prefix);
+  void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
 }

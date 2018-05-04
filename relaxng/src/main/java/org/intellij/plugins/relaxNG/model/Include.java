@@ -18,8 +18,8 @@ package org.intellij.plugins.relaxNG.model;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,6 +30,6 @@ public interface Include<E extends PsiElement, D extends Define> extends CommonE
   @Nullable
   PsiFile getInclude();
 
-  @NotNull
+  @Nonnull
   D[] getOverrides();
 }

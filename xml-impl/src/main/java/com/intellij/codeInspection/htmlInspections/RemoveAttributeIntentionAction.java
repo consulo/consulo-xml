@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -26,7 +28,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
@@ -39,19 +40,19 @@ public class RemoveAttributeIntentionAction implements LocalQuickFix {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getName() {
     return XmlErrorMessages.message("remove.attribute.quickfix.text", myLocalName);
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlErrorMessages.message("remove.attribute.quickfix.family");
   }
 
   @Override
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     PsiElement e = descriptor.getPsiElement();
     final XmlAttribute myAttribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
     if (myAttribute == null) return;

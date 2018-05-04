@@ -19,7 +19,7 @@ package com.intellij.util.xml;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.List;
@@ -57,7 +57,7 @@ public class GenericValueUtil {
     return false;
   }
 
-  @NotNull
+  @Nonnull
   public static <T> Collection<T> getValueCollection(final Collection<? extends GenericValue<? extends T>> collection, Collection<T> result) {
     for (GenericValue<? extends T> o : collection) {
       ContainerUtil.addIfNotNull(o.getValue(), result);
@@ -65,7 +65,7 @@ public class GenericValueUtil {
     return result;
   }
 
-  @NotNull
+  @Nonnull
   public static Collection<String> getStringCollection(final Collection<? extends GenericValue> collection, Collection<String> result) {
     for (GenericValue o : collection) {
       ContainerUtil.addIfNotNull(o.getStringValue(), result);
@@ -73,7 +73,7 @@ public class GenericValueUtil {
     return result;
   }
 
-  @NotNull
+  @Nonnull
   public static Collection<String> getClassStringCollection(final Collection<? extends GenericValue> collection, Collection<String> result) {
     for (GenericValue o : collection) {
       final String value = o.getStringValue();

@@ -15,8 +15,9 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 import com.intellij.codeInsight.daemon.QuickFixActionRegistrar;
 import com.intellij.codeInsight.quickfix.UnresolvedReferenceQuickFixProvider;
@@ -28,7 +29,7 @@ import com.intellij.xml.XmlBundle;
 public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<TypeOrElementOrAttributeReference>
 {
 	@Override
-	public void registerFixes(@NotNull TypeOrElementOrAttributeReference ref, @NotNull QuickFixActionRegistrar registrar)
+	public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar)
 	{
 		if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference)
 		{
@@ -66,7 +67,7 @@ public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFix
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Class<TypeOrElementOrAttributeReference> getReferenceClass()
 	{

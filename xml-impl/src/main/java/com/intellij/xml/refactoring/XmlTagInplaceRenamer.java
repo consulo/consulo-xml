@@ -43,7 +43,7 @@ import com.intellij.refactoring.util.CommonRefactoringUtil;
 import com.intellij.util.PairProcessor;
 import com.intellij.util.containers.Stack;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +57,11 @@ public class XmlTagInplaceRenamer {
   private final static Stack<XmlTagInplaceRenamer> ourRenamersStack = new Stack<XmlTagInplaceRenamer>();
   private ArrayList<RangeHighlighter> myHighlighters;
 
-  private XmlTagInplaceRenamer(@NotNull final Editor editor) {
+  private XmlTagInplaceRenamer(@Nonnull final Editor editor) {
     myEditor = editor;
   }
 
-  public static void rename(final Editor editor, @NotNull final XmlTag tag) {
+  public static void rename(final Editor editor, @Nonnull final XmlTag tag) {
     if (!ourRenamersStack.isEmpty()) {
       ourRenamersStack.peek().finish();
     }
@@ -71,7 +71,7 @@ public class XmlTagInplaceRenamer {
     renamer.rename(tag);
   }
 
-  private void rename(@NotNull final XmlTag tag) {
+  private void rename(@Nonnull final XmlTag tag) {
     final Pair<ASTNode, ASTNode> pair = getNamePair(tag);
     if (pair == null) return;
 
@@ -134,7 +134,7 @@ public class XmlTagInplaceRenamer {
     }
   }
 
-  private Pair<ASTNode, ASTNode> getNamePair(@NotNull final XmlTag tag) {
+  private Pair<ASTNode, ASTNode> getNamePair(@Nonnull final XmlTag tag) {
     final int offset = myEditor.getCaretModel().getOffset();
 
     final ASTNode node = tag.getNode();
@@ -155,7 +155,7 @@ public class XmlTagInplaceRenamer {
     return new Pair<ASTNode, ASTNode>(selected, other);
   }
 
-  private static Template buildTemplate(@NotNull final XmlTag tag, @NotNull final Pair<ASTNode, ASTNode> pair) {
+  private static Template buildTemplate(@Nonnull final XmlTag tag, @Nonnull final Pair<ASTNode, ASTNode> pair) {
     final TemplateBuilderImpl builder = new TemplateBuilderImpl(tag);
 
     final ASTNode selected = pair.first;

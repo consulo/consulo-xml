@@ -20,7 +20,8 @@ import gnu.trove.THashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -36,7 +37,7 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor
 {
 	private final NotNullLazyValue<Set<String>> myStandardResources = new NotNullLazyValue<Set<String>>()
 	{
-		@NotNull
+		@Nonnull
 		@Override
 		protected Set<String> compute()
 		{
@@ -63,7 +64,7 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor
 		}
 	};
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Set<VirtualFile> getAdditionalRootsToIndex()
 	{

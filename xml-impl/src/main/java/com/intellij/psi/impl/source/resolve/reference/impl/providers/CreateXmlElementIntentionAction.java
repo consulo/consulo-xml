@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.template.Template;
@@ -32,7 +34,6 @@ import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
 class CreateXmlElementIntentionAction implements IntentionAction {
@@ -44,7 +45,7 @@ class CreateXmlElementIntentionAction implements IntentionAction {
 
 	CreateXmlElementIntentionAction(
 			@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
-			@NonNls @NotNull String declarationTagName,
+			@NonNls @Nonnull String declarationTagName,
 			TypeOrElementOrAttributeReference ref) {
 
 		myMessageKey = messageKey;
@@ -53,19 +54,19 @@ class CreateXmlElementIntentionAction implements IntentionAction {
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getText() {
 		return XmlBundle.message(myMessageKey, XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName() {
 		return XmlBundle.message("xml.create.xml.declaration.intention.type");
 	}
 
 	@Override
-	public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
+	public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
 		if (!myIsAvailableEvaluated) {
 			final XmlTag tag = PsiTreeUtil.getParentOfType(myRef.getElement(), XmlTag.class);
 			if (tag != null) {
@@ -84,7 +85,7 @@ class CreateXmlElementIntentionAction implements IntentionAction {
 	}
 
 	@Override
-	public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+	public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
 		if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
 
 		final XmlTag rootTag = myTargetFile.getDocument().getRootTag();

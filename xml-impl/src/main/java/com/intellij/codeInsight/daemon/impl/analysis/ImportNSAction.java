@@ -27,7 +27,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlNamespaceHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class ImportNSAction implements QuestionAction {
   private final Editor myEditor;
   private final String myTitle;
 
-  public ImportNSAction(final Set<String> namespaces, XmlFile file, @NotNull PsiElement element, Editor editor, final String title) {
+  public ImportNSAction(final Set<String> namespaces, XmlFile file, @Nonnull PsiElement element, Editor editor, final String title) {
 
     myNamespaces = namespaces;
     myFile = file;

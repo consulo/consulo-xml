@@ -15,8 +15,9 @@
  */
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.psi.xml.XmlFile;
@@ -29,13 +30,13 @@ public class HtmlFileNSInfoProvider implements XmlFileNSInfoProvider
 {
 	@Nullable
 	@Override
-	public String[][] getDefaultNamespaces(@NotNull XmlFile file)
+	public String[][] getDefaultNamespaces(@Nonnull XmlFile file)
 	{
 		return null;
 	}
 
 	@Override
-	public boolean overrideNamespaceFromDocType(@NotNull XmlFile file)
+	public boolean overrideNamespaceFromDocType(@Nonnull XmlFile file)
 	{
 		return file.getFileType() == HtmlFileType.INSTANCE || file.getFileType() == XHtmlFileType.INSTANCE;
 	}

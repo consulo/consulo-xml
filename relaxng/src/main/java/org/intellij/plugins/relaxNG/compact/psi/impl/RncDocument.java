@@ -16,10 +16,12 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.meta.MetaRegistry;
@@ -76,13 +78,13 @@ public class RncDocument extends RncElementImpl implements XmlDocument {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   protected <T> T[] findChildrenByClass(Class<T> aClass) {
     return super.findChildrenByClass(aClass);
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitElement(this);
   }
 }

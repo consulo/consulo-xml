@@ -17,8 +17,8 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.util.xml.XmlName;
 import gnu.trove.THashMap;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -38,13 +38,13 @@ public class ChildrenDescriptionsHolder<T extends DomChildDescriptionImpl> {
     this(null);
   }
 
-  final T addDescription(@NotNull T t) {
+  final T addDescription(@Nonnull T t) {
     myMap.put(t.getXmlName(), t);
     myCached = null;
     return t;
   }
 
-  final void addDescriptions(@NotNull Collection<T> collection) {
+  final void addDescriptions(@Nonnull Collection<T> collection) {
     for (final T t : collection) {
       addDescription(t);
     }
@@ -58,19 +58,19 @@ public class ChildrenDescriptionsHolder<T extends DomChildDescriptionImpl> {
   }
 
   @Nullable
-  final T getDescription(@NotNull final String localName, String namespaceKey) {
+  final T getDescription(@Nonnull final String localName, String namespaceKey) {
     return getDescription(new XmlName(localName, namespaceKey));
   }
 
   @Nullable
-  final T findDescription(@NotNull final String localName) {
+  final T findDescription(@Nonnull final String localName) {
     for (final XmlName xmlName : myMap.keySet()) {
       if (xmlName.getLocalName().equals(localName)) return myMap.get(xmlName);
     }
     return myDelegate != null ? myDelegate.findDescription(localName) : null;
   }
 
-  @NotNull
+  @Nonnull
   final List<T> getDescriptions() {
     final ArrayList<T> result = new ArrayList<T>();
     dumpDescriptions(result);

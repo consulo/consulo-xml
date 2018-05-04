@@ -37,7 +37,7 @@ import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ import java.util.Set;
 public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 
   @Override
-  public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder holder) {
+  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
     if (psiElement instanceof CommonElement) {
       ((CommonElement)psiElement).accept(new MyAnnotator<>(CommonAnnotationHolder.create(holder)));
     }
@@ -82,7 +82,7 @@ public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 
         final PsiElementProcessor.FindElement<XmlFile> processor = new PsiElementProcessor.FindElement<XmlFile>() {
           @Override
-          public boolean execute(@NotNull XmlFile file) {
+          public boolean execute(@Nonnull XmlFile file) {
             final Grammar grammar = GrammarFactory.getGrammar(file);
             if (grammar == null) return true;
 

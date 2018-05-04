@@ -19,9 +19,10 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:paramElemType interface.
@@ -33,7 +34,7 @@ public interface RngParam extends RngDomElement {
    *
    * @return the value of the simple content.
    */
-  @NotNull
+  @Nonnull
   @Required
   String getValue();
 
@@ -42,7 +43,7 @@ public interface RngParam extends RngDomElement {
    *
    * @param value the new value to set
    */
-  void setValue(@NotNull String value);
+  void setValue(@Nonnull String value);
 
 
   /**
@@ -50,7 +51,7 @@ public interface RngParam extends RngDomElement {
    *
    * @return the value of the name child.
    */
-  @NotNull
+  @Nonnull
   @Required
   GenericAttributeValue<String> getName();
 

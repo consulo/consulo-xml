@@ -17,8 +17,8 @@ package com.intellij.xml.index;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileTypes.FileType;
@@ -47,19 +47,19 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 		return new GlobalSearchScope(project)
 		{
 			@Override
-			public int compare(@NotNull VirtualFile file1, @NotNull VirtualFile file2)
+			public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2)
 			{
 				return projectScope.compare(file1, file2);
 			}
 
 			@Override
-			public boolean isSearchInModuleContent(@NotNull Module aModule)
+			public boolean isSearchInModuleContent(@Nonnull Module aModule)
 			{
 				return true;
 			}
 
 			@Override
-			public boolean contains(@NotNull VirtualFile file)
+			public boolean contains(@Nonnull VirtualFile file)
 			{
 				final VirtualFile parent = file.getParent();
 				return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
@@ -74,7 +74,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 	}
 
 
-	protected static VirtualFileFilter createFilter(@NotNull final Module module)
+	protected static VirtualFileFilter createFilter(@Nonnull final Module module)
 	{
 
 		final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
@@ -112,20 +112,20 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public KeyDescriptor<String> getKeyDescriptor()
 	{
 		return EnumeratorStringDescriptor.INSTANCE;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public FileBasedIndex.InputFilter getInputFilter()
 	{
 		return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE)
 		{
 			@Override
-			public boolean acceptInput(@Nullable Project project, @NotNull final VirtualFile file)
+			public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file)
 			{
 				FileType fileType = file.getFileType();
 				final String extension = file.getExtension();

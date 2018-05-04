@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -51,7 +51,7 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
     return myDescriptor.getValueDeclaration(getElement(), getValue());
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Object[] getVariants() {
     if (myDescriptor.isFixed()) {
@@ -64,7 +64,7 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
     }
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getUnresolvedMessagePattern() {
     String name = getElement() instanceof XmlTag ? "tag" : "attribute";

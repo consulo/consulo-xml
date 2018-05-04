@@ -18,7 +18,7 @@ package org.intellij.plugins.relaxNG.validation;
 
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.Attributes2Impl;
@@ -78,7 +78,7 @@ class Psi2SaxAdapter extends XmlElementVisitor implements PsiElementProcessor<Ps
   }
 
   @Override
-  public boolean execute(@NotNull PsiElement element) {
+  public boolean execute(@Nonnull PsiElement element) {
     element.accept(this);
     return true;
   }

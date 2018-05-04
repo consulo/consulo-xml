@@ -24,7 +24,7 @@ import com.intellij.xml.impl.dom.DomElementXmlDescriptor;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DefinesXml;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author yole

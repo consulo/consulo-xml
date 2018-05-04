@@ -7,7 +7,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.Key;
 import com.intellij.util.Consumer;
 import com.intellij.util.ParameterizedTypeImpl;
@@ -229,7 +230,7 @@ public class DomExtensionsTest extends DomTestCase {
 
   public static class AttrDomExtender extends DomExtender<MyElement> {
     @Override
-    public void registerExtensions(@NotNull final MyElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       final String value = element.getAttr().getValue();
       if (value != null) {
         registrar.registerGenericAttributeValueChildExtension(new XmlName(value), Boolean.class);
@@ -239,7 +240,7 @@ public class DomExtensionsTest extends DomTestCase {
 
   public static class AttrDomExtender2 extends DomExtender<MyElement> {
     @Override
-    public void registerExtensions(@NotNull final MyElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       final String value = element.getAttr().getValue();
       if (value != null) {
         registrar.registerGenericAttributeValueChildExtension(new XmlName(value), StringBuffer.class).setConverter(new StringBufferConverter(), true);
@@ -253,7 +254,7 @@ public class DomExtensionsTest extends DomTestCase {
   public static class AttrDomExtender3 extends DomExtender<MyElement> {
 
     @Override
-    public void registerExtensions(@NotNull final MyElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       final String value = element.getAttr().getValue();
       if (value != null) {
         registrar.registerAttributeChildExtension(new XmlName(value), MyAttribute.class).putUserData(BOOL_KEY, Boolean.TRUE);
@@ -263,7 +264,7 @@ public class DomExtensionsTest extends DomTestCase {
 
   public static class FixedDomExtender extends DomExtender<MyElement> {
     @Override
-    public void registerExtensions(@NotNull final MyElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       final String value = element.getAttr().getValue();
       if (value != null) {
         final ParameterizedType type = new ParameterizedTypeImpl(GenericDomValue.class, StringBuffer.class);
@@ -272,7 +273,7 @@ public class DomExtensionsTest extends DomTestCase {
         extension.addExtender(new DomExtender<GenericDomValue<StringBuffer>>(){
 
           @Override
-          public void registerExtensions(@NotNull final GenericDomValue<StringBuffer> stringBufferGenericDomValue, @NotNull final DomExtensionsRegistrar registrar) {
+          public void registerExtensions(@Nonnull final GenericDomValue<StringBuffer> stringBufferGenericDomValue, @Nonnull final DomExtensionsRegistrar registrar) {
             registrar.registerGenericAttributeValueChildExtension(new XmlName("aaa"), String.class);
           }
         });
@@ -282,7 +283,7 @@ public class DomExtensionsTest extends DomTestCase {
   }
   public static class CollectionDomExtender extends DomExtender<MyElement> {
     @Override
-    public void registerExtensions(@NotNull final MyElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       final String value = element.getAttr().getValue();
       if (value != null) {
         registrar.registerCollectionChildrenExtension(new XmlName(value), MyElement.class).setConverter(new MyStringBufferConverter(true), true);
@@ -292,7 +293,7 @@ public class DomExtensionsTest extends DomTestCase {
 
   public static class CustomDomExtender extends DomExtender<MyCustomChildrenElement> {
     @Override
-    public void registerExtensions(@NotNull final MyCustomChildrenElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyCustomChildrenElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       assertEmpty(element.getCustomChidren());
       registrar.registerCollectionChildrenExtension(new XmlName("xx"), MyDynamicElement.class);
     }
@@ -300,7 +301,7 @@ public class DomExtensionsTest extends DomTestCase {
 
   public static class ModestDomExtender extends DomExtender<MyCustomChildrenElement> {
     @Override
-    public void registerExtensions(@NotNull final MyCustomChildrenElement element, @NotNull final DomExtensionsRegistrar registrar) {
+    public void registerExtensions(@Nonnull final MyCustomChildrenElement element, @Nonnull final DomExtensionsRegistrar registrar) {
       registrar.registerCollectionChildrenExtension(new XmlName("xx"), MyDynamicElement.class);
     }
   }

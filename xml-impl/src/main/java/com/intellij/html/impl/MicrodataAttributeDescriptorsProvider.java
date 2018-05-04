@@ -27,8 +27,9 @@ import static com.intellij.html.impl.util.MicrodataUtil.hasScopeTag;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -114,10 +115,10 @@ public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescri
 	private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor
 	{
 
-		@NotNull
+		@Nonnull
 		private final XmlTag myContext;
 
-		public MicrodataPropertyAttributeDescriptor(@NotNull XmlTag context)
+		public MicrodataPropertyAttributeDescriptor(@Nonnull XmlTag context)
 		{
 			super(ITEM_PROP);
 			myContext = context;
@@ -143,7 +144,7 @@ public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescri
 			return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
 		}
 
-		private static String[] findProperties(@NotNull XmlTag tag)
+		private static String[] findProperties(@Nonnull XmlTag tag)
 		{
 			final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
 			if(typeAttribute != null)

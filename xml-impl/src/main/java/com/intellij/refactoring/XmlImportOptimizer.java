@@ -29,7 +29,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,7 +56,7 @@ public class XmlImportOptimizer implements ImportOptimizer {
     return file instanceof XmlFile;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Runnable processFile(final PsiFile file) {
     return new Runnable() {

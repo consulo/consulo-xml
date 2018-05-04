@@ -21,9 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.lang.ASTNode;
@@ -105,7 +107,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -375,7 +377,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 		});
 	}
 
-	@NotNull
+	@Nonnull
 	private static String getFilePathForLogging(@Nullable PsiFile file)
 	{
 		if(file == null)
@@ -446,7 +448,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 		return descriptor;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public CompositePsiElement clone()
 	{
@@ -569,7 +571,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 	}
 
 	@Override
-	public void deleteChildInternal(@NotNull final ASTNode child)
+	public void deleteChildInternal(@Nonnull final ASTNode child)
 	{
 		final PomModel model = PomManager.getModel(getProject());
 		final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
@@ -591,7 +593,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 	}
 
 	@Override
-	public void replaceChildInternal(@NotNull final ASTNode child, @NotNull final TreeElement newElement)
+	public void replaceChildInternal(@Nonnull final ASTNode child, @Nonnull final TreeElement newElement)
 	{
 		final PomModel model = PomManager.getModel(getProject());
 		final XmlAspect aspect = model.getModelAspect(XmlAspect.class);

@@ -18,8 +18,8 @@ package com.intellij.util.xml;
 import java.lang.reflect.Type;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
@@ -51,7 +51,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 		return INSTANCE_CACHE.getValue(project);
 	}
 
-	public DomManager(@NotNull Project project)
+	public DomManager(@Nonnull Project project)
 	{
 		super(PsiManager.getInstance(project).getModificationTracker().getOutOfCodeBlockModificationTracker());
 	}
@@ -75,7 +75,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * @deprecated use {@link #getFileElement(XmlFile, Class)}
 	 */ public abstract <T extends DomElement> DomFileElement<T> getFileElement(XmlFile file);
 
-	@NotNull
+	@Nonnull
 	@Deprecated
 	/**
 	 * @deprecated use {@link #getFileElement(XmlFile, Class)}
@@ -155,7 +155,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * this method to resolve DOM references. This result's subtree will be traversed recursively searching for the reference target. See
 	 * {@link com.intellij.util.xml.Resolve} annotation.
 	 */
-	@NotNull
+	@Nonnull
 	public abstract DomElement getResolvingScope(GenericDomValue element);
 
 	/**
@@ -172,7 +172,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	public abstract TypeChooserManager getTypeChooserManager();
 
 	@Nullable
-	public abstract AbstractDomChildrenDescription findChildrenDescription(@NotNull XmlTag templateChildTag, @NotNull DomElement parent);
+	public abstract AbstractDomChildrenDescription findChildrenDescription(@Nonnull XmlTag templateChildTag, @Nonnull DomElement parent);
 
 	@Nullable
 	public final DomFileDescription<?> getDomFileDescription(final XmlFile xmlFile)

@@ -19,8 +19,9 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.io.FileUtil;
 import org.apache.xml.resolver.Catalog;
 import org.apache.xml.resolver.CatalogManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class XMLCatalogManager {
 
   private final CatalogManager myManager = new CatalogManager();
 
-  public XMLCatalogManager(@NotNull String propertiesFilePath) {
+  public XMLCatalogManager(@Nonnull String propertiesFilePath) {
 
     File file = new File(propertiesFilePath);
     try {

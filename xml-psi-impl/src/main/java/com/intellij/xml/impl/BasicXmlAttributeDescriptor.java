@@ -24,7 +24,8 @@
  */
 package com.intellij.xml.impl;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.ArrayUtilRt;

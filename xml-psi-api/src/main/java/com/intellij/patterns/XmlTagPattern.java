@@ -18,9 +18,11 @@ package com.intellij.patterns;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlTag;
@@ -43,7 +45,7 @@ public class XmlTagPattern<Self extends XmlTagPattern<Self>> extends XmlNamedEle
 		});
 	}
 
-	protected XmlTagPattern(@NotNull final InitialPatternCondition<XmlTag> condition)
+	protected XmlTagPattern(@Nonnull final InitialPatternCondition<XmlTag> condition)
 	{
 		super(condition);
 	}
@@ -60,24 +62,24 @@ public class XmlTagPattern<Self extends XmlTagPattern<Self>> extends XmlNamedEle
 		return tag.getNamespace();
 	}
 
-	public Self withAttributeValue(@NotNull @NonNls final String attributeName, @NotNull final String attributeValue)
+	public Self withAttributeValue(@Nonnull @NonNls final String attributeName, @Nonnull final String attributeValue)
 	{
 		return with(new PatternCondition<XmlTag>("withAttributeValue")
 		{
 			@Override
-			public boolean accepts(@NotNull final XmlTag xmlTag, final ProcessingContext context)
+			public boolean accepts(@Nonnull final XmlTag xmlTag, final ProcessingContext context)
 			{
 				return Comparing.equal(xmlTag.getAttributeValue(attributeName), attributeValue);
 			}
 		});
 	}
 
-	public Self withAnyAttribute(@NotNull @NonNls final String... attributeNames)
+	public Self withAnyAttribute(@Nonnull @NonNls final String... attributeNames)
 	{
 		return with(new PatternCondition<XmlTag>("withAnyAttribute")
 		{
 			@Override
-			public boolean accepts(@NotNull final XmlTag xmlTag, final ProcessingContext context)
+			public boolean accepts(@Nonnull final XmlTag xmlTag, final ProcessingContext context)
 			{
 				for(String attributeName : attributeNames)
 				{
@@ -91,24 +93,24 @@ public class XmlTagPattern<Self extends XmlTagPattern<Self>> extends XmlNamedEle
 		});
 	}
 
-	public Self withDescriptor(@NotNull final ElementPattern<? extends PsiMetaData> metaDataPattern)
+	public Self withDescriptor(@Nonnull final ElementPattern<? extends PsiMetaData> metaDataPattern)
 	{
 		return with(new PatternCondition<XmlTag>("withDescriptor")
 		{
 			@Override
-			public boolean accepts(@NotNull final XmlTag xmlTag, final ProcessingContext context)
+			public boolean accepts(@Nonnull final XmlTag xmlTag, final ProcessingContext context)
 			{
 				return metaDataPattern.accepts(xmlTag.getDescriptor());
 			}
 		});
 	}
 
-	public Self isFirstSubtag(@NotNull final ElementPattern pattern)
+	public Self isFirstSubtag(@Nonnull final ElementPattern pattern)
 	{
 		return with(new PatternCondition<XmlTag>("isFirstSubtag")
 		{
 			@Override
-			public boolean accepts(@NotNull final XmlTag xmlTag, final ProcessingContext context)
+			public boolean accepts(@Nonnull final XmlTag xmlTag, final ProcessingContext context)
 			{
 				final XmlTag parent = xmlTag.getParentTag();
 				return parent != null && pattern.accepts(parent, context) && parent.getSubTags()[0] == xmlTag;
@@ -116,24 +118,24 @@ public class XmlTagPattern<Self extends XmlTagPattern<Self>> extends XmlNamedEle
 		});
 	}
 
-	public Self withFirstSubTag(@NotNull final ElementPattern<? extends XmlTag> pattern)
+	public Self withFirstSubTag(@Nonnull final ElementPattern<? extends XmlTag> pattern)
 	{
 		return withSubTags(StandardPatterns.<XmlTag>collection().first(pattern));
 	}
 
-	public Self withSubTags(@NotNull final ElementPattern<? extends Collection<XmlTag>> pattern)
+	public Self withSubTags(@Nonnull final ElementPattern<? extends Collection<XmlTag>> pattern)
 	{
 		return with(new PatternCondition<XmlTag>("withSubTags")
 		{
 			@Override
-			public boolean accepts(@NotNull final XmlTag xmlTag, final ProcessingContext context)
+			public boolean accepts(@Nonnull final XmlTag xmlTag, final ProcessingContext context)
 			{
 				return pattern.accepts(Arrays.asList(xmlTag.getSubTags()), context);
 			}
 		});
 	}
 
-	public Self withoutAttributeValue(@NotNull @NonNls final String attributeName, @NotNull final String attributeValue)
+	public Self withoutAttributeValue(@Nonnull @NonNls final String attributeName, @Nonnull final String attributeValue)
 	{
 		return and(StandardPatterns.not(withAttributeValue(attributeName, attributeValue)));
 	}

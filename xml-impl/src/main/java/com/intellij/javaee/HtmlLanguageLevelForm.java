@@ -23,7 +23,7 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -69,7 +69,7 @@ public class HtmlLanguageLevelForm {
     return myContentPanel;
   }
 
-  @NotNull
+  @Nonnull
   public String getDoctype() {
     if (myHtml4RadioButton.isSelected()) {
       return XmlUtil.XHTML_URI;
@@ -106,11 +106,11 @@ public class HtmlLanguageLevelForm {
     }
   }
 
-  public void addListener(@NotNull MyListener listener) {
+  public void addListener(@Nonnull MyListener listener) {
     myListeners.add(listener);
   }
 
-  public void removeListener(@NotNull MyListener listener) {
+  public void removeListener(@Nonnull MyListener listener) {
     myListeners.remove(listener);
   }
 

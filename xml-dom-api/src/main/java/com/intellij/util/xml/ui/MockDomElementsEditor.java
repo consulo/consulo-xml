@@ -29,7 +29,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.StableElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.util.*;
@@ -82,7 +82,7 @@ public class MockDomElementsEditor {
         return null;
       }
 
-      @NotNull
+      @Nonnull
       protected JComponent createCustomComponent() {
         final JComponent customComponent = super.createCustomComponent();
         myContents = getDomComponent();

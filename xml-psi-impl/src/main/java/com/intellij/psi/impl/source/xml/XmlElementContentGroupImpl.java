@@ -26,7 +26,7 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -35,7 +35,7 @@ public class XmlElementContentGroupImpl  extends XmlElementImpl implements XmlEl
                                                                            XmlElementType {
 
   private NotNullLazyValue<XmlContentParticle[]> myParticles = new NotNullLazyValue<XmlContentParticle[]>() {
-    @NotNull
+    @Nonnull
     @Override
     protected XmlContentParticle[] compute() {
       return ContainerUtil.map(getChildren(TokenSet.create(XML_ELEMENT_CONTENT_GROUP, XML_NAME)), new Function<ASTNode, XmlContentParticle>() {

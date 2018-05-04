@@ -16,8 +16,8 @@
 package com.intellij.xml.util;
 
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,19 +31,19 @@ public abstract class TagSetRuleProvider extends XmlTagRuleProviderBase {
   private final Map<String, TagsRuleMap> map = Collections.synchronizedMap(new HashMap<String, TagsRuleMap>());
 
   @Nullable
-  protected abstract String getNamespace(@NotNull XmlTag tag);
+  protected abstract String getNamespace(@Nonnull XmlTag tag);
 
-  protected abstract void initMap(TagsRuleMap map, @NotNull String version);
+  protected abstract void initMap(TagsRuleMap map, @Nonnull String version);
 
   @Override
-  public Rule[] getTagRule(@NotNull XmlTag tag) {
+  public Rule[] getTagRule(@Nonnull XmlTag tag) {
     String namespace = getNamespace(tag);
     if (namespace == null) return Rule.EMPTY_ARRAY;
 
     return getTagRule(tag, namespace);
   }
 
-  public Rule[] getTagRule(@NotNull XmlTag tag, String namespace) {
+  public Rule[] getTagRule(@Nonnull XmlTag tag, String namespace) {
     TagsRuleMap ruleMap = map.get(namespace);
     if (ruleMap == null) {
       ruleMap = new TagsRuleMap();

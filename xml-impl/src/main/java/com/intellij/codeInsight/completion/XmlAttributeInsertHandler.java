@@ -17,8 +17,8 @@ package com.intellij.codeInsight.completion;
 
 import java.util.Collections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.AutoPopupController;
 import com.intellij.codeInsight.lookup.LookupElement;
@@ -136,7 +136,7 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement>
 		}
 	}
 
-	private static void qualifyWithPrefix(@NotNull String namespacePrefix, @NotNull PsiElement context)
+	private static void qualifyWithPrefix(@Nonnull String namespacePrefix, @Nonnull PsiElement context)
 	{
 		final PsiElement parent = context.getParent();
 
@@ -160,8 +160,8 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement>
 		}
 	}
 
-	@NotNull
-	private static String makePrefixUnique(@NotNull String basePrefix, @NotNull XmlTag context)
+	@Nonnull
+	private static String makePrefixUnique(@Nonnull String basePrefix, @Nonnull XmlTag context)
 	{
 		if(context.getNamespaceByPrefix(basePrefix).isEmpty())
 		{

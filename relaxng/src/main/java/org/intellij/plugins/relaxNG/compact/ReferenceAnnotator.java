@@ -26,7 +26,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReference;
 import org.intellij.plugins.relaxNG.compact.psi.*;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.text.MessageFormat;
 
@@ -39,7 +39,7 @@ public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
   private AnnotationHolder myHolder;
 
   @Override
-  public synchronized void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder holder) {
+  public synchronized void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
     myHolder = holder;
     try {
       psiElement.accept(this);

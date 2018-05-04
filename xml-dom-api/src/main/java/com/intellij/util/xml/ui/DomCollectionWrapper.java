@@ -18,7 +18,7 @@ package com.intellij.util.xml.ui;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,7 +50,7 @@ public class DomCollectionWrapper<T> extends DomWrapper<T>{
     myGetter = getter;
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getExistingDomElement() {
     return myDomElement;
   }

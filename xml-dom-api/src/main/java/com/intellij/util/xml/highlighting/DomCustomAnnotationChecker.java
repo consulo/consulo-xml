@@ -17,7 +17,7 @@ package com.intellij.util.xml.highlighting;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.openapi.extensions.ExtensionPointName;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -31,8 +31,8 @@ import java.util.List;
 public abstract class DomCustomAnnotationChecker<T extends Annotation> {
   public static final ExtensionPointName<DomCustomAnnotationChecker> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.customAnnotationChecker");
   
-  @NotNull
+  @Nonnull
   public abstract Class<T> getAnnotationClass();
 
-  public abstract List<DomElementProblemDescriptor> checkForProblems(@NotNull T t, @NotNull DomElement element, @NotNull DomElementAnnotationHolder holder, @NotNull DomHighlightingHelper helper);
+  public abstract List<DomElementProblemDescriptor> checkForProblems(@Nonnull T t, @Nonnull DomElement element, @Nonnull DomElementAnnotationHolder holder, @Nonnull DomHighlightingHelper helper);
 }

@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public interface GenericDomValue<T> extends DomElement, MutableGenericValue<T>{
 
-  @NotNull
+  @Nonnull
   Converter<T> getConverter();
 
   @TagValue

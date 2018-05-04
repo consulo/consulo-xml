@@ -15,10 +15,8 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Rustam Vishnyakov

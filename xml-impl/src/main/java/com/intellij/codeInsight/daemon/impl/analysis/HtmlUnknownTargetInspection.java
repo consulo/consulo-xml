@@ -15,15 +15,16 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiReference;
 import com.intellij.xml.util.AnchorReferenceImpl;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Eugene.Kudelevsky
  */
 public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
-  @NotNull
+  @Nonnull
   @Override
   public String getShortName() {
     return "HtmlUnknownTarget";

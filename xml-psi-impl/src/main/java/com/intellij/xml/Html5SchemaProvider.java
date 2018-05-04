@@ -2,7 +2,7 @@ package com.intellij.xml;
 
 import java.net.URL;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.ExtensionPointName;
@@ -84,13 +84,13 @@ public abstract class Html5SchemaProvider
 		LOG.info("CHARS_DTD_LOCATION = " + getCharsDtdLocation());
 	}
 
-	@NotNull
+	@Nonnull
 	public abstract URL getHtmlSchemaLocation();
 
-	@NotNull
+	@Nonnull
 	public abstract URL getXhtmlSchemaLocation();
 
-	@NotNull
+	@Nonnull
 	public abstract URL getCharsLocation();
 
 	static

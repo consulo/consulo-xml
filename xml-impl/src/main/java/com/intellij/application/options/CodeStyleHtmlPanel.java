@@ -21,13 +21,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
 import com.intellij.openapi.application.ApplicationBundle;
@@ -270,7 +270,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
   }
 
-  @NotNull
+  @Nonnull
   protected FileType getFileType() {
     return HtmlFileType.INSTANCE;
   }

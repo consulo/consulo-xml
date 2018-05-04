@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
@@ -119,22 +120,22 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
 		return 1;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public ID<String, Set<SchemaTypeInfo>> getName()
 	{
 		return NAME;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public DataIndexer<String, Set<SchemaTypeInfo>, FileContent> getIndexer()
 	{
 		return new DataIndexer<String, Set<SchemaTypeInfo>, FileContent>()
 		{
-			@NotNull
+			@Nonnull
 			@Override
-			public Map<String, Set<SchemaTypeInfo>> map(@NotNull FileContent inputData)
+			public Map<String, Set<SchemaTypeInfo>> map(@Nonnull FileContent inputData)
 			{
 				final Map<String, Set<SchemaTypeInfo>> map = new HashMap<String, Set<SchemaTypeInfo>>();
 				final MultiMap<SchemaTypeInfo, SchemaTypeInfo> multiMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
@@ -147,14 +148,14 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
 		};
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public DataExternalizer<Set<SchemaTypeInfo>> getValueExternalizer()
 	{
 		return new DataExternalizer<Set<SchemaTypeInfo>>()
 		{
 			@Override
-			public void save(@NotNull DataOutput out, Set<SchemaTypeInfo> value) throws IOException
+			public void save(@Nonnull DataOutput out, Set<SchemaTypeInfo> value) throws IOException
 			{
 				DataInputOutputUtil.writeINT(out, value.size());
 				for(SchemaTypeInfo key : value)
@@ -166,7 +167,7 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
 			}
 
 			@Override
-			public Set<SchemaTypeInfo> read(@NotNull DataInput in) throws IOException
+			public Set<SchemaTypeInfo> read(@Nonnull DataInput in) throws IOException
 			{
 				final Set<SchemaTypeInfo> set = new HashSet<SchemaTypeInfo>();
 				final int size = DataInputOutputUtil.readINT(in);

@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -25,7 +27,6 @@ import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Consumer;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
@@ -33,28 +34,29 @@ import org.jetbrains.annotations.NotNull;
 public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
   private final String myName;
   private final String myText;
-  @NotNull private final Key<HtmlUnknownTagInspection> myInspectionKey;
+  @Nonnull
+  private final Key<HtmlUnknownTagInspection> myInspectionKey;
 
-  public AddCustomTagOrAttributeIntentionAction(@NotNull Key<HtmlUnknownTagInspection> inspectionKey, String name, String text) {
+  public AddCustomTagOrAttributeIntentionAction(@Nonnull Key<HtmlUnknownTagInspection> inspectionKey, String name, String text) {
     myInspectionKey = inspectionKey;
     myName = name;
     myText = text;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getName() {
     return myText;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlBundle.message("fix.html.family");
   }
 
   @Override
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     final PsiElement element = descriptor.getPsiElement();
 
     InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();

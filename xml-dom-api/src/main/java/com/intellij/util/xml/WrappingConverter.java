@@ -17,8 +17,8 @@
 package com.intellij.util.xml;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,14 +54,14 @@ public abstract class WrappingConverter extends Converter<Object> {
     return null;
   }
 
-  @NotNull
-  public List<Converter> getConverters(@NotNull final GenericDomValue domElement) {
+  @Nonnull
+  public List<Converter> getConverters(@Nonnull final GenericDomValue domElement) {
     final Converter converter = getConverter(domElement);
     return converter == null ? Collections.<Converter>emptyList() : Collections.singletonList(converter);
   }
 
   @Nullable
-  public abstract Converter getConverter(@NotNull final GenericDomValue domElement);
+  public abstract Converter getConverter(@Nonnull final GenericDomValue domElement);
 
   public static Converter getDeepestConverter(final Converter converter, final GenericDomValue domValue) {
     Converter cur = converter;

@@ -17,7 +17,7 @@ package com.intellij.psi.xml;
 
 import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.xml.XmlNSDescriptor;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author Mike

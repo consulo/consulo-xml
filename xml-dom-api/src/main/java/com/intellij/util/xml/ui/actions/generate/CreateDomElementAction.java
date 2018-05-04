@@ -15,6 +15,9 @@
  */
 package com.intellij.util.xml.ui.actions.generate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.actions.SimpleCodeInsightAction;
 import com.intellij.codeInsight.template.Expression;
 import com.intellij.codeInsight.template.TemplateBuilder;
@@ -26,8 +29,6 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -41,7 +42,7 @@ public abstract class CreateDomElementAction<T extends DomElement> extends Simpl
   }
 
   @Override
-  public void invoke(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+  public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
     DomElement element = createElement(getContextElement(editor), editor, file, project);
   }
 
@@ -49,7 +50,7 @@ public abstract class CreateDomElementAction<T extends DomElement> extends Simpl
   protected abstract DomElement createElement(T context, Editor editor, PsiFile file, Project project);
 
   @Override
-  protected boolean isValidForFile(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
     return getContextElement(editor) != null;
   }
 

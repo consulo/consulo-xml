@@ -25,8 +25,8 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.List;
@@ -76,13 +76,13 @@ public abstract class DomService {
 
   public abstract <T extends DomElement> DomAnchor<T> createAnchor(T domElement);
 
-  @NotNull
-  public abstract XmlFile getContainingFile(@NotNull DomElement domElement);
+  @Nonnull
+  public abstract XmlFile getContainingFile(@Nonnull DomElement domElement);
 
-  @NotNull
-  public abstract EvaluatedXmlName getEvaluatedXmlName(@NotNull DomElement element);
+  @Nonnull
+  public abstract EvaluatedXmlName getEvaluatedXmlName(@Nonnull DomElement element);
 
-  @NotNull
+  @Nonnull
   public abstract XmlFileHeader getXmlFileHeader(XmlFile file);
 
   public enum StructureViewMode {

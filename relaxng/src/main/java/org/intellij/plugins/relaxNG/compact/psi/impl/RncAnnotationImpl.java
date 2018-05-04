@@ -16,13 +16,15 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.IElementType;
 import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.
@@ -35,7 +37,7 @@ public class RncAnnotationImpl extends RncElementImpl implements RncAnnotation {
   }
 
   @Override
-  public void accept(@NotNull RncElementVisitor visitor) {
+  public void accept(@Nonnull RncElementVisitor visitor) {
     visitor.visitAnnotation(this);
   }
 

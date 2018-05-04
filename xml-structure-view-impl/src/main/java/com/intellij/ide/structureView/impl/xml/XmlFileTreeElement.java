@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlDoctype;
@@ -34,7 +34,7 @@ public class XmlFileTreeElement extends AbstractXmlTagTreeElement<XmlFile> {
     super(file);
   }
 
-  @NotNull
+  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     final XmlDocument document = getElement().getDocument();
     List<XmlTag> rootTags = new ArrayList<XmlTag>();

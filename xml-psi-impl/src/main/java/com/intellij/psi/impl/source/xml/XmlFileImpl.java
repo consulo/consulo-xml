@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.openapi.fileTypes.FileType;
@@ -78,7 +79,7 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -98,7 +99,7 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile
 	private FileType myType = null;
 
 	@Override
-	@NotNull
+	@Nonnull
 	public FileType getFileType()
 	{
 		if(myType == null)
@@ -130,12 +131,12 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile
 	}
 
 	@Override
-	public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place)
+	public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState state, PsiElement lastParent, @Nonnull PsiElement place)
 	{
 		return super.processDeclarations(processor, state, lastParent, place) && (!isWebFileType() || ScriptSupportUtil.processDeclarations(this, processor, state, lastParent, place));
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public GlobalSearchScope getFileResolveScope()
 	{

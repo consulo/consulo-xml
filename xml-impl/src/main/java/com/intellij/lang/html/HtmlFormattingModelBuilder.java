@@ -31,10 +31,10 @@ import com.intellij.psi.formatter.xml.HtmlPolicy;
 import com.intellij.psi.formatter.xml.XmlBlock;
 import com.intellij.psi.impl.source.SourceTreeToPsiMap;
 import com.intellij.lang.xml.XmlFormattingModel;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class HtmlFormattingModelBuilder implements FormattingModelBuilder {
-  @NotNull
+  @Nonnull
     public FormattingModel createModel(final PsiElement element, final CodeStyleSettings settings) {
     final PsiFile psiFile = element.getContainingFile();
     final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(psiFile);

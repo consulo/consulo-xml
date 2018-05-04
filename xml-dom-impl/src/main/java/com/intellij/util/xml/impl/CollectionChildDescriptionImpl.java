@@ -10,8 +10,8 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -26,7 +26,7 @@ import java.util.List;
 public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl implements DomCollectionChildDescription, AbstractCollectionChildDescription {
   private final Collection<JavaMethod> myGetterMethods;
   private final NotNullFunction<DomInvocationHandler, List<XmlTag>> myTagsGetter = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
-    @NotNull
+    @Nonnull
     public List<XmlTag> fun(final DomInvocationHandler handler) {
       XmlTag tag = handler.getXmlTag();
       if (tag == null) {
@@ -50,7 +50,7 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     return myTagsGetter;
   }
 
-  public DomElement addValue(@NotNull DomElement element) {
+  public DomElement addValue(@Nonnull DomElement element) {
     assert element.getGenericInfo().getCollectionChildrenDescriptions().contains(this);
     return addChild(element, getType(), Integer.MAX_VALUE);
   }
@@ -66,15 +66,15 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     }
   }
 
-  public DomElement addValue(@NotNull DomElement element, int index) {
+  public DomElement addValue(@Nonnull DomElement element, int index) {
     return addChild(element, getType(), index);
   }
 
-  public DomElement addValue(@NotNull DomElement parent, Type type) {
+  public DomElement addValue(@Nonnull DomElement parent, Type type) {
     return addValue(parent, type, Integer.MAX_VALUE);
   }
 
-  public final DomElement addValue(@NotNull DomElement parent, Type type, int index) {
+  public final DomElement addValue(@Nonnull DomElement parent, Type type, int index) {
     return addChild(parent, type, index);
   }
 
@@ -84,8 +84,8 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     return methods.isEmpty() ? null : methods.iterator().next();
   }
 
-  @NotNull
-  public List<? extends DomElement> getValues(@NotNull final DomElement element) {
+  @Nonnull
+  public List<? extends DomElement> getValues(@Nonnull final DomElement element) {
     final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(element);
     if (handler != null) {
       return handler.getCollectionChildren(this, myTagsGetter);
@@ -104,8 +104,8 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     return (List<? extends DomElement>)getterMethod.invoke(element, ArrayUtil.EMPTY_OBJECT_ARRAY);
   }
 
-  @NotNull
-  public String getCommonPresentableName(@NotNull DomNameStrategy strategy) {
+  @Nonnull
+  public String getCommonPresentableName(@Nonnull DomNameStrategy strategy) {
     String words = strategy.splitIntoWords(getXmlElementName());
     return StringUtil.capitalizeWords(words.endsWith("es") ? words: StringUtil.pluralize(words), true);
   }

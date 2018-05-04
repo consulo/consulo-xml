@@ -15,8 +15,9 @@
  */
 package com.intellij.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -28,9 +29,9 @@ import com.intellij.psi.xml.XmlTag;
 public interface XmlNSDescriptor extends PsiMetaData
 {
 	@Nullable
-	XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag);
+	XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag);
 
-	@NotNull
+	@Nonnull
 	XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document);
 
 	@Nullable

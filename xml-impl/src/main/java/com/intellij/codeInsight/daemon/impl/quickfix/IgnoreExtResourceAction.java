@@ -15,12 +15,13 @@
  */
 package com.intellij.codeInsight.daemon.impl.quickfix;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author mike
@@ -30,7 +31,7 @@ public class IgnoreExtResourceAction extends BaseExtResourceAction {
     return "ignore.external.resource.text";
   }
 
-  protected void doInvoke(@NotNull final PsiFile file, final int offset, @NotNull final String uri, final Editor editor) throws IncorrectOperationException {
+  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
     ApplicationManager.getApplication().runWriteAction(new Runnable() {
       public void run() {
         ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri);

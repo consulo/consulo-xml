@@ -29,8 +29,8 @@ import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
@@ -48,12 +48,15 @@ public class AbstractTagInjection extends BaseInjection {
 
   private static final Logger LOG = Logger.getInstance("org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection");
 
-  @NotNull @NonNls
+  @Nonnull
+  @NonNls
   private StringMatcher myTagName = StringMatcher.ANY;
 
-  @NotNull @NonNls
+  @Nonnull
+  @NonNls
   private Set<String> myTagNamespace = Collections.emptySet();
-  @NotNull @NonNls
+  @Nonnull
+  @NonNls
   private String myXPathCondition = "";
 
   private XPath myCompiledXPathCondition;
@@ -63,12 +66,12 @@ public class AbstractTagInjection extends BaseInjection {
     super(XmlLanguageInjectionSupport.XML_SUPPORT_ID);
   }
 
-  @NotNull
+  @Nonnull
   public String getTagName() {
     return myTagName.getPattern();
   }
 
-  public void setTagName(@NotNull @NonNls String tagName) {
+  public void setTagName(@Nonnull @NonNls String tagName) {
     myTagName = StringMatcher.create(tagName);
   }
 
@@ -78,16 +81,16 @@ public class AbstractTagInjection extends BaseInjection {
            (!(element instanceof XmlElement) || matchXPath((XmlElement)element));
   }
 
-  @NotNull
+  @Nonnull
   public String getTagNamespace() {
     return StringUtil.join(myTagNamespace, "|");
   }
 
-  public void setTagNamespace(@NotNull @NonNls String tagNamespace) {
+  public void setTagNamespace(@Nonnull @NonNls String tagNamespace) {
     myTagNamespace = new TreeSet<String>(StringUtil.split(tagNamespace,"|"));
   }
 
-  @NotNull
+  @Nonnull
   public String getXPathCondition() {
     return myXPathCondition;
   }
@@ -138,7 +141,7 @@ public class AbstractTagInjection extends BaseInjection {
     return new AbstractTagInjection().copyFrom(this);
   }
 
-  public AbstractTagInjection copyFrom(@NotNull BaseInjection o) {
+  public AbstractTagInjection copyFrom(@Nonnull BaseInjection o) {
     super.copyFrom(o);
     if (o instanceof AbstractTagInjection) {
       final AbstractTagInjection other = (AbstractTagInjection)o;

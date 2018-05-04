@@ -17,9 +17,11 @@ package com.intellij.psi.xml;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.util.IncorrectOperationException;
@@ -34,22 +36,22 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	XmlTag[] EMPTY = new XmlTag[0];
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	String getName();
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	String getNamespace();
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	String getLocalName();
 
 	@Nullable
 	XmlElementDescriptor getDescriptor();
 
-	@NotNull
+	@Nonnull
 	XmlAttribute[] getAttributes();
 
 	@Nullable
@@ -95,27 +97,27 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 
 	XmlTag addSubTag(XmlTag subTag, boolean first);
 
-	@NotNull
+	@Nonnull
 	XmlTag[] getSubTags();
 
-	@NotNull
+	@Nonnull
 	XmlTag[] findSubTags(@NonNls String qname);
 
 	/**
 	 * @param localName non-qualified tag name.
 	 * @param namespace if null, name treated as qualified name to find.
 	 */
-	@NotNull
+	@Nonnull
 	XmlTag[] findSubTags(@NonNls String localName, @Nullable String namespace);
 
 	@Nullable
 	XmlTag findFirstSubTag(@NonNls String qname);
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	String getNamespacePrefix();
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	String getNamespaceByPrefix(@NonNls String prefix);
 
@@ -129,10 +131,10 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	/**
 	 * @return map keys: prefixes values: namespaces
 	 */
-	@NotNull
+	@Nonnull
 	Map<String, String> getLocalNamespaceDeclarations();
 
-	@NotNull
+	@Nonnull
 	XmlTagValue getValue();
 
 	@Nullable

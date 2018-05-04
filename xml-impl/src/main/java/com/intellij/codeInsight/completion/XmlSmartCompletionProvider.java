@@ -22,7 +22,7 @@ import com.intellij.psi.impl.source.xml.XmlContentDFA;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class XmlSmartCompletionProvider {
     });
   }
 
-  private static void addElementToResult(@NotNull XmlElementDescriptor descriptor, CompletionResultSet result) {
+  private static void addElementToResult(@Nonnull XmlElementDescriptor descriptor, CompletionResultSet result) {
     XmlTagInsertHandler insertHandler = XmlTagInsertHandler.INSTANCE;
     if (descriptor instanceof XmlElementDescriptorImpl) {
       String name = descriptor.getName();
@@ -73,7 +73,7 @@ public class XmlSmartCompletionProvider {
     result.addElement(createLookupElement(descriptor).withInsertHandler(insertHandler));
   }
 
-  public static LookupElementBuilder createLookupElement(@NotNull XmlElementDescriptor descriptor) {
+  public static LookupElementBuilder createLookupElement(@Nonnull XmlElementDescriptor descriptor) {
     LookupElementBuilder builder = LookupElementBuilder.create(descriptor.getName());
     if (descriptor instanceof XmlElementDescriptorImpl) {
       builder = builder.withTypeText(((XmlElementDescriptorImpl)descriptor).getNamespace(), true);

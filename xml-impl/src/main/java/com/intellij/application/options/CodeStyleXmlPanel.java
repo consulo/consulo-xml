@@ -17,13 +17,13 @@ package com.intellij.application.options;
 
 import java.awt.Dimension;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
@@ -171,7 +171,7 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel{
     return readFromFile(getClass(), "preview.xml.template");
   }
 
-  @NotNull
+  @Nonnull
   protected FileType getFileType() {
     return XmlFileType.INSTANCE;
   }

@@ -29,8 +29,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.*;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -45,25 +45,25 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
   public static final Pair<TextRange,PsiElement> NO_PROBLEM = new Pair<TextRange, PsiElement>(null, null);
   private final ProblemHighlightType myHighlightType;
 
-  public DomElementProblemDescriptorImpl(@NotNull final DomElement domElement, final String message, final HighlightSeverity type) {
+  public DomElementProblemDescriptorImpl(@Nonnull final DomElement domElement, final String message, final HighlightSeverity type) {
     this(domElement, message, type, LocalQuickFix.EMPTY_ARRAY);
   }
 
-  public DomElementProblemDescriptorImpl(@NotNull final DomElement domElement,
+  public DomElementProblemDescriptorImpl(@Nonnull final DomElement domElement,
                                          final String message,
                                          final HighlightSeverity type,
                                          @Nullable final TextRange textRange) {
     this(domElement, message, type, textRange, null, LocalQuickFix.EMPTY_ARRAY);
   }
 
-  public DomElementProblemDescriptorImpl(@NotNull final DomElement domElement,
+  public DomElementProblemDescriptorImpl(@Nonnull final DomElement domElement,
                                          final String message,
                                          final HighlightSeverity type,
                                          final LocalQuickFix... fixes) {
     this(domElement, message, type, null, null, fixes);
   }
 
-  public DomElementProblemDescriptorImpl(@NotNull final DomElement domElement,
+  public DomElementProblemDescriptorImpl(@Nonnull final DomElement domElement,
                                          final String message,
                                          final HighlightSeverity type,
                                          @Nullable final TextRange textRange,
@@ -87,27 +87,27 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
     myHighlightType = highlightType;
   }
 
-  @NotNull
+  @Nonnull
   public DomElement getDomElement() {
     return myDomElement;
   }
 
-  @NotNull
+  @Nonnull
   public HighlightSeverity getHighlightSeverity() {
     return mySeverity;
   }
 
-  @NotNull
+  @Nonnull
   public String getDescriptionTemplate() {
     return myMessage == null ? "" : myMessage;
   }
 
-  @NotNull
+  @Nonnull
   public LocalQuickFix[] getFixes() {
     return myFixes;
   }
 
-  @NotNull
+  @Nonnull
   public final List<Annotation> getAnnotations() {
     if (myAnnotations == null) {
       myAnnotations = ContainerUtil.createMaybeSingletonList(DomElementsHighlightingUtil.createAnnotation(this));
@@ -140,7 +140,7 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
     return myPair;
   }
 
-  @NotNull
+  @Nonnull
   protected Pair<TextRange,PsiElement> computeProblemRange() {
     final PsiElement element = getPsiElement();
 

@@ -20,8 +20,9 @@ import com.intellij.util.xml.DomUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -30,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class DomWrapper<T> {
 
-  @NotNull
+  @Nonnull
   public abstract DomElement getExistingDomElement();
 
   @Nullable

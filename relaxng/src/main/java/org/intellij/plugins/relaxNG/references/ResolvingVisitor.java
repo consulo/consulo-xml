@@ -29,8 +29,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
 import gnu.trove.THashSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Set;
 
@@ -119,7 +119,7 @@ class ResolvingVisitor extends XmlElementVisitor implements PsiElementProcessor 
   }
 
   @Override
-  public boolean execute(@NotNull PsiElement element) {
+  public boolean execute(@Nonnull PsiElement element) {
     element.accept(this);
     return shouldContinue();
   }

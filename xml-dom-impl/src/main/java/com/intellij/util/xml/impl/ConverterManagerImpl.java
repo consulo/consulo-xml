@@ -4,8 +4,8 @@ import com.intellij.openapi.paths.PathReference;
 import com.intellij.util.containers.ConcurrentInstanceMap;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.converters.PathReferenceConverter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ class ConverterManagerImpl implements ConverterManager {
   private final ImplementationClassCache myImplementationClassCache = new ImplementationClassCache(DomImplementationClassEP.CONVERTER_EP_NAME);
 
   private final ConcurrentInstanceMap<Object> myConverterInstances = new ConcurrentInstanceMap<Object>() {
-    @NotNull
+    @Nonnull
     @Override
     protected Object create(Class key) {
       Class implementation = myImplementationClassCache.get(key);
@@ -41,7 +41,7 @@ class ConverterManagerImpl implements ConverterManager {
     mySimpleConverters.put(clazz, converter);
   }
 
-  @NotNull
+  @Nonnull
   public final Converter getConverterInstance(final Class<? extends Converter> converterClass) {
     Converter converter = getInstance(converterClass);
     assert converter != null: "Converter not found for " + converterClass;

@@ -19,8 +19,8 @@ package com.intellij.util.xml.reflect;
 import com.intellij.pom.PomTarget;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.EvaluatedXmlName;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -40,17 +40,17 @@ public interface CustomDomChildrenDescription extends AbstractDomChildrenDescrip
 
     public static final AttributeDescriptor EMPTY = new AttributeDescriptor();
 
-    public Set<EvaluatedXmlName> getCompletionVariants(@NotNull DomElement parent) {
+    public Set<EvaluatedXmlName> getCompletionVariants(@Nonnull DomElement parent) {
       return Collections.emptySet();
     }
 
     @Nullable
-    public PomTarget findDeclaration(DomElement parent, @NotNull EvaluatedXmlName name) {
+    public PomTarget findDeclaration(DomElement parent, @Nonnull EvaluatedXmlName name) {
       return null;
     }
 
     @Nullable
-    public PomTarget findDeclaration(@NotNull DomElement child) {
+    public PomTarget findDeclaration(@Nonnull DomElement child) {
       return child.getChildDescription();
     }
     

@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
@@ -26,16 +28,15 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlDoctype;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.HtmlUtil;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
  *         Date: 9/3/12
  */
 public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
-  @NotNull
+  @Nonnull
   @Override
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override
       public void visitXmlAttributeValue(XmlAttributeValue value) {

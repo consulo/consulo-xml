@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.filters.getters;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.ArrayUtil;
@@ -32,7 +33,7 @@ import com.intellij.xml.impl.XmlEnumerationDescriptor;
  */
 public class XmlAttributeValueGetter
 {
-	@NotNull
+	@Nonnull
 	public static String[] getEnumeratedValues(XmlAttribute attribute)
 	{
 		final XmlAttributeDescriptor descriptor = attribute.getDescriptor();

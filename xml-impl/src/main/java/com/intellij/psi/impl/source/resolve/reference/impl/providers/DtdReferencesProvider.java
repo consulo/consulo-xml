@@ -18,9 +18,11 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.LocalQuickFixProvider;
@@ -95,7 +97,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getCanonicalText()
 		{
 			final XmlElement nameElement = myNameElement;
@@ -111,7 +113,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+		public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 		{
 			return null;
 		}
@@ -123,7 +125,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Object[] getVariants()
 		{
 			final XmlNSDescriptor rootTagNSDescriptor = DtdResolveUtil.getNsDescriptor(myElement);
@@ -160,7 +162,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getUnresolvedMessagePattern()
 		{
 			return XmlBundle.message("xml.dtd.unresolved.element.reference", getCanonicalText());
@@ -221,7 +223,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getCanonicalText()
 		{
 			return myRange.substring(myElement.getText());
@@ -235,7 +237,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+		public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 		{
 			return null;
 		}
@@ -247,7 +249,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Object[] getVariants()
 		{
 			return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -274,7 +276,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getUnresolvedMessagePattern()
 		{
 			return XmlBundle.message("xml.dtd.unresolved.entity.reference", getCanonicalText());
@@ -294,8 +296,8 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 	}
 
 	@Override
-	@NotNull
-	public PsiReference[] getReferencesByElement(@NotNull final PsiElement element, @NotNull final ProcessingContext context)
+	@Nonnull
+	public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull final ProcessingContext context)
 	{
 		XmlElement nameElement = null;
 

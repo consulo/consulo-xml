@@ -23,8 +23,8 @@ import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public abstract class DomGenericInfoEx implements DomGenericInfo {
   @Nullable
   public abstract Invocation createInvocation(final JavaMethod method);
 
-  @NotNull
+  @Nonnull
   public abstract List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions();
 
   @Nullable

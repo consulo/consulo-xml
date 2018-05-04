@@ -35,8 +35,8 @@ import com.intellij.ui.components.panels.Wrapper;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
@@ -67,7 +67,7 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
     myFile = file;
 
     FileEditorManager.getInstance(myProject).addFileEditorManagerListener(new FileEditorManagerAdapter() {
-      public void selectionChanged(@NotNull FileEditorManagerEvent event) {
+      public void selectionChanged(@Nonnull FileEditorManagerEvent event) {
         if (!isValid()) return;
 
         ApplicationManager.getApplication().invokeLater(new Runnable() {
@@ -123,11 +123,11 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
 
   abstract protected void setSelectedDomElement(DomElement domElement);
 
-  public final void addWatchedElement(@NotNull final DomElement domElement) {
+  public final void addWatchedElement(@Nonnull final DomElement domElement) {
     addWatchedDocument(getDocumentManager().getDocument(DomUtil.getFile(domElement)));
   }
 
-  public final void removeWatchedElement(@NotNull final DomElement domElement) {
+  public final void removeWatchedElement(@Nonnull final DomElement domElement) {
     removeWatchedDocument(getDocumentManager().getDocument(DomUtil.getFile(domElement)));
   }
 
@@ -185,7 +185,7 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
     return myProject;
   }
 
-  @NotNull
+  @Nonnull
   public final VirtualFile getVirtualFile() {
     return myFile;
   }
@@ -234,7 +234,7 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
 
   public FileEditorLocation getCurrentLocation() {
     return new FileEditorLocation() {
-      @NotNull
+      @Nonnull
       public FileEditor getEditor() {
         return PerspectiveFileEditor.this;
       }
@@ -249,19 +249,19 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
     return null;
   }
 
-  @NotNull
-  public FileEditorState getState(@NotNull FileEditorStateLevel level) {
+  @Nonnull
+  public FileEditorState getState(@Nonnull FileEditorStateLevel level) {
     return FILE_EDITOR_STATE;
   }
 
-  public void setState(@NotNull FileEditorState state) {
+  public void setState(@Nonnull FileEditorState state) {
   }
 
-  public void addPropertyChangeListener(@NotNull PropertyChangeListener listener) {
+  public void addPropertyChangeListener(@Nonnull PropertyChangeListener listener) {
     myPropertyChangeSupport.addPropertyChangeListener(listener);
   }
 
-  public void removePropertyChangeListener(@NotNull PropertyChangeListener listener) {
+  public void removePropertyChangeListener(@Nonnull PropertyChangeListener listener) {
     myPropertyChangeSupport.removePropertyChangeListener(listener);
   }
 
@@ -273,12 +273,12 @@ abstract public class PerspectiveFileEditor extends UserDataHolderBase implement
     return !myInvalidated;
   }
 
-  @NotNull
+  @Nonnull
   public JComponent getComponent() {
     return getWrapper();
   }
 
-  @NotNull
+  @Nonnull
   protected abstract JComponent createCustomComponent();
 
   public Wrapper getWrapper() {

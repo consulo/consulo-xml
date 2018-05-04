@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.editorActions.moveLeftRight;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import consulo.annotations.RequiredReadAction;
@@ -23,9 +24,9 @@ import consulo.annotations.RequiredReadAction;
 public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler
 {
 	@RequiredReadAction
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiElement[] getMovableSubElements(@NotNull PsiElement element)
+	public PsiElement[] getMovableSubElements(@Nonnull PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{

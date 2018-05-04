@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.template;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
@@ -31,12 +32,12 @@ public class XmlContextType extends TemplateContextType {
   }
 
   @Override
-  public boolean isInContext(@NotNull PsiFile file, int offset) {
+  public boolean isInContext(@Nonnull PsiFile file, int offset) {
     return file.getLanguage().isKindOf(XMLLanguage.INSTANCE) && !isEmbeddedContent(file, offset) &&
            !HtmlContextType.isMyLanguage(PsiUtilCore.getLanguageAtOffset(file, offset));
   }
 
-  public static boolean isEmbeddedContent(@NotNull final PsiFile file, final int offset) {
+  public static boolean isEmbeddedContent(@Nonnull final PsiFile file, final int offset) {
     Language languageAtOffset = PsiUtilCore.getLanguageAtOffset(file, offset);
     return !(languageAtOffset.isKindOf(XMLLanguage.INSTANCE) || languageAtOffset instanceof XMLLanguage);
   }

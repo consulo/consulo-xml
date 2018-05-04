@@ -29,8 +29,8 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,7 +88,7 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
         final Converter converter = reference.getConverter();
         if (converter instanceof ResolvingConverter) {
           final AbstractConvertContext context = new AbstractConvertContext() {
-            @NotNull
+            @Nonnull
             public DomElement getInvocationElement() {
               return reference;
             }

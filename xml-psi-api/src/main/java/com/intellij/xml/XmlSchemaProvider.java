@@ -27,8 +27,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +41,7 @@ public abstract class XmlSchemaProvider {
   public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = new ExtensionPointName<XmlSchemaProvider>("com.intellij.xml.schemaProvider");
 
   @Nullable
-  public static XmlFile findSchema(@NotNull @NonNls String namespace, @Nullable Module module, @NotNull PsiFile file) {
+  public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nullable Module module, @Nonnull PsiFile file) {
     if (file.getProject().isDefault()) return null;
     final boolean dumb = DumbService.getInstance(file.getProject()).isDumb();
     for (XmlSchemaProvider provider: Extensions.getExtensions(EP_NAME)) {
@@ -61,7 +61,7 @@ public abstract class XmlSchemaProvider {
   }
 
   @Nullable
-  public static XmlFile findSchema(@NotNull @NonNls String namespace, @NotNull PsiFile baseFile) {
+  public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nonnull PsiFile baseFile) {
     final PsiDirectory directory = baseFile.getParent();
     final Module module = ModuleUtil.findModuleForPsiElement(directory == null ? baseFile : directory);
     return findSchema(namespace, module, baseFile);
@@ -72,7 +72,7 @@ public abstract class XmlSchemaProvider {
    */
   @Deprecated
   @Nullable
-  public static XmlSchemaProvider getAvailableProvider(@NotNull final XmlFile file) {
+  public static XmlSchemaProvider getAvailableProvider(@Nonnull final XmlFile file) {
     for (XmlSchemaProvider provider: Extensions.getExtensions(EP_NAME)) {
       if (provider.isAvailable(file)) {
         return provider;
@@ -81,7 +81,7 @@ public abstract class XmlSchemaProvider {
     return null;    
   }
 
-  public static List<XmlSchemaProvider> getAvailableProviders(@NotNull final XmlFile file) {
+  public static List<XmlSchemaProvider> getAvailableProviders(@Nonnull final XmlFile file) {
     return ContainerUtil.findAll(Extensions.getExtensions(EP_NAME), new Condition<XmlSchemaProvider>() {
       public boolean value(XmlSchemaProvider xmlSchemaProvider) {
         return xmlSchemaProvider.isAvailable(file);
@@ -90,10 +90,10 @@ public abstract class XmlSchemaProvider {
   }
 
   @Nullable
-  public abstract XmlFile getSchema(@NotNull @NonNls String url, @Nullable Module module, @NotNull final PsiFile baseFile);
+  public abstract XmlFile getSchema(@Nonnull @NonNls String url, @Nullable Module module, @Nonnull final PsiFile baseFile);
 
 
-  public boolean isAvailable(@NotNull final XmlFile file) {
+  public boolean isAvailable(@Nonnull final XmlFile file) {
     return false;
   }
 
@@ -103,18 +103,18 @@ public abstract class XmlSchemaProvider {
    * @param tagName optional
    * @return available namespace uris, or <code>null</code> if the provider did not recognize the file.
    */
-  @NotNull
-  public Set<String> getAvailableNamespaces(@NotNull final XmlFile file, @Nullable final String tagName) {
+  @Nonnull
+  public Set<String> getAvailableNamespaces(@Nonnull final XmlFile file, @Nullable final String tagName) {
     return Collections.emptySet();
   }
 
   @Nullable
-  public String getDefaultPrefix(@NotNull @NonNls String namespace, @NotNull final XmlFile context) {
+  public String getDefaultPrefix(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
     return null;
   }
 
   @Nullable
-  public Set<String> getLocations(@NotNull @NonNls String namespace, @NotNull final XmlFile context) {
+  public Set<String> getLocations(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
     return null;
   }
 }

@@ -15,8 +15,8 @@
  */
 package com.intellij.psi.impl.smartPointers;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
@@ -30,7 +30,7 @@ public class XmlAnchorProvider implements SmartPointerAnchorProvider
 {
 	@Nullable
 	@Override
-	public PsiElement getAnchor(@NotNull PsiElement element)
+	public PsiElement getAnchor(@Nonnull PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{
@@ -41,7 +41,7 @@ public class XmlAnchorProvider implements SmartPointerAnchorProvider
 
 	@Nullable
 	@Override
-	public PsiElement restoreElement(@NotNull PsiElement anchor)
+	public PsiElement restoreElement(@Nonnull PsiElement anchor)
 	{
 		if(anchor instanceof XmlToken)
 		{

@@ -15,10 +15,11 @@
  */
 package com.intellij.ide.browsers;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author nik
@@ -26,5 +27,5 @@ import org.jetbrains.annotations.NotNull;
 public abstract class RemoteFileUpdater {
   public static final ExtensionPointName<RemoteFileUpdater> EP_NAME = ExtensionPointName.create("com.intellij.remoteFileUpdater");
 
-  public abstract boolean updateFile(@NotNull VirtualFile file, Project project, @NotNull Runnable onUpdateFinished);
+  public abstract boolean updateFile(@Nonnull VirtualFile file, Project project, @Nonnull Runnable onUpdateFinished);
 }

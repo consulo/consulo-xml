@@ -17,9 +17,11 @@ package com.intellij.xml.util;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlTagValueImpl;
@@ -39,7 +41,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 {
 	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.IncludedXmlTag");
 
-	public IncludedXmlTag(@NotNull XmlTag original, @Nullable PsiElement parent)
+	public IncludedXmlTag(@Nonnull XmlTag original, @Nullable PsiElement parent)
 	{
 		super(original, parent);
 	}
@@ -52,7 +54,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getName()
 	{
@@ -60,13 +62,13 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException
+	public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException
 	{
 		throw new UnsupportedOperationException("Can't modify included tags");
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getNamespace()
 	{
@@ -76,7 +78,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getLocalName()
 	{
@@ -91,7 +93,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlAttribute[] getAttributes()
 	{
 		XmlAttribute[] original = getOriginal().getAttributes();
@@ -159,7 +161,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] getSubTags()
 	{
 		return wrapTags(getOriginal().getSubTags());
@@ -176,14 +178,14 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] findSubTags(@NonNls String qname)
 	{
 		return wrapTags(getOriginal().findSubTags(qname));
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] findSubTags(@NonNls String localName, @NonNls String namespace)
 	{
 		return wrapTags(getOriginal().findSubTags(localName, namespace));
@@ -198,7 +200,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getNamespacePrefix()
 	{
@@ -206,7 +208,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getNamespaceByPrefix(@NonNls String prefix)
 	{
@@ -233,14 +235,14 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Map<String, String> getLocalNamespaceDeclarations()
 	{
 		return getOriginal().getLocalNamespaceDeclarations();
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTagValue getValue()
 	{
 		return XmlTagValueImpl.createXmlTagValue(this);

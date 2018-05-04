@@ -23,11 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.DeferredUserLookupValue;
 import com.intellij.codeInsight.lookup.LookupItem;
 import com.intellij.codeInsight.lookup.LookupValueWithPriority;
@@ -346,12 +347,12 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		return true;
 	}
 
-	public static boolean isSystemColorName(@NotNull @NonNls final String s)
+	public static boolean isSystemColorName(@Nonnull @NonNls final String s)
 	{
 		return ourSystemColors.contains(s);
 	}
 
-	public static boolean isStandardColor(@NotNull @NonNls final String s)
+	public static boolean isStandardColor(@Nonnull @NonNls final String s)
 	{
 		return ourStandardColors.contains(s);
 	}
@@ -453,7 +454,7 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		return ourHexCodeToColorNameMap.get(colorName);
 	}
 
-	private static String toHex(@NotNull final Color color)
+	private static String toHex(@Nonnull final Color color)
 	{
 		final StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < 3; i++)

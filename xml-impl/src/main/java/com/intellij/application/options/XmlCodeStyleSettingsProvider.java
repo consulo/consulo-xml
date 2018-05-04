@@ -21,7 +21,7 @@ import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
 import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
 import com.intellij.psi.formatter.xml.XmlCodeStyleSettings;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
@@ -30,7 +30,7 @@ public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
 
   public static final String CONFIGURABLE_DISPLAY_NAME = ApplicationBundle.message("title.xml");
 
-  @NotNull
+  @Nonnull
   public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
     return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.xml")){
       protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {

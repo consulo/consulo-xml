@@ -16,9 +16,10 @@
 
 package com.intellij.codeInspection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.daemon.HighlightDisplayKey;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -31,7 +32,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 	@NonNls
 	static final String ALL = "ALL";
 
-	@NotNull
+	@Nonnull
 	@Override
 	public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element)
 	{
@@ -49,7 +50,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 	}
 
 	@Override
-	public boolean isSuppressedFor(@NotNull final PsiElement element)
+	public boolean isSuppressedFor(@Nonnull final PsiElement element)
 	{
 		return XmlSuppressionProvider.isSuppressed(element, getID());
 	}
@@ -66,12 +67,12 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 	{
 		private final String id;
 
-		public SuppressTagStatic(@NotNull String id)
+		public SuppressTagStatic(@Nonnull String id)
 		{
 			this.id = id;
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public String getName()
 		{
@@ -79,13 +80,13 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 		}
 
 		@Override
-		public boolean isAvailable(@NotNull Project project, @NotNull PsiElement context)
+		public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context)
 		{
 			return context.isValid();
 		}
 
 		@Override
-		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor)
+		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
 		{
 			PsiElement element = descriptor.getPsiElement();
 			if(PsiTreeUtil.getParentOfType(element, XmlTag.class) == null)
@@ -96,7 +97,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getFamilyName()
 		{
 			return getName();
@@ -107,12 +108,12 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 	{
 		private final String myInspectionId;
 
-		public SuppressForFile(@NotNull String inspectionId)
+		public SuppressForFile(@Nonnull String inspectionId)
 		{
 			myInspectionId = inspectionId;
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public String getName()
 		{
@@ -120,7 +121,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 		}
 
 		@Override
-		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor)
+		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
 		{
 			PsiElement element = descriptor.getPsiElement();
 			if(element == null || !element.isValid() || !(element.getContainingFile() instanceof XmlFile))
@@ -131,13 +132,13 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 		}
 
 		@Override
-		public boolean isAvailable(@NotNull Project project, @NotNull PsiElement context)
+		public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context)
 		{
 			return context.isValid();
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getFamilyName()
 		{
 			return getName();
@@ -151,7 +152,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 			super(ALL);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public String getName()
 		{

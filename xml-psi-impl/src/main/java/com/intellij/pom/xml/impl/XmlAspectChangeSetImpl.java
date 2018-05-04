@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.pom.PomModel;
 import com.intellij.pom.PomModelAspect;
 import com.intellij.pom.event.PomChangeSet;
@@ -50,12 +50,12 @@ public class XmlAspectChangeSetImpl implements XmlChangeSet {
     return Collections.unmodifiableList(myChanges);
   }
 
-  @NotNull
+  @Nonnull
   public PomModelAspect getAspect() {
     return myModel.getModelAspect(XmlAspect.class);
   }
 
-  public void merge(@NotNull PomChangeSet blocked) {
+  public void merge(@Nonnull PomChangeSet blocked) {
     final List<XmlChange> changes = ((XmlAspectChangeSetImpl)blocked).myChanges;
     for (XmlChange xmlChange : changes) {
       add(xmlChange);
@@ -70,7 +70,7 @@ public class XmlAspectChangeSetImpl implements XmlChangeSet {
     myChanges.clear();
   }
 
-  @NotNull
+  @Nonnull
   public Iterable<XmlFile> getChangedFiles() {
     return myChangedFiles;
   }
@@ -88,7 +88,7 @@ public class XmlAspectChangeSetImpl implements XmlChangeSet {
     return buffer.toString();
   }
 
-  public void addChangedFile(@NotNull final XmlFile xmlFile) {
+  public void addChangedFile(@Nonnull final XmlFile xmlFile) {
     myChangedFiles.add(xmlFile);
   }
 }

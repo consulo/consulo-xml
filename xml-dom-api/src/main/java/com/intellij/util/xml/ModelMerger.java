@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

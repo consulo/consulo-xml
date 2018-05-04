@@ -15,11 +15,12 @@
  */
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nullable;
+
 import com.intellij.util.xml.AbstractDomDeclarationSearcher;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomTarget;
 import com.intellij.util.xml.NameValue;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter

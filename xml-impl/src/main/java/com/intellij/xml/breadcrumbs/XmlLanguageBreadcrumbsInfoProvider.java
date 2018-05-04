@@ -22,9 +22,11 @@
  */
 package com.intellij.xml.breadcrumbs;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;
@@ -42,13 +44,13 @@ public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider
 
 	@RequiredReadAction
 	@Override
-	public boolean acceptElement(@NotNull final PsiElement e)
+	public boolean acceptElement(@Nonnull final PsiElement e)
 	{
 		return e instanceof XmlTag && e.isValid();
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Language getLanguage()
 	{
 		return XMLLanguage.INSTANCE;
@@ -56,8 +58,8 @@ public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider
 
 	@RequiredReadAction
 	@Override
-	@NotNull
-	public String getElementInfo(@NotNull final PsiElement e)
+	@Nonnull
+	public String getElementInfo(@Nonnull final PsiElement e)
 	{
 		final XmlTag tag = (XmlTag) e;
 		return tag.getName();
@@ -66,7 +68,7 @@ public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider
 	@RequiredReadAction
 	@Override
 	@Nullable
-	public String getElementTooltip(@NotNull final PsiElement e)
+	public String getElementTooltip(@Nonnull final PsiElement e)
 	{
 		final XmlTag tag = (XmlTag) e;
 		final StringBuilder result = new StringBuilder("&lt;");

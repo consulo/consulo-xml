@@ -26,8 +26,8 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.events.DomEvent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +58,7 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     myName = name;
     
     DomElementAnnotationsManager.getInstance(project).addHighlightingListener(new DomElementAnnotationsManager.DomHighlightingListener() {
-      public void highlightingFinished(@NotNull DomFileElement element) {
+      public void highlightingFinished(@Nonnull DomFileElement element) {
         if (isInitialised() && getComponent().isShowing() && element.isValid()) {
           updateHighlighting();
         }
@@ -94,7 +94,7 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     return myComponent;
   }
 
-  @NotNull
+  @Nonnull
   protected JComponent createCustomComponent() {
     new MnemonicHelper().register(getComponent());
     myComponent = myComponentFactory.create();
@@ -108,7 +108,7 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     return myComponent.getComponent();
   }
 
-  @NotNull
+  @Nonnull
   public final String getName() {
     return myName;
   }

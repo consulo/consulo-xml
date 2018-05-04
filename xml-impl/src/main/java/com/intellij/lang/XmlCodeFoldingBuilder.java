@@ -33,8 +33,8 @@ import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.*;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +45,8 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
   private static final int MIN_TEXT_RANGE_LENGTH = 3;
   private static final String STYLE_ATTRIBUTE = "style";
 
-  @NotNull
-  public FoldingDescriptor[] buildFoldRegions(@NotNull ASTNode node, @NotNull Document document) {
+  @Nonnull
+  public FoldingDescriptor[] buildFoldRegions(@Nonnull ASTNode node, @Nonnull Document document) {
     final PsiElement psiElement = node.getPsi();
     XmlDocument xmlDocument = null;
 
@@ -216,7 +216,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
     return false;
   }
 
-  public String getPlaceholderText(@NotNull ASTNode node) {
+  public String getPlaceholderText(@Nonnull ASTNode node) {
     final PsiElement psi = node.getPsi();
     if (psi instanceof XmlTag ||
         psi instanceof XmlComment ||
@@ -226,7 +226,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
     return null;
   }
 
-  public boolean isCollapsedByDefault(@NotNull ASTNode node) {
+  public boolean isCollapsedByDefault(@Nonnull ASTNode node) {
     final PsiElement psi = node.getPsi();
     final XmlCodeFoldingSettings foldingSettings = getFoldingSettings();
     return (psi instanceof XmlTag && foldingSettings.isCollapseXmlTags())

@@ -21,8 +21,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.SortedList;
 import com.intellij.util.containers.Stack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -274,7 +274,7 @@ class Html5SectionsProcessor {
     return ArrayUtil.contains(tag.getLocalName().toLowerCase(), HEADER_ELEMENTS) || HGROUP_ELEMENT.equalsIgnoreCase(tag.getLocalName());
   }
 
-  private static int compareHeaderRanks(final @NotNull XmlTag header1, final @NotNull XmlTag header2) {
+  private static int compareHeaderRanks(final @Nonnull XmlTag header1, final @Nonnull XmlTag header2) {
     return getHeaderRank(header2) - getHeaderRank(header1);
   }
 

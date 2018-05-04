@@ -54,9 +54,9 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -71,7 +71,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
   private final static Logger LOG = Logger.getInstance(GenerateXmlTagAction.class);
 
   @Override
-  public void invoke(@NotNull final Project project, @NotNull final Editor editor, @NotNull final PsiFile file) {
+  public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
     if (!CodeInsightUtilBase.prepareEditorForWrite(editor)) return;
     try {
       final XmlTag contextTag = getContextTag(editor, file);
@@ -144,7 +144,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
   }
 
   @Nullable
-  private static XmlTag getAnchor(@NotNull XmlTag contextTag, Editor editor, XmlElementDescriptor selected) {
+  private static XmlTag getAnchor(@Nonnull XmlTag contextTag, Editor editor, XmlElementDescriptor selected) {
     XmlContentDFA contentDFA = XmlContentDFA.getContentDFA(contextTag);
     int offset = editor.getCaretModel().getOffset();
     if (contentDFA == null) {
@@ -241,7 +241,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     }
   }
 
-  private static XmlTag createTag(@NotNull XmlTag contextTag, @NotNull XmlElementDescriptor descriptor) {
+  private static XmlTag createTag(@Nonnull XmlTag contextTag, @Nonnull XmlElementDescriptor descriptor) {
     String namespace = getNamespace(descriptor);
     XmlTag tag = contextTag.createChildTag(descriptor.getName(), namespace, null, false);
     PsiElement lastChild = tag.getLastChild();
@@ -300,7 +300,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
   }
 
   @Override
-  protected boolean isValidForFile(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
     if (!(file instanceof XmlFile)) return false;
     XmlTag contextTag = getContextTag(editor, file);
     return contextTag != null && contextTag.getDescriptor() != null;

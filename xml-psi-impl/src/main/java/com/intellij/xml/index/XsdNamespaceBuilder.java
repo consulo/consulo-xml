@@ -26,8 +26,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.Comparing;
 import com.intellij.util.xml.NanoXmlUtil;
 import com.intellij.xml.util.XmlUtil;
@@ -127,12 +128,12 @@ public class XsdNamespaceBuilder extends NanoXmlUtil.IXMLBuilderAdapter implemen
 	}
 
 	@Override
-	public int compareTo(@NotNull XsdNamespaceBuilder o)
+	public int compareTo(@Nonnull XsdNamespaceBuilder o)
 	{
 		return Comparing.compare(myNamespace, o.myNamespace);
 	}
 
-	public boolean hasTag(@NotNull String tagName)
+	public boolean hasTag(@Nonnull String tagName)
 	{
 		return myTags.contains(tagName);
 	}

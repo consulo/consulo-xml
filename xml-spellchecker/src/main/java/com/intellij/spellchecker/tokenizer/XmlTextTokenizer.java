@@ -15,6 +15,8 @@
  */
 package com.intellij.spellchecker.tokenizer;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
@@ -23,11 +25,10 @@ import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.spellchecker.inspections.PlainTextSplitter;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlTextTokenizer extends Tokenizer<XmlText> {
 	@Override
-	public void tokenize(@NotNull XmlText element, TokenConsumer consumer) {
+	public void tokenize(@Nonnull XmlText element, TokenConsumer consumer) {
 		if (element instanceof PsiLanguageInjectionHost && InjectedLanguageUtil.hasInjections((PsiLanguageInjectionHost)element)) return;
 		processChildren(element, consumer);
 	}

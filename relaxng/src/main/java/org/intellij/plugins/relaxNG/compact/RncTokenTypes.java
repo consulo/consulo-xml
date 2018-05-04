@@ -21,7 +21,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TObjectProcedure;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 
 import java.lang.reflect.Field;
@@ -66,7 +66,7 @@ public class RncTokenTypes {
     }
   }
 
-  @NotNull
+  @Nonnull
   public static IElementType get(int i) {
     assert !ourTokenTypes.isEmpty();
     final IElementType type = ourTokenTypes.get(i);
@@ -74,7 +74,7 @@ public class RncTokenTypes {
     return type;
   }
 
-  @NotNull
+  @Nonnull
   private static IElementType get(final String name) {
     assert !ourTokenTypes.isEmpty();
     final Ref<IElementType> ref = new Ref<>();

@@ -15,8 +15,9 @@
  */
 package com.intellij.xml.impl.schema;
 
+import javax.annotation.Nullable;
+
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author nik

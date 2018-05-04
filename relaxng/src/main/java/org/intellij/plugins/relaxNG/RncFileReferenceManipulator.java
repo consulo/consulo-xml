@@ -15,6 +15,8 @@
  */
 package org.intellij.plugins.relaxNG;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.AbstractElementManipulator;
@@ -23,14 +25,13 @@ import com.intellij.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
-import org.jetbrains.annotations.NotNull;
 
 /**
 * @author peter
 */
 public class RncFileReferenceManipulator extends AbstractElementManipulator<RncFileReference> {
   @Override
-  public RncFileReference handleContentChange(@NotNull RncFileReference element, @NotNull TextRange range, String newContent) throws
+  public RncFileReference handleContentChange(@Nonnull RncFileReference element, @Nonnull TextRange range, String newContent) throws
                                                                                                             IncorrectOperationException {
     final ASTNode node = element.getNode();
     assert node != null;
@@ -45,9 +46,9 @@ public class RncFileReferenceManipulator extends AbstractElementManipulator<RncF
     return element;
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public TextRange getRangeInElement(@NotNull RncFileReference element) {
+  public TextRange getRangeInElement(@Nonnull RncFileReference element) {
     return element.getReferenceRange();
   }
 }

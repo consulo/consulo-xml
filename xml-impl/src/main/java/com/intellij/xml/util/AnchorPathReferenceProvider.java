@@ -24,8 +24,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReference;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class AnchorPathReferenceProvider implements PathReferenceProvider {
 
-  public boolean createReferences(@NotNull final PsiElement psiElement, final @NotNull List<PsiReference> references, final boolean soft) {
+  public boolean createReferences(@Nonnull final PsiElement psiElement, final @Nonnull List<PsiReference> references, final boolean soft) {
 
     final TextRange range = ElementManipulators.getValueTextRange(psiElement);
     final String elementText = psiElement.getText();
@@ -93,7 +93,7 @@ public class AnchorPathReferenceProvider implements PathReferenceProvider {
     return fileReference;
   }
 
-  public PathReference getPathReference(@NotNull final String path, @NotNull final PsiElement element) {
+  public PathReference getPathReference(@Nonnull final String path, @Nonnull final PsiElement element) {
     return null;
   }
 }

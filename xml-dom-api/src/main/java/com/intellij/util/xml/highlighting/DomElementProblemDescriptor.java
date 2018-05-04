@@ -22,20 +22,20 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
 public interface DomElementProblemDescriptor extends CommonProblemDescriptor {
 
-  @NotNull
+  @Nonnull
   DomElement getDomElement();
-  @NotNull
+  @Nonnull
   HighlightSeverity getHighlightSeverity();
-  @NotNull
+  @Nonnull
   LocalQuickFix[] getFixes();
-  @NotNull
+  @Nonnull
   List<Annotation> getAnnotations();
 
   void highlightWholeElement();

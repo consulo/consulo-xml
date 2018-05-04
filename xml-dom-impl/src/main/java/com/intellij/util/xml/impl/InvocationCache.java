@@ -6,7 +6,7 @@ import com.intellij.pom.Navigatable;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.xml.*;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

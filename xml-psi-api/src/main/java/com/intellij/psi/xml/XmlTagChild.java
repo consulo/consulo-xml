@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.xml;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public interface XmlTagChild extends XmlElement{
   XmlTagChild[] EMPTY_ARRAY = new XmlTagChild[0];

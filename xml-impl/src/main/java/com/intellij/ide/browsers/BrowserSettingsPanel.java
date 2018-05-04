@@ -24,6 +24,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -34,8 +35,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.GeneralSettings;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -269,7 +269,7 @@ final class BrowserSettingsPanel
 	{
 		TableModelEditor.DialogItemEditor<ConfigurableWebBrowser> itemEditor = new TableModelEditor.DialogItemEditor<ConfigurableWebBrowser>()
 		{
-			@NotNull
+			@Nonnull
 			@Override
 			public Class<ConfigurableWebBrowser> getItemClass()
 			{
@@ -277,14 +277,14 @@ final class BrowserSettingsPanel
 			}
 
 			@Override
-			public ConfigurableWebBrowser clone(@NotNull ConfigurableWebBrowser item, boolean forInPlaceEditing)
+			public ConfigurableWebBrowser clone(@Nonnull ConfigurableWebBrowser item, boolean forInPlaceEditing)
 			{
 				return new ConfigurableWebBrowser(forInPlaceEditing ? item.getId() : UUID.randomUUID(), item.getFamily(), item.getName(),
 						item.getPath(), item.isActive(), forInPlaceEditing ? item.getSpecificSettings() : cloneSettings(item));
 			}
 
 			@Override
-			public void edit(@NotNull ConfigurableWebBrowser browser, @NotNull Function<ConfigurableWebBrowser, ConfigurableWebBrowser> mutator,
+			public void edit(@Nonnull ConfigurableWebBrowser browser, @Nonnull Function<ConfigurableWebBrowser, ConfigurableWebBrowser> mutator,
 					boolean isAdd)
 			{
 				BrowserSpecificSettings settings = cloneSettings(browser);
@@ -295,7 +295,7 @@ final class BrowserSettingsPanel
 			}
 
 			@Nullable
-			private BrowserSpecificSettings cloneSettings(@NotNull ConfigurableWebBrowser browser)
+			private BrowserSpecificSettings cloneSettings(@Nonnull ConfigurableWebBrowser browser)
 			{
 				BrowserSpecificSettings settings = browser.getSpecificSettings();
 				if(settings == null)
@@ -310,19 +310,19 @@ final class BrowserSettingsPanel
 			}
 
 			@Override
-			public void applyEdited(@NotNull ConfigurableWebBrowser oldItem, @NotNull ConfigurableWebBrowser newItem)
+			public void applyEdited(@Nonnull ConfigurableWebBrowser oldItem, @Nonnull ConfigurableWebBrowser newItem)
 			{
 				oldItem.setSpecificSettings(newItem.getSpecificSettings());
 			}
 
 			@Override
-			public boolean isEditable(@NotNull ConfigurableWebBrowser browser)
+			public boolean isEditable(@Nonnull ConfigurableWebBrowser browser)
 			{
 				return browser.getSpecificSettings() != null;
 			}
 
 			@Override
-			public boolean isRemovable(@NotNull ConfigurableWebBrowser item)
+			public boolean isRemovable(@Nonnull ConfigurableWebBrowser item)
 			{
 				return !WebBrowserManager.getInstance().isPredefinedBrowser(item);
 			}
@@ -337,7 +337,7 @@ final class BrowserSettingsPanel
 			}
 
 			@Override
-			public void dataChanged(@NotNull ColumnInfo<ConfigurableWebBrowser, ?> columnInfo, int rowIndex)
+			public void dataChanged(@Nonnull ColumnInfo<ConfigurableWebBrowser, ?> columnInfo, int rowIndex)
 			{
 				if(columnInfo == PATH_COLUMN_INFO)
 				{
@@ -362,7 +362,7 @@ final class BrowserSettingsPanel
 		alternativeBrowserPathField.setText(model.getRowCount() == 0 ? "" : model.getRowValue(0).getPath());
 	}
 
-	@NotNull
+	@Nonnull
 	public JPanel getComponent()
 	{
 		return root;
@@ -426,7 +426,7 @@ final class BrowserSettingsPanel
 		updateCustomPathTextFieldValue(defaultBrowser);
 	}
 
-	public void selectBrowser(@NotNull WebBrowser browser)
+	public void selectBrowser(@Nonnull WebBrowser browser)
 	{
 		if(browser instanceof ConfigurableWebBrowser)
 		{

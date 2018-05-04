@@ -23,7 +23,7 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:valueElemType interface.
@@ -35,7 +35,7 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the simple content.
    */
-  @NotNull
+  @Nonnull
   @Required
   String getValue();
 
@@ -44,7 +44,7 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @param value the new value to set
    */
-  void setValue(@NotNull String value);
+  void setValue(@Nonnull String value);
 
 
   /**
@@ -52,6 +52,6 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the type child.
    */
-  @NotNull
+  @Nonnull
   GenericAttributeValue<String> getType();
 }

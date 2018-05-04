@@ -19,7 +19,8 @@
  */
 package com.intellij.lang.html;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
@@ -29,8 +30,8 @@ import consulo.lang.LanguageVersion;
 
 public class HTMLParser implements PsiParser {
 
-  @NotNull
-  public ASTNode parse(@NotNull final IElementType root, @NotNull final PsiBuilder builder, @NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public ASTNode parse(@Nonnull final IElementType root, @Nonnull final PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
     final PsiBuilder.Marker file = builder.mark();
     new HtmlParsing(builder).parseDocument();

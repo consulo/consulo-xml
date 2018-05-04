@@ -14,7 +14,7 @@ import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncInclude;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 * Date: 09.06.2010
 */
 public class RelaxIncludeProvider extends FileIncludeProvider {
-  @NotNull
+  @Nonnull
   @Override
   public String getId() {
     return "relax-ng";
@@ -37,12 +37,12 @@ public class RelaxIncludeProvider extends FileIncludeProvider {
   }
 
   @Override
-  public void registerFileTypesUsedForIndexing(@NotNull Consumer<FileType> fileTypeSink) {
+  public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
     fileTypeSink.consume(XmlFileType.INSTANCE);
     fileTypeSink.consume(RncFileType.getInstance());
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public FileIncludeInfo[] getIncludeInfos(FileContent content) {
     final ArrayList<FileIncludeInfo> infos;

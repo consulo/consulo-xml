@@ -23,7 +23,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.codeInspection.InspectionsBundle;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.FieldPanel;

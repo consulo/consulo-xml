@@ -25,8 +25,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -65,13 +65,13 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     //return myValue.getManager().findClass(fqn, GlobalSearchScope.allScope(myValue.getProject()));
   }
 
-  @NotNull
+  @Nonnull
   public String getUnresolvedMessagePattern() {
     //noinspection UnresolvedPropertyKey
     return XmlErrorMessages.message("unknown.encoding.0");
   }
 
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     return myCharsetName;
   }
@@ -80,7 +80,7 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     return null;
   }
 
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     return null;
   }
 
@@ -88,7 +88,7 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     return false;
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     Charset[] charsets = CharsetToolkit.getAvailableCharsets();
     List<LookupElement> suggestions = new ArrayList<LookupElement>(charsets.length);

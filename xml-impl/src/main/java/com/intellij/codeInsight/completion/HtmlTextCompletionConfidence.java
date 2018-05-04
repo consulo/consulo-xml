@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.completion;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -27,21 +28,21 @@ import com.intellij.util.ThreeState;
 
 public class HtmlTextCompletionConfidence extends CompletionConfidence
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public ThreeState shouldFocusLookup(@NotNull CompletionParameters completionParameters)
+	public ThreeState shouldFocusLookup(@Nonnull CompletionParameters completionParameters)
 	{
 		return ThreeState.UNSURE;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public ThreeState shouldSkipAutopopup(@NotNull PsiElement contextElement, @NotNull PsiFile psiFile, int offset)
+	public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset)
 	{
 		return shouldSkipAutopopupInHtml(contextElement, offset) ? ThreeState.YES : ThreeState.UNSURE;
 	}
 
-	public static boolean shouldSkipAutopopupInHtml(@NotNull PsiElement contextElement, int offset)
+	public static boolean shouldSkipAutopopupInHtml(@Nonnull PsiElement contextElement, int offset)
 	{
 		ASTNode node = contextElement.getNode();
 		if(node != null && node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS)

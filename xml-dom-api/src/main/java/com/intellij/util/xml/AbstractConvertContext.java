@@ -15,6 +15,8 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -26,8 +28,8 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -43,7 +45,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     return getInvocationElement().getXmlElement();
   }
 
-  @NotNull
+  @Nonnull
   public final XmlFile getFile() {
     return DomUtil.getFile(getInvocationElement());
   }
@@ -88,7 +90,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     return scope; // ??? scope == null ? GlobalSearchScope.allScope(getProject()) : scope; ???
   }
 
-  public static GlobalSearchScope getSearchScope(@NotNull ConvertContext context) {
+  public static GlobalSearchScope getSearchScope(@Nonnull ConvertContext context) {
     Module[] modules = getConvertContextModules(context);
     if (modules.length == 0) return null;
 
@@ -113,8 +115,8 @@ public abstract class AbstractConvertContext extends ConvertContext {
   }
 
 
-  @NotNull
-  private static Module[] getConvertContextModules(@NotNull ConvertContext context) {
+  @Nonnull
+  private static Module[] getConvertContextModules(@Nonnull ConvertContext context) {
     Module[] modules = ModuleContextProvider.getModules(context.getFile());
     if (modules.length > 0) return modules;
 

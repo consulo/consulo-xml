@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import consulo.ide.IconDescriptor;
@@ -30,7 +30,7 @@ import consulo.ide.IconDescriptorUpdater;
 public class DomIconDescriptorUpdater implements IconDescriptorUpdater
 {
   @Override
-  public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int flags) {
+  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
     if (element instanceof XmlFile) {
       DomFileDescription<?> description = DomManager.getDomManager(element.getProject()).getDomFileDescription((XmlFile)element);
       if(description != null) {

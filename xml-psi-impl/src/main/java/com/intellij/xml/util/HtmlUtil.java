@@ -26,10 +26,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.htmlInspections.XmlEntitiesInspection;
 import com.intellij.ide.highlighter.HtmlFileType;
@@ -447,7 +448,7 @@ public class HtmlUtil
 		return true;
 	}
 
-	public static boolean isBooleanAttribute(@NotNull XmlAttributeDescriptor descriptor, @Nullable PsiElement context)
+	public static boolean isBooleanAttribute(@Nonnull XmlAttributeDescriptor descriptor, @Nullable PsiElement context)
 	{
 		if(descriptor instanceof HtmlAttributeDescriptorImpl && descriptor.isEnumerated())
 		{
@@ -468,7 +469,7 @@ public class HtmlUtil
 		return context != null && isCustomBooleanAttribute(descriptor.getName(), context);
 	}
 
-	public static boolean isCustomBooleanAttribute(@NotNull String attributeName, @NotNull PsiElement context)
+	public static boolean isCustomBooleanAttribute(@Nonnull String attributeName, @Nonnull PsiElement context)
 	{
 		final String entitiesString = getEntitiesString(context, XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME);
 		if(entitiesString != null)
@@ -551,7 +552,7 @@ public class HtmlUtil
 	}
 
 	@Nullable
-	public static String getEntitiesString(@Nullable PsiElement context, @NotNull String inspectionName)
+	public static String getEntitiesString(@Nullable PsiElement context, @Nonnull String inspectionName)
 	{
 		if(context == null)
 		{
@@ -664,7 +665,7 @@ public class HtmlUtil
 		return isHtml5Document(doc);
 	}
 
-	public static boolean isHtmlTag(@NotNull XmlTag tag)
+	public static boolean isHtmlTag(@Nonnull XmlTag tag)
 	{
 		if(tag.getLanguage() != HTMLLanguage.INSTANCE)
 		{
@@ -723,7 +724,7 @@ public class HtmlUtil
 		return "meta.rnc".equals(name);
 	}
 
-	public static boolean tagHasHtml5Schema(@NotNull XmlTag context)
+	public static boolean tagHasHtml5Schema(@Nonnull XmlTag context)
 	{
 		XmlElementDescriptor descriptor = context.getDescriptor();
 		if(descriptor != null)
@@ -741,7 +742,7 @@ public class HtmlUtil
 		private static final TerminateException INSTANCE = new TerminateException();
 	}
 
-	public static Charset detectCharsetFromMetaTag(@NotNull CharSequence content)
+	public static Charset detectCharsetFromMetaTag(@Nonnull CharSequence content)
 	{
 		// check for <meta http-equiv="charset=CharsetName" > or <meta charset="CharsetName"> and return Charset
 		// because we will lightly parse and explicit charset isn't used very often do quick check for applicability
@@ -919,19 +920,19 @@ public class HtmlUtil
 		return false;
 	}
 
-	public static boolean hasHtmlPrefix(@NotNull String url)
+	public static boolean hasHtmlPrefix(@Nonnull String url)
 	{
 		return url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//") || //Protocol-relative URL
 				url.startsWith("ftp://");
 	}
 
-	public static boolean isHtmlFile(@NotNull PsiElement element)
+	public static boolean isHtmlFile(@Nonnull PsiElement element)
 	{
 		Language language = element.getLanguage();
 		return language.isKindOf(HTMLLanguage.INSTANCE) || language == XHTMLLanguage.INSTANCE;
 	}
 
-	public static boolean isHtmlFile(@NotNull VirtualFile file)
+	public static boolean isHtmlFile(@Nonnull VirtualFile file)
 	{
 		FileType fileType = file.getFileType();
 		return fileType == HtmlFileType.INSTANCE || fileType == XHtmlFileType.INSTANCE;
@@ -1038,7 +1039,7 @@ public class HtmlUtil
 	}
 
 	@Nullable
-	private static String getAttributeValue(@NotNull XmlTag tag, @NotNull String attrName)
+	private static String getAttributeValue(@Nonnull XmlTag tag, @Nonnull String attrName)
 	{
 		XmlAttribute classAttribute = getAttributeByName(tag, attrName);
 		if(classAttribute != null && !containsOuterLanguageElements(classAttribute))
@@ -1053,7 +1054,7 @@ public class HtmlUtil
 	}
 
 	@Nullable
-	private static XmlAttribute getAttributeByName(@NotNull XmlTag tag, @NotNull String name)
+	private static XmlAttribute getAttributeByName(@Nonnull XmlTag tag, @Nonnull String name)
 	{
 		PsiElement child = tag.getFirstChild();
 		while(child != null)
@@ -1071,7 +1072,7 @@ public class HtmlUtil
 		return null;
 	}
 
-	private static boolean containsOuterLanguageElements(@NotNull PsiElement element)
+	private static boolean containsOuterLanguageElements(@Nonnull PsiElement element)
 	{
 		PsiElement child = element.getFirstChild();
 		while(child != null)

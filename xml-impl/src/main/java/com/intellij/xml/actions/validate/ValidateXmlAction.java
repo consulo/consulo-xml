@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.actions.validate;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -40,7 +40,7 @@ public class ValidateXmlAction extends AnAction {
   public ValidateXmlAction() {
   }
 
-  private ValidateXmlActionHandler getHandler(final @NotNull PsiFile file) {
+  private ValidateXmlActionHandler getHandler(final @Nonnull PsiFile file) {
     ValidateXmlActionHandler handler = new ValidateXmlActionHandler(true);
     handler.setErrorReporter(
       new StdErrorReporter(handler, file.getProject(),
@@ -61,7 +61,7 @@ public class ValidateXmlAction extends AnAction {
     }
   }
 
-  private void doRunAction(final @NotNull PsiFile psiFile) {
+  private void doRunAction(final @Nonnull PsiFile psiFile) {
 
     CommandProcessor.getInstance().executeCommand(psiFile.getProject(), new Runnable(){
       public void run(){

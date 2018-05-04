@@ -19,7 +19,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.filters.ElementFilter;
-import com.intellij.psi.impl.source.resolve.reference.PsiReferenceProviderBase;
 import com.intellij.psi.templateLanguages.OuterLanguageElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
@@ -29,8 +28,10 @@ import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import gnu.trove.THashSet;
+
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -76,8 +77,8 @@ public class IdReferenceProvider extends PsiReferenceProvider {
     };
   }
 
-  @NotNull
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context) {
+  @Nonnull
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
     if (element instanceof XmlAttributeValue) {
       final XmlExtension extension = XmlExtension.getExtensionByElement(element);
       if (extension != null && extension.hasDynamicComponents(element)) {
@@ -125,7 +126,7 @@ public class IdReferenceProvider extends PsiReferenceProvider {
     return PsiReference.EMPTY_ARRAY;
   }
 
-  private static boolean hasOuterLanguageElement(@NotNull PsiElement element) {
+  private static boolean hasOuterLanguageElement(@Nonnull PsiElement element) {
     for (PsiElement child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
       if (child instanceof OuterLanguageElement) {
         return true;

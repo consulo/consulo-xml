@@ -15,18 +15,19 @@
  */
 package com.intellij.usageView;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.ElementDescriptionLocation;
 import com.intellij.psi.ElementDescriptionProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author yole
  */
 public class XmlUsageViewDescriptionProvider implements ElementDescriptionProvider {
-  public String getElementDescription(@NotNull final PsiElement element, @NotNull final ElementDescriptionLocation location) {
+  public String getElementDescription(@Nonnull final PsiElement element, @Nonnull final ElementDescriptionLocation location) {
     if (location instanceof UsageViewShortNameLocation) {
       if (element instanceof XmlAttributeValue) {
         return ((XmlAttributeValue)element).getValue();

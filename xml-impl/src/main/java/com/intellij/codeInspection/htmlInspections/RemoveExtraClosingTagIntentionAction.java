@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.intention.IntentionAction;
@@ -35,38 +37,37 @@ import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
  */
 public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, IntentionAction {
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlErrorMessages.message("remove.extra.closing.tag.quickfix");
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getName() {
     return XmlErrorMessages.message("remove.extra.closing.tag.quickfix");
   }
 
 
   @Override
-  @NotNull
+  @Nonnull
   public String getText() {
     return getName();
   }
 
   @Override
-  public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
+  public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
     return true;
   }
 
   @Override
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
     final int offset = editor.getCaretModel().getOffset();
     final PsiElement psiElement = file.findElementAt(offset);
     if (psiElement == null || !psiElement.isValid() || !(psiElement instanceof XmlToken)) {
@@ -82,7 +83,7 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Inte
     return true;
   }
 
-  private static void doFix(@NotNull final PsiElement element) throws IncorrectOperationException {
+  private static void doFix(@Nonnull final PsiElement element) throws IncorrectOperationException {
     final XmlToken endNameToken = (XmlToken)element;
     final PsiElement tagElement = endNameToken.getParent();
     if (!(tagElement instanceof XmlTag) && !(tagElement instanceof PsiErrorElement)) return;
@@ -105,7 +106,7 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Inte
   }
 
   @Override
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     final PsiElement element = descriptor.getPsiElement();
     if (!element.isValid() || !(element instanceof XmlToken)) return;
     if (!FileModificationService.getInstance().prepareFileForWrite(element.getContainingFile())) return;

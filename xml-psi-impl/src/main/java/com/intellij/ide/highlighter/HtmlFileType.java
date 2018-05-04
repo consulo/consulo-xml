@@ -18,11 +18,11 @@ package com.intellij.ide.highlighter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.Language;
@@ -50,19 +50,19 @@ public class HtmlFileType extends XmlLikeFileType
 		super(language);
 	}
 
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return "HTML";
 	}
 
-	@NotNull
+	@Nonnull
 	public String getDescription()
 	{
 		return IdeBundle.message("filetype.description.html");
 	}
 
-	@NotNull
+	@Nonnull
 	public String getDefaultExtension()
 	{
 		return "html";
@@ -73,7 +73,7 @@ public class HtmlFileType extends XmlLikeFileType
 		return AllIcons.FileTypes.Html;
 	}
 
-	public String getCharset(@NotNull final VirtualFile file, final byte[] content)
+	public String getCharset(@Nonnull final VirtualFile file, final byte[] content)
 	{
 		String charset = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
 		if(charset != null)
@@ -93,7 +93,7 @@ public class HtmlFileType extends XmlLikeFileType
 		return c == null ? null : c.name();
 	}
 
-	public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @NotNull final CharSequence content)
+	public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @Nonnull final CharSequence content)
 	{
 		String name = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
 		Charset charset = CharsetToolkit.forName(name);

@@ -16,13 +16,14 @@
 
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Dmitry Avdeev
@@ -32,12 +33,12 @@ public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFi
   protected final T myElement;
   protected final String myName;
 
-  public AddDomElementQuickFix(@NotNull T element) {
+  public AddDomElementQuickFix(@Nonnull T element) {
     myElement = (T)element.createStableCopy();
     myName = computeName();
   }
 
-  @NotNull
+  @Nonnull
   public String getName() {
     return myName;
   }
@@ -53,12 +54,12 @@ public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFi
     return myElement.getXmlElement() instanceof XmlTag;
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return DomBundle.message("quick.fixes.family");
   }
 
-  public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
     myElement.ensureXmlElementExists();
   }
 }

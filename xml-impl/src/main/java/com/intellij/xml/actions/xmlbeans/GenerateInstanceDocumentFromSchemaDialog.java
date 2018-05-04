@@ -31,9 +31,9 @@ import com.intellij.ui.JBColor;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -292,7 +292,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
     }
   }
 
-  @NotNull
+  @Nonnull
   protected String getHelpId() {
     return "webservices.GenerateInstanceDocumentFromSchema";
   }

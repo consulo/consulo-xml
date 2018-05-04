@@ -21,8 +21,8 @@ import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xmlb.annotations.Attribute;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -41,7 +41,7 @@ public class DomExtenderEP extends AbstractExtensionPointBean {
 
 
   @Nullable
-  public DomExtensionsRegistrarImpl extend(@NotNull final Project project, @NotNull final DomElement element, @Nullable DomExtensionsRegistrarImpl registrar) {
+  public DomExtensionsRegistrarImpl extend(@Nonnull final Project project, @Nonnull final DomElement element, @Nullable DomExtensionsRegistrarImpl registrar) {
     if (myExtender == null) {
       try {
         myDomClass = findClass(domClassName);

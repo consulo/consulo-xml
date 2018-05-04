@@ -27,9 +27,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.javaee.ImplicitNamespaceDescriptorProvider;
@@ -138,7 +140,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Nullable
-	private static XmlNSDescriptor getDtdDescriptor(@NotNull XmlFile containingFile)
+	private static XmlNSDescriptor getDtdDescriptor(@Nonnull XmlFile containingFile)
 	{
 		final XmlDocument document = containingFile.getDocument();
 		if(document == null)
@@ -187,7 +189,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	 * Use {@link #getReferences(PsiReferenceService.Hints)} instead of calling or overriding this method.
 	 */
 	@Deprecated
-	@NotNull
+	@Nonnull
 	@Override
 	public final PsiReference[] getReferences()
 	{
@@ -195,14 +197,14 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	public boolean shouldAskParentForReferences(@NotNull PsiReferenceService.Hints hints)
+	public boolean shouldAskParentForReferences(@Nonnull PsiReferenceService.Hints hints)
 	{
 		return false;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiReference[] getReferences(@NotNull PsiReferenceService.Hints hints)
+	public PsiReference[] getReferences(@Nonnull PsiReferenceService.Hints hints)
 	{
 		ProgressManager.checkCanceled();
 		final ASTNode startTagName = XmlChildRole.START_TAG_NAME_FINDER.findChild(this);
@@ -271,7 +273,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		return i >= 0 || ranges[-i - 2].containsOffset(offsetInTag);
 	}
 
-	@NotNull
+	@Nonnull
 	private TextRange[] getValueTextRanges()
 	{
 		TextRange[] elements = myTextElements;
@@ -400,7 +402,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 				externalResourceModificationTracker()));
 	}
 
-	@NotNull
+	@Nonnull
 	private Map<String, CachedValue<XmlNSDescriptor>> computeNsDescriptorMap()
 	{
 		Map<String, CachedValue<XmlNSDescriptor>> map = null;
@@ -450,7 +452,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		return map == null ? Collections.<String, CachedValue<XmlNSDescriptor>>emptyMap() : map;
 	}
 
-	private Map<String, CachedValue<XmlNSDescriptor>> initializeSchema(@NotNull final String namespace,
+	private Map<String, CachedValue<XmlNSDescriptor>> initializeSchema(@Nonnull final String namespace,
 			@Nullable final String version,
 			final String fileLocation,
 			Map<String, CachedValue<XmlNSDescriptor>> map,
@@ -561,7 +563,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Nullable
-	private PsiMetaOwner retrieveOwner(final XmlFile file, @NotNull final String namespace)
+	private PsiMetaOwner retrieveOwner(final XmlFile file, @Nonnull final String namespace)
 	{
 		if(file == null)
 		{
@@ -663,7 +665,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		String name = myName;
@@ -684,7 +686,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	public PsiElement setName(@NotNull final String name) throws IncorrectOperationException
+	public PsiElement setName(@Nonnull final String name) throws IncorrectOperationException
 	{
 		final PomModel model = PomManager.getModel(getProject());
 		final XmlAspect aspect = model.getModelAspect(XmlAspect.class);
@@ -719,7 +721,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlAttribute[] getAttributes()
 	{
 		XmlAttribute[] attributes = myAttributes;
@@ -730,14 +732,14 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		return attributes;
 	}
 
-	@NotNull
+	@Nonnull
 	private XmlAttribute[] calculateAttributes()
 	{
 		final List<XmlAttribute> result = new ArrayList<>(10);
 		processChildren(new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull PsiElement element)
+			public boolean execute(@Nonnull PsiElement element)
 			{
 				if(element instanceof XmlAttribute)
 				{
@@ -831,7 +833,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] getSubTags()
 	{
 		return CachedValuesManager.getManager(getProject()).getParameterizedCachedValue(this, SUBTAGS_KEY, CACHED_VALUE_PROVIDER, false, this);
@@ -842,7 +844,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		processElements(new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull PsiElement element)
+			public boolean execute(@Nonnull PsiElement element)
 			{
 				if(element instanceof XmlTag)
 				{
@@ -855,14 +857,14 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] findSubTags(String name)
 	{
 		return findSubTags(name, null);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTag[] findSubTags(final String name, @Nullable final String namespace)
 	{
 		final XmlTag[] subTags = getSubTags();
@@ -944,21 +946,21 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getNamespace()
 	{
 		return CachedValuesManager.getCachedValue(this, () -> CachedValueProvider.Result.create(getNamespaceByPrefix(getNamespacePrefix()), PsiModificationTracker.MODIFICATION_COUNT));
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getNamespacePrefix()
 	{
 		return XmlUtil.findPrefixByQualifiedName(getName());
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getNamespaceByPrefix(String prefix)
 	{
 		BidirectionalMap<String, String> map = getNamespaceMap();
@@ -1163,7 +1165,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getLocalName()
 	{
 		String localName = myLocalName;
@@ -1183,7 +1185,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Map<String, String> getLocalNamespaceDeclarations()
 	{
 		Map<String, String> namespaces = new THashMap<>();
@@ -1273,7 +1275,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTagValue getValue()
 	{
 		XmlTagValue tagValue = myValue;
@@ -1285,7 +1287,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -1399,7 +1401,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	public void deleteChildInternal(@NotNull final ASTNode child)
+	public void deleteChildInternal(@Nonnull final ASTNode child)
 	{
 		final PomModel model = PomManager.getModel(getProject());
 		final XmlAspect aspect = model.getModelAspect(XmlAspect.class);

@@ -45,7 +45,7 @@ import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import com.intellij.xml.util.XmlResourceResolver;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.xml.sax.SAXParseException;
 
 import java.lang.ref.WeakReference;
@@ -125,7 +125,7 @@ public class ExternalDocumentValidator {
       }
 
       @Override
-      public void addMessage(final PsiElement context, final String message, @NotNull final ErrorType type) {
+      public void addMessage(final PsiElement context, final String message, @Nonnull final ErrorType type) {
         final ValidationInfo o = new ValidationInfo(context, message, type);
         results.add(o);
       }

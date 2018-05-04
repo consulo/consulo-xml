@@ -15,10 +15,11 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.xml.XmlTag;
 import org.intellij.plugins.intelliLang.inject.InjectorUtils;
-import org.jetbrains.annotations.NotNull;
 
 public class XmlTagInjection extends AbstractTagInjection {
 
@@ -26,11 +27,11 @@ public class XmlTagInjection extends AbstractTagInjection {
     setTagName("<none>");
   }
 
-  public boolean isApplicable(@NotNull final XmlTag context) {
+  public boolean isApplicable(@Nonnull final XmlTag context) {
     return matches(context) && matchXPath(context);
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     final String name = getTagName();
     return name.length() > 0 ? name : "*";
@@ -41,7 +42,7 @@ public class XmlTagInjection extends AbstractTagInjection {
     return new XmlTagInjection().copyFrom(this);
   }
 
-  public XmlTagInjection copyFrom(@NotNull BaseInjection o) {
+  public XmlTagInjection copyFrom(@Nonnull BaseInjection o) {
     super.copyFrom(o);
     return this;
   }

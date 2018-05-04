@@ -23,7 +23,7 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the type child.
    */
-  @NotNull
+  @Nonnull
   @Required
   GenericAttributeValue<String> getType();
 
@@ -46,7 +46,7 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of param children.
    */
-  @NotNull
+  @Nonnull
   List<RngParam> getParams();
 
   /**
@@ -62,6 +62,6 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of except children.
    */
-  @NotNull
+  @Nonnull
   RngExcept getExcept();
 }

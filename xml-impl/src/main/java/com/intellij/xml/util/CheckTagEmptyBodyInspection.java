@@ -16,6 +16,8 @@
 
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInspection.*;
 import com.intellij.lang.ASTNode;
@@ -35,7 +37,6 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Maxim Mossienko
@@ -45,8 +46,8 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
     return true;
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override public void visitXmlTag(final XmlTag tag) {
         if (!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag)) {
@@ -77,34 +78,34 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
            "link".equals(name) || "br".equals(name) || "meta".equals(name) || "img".equals(name) || "input".equals(name) || "hr".equals(name);
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.XML_INSPECTIONS;
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("xml.inspections.check.tag.empty.body");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return "CheckTagEmptyBody";
   }
 
   private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
-    @NotNull
+    @Nonnull
     public String getName() {
       return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return getName();
     }
 
-    public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
       final PsiElement tag = descriptor.getPsiElement();
       if (!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile())) {
         return;

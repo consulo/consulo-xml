@@ -21,7 +21,7 @@ package org.intellij.plugins.relaxNG.xml.dom.names;
 
 import com.intellij.util.xml.Required;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:nameElemType interface.
@@ -33,7 +33,7 @@ public interface Name extends RngDomElement {
    *
    * @return the value of the simple content.
    */
-  @NotNull
+  @Nonnull
   @Required
   String getValue();
 
@@ -42,5 +42,5 @@ public interface Name extends RngDomElement {
    *
    * @param value the new value to set
    */
-  void setValue(@NotNull String value);
+  void setValue(@Nonnull String value);
 }

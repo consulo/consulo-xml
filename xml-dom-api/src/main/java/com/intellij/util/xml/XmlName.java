@@ -17,8 +17,8 @@ package com.intellij.util.xml;
 
 import com.intellij.openapi.util.Comparing;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -29,18 +29,18 @@ public class XmlName implements Comparable<XmlName> {
 
   private final int myHashCode;
 
-  public XmlName(@NotNull @NonNls final String localName) {
+  public XmlName(@Nonnull @NonNls final String localName) {
     this(localName, null);
   }
 
-  public XmlName(@NotNull @NonNls final String localName, @Nullable final String namespaceKey) {
+  public XmlName(@Nonnull @NonNls final String localName, @Nullable final String namespaceKey) {
     myLocalName = localName;
     myNamespaceKey = namespaceKey;
 
     myHashCode = 31 * myLocalName.hashCode() + (myNamespaceKey != null ? myNamespaceKey.hashCode() : 0);
   }
 
-  @NotNull
+  @Nonnull
   public final String getLocalName() {
     return myLocalName;
   }

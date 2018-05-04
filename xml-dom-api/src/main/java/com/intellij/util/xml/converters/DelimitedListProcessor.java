@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.converters;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -28,7 +28,7 @@ public abstract class DelimitedListProcessor {
     myDelimiters = delimiters;
   }
 
-  public void processText(final @NotNull String text) {
+  public void processText(final @Nonnull String text) {
     int start;
     int pos = 0;
 

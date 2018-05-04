@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.structure;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlFileTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
@@ -41,8 +41,8 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
 
 	public DomStructureViewTreeModel(
-			@NotNull XmlFile file,
-			@NotNull Function<DomElement, DomService.StructureViewMode> descriptor,
+			@Nonnull XmlFile file,
+			@Nonnull Function<DomElement, DomService.StructureViewMode> descriptor,
 			@Nullable Editor editor)
 	{
 		this(file, DomElementsNavigationManager.getManager(file.getProject()).getDomElementsNavigateProvider(DomElementsNavigationManager
@@ -50,9 +50,9 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	}
 
 	public DomStructureViewTreeModel(
-			@NotNull XmlFile file,
+			@Nonnull XmlFile file,
 			final DomElementNavigationProvider navigationProvider,
-			@NotNull Function<DomElement, DomService.StructureViewMode> descriptor,
+			@Nonnull Function<DomElement, DomService.StructureViewMode> descriptor,
 			@Nullable Editor editor)
 	{
 		super(file, editor);
@@ -61,7 +61,7 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		XmlFile myFile = getPsiFile();

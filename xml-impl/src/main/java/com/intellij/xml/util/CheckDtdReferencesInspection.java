@@ -18,8 +18,9 @@ package com.intellij.xml.util;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -46,8 +47,8 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
     return true;
   }
 
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
     return new XmlElementVisitor() {
 
       private Map<PsiFile, Boolean> myDoctypeMap = new HashMap<PsiFile, Boolean>();
@@ -112,22 +113,22 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
     }
   }
 
-  @NotNull
+  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
 
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.XML_INSPECTIONS;
   }
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return XmlBundle.message("xml.inspections.check.dtd.references");
   }
 
-  @NotNull
+  @Nonnull
   @NonNls
   public String getShortName() {
     return "CheckDtdRefs";

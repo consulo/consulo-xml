@@ -34,8 +34,8 @@ import gnu.trove.THashSet;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.*;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -199,7 +199,7 @@ public class DefinitionResolver extends CommonElement.Visitor implements
     }
 
     @Override
-    public boolean execute(@NotNull XmlFile element) {
+    public boolean execute(@Nonnull XmlFile element) {
       final Grammar g = GrammarFactory.getGrammar(element);
       if (g != null) {
         g.acceptChildren(new CommonElement.Visitor() {

@@ -18,7 +18,8 @@ package com.intellij.javaee;
 import java.util.Collections;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
@@ -29,7 +30,7 @@ import com.intellij.openapi.components.StoragePathMacros;
 @State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/misc.xml"))
 public class ProjectResources extends ExternalResourceManagerExImpl
 {
-	@NotNull
+	@Nonnull
 	@Override
 	protected Map<String, Map<String, Resource>> computeStdResources()
 	{

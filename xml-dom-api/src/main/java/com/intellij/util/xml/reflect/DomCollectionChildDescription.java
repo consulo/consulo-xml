@@ -17,8 +17,8 @@ package com.intellij.util.xml.reflect;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.JavaMethod;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -32,9 +32,9 @@ public interface DomCollectionChildDescription extends DomChildrenDescription {
   @Nullable
   JavaMethod getGetterMethod();
 
-  DomElement addValue(@NotNull DomElement parent);
-  DomElement addValue(@NotNull DomElement parent, int index);
-  DomElement addValue(@NotNull DomElement parent, Type type);
-  DomElement addValue(@NotNull DomElement parent, Type type, int index);
+  DomElement addValue(@Nonnull DomElement parent);
+  DomElement addValue(@Nonnull DomElement parent, int index);
+  DomElement addValue(@Nonnull DomElement parent, Type type);
+  DomElement addValue(@Nonnull DomElement parent, Type type, int index);
 
 }

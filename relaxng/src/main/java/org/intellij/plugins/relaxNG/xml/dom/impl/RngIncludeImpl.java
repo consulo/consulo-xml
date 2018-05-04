@@ -20,7 +20,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomUtil;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public abstract class RngIncludeImpl extends RngDomElementBase implements RngInc
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public RngDefine[] getOverrides() {
     // TODO: include stuff inside DIVs - fix when this is actually used
     final List<RngDefine> defines = DomUtil.getChildrenOfType(this, RngDefine.class);

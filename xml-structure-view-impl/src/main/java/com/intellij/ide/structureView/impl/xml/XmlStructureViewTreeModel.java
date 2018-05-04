@@ -15,8 +15,8 @@
  */
 package com.intellij.ide.structureView.impl.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.structureView.StructureViewExtension;
 import com.intellij.ide.structureView.StructureViewFactoryEx;
 import com.intellij.ide.structureView.StructureViewTreeElement;
@@ -44,13 +44,13 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	};
 	private static final Sorter[] SORTERS = {Sorter.ALPHA_SORTER};
 
-	public XmlStructureViewTreeModel(@NotNull XmlFile file, @Nullable Editor editor)
+	public XmlStructureViewTreeModel(@Nonnull XmlFile file, @Nullable Editor editor)
 	{
 		super(editor, file);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		XmlFile myFile = getPsiFile();
@@ -74,7 +74,7 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected Class[] getSuitableClasses()
 	{
 		return CLASSES;
@@ -99,7 +99,7 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Sorter[] getSorters()
 	{
 		return SORTERS;

@@ -1,6 +1,6 @@
 package com.intellij.xml;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlDocument;

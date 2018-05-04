@@ -22,9 +22,11 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.jdom.Document;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.JDOMUtil;
 import com.intellij.openapi.util.io.FileUtilRt;
@@ -105,14 +107,14 @@ public class HTMLControls
 	{
 		@Nullable
 		@Override
-		public TagState fromString(@NotNull String value)
+		public TagState fromString(@Nonnull String value)
 		{
 			return TagState.valueOf(value.toUpperCase(Locale.US));
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public String toString(@NotNull TagState state)
+		public String toString(@Nonnull TagState state)
 		{
 			return state.name().toLowerCase(Locale.US);
 		}
@@ -122,7 +124,7 @@ public class HTMLControls
 	{
 		@Nullable
 		@Override
-		public Set<String> fromString(@NotNull String value)
+		public Set<String> fromString(@Nonnull String value)
 		{
 			final THashSet<String> result = new THashSet<String>();
 			for(String closingTag : StringUtil.split(value, ","))
@@ -132,9 +134,9 @@ public class HTMLControls
 			return result;
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public String toString(@NotNull Set<String> o)
+		public String toString(@Nonnull Set<String> o)
 		{
 			return StringUtil.join(o, ", ");
 		}

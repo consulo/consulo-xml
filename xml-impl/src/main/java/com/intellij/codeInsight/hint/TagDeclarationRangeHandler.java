@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.hint;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
@@ -24,8 +25,8 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 
 public class TagDeclarationRangeHandler implements DeclarationRangeHandler {
-  @NotNull
-  public TextRange getDeclarationRange(@NotNull final PsiElement container) {
+  @Nonnull
+  public TextRange getDeclarationRange(@Nonnull final PsiElement container) {
     XmlTag xmlTag = (XmlTag)container;
     int endOffset = xmlTag.getTextRange().getStartOffset();
 

@@ -17,7 +17,7 @@
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import com.intellij.openapi.util.TextRange;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.

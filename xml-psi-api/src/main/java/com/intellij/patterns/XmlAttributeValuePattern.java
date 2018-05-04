@@ -15,9 +15,10 @@
  */
 package com.intellij.patterns;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
@@ -60,7 +61,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PsiNamePatternCondition<XmlAttributeValue>("withLocalName", namePattern)
 		{
 			@Override
-			public String getPropertyValue(@NotNull final Object o)
+			public String getPropertyValue(@Nonnull final Object o)
 			{
 				if(o instanceof XmlAttributeValue)
 				{
@@ -100,7 +101,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PsiNamePatternCondition<XmlAttributeValue>("withNamespace", namePattern)
 		{
 			@Override
-			public String getPropertyValue(@NotNull final Object o)
+			public String getPropertyValue(@Nonnull final Object o)
 			{
 				if(o instanceof XmlAttributeValue)
 				{
@@ -120,7 +121,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PatternCondition<XmlAttributeValue>("withValue")
 		{
 			@Override
-			public boolean accepts(@NotNull XmlAttributeValue xmlAttributeValue, ProcessingContext context)
+			public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue, ProcessingContext context)
 			{
 				return valuePattern.accepts(xmlAttributeValue.getValue(), context);
 			}

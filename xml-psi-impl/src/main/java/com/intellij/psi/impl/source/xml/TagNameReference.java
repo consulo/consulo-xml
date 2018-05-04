@@ -15,8 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
@@ -127,7 +127,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getCanonicalText()
 	{
 		return getNameElement().getText();
@@ -170,7 +170,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		PsiMetaData metaData = null;
 
@@ -211,7 +211,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Object[] getVariants()
 	{
 		return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -224,7 +224,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Nullable
-	static TagNameReference createTagNameReference(XmlElement element, @NotNull ASTNode nameElement, boolean startTagFlag)
+	static TagNameReference createTagNameReference(XmlElement element, @Nonnull ASTNode nameElement, boolean startTagFlag)
 	{
 		final XmlExtension extension = XmlExtension.getExtensionByElement(element);
 		return extension == null ? null : extension.createTagNameReference(nameElement, startTagFlag);

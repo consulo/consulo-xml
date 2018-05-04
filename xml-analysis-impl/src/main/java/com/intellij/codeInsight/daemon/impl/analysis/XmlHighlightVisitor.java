@@ -19,8 +19,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.BundleBase;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.daemon.HighlightDisplayKey;
@@ -135,12 +136,12 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	{
 	}
 
-	private void addElementsForTag(XmlTag tag, @NotNull String localizedMessage, HighlightInfoType type, IntentionAction quickFixAction)
+	private void addElementsForTag(XmlTag tag, @Nonnull String localizedMessage, HighlightInfoType type, IntentionAction quickFixAction)
 	{
 		addElementsForTagWithManyQuickFixes(tag, localizedMessage, type, quickFixAction);
 	}
 
-	private void addElementsForTagWithManyQuickFixes(XmlTag tag, @NotNull String localizedMessage, HighlightInfoType type, IntentionAction... quickFixActions)
+	private void addElementsForTagWithManyQuickFixes(XmlTag tag, @Nonnull String localizedMessage, HighlightInfoType type, IntentionAction... quickFixActions)
 	{
 		bindMessageToTag(tag, type, -1, localizedMessage, quickFixActions);
 	}
@@ -233,7 +234,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 		}
 	}
 
-	private void bindMessageToTag(final XmlTag tag, final HighlightInfoType warning, final int messageLength, @NotNull String localizedMessage, IntentionAction... quickFixActions)
+	private void bindMessageToTag(final XmlTag tag, final HighlightInfoType warning, final int messageLength, @Nonnull String localizedMessage, IntentionAction... quickFixActions)
 	{
 		XmlToken childByRole = XmlTagUtil.getStartTagNameElement(tag);
 
@@ -274,7 +275,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 		checkReferences(processingInstruction);
 	}
 
-	private void bindMessageToAstNode(final PsiElement childByRole, final HighlightInfoType warning, final int offset, int length, @NotNull String localizedMessage, IntentionAction...
+	private void bindMessageToAstNode(final PsiElement childByRole, final HighlightInfoType warning, final int offset, int length, @Nonnull String localizedMessage, IntentionAction...
 			quickFixActions)
 	{
 		if(childByRole != null)
@@ -428,7 +429,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
 	private void reportOneTagProblem(final XmlTag tag,
 			final String name,
-			@NotNull String localizedMessage,
+			@Nonnull String localizedMessage,
 			final IntentionAction basicIntention,
 			final HighlightDisplayKey key,
 			final XmlEntitiesInspection inspection,
@@ -501,7 +502,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 		return DO_NOT_VALIDATE.get(context, null);
 	}
 
-	public static void setSkipValidation(@NotNull PsiElement element)
+	public static void setSkipValidation(@Nonnull PsiElement element)
 	{
 		DO_NOT_VALIDATE.put(element, Boolean.TRUE);
 	}
@@ -583,7 +584,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	}
 
 	@Nullable
-	private HighlightInfo reportAttributeProblem(final XmlTag tag, final String localName, final XmlAttribute attribute, @NotNull String localizedMessage)
+	private HighlightInfo reportAttributeProblem(final XmlTag tag, final String localName, final XmlAttribute attribute, @Nonnull String localizedMessage)
 	{
 
 		final RemoveAttributeIntentionFix removeAttributeIntention = new RemoveAttributeIntentionFix(localName, attribute);
@@ -766,8 +767,8 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 		return reference instanceof FileReferenceOwner || reference instanceof AnchorReference;
 	}
 
-	@NotNull
-	public static String getErrorDescription(@NotNull PsiReference reference)
+	@Nonnull
+	public static String getErrorDescription(@Nonnull PsiReference reference)
 	{
 		String message;
 		if(reference instanceof EmptyResolveMessageProvider)
@@ -833,13 +834,13 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	}
 
 	@Override
-	public void addMessage(PsiElement context, String message, @NotNull ErrorType type)
+	public void addMessage(PsiElement context, String message, @Nonnull ErrorType type)
 	{
 		addMessageWithFixes(context, message, type);
 	}
 
 	@Override
-	public void addMessageWithFixes(final PsiElement context, final String message, @NotNull final ErrorType type, @NotNull final IntentionAction... fixes)
+	public void addMessageWithFixes(final PsiElement context, final String message, @Nonnull final ErrorType type, @Nonnull final IntentionAction... fixes)
 	{
 		if(message != null && !message.isEmpty())
 		{
@@ -879,7 +880,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	}
 
 	@Override
-	public boolean suitableForFile(@NotNull final PsiFile file)
+	public boolean suitableForFile(@Nonnull final PsiFile file)
 	{
 		if(file instanceof XmlFile)
 		{
@@ -897,13 +898,13 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	}
 
 	@Override
-	public void visit(@NotNull final PsiElement element)
+	public void visit(@Nonnull final PsiElement element)
 	{
 		element.accept(this);
 	}
 
 	@Override
-	public boolean analyze(@NotNull final PsiFile file, final boolean updateWholeFile, @NotNull HighlightInfoHolder holder, @NotNull Runnable action)
+	public boolean analyze(@Nonnull final PsiFile file, final boolean updateWholeFile, @Nonnull HighlightInfoHolder holder, @Nonnull Runnable action)
 	{
 		myHolder = holder;
 		try
@@ -918,7 +919,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public HighlightVisitor clone()
 	{
 		return new XmlHighlightVisitor();
@@ -942,7 +943,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 		return unquotedValue;
 	}
 
-	public static boolean shouldBeValidated(@NotNull XmlTag tag)
+	public static boolean shouldBeValidated(@Nonnull XmlTag tag)
 	{
 		PsiElement parent = tag.getParent();
 		if(parent instanceof XmlTag)

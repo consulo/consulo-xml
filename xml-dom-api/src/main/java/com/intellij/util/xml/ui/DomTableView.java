@@ -17,7 +17,7 @@ package com.intellij.util.xml.ui;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.DataSink;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
@@ -60,7 +60,7 @@ public class DomTableView extends AbstractTableView<DomElement> {
     installPopup(ActionPlaces.J2EE_ATTRIBUTES_VIEW_POPUP, group);
   }
 
-  protected void wrapValueSetting(@NotNull final DomElement domElement, final Runnable valueSetter) {
+  protected void wrapValueSetting(@Nonnull final DomElement domElement, final Runnable valueSetter) {
     if (domElement.isValid()) {
       new WriteCommandAction(getProject(), DomUtil.getFile(domElement)) {
         protected void run(final Result result) throws Throwable {

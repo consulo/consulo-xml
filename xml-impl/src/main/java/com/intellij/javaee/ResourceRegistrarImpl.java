@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -85,13 +85,13 @@ public class ResourceRegistrarImpl implements ResourceRegistrar
 		addStdResource(resource, version, ExternalResourceManagerEx.STANDARD_SCHEMAS + fileName, clazz);
 	}
 
-	@NotNull
+	@Nonnull
 	public Map<String, Map<String, ExternalResourceManagerExImpl.Resource>> getResources()
 	{
 		return myResources;
 	}
 
-	@NotNull
+	@Nonnull
 	public List<String> getIgnored()
 	{
 		return myIgnored;

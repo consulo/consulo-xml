@@ -16,11 +16,13 @@
 
 package com.intellij.util.xml.tree.actions;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -33,7 +35,7 @@ public class AddDomElementActionGroup extends ActionGroup {
     }
   };
 
-  @NotNull
+  @Nonnull
   public AnAction[] getChildren(@Nullable AnActionEvent e) {
     return myAction.getChildren(e);
   }

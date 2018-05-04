@@ -21,9 +21,10 @@ import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.refactoring.rename.NameSuggestionProvider;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Gregory.Shrago

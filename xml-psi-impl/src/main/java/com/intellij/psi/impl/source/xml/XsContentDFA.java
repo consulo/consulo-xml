@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 
@@ -40,8 +41,8 @@ import org.apache.xerces.xni.grammars.XSGrammar;
 import org.apache.xerces.xs.XSElementDeclaration;
 import org.apache.xerces.xs.XSModel;
 import org.apache.xerces.xs.XSTypeDefinition;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import com.intellij.openapi.application.ApplicationManager;
@@ -80,7 +81,7 @@ class XsContentDFA extends XmlContentDFA
 	private final XmlElementDescriptor[] myElementDescriptors;
 
 	@Nullable
-	public static XmlContentDFA createContentDFA(@NotNull XmlTag parentTag)
+	public static XmlContentDFA createContentDFA(@Nonnull XmlTag parentTag)
 	{
 		final PsiFile file = parentTag.getContainingFile().getOriginalFile();
 		if(!(file instanceof XmlFile))
@@ -108,7 +109,7 @@ class XsContentDFA extends XmlContentDFA
 		return new XsContentDFA(decl, parentTag);
 	}
 
-	public XsContentDFA(@NotNull XSElementDeclaration decl, final XmlTag parentTag)
+	public XsContentDFA(@Nonnull XSElementDeclaration decl, final XmlTag parentTag)
 	{
 		XSComplexTypeDecl definition = (XSComplexTypeDecl) decl.getTypeDefinition();
 		myContentModel = definition.getContentModel(new CMBuilder(new CMNodeFactory()));

@@ -35,8 +35,8 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.reflect.*;
 import com.intellij.xml.util.XmlTagUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -52,7 +52,7 @@ public class DomUtil {
   private static final Key<DomFileElement> FILE_ELEMENT_KEY = Key.create("dom file element");
 
   private static final ConcurrentFactoryMap<Type, Class> ourTypeParameters = new ConcurrentFactoryMap<Type, Class>() {
-    @NotNull
+    @Nonnull
     protected Class create(final Type key) {
       final Class<?> result = ReflectionUtil.substituteGenericType(GENERIC_VALUE_TYPE_VARIABLE, key);
       return result == null ? DUMMY : result;
@@ -71,7 +71,7 @@ public class DomUtil {
   }
 
   @Nullable
-  public static <T extends DomElement> T findByName(@NotNull Collection<T> list, @NonNls @NotNull String name) {
+  public static <T extends DomElement> T findByName(@Nonnull Collection<T> list, @NonNls @Nonnull String name) {
     for (T element: list) {
       String elementName = element.getGenericInfo().getElementName(element);
       if (elementName != null && elementName.equals(name)) {
@@ -81,8 +81,8 @@ public class DomUtil {
     return null;
   }
 
-  @NotNull
-  public static String[] getElementNames(@NotNull Collection<? extends DomElement> list) {
+  @Nonnull
+  public static String[] getElementNames(@Nonnull Collection<? extends DomElement> list) {
     ArrayList<String> result = new ArrayList<String>(list.size());
     if (list.size() > 0) {
       for (DomElement element: list) {
@@ -95,8 +95,8 @@ public class DomUtil {
     return ArrayUtil.toStringArray(result);
   }
 
-  @NotNull
-  public static List<XmlTag> getElementTags(@NotNull Collection<? extends DomElement> list) {
+  @Nonnull
+  public static List<XmlTag> getElementTags(@Nonnull Collection<? extends DomElement> list) {
     ArrayList<XmlTag> result = new ArrayList<XmlTag>(list.size());
     for (DomElement element: list) {
       XmlTag tag = element.getXmlTag();
@@ -107,8 +107,8 @@ public class DomUtil {
     return result;
   }
 
-  @NotNull
-  public static XmlTag[] getElementTags(@NotNull DomElement[] list) {
+  @Nonnull
+  public static XmlTag[] getElementTags(@Nonnull DomElement[] list) {
     XmlTag[] result = new XmlTag[list.length];
     int i = 0;
     for (DomElement element: list) {
@@ -197,7 +197,7 @@ public class DomUtil {
     return Collections.emptyList();
   }
 
-  public static <T> List<T> getChildrenOfType(@NotNull final DomElement parent, final Class<T> type) {
+  public static <T> List<T> getChildrenOfType(@Nonnull final DomElement parent, final Class<T> type) {
     final List<T> result = new SmartList<T>();
     parent.acceptChildren(new DomElementVisitor() {
       public void visitDomElement(final DomElement element) {
@@ -209,7 +209,7 @@ public class DomUtil {
     return result;
   }
 
-  public static List<DomElement> getDefinedChildren(@NotNull final DomElement parent, final boolean tags, final boolean attributes) {
+  public static List<DomElement> getDefinedChildren(@Nonnull final DomElement parent, final boolean tags, final boolean attributes) {
     if (parent instanceof MergedObject) {
       final SmartList<DomElement> result = new SmartList<DomElement>();
       parent.acceptChildren(new DomElementVisitor() {
@@ -273,11 +273,11 @@ public class DomUtil {
     return true;
   }
 
-  public static <T> List<T> getDefinedChildrenOfType(@NotNull final DomElement parent, final Class<T> type, boolean tags, boolean attributes) {
+  public static <T> List<T> getDefinedChildrenOfType(@Nonnull final DomElement parent, final Class<T> type, boolean tags, boolean attributes) {
     return ContainerUtil.findAll(getDefinedChildren(parent, tags, attributes), type);
   }
 
-  public static <T> List<T> getDefinedChildrenOfType(@NotNull final DomElement parent, final Class<T> type) {
+  public static <T> List<T> getDefinedChildrenOfType(@Nonnull final DomElement parent, final Class<T> type) {
     return getDefinedChildrenOfType(parent, type, true, true);
   }
 
@@ -286,7 +286,7 @@ public class DomUtil {
     return ElementPresentationManager.findByName(getIdentitySiblings(element), newName);
   }
 
-  public static boolean isAncestor(@NotNull DomElement ancestor, @NotNull DomElement descendant, boolean strict) {
+  public static boolean isAncestor(@Nonnull DomElement ancestor, @Nonnull DomElement descendant, boolean strict) {
     if (!strict && ancestor.equals(descendant)) return true;
     final DomElement parent = descendant.getParent();
     return parent != null && isAncestor(ancestor, parent, false);
@@ -376,8 +376,8 @@ public class DomUtil {
     return null;
   }
 
-  @NotNull
-  public static <T extends DomElement> T getOriginalElement(@NotNull final T domElement) {
+  @Nonnull
+  public static <T extends DomElement> T getOriginalElement(@Nonnull final T domElement) {
     final XmlElement psiElement = domElement.getXmlElement();
     if (psiElement == null) return domElement;
 
@@ -398,7 +398,7 @@ public class DomUtil {
     return (T)current;
   }
 
-  public static <T extends DomElement> T addElementAfter(@NotNull final T anchor) {
+  public static <T extends DomElement> T addElementAfter(@Nonnull final T anchor) {
     final DomElement parent = anchor.getParent();
     final DomCollectionChildDescription childDescription = (DomCollectionChildDescription)anchor.getChildDescription();
     assert parent != null;
@@ -431,7 +431,7 @@ public class DomUtil {
     return null;
   }
 
-  public static <T extends DomElement> DomFileElement<T> getFileElement(@NotNull DomElement element) {
+  public static <T extends DomElement> DomFileElement<T> getFileElement(@Nonnull DomElement element) {
 
     if (element instanceof DomFileElement) {
       return (DomFileElement)element;
@@ -447,8 +447,8 @@ public class DomUtil {
     return fileElement;
   }
 
-  @NotNull
-  public static XmlFile getFile(@NotNull DomElement element) {
+  @Nonnull
+  public static XmlFile getFile(@Nonnull DomElement element) {
     return DomService.getInstance().getContainingFile(element);
   }
 
@@ -458,8 +458,8 @@ public class DomUtil {
    * If root tag has changed, file may lose its domness, so there will be no DomFileElement, but the inner DomElement's
    * will be still alive because the underlying XML tags are valid
    */
-  @NotNull
-  public static DomElement getRoot(@NotNull DomElement domElement) {
+  @Nonnull
+  public static DomElement getRoot(@Nonnull DomElement domElement) {
     while (true) {
       final DomElement parent = domElement.getParent();
       if (parent == null) {
@@ -469,7 +469,7 @@ public class DomUtil {
     }
   }
 
-  public static boolean hasXml(@NotNull DomElement element) {
+  public static boolean hasXml(@Nonnull DomElement element) {
     return element.getXmlElement() != null;
   }
 

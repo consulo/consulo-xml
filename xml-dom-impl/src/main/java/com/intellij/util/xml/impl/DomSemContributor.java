@@ -42,8 +42,8 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -234,7 +234,7 @@ public class DomSemContributor extends SemContributor {
   }
 
   @Nullable
-  private static DomInvocationHandler getParentDom(@NotNull XmlTag tag) {
+  private static DomInvocationHandler getParentDom(@Nonnull XmlTag tag) {
     LinkedHashSet<XmlTag> allParents = new LinkedHashSet<XmlTag>();
     PsiElement each = tag;
     while (each instanceof XmlTag && allParents.add((XmlTag)each)) {

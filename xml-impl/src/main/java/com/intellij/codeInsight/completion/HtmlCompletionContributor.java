@@ -19,8 +19,9 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 import java.nio.charset.Charset;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.openapi.vfs.CharsetToolkit;
@@ -45,7 +46,7 @@ public class HtmlCompletionContributor extends CompletionContributor
 		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlAttributeValue()), new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result)
+			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
 			{
 				final PsiElement position = parameters.getPosition();
 				if(!hasHtmlAttributesCompletion(position))
@@ -74,7 +75,7 @@ public class HtmlCompletionContributor extends CompletionContributor
 		return xmlTag != null && xmlTag.getLanguage() == XHTMLLanguage.INSTANCE;
 	}
 
-	@NotNull
+	@Nonnull
 	@NonNls
 	protected static String[] addSpecificCompletions(final XmlAttribute attribute)
 	{

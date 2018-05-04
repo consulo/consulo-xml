@@ -1,5 +1,8 @@
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Factory;
@@ -16,8 +19,6 @@ import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.AttributeStub;
 import com.intellij.xml.util.XmlStringUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
@@ -44,7 +45,7 @@ public class AttributeChildInvocationHandler extends DomInvocationHandler<Attrib
     return true;
   }
 
-  protected XmlElement recomputeXmlElement(@NotNull final DomInvocationHandler parent) {
+  protected XmlElement recomputeXmlElement(@Nonnull final DomInvocationHandler parent) {
     if (!parent.isValid()) return null;
 
     final XmlTag tag = parent.getXmlTag();

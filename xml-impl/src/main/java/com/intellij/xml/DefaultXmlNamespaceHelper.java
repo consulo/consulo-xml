@@ -31,8 +31,8 @@ import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XmlTagNamesIndex;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -46,9 +46,9 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
     return true;
   }
 
-  public void insertNamespaceDeclaration(@NotNull final XmlFile file,
+  public void insertNamespaceDeclaration(@Nonnull final XmlFile file,
                                          @Nullable final Editor editor,
-                                         @NotNull final Set<String> possibleNamespaces,
+                                         @Nonnull final Set<String> possibleNamespaces,
                                          @Nullable String nsPrefix,
                                          @Nullable final Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException {
 
@@ -160,8 +160,8 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
     return location;
   }
 
-  @NotNull
-  public Set<String> guessUnboundNamespaces(@NotNull final PsiElement element, @NotNull XmlFile file) {
+  @Nonnull
+  public Set<String> guessUnboundNamespaces(@Nonnull final PsiElement element, @Nonnull XmlFile file) {
     if (!(element instanceof XmlTag)) {
       return Collections.emptySet();
     }
@@ -216,8 +216,8 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
     return possibleUris;
   }
 
-  @NotNull
-  public Set<String> getNamespacesByTagName(@NotNull final String tagName, @NotNull final XmlFile context) {
+  @Nonnull
+  public Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context) {
     final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(context);
 
     HashSet<String> set = new HashSet<String>();

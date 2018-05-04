@@ -15,7 +15,8 @@
  */
 package com.intellij.spellchecker.tokenizer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -29,7 +30,7 @@ public class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy
 	protected final Tokenizer<XmlAttributeValue> myXmlAttributeTokenizer = new XmlAttributeValueTokenizer();
 	protected final Tokenizer<XmlText> myXmlTextTokenizer = new XmlTextTokenizer();
 
-	@NotNull
+	@Nonnull
 	public Tokenizer getTokenizer(PsiElement element)
 	{
 		if(element instanceof XmlAttributeValue)
@@ -46,7 +47,7 @@ public class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy
 
 	public static class XmlAttributeValueTokenizer extends Tokenizer<XmlAttributeValue>
 	{
-		public void tokenize(@NotNull final XmlAttributeValue element, final TokenConsumer consumer)
+		public void tokenize(@Nonnull final XmlAttributeValue element, final TokenConsumer consumer)
 		{
 			if(element instanceof PsiLanguageInjectionHost && InjectedLanguageUtil.hasInjections((PsiLanguageInjectionHost) element))
 			{

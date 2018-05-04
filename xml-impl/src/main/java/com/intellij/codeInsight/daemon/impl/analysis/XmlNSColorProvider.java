@@ -15,7 +15,7 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.xml.XmlElement;
 import consulo.extensions.CompositeExtensionPointName;

@@ -12,8 +12,9 @@
  */
 package com.intellij.codeInsight.template;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.util.io.FileUtilRt;
@@ -29,7 +30,7 @@ public class XslTextContextType extends TemplateContextType {
   }
 
   @Override
-  public boolean isInContext(@NotNull PsiFile file, int offset) {
+  public boolean isInContext(@Nonnull PsiFile file, int offset) {
     if (isXslOrXsltFile(file)) {
       PsiElement element = file.findElementAt(offset);
       return element == null || HtmlTextContextType.isInContext(element);

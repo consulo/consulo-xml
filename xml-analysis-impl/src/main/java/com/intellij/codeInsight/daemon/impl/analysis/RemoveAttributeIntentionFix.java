@@ -15,8 +15,9 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
@@ -32,27 +33,27 @@ import com.intellij.psi.xml.XmlAttribute;
 public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {
   private final String myLocalName;
 
-  public RemoveAttributeIntentionFix(final String localName, final @NotNull XmlAttribute attribute) {
+  public RemoveAttributeIntentionFix(final String localName, final @Nonnull XmlAttribute attribute) {
     super(attribute);
     myLocalName = localName;
   }
 
-  @NotNull
+  @Nonnull
   public String getText() {
     return XmlErrorMessages.message("remove.attribute.quickfix.text", myLocalName);
   }
 
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlErrorMessages.message("remove.attribute.quickfix.family");
   }
 
   @Override
-  public void invoke(@NotNull Project project,
-                     @NotNull PsiFile file,
+  public void invoke(@Nonnull Project project,
+                     @Nonnull PsiFile file,
                      @Nullable("is null when called from inspection") Editor editor,
-                     @NotNull PsiElement startElement,
-                     @NotNull PsiElement endElement) {
+                     @Nonnull PsiElement startElement,
+                     @Nonnull PsiElement endElement) {
     if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
     PsiElement next = findNextAttribute((XmlAttribute)startElement);
     startElement.delete();

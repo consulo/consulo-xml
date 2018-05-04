@@ -19,7 +19,7 @@ package com.intellij.util.xml;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Function;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class ElementPresentationManagerImpl extends ElementPresentationManager {
 
-  @NotNull
+  @Nonnull
   public <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags) {
     List<Object> result = new ArrayList<Object>(elements.size());
     for (T element : elements) {

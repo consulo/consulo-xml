@@ -17,9 +17,11 @@ package com.intellij.xml.util;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -198,7 +200,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 		return null;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getCanonicalText()
 	{
 		return myAnchor;
@@ -210,7 +212,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 	}
 
 	@Nullable
-	public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		return null;
 	}
@@ -224,7 +226,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 		return myElement.getManager().areElementsEquivalent(element, resolve());
 	}
 
-	@NotNull
+	@Nonnull
 	public Object[] getVariants()
 	{
 		final Map<String, XmlTag> idMap = getIdMap();
@@ -268,7 +270,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 		return mySoft;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getUnresolvedMessagePattern()
 	{
 		final XmlFile xmlFile = getFile();
@@ -295,7 +297,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 			{
 				processXmlElements(rootTag, new PsiElementProcessor<XmlTag>()
 				{
-					public boolean execute(@NotNull final XmlTag element)
+					public boolean execute(@Nonnull final XmlTag element)
 					{
 						final String anchorValue = getAnchorValue(element);
 

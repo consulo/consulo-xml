@@ -17,8 +17,8 @@ package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
@@ -31,7 +31,7 @@ import com.intellij.xml.breadcrumbs.DefaultCrumbsPresentation;
  */
 public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresentationProvider
 {
-	private static boolean isMyContext(@NotNull PsiElement deepestElement)
+	private static boolean isMyContext(@Nonnull PsiElement deepestElement)
 	{
 		final PsiFile file = deepestElement.getContainingFile();
 		if(file == null || !XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file))
@@ -42,7 +42,7 @@ public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresen
 	}
 
 	@Override
-	public CrumbPresentation[] getCrumbPresentations(@NotNull PsiElement[] elements)
+	public CrumbPresentation[] getCrumbPresentations(@Nonnull PsiElement[] elements)
 	{
 		if(elements.length == 0 || !isMyContext(elements[elements.length - 1]))
 		{

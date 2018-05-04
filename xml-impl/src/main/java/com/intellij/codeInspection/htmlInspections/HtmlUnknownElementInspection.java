@@ -17,7 +17,8 @@ package com.intellij.codeInspection.htmlInspections;
 
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -34,12 +35,12 @@ public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTo
 	public JDOMExternalizableStringList myValues;
 	public boolean myCustomValuesEnabled = true;
 
-	public HtmlUnknownElementInspection(@NotNull String defaultValues)
+	public HtmlUnknownElementInspection(@Nonnull String defaultValues)
 	{
 		myValues = reparseProperties(defaultValues);
 	}
 
-	protected static JDOMExternalizableStringList reparseProperties(@NotNull final String properties)
+	protected static JDOMExternalizableStringList reparseProperties(@Nonnull final String properties)
 	{
 		final JDOMExternalizableStringList result = new JDOMExternalizableStringList();
 
@@ -52,7 +53,7 @@ public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTo
 		return result;
 	}
 
-	protected static void registerProblemOnAttributeName(@NotNull XmlAttribute attribute, String message, @NotNull ProblemsHolder holder, LocalQuickFix... quickfixes)
+	protected static void registerProblemOnAttributeName(@Nonnull XmlAttribute attribute, String message, @Nonnull ProblemsHolder holder, LocalQuickFix... quickfixes)
 	{
 		final ASTNode node = attribute.getNode();
 		assert node != null;
@@ -67,13 +68,13 @@ public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTo
 		}
 	}
 
-	protected boolean isCustomValue(@NotNull final String value)
+	protected boolean isCustomValue(@Nonnull final String value)
 	{
 		return myValues.contains(value.toLowerCase());
 	}
 
 	@Override
-	public void addEntry(@NotNull final String text)
+	public void addEntry(@Nonnull final String text)
 	{
 		final String s = text.trim().toLowerCase();
 		if(!isCustomValue(s))
@@ -103,16 +104,16 @@ public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTo
 		myCustomValuesEnabled = customValuesEnabled;
 	}
 
-	public void updateAdditionalEntries(@NotNull final String values)
+	public void updateAdditionalEntries(@Nonnull final String values)
 	{
 		myValues = reparseProperties(values);
 	}
 
 	protected abstract String getCheckboxTitle();
 
-	@NotNull
+	@Nonnull
 	protected abstract String getPanelTitle();
 
-	@NotNull
+	@Nonnull
 	protected abstract Logger getLogger();
 }

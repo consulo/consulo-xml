@@ -15,8 +15,9 @@
  */
 package com.intellij.application.options;
 
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;

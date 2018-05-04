@@ -16,7 +16,7 @@
 package com.intellij.psi.xml;
 
 import com.intellij.xml.XmlElementDescriptor;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

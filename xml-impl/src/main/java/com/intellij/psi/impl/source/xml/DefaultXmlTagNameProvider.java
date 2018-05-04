@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.AutoPopupController;
 import com.intellij.codeInsight.completion.InsertHandler;
 import com.intellij.codeInsight.completion.InsertionContext;
@@ -65,7 +65,7 @@ public class DefaultXmlTagNameProvider implements XmlTagNameProvider
 	private static final Logger LOG = Logger.getInstance(DefaultXmlTagNameProvider.class);
 
 	@Override
-	public void addTagNameVariants(List<LookupElement> elements, @NotNull XmlTag tag, String prefix)
+	public void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix)
 	{
 		final List<String> namespaces;
 		if(prefix.isEmpty())

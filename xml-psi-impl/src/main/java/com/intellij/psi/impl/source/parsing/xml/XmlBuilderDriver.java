@@ -20,7 +20,7 @@
 package com.intellij.psi.impl.source.parsing.xml;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.LighterASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -56,7 +56,7 @@ public class XmlBuilderDriver {
     return myText;
   }
 
-  public void addImplicitBinding(@NonNls @NotNull String prefix, @NonNls @NotNull String namespace) {
+  public void addImplicitBinding(@NonNls @Nonnull String prefix, @NonNls @Nonnull String namespace) {
     myNamespacesStack.push(namespace);
     myPrefixesStack.push(prefix);
   }

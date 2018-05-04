@@ -15,7 +15,8 @@
  */
 package com.intellij.lang.xhtml;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.xml.XMLParserDefinition;
 import com.intellij.lexer.Lexer;
@@ -33,8 +34,8 @@ import consulo.lang.util.LanguageVersionUtil;
 public class XHTMLParserDefinition extends XMLParserDefinition {
 
   @Override
-  @NotNull
-  public Lexer createLexer(@NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
     return new XHtmlLexer();
   }
 

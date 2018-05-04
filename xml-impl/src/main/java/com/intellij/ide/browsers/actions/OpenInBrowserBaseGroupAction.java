@@ -17,8 +17,9 @@ package com.intellij.ide.browsers.actions;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.browsers.WebBrowser;
 import com.intellij.ide.browsers.WebBrowserManager;
@@ -43,9 +44,9 @@ public abstract class OpenInBrowserBaseGroupAction extends ComputableActionGroup
 		p.setIcon(AllIcons.Nodes.PpWeb);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	protected final CachedValueProvider<AnAction[]> createChildrenProvider(@NotNull final ActionManager actionManager)
+	protected final CachedValueProvider<AnAction[]> createChildrenProvider(@Nonnull final ActionManager actionManager)
 	{
 		return new CachedValueProvider<AnAction[]>()
 		{
@@ -95,7 +96,7 @@ public abstract class OpenInBrowserBaseGroupAction extends ComputableActionGroup
 		}
 
 		@Override
-		public void update(@NotNull AnActionEvent e)
+		public void update(@Nonnull AnActionEvent e)
 		{
 			e.getPresentation().setVisible(!WebBrowserManager.getInstance().getBrowsers().isEmpty());
 		}

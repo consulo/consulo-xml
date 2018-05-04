@@ -16,8 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.AutoPopupController;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
@@ -40,7 +40,7 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
 		super(element);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getText()
 	{
@@ -48,18 +48,18 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFamilyName()
 	{
 		return getName();
 	}
 
 	@Override
-	public void invoke(@NotNull Project project,
-			@NotNull PsiFile file,
+	public void invoke(@Nonnull Project project,
+			@Nonnull PsiFile file,
 			@Nullable("is null when called from inspection") final Editor editor,
-			@NotNull PsiElement startElement,
-			@NotNull PsiElement endElement)
+			@Nonnull PsiElement startElement,
+			@Nonnull PsiElement endElement)
 	{
 		final XmlAttribute attribute = PsiTreeUtil.getNonStrictParentOfType(startElement, XmlAttribute.class);
 		if(attribute == null || attribute.getValue() != null)
@@ -75,7 +75,7 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
 		new WriteCommandAction(project)
 		{
 			@Override
-			protected void run(@NotNull final Result result)
+			protected void run(@Nonnull final Result result)
 			{
 				final XmlAttribute attributeWithValue = XmlElementFactory.getInstance(getProject()).createXmlAttribute(attribute.getName(), "");
 				final PsiElement newAttribute = attribute.replace(attributeWithValue);

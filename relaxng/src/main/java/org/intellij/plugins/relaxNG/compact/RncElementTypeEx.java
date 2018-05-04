@@ -18,7 +18,7 @@ package org.intellij.plugins.relaxNG.compact;
 import com.intellij.lang.ASTNode;
 import com.intellij.util.NotNullFunction;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -40,7 +40,7 @@ class RncElementTypeEx<C extends RncElement> extends RncElementType implements N
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public final C fun(ASTNode node) {
     try {
       return myConstructor.newInstance(node);

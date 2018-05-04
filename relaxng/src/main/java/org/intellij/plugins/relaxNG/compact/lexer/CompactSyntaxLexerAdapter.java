@@ -26,8 +26,8 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
 import org.kohsuke.rngom.parse.compact.Token;
@@ -156,7 +156,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 		return CharArrayUtil.fromSequence(myBuffer);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public CharSequence getBufferSequence()
 	{
@@ -219,7 +219,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 
 	@Override
 	@SuppressWarnings("IOResourceOpenedButNotSafelyClosed")
-	public void start(@NotNull CharSequence buffer, int startOffset, int endOffset, int initialState)
+	public void start(@Nonnull CharSequence buffer, int startOffset, int endOffset, int initialState)
 	{
 		myBuffer = buffer;
 

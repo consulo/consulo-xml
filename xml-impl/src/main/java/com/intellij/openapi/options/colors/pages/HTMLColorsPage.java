@@ -17,9 +17,9 @@ package com.intellij.openapi.options.colors.pages;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
 import com.intellij.ide.highlighter.HtmlFileType;
@@ -45,7 +45,7 @@ public class HTMLColorsPage implements ColorSettingsPage {
   };
   private static final String FULL_PRODUCT_NAME = ApplicationNamesInfo.getInstance().getFullProductName();
 
-  @NotNull
+  @Nonnull
   public String getDisplayName() {
     return OptionsBundle.message("options.html.display.name");
   }
@@ -54,12 +54,12 @@ public class HTMLColorsPage implements ColorSettingsPage {
     return HtmlFileType.INSTANCE.getIcon();
   }
 
-  @NotNull
+  @Nonnull
   public AttributesDescriptor[] getAttributeDescriptors() {
     return ATTRS;
   }
 
-  @NotNull
+  @Nonnull
   public ColorDescriptor[] getColorDescriptors() {
     // todo: make preview for it
 
@@ -74,12 +74,12 @@ public class HTMLColorsPage implements ColorSettingsPage {
     return colorDescriptors;
   }
 
-  @NotNull
+  @Nonnull
   public SyntaxHighlighter getHighlighter() {
     return new HtmlFileHighlighter();
   }
 
-  @NotNull
+  @Nonnull
   public String getDemoText() {
     return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n" +
            "<!--\n" +

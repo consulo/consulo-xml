@@ -47,8 +47,8 @@ import org.intellij.plugins.intelliLang.inject.config.ui.configurables.XmlAttrib
 import org.intellij.plugins.intelliLang.inject.config.ui.configurables.XmlTagInjectionConfigurable;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,12 +76,12 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
     return false;
   }
 
-  @NotNull
+  @Nonnull
   public String getId() {
     return XML_SUPPORT_ID;
   }
 
-  @NotNull
+  @Nonnull
   public Class[] getPatternClasses() {
     return new Class[] {XmlPatterns.class};
   }
@@ -93,7 +93,7 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
 
   @Nullable
   @Override
-  public BaseInjection findCommentInjection(@NotNull PsiElement host, @Nullable Ref<PsiElement> commentRef) {
+  public BaseInjection findCommentInjection(@Nonnull PsiElement host, @Nullable Ref<PsiElement> commentRef) {
     if (host instanceof XmlAttributeValue) return null;
     return InjectorUtils.findCommentInjection(host instanceof XmlText ? host.getParent() : host, getId(), commentRef);
   }

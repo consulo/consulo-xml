@@ -46,8 +46,8 @@ import com.intellij.util.xml.structure.DomStructureViewBuilder;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.util.xml.stubs.builder.DomStubBuilder;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,7 +68,7 @@ public class DomServiceImpl extends DomService {
     }
   };
 
-  @NotNull
+  @Nonnull
   private static XmlFileHeader calcXmlFileHeader(final XmlFile file) {
 
     if (file instanceof PsiFileEx && ((PsiFileEx)file).isContentsLoaded() && file.getNode().isParsed()) {
@@ -147,20 +147,20 @@ public class DomServiceImpl extends DomService {
     return DomAnchorImpl.createAnchor(domElement);
   }
 
-  @NotNull
-  public XmlFile getContainingFile(@NotNull DomElement domElement) {
+  @Nonnull
+  public XmlFile getContainingFile(@Nonnull DomElement domElement) {
     if (domElement instanceof DomFileElement) {
       return ((DomFileElement)domElement).getFile();
     }
     return DomManagerImpl.getNotNullHandler(domElement).getFile();
   }
 
-  @NotNull
-  public EvaluatedXmlName getEvaluatedXmlName(@NotNull final DomElement element) {
+  @Nonnull
+  public EvaluatedXmlName getEvaluatedXmlName(@Nonnull final DomElement element) {
     return DomManagerImpl.getNotNullHandler(element).getXmlName();
   }
 
-  @NotNull
+  @Nonnull
   public XmlFileHeader getXmlFileHeader(XmlFile file) {
     return file.isValid() ? ourRootTagCache.get(ROOT_TAG_NS_KEY, file, null).getValue() : XmlFileHeader.EMPTY;
   }

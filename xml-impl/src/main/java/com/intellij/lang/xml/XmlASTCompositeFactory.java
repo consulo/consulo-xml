@@ -17,8 +17,8 @@ package com.intellij.lang.xml;
 
 import static com.intellij.psi.xml.XmlElementType.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.impl.source.html.HtmlDocumentImpl;
 import com.intellij.psi.impl.source.html.HtmlTagImpl;
 import com.intellij.psi.impl.source.tree.CompositeElement;
@@ -35,7 +35,7 @@ import consulo.psi.tree.ASTCompositeFactory;
  */
 public class XmlASTCompositeFactory implements ASTCompositeFactory
 {
-  @NotNull
+  @Nonnull
   @Override
   public CompositeElement createComposite(IElementType type) {
     if (type == XML_TAG) {

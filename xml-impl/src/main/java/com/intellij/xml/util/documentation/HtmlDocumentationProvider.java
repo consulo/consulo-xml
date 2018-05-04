@@ -33,11 +33,12 @@ import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * @author maxim

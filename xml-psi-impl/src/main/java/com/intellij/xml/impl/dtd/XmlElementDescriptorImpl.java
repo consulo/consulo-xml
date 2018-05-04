@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.UserDataCache;
@@ -148,7 +148,7 @@ public class XmlElementDescriptorImpl extends BaseXmlElementDescriptorImpl imple
 		XmlUtil.processXmlElements(contentSpecElement, new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@NotNull PsiElement child)
+			public boolean execute(@Nonnull PsiElement child)
 			{
 				if(child instanceof XmlToken)
 				{
@@ -271,7 +271,7 @@ public class XmlElementDescriptorImpl extends BaseXmlElementDescriptorImpl imple
 	}
 
 	public static
-	@NotNull
+	@Nonnull
 	XmlAttlistDecl[] getCachedAttributeDeclarations(@Nullable XmlElement owner)
 	{
 		if(owner == null)

@@ -18,7 +18,8 @@ package com.intellij.psi.impl.source.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
@@ -47,21 +48,21 @@ public class XmlTagValueImpl implements XmlTagValue
 	private volatile String myText = null;
 	private volatile String myTrimmedText = null;
 
-	public XmlTagValueImpl(@NotNull XmlTagChild[] bodyElements, @NotNull XmlTag tag)
+	public XmlTagValueImpl(@Nonnull XmlTagChild[] bodyElements, @Nonnull XmlTag tag)
 	{
 		myTag = tag;
 		myElements = bodyElements;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlTagChild[] getChildren()
 	{
 		return myElements;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XmlText[] getTextElements()
 	{
 		XmlText[] textElements = myTextElements;
@@ -81,7 +82,7 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getText()
 	{
 		String text = myText;
@@ -98,7 +99,7 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public TextRange getTextRange()
 	{
 		if(myElements.length == 0)
@@ -114,7 +115,7 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getTrimmedText()
 	{
 		String trimmedText = myTrimmedText;
@@ -220,7 +221,7 @@ public class XmlTagValueImpl implements XmlTagValue
 			boolean insideBody = false;
 
 			@Override
-			public boolean execute(@NotNull PsiElement element)
+			public boolean execute(@Nonnull PsiElement element)
 			{
 				final ASTNode treeElement = element.getNode();
 				if(insideBody)

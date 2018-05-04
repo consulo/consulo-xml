@@ -15,6 +15,8 @@
  */
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -27,30 +29,30 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
  */
 class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptorImpl implements DomElementResolveProblemDescriptor {
-  @NotNull private final PsiReference myReference;
+  @Nonnull
+  private final PsiReference myReference;
 
-  public DomElementResolveProblemDescriptorImpl(@NotNull final GenericDomValue domElement, @NotNull final PsiReference reference, LocalQuickFix... quickFixes) {
+  public DomElementResolveProblemDescriptorImpl(@Nonnull final GenericDomValue domElement, @Nonnull final PsiReference reference, LocalQuickFix... quickFixes) {
     super(domElement, reference instanceof FileReference ? ProblemsHolder.unresolvedReferenceMessage(reference) : XmlHighlightVisitor.getErrorDescription(reference), HighlightSeverity.ERROR, quickFixes);
     myReference = reference;
   }
 
-  @NotNull
+  @Nonnull
   public PsiReference getPsiReference() {
     return myReference;
   }
 
-  @NotNull
+  @Nonnull
   public GenericDomValue getDomElement() {
     return (GenericDomValue)super.getDomElement();
   }
 
-  @NotNull
+  @Nonnull
   protected Pair<TextRange, PsiElement> computeProblemRange() {
     final PsiReference reference = myReference;
     PsiElement element = reference.getElement();

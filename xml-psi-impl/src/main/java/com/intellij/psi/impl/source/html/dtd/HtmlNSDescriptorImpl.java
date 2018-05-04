@@ -26,8 +26,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSTypeDescriptorProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +84,7 @@ public class HtmlNSDescriptorImpl implements XmlNSDescriptor, DumbAware, XmlNSTy
     return decls;
   }
 
-  public XmlElementDescriptor getElementDescriptor(@NotNull XmlTag tag) {
+  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
     String name = tag.getLocalName();
     if (!myCaseSensitive) name = name.toLowerCase();
 
@@ -95,7 +95,7 @@ public class HtmlNSDescriptorImpl implements XmlNSDescriptor, DumbAware, XmlNSTy
     return xmlElementDescriptor;
   }
 
-  @NotNull
+  @Nonnull
   public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
     return myDelegate == null ? XmlElementDescriptor.EMPTY_ARRAY : myDelegate.getRootElementsDescriptors(document);
   }

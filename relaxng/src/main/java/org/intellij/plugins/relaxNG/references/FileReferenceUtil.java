@@ -24,8 +24,8 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferen
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.intellij.patterns.XmlPatterns.*;
 
@@ -106,7 +106,7 @@ public class FileReferenceUtil {
       return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] getVariants() {
       final Object[] variants = super.getVariants();

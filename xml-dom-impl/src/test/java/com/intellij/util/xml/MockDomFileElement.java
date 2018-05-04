@@ -12,8 +12,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -30,13 +30,13 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlFile getFile() {
     throw new UnsupportedOperationException("Method getFile is not yet implemented in " + getClass().getName());
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public XmlFile getOriginalFile() {
     throw new UnsupportedOperationException("Method getOriginalFile is not yet implemented in " + getClass().getName());
   }
@@ -47,7 +47,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomElement getRootElement() {
     throw new UnsupportedOperationException("Method getRootElement is not yet implemented in " + getClass().getName());
   }
@@ -58,7 +58,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomFileDescription getFileDescription() {
     return myFileDescription;
   }
@@ -69,7 +69,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
     throw new UnsupportedOperationException("Method getXmlTag is not yet implemented in " + getClass().getName());
   }
 
-  @NotNull
+  @Nonnull
   public <T extends DomElement> DomFileElement<T> getRoot() {
     return (DomFileElement<T>)this;
   }
@@ -112,20 +112,20 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomGenericInfo getGenericInfo() {
     throw new UnsupportedOperationException("Method getGenericInfo is not yet implemented in " + getClass().getName());
   }
 
   @Override
-  @NotNull
+  @Nonnull
   @NonNls
   public String getXmlElementName() {
     throw new UnsupportedOperationException("Method getXmlElementName is not yet implemented in " + getClass().getName());
   }
 
   @Override
-  @NotNull
+  @Nonnull
   @NonNls
   public String getXmlElementNamespace() {
     throw new UnsupportedOperationException("Method getXmlElementNamespace is not yet implemented in " + getClass().getName());
@@ -148,7 +148,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomManager getManager() {
     throw new UnsupportedOperationException("Method getManager is not yet implemented in " + getClass().getName());
   }
@@ -159,7 +159,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public AbstractDomChildrenDescription getChildDescription() {
     throw new UnsupportedOperationException("Method getChildDescription is not yet implemented in " + getClass().getName());
   }
@@ -170,7 +170,7 @@ public class MockDomFileElement extends UserDataHolderBase implements DomFileEle
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public ElementPresentation getPresentation() {
     throw new UnsupportedOperationException("Method getPresentation is not yet implemented in " + getClass().getName());
   }

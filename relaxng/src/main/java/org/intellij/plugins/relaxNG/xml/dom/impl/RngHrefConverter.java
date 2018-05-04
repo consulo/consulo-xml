@@ -24,8 +24,8 @@ import com.intellij.util.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,7 +54,7 @@ public class RngHrefConverter extends Converter<XmlFile> implements CustomRefere
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public PsiReference[] createReferences(GenericDomValue<XmlFile> genericDomValue, PsiElement element, ConvertContext context) {
     final String s = genericDomValue.getStringValue();
     if (s == null || element == null) {

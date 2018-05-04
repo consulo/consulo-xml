@@ -15,7 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPassFactory;
@@ -38,7 +39,7 @@ public class XmlTagTreeHighlightingPassFactory extends AbstractProjectComponent 
 	}
 
 	@Override
-	public TextEditorHighlightingPass createHighlightingPass(@NotNull final PsiFile file, @NotNull final Editor editor)
+	public TextEditorHighlightingPass createHighlightingPass(@Nonnull final PsiFile file, @Nonnull final Editor editor)
 	{
 		if(editor.isOneLineMode())
 		{

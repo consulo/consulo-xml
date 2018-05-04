@@ -23,7 +23,7 @@ import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 import org.intellij.plugins.relaxNG.validation.ValidateAction;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngDefineMetaData;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.javaee.ResourceRegistrar;
 import com.intellij.javaee.StandardResourceProvider;
 import com.intellij.openapi.actionSystem.ActionManager;
@@ -115,7 +115,7 @@ public class ApplicationLoader implements ApplicationComponent
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getComponentName()
 	{

@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -31,8 +33,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
@@ -49,7 +49,7 @@ public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
 		super();
 	}
 
-	public HtmlUnknownTagInspection(@NonNls @NotNull final String defaultValues)
+	public HtmlUnknownTagInspection(@NonNls @Nonnull final String defaultValues)
 	{
 		super(defaultValues);
 	}
@@ -61,8 +61,8 @@ public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
 		return createOptionsPanel(this);
 	}
 
-	@NotNull
-	protected static JComponent createOptionsPanel(@NotNull final HtmlUnknownElementInspection inspection)
+	@Nonnull
+	protected static JComponent createOptionsPanel(@Nonnull final HtmlUnknownElementInspection inspection)
 	{
 		final JPanel result = new JPanel(new BorderLayout());
 

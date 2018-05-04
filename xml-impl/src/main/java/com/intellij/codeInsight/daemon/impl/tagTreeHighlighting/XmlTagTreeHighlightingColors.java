@@ -17,7 +17,8 @@ package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.openapi.editor.colors.ColorKey;
 import com.intellij.util.ui.PlatformColors;
@@ -42,7 +43,7 @@ public class XmlTagTreeHighlightingColors
 	{
 	}
 
-	@NotNull
+	@Nonnull
 	public static ColorKey[] getColorKeys()
 	{
 		final int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();

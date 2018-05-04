@@ -1,6 +1,6 @@
 package com.intellij.xml.breadcrumbs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.Language;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 
@@ -10,7 +10,7 @@ import com.intellij.lang.xhtml.XHTMLLanguage;
  */
 public class XHtmlLanguageBreadcrumbsInfoProvider extends HtmlLanguageBreadcrumbsInfoProvider
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

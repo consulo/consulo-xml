@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.structure;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.ide.structureView.StructureView;
 import com.intellij.ide.structureView.StructureViewModel;
 import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
@@ -49,7 +49,7 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 	{
 		return new DomStructureViewTreeModel(myFile, myDescriptor, editor);
@@ -62,8 +62,8 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 	}
 
 	@Override
-	@NotNull
-	public StructureView createStructureView(final FileEditor fileEditor, @NotNull final Project project)
+	@Nonnull
+	public StructureView createStructureView(final FileEditor fileEditor, @Nonnull final Project project)
 	{
 		return new StructureViewComponent(fileEditor, createStructureViewModel(fileEditor instanceof TextEditor ? ((TextEditor) fileEditor)
 				.getEditor() : null), project, true)

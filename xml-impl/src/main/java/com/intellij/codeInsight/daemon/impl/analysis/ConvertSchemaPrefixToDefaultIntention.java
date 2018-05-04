@@ -29,8 +29,8 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
     final XmlAttribute xmlns = getXmlnsDeclaration(element);
     if (xmlns == null) return;
     SchemaPrefixReference prefixRef = null;
@@ -101,11 +101,11 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) {
     return getXmlnsDeclaration(element) != null;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getFamilyName() {
     return NAME;

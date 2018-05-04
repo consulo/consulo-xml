@@ -15,17 +15,18 @@
  */
 package com.intellij.util.xml.highlighting;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.psi.PsiReference;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
  */
 public interface DomElementResolveProblemDescriptor extends DomElementProblemDescriptor{
-  @NotNull
+  @Nonnull
   PsiReference getPsiReference();
 
-  @NotNull
+  @Nonnull
   GenericDomValue getDomElement();
 }

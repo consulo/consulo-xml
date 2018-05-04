@@ -15,11 +15,13 @@
  */
 package com.intellij.patterns;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.ProcessingContext;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -46,20 +48,20 @@ public class GenericDomValuePattern<T> extends DomElementPattern<GenericDomValue
 
   public GenericDomValuePattern<T> withStringValue(final ElementPattern<String> pattern) {
     return with(new PatternCondition<GenericDomValue<T>>("withStringValue") {
-      public boolean accepts(@NotNull final GenericDomValue<T> genericDomValue, final ProcessingContext context) {
+      public boolean accepts(@Nonnull final GenericDomValue<T> genericDomValue, final ProcessingContext context) {
         return pattern.getCondition().accepts(genericDomValue.getStringValue(), context);
       }
 
     });
   }
 
-  public GenericDomValuePattern<T> withValue(@NotNull final T value) {
+  public GenericDomValuePattern<T> withValue(@Nonnull final T value) {
     return withValue(StandardPatterns.object(value));
   }
 
   public GenericDomValuePattern<T> withValue(final ElementPattern<?> pattern) {
     return with(new PatternCondition<GenericDomValue<T>>("withValue") {
-      public boolean accepts(@NotNull final GenericDomValue<T> genericDomValue, final ProcessingContext context) {
+      public boolean accepts(@Nonnull final GenericDomValue<T> genericDomValue, final ProcessingContext context) {
         return pattern.getCondition().accepts(genericDomValue.getValue(), context);
       }
     });

@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +105,7 @@ public class XmlTagUtil extends XmlTagUtilBase {
   }
 
   @Nullable
-  public static XmlToken getStartTagNameElement(@NotNull XmlTag tag) {
+  public static XmlToken getStartTagNameElement(@Nonnull XmlTag tag) {
     final ASTNode node = tag.getNode();
     if (node == null) return null;
 
@@ -120,7 +120,7 @@ public class XmlTagUtil extends XmlTagUtilBase {
   }
 
   @Nullable
-  public static XmlToken getEndTagNameElement(@NotNull XmlTag tag) {
+  public static XmlToken getEndTagNameElement(@Nonnull XmlTag tag) {
     final ASTNode node = tag.getNode();
     if (node == null) return null;
 
@@ -141,8 +141,8 @@ public class XmlTagUtil extends XmlTagUtilBase {
     return null;
   }
 
-  @NotNull
-  public static TextRange getTrimmedValueRange(final @NotNull XmlTag tag) {
+  @Nonnull
+  public static TextRange getTrimmedValueRange(final @Nonnull XmlTag tag) {
     XmlTagValue tagValue = tag.getValue();
     final String text = tagValue.getText();
     final String trimmed = text.trim();
@@ -152,14 +152,14 @@ public class XmlTagUtil extends XmlTagUtilBase {
   }
 
   @Nullable
-  public static TextRange getStartTagRange(@NotNull XmlTag tag) {
+  public static TextRange getStartTagRange(@Nonnull XmlTag tag) {
     XmlToken tagName = getStartTagNameElement(tag);
     return getTag(tagName, XmlTokenType.XML_START_TAG_START);
   }
 
 
   @Nullable
-  public static TextRange getEndTagRange(@NotNull XmlTag tag) {
+  public static TextRange getEndTagRange(@Nonnull XmlTag tag) {
     XmlToken tagName = getEndTagNameElement(tag);
 
     return getTag(tagName, XmlTokenType.XML_END_TAG_START);

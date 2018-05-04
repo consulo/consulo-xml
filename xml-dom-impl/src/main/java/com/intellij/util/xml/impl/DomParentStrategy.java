@@ -15,10 +15,12 @@
  */
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -29,11 +31,14 @@ public interface DomParentStrategy {
   @Nullable
   XmlElement getXmlElement();
 
-  @NotNull DomParentStrategy refreshStrategy(final DomInvocationHandler handler);
+  @Nonnull
+  DomParentStrategy refreshStrategy(final DomInvocationHandler handler);
 
-  @NotNull DomParentStrategy setXmlElement(@NotNull XmlElement element);
+  @Nonnull
+  DomParentStrategy setXmlElement(@Nonnull XmlElement element);
 
-  @NotNull DomParentStrategy clearXmlElement();
+  @Nonnull
+  DomParentStrategy clearXmlElement();
 
   @Nullable
   String checkValidity();

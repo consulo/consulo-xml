@@ -24,8 +24,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementNavigationProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -34,7 +34,8 @@ import java.util.Map;
 public abstract class AbstractDomGenerateProvider<T extends DomElement> extends DefaultGenerateElementProvider<T> {
   public static final String NAMESPACE_PREFIX_VAR = "NS_PREFIX";
 
-  @Nullable private final String myMappingId;
+  @Nullable
+  private final String myMappingId;
 
   public AbstractDomGenerateProvider(final String description, final Class<T> aClass) {
     this(description, aClass, null);
@@ -57,12 +58,12 @@ public abstract class AbstractDomGenerateProvider<T extends DomElement> extends 
 
   protected Map<String, String> getPredefinedVars(@Nullable DomElement parentDomElement,
                                                   @Nullable T t,
-                                                  @NotNull Editor editor,
-                                                  @NotNull PsiFile file) {
+                                                  @Nonnull Editor editor,
+                                                  @Nonnull PsiFile file) {
     return createNamespacePrefixMap(parentDomElement);
   }
 
-  @NotNull
+  @Nonnull
   public static Map<String, String> createNamespacePrefixMap(@Nullable DomElement domElement) {
     Map<String, String> vars = new HashMap<String, String>();
 
@@ -71,7 +72,7 @@ public abstract class AbstractDomGenerateProvider<T extends DomElement> extends 
     return vars;
   }
 
-  public static void addNamespacePrefix(@Nullable DomElement domElement, @NotNull Map<String, String> vars) {
+  public static void addNamespacePrefix(@Nullable DomElement domElement, @Nonnull Map<String, String> vars) {
     if (domElement != null) {
       XmlTag tag = domElement.getXmlTag();
       if (tag != null) {

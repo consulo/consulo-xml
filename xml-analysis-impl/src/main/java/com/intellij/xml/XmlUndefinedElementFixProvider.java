@@ -20,8 +20,8 @@ import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -36,7 +36,7 @@ public abstract class XmlUndefinedElementFixProvider {
    * providers should be asked
    */
   @Nullable
-  public IntentionAction[] createFixes(final @NotNull XmlAttribute attribute) {
+  public IntentionAction[] createFixes(final @Nonnull XmlAttribute attribute) {
     return null;
   }
 
@@ -47,7 +47,7 @@ public abstract class XmlUndefinedElementFixProvider {
    * providers should be asked
    */
   @Nullable
-  public LocalQuickFix[] createFixes(final @NotNull XmlTag tag) {
+  public LocalQuickFix[] createFixes(final @Nonnull XmlTag tag) {
     return null;
   }
 }

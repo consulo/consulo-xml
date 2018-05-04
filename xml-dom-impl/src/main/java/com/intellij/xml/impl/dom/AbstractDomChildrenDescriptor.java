@@ -18,8 +18,8 @@ import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
   }
 
   @Nullable
-  public XmlElementDescriptor getElementDescriptor(@NotNull final XmlTag childTag, @Nullable XmlTag contextTag) {
+  public XmlElementDescriptor getElementDescriptor(@Nonnull final XmlTag childTag, @Nullable XmlTag contextTag) {
     DomElement domElement = myManager.getDomElement(childTag);
     if (domElement == null) {
       domElement = myManager.getDomElement(contextTag);
@@ -178,11 +178,11 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
   public XmlNSDescriptor getNSDescriptor() {
     return new XmlNSDescriptor() {
       @Nullable
-      public XmlElementDescriptor getElementDescriptor(@NotNull final XmlTag tag) {
+      public XmlElementDescriptor getElementDescriptor(@Nonnull final XmlTag tag) {
         throw new UnsupportedOperationException("Method getElementDescriptor not implemented in " + getClass());
       }
 
-      @NotNull
+      @Nonnull
       public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
         throw new UnsupportedOperationException("Method getRootElementsDescriptors not implemented in " + getClass());
       }

@@ -20,8 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -311,7 +311,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getCanonicalText()
 	{
 		final String text = myElement.getText();
@@ -334,7 +334,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 	}
 
 	@Override
-	public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		throw new IncorrectOperationException();
 	}
@@ -346,7 +346,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Object[] getVariants()
 	{
 		final XmlTag tag = PsiTreeUtil.getContextOfType(myElement, XmlTag.class, true);
@@ -438,7 +438,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 		static final MyResolver INSTANCE = new MyResolver();
 
 		@Override
-		public PsiElement resolve(@NotNull PsiReference ref, boolean incompleteCode)
+		public PsiElement resolve(@Nonnull PsiReference ref, boolean incompleteCode)
 		{
 			return ((TypeOrElementOrAttributeReference) ref).resolveInner();
 		}
@@ -458,7 +458,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 		}
 
 		@Override
-		public boolean execute(@NotNull final XmlTag element)
+		public boolean execute(@Nonnull final XmlTag element)
 		{
 			String name = element.getAttributeValue(SchemaReferencesProvider.NAME_ATTR_NAME);
 			final String prefixByNamespace = tag.getPrefixByNamespace(namespace);

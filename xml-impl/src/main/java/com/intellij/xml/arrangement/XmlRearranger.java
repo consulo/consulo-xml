@@ -13,8 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
@@ -58,16 +59,16 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 
 	private static final DefaultArrangementSettingsSerializer SETTINGS_SERIALIZER = new DefaultArrangementSettingsSerializer(DEFAULT_SETTINGS);
 
-	@NotNull
+	@Nonnull
 	public static StdArrangementMatchRule attrArrangementRule(
-			@NotNull String nameFilter, @NotNull String namespaceFilter, @NotNull ArrangementSettingsToken orderType)
+			@Nonnull String nameFilter, @Nonnull String namespaceFilter, @Nonnull ArrangementSettingsToken orderType)
 	{
 		return new StdArrangementMatchRule(new StdArrangementEntryMatcher(ArrangementUtil.combine(new ArrangementAtomMatchCondition
 				(StdArrangementTokens.Regexp.NAME, nameFilter), new ArrangementAtomMatchCondition(StdArrangementTokens.Regexp.XML_NAMESPACE,
 				namespaceFilter))), orderType);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public ArrangementSettingsSerializer getSerializer()
 	{
@@ -82,13 +83,13 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 	}
 
 	@Override
-	public boolean isEnabled(@NotNull ArrangementSettingsToken token, @Nullable ArrangementMatchCondition current)
+	public boolean isEnabled(@Nonnull ArrangementSettingsToken token, @Nullable ArrangementMatchCondition current)
 	{
 		return SUPPORTED_TYPES.contains(token) || StdArrangementTokens.Regexp.NAME.equals(token) || StdArrangementTokens.Regexp.XML_NAMESPACE.equals
 				(token) || KEEP.equals(token) || BY_NAME.equals(token) || SUPPORTED_TYPES.contains(token);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Collection<Set<ArrangementSettingsToken>> getMutexes()
 	{
@@ -98,11 +99,11 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 	@Nullable
 	@Override
 	public Pair<XmlElementArrangementEntry, List<XmlElementArrangementEntry>> parseWithNew(
-			@NotNull PsiElement root,
+			@Nonnull PsiElement root,
 			@Nullable Document document,
-			@NotNull Collection<TextRange> ranges,
-			@NotNull PsiElement element,
-			@NotNull ArrangementSettings settings)
+			@Nonnull Collection<TextRange> ranges,
+			@Nonnull PsiElement element,
+			@Nonnull ArrangementSettings settings)
 	{
 		final XmlArrangementParseInfo newEntryInfo = new XmlArrangementParseInfo();
 		element.accept(new XmlArrangementVisitor(newEntryInfo, Collections.singleton(element.getTextRange())));
@@ -117,10 +118,10 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 		return Pair.create(entry, existingEntriesInfo.getEntries());
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<XmlElementArrangementEntry> parse(
-			@NotNull PsiElement root, @Nullable Document document, @NotNull Collection<TextRange> ranges, @NotNull ArrangementSettings settings)
+			@Nonnull PsiElement root, @Nullable Document document, @Nonnull Collection<TextRange> ranges, @Nonnull ArrangementSettings settings)
 	{
 		final XmlArrangementParseInfo parseInfo = new XmlArrangementParseInfo();
 		root.accept(new XmlArrangementVisitor(parseInfo, ranges));
@@ -129,10 +130,10 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 
 	@Override
 	public int getBlankLines(
-			@NotNull CodeStyleSettings settings,
+			@Nonnull CodeStyleSettings settings,
 			@Nullable XmlElementArrangementEntry parent,
 			@Nullable XmlElementArrangementEntry previous,
-			@NotNull XmlElementArrangementEntry target)
+			@Nonnull XmlElementArrangementEntry target)
 	{
 		return -1;
 	}
@@ -153,9 +154,9 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 				.Regexp.XML_NAMESPACE), new CompositeArrangementSettingsToken(ORDER, KEEP, BY_NAME));
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public ArrangementEntryMatcher buildMatcher(@NotNull ArrangementMatchCondition condition) throws IllegalArgumentException
+	public ArrangementEntryMatcher buildMatcher(@Nonnull ArrangementMatchCondition condition) throws IllegalArgumentException
 	{
 		throw new IllegalArgumentException("Can't build a matcher for condition " + condition);
 	}

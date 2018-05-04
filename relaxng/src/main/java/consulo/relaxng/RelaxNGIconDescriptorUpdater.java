@@ -1,7 +1,7 @@
 package consulo.relaxng;
 
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import consulo.annotations.RequiredReadAction;
@@ -16,7 +16,7 @@ public class RelaxNGIconDescriptorUpdater implements IconDescriptorUpdater
 {
 	@RequiredReadAction
 	@Override
-	public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement psiElement, int i)
+	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement psiElement, int i)
 	{
 		if(psiElement instanceof RncDefine)
 		{

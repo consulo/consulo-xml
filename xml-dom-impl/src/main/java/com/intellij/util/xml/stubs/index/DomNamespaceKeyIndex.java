@@ -15,7 +15,8 @@
  */
 package com.intellij.util.xml.stubs.index;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileWithId;
 import com.intellij.psi.PsiFile;
@@ -64,7 +65,7 @@ public class DomNamespaceKeyIndex extends StringStubIndexExtension<PsiFile>
 		return processor.isFound();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public StubIndexKey<String, PsiFile> getKey()
 	{

@@ -15,8 +15,9 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.InspectionProfileEntry;
 import com.intellij.codeInspection.InspectionsBundle;
@@ -48,21 +49,21 @@ public class RequiredAttributesInspectionBase extends XmlSuppressableInspectionT
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getGroupDisplayName()
 	{
 		return XmlInspectionGroupNames.HTML_INSPECTIONS;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getDisplayName()
 	{
 		return InspectionsBundle.message("inspection.required.attributes.display.name");
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	@NonNls
 	public String getShortName()
 	{

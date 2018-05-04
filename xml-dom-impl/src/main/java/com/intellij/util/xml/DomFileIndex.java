@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
@@ -51,7 +51,7 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 		myDataIndexer = new DataIndexer<String, Void, FileContent>()
 		{
 			@Override
-			@NotNull
+			@Nonnull
 			public Map<String, Void> map(final FileContent inputData)
 			{
 				final Set<String> namespaces = new THashSet<String>();
@@ -88,14 +88,14 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public ID<String, Void> getName()
 	{
 		return NAME;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public DataIndexer<String, Void, FileContent> getIndexer()
 	{
 		return myDataIndexer;

@@ -17,13 +17,13 @@ package com.intellij.codeInsight.daemon.impl.analysis;
 
 import com.intellij.psi.PsiReference;
 import com.intellij.xml.util.AnchorReferenceImpl;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
 public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
-  @NotNull
+  @Nonnull
   @Override
   public String getShortName() {
     return "HtmlUnknownAnchorTarget";

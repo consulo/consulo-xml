@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.completion;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.editorActions.smartEnter.SmartEnterProcessor;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
@@ -28,8 +30,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.text.CharArrayUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
@@ -37,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 public class XmlSmartEnterProcessor extends SmartEnterProcessor {
   private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.XmlSmartEnterProcessor");
 
-  public boolean process(@NotNull final Project project, @NotNull final Editor editor, @NotNull final PsiFile psiFile) {
+  public boolean process(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile psiFile) {
     return completeEndTag(project, editor, psiFile);
   }
 
@@ -201,7 +203,7 @@ public class XmlSmartEnterProcessor extends SmartEnterProcessor {
     return getClosingQuote(xmlAttribute) + (emptyTag ? "/>" : ">");
   }
 
-  @NotNull
+  @Nonnull
   protected static CharSequence getClosingQuote(@Nullable final XmlAttribute attribute) {
     if (attribute == null) {
       return "";

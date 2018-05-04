@@ -18,7 +18,7 @@ package com.intellij.ide.highlighter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lexer.DtdLexer;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlHighlightingLexer;
@@ -139,7 +139,7 @@ public class XmlFileHighlighter extends SyntaxHighlighterBase
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Lexer getHighlightingLexer()
 	{
 		if(myIsDtd)
@@ -157,7 +157,7 @@ public class XmlFileHighlighter extends SyntaxHighlighterBase
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public TextAttributesKey[] getTokenHighlights(IElementType tokenType)
 	{
 		return pack(keys1.get(tokenType), keys2.get(tokenType));

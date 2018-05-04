@@ -40,8 +40,8 @@ import org.intellij.plugins.intelliLang.inject.LanguageInjectionSupport;
 import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
 import org.intellij.plugins.intelliLang.inject.config.BaseInjection;
 import org.intellij.plugins.intelliLang.inject.config.InjectionPlace;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -67,7 +67,7 @@ public final class XmlLanguageInjector implements MultiHostInjector {
   }
 
   @Override
-  public void injectLanguages(@NotNull final MultiHostRegistrar registrar, @NotNull PsiElement host) {
+  public void injectLanguages(@Nonnull final MultiHostRegistrar registrar, @Nonnull PsiElement host) {
     final XmlElement xmlElement = (XmlElement) host;
     if (!isInIndex(xmlElement)) return;
     final TreeSet<TextRange> ranges = new TreeSet<TextRange>(InjectorUtils.RANGE_COMPARATOR);

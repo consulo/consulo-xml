@@ -15,8 +15,9 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -26,16 +27,16 @@ import com.intellij.xml.util.XmlUtil;
 
 public class DependentNSReference extends BasicAttributeValueReference
 {
-	@NotNull
+	@Nonnull
 	private final URLReference myReference;
 	private final boolean myForceFetchResultValid;
 
-	public DependentNSReference(final PsiElement element, TextRange range, @NotNull URLReference ref)
+	public DependentNSReference(final PsiElement element, TextRange range, @Nonnull URLReference ref)
 	{
 		this(element, range, ref, false);
 	}
 
-	public DependentNSReference(final PsiElement element, TextRange range, @NotNull URLReference ref, boolean valid)
+	public DependentNSReference(final PsiElement element, TextRange range, @Nonnull URLReference ref, boolean valid)
 	{
 		super(element, range);
 		myReference = ref;
@@ -61,7 +62,7 @@ public class DependentNSReference extends BasicAttributeValueReference
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public Object[] getVariants()
 	{
 		return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -78,7 +79,7 @@ public class DependentNSReference extends BasicAttributeValueReference
 		return myForceFetchResultValid;
 	}
 
-	@NotNull
+	@Nonnull
 	public URLReference getNamespaceReference()
 	{
 		return myReference;

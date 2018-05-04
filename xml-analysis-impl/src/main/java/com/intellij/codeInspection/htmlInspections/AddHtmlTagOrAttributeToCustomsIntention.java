@@ -16,7 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.InspectionProfileEntry;
@@ -44,24 +45,24 @@ public class AddHtmlTagOrAttributeToCustomsIntention implements IntentionAction 
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getText() {
     return myText;
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlBundle.message("fix.html.family");
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     return true;
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, final PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, final PsiFile file) throws IncorrectOperationException {
     InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
     profile.modifyToolSettings(myInspectionKey, file, new Consumer<InspectionProfileEntry>() {
       @Override

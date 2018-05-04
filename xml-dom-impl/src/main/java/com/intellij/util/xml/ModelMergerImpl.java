@@ -19,8 +19,8 @@ import net.sf.cglib.proxy.AdvancedProxy;
 import net.sf.cglib.proxy.InvocationHandler;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.SmartList;
@@ -260,7 +260,7 @@ public class ModelMergerImpl implements ModelMerger {
       myClass = aClass;
     }
 
-    @NotNull
+    @Nonnull
     private InvocationStrategy findStrategy(final Object proxy, final Method method) {
       for (final Pair<InvocationStrategy, Class> pair : myAcceptsCache.get(method)) {
         if (Object.class.equals(pair.second) || pair.second.isInstance(proxy)) {
@@ -340,14 +340,14 @@ public class ModelMergerImpl implements ModelMerger {
     if (returnType.isInterface()) {
       final List<Object> orderedPrimaryKeys = new SmartList<Object>();
       final FactoryMap<Object, List<Set<Object>>> map = new FactoryMap<Object, List<Set<Object>>>() {
-        @NotNull
+        @Nonnull
         protected List<Set<Object>> create(final Object key) {
           orderedPrimaryKeys.add(key);
           return new SmartList<Set<Object>>();
         }
       };
       final FactoryMap<Object, int[]> counts = new FactoryMap<Object, int[]>() {
-        @NotNull
+        @Nonnull
         protected int[] create(final Object key) {
           return new int[implementations.size()];
         }

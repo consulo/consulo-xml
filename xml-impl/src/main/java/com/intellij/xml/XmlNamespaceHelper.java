@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Set;
 
@@ -63,9 +63,9 @@ public abstract class XmlNamespaceHelper {
     }
   }
 
-  public abstract void insertNamespaceDeclaration(@NotNull final XmlFile file,
+  public abstract void insertNamespaceDeclaration(@Nonnull final XmlFile file,
                                                   @Nullable final Editor editor,
-                                                  @NonNls @NotNull final Set<String> possibleNamespaces,
+                                                  @NonNls @Nonnull final Set<String> possibleNamespaces,
                                                   @NonNls @Nullable final String nsPrefix,
                                                   @Nullable Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException;
 
@@ -83,13 +83,13 @@ public abstract class XmlNamespaceHelper {
     return false;
   }
 
-  @NotNull
-  public abstract Set<String> guessUnboundNamespaces(@NotNull PsiElement element, final XmlFile file);
+  @Nonnull
+  public abstract Set<String> guessUnboundNamespaces(@Nonnull PsiElement element, final XmlFile file);
 
-  @NotNull
-  public abstract Set<String> getNamespacesByTagName(@NotNull final String tagName, @NotNull final XmlFile context);
+  @Nonnull
+  public abstract Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context);
 
-  public String getNamespaceAlias(@NotNull final XmlFile file) {
+  public String getNamespaceAlias(@Nonnull final XmlFile file) {
     return XmlBundle.message("namespace.alias");
   }
 }

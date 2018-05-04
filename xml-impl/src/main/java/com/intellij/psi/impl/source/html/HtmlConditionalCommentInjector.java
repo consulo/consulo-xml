@@ -15,6 +15,9 @@
  */
 package com.intellij.psi.impl.source.html;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
@@ -26,8 +29,6 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -41,7 +42,7 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
    * @param host  target element to check
    * @return      <code>true</code> if given element is conditional comment; <code>false</code> otherwise
    */
-  public static boolean isConditionalComment(@NotNull PsiElement host) {
+  public static boolean isConditionalComment(@Nonnull PsiElement host) {
     return parseConditionalCommentBoundaries(host) != null;
   }
 
@@ -53,7 +54,7 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
    *              pair like <code>(conditional comment start element; conditional comment end element)</code> otherwise
    */
   @Nullable
-  private static Pair<ASTNode, ASTNode> parseConditionalCommentBoundaries(@NotNull PsiElement host) {
+  private static Pair<ASTNode, ASTNode> parseConditionalCommentBoundaries(@Nonnull PsiElement host) {
     if (!(host instanceof XmlComment)) {
       return null;
     }
@@ -74,7 +75,7 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
   }
 
   @Override
-  public void injectLanguages(@NotNull final MultiHostRegistrar registrar, @NotNull final PsiElement host) {
+  public void injectLanguages(@Nonnull final MultiHostRegistrar registrar, @Nonnull final PsiElement host) {
     Pair<ASTNode, ASTNode> pair = parseConditionalCommentBoundaries(host);
     if (pair == null) {
       return;

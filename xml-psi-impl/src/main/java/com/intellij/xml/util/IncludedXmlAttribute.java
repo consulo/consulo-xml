@@ -15,9 +15,10 @@
  */
 package com.intellij.xml.util;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
@@ -32,24 +33,24 @@ import com.intellij.xml.XmlAttributeDescriptor;
  */
 public class IncludedXmlAttribute extends IncludedXmlElement<XmlAttribute> implements XmlAttribute {
 
-  public IncludedXmlAttribute(@NotNull XmlAttribute original, @Nullable XmlTag parent) {
+  public IncludedXmlAttribute(@Nonnull XmlAttribute original, @Nullable XmlTag parent) {
     super(original, parent);
   }
 
   @Override
   @NonNls
-  @NotNull
+  @Nonnull
   public String getName() {
     return getOriginal().getName();
   }
 
   @Override
-  public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
     throw new UnsupportedOperationException("Can't modify included elements");
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getLocalName() {
     return getOriginal().getLocalName();
   }
@@ -60,13 +61,13 @@ public class IncludedXmlAttribute extends IncludedXmlElement<XmlAttribute> imple
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getNamespace() {
     return getOriginal().getNamespace();
   }
 
   @NonNls
-  @NotNull
+  @Nonnull
   public String getNamespacePrefix() {
     return getOriginal().getNamespacePrefix();
   }

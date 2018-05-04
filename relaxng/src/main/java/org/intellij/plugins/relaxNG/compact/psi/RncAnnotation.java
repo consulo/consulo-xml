@@ -16,8 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
+import javax.annotation.Nullable;
+
 import com.intellij.psi.PsiComment;
-import org.jetbrains.annotations.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

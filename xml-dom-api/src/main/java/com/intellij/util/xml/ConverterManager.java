@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -27,7 +27,7 @@ public interface ConverterManager {
 
   void addConverter(Class clazz, Converter converter);
 
-  @NotNull
+  @Nonnull
   Converter getConverterInstance(Class<? extends Converter> converterClass);
 
   @Nullable

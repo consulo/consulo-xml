@@ -23,7 +23,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.EventListener;
 import java.util.List;
@@ -34,10 +34,10 @@ public abstract class DomElementAnnotationsManager {
     return ServiceManager.getService(project, DomElementAnnotationsManager.class);
   }
 
-  @NotNull
+  @Nonnull
   public abstract DomElementsProblemsHolder getProblemHolder(DomElement element);
 
-  @NotNull
+  @Nonnull
   public abstract DomElementsProblemsHolder getCachedProblemHolder(DomElement element);
 
   public abstract List<ProblemDescriptor> createProblemDescriptors(final InspectionManager manager, DomElementProblemDescriptor problemDescriptor);
@@ -58,9 +58,9 @@ public abstract class DomElementAnnotationsManager {
    * @param onTheFly
    * @return collected DOM problem descriptors
    */
-  @NotNull
-  public abstract <T extends DomElement> List<DomElementProblemDescriptor> checkFileElement(@NotNull DomFileElement<T> element,
-                                                                                            @NotNull DomElementsInspection<T> inspection,
+  @Nonnull
+  public abstract <T extends DomElement> List<DomElementProblemDescriptor> checkFileElement(@Nonnull DomFileElement<T> element,
+                                                                                            @Nonnull DomElementsInspection<T> inspection,
                                                                                             boolean onTheFly);
 
   public abstract void dropAnnotationsCache();
@@ -72,6 +72,6 @@ public abstract class DomElementAnnotationsManager {
      * {@link com.intellij.util.xml.DomFileElement} 
      * @param element file element whose highlighting has been finished
      */
-    void highlightingFinished(@NotNull DomFileElement element);
+    void highlightingFinished(@Nonnull DomFileElement element);
   }
 }

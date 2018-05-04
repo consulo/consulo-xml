@@ -17,8 +17,9 @@
 package org.intellij.plugins.relaxNG.config;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
@@ -36,7 +37,7 @@ import com.intellij.xml.XmlSchemaProvider;
 public class NoNamespaceSchemaProvider extends XmlSchemaProvider {
   @Override
   @Nullable
-  public XmlFile getSchema(@NotNull @NonNls String url, @Nullable Module module, @NotNull PsiFile baseFile) {
+  public XmlFile getSchema(@Nonnull @NonNls String url, @Nullable Module module, @Nonnull PsiFile baseFile) {
     if ("".equals(url)) {
       final Project project = baseFile.getProject();
       final VirtualFile file = NoNamespaceConfig.getInstance(project).getMappedFile(baseFile);
@@ -50,7 +51,7 @@ public class NoNamespaceSchemaProvider extends XmlSchemaProvider {
   }
 
   @Override
-  public boolean isAvailable(@NotNull XmlFile file) {
+  public boolean isAvailable(@Nonnull XmlFile file) {
     if (file.getFileType() != XmlFileType.INSTANCE) {
       return false;
     }

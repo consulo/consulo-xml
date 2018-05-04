@@ -17,7 +17,8 @@ package com.intellij.codeInsight.daemon.impl.analysis;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.XmlHighlighterColors;
@@ -35,7 +36,7 @@ import com.intellij.util.containers.ContainerUtil;
 public class XmlNsPrefixAnnotator implements Annotator
 {
 	@Override
-	public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder)
+	public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder)
 	{
 		if(element instanceof XmlTag || element instanceof XmlAttribute)
 		{

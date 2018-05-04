@@ -16,6 +16,9 @@
 
 package com.intellij.util.xml.ui.actions.generate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -23,8 +26,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementNavigationProvider;
 import com.intellij.util.xml.DomElementsNavigationManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * User: Sergey.Vasiliev
@@ -36,7 +37,7 @@ public abstract class GenerateDomElementProvider<T extends DomElement> {
     myDescription = description;
   }
 
-  public boolean isAvailableForElement(@NotNull DomElement contextElement) {
+  public boolean isAvailableForElement(@Nonnull DomElement contextElement) {
     return true;
   }
   

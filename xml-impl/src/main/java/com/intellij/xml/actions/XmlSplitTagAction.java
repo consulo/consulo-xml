@@ -29,7 +29,7 @@ import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -37,19 +37,19 @@ import org.jetbrains.annotations.NotNull;
 public class XmlSplitTagAction implements IntentionAction {
 
   @Override
-  @NotNull
+  @Nonnull
   public String getText() {
     return XmlBundle.message("xml.split.tag.intention.action");
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return XmlBundle.message("xml.split.tag.intention.action");
   }
 
   @Override
-  public boolean isAvailable(@NotNull final Project project, final Editor editor, final PsiFile file) {
+  public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
     if (file instanceof XmlFile) {
       if (editor != null) {
         final int offset = editor.getCaretModel().getOffset();
@@ -79,7 +79,7 @@ public class XmlSplitTagAction implements IntentionAction {
   }
 
   @Override
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
     if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
 
     if (editor != null) {

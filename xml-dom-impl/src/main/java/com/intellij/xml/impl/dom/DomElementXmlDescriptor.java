@@ -19,9 +19,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightingAwareElementDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
@@ -46,13 +48,13 @@ public class DomElementXmlDescriptor extends AbstractDomChildrenDescriptor imple
 {
 	private final DomChildrenDescription myChildrenDescription;
 
-	public DomElementXmlDescriptor(@NotNull final DomElement domElement)
+	public DomElementXmlDescriptor(@Nonnull final DomElement domElement)
 	{
 		super(domElement.getManager());
 		myChildrenDescription = new MyRootDomChildrenDescription(domElement);
 	}
 
-	public DomElementXmlDescriptor(@NotNull final DomChildrenDescription childrenDescription, final DomManager manager)
+	public DomElementXmlDescriptor(@Nonnull final DomChildrenDescription childrenDescription, final DomManager manager)
 	{
 		super(manager);
 		myChildrenDescription = childrenDescription;
@@ -147,57 +149,57 @@ public class DomElementXmlDescriptor extends AbstractDomChildrenDescriptor imple
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public XmlName getXmlName()
 		{
 			throw new UnsupportedOperationException("Method getXmlName not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public String getXmlElementName()
 		{
 			return myDomElement.getXmlElementName();
 		}
 
 		@Override
-		@NotNull
-		public String getCommonPresentableName(@NotNull final DomNameStrategy strategy)
+		@Nonnull
+		public String getCommonPresentableName(@Nonnull final DomNameStrategy strategy)
 		{
 			throw new UnsupportedOperationException("Method getCommonPresentableName not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
-		public String getCommonPresentableName(@NotNull final DomElement parent)
+		@Nonnull
+		public String getCommonPresentableName(@Nonnull final DomElement parent)
 		{
 			throw new UnsupportedOperationException("Method getCommonPresentableName not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
-		public List<? extends DomElement> getValues(@NotNull final DomElement parent)
+		@Nonnull
+		public List<? extends DomElement> getValues(@Nonnull final DomElement parent)
 		{
 			throw new UnsupportedOperationException("Method getValues not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
-		public List<? extends DomElement> getStableValues(@NotNull final DomElement parent)
+		@Nonnull
+		public List<? extends DomElement> getStableValues(@Nonnull final DomElement parent)
 		{
 			throw new UnsupportedOperationException("Method getStableValues not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Type getType()
 		{
 			throw new UnsupportedOperationException("Method getType not implemented in " + getClass());
 		}
 
 		@Override
-		@NotNull
-		public DomNameStrategy getDomNameStrategy(@NotNull final DomElement parent)
+		@Nonnull
+		public DomNameStrategy getDomNameStrategy(@Nonnull final DomElement parent)
 		{
 			throw new UnsupportedOperationException("Method getDomNameStrategy not implemented in " + getClass());
 		}

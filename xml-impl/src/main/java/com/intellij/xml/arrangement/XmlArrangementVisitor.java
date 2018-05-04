@@ -9,8 +9,8 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.Stack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
@@ -27,7 +27,7 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
   private final XmlArrangementParseInfo myInfo;
   private final Collection<TextRange> myRanges;
 
-  public XmlArrangementVisitor(@NotNull XmlArrangementParseInfo info, @NotNull Collection<TextRange> ranges) {
+  public XmlArrangementVisitor(@Nonnull XmlArrangementParseInfo info, @Nonnull Collection<TextRange> ranges) {
     myInfo = info;
     myRanges = ranges;
   }
@@ -70,8 +70,8 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
   }
 
   @Nullable
-  private XmlElementArrangementEntry createNewEntry(@NotNull TextRange range,
-                                                    @NotNull ArrangementSettingsToken type,
+  private XmlElementArrangementEntry createNewEntry(@Nonnull TextRange range,
+                                                    @Nonnull ArrangementSettingsToken type,
                                                     @Nullable String name,
                                                     boolean canBeMatched) {
     if (!isWithinBounds(range)) {
@@ -95,7 +95,7 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
     return myStack.isEmpty() ? null : myStack.peek();
   }
 
-  private boolean isWithinBounds(@NotNull TextRange range) {
+  private boolean isWithinBounds(@Nonnull TextRange range) {
     for (TextRange textRange : myRanges) {
       if (textRange.intersects(range)) {
         return true;

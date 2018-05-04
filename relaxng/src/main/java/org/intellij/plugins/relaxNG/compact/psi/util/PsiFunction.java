@@ -16,10 +16,11 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.NotNullFunction;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,7 +31,7 @@ public final class PsiFunction implements NotNullFunction<ASTNode, PsiElement> {
   public static final PsiFunction INSTANCE = new PsiFunction();
 
   @Override
-  @NotNull
+  @Nonnull
   public PsiElement fun(ASTNode astNode) {
     return astNode.getPsi();
   }

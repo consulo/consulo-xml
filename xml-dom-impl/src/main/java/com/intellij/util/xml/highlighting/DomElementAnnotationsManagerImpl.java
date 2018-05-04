@@ -47,8 +47,8 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.impl.DomApplicationComponent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +63,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
 
   private static final DomElementsProblemsHolder EMPTY_PROBLEMS_HOLDER = new DomElementsProblemsHolder() {
     @Override
-    @NotNull
+    @Nonnull
     public List<DomElementProblemDescriptor> getProblems(DomElement domElement) {
       return Collections.emptyList();
     }
@@ -99,12 +99,12 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
     }
 
     @Override
-    public List<DomElementProblemDescriptor> getAllProblems(@NotNull DomElementsInspection inspection) {
+    public List<DomElementProblemDescriptor> getAllProblems(@Nonnull DomElementsInspection inspection) {
       return Collections.emptyList();
     }
 
     @Override
-    public boolean isInspectionCompleted(@NotNull final DomElementsInspection inspectionClass) {
+    public boolean isInspectionCompleted(@Nonnull final DomElementsInspection inspectionClass) {
       return false;
     }
 
@@ -123,7 +123,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
     };
     final ProfileChangeAdapter profileChangeAdapter = new ProfileChangeAdapter() {
       @Override
-      public void profileActivated(@NotNull Profile oldProfile, Profile profile) {
+      public void profileActivated(@Nonnull Profile oldProfile, Profile profile) {
         dropAnnotationsCache();
       }
 
@@ -148,7 +148,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
     myModificationCount++;
   }
 
-  public final List<DomElementProblemDescriptor> appendProblems(@NotNull DomFileElement element, @NotNull DomElementAnnotationHolder annotationHolder, Class<? extends DomElementsInspection> inspectionClass) {
+  public final List<DomElementProblemDescriptor> appendProblems(@Nonnull DomFileElement element, @Nonnull DomElementAnnotationHolder annotationHolder, Class<? extends DomElementsInspection> inspectionClass) {
     final DomElementAnnotationHolderImpl holderImpl = (DomElementAnnotationHolderImpl)annotationHolder;
     synchronized (LOCK) {
       final DomElementsProblemsHolderImpl holder = _getOrCreateProblemsHolder(element);
@@ -198,7 +198,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomElementsProblemsHolder getProblemHolder(DomElement element) {
     if (element == null || !element.isValid()) return EMPTY_PROBLEMS_HOLDER;
     final DomFileElement<DomElement> fileElement = DomUtil.getFileElement(element);
@@ -216,7 +216,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public DomElementsProblemsHolder getCachedProblemHolder(DomElement element) {
     return getProblemHolder(element);
   }
@@ -254,9 +254,9 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
   }
 
   @Override
-  @NotNull
-  public <T extends DomElement> List<DomElementProblemDescriptor> checkFileElement(@NotNull final DomFileElement<T> domFileElement,
-                                                                                   @NotNull final DomElementsInspection<T> inspection,
+  @Nonnull
+  public <T extends DomElement> List<DomElementProblemDescriptor> checkFileElement(@Nonnull final DomFileElement<T> domFileElement,
+                                                                                   @Nonnull final DomElementsInspection<T> inspection,
                                                                                    boolean onTheFly) {
     final DomElementsProblemsHolder problemHolder = getProblemHolder(domFileElement);
     if (isHolderUpToDate(domFileElement) && problemHolder.isInspectionCompleted(inspection)) {
@@ -314,7 +314,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
     return true;
   }
 
-  @NotNull
+  @Nonnull
   public DomHighlightStatus getHighlightStatus(final DomElement element) {
     synchronized (LOCK) {
       final DomFileElement<DomElement> root = DomUtil.getFileElement(element);

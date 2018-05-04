@@ -18,7 +18,7 @@ package com.intellij.codeInsight.completion;
 import java.util.Collections;
 import java.util.Set;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.openapi.diagnostic.Logger;

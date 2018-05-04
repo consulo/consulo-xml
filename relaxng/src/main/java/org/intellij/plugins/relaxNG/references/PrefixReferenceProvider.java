@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.LocalQuickFixProvider;
@@ -47,8 +47,8 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
   private static final Logger LOG = Logger.getInstance("#org.intellij.plugins.relaxNG.references.PrefixReferenceProvider");
 
   @Override
-  @NotNull
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+  @Nonnull
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
     final XmlAttributeValue value = (XmlAttributeValue)element;
 
     final String s = value.getValue();
@@ -108,7 +108,7 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Object[] getVariants() {
       return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }
@@ -119,7 +119,7 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getUnresolvedMessagePattern() {
       return "Undefined namespace prefix ''{0}''";
     }

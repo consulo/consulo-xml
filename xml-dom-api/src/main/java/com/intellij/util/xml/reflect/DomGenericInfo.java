@@ -19,8 +19,8 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -32,23 +32,25 @@ public interface DomGenericInfo {
   @Nullable
   String getElementName(DomElement element);
 
-  @NotNull
+  @Nonnull
   List<? extends AbstractDomChildrenDescription> getChildrenDescriptions();
 
-  @NotNull
+  @Nonnull
   List<? extends DomFixedChildDescription> getFixedChildrenDescriptions();
 
-  @NotNull
+  @Nonnull
   List<? extends DomCollectionChildDescription> getCollectionChildrenDescriptions();
 
-  @NotNull
+  @Nonnull
   List<? extends DomAttributeChildDescription> getAttributeChildrenDescriptions();
 
-  @Nullable DomFixedChildDescription getFixedChildDescription(@NonNls String tagName);
+  @Nullable
+  DomFixedChildDescription getFixedChildDescription(@NonNls String tagName);
 
   @Nullable DomFixedChildDescription getFixedChildDescription(@NonNls String tagName, @NonNls String namespaceKey);
 
-  @Nullable DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName);
+  @Nullable
+  DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName);
 
   @Nullable DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName, @NonNls String namespaceKey);
 
@@ -75,6 +77,6 @@ public interface DomGenericInfo {
   @Nullable
   GenericDomValue getNameDomElement(DomElement element);
 
-  @NotNull
+  @Nonnull
   List<? extends CustomDomChildrenDescription> getCustomNameChildrenDescription();
 }

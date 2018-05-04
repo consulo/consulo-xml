@@ -15,6 +15,8 @@
  */
 package com.intellij.util.xml.model.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.util.CachedValueProvider;
@@ -24,8 +26,8 @@ import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.DomModelCache;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * User: Sergey.Vasiliev
@@ -36,15 +38,15 @@ public abstract class CachedSimpleDomModelFactory<T extends DomElement, M extend
 
   private final DomModelCache<M, XmlFile> myModelCache;
 
-  protected CachedSimpleDomModelFactory(@NotNull Class<T> aClass,
-                          @NotNull ModelMerger modelMerger,
+  protected CachedSimpleDomModelFactory(@Nonnull Class<T> aClass,
+                          @Nonnull ModelMerger modelMerger,
                           final Project project,
                           @NonNls String name) {
     super(aClass, modelMerger);
 
     myModelCache = new DomModelCache<M, XmlFile>(project, name + " model") {
-       @NotNull
-       protected CachedValueProvider.Result<M> computeValue(@NotNull XmlFile file) {
+       @Nonnull
+       protected CachedValueProvider.Result<M> computeValue(@Nonnull XmlFile file) {
          file = (XmlFile)file.getOriginalFile();
 
          final Scope scope = getModelScope(file);
@@ -63,5 +65,5 @@ public abstract class CachedSimpleDomModelFactory<T extends DomElement, M extend
   }
 
   @Nullable
-  protected abstract M computeModel(@NotNull XmlFile psiFile, @Nullable Scope scope);
+  protected abstract M computeModel(@Nonnull XmlFile psiFile, @Nullable Scope scope);
 }

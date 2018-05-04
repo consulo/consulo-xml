@@ -16,6 +16,8 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
@@ -29,7 +31,6 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author spleaner
@@ -38,7 +39,7 @@ public abstract class HtmlLocalInspectionTool extends XmlSuppressableInspectionT
 
   @Override
   @Nls
-  @NotNull
+  @Nonnull
   public String getGroupDisplayName() {
     return XmlInspectionGroupNames.HTML_INSPECTIONS;
   }
@@ -48,17 +49,17 @@ public abstract class HtmlLocalInspectionTool extends XmlSuppressableInspectionT
     return true;
   }
 
-  protected void checkTag(@NotNull final XmlTag tag, @NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     // should be overridden
   }
 
-  protected void checkAttribute(@NotNull final XmlAttribute attribute, @NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  protected void checkAttribute(@Nonnull final XmlAttribute attribute, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     // should be overridden
   }
 
   @Override
-  @NotNull
-  public PsiElementVisitor buildVisitor(@NotNull final ProblemsHolder holder, final boolean isOnTheFly) {
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     return new XmlElementVisitor() {
       @Override public void visitXmlToken(final XmlToken token) {
         if (token.getTokenType() == XmlTokenType.XML_NAME) {

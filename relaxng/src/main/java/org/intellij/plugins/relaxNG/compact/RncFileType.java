@@ -22,8 +22,8 @@ import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 
@@ -42,20 +42,20 @@ public class RncFileType extends LanguageFileType  {
   }
 
   @Override
-  @NotNull
+  @Nonnull
   @NonNls
   public String getName() {
     return "RNG Compact";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getDescription() {
     return "RELAX NG Compact Syntax";
   }
 
   @Override
-  @NotNull
+  @Nonnull
   @NonNls
   public String getDefaultExtension() {
     return "rnc";
@@ -73,7 +73,7 @@ public class RncFileType extends LanguageFileType  {
 
   public static class Factory extends FileTypeFactory {
     @Override
-    public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
+    public void createFileTypes(@Nonnull FileTypeConsumer fileTypeConsumer) {
       fileTypeConsumer.consume(INSTANCE, RNC_EXT);
     }
   }

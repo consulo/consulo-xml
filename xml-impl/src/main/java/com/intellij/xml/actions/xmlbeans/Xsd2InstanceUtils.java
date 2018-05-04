@@ -33,7 +33,7 @@ import com.intellij.xml.util.XmlUtil;
 import org.apache.xmlbeans.*;
 import org.apache.xmlbeans.impl.tool.CommandLine;
 import org.apache.xmlbeans.impl.xsd2inst.SampleXmlUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -165,8 +165,8 @@ public class Xsd2InstanceUtils {
     return Collections.emptyList();
   }
 
-  public static String processAndSaveAllSchemas(@NotNull XmlFile file, @NotNull final Map<String, String> scannedToFileName,
-                                          final @NotNull SchemaReferenceProcessor schemaReferenceProcessor) {
+  public static String processAndSaveAllSchemas(@Nonnull XmlFile file, @Nonnull final Map<String, String> scannedToFileName,
+                                          final @Nonnull SchemaReferenceProcessor schemaReferenceProcessor) {
     final String fileName = file.getName();
 
     String previous = scannedToFileName.get(fileName);

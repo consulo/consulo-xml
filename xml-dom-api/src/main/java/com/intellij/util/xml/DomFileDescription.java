@@ -24,11 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Iconable;
@@ -95,7 +96,7 @@ public class DomFileDescription<T>
 	 * @deprecated use {@link #registerNamespacePolicy(String, String...)} or override {@link #getAllowedNamespaces(String,
 	 * com.intellij.psi.xml.XmlFile)} instead
 	 */
-	protected final void registerNamespacePolicy(@NotNull String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
+	protected final void registerNamespacePolicy(@Nonnull String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
 	{
 		myNamespacePolicies.put(namespaceKey, policy);
 	}
@@ -105,7 +106,7 @@ public class DomFileDescription<T>
 	 * @param namespaces   XML namespace or DTD public or system id value for the given namespaceKey
 	 * @see com.intellij.util.xml.Namespace
 	 */
-	public final void registerNamespacePolicy(@NotNull  String namespaceKey, final String... namespaces)
+	public final void registerNamespacePolicy(@Nonnull String namespaceKey, final String... namespaces)
 	{
 		registerNamespacePolicy(namespaceKey, new ConstantFunction<>(Arrays.asList(namespaces)));
 	}
@@ -114,8 +115,8 @@ public class DomFileDescription<T>
 	 * Consider using {@link DomService#getXmlFileHeader(com.intellij.psi.xml.XmlFile)} when implementing this.
 	 */
 	@SuppressWarnings({"MethodMayBeStatic"})
-	@NotNull
-	public List<String> getAllowedNamespaces(@NotNull String namespaceKey, @NotNull XmlFile file)
+	@Nonnull
+	public List<String> getAllowedNamespaces(@Nonnull String namespaceKey, @Nonnull XmlFile file)
 	{
 		final NotNullFunction<XmlTag, List<String>> function = myNamespacePolicies.get(namespaceKey);
 		if(function instanceof ConstantFunction)
@@ -215,7 +216,7 @@ public class DomFileDescription<T>
 		return myImplementations;
 	}
 
-	@NotNull
+	@Nonnull
 	public final Class<T> getRootElementClass()
 	{
 		return myRootElementClass;
@@ -228,12 +229,12 @@ public class DomFileDescription<T>
 
 	@Deprecated
 	@DeprecationInfo(value = "Use #isMyFile(XmlFile)", until = "2.0")
-	public boolean isMyFile(@NotNull XmlFile file, @Nullable final Module module)
+	public boolean isMyFile(@Nonnull XmlFile file, @Nullable final Module module)
 	{
 		return isMyFile(file);
 	}
 
-	public boolean isMyFile(@NotNull XmlFile file)
+	public boolean isMyFile(@Nonnull XmlFile file)
 	{
 		final Namespace namespace = DomReflectionUtil.findAnnotationDFS(myRootElementClass, Namespace.class);
 		if(namespace != null)
@@ -265,7 +266,7 @@ public class DomFileDescription<T>
 	 * @param file XML file to get dependencies of
 	 * @return dependency item set
 	 */
-	@NotNull
+	@Nonnull
 	public Set<? extends Object> getDependencyItems(XmlFile file)
 	{
 		return Collections.emptySet();
@@ -275,7 +276,7 @@ public class DomFileDescription<T>
 	 * @param reference DOM reference
 	 * @return element, whose all children will be searched for declaration
 	 */
-	@NotNull
+	@Nonnull
 	public DomElement getResolveScope(GenericDomValue<?> reference)
 	{
 		final DomElement annotation = getScopeFromAnnotation(reference);
@@ -292,7 +293,7 @@ public class DomFileDescription<T>
 	 * @return element, whose direct children names will be compared by name. Basically it's parameter element's parent (see {@link
 	 * ParentScopeProvider}).
 	 */
-	@NotNull
+	@Nonnull
 	public DomElement getIdentityScope(DomElement element)
 	{
 		final DomElement annotation = getScopeFromAnnotation(element);

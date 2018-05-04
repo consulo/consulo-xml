@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -47,7 +47,7 @@ public class XmlInstanceValidator {
   private XmlInstanceValidator() {
   }
 
-  public static void doValidation(@NotNull final XmlDocument doc, final Validator.ValidationHost host, final XmlFile descriptorFile) {
+  public static void doValidation(@Nonnull final XmlDocument doc, final Validator.ValidationHost host, final XmlFile descriptorFile) {
     try {
       final Schema schema = RngParser.getCachedSchema(descriptorFile);
       if (schema == null) {

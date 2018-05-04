@@ -17,7 +17,8 @@ package com.intellij.util.xml.stubs;
 
 import java.io.IOException;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.stubs.IndexSink;
 import com.intellij.psi.stubs.ObjectStubSerializer;
@@ -36,7 +37,7 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 	final static ObjectStubSerializer INSTANCE = new ElementStubSerializer();
 
 	@Override
-	public void serialize(@NotNull ElementStub stub, @NotNull StubOutputStream dataStream) throws IOException
+	public void serialize(@Nonnull ElementStub stub, @Nonnull StubOutputStream dataStream) throws IOException
 	{
 		dataStream.writeName(stub.getName());
 		dataStream.writeName(stub.getNamespaceKey());
@@ -45,16 +46,16 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 		dataStream.writeName(stub.getElementClass());
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public ElementStub deserialize(@NotNull StubInputStream dataStream, ElementStub parentStub) throws IOException
+	public ElementStub deserialize(@Nonnull StubInputStream dataStream, ElementStub parentStub) throws IOException
 	{
 		return new ElementStub(parentStub, dataStream.readName(), dataStream.readName(), dataStream.readVarInt(), dataStream.readBoolean(),
 				dataStream.readName());
 	}
 
 	@Override
-	public void indexStub(@NotNull ElementStub stub, @NotNull IndexSink sink)
+	public void indexStub(@Nonnull ElementStub stub, @Nonnull IndexSink sink)
 	{
 		final String namespaceKey = stub.getNamespaceKey();
 		if(StringUtil.isNotEmpty(namespaceKey))
@@ -69,7 +70,7 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getExternalId()
 	{

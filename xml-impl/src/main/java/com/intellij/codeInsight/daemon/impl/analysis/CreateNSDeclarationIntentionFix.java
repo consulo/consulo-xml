@@ -59,8 +59,8 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -79,23 +79,23 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   private final PsiAnchor myElement;
   private final PsiAnchor myToken;
 
-  @NotNull
+  @Nonnull
   private XmlFile getFile() {
     return (XmlFile)myElement.getFile();
   }
 
   @Nullable
-  public static CreateNSDeclarationIntentionFix createFix(@NotNull final PsiElement element, @NotNull final String namespacePrefix) {
+  public static CreateNSDeclarationIntentionFix createFix(@Nonnull final PsiElement element, @Nonnull final String namespacePrefix) {
     PsiFile file = element.getContainingFile();
     return file instanceof XmlFile ? new CreateNSDeclarationIntentionFix(element, namespacePrefix) : null;
   }
 
-  protected CreateNSDeclarationIntentionFix(@NotNull final PsiElement element,
-                                            @NotNull final String namespacePrefix) {
+  protected CreateNSDeclarationIntentionFix(@Nonnull final PsiElement element,
+                                            @Nonnull final String namespacePrefix) {
     this(element, namespacePrefix, null);
   }
 
-  public CreateNSDeclarationIntentionFix(@NotNull final PsiElement element,
+  public CreateNSDeclarationIntentionFix(@Nonnull final PsiElement element,
                                          final String namespacePrefix,
                                          @Nullable final XmlToken token) {
     myNamespacePrefix = namespacePrefix;
@@ -104,7 +104,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getText() {
     final String alias = StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()));
     return XmlErrorMessages.message("create.namespace.declaration.quickfix", alias);
@@ -115,19 +115,19 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getName() {
     return getFamilyName();
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getFamilyName() {
     return getText();
   }
 
   @Override
-  public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
+  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     final PsiFile containingFile = descriptor.getPsiElement().getContainingFile();
     Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
     final PsiFile file = editor != null ? PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument()):null;
@@ -139,13 +139,13 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     PsiElement element = myElement.retrieve();
     return element != null && element.isValid();
   }
 
   @Override
-  public void invoke(@NotNull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
     if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
 
     final PsiElement element = myElement.retrieve();
@@ -159,7 +159,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
       project,
       new StringToAttributeProcessor() {
         @Override
-        public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@NotNull final String namespace) throws IncorrectOperationException {
+        public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String namespace) throws IncorrectOperationException {
           String prefix = myNamespacePrefix;
           if (StringUtil.isEmpty(prefix)) {
             final XmlFile xmlFile = XmlExtension.getExtension(file).getContainingFile(element);
@@ -205,7 +205,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   @Override
-  public boolean showHint(@NotNull final Editor editor) {
+  public boolean showHint(@Nonnull final Editor editor) {
     if (myToken == null) return false;
     XmlToken token = (XmlToken)myToken.retrieve();
     if (token == null) return false;
@@ -273,11 +273,11 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   public interface StringToAttributeProcessor {
-    void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@NonNls @NotNull String attrName) throws IncorrectOperationException;
+    void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@NonNls @Nonnull String attrName) throws IncorrectOperationException;
   }
 
 
-  public static void runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(@NotNull final String[] namespacesToChooseFrom,
+  public static void runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(@Nonnull final String[] namespacesToChooseFrom,
                                                                                            final Project project, final StringToAttributeProcessor onSelection,
                                                                                            String title,
                                                                                            final IntentionAction requestor,
@@ -421,6 +421,6 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   public interface ExternalUriProcessor {
-    void process(@NotNull String uri,@Nullable final String url);
+    void process(@Nonnull String uri,@Nullable final String url);
   }
 }

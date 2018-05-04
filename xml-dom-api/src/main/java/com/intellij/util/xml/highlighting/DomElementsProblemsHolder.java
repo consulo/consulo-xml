@@ -18,7 +18,7 @@ package com.intellij.util.xml.highlighting;
 
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public interface DomElementsProblemsHolder {
 
   List<DomElementProblemDescriptor> getAllProblems();
 
-  List<DomElementProblemDescriptor> getAllProblems(@NotNull DomElementsInspection inspection);
+  List<DomElementProblemDescriptor> getAllProblems(@Nonnull DomElementsInspection inspection);
 
-  boolean isInspectionCompleted(@NotNull DomElementsInspection inspection);
+  boolean isInspectionCompleted(@Nonnull DomElementsInspection inspection);
 }

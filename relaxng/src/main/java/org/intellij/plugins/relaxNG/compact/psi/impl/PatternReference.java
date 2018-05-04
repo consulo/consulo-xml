@@ -40,8 +40,8 @@ import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Map;
 import java.util.Set;
@@ -80,7 +80,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public ResolveResult[] multiResolve(boolean incompleteCode) {
     final RncGrammar scope = getScope();
     if (scope == null) {
@@ -115,7 +115,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getCanonicalText() {
     final ASTNode node = findNameNode();
     return node != null ? EscapeUtil.unescapeText(node) : "";
@@ -131,12 +131,12 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     final RncGrammar scope = getScope();
     if (scope == null) {
@@ -155,7 +155,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  @NotNull
+  @Nonnull
   public String getUnresolvedMessagePattern() {
     return "Unresolved pattern reference ''{0}''";
   }
@@ -176,20 +176,20 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
       myReference = reference;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getName() {
       return "Create Pattern '" + myReference.getCanonicalText() + "'";
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
       return "Create Pattern";
     }
 
     @Override
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
       final RncFile rncfile = (RncFile)PsiFileFactory.getInstance(myReference.getElement().getProject()).createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
 
       final RncGrammar grammar = rncfile.getGrammar();

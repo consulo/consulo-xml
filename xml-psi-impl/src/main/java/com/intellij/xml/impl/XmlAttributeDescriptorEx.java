@@ -15,10 +15,11 @@
  */
 package com.intellij.xml.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.xml.XmlAttributeDescriptor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
@@ -31,5 +32,5 @@ public interface XmlAttributeDescriptorEx extends XmlAttributeDescriptor {
    */
   @Nullable
   @NonNls
-  String handleTargetRename(@NotNull @NonNls final String newTargetName);
+  String handleTargetRename(@Nonnull @NonNls final String newTargetName);
 }

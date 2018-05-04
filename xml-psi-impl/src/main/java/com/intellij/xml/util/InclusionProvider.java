@@ -25,8 +25,8 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xmlb.JDOMXIncluder;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.regex.Matcher;
 
@@ -40,7 +40,7 @@ class InclusionProvider implements CachedValueProvider<PsiElement[]> {
     myXincludeTag = xincludeTag;
   }
 
-  @NotNull
+  @Nonnull
   public static PsiElement[] getIncludedTags(XmlTag xincludeTag) {
     return CachedValuesManager.getManager(xincludeTag.getProject()).getCachedValue(xincludeTag, new InclusionProvider(xincludeTag));
   }
@@ -55,7 +55,7 @@ class InclusionProvider implements CachedValueProvider<PsiElement[]> {
     return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
   }
 
-  private static XmlTag[] extractXpointer(@NotNull XmlTag rootTag, @Nullable final String xpointer) {
+  private static XmlTag[] extractXpointer(@Nonnull XmlTag rootTag, @Nullable final String xpointer) {
     if (xpointer != null) {
       Matcher matcher = JDOMXIncluder.XPOINTER_PATTERN.matcher(xpointer);
       if (matcher.matches()) {

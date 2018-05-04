@@ -23,8 +23,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -64,36 +64,39 @@ public interface DomElement extends AnnotatedElement, UserDataHolder {
    */
   boolean exists();
 
-  @NotNull
+  @Nonnull
   DomGenericInfo getGenericInfo();
 
-  @NotNull @NonNls String getXmlElementName();
+  @Nonnull
+  @NonNls String getXmlElementName();
 
-  @NotNull @NonNls String getXmlElementNamespace();
+  @Nonnull
+  @NonNls String getXmlElementNamespace();
 
   /**
    * @return namespace key if this element or one of its ancestors is annotated with
    * {@link Namespace}, or null otherwise, which means that namespace should be equal
    * to that of the element's parent
    */
-  @Nullable @NonNls String getXmlElementNamespaceKey();
+  @Nullable
+  @NonNls String getXmlElementNamespaceKey();
 
   void accept(final DomElementVisitor visitor);
 
   void acceptChildren(DomElementVisitor visitor);
 
-  @NotNull
+  @Nonnull
   DomManager getManager();
 
-  @NotNull
+  @Nonnull
   Type getDomElementType();
 
   AbstractDomChildrenDescription getChildDescription();
 
-  @NotNull
+  @Nonnull
   DomNameStrategy getNameStrategy();
 
-  @NotNull
+  @Nonnull
   ElementPresentation getPresentation();
 
   GlobalSearchScope getResolveScope();

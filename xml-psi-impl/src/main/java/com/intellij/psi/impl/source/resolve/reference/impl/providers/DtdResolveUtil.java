@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtilCoreImpl;
 import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.util.PsiTreeUtil;

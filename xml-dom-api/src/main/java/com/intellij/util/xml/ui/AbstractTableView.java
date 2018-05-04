@@ -43,7 +43,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.actions.ContextHelpAction;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -288,7 +288,7 @@ public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDat
     myTable.repaint();
   }
 
-  protected abstract void wrapValueSetting(@NotNull T t, Runnable valueSetter);
+  protected abstract void wrapValueSetting(@Nonnull T t, Runnable valueSetter);
 
   protected final void fireChanged() {
     myDispatcher.getMulticaster().changed();

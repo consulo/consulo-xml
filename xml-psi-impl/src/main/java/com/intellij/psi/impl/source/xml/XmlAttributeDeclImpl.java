@@ -15,6 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.util.EditSourceUtil;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
@@ -32,7 +34,6 @@ import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Mike
@@ -100,7 +101,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
 
     final StringBuilder builder = new StringBuilder();
     value.processElements(new PsiElementProcessor() {
-      public boolean execute(@NotNull PsiElement element) {
+      public boolean execute(@Nonnull PsiElement element) {
         builder.append(element.getText());
         return true;
       }
@@ -146,7 +147,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     return MetaRegistry.getMeta(this);
   }
 
-  public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
     XmlElementChangeUtil.doNameReplacement(this, getNameElement(), name);
     return null;
   }
@@ -181,7 +182,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     navigatable.navigate(requestFocus);
   }
 
-  @NotNull
+  @Nonnull
   public PsiElement getNavigationElement() {
     return this;
   }

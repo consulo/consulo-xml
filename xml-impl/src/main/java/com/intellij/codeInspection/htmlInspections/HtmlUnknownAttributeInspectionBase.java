@@ -15,9 +15,10 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -50,7 +51,7 @@ public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspec
 
 	@Override
 	@Nls
-	@NotNull
+	@Nonnull
 	public String getDisplayName()
 	{
 		return XmlBundle.message("html.inspections.unknown.attribute");
@@ -58,7 +59,7 @@ public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspec
 
 	@Override
 	@NonNls
-	@NotNull
+	@Nonnull
 	public String getShortName()
 	{
 		return ATTRIBUTE_SHORT_NAME;
@@ -70,7 +71,7 @@ public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspec
 		return XmlBundle.message("html.inspections.unknown.tag.attribute.checkbox.title");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected String getPanelTitle()
 	{
@@ -78,14 +79,14 @@ public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspec
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected Logger getLogger()
 	{
 		return LOG;
 	}
 
 	@Override
-	protected void checkAttribute(@NotNull final XmlAttribute attribute, @NotNull final ProblemsHolder holder, final boolean isOnTheFly)
+	protected void checkAttribute(@Nonnull final XmlAttribute attribute, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
 	{
 		final XmlTag tag = attribute.getParent();
 

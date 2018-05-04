@@ -15,7 +15,8 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.daemon.QuickFixActionRegistrar;
 import com.intellij.codeInsight.daemon.impl.quickfix.AddXsiSchemaLocationForExtResourceAction;
 import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
@@ -31,7 +32,7 @@ import com.intellij.psi.xml.XmlAttribute;
 public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<URLReference>
 {
 	@Override
-	public void registerFixes(@NotNull URLReference ref, @NotNull QuickFixActionRegistrar registrar)
+	public void registerFixes(@Nonnull URLReference ref, @Nonnull QuickFixActionRegistrar registrar)
 	{
 		registrar.register(new FetchExtResourceAction());
 		registrar.register(new ManuallySetupExtResourceAction());
@@ -44,7 +45,7 @@ public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixPro
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Class<URLReference> getReferenceClass()
 	{

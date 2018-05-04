@@ -18,10 +18,12 @@ package com.intellij.codeInspection.htmlInspections;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -49,7 +51,7 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 	public static final Key<HtmlUnknownElementInspection> TAG_KEY = Key.create(TAG_SHORT_NAME);
 	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.HtmlUnknownTagInspection");
 
-	public HtmlUnknownTagInspectionBase(@NotNull String defaultValues)
+	public HtmlUnknownTagInspectionBase(@Nonnull String defaultValues)
 	{
 		super(defaultValues);
 	}
@@ -66,7 +68,7 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 
 	@Override
 	@Nls
-	@NotNull
+	@Nonnull
 	public String getDisplayName()
 	{
 		return XmlBundle.message("html.inspections.unknown.tag");
@@ -74,14 +76,14 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 
 	@Override
 	@NonNls
-	@NotNull
+	@Nonnull
 	public String getShortName()
 	{
 		return TAG_SHORT_NAME;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected Logger getLogger()
 	{
 		return LOG;
@@ -94,14 +96,14 @@ public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected String getPanelTitle()
 	{
 		return XmlBundle.message("html.inspections.unknown.tag.title");
 	}
 
 	@Override
-	protected void checkTag(@NotNull final XmlTag tag, @NotNull final ProblemsHolder holder, final boolean isOnTheFly)
+	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
 	{
 		if(!(tag instanceof HtmlTag) || !XmlHighlightVisitor.shouldBeValidated(tag))
 		{

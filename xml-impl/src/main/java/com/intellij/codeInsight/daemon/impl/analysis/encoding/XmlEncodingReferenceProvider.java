@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis.encoding;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
@@ -25,7 +27,6 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author cdr
@@ -34,8 +35,8 @@ public class XmlEncodingReferenceProvider extends PsiReferenceProvider {
   private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider");
   @NonNls private static final String CHARSET_PREFIX = "charset=";
 
-  @NotNull
-  public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull final ProcessingContext context) {
+  @Nonnull
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
     LOG.assertTrue(element instanceof XmlAttributeValue);
     XmlAttributeValue value = (XmlAttributeValue)element;
 

@@ -15,10 +15,11 @@
  */
 package com.intellij.util.xml.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author peter
@@ -30,7 +31,7 @@ public class RootDomParentStrategy implements DomParentStrategy {
     myFileElement = fileElement;
   }
 
-  @NotNull
+  @Nonnull
   public DomInvocationHandler getParentHandler() {
     throw new UnsupportedOperationException("Method getParentHandler is not yet implemented in " + getClass().getName());
   }
@@ -39,17 +40,17 @@ public class RootDomParentStrategy implements DomParentStrategy {
     return myFileElement.getRootTag();
   }
 
-  @NotNull
+  @Nonnull
   public DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     return this;
   }
 
-  @NotNull
-  public DomParentStrategy setXmlElement(@NotNull final XmlElement element) {
+  @Nonnull
+  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
     return this;
   }
 
-  @NotNull
+  @Nonnull
   public DomParentStrategy clearXmlElement() {
     return this;
   }
