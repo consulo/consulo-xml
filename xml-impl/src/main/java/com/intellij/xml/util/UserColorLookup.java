@@ -62,24 +62,25 @@ public class UserColorLookup extends LookupElementDecorator<LookupElement>
 		context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
 
 		ColorPickerListener[] listeners = ColorPickerListenerFactory.createListenersFor(element);
-		Color color = ColorChooser.chooseColor(WindowManager.getInstance().suggestParentWindow(context.getProject()), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, listeners, true);
-
-		if(color != null)
+		ColorChooser.chooseColor(WindowManager.getInstance().suggestParentWindow(context.getProject()), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, listeners, true, color ->
 		{
-			String s = Integer.toHexString(color.getRGB() & 0xFFFFFF);
-			if(s.length() != 6)
+			if(color != null)
 			{
-				StringBuilder buf = new StringBuilder(s);
-				for(int i = 6 - buf.length(); i > 0; --i)
+				String s = Integer.toHexString(color.getRGB() & 0xFFFFFF);
+				if(s.length() != 6)
 				{
-					buf.insert(0, '0');
+					StringBuilder buf = new StringBuilder(s);
+					for(int i = 6 - buf.length(); i > 0; --i)
+					{
+						buf.insert(0, '0');
+					}
+					s = buf.toString();
 				}
-				s = buf.toString();
+				s = "#" + s;
+				context.getDocument().insertString(context.getStartOffset(), s);
+				context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
 			}
-			s = "#" + s;
-			context.getDocument().insertString(context.getStartOffset(), s);
-			context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
-		}
+		});
 	}
 
 	@Nullable

@@ -65,10 +65,10 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
 	@Override
 	public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException
 	{
-		chooseColor(editor.getComponent(), element, getText(), false);
+		chooseColor(editor.getComponent(), element, getText());
 	}
 
-	public static void chooseColor(JComponent editorComponent, PsiElement element, String caption, boolean startInWriteAction)
+	public static void chooseColor(JComponent editorComponent, PsiElement element, String caption)
 	{
 		final XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
 		if(literal == null)
@@ -86,45 +86,38 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
 		{
 			oldColor = JBColor.GRAY;
 		}
-		Color color = ColorChooser.chooseColor(editorComponent, caption, oldColor, true);
-		if(color == null)
+
+		final Color temp = oldColor;
+		ColorChooser.chooseColor(editorComponent, caption, temp, true, color ->
 		{
-			return;
-		}
-		if(!Comparing.equal(color, oldColor))
-		{
-			if(!FileModificationService.getInstance().preparePsiElementForWrite(element))
+			if(color == null)
 			{
 				return;
 			}
-			final String newText = "#" + ColorUtil.toHex(color);
-			final PsiManager manager = literal.getManager();
-			final XmlAttribute newAttribute = XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
-			final Runnable replaceRunnable = new Runnable()
+
+			if(!Comparing.equal(color, temp))
 			{
-				public void run()
+				if(!FileModificationService.getInstance().preparePsiElementForWrite(element))
 				{
-					final XmlAttributeValue valueElement = newAttribute.getValueElement();
-					assert valueElement != null;
-					literal.replace(valueElement);
+					return;
 				}
-			};
-			if(startInWriteAction)
-			{
+
+				final String newText = "#" + ColorUtil.toHex(color);
+				final PsiManager manager = literal.getManager();
+				final XmlAttribute newAttribute = XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
+
 				new WriteCommandAction(element.getProject(), caption)
 				{
 					@Override
 					protected void run(Result result) throws Throwable
 					{
-						replaceRunnable.run();
+						final XmlAttributeValue valueElement = newAttribute.getValueElement();
+						assert valueElement != null;
+						literal.replace(valueElement);
 					}
 				}.execute();
 			}
-			else
-			{
-				replaceRunnable.run();
-			}
-		}
+		});
 	}
 }
 
