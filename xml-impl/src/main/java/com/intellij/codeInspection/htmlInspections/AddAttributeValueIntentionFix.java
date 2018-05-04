@@ -57,7 +57,7 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
 	@Override
 	public void invoke(@Nonnull Project project,
 			@Nonnull PsiFile file,
-			@Nullable("is null when called from inspection") final Editor editor,
+			@Nullable final Editor editor,
 			@Nonnull PsiElement startElement,
 			@Nonnull PsiElement endElement)
 	{

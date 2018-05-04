@@ -83,7 +83,7 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
 	@Override
 	public void invoke(@Nonnull final Project project,
 			@Nonnull PsiFile file,
-			@Nullable("is null when called from inspection") final Editor editor,
+			@Nullable final Editor editor,
 			@Nonnull PsiElement startElement,
 			@Nonnull PsiElement endElement)
 	{
