@@ -15,6 +15,11 @@
  */
 package com.intellij.codeInsight.intentions;
 
+import java.awt.Color;
+
+import javax.annotation.Nonnull;
+import javax.swing.JComponent;
+
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
@@ -34,71 +39,92 @@ import com.intellij.ui.ColorChooser;
 import com.intellij.ui.ColorUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
-import javax.annotation.Nonnull;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Konstantin Bulenkov
  */
-public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction {
-  public XmlChooseColorIntentionAction() {
-    setText(CodeInsightBundle.message("intention.color.chooser.dialog"));
-  }
+public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
+{
+	public XmlChooseColorIntentionAction()
+	{
+		setText(CodeInsightBundle.message("intention.color.chooser.dialog"));
+	}
 
-  public boolean isAvailable(@Nonnull final Project project, final Editor editor, @Nonnull final PsiElement element) {
-    final PsiElement parent = element.getParent();
-    return parent instanceof XmlAttributeValue && ColorUtil.fromHex(((XmlAttributeValue)parent).getValue(), null) != null;
-  }
+	public boolean isAvailable(@Nonnull final Project project, final Editor editor, @Nonnull final PsiElement element)
+	{
+		final PsiElement parent = element.getParent();
+		return parent instanceof XmlAttributeValue && ColorUtil.fromHex(((XmlAttributeValue) parent).getValue(), null) != null;
+	}
 
-  @Nonnull
-  public String getFamilyName() {
-    return getText();
-  }
+	@Nonnull
+	public String getFamilyName()
+	{
+		return getText();
+	}
 
-  @Override
-  public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
-    chooseColor(editor.getComponent(), element, getText(), false);
-  }
+	@Override
+	public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException
+	{
+		chooseColor(editor.getComponent(), element, getText(), false);
+	}
 
-  public static void chooseColor(JComponent editorComponent, PsiElement element, String caption, boolean startInWriteAction) {
-    final XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
-    if (literal == null) return;
-    final String text = StringUtil.unquoteString(literal.getValue());
+	public static void chooseColor(JComponent editorComponent, PsiElement element, String caption, boolean startInWriteAction)
+	{
+		final XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
+		if(literal == null)
+		{
+			return;
+		}
+		final String text = StringUtil.unquoteString(literal.getValue());
 
-    Color oldColor;
-    try {
-      oldColor = Color.decode(text);
-    }
-    catch (NumberFormatException e) {
-      oldColor = JBColor.GRAY;
-    }
-    Color color = ColorChooser.chooseColor(editorComponent, caption, oldColor, true);
-    if (color == null) return;
-    if (!Comparing.equal(color, oldColor)) {
-      if (!FileModificationService.getInstance().preparePsiElementForWrite(element)) return;
-      final String newText = "#" + ColorUtil.toHex(color);
-      final PsiManager manager = literal.getManager();
-      final XmlAttribute newAttribute = XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
-      final Runnable replaceRunnable = new Runnable() {
-        public void run() {
-          final XmlAttributeValue valueElement = newAttribute.getValueElement();
-          assert valueElement != null;
-          literal.replace(valueElement);
-        }
-      };
-      if (startInWriteAction) {
-        new WriteCommandAction(element.getProject(), caption) {
-          @Override
-          protected void run(Result result) throws Throwable {
-            replaceRunnable.run();
-          }
-        }.execute();
-      } else {
-        replaceRunnable.run();
-      }
-    }
-  }
+		Color oldColor;
+		try
+		{
+			oldColor = Color.decode(text);
+		}
+		catch(NumberFormatException e)
+		{
+			oldColor = JBColor.GRAY;
+		}
+		Color color = ColorChooser.chooseColor(editorComponent, caption, oldColor, true);
+		if(color == null)
+		{
+			return;
+		}
+		if(!Comparing.equal(color, oldColor))
+		{
+			if(!FileModificationService.getInstance().preparePsiElementForWrite(element))
+			{
+				return;
+			}
+			final String newText = "#" + ColorUtil.toHex(color);
+			final PsiManager manager = literal.getManager();
+			final XmlAttribute newAttribute = XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
+			final Runnable replaceRunnable = new Runnable()
+			{
+				public void run()
+				{
+					final XmlAttributeValue valueElement = newAttribute.getValueElement();
+					assert valueElement != null;
+					literal.replace(valueElement);
+				}
+			};
+			if(startInWriteAction)
+			{
+				new WriteCommandAction(element.getProject(), caption)
+				{
+					@Override
+					protected void run(Result result) throws Throwable
+					{
+						replaceRunnable.run();
+					}
+				}.execute();
+			}
+			else
+			{
+				replaceRunnable.run();
+			}
+		}
+	}
 }
 
