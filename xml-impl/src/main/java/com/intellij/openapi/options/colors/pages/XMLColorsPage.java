@@ -18,10 +18,8 @@ package com.intellij.openapi.options.colors.pages;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.ide.highlighter.XmlFileHighlighter;
-import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.editor.XmlHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
@@ -45,10 +43,6 @@ public class XMLColorsPage implements ColorSettingsPage {
   @Nonnull
   public String getDisplayName() {
     return OptionsBundle.message("options.xml.display.name");
-  }
-
-  public Icon getIcon() {
-    return XmlFileType.INSTANCE.getIcon();
   }
 
   @Nonnull

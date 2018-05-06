@@ -16,12 +16,12 @@
 package com.intellij.ide.highlighter;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.ui.image.Image;
 
 public class DTDFileType extends LanguageFileType {
   public static final DTDFileType INSTANCE = new DTDFileType();
@@ -31,7 +31,7 @@ public class DTDFileType extends LanguageFileType {
   }
 
   @Nonnull
-  public String getName() {
+  public String getId() {
     return "DTD";
   }
 
@@ -45,7 +45,7 @@ public class DTDFileType extends LanguageFileType {
     return "dtd";
   }
 
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.FileTypes.Dtd;
   }
 }

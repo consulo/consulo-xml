@@ -42,6 +42,7 @@ import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.TreeSpeedSearch;
 import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 import consulo.vfs.ArchiveFileSystem;
 
@@ -178,8 +179,7 @@ public class ConfigFilesTreeBuilder {
     final Object object = ((DefaultMutableTreeNode)value).getUserObject();
     if (object instanceof FileType) {
       final FileType fileType = (FileType)object;
-      final Icon icon = fileType.getIcon();
-      renderer.setIcon(icon);
+      renderer.setIcon(TargetAWT.to(fileType.getIcon()));
       renderer.append(getFileTypeNodeName(fileType), SimpleTextAttributes.REGULAR_ATTRIBUTES);
     }
     else if (object instanceof Module) {

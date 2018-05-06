@@ -20,7 +20,6 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
@@ -32,6 +31,7 @@ import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.text.XmlCharsetDetector;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.ui.image.Image;
 
 public class HtmlFileType extends XmlLikeFileType
 {
@@ -51,7 +51,7 @@ public class HtmlFileType extends XmlLikeFileType
 	}
 
 	@Nonnull
-	public String getName()
+	public String getId()
 	{
 		return "HTML";
 	}
@@ -68,7 +68,7 @@ public class HtmlFileType extends XmlLikeFileType
 		return "html";
 	}
 
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return AllIcons.FileTypes.Html;
 	}

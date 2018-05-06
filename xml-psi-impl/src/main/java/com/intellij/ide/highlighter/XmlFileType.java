@@ -18,7 +18,6 @@ package com.intellij.ide.highlighter;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
@@ -27,6 +26,7 @@ import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.fileTypes.FileTypeWithPredefinedCharset;
+import consulo.ui.image.Image;
 
 public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset
 {
@@ -43,7 +43,7 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 
 	@Override
 	@Nonnull
-	public String getName()
+	public String getId()
 	{
 		return "XML";
 	}
@@ -63,7 +63,7 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 	}
 
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return AllIcons.FileTypes.Xml;
 	}

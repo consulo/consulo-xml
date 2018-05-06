@@ -23,6 +23,7 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.xml.XmlBundle;
+import consulo.awt.TargetAWT;
 
 /**
  * @author Eugene.Kudelevsky
@@ -32,7 +33,7 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   @NonNls private static final String DEFAULT_HTML_TEMPLATE_PROPERTY = "DefaultHtmlFileTemplate";
 
   public CreateHtmlFileAction() {
-    super(XmlBundle.message("new.html.file.action"), XmlBundle.message("new.html.file.action.description"), HtmlFileType.INSTANCE.getIcon());
+    super(XmlBundle.message("new.html.file.action"), XmlBundle.message("new.html.file.action.description"), TargetAWT.to(HtmlFileType.INSTANCE.getIcon()));
   }
 
   @Override
@@ -44,9 +45,9 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   protected void buildDialog(Project project, PsiDirectory directory, CreateFileFromTemplateDialog.Builder builder) {
     builder
       .setTitle(XmlBundle.message("new.html.file.action"))
-      .addKind("HTML file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
-      .addKind("HTML4 file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
-      .addKind("XHTML file", XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
+      .addKind("HTML file", TargetAWT.to(HtmlFileType.INSTANCE.getIcon()), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
+      .addKind("HTML4 file", TargetAWT.to(HtmlFileType.INSTANCE.getIcon()), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
+      .addKind("XHTML file", TargetAWT.to(XHtmlFileType.INSTANCE.getIcon()), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
   }
 
   @Override

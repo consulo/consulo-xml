@@ -16,11 +16,11 @@
 package com.intellij.ide.highlighter;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.xhtml.XHTMLLanguage;
+import consulo.ui.image.Image;
 
 public class XHtmlFileType extends HtmlFileType {
   public static final XHtmlFileType INSTANCE = new XHtmlFileType();
@@ -30,7 +30,7 @@ public class XHtmlFileType extends HtmlFileType {
   }
 
   @Nonnull
-  public String getName() {
+  public String getId() {
     return "XHTML";
   }
 
@@ -44,7 +44,7 @@ public class XHtmlFileType extends HtmlFileType {
     return "xhtml";
   }
 
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.FileTypes.Xhtml;
   }
 }

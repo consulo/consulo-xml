@@ -16,16 +16,16 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 /*
 * Created by IntelliJ IDEA.
@@ -44,7 +44,7 @@ public class RncFileType extends LanguageFileType  {
   @Override
   @Nonnull
   @NonNls
-  public String getName() {
+  public String getId() {
     return "RNG Compact";
   }
 
@@ -63,7 +63,7 @@ public class RncFileType extends LanguageFileType  {
 
   @Override
   @Nullable
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.FileTypes.Text;
   }
 

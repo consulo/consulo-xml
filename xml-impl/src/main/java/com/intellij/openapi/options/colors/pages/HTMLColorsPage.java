@@ -18,11 +18,9 @@ package com.intellij.openapi.options.colors.pages;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
-import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.application.ApplicationNamesInfo;
 import com.intellij.openapi.editor.XmlHighlighterColors;
 import com.intellij.openapi.editor.colors.ColorKey;
@@ -48,10 +46,6 @@ public class HTMLColorsPage implements ColorSettingsPage {
   @Nonnull
   public String getDisplayName() {
     return OptionsBundle.message("options.html.display.name");
-  }
-
-  public Icon getIcon() {
-    return HtmlFileType.INSTANCE.getIcon();
   }
 
   @Nonnull
