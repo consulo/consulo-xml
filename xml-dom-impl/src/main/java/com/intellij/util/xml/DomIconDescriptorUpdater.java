@@ -16,12 +16,14 @@
 package com.intellij.util.xml;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
+import consulo.annotations.RequiredReadAction;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptor;
 import consulo.ide.IconDescriptorUpdater;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -29,16 +31,21 @@ import consulo.ide.IconDescriptorUpdater;
  */
 public class DomIconDescriptorUpdater implements IconDescriptorUpdater
 {
-  @Override
-  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
-    if (element instanceof XmlFile) {
-      DomFileDescription<?> description = DomManager.getDomManager(element.getProject()).getDomFileDescription((XmlFile)element);
-      if(description != null) {
-        final Icon fileIcon = description.getFileIcon(flags);
-        if(fileIcon != null) {
-          iconDescriptor.setMainIcon(fileIcon);
-        }
-      }
-    }
-  }
+	@RequiredReadAction
+	@Override
+	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags)
+	{
+		if(element instanceof XmlFile)
+		{
+			DomFileDescription<?> description = DomManager.getDomManager(element.getProject()).getDomFileDescription((XmlFile) element);
+			if(description != null)
+			{
+				final Image fileIcon = description.getFileIcon(flags);
+				if(fileIcon != null)
+				{
+					iconDescriptor.setMainIcon(TargetAWT.to(fileIcon));
+				}
+			}
+		}
+	}
 }

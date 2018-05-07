@@ -26,7 +26,6 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.extensions.ExtensionPointName;
@@ -40,6 +39,7 @@ import com.intellij.util.SmartList;
 import com.intellij.util.containers.ConcurrentInstanceMap;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -176,7 +176,7 @@ public class DomFileDescription<T>
 	}
 
 	@Nullable
-	public Icon getFileIcon(@Iconable.IconFlags int flags)
+	public Image getFileIcon(@Iconable.IconFlags int flags)
 	{
 		return null;
 	}
