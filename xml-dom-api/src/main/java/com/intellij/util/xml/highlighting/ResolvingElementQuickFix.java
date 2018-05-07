@@ -44,6 +44,7 @@ import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.ModelMergerUtil;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 
 /**
@@ -137,7 +138,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
           }
 
           public Icon getIconFor(final DomElement aValue) {
-            return IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0);
+            return TargetAWT.to(IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0));
           }
 
           @Nonnull

@@ -24,13 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.presentation.VirtualFilePresentation;
 import com.intellij.openapi.fileTypes.FileType;
@@ -44,6 +43,7 @@ import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
 import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
+import consulo.ui.image.Image;
 import consulo.vfs.ArchiveFileSystem;
 
 public class ConfigFilesTreeBuilder {
@@ -190,8 +190,8 @@ public class ConfigFilesTreeBuilder {
     }
     else if (object instanceof PsiFile) {
       final PsiFile psiFile = (PsiFile)object;
-      final Icon icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
-      renderer.setIcon(icon);
+      final Image icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
+      renderer.setIcon(TargetAWT.to(icon));
       final String fileName = psiFile.getName();
       renderer.append(fileName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
       final VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -206,7 +206,7 @@ public class ConfigFilesTreeBuilder {
     }
     else if (object instanceof VirtualFile) {
       VirtualFile file = (VirtualFile)object;
-      renderer.setIcon(VirtualFilePresentation.getIcon(file));
+      renderer.setIcon(TargetAWT.to(VirtualFilePresentation.getIcon(file)));
       renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
       String path = file.getPath();
       final int i = path.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);

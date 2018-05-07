@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import consulo.annotations.RequiredReadAction;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptor;
 import consulo.ide.IconDescriptorUpdater;
 import consulo.ui.image.Image;
@@ -43,7 +42,7 @@ public class DomIconDescriptorUpdater implements IconDescriptorUpdater
 				final Image fileIcon = description.getFileIcon(flags);
 				if(fileIcon != null)
 				{
-					iconDescriptor.setMainIcon(TargetAWT.to(fileIcon));
+					iconDescriptor.setMainIcon(fileIcon);
 				}
 			}
 		}

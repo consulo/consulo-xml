@@ -36,6 +36,7 @@ import com.intellij.util.NullableFunction;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.ContainerUtil;
+import consulo.awt.TargetAWT;
 
 /**
  * @author peter
@@ -233,7 +234,7 @@ public abstract class ElementPresentationManager {
   @Nullable
   private static Icon[] getIconsForClass(final Class clazz, @Nullable Object o) {
     TypePresentationService service = TypePresentationService.getInstance();
-    final Icon icon = o == null ? service.getTypeIcon(clazz) : service.getIcon(o);
+    final Icon icon = TargetAWT.to(o == null ? service.getTypeIcon(clazz) : service.getIcon(o));
     if (icon != null) {
       return new Icon[]{icon};
     }

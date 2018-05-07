@@ -44,6 +44,7 @@ import com.intellij.util.xml.tree.DomElementsGroupNode;
 import com.intellij.util.xml.tree.DomModelTreeView;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 
 /**
@@ -168,7 +169,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
 
       for (DomElement implementation : implementations) {
         final XmlFile xmlFile = DomUtil.getFile(implementation);
-        actionGroup.add(new MyDefaultAddAction(implementation, xmlFile.getName(), IconDescriptorUpdaters.getIcon(xmlFile, 0), e, type, description));
+        actionGroup.add(new MyDefaultAddAction(implementation, xmlFile.getName(), TargetAWT.to(IconDescriptorUpdaters.getIcon(xmlFile, 0)), e, type, description));
       }
       return actionGroup;
     }

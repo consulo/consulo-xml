@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
@@ -34,8 +35,6 @@ import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -46,6 +45,7 @@ import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.psi.meta.PsiPresentableMetaData;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 
 /**
@@ -151,7 +151,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
     @Override
     @Nullable
     public Icon getIcon() {
-      return IconDescriptorUpdaters.getIcon(RncDefineImpl.this, 0);
+      return TargetAWT.to(IconDescriptorUpdaters.getIcon(RncDefineImpl.this, 0));
     }
 
     @Override
