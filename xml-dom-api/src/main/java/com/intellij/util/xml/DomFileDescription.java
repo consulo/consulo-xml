@@ -25,13 +25,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -42,7 +40,6 @@ import com.intellij.util.SmartList;
 import com.intellij.util.containers.ConcurrentInstanceMap;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
-import consulo.annotations.DeprecationInfo;
 
 /**
  * @author peter
@@ -225,13 +222,6 @@ public class DomFileDescription<T>
 	public final String getRootTagName()
 	{
 		return myRootTagName;
-	}
-
-	@Deprecated
-	@DeprecationInfo(value = "Use #isMyFile(XmlFile)", until = "2.0")
-	public boolean isMyFile(@Nonnull XmlFile file, @Nullable final Module module)
-	{
-		return isMyFile(file);
 	}
 
 	public boolean isMyFile(@Nonnull XmlFile file)
