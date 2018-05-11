@@ -49,7 +49,7 @@ import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.EditorFactoryAdapter;
 import com.intellij.openapi.editor.event.EditorFactoryEvent;
 import com.intellij.openapi.editor.ex.DocumentEx;
-import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.editor.impl.DesktopEditorImpl;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
@@ -188,7 +188,7 @@ public class XmlTagNameSynchronizer extends CommandAdapter implements NamedCompo
 		{
 			myEditor = editor;
 			myLanguage = language;
-			final Disposable disposable = ((EditorImpl) editor).getDisposable();
+			final Disposable disposable = ((DesktopEditorImpl) editor).getDisposable();
 			final Document document = editor.getDocument();
 			document.addDocumentListener(this, disposable);
 			editor.putUserData(SYNCHRONIZER_KEY, this);
