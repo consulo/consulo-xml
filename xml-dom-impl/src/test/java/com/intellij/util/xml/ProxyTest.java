@@ -1,19 +1,20 @@
 package com.intellij.util.xml;
 
-import com.intellij.util.ArrayUtil;
-import junit.framework.TestCase;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sf.cglib.proxy.AdvancedProxy;
+import net.sf.cglib.proxy.InvocationHandler;
+
+import com.intellij.util.ArrayUtil;
+import junit.framework.TestCase;
+
 /**
  * @author peter
  */
-public class ProxyTest extends TestCase {
+public abstract class ProxyTest extends TestCase {
 
   public void testExtendClass() throws Throwable {
     final List<String> invocations = new ArrayList<String>();

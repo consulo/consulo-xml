@@ -3,6 +3,12 @@
  */
 package com.intellij.util.xml;
 
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.util.Ref;
@@ -20,16 +26,11 @@ import com.intellij.util.xml.impl.DomFileElementImpl;
 import com.intellij.util.xml.reflect.DomExtender;
 import com.intellij.util.xml.reflect.DomExtenderEP;
 import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
-import javax.annotation.Nonnull;
-
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * @author peter
  */
-public class DomConcurrencyStressTest extends DomTestCase {
+public abstract class DomConcurrencyStressTest extends DomTestCase {
   private static final int ITERATIONS = Timings.adjustAccordingToMySpeed(239, true);
 
   public void testInternalDomLocksReadConsistency() throws Throwable {

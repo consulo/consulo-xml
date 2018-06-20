@@ -6,7 +6,7 @@ import com.intellij.util.xml.events.DomEvent;
 /**
  * @author peter
  */
-public class SimpleValuesIncrementalUpdateTest extends DomTestCase{
+public abstract class SimpleValuesIncrementalUpdateTest extends DomTestCase{
 
   public void testAttributeChange() throws Throwable {
     final MyElement element = createElement("<a/>");

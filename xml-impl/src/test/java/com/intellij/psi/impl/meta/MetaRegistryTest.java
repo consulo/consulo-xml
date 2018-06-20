@@ -18,7 +18,7 @@ import com.intellij.testFramework.UsefulTestCase;
 /**
 * @author peter
 */
-public class MetaRegistryTest extends LightPlatformTestCase {
+public abstract class MetaRegistryTest extends LightPlatformTestCase {
 
   public void testChangingMetaData() throws Throwable {
     final boolean[] flag = new boolean[]{false};

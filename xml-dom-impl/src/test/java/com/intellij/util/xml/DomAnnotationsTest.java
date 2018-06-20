@@ -20,7 +20,7 @@ import com.intellij.util.xml.highlighting.MockDomInspection;
 /**
  * @author peter
  */
-public class DomAnnotationsTest extends DomTestCase{
+public abstract class DomAnnotationsTest extends DomTestCase{
 
   @Override
   protected <T extends DomElement> T createElement(final String xml, final Class<T> aClass) {

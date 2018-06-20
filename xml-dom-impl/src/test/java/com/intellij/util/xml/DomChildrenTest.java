@@ -1,5 +1,10 @@
 package com.intellij.util.xml;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiElement;
@@ -12,15 +17,10 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.events.DomEvent;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author peter
  */
-public class DomChildrenTest extends DomTestCase {
+public abstract class DomChildrenTest extends DomTestCase {
 
   private MyElement createElement(final String xml) throws IncorrectOperationException {
     return createElement(xml, MyElement.class);

@@ -19,7 +19,7 @@ import com.intellij.testFramework.LightPlatformTestCase;
 /**
  * @author peter
  */
-public class DomSaxParserTest extends LightPlatformTestCase
+public abstract class DomSaxParserTest extends LightPlatformTestCase
 {
   public void testGetRootTagNameWithoutNamespace() throws Throwable {
     assertData("<root>", "root", null, null, null);

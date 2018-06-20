@@ -1,5 +1,12 @@
 package com.intellij.util.xml;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.intellij.mock.MockModule;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -10,19 +17,21 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.events.DomEvent;
-import com.intellij.util.xml.impl.*;
+import com.intellij.util.xml.impl.CollectionChildDescriptionImpl;
+import com.intellij.util.xml.impl.DomApplicationComponent;
+import com.intellij.util.xml.impl.DomFileElementImpl;
+import com.intellij.util.xml.impl.DomManagerImpl;
+import com.intellij.util.xml.impl.FixedChildDescriptionImpl;
+import com.intellij.util.xml.impl.StaticGenericInfo;
 import com.intellij.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.*;
-
 /**
  * @author peter
  */
-public class DomBasicsTest extends DomTestCase {
+public abstract class DomBasicsTest extends DomTestCase {
   @Override
   protected void invokeTestRunnable(final Runnable runnable) throws Exception {
     new WriteCommandAction.Simple(null) {

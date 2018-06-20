@@ -1,5 +1,7 @@
 package com.intellij.util.xml.impl;
 
+import java.util.List;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
@@ -8,12 +10,10 @@ import com.intellij.util.xml.DomTestCase;
 import com.intellij.util.xml.SubTag;
 import com.intellij.util.xml.events.DomEvent;
 
-import java.util.List;
-
 /**
  * @author peter
  */
-public class IncrementalUpdateEventsTest extends DomTestCase {
+public abstract class IncrementalUpdateEventsTest extends DomTestCase {
   private MyElement myElement;
 
   @Override

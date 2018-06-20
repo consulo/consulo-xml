@@ -4,6 +4,8 @@
  */
 package com.intellij.util.xml;
 
+import java.util.List;
+
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.xml.XmlFile;
@@ -11,12 +13,10 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.impl.DomFileElementImpl;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 
-import java.util.List;
-
 /**
  * @author peter
  */
-public class DomNamespacesTest extends DomTestCase {
+public abstract class DomNamespacesTest extends DomTestCase {
 
   public void testUseExistingNamespace() throws Throwable {
     final MyElement element = createElement("<a xmlns=\"foo\" xmlns:bar=\"bar\"/>", MyElement.class);
