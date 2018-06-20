@@ -9,7 +9,6 @@ import org.junit.Test;
  */
 public class NameStrategyTest
 {
-
 	@Test
 	public void testHyphenStrategy() throws Throwable
 	{
