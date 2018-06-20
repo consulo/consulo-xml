@@ -3,14 +3,17 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.command.WriteCommandAction;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import java.util.*;
+import com.intellij.openapi.command.WriteCommandAction;
 
 /**
  * @author peter
  */
-public class DomModelMergingTest extends DomTestCase{
+public abstract class DomModelMergingTest extends DomTestCase{
   private ModelMerger myMerger;
 
   @Override

@@ -25,7 +25,7 @@ import com.intellij.util.xml.reflect.DomFixedChildDescription;
 /**
  * @author peter
  */
-public class DomExtensionsTest extends DomTestCase {
+public abstract class DomExtensionsTest extends DomTestCase {
   private static final Key<Boolean> BOOL_KEY = Key.create("aaa");
 
   public void testExtendAttributes() throws Throwable {
