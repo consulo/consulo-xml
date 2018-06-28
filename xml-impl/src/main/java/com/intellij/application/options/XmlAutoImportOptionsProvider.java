@@ -15,35 +15,36 @@
  */
 package com.intellij.application.options;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.Nls;
 import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;
+import consulo.options.SimpleConfigurableByProperties;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.VerticalLayout;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlAutoImportOptionsProvider extends BeanConfigurable<XmlSettings> implements Configurable
+public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements Configurable
 {
-	public XmlAutoImportOptionsProvider()
-	{
-		super(XmlSettings.getInstance());
-		checkBox("SHOW_XML_ADD_IMPORT_HINTS", ApplicationBundle.message("checkbox.show.import.popup"));
-	}
-
-	@Nls
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public String getDisplayName()
+	protected Component createLayout(PropertyBuilder propertyBuilder)
 	{
-		return null;
-	}
+		VerticalLayout layout = VerticalLayout.create();
 
-	@Nullable
-	@Override
-	public String getHelpTopic()
-	{
-		return null;
+		XmlSettings settings = XmlSettings.getInstance();
+
+		CheckBox showAddImports = CheckBox.create(ApplicationBundle.message("checkbox.show.import.popup"));
+		layout.add(showAddImports);
+		propertyBuilder.add(showAddImports, settings::isShowXmlImportsHints, settings::setShowXmlImportHints);
+
+		return layout;
 	}
 }

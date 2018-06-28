@@ -15,33 +15,45 @@
  */
 package com.intellij.application.options.editor;
 
-import com.intellij.openapi.options.BeanConfigurable;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.options.Configurable;
+import consulo.options.SimpleConfigurableByProperties;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.VerticalLayout;
 
 /**
  * @author VISTALL
  */
-public class XmlEditorOptionsProvider extends BeanConfigurable<XmlEditorOptions> implements Configurable
+public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable
 {
-	public XmlEditorOptionsProvider()
-	{
-		super(XmlEditorOptions.getInstance());
-		checkBox("automaticallyInsertClosingTag", "Automatically insert closing tag");
-		checkBox("automaticallyInsertRequiredAttributes", "Automatically insert required attributes");
-		checkBox("automaticallyStartAttribute", "Automatically start attribute");
-		checkBox("automaticallyInsertRequiredSubTags", "Automatically insert required subtags");
-	}
-
-
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public String getDisplayName()
+	protected Component createLayout(PropertyBuilder propertyBuilder)
 	{
-		return null;
-	}
+		VerticalLayout layout = VerticalLayout.create();
 
-	@Override
-	public String getHelpTopic()
-	{
-		return null;
+		XmlEditorOptions options = XmlEditorOptions.getInstance();
+
+		CheckBox automaticallyInsertClosingTag = CheckBox.create("Automatically insert closing tag");
+		layout.add(automaticallyInsertClosingTag);
+		propertyBuilder.add(automaticallyInsertClosingTag, options::isAutomaticallyInsertClosingTag, options::setAutomaticallyInsertClosingTag);
+
+		CheckBox automaticallyInsertRequiredAttributes = CheckBox.create("Automatically insert required attributes");
+		layout.add(automaticallyInsertRequiredAttributes);
+		propertyBuilder.add(automaticallyInsertRequiredAttributes, options::isAutomaticallyInsertRequiredAttributes, options::setAutomaticallyInsertRequiredAttributes);
+
+		CheckBox automaticallyStartAttribute = CheckBox.create("Automatically start attribute");
+		layout.add(automaticallyStartAttribute);
+		propertyBuilder.add(automaticallyStartAttribute, options::isAutomaticallyStartAttribute, options::setAutomaticallyStartAttribute);
+
+		CheckBox automaticallyInsertRequiredSubTags = CheckBox.create("Automatically insert required subtags");
+		layout.add(automaticallyInsertRequiredSubTags);
+		propertyBuilder.add(automaticallyInsertRequiredSubTags, options::isAutomaticallyInsertRequiredSubTags, options::setAutomaticallyInsertRequiredSubTags);
+
+		return layout;
 	}
 }

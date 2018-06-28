@@ -20,31 +20,31 @@
  */
 package com.intellij.application.options.editor;
 
-import org.jetbrains.annotations.Nls;
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;
+import consulo.options.SimpleConfigurableByProperties;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.VerticalLayout;
 
-public class XmlCodeFoldingConfigurable extends BeanConfigurable<XmlFoldingSettings> implements Configurable
+public class XmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements Configurable
 {
-	public XmlCodeFoldingConfigurable()
-	{
-		super(XmlFoldingSettings.getInstance());
-		checkBox("COLLAPSE_XML_TAGS", ApplicationBundle.message("checkbox.collapse.xml.tags"));
-	}
-
-	@Nls
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public String getDisplayName()
+	protected Component createLayout(PropertyBuilder propertyBuilder)
 	{
-		return null;
-	}
+		VerticalLayout layout = VerticalLayout.create();
 
-	@Nullable
-	@Override
-	public String getHelpTopic()
-	{
-		return null;
+		XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
+
+		CheckBox collapseXmlTags = CheckBox.create(ApplicationBundle.message("checkbox.collapse.xml.tags"));
+		layout.add(collapseXmlTags);
+		propertyBuilder.add(collapseXmlTags, settings::isCollapseXmlTags, settings::setCollapseXmlTags);
+
+		return layout;
 	}
 }

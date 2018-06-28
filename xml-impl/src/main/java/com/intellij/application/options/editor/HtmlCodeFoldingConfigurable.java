@@ -20,32 +20,31 @@
  */
 package com.intellij.application.options.editor;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
-import org.jetbrains.annotations.Nls;
 import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.options.BeanConfigurable;
 import com.intellij.openapi.options.Configurable;
+import consulo.options.SimpleConfigurableByProperties;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.VerticalLayout;
 
-public class HtmlCodeFoldingConfigurable extends BeanConfigurable<XmlFoldingSettings> implements Configurable
+public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements Configurable
 {
-	public HtmlCodeFoldingConfigurable()
-	{
-		super(XmlFoldingSettings.getInstance());
-		checkBox("COLLAPSE_HTML_STYLE_ATTRIBUTE", ApplicationBundle.message("checkbox.collapse.html.style.attribute"));
-	}
-
-	@Nls
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public String getDisplayName()
+	protected Component createLayout(PropertyBuilder propertyBuilder)
 	{
-		return null;
-	}
+		VerticalLayout layout = VerticalLayout.create();
 
-	@Nullable
-	@Override
-	public String getHelpTopic()
-	{
-		return null;
+		XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
+
+		CheckBox collapseHtmlStyles = CheckBox.create(ApplicationBundle.message("checkbox.collapse.html.style.attribute"));
+		layout.add(collapseHtmlStyles);
+		propertyBuilder.add(collapseHtmlStyles, settings::isCollapseHtmlStyleAttribute, settings::setCollapseHtmlStyleAttribute);
+
+		return layout;
 	}
 }

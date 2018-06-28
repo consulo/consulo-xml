@@ -25,21 +25,35 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
  * @author Dmitry Avdeev
  */
 
-@State(name="XmlSettings", storages= @Storage("editor.codeinsight.xml"))
-public class XmlSettings implements PersistentStateComponent<XmlSettings> {
-  public boolean SHOW_XML_ADD_IMPORT_HINTS = true;
+@State(name = "XmlSettings", storages = @Storage("editor.codeinsight.xml"))
+public class XmlSettings implements PersistentStateComponent<XmlSettings>
+{
+	public boolean SHOW_XML_ADD_IMPORT_HINTS = true;
 
-  public static XmlSettings getInstance() {
-    return ServiceManager.getService(XmlSettings.class);
-  }
+	public static XmlSettings getInstance()
+	{
+		return ServiceManager.getService(XmlSettings.class);
+	}
 
-  @Override
-  public XmlSettings getState() {
-    return this;
-  }
+	public void setShowXmlImportHints(boolean value)
+	{
+		SHOW_XML_ADD_IMPORT_HINTS = value;
+	}
 
-  @Override
-  public void loadState(final XmlSettings state) {
-    XmlSerializerUtil.copyBean(state, this);
-  }
+	public boolean isShowXmlImportsHints()
+	{
+		return SHOW_XML_ADD_IMPORT_HINTS;
+	}
+
+	@Override
+	public XmlSettings getState()
+	{
+		return this;
+	}
+
+	@Override
+	public void loadState(final XmlSettings state)
+	{
+		XmlSerializerUtil.copyBean(state, this);
+	}
 }

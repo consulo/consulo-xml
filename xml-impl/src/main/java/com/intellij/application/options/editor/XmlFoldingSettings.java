@@ -16,6 +16,8 @@
 
 package com.intellij.application.options.editor;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.XmlCodeFoldingSettings;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -23,10 +25,13 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 
-
 @State(name = "XmlFoldingSettings", storages = @Storage("editor.codeinsight.xml"))
 public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings>
 {
+	public boolean COLLAPSE_XML_TAGS = false;
+	public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
+
+	@Nonnull
 	public static XmlFoldingSettings getInstance()
 	{
 		return ServiceManager.getService(XmlFoldingSettings.class);
@@ -53,9 +58,6 @@ public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentSta
 	{
 		this.COLLAPSE_HTML_STYLE_ATTRIBUTE = value;
 	}
-
-	public boolean COLLAPSE_XML_TAGS = false;
-	public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
 
 	@Override
 	public XmlFoldingSettings getState()
