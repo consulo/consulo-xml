@@ -16,6 +16,16 @@
 
 package org.intellij.plugins.relaxNG.model.annotation;
 
+import java.util.Collection;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.intellij.plugins.relaxNG.model.Define;
+import org.intellij.plugins.relaxNG.model.Grammar;
+import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
+import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -25,16 +35,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.SmartList;
-import org.intellij.plugins.relaxNG.model.Define;
-import org.intellij.plugins.relaxNG.model.Grammar;
-import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
-import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import java.util.Collection;
-import java.util.List;
+import consulo.ui.image.Image;
 
 class OverriddenDefineRenderer extends GutterIconRenderer implements DumbAware {
 
@@ -46,7 +47,7 @@ class OverriddenDefineRenderer extends GutterIconRenderer implements DumbAware {
 
   @Override
   @Nonnull
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.Gutter.OverridenMethod;
   }
 

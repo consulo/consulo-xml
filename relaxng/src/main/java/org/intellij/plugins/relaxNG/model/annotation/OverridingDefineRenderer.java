@@ -16,6 +16,14 @@
 
 package org.intellij.plugins.relaxNG.model.annotation;
 
+import java.awt.event.MouseEvent;
+import java.util.Collection;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.intellij.plugins.relaxNG.model.Define;
 import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -27,14 +35,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.ui.awt.RelativePoint;
 import com.intellij.util.OpenSourceUtil;
 import com.intellij.util.containers.ContainerUtil;
-import org.intellij.plugins.relaxNG.model.Define;
-import javax.annotation.Nonnull;
-
-import javax.annotation.Nullable;
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
-import java.util.Set;
+import consulo.ui.image.Image;
 
 class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
 
@@ -48,7 +49,7 @@ class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
 
   @Override
   @Nonnull
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.Gutter.OverridingMethod;
   }
 
