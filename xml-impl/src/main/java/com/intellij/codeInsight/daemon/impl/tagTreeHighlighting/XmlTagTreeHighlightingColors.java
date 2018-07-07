@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.openapi.editor.colors.ColorKey;
-import com.intellij.util.ui.PlatformColors;
+import com.intellij.ui.JBColor;
 
 /**
  * @author Eugene.Kudelevsky
@@ -35,7 +35,7 @@ public class XmlTagTreeHighlightingColors
 			Color.YELLOW,
 			Color.GREEN,
 			Color.CYAN,
-			PlatformColors.BLUE,
+			JBColor.BLUE,
 			Color.MAGENTA
 	};
 
