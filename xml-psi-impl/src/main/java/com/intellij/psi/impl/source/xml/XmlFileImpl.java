@@ -20,8 +20,6 @@ import javax.annotation.Nonnull;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -96,22 +94,11 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile
 		return "XmlFile:" + getName();
 	}
 
-	private FileType myType = null;
-
 	@Override
 	@Nonnull
 	public FileType getFileType()
 	{
-		if(myType == null)
-		{
-			myType = getLanguage().getAssociatedFileType();
-			if(myType == null)
-			{
-				VirtualFile virtualFile = getOriginalFile().getVirtualFile();
-				myType = virtualFile == null ? FileTypeRegistry.getInstance().getFileTypeByFileName(getName()) : virtualFile.getFileType();
-			}
-		}
-		return myType;
+		return getViewProvider().getFileType();
 	}
 
 	@Override
