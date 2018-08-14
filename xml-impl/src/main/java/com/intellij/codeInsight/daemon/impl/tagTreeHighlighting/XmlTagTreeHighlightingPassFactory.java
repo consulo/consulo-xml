@@ -20,21 +20,18 @@ import javax.annotation.Nonnull;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPass;
 import com.intellij.codeHighlighting.TextEditorHighlightingPassFactory;
-import com.intellij.codeHighlighting.TextEditorHighlightingPassRegistrar;
-import com.intellij.openapi.components.AbstractProjectComponent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeHighlightingPassFactory extends AbstractProjectComponent implements TextEditorHighlightingPassFactory
+public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory
 {
-	public XmlTagTreeHighlightingPassFactory(Project project, TextEditorHighlightingPassRegistrar registrar)
+	@Override
+	public void register(@Nonnull Registrar registrar)
 	{
-		super(project);
 		registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
 	}
 

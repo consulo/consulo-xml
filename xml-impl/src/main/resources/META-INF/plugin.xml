@@ -91,11 +91,6 @@
 
 	<project-components>
 		<component>
-			<implementation-class>com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory
-			</implementation-class>
-			<skipForDefaultProject/>
-		</component>
-		<component>
 			<interface-class>com.intellij.pom.xml.XmlAspect</interface-class>
 			<implementation-class>com.intellij.pom.xml.impl.XmlAspectImpl</implementation-class>
 			<!--<loadForDefaultProject/>-->
@@ -630,6 +625,8 @@
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XHtmlLanguageBreadcrumbsInfoProvider"/>
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.HtmlLanguageBreadcrumbsInfoProvider"/>
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
+
+		<textEditorHighlightingPassFactory implementation="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory" />
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">
