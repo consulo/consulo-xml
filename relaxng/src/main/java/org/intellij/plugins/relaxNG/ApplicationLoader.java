@@ -16,6 +16,8 @@
 
 package org.intellij.plugins.relaxNG;
 
+import javax.inject.Singleton;
+
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
 import org.intellij.plugins.relaxNG.inspections.RngDomInspection;
 import org.intellij.plugins.relaxNG.inspections.UnusedDefineInspection;
@@ -23,12 +25,10 @@ import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 import org.intellij.plugins.relaxNG.validation.ValidateAction;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngDefineMetaData;
-import javax.annotation.Nonnull;
 import com.intellij.javaee.ResourceRegistrar;
 import com.intellij.javaee.StandardResourceProvider;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.AndFilter;
 import com.intellij.psi.filters.ClassFilter;
@@ -40,24 +40,18 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 
-public class ApplicationLoader implements ApplicationComponent
+@Singleton
+public class ApplicationLoader
 {
 	private static final String RNG_EXT = "rng";
 	private static final String VALIDATE_XML = "ValidateXml";
 	public static final String RNG_NAMESPACE = "http://relaxng.org/ns/structure/1.0";
 
-	@Override
-	public void initComponent()
+	public ApplicationLoader()
 	{
 		registerMetaData();
 
 		installValidateXmlAction();
-	}
-
-	@Override
-	public void disposeComponent()
-	{
-
 	}
 
 	private static void installValidateXmlAction()
@@ -113,12 +107,5 @@ public class ApplicationLoader implements ApplicationComponent
 			registrar.addStdResource(RNG_NAMESPACE, "/resources/relaxng.rng", getClass());
 			registrar.addIgnoredResource("http://relaxng.org/ns/compatibility/annotations/1.0");
 		}
-	}
-
-	@Nonnull
-	@Override
-	public String getComponentName()
-	{
-		return getClass().getSimpleName();
 	}
 }

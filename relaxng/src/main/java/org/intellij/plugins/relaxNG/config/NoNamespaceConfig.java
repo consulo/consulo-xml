@@ -19,7 +19,6 @@ package org.intellij.plugins.relaxNG.config;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -29,14 +28,17 @@ import com.intellij.psi.PsiFile;
  * User: sweinreuter
  * Date: 26.11.2007
  */
-public abstract class NoNamespaceConfig implements ProjectComponent {
-  @Nullable
-  public abstract String getMapping(@Nonnull PsiFile file);
-  public abstract VirtualFile getMappedFile(@Nonnull PsiFile file);
+public abstract class NoNamespaceConfig
+{
+	@Nullable
+	public abstract String getMapping(@Nonnull PsiFile file);
 
-  public abstract void setMapping(@Nonnull PsiFile file, @Nullable String location);
+	public abstract VirtualFile getMappedFile(@Nonnull PsiFile file);
 
-  public static NoNamespaceConfig getInstance(@Nonnull Project project) {
-    return project.getComponent(NoNamespaceConfig.class);
-  }
+	public abstract void setMapping(@Nonnull PsiFile file, @Nullable String location);
+
+	public static NoNamespaceConfig getInstance(@Nonnull Project project)
+	{
+		return project.getComponent(NoNamespaceConfig.class);
+	}
 }

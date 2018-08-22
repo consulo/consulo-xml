@@ -55,18 +55,9 @@
 						 implementationClass="org.intellij.plugins.relaxNG.inspections.UnusedDefineInspection"/>
 
 		<iconDescriptorUpdater implementation="consulo.relaxng.RelaxNGIconDescriptorUpdater" />
+
+		<applicationService serviceImplementation="org.intellij.plugins.relaxNG.ApplicationLoader" lazy="false" />
+
+		<projectService serviceInterface="org.intellij.plugins.relaxNG.config.NoNamespaceConfig" serviceImplementation="org.intellij.plugins.relaxNG.config.NoNamespaceConfigImpl" lazy="false"/>
 	</extensions>
-
-	<project-components>
-		<component>
-			<interface-class>org.intellij.plugins.relaxNG.config.NoNamespaceConfig</interface-class>
-			<implementation-class>org.intellij.plugins.relaxNG.config.NoNamespaceConfigImpl</implementation-class>
-		</component>
-	</project-components>
-
-	<application-components>
-		<component>
-			<implementation-class>org.intellij.plugins.relaxNG.ApplicationLoader</implementation-class>
-		</component>
-	</application-components>
 </idea-plugin>
