@@ -15,26 +15,25 @@
  */
 package com.intellij.javaee;
 
-import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.openapi.components.AbstractProjectComponent;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.Disposable;
 import com.intellij.psi.impl.PsiManagerEx;
 
 /**
  * @author yole
  */
-public class PsiExternalResourceNotifier extends AbstractProjectComponent {
+public class PsiExternalResourceNotifier {
   private final PsiManagerEx myPsiManager;
   private final ExternalResourceManagerEx myExternalResourceManager;
   private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
 
+  @Inject
   public PsiExternalResourceNotifier(PsiManagerEx psiManager, ExternalResourceManager externalResourceManager,
                                      final DaemonCodeAnalyzer daemonCodeAnalyzer, Project project) {
-    super(project);
     myPsiManager = psiManager;
     myExternalResourceManager = (ExternalResourceManagerEx)externalResourceManager;
     myDaemonCodeAnalyzer = daemonCodeAnalyzer;
@@ -45,11 +44,6 @@ public class PsiExternalResourceNotifier extends AbstractProjectComponent {
         myExternalResourceManager.removeExternalResourceListener(myExternalResourceListener);
       }
     });
-  }
-
-  @Nonnull
-  public String getComponentName() {
-    return "PsiExternalResourceNotifier";
   }
 
   private class MyExternalResourceListener implements ExternalResourceListener {

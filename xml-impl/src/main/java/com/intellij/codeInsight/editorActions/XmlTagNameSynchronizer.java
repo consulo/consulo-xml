@@ -78,7 +78,7 @@ import consulo.annotations.RequiredReadAction;
 /**
  * @author Dennis.Ushakov
  */
-public class XmlTagNameSynchronizer extends CommandAdapter implements NamedComponent
+public class XmlTagNameSynchronizer extends CommandAdapter
 {
 	private static final Logger LOG = Logger.getInstance(XmlTagNameSynchronizer.class);
 	private static final Set<String> SUPPORTED_LANGUAGES = ContainerUtil.set(HTMLLanguage.INSTANCE.getID(), XMLLanguage.INSTANCE.getID(), XHTMLLanguage.INSTANCE.getID());
@@ -131,13 +131,6 @@ public class XmlTagNameSynchronizer extends CommandAdapter implements NamedCompo
 			}
 		}
 		return null;
-	}
-
-	@Nonnull
-	@Override
-	public String getComponentName()
-	{
-		return "XmlTagNameSynchronizer";
 	}
 
 	@Nonnull
