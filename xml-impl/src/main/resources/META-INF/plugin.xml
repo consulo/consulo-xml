@@ -80,29 +80,7 @@
 		</group>
 	</actions>
 
-	<application-components>
-		<component>
-			<implementation-class>com.intellij.javaee.DefaultHtmlDoctypeInitialConfigurator</implementation-class>
-		</component>
-		<component>
-			<implementation-class>com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer</implementation-class>
-		</component>
-	</application-components>
-
-	<project-components>
-		<component>
-			<interface-class>com.intellij.pom.xml.XmlAspect</interface-class>
-			<implementation-class>com.intellij.pom.xml.impl.XmlAspectImpl</implementation-class>
-			<!--<loadForDefaultProject/>-->
-		</component>
-
-		<component>
-			<implementation-class>com.intellij.javaee.PsiExternalResourceNotifier</implementation-class>
-		</component>
-	</project-components>
-
 	<extensionPoints>
-
 		<extensionPoint name="startTagEndToken"
 						interface="com.intellij.psi.xml.XmlChildRole$StartTagEndTokenProvider"/>
 		<extensionPoint name="schemaProvider"
@@ -627,6 +605,12 @@
 		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
 
 		<textEditorHighlightingPassFactory implementation="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory" />
+
+		<applicationService serviceImplementation="com.intellij.javaee.DefaultHtmlDoctypeInitialConfigurator" lazy="false" />
+		<applicationService serviceImplementation="com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer" lazy="false" />
+
+		<projectService serviceInterface="com.intellij.pom.xml.XmlAspect" serviceImplementation="com.intellij.pom.xml.impl.XmlAspectImpl" lazy="false" />
+		<projectService serviceImplementation="com.intellij.javaee.PsiExternalResourceNotifier" lazy="false" />
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">

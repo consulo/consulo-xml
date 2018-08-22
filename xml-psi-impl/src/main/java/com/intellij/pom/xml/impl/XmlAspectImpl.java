@@ -17,6 +17,8 @@ package com.intellij.pom.xml.impl;
 
 import java.util.Collections;
 
+import javax.inject.Singleton;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.pom.PomModel;
 import com.intellij.pom.PomModelAspect;
@@ -50,6 +52,7 @@ import com.intellij.psi.xml.XmlTagChild;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.CharTable;
 
+@Singleton
 public class XmlAspectImpl implements XmlAspect
 {
 	private final PomModel myModel;

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.completion.XmlTagInsertHandler;
@@ -36,7 +37,6 @@ import com.intellij.openapi.command.CommandAdapter;
 import com.intellij.openapi.command.CommandEvent;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.undo.UndoManager;
-import com.intellij.openapi.components.NamedComponent;
 import com.intellij.openapi.diagnostic.Attachment;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Caret;
@@ -78,6 +78,7 @@ import consulo.annotations.RequiredReadAction;
 /**
  * @author Dennis.Ushakov
  */
+@Singleton
 public class XmlTagNameSynchronizer extends CommandAdapter
 {
 	private static final Logger LOG = Logger.getInstance(XmlTagNameSynchronizer.class);

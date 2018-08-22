@@ -16,40 +16,46 @@
 package com.intellij.javaee;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.psi.impl.PsiManagerEx;
 
 /**
  * @author yole
  */
-public class PsiExternalResourceNotifier {
-  private final PsiManagerEx myPsiManager;
-  private final ExternalResourceManagerEx myExternalResourceManager;
-  private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
+@Singleton
+public class PsiExternalResourceNotifier implements Disposable
+{
+	private final PsiManagerEx myPsiManager;
+	private final ExternalResourceManagerEx myExternalResourceManager;
+	private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
+	private final ExternalResourceListener myExternalResourceListener;
 
-  @Inject
-  public PsiExternalResourceNotifier(PsiManagerEx psiManager, ExternalResourceManager externalResourceManager,
-                                     final DaemonCodeAnalyzer daemonCodeAnalyzer, Project project) {
-    myPsiManager = psiManager;
-    myExternalResourceManager = (ExternalResourceManagerEx)externalResourceManager;
-    myDaemonCodeAnalyzer = daemonCodeAnalyzer;
-    final ExternalResourceListener myExternalResourceListener = new MyExternalResourceListener();
-    myExternalResourceManager.addExternalResourceListener(myExternalResourceListener);
-    Disposer.register(project, new Disposable() {
-      public void dispose() {
-        myExternalResourceManager.removeExternalResourceListener(myExternalResourceListener);
-      }
-    });
-  }
+	@Inject
+	public PsiExternalResourceNotifier(PsiManagerEx psiManager, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
+	{
+		myPsiManager = psiManager;
+		myExternalResourceManager = (ExternalResourceManagerEx) externalResourceManager;
+		myDaemonCodeAnalyzer = daemonCodeAnalyzer;
 
-  private class MyExternalResourceListener implements ExternalResourceListener {
-    public void externalResourceChanged() {
-      myPsiManager.beforeChange(true);
-      myDaemonCodeAnalyzer.restart();
-    }
-  }
+		myExternalResourceListener = new MyExternalResourceListener();
+		myExternalResourceManager.addExternalResourceListener(myExternalResourceListener);
+	}
+
+	private class MyExternalResourceListener implements ExternalResourceListener
+	{
+		public void externalResourceChanged()
+		{
+			myPsiManager.beforeChange(true);
+			myDaemonCodeAnalyzer.restart();
+		}
+	}
+
+	@Override
+	public void dispose()
+	{
+		myExternalResourceManager.removeExternalResourceListener(myExternalResourceListener);
+	}
 }
