@@ -23,12 +23,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import net.sf.cglib.proxy.AdvancedProxy;
 import net.sf.cglib.proxy.InvocationHandler;
 
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.DomSupportEnabled;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.Disposable;
@@ -79,6 +82,7 @@ import com.intellij.util.xml.reflect.DomGenericInfo;
 /**
  * @author peter
  */
+@Singleton
 public final class DomManagerImpl extends DomManager
 {
 	private static final Key<Object> MOCK = Key.create("MockElement");
@@ -100,6 +104,7 @@ public final class DomManagerImpl extends DomManager
 
 	private boolean myChanging;
 
+	@Inject
 	public DomManagerImpl(Project project)
 	{
 		super(project);

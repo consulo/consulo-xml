@@ -15,6 +15,23 @@
  */
 package com.intellij.util.xml.impl;
 
+import static com.intellij.patterns.XmlPatterns.or;
+import static com.intellij.patterns.XmlPatterns.psiElement;
+import static com.intellij.patterns.XmlPatterns.xmlAttribute;
+import static com.intellij.patterns.XmlPatterns.xmlEntityRef;
+import static com.intellij.patterns.XmlPatterns.xmlFile;
+import static com.intellij.patterns.XmlPatterns.xmlTag;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.NullableComputable;
 import com.intellij.openapi.util.RecursionGuard;
@@ -42,13 +59,6 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.lang.reflect.Type;
-import java.util.*;
-
-import static com.intellij.patterns.XmlPatterns.*;
 
 /**
  * @author peter
@@ -56,6 +66,7 @@ import static com.intellij.patterns.XmlPatterns.*;
 public class DomSemContributor extends SemContributor {
   private final SemService mySemService;
 
+  @Inject
   public DomSemContributor(SemService semService) {
     mySemService = semService;
   }

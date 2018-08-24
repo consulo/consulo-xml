@@ -1,6 +1,7 @@
 package com.intellij.xml;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.PsiElement;
@@ -11,6 +12,7 @@ import com.intellij.psi.xml.XmlFile;
 
 public class XmlPsiTreeChangePreprocessor extends PsiTreeChangePreprocessorBase
 {
+	@Inject
 	public XmlPsiTreeChangePreprocessor(@Nonnull PsiManager psiManager)
 	{
 		super(psiManager);

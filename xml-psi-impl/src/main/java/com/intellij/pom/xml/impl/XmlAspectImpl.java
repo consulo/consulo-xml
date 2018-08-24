@@ -17,6 +17,7 @@ package com.intellij.pom.xml.impl;
 
 import java.util.Collections;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.intellij.lang.ASTNode;
@@ -58,6 +59,7 @@ public class XmlAspectImpl implements XmlAspect
 	private final PomModel myModel;
 	private final TreeAspect myTreeAspect;
 
+	@Inject
 	public XmlAspectImpl(PomModel model, TreeAspect aspect)
 	{
 		myModel = model;

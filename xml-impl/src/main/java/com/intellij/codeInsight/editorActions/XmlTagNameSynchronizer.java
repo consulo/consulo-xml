@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
@@ -87,6 +88,7 @@ public class XmlTagNameSynchronizer extends CommandAdapter
 	private static final Key<TagNameSynchronizer> SYNCHRONIZER_KEY = Key.create("tag_name_synchronizer");
 	private final FileDocumentManager myFileDocumentManager;
 
+	@Inject
 	public XmlTagNameSynchronizer(EditorFactory editorFactory, FileDocumentManager manager, CommandProcessor processor)
 	{
 		myFileDocumentManager = manager;
