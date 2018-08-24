@@ -15,14 +15,15 @@
  */
 package com.intellij.util.xml.reflect;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.AbstractExtensionPointBean;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xmlb.annotations.Attribute;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -45,7 +46,7 @@ public class DomExtenderEP extends AbstractExtensionPointBean {
     if (myExtender == null) {
       try {
         myDomClass = findClass(domClassName);
-        myExtender = instantiate(extenderClassName, project.getPicoContainer());
+        myExtender = instantiate(extenderClassName, project.getInjectingContainer());
       }
       catch(Exception e) {
         LOG.error(e);
