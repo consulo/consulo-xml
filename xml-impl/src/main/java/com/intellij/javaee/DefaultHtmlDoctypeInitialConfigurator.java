@@ -14,8 +14,10 @@ import com.intellij.xml.Html5SchemaProvider;
 public class DefaultHtmlDoctypeInitialConfigurator
 {
 	@Inject
-	public DefaultHtmlDoctypeInitialConfigurator(ProjectManager projectManager, PropertiesComponent propertiesComponent)
+	public DefaultHtmlDoctypeInitialConfigurator(ProjectManager projectManager)
 	{
+		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+
 		if(!propertiesComponent.getBoolean("DefaultHtmlDoctype.MigrateToHtml5", false))
 		{
 			propertiesComponent.setValue("DefaultHtmlDoctype.MigrateToHtml5", Boolean.TRUE.toString());
