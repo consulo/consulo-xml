@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.openapi.Disposable;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.PsiManagerEx;
 
 /**
@@ -28,13 +29,13 @@ import com.intellij.psi.impl.PsiManagerEx;
 @Singleton
 public class PsiExternalResourceNotifier implements Disposable
 {
-	private final PsiManagerEx myPsiManager;
+	private final PsiManager myPsiManager;
 	private final ExternalResourceManagerEx myExternalResourceManager;
 	private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
 	private final ExternalResourceListener myExternalResourceListener;
 
 	@Inject
-	public PsiExternalResourceNotifier(PsiManagerEx psiManager, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
+	public PsiExternalResourceNotifier(PsiManager psiManager, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
 	{
 		myPsiManager = psiManager;
 		myExternalResourceManager = (ExternalResourceManagerEx) externalResourceManager;
@@ -48,7 +49,7 @@ public class PsiExternalResourceNotifier implements Disposable
 	{
 		public void externalResourceChanged()
 		{
-			myPsiManager.beforeChange(true);
+			((PsiManagerEx)myPsiManager).beforeChange(true);
 			myDaemonCodeAnalyzer.restart();
 		}
 	}
