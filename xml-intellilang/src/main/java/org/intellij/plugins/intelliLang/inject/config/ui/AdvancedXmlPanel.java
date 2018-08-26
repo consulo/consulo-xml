@@ -19,17 +19,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
 import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
-import org.intellij.plugins.intelliLang.inject.config.XPathSupportProxy;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
+import consulo.intelliLang.xml.XPathSupportProvider;
 
 public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjection>
 {
-
 	private JPanel myRoot;
 
 	private EditorTextField myValuePattern;
@@ -76,20 +74,20 @@ public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjectio
 		});
 
 		// don't even bother to look up the language when xpath-evaluation isn't possible
-		final XPathSupportProxy proxy = XPathSupportProxy.getInstance();
-		myXPathCondition = new LanguageTextField(proxy != null ? InjectedLanguage.findLanguageById("XPath") : null, getProject(), getOrigInjection().getXPathCondition(),
+		final XPathSupportProvider proxy = XPathSupportProvider.findProvider();
+		myXPathCondition = new LanguageTextField(proxy != null ? proxy.getLanguage() : null, getProject(), getOrigInjection().getXPathCondition(),
 				new LanguageTextField.SimpleDocumentCreator()
-		{
+				{
 					@Override
 					public void customizePsiFile(PsiFile psiFile)
-			{
-				// important to get proper validation & completion for Jaxen's built-in and PSI functions
-				// like lower-case(), file-type(), file-ext(), file-name(), etc.
-				if(proxy != null)
-				{
-					proxy.attachContext(psiFile);
-				}
-			}
-		});
+					{
+						// important to get proper validation & completion for Jaxen's built-in and PSI functions
+						// like lower-case(), file-type(), file-ext(), file-name(), etc.
+						if(proxy != null)
+						{
+							proxy.attachContext(psiFile);
+						}
+					}
+				});
 	}
 }

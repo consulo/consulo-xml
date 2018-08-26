@@ -15,6 +15,19 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport;
+import org.intellij.plugins.intelliLang.util.StringMatcher;
+import org.jaxen.JaxenException;
+import org.jaxen.XPath;
+import org.jdom.Element;
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.JDOMExternalizer;
 import com.intellij.openapi.util.text.StringUtil;
@@ -23,18 +36,7 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport;
-import org.intellij.plugins.intelliLang.util.StringMatcher;
-import org.jaxen.JaxenException;
-import org.jaxen.XPath;
-import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
+import consulo.intelliLang.xml.XPathSupportProvider;
 
 /**
  * Base class for XML-related injections (XML tags and attributes).
@@ -42,7 +44,7 @@ import java.util.TreeSet;
  * and an optional XPath expression (only valid if XPathView is installed) and
  * the appropriate logic to determine if a tag matches those properties.
  *
- * @see org.intellij.plugins.intelliLang.inject.config.XPathSupportProxy
+ * @see XPathSupportProvider
  */
 public class AbstractTagInjection extends BaseInjection {
 
@@ -104,7 +106,7 @@ public class AbstractTagInjection extends BaseInjection {
     myXPathCondition = condition != null ? condition : "";
     if (StringUtil.isNotEmpty(myXPathCondition)) {
       try {
-        final XPathSupportProxy xPathSupport = XPathSupportProxy.getInstance();
+        final XPathSupportProvider xPathSupport = XPathSupportProvider.findProvider();
         if (xPathSupport != null) {
           myCompiledXPathCondition = xPathSupport.createXPath(myXPathCondition);
         }
