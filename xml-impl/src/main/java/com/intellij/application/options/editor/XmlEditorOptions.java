@@ -19,6 +19,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
@@ -32,6 +33,7 @@ import com.intellij.xml.XmlBundle;
 /**
  * @author spleaner
  */
+@Singleton
 @State(name = "XmlEditorOptions", storages = @Storage("editor.xml"))
 public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>
 {

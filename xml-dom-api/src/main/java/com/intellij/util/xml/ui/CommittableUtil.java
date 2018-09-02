@@ -17,10 +17,12 @@ package com.intellij.util.xml.ui;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
 
 /**
  * @author peter
  */
+@Singleton
 public class CommittableUtil {
 
   public void commit(@Nonnull Committable committable) {

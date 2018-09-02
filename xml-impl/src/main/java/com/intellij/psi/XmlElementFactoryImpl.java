@@ -16,10 +16,11 @@
 package com.intellij.psi;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
@@ -45,11 +46,12 @@ import com.intellij.xml.util.XmlTagUtil;
 /**
  * @author Dmitry Avdeev
  */
+@Singleton
 public class XmlElementFactoryImpl extends XmlElementFactory
 {
-
 	private final Project myProject;
 
+	@Inject
 	public XmlElementFactoryImpl(Project project)
 	{
 		myProject = project;

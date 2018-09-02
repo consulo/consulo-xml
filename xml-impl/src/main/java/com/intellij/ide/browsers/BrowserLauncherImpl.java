@@ -15,6 +15,13 @@
  */
 package com.intellij.ide.browsers;
 
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Singleton;
+
 import com.intellij.concurrency.JobScheduler;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.util.ExecUtil;
@@ -25,13 +32,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.AppUIUtil;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
-final class BrowserLauncherImpl extends BrowserLauncherAppless
+@Singleton
+public final class BrowserLauncherImpl extends BrowserLauncherAppless
 {
 	@Override
 	protected void doShowError(@Nullable final String error, @Nullable final WebBrowser browser, @Nullable final Project project,

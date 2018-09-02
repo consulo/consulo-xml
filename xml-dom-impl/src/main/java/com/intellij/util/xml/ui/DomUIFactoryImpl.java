@@ -44,6 +44,7 @@ import com.intellij.util.xml.highlighting.DomElementsErrorPanel;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import javax.inject.Singleton;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
@@ -53,6 +54,7 @@ import java.lang.reflect.Type;
 /**
  * @author peter
  */
+@Singleton
 public class DomUIFactoryImpl extends DomUIFactory {
 
   private final ClassMap<Function<DomWrapper<String>, BaseControl>> myCustomControlCreators = new ClassMap<Function<DomWrapper<String>, BaseControl>>();

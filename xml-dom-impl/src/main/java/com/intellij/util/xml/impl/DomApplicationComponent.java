@@ -26,6 +26,8 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
+
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.extensions.Extensions;
@@ -42,6 +44,7 @@ import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 /**
  * @author peter
  */
+@Singleton
 public class DomApplicationComponent
 {
 	private final FactoryMap<String, Set<DomFileDescription>> myRootTagName2FileDescription = new FactoryMap<String, Set<DomFileDescription>>()

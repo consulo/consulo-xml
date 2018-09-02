@@ -15,64 +15,77 @@
  */
 package com.intellij.util.xml.impl;
 
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import com.intellij.codeInsight.template.Template;
 import com.intellij.codeInsight.template.TemplateManager;
 import com.intellij.codeInsight.template.impl.TemplateSettings;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.actions.generate.DomTemplateRunner;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.Map;
 
 /**
  * User: Sergey.Vasiliev
  */
-public class DomTemplateRunnerImpl extends DomTemplateRunner {
-  private final Project myProject;
+@Singleton
+public class DomTemplateRunnerImpl extends DomTemplateRunner
+{
+	private final Project myProject;
 
-  public DomTemplateRunnerImpl(Project project) {
-    myProject = project;
-  }
+	@Inject
+	public DomTemplateRunnerImpl(Project project)
+	{
+		myProject = project;
+	}
 
-  public <T extends DomElement> void runTemplate(final T t, final String mappingId, final Editor editor) {
-       runTemplate(t, mappingId, editor, new HashMap<String, String>());
-  }
+	public <T extends DomElement> void runTemplate(final T t, final String mappingId, final Editor editor)
+	{
+		runTemplate(t, mappingId, editor, new HashMap<String, String>());
+	}
 
-  @Override
-  public <T extends DomElement> void runTemplate(T t, String mappingId, Editor editor,
-                                                 @Nonnull Map<String, String> predefinedVars) {
-    final Template template = getTemplate(mappingId);
-    runTemplate(t, editor, template, predefinedVars);
-  }
+	@Override
+	public <T extends DomElement> void runTemplate(T t, String mappingId, Editor editor,
+												   @Nonnull Map<String, String> predefinedVars)
+	{
+		final Template template = getTemplate(mappingId);
+		runTemplate(t, editor, template, predefinedVars);
+	}
 
-  public <T extends DomElement> void runTemplate(final T t, final Editor editor, @Nullable final Template template) {
-     runTemplate(t, editor, template, new HashMap<String, String>());
-  }
+	public <T extends DomElement> void runTemplate(final T t, final Editor editor, @Nullable final Template template)
+	{
+		runTemplate(t, editor, template, new HashMap<String, String>());
+	}
 
-  public <T extends DomElement> void runTemplate(final T t, final Editor editor, @Nullable final Template template, Map<String, String> predefinedVars) {
-    if (template != null) {
-      DomElement copy = t.createStableCopy();
-      PsiDocumentManager.getInstance(myProject).doPostponedOperationsAndUnblockDocument(editor.getDocument());
-      XmlTag tag = copy.getXmlTag();
-      assert tag != null;
-      editor.getCaretModel().moveToOffset(tag.getTextRange().getStartOffset());
-      copy.undefine();
+	public <T extends DomElement> void runTemplate(final T t, final Editor editor, @Nullable final Template template, Map<String, String> predefinedVars)
+	{
+		if(template != null)
+		{
+			DomElement copy = t.createStableCopy();
+			PsiDocumentManager.getInstance(myProject).doPostponedOperationsAndUnblockDocument(editor.getDocument());
+			XmlTag tag = copy.getXmlTag();
+			assert tag != null;
+			editor.getCaretModel().moveToOffset(tag.getTextRange().getStartOffset());
+			copy.undefine();
 
-      PsiDocumentManager.getInstance(myProject).doPostponedOperationsAndUnblockDocument(editor.getDocument());
+			PsiDocumentManager.getInstance(myProject).doPostponedOperationsAndUnblockDocument(editor.getDocument());
 
-      template.setToReformat(true);
-      TemplateManager.getInstance(myProject).startTemplate(editor, template, true, predefinedVars, null);
-    }
-  }
+			template.setToReformat(true);
+			TemplateManager.getInstance(myProject).startTemplate(editor, template, true, predefinedVars, null);
+		}
+	}
 
-  @Nullable
-  protected static Template getTemplate(final String mappingId) {
-    return mappingId != null ? TemplateSettings.getInstance().getTemplateById(mappingId) : null;
-  }
+	@Nullable
+	protected static Template getTemplate(final String mappingId)
+	{
+		return mappingId != null ? TemplateSettings.getInstance().getTemplateById(mappingId) : null;
+	}
 }

@@ -28,9 +28,11 @@ import com.intellij.util.xmlb.XmlSerializer;
 import org.jdom.Element;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
 
 import java.util.*;
 
+@Singleton
 @State(name = "WebBrowsersConfiguration", storages = {@Storage(file = StoragePathMacros.APP_CONFIG + "/web-browsers.xml")})
 public class WebBrowserManager extends SimpleModificationTracker implements PersistentStateComponent<Element>
 {

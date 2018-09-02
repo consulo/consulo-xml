@@ -33,6 +33,8 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
+
 import org.jetbrains.annotations.TestOnly;
 import com.intellij.application.options.PathMacrosImpl;
 import com.intellij.application.options.ReplacePathToMacroMap;
@@ -68,6 +70,7 @@ import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
 
+@Singleton
 @State(name = "ExternalResourceManagerImpl", storages = {
 		@Storage(file = StoragePathMacros.APP_CONFIG + "/javaeeExternalResources.xml"),
 		@Storage(file = StoragePathMacros.APP_CONFIG + "/other.xml", deprecated = true)

@@ -20,6 +20,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Function;
 import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.List;
 /**
  * @author Dmitry Avdeev
  */
+@Singleton
 public class ElementPresentationManagerImpl extends ElementPresentationManager {
 
   @Nonnull

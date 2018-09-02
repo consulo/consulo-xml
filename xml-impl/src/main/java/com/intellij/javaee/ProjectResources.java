@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -27,6 +28,7 @@ import com.intellij.openapi.components.StoragePathMacros;
 /**
  * @author Dmitry Avdeev
  */
+@Singleton
 @State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/misc.xml"))
 public class ProjectResources extends ExternalResourceManagerExImpl
 {
