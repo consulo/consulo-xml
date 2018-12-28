@@ -242,7 +242,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	{
 		if(urls.size() == 1)
 		{
-			return new AsyncResult.Done<Url>(ContainerUtil.getFirstItem(urls));
+			return AsyncResult.resolved(ContainerUtil.getFirstItem(urls));
 		}
 
 		final JBList list = new JBList(urls);
