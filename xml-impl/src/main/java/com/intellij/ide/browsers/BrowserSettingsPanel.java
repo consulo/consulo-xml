@@ -25,6 +25,7 @@ import java.awt.event.ItemListener;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -35,7 +36,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import javax.annotation.Nullable;
 import com.intellij.ide.GeneralSettings;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -58,11 +58,9 @@ import com.intellij.util.ui.table.TableModelEditor;
 
 final class BrowserSettingsPanel
 {
-	private static final FileChooserDescriptor APP_FILE_CHOOSER_DESCRIPTOR = FileChooserDescriptorFactory
-			.createSingleFileOrExecutableAppDescriptor();
+	private static final FileChooserDescriptor APP_FILE_CHOOSER_DESCRIPTOR = FileChooserDescriptorFactory.createSingleFileOrExecutableAppDescriptor();
 
-	private static final EditableColumnInfo<ConfigurableWebBrowser, String> PATH_COLUMN_INFO = new EditableColumnInfo<ConfigurableWebBrowser,
-			String>("Path")
+	private static final EditableColumnInfo<ConfigurableWebBrowser, String> PATH_COLUMN_INFO = new EditableColumnInfo<ConfigurableWebBrowser, String>("Path")
 	{
 		@Override
 		public String valueOf(ConfigurableWebBrowser item)
@@ -175,8 +173,7 @@ final class BrowserSettingsPanel
 
 	public BrowserSettingsPanel()
 	{
-		alternativeBrowserPathField.addBrowseFolderListener(IdeBundle.message("title.select.path.to.browser"), null, null,
-				APP_FILE_CHOOSER_DESCRIPTOR);
+		alternativeBrowserPathField.addBrowseFolderListener(IdeBundle.message("title.select.path.to.browser"), null, null, APP_FILE_CHOOSER_DESCRIPTOR);
 		defaultBrowserPanel.setBorder(TitledSeparator.EMPTY_BORDER);
 
 		//noinspection unchecked
@@ -279,18 +276,16 @@ final class BrowserSettingsPanel
 			@Override
 			public ConfigurableWebBrowser clone(@Nonnull ConfigurableWebBrowser item, boolean forInPlaceEditing)
 			{
-				return new ConfigurableWebBrowser(forInPlaceEditing ? item.getId() : UUID.randomUUID(), item.getFamily(), item.getName(),
-						item.getPath(), item.isActive(), forInPlaceEditing ? item.getSpecificSettings() : cloneSettings(item));
+				return new ConfigurableWebBrowser(forInPlaceEditing ? item.getId() : UUID.randomUUID(), item.getFamily(), item.getName(), item.getPath(), item.isActive(), forInPlaceEditing ? item.getSpecificSettings() : cloneSettings(item));
 			}
 
 			@Override
-			public void edit(@Nonnull ConfigurableWebBrowser browser, @Nonnull Function<ConfigurableWebBrowser, ConfigurableWebBrowser> mutator,
-					boolean isAdd)
+			public void edit(@Nonnull ConfigurableWebBrowser browser, @Nonnull Function<ConfigurableWebBrowser, ConfigurableWebBrowser> mutator, boolean isAdd)
 			{
 				BrowserSpecificSettings settings = cloneSettings(browser);
-				if(settings != null && ShowSettingsUtil.getInstance().editConfigurable(browsersTable, settings.createConfigurable()))
+				if(settings != null)
 				{
-					mutator.fun(browser).setSpecificSettings(settings);
+					ShowSettingsUtil.getInstance().editConfigurable(browsersTable, settings.createConfigurable()).doWhenDone(() -> mutator.fun(browser).setSpecificSettings(settings));
 				}
 			}
 
@@ -327,8 +322,7 @@ final class BrowserSettingsPanel
 				return !WebBrowserManager.getInstance().isPredefinedBrowser(item);
 			}
 		};
-		browsersEditor = new TableModelEditor<ConfigurableWebBrowser>(COLUMNS, itemEditor, "No web browsers configured").modelListener(new
-																																			   TableModelEditor.DataChangedListener<ConfigurableWebBrowser>()
+		browsersEditor = new TableModelEditor<ConfigurableWebBrowser>(COLUMNS, itemEditor, "No web browsers configured").modelListener(new TableModelEditor.DataChangedListener<ConfigurableWebBrowser>()
 		{
 			@Override
 			public void tableChanged(TableModelEvent event)
@@ -379,8 +373,7 @@ final class BrowserSettingsPanel
 			return true;
 		}
 
-		if(defaultBrowser == DefaultBrowser.ALTERNATIVE && !Comparing.strEqual(generalSettings.getBrowserPath(),
-				alternativeBrowserPathField.getText()))
+		if(defaultBrowser == DefaultBrowser.ALTERNATIVE && !Comparing.strEqual(generalSettings.getBrowserPath(), alternativeBrowserPathField.getText()))
 		{
 			return true;
 		}
