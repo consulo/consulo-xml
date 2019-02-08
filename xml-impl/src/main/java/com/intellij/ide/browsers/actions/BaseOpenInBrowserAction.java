@@ -19,10 +19,10 @@ import java.awt.event.InputEvent;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.JList;
 
-import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeBundle;
 import com.intellij.ide.browsers.BrowserLauncher;
@@ -55,7 +55,6 @@ import com.intellij.psi.PsiManager;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.ui.ColoredListCellRenderer;
 import com.intellij.ui.components.JBList;
-import com.intellij.util.Consumer;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.Url;
 import com.intellij.util.containers.ContainerUtil;
@@ -216,14 +215,9 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 			Collection<Url> urls = WebBrowserService.getInstance().getUrlsToOpen(request, preferLocalUrl);
 			if(!urls.isEmpty())
 			{
-				chooseUrl(urls).doWhenDone(new Consumer<Url>()
-				{
-					@Override
-					public void consume(Url url)
-					{
-						ApplicationManager.getApplication().saveAll();
-						BrowserLauncher.getInstance().browse(url.toExternalForm(), browser, request.getProject());
-					}
+				chooseUrl(urls).doWhenDone(url -> {
+					ApplicationManager.getApplication().saveAll();
+					BrowserLauncher.getInstance().browse(url.toExternalForm(), browser, request.getProject());
 				});
 			}
 		}
@@ -257,7 +251,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 			}
 		});
 
-		final AsyncResult<Url> result = new AsyncResult<Url>();
+		final AsyncResult<Url> result = AsyncResult.undefined();
 		JBPopupFactory.getInstance().
 				createListPopupBuilder(list).
 				setTitle("Choose Url").

@@ -30,6 +30,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.AsyncResult;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.AppUIUtil;
 
@@ -37,40 +38,31 @@ import com.intellij.ui.AppUIUtil;
 public final class BrowserLauncherImpl extends BrowserLauncherAppless
 {
 	@Override
-	protected void doShowError(@Nullable final String error, @Nullable final WebBrowser browser, @Nullable final Project project,
-			final String title, @Nullable final Runnable launchTask)
+	protected void doShowError(@Nullable final String error, @Nullable final WebBrowser browser, @Nullable final Project project, final String title, @Nullable final Runnable launchTask)
 	{
 		AppUIUtil.invokeOnEdt(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				if(Messages.showYesNoDialog(project, StringUtil.notNullize(error, "Unknown error"), title == null ? IdeBundle.message("browser" +
-						".error") : title, Messages.OK_BUTTON, IdeBundle.message("button.fix"), null) == Messages.NO)
+				if(Messages.showYesNoDialog(project, StringUtil.notNullize(error, "Unknown error"), title == null ? IdeBundle.message("browser" + ".error") : title, Messages.OK_BUTTON, IdeBundle.message("button.fix"), null) == Messages.NO)
 				{
 					final BrowserSettings browserSettings = new BrowserSettings();
-					if(ShowSettingsUtil.getInstance().editConfigurable(project, browserSettings, browser == null ? null : new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							browserSettings.selectBrowser(browser);
-						}
-					}))
-					{
+
+					AsyncResult<Void> result = ShowSettingsUtil.getInstance().editConfigurable(project, browserSettings, browser == null ? null : (Runnable) () -> browserSettings.selectBrowser(browser));
+					result.doWhenDone(() -> {
 						if(launchTask != null)
 						{
 							launchTask.run();
 						}
-					}
+					});
 				}
 			}
 		}, project == null ? null : project.getDisposed());
 	}
 
 	@Override
-	protected void checkCreatedProcess(@Nullable final WebBrowser browser, @Nullable final Project project,
-			@Nonnull final GeneralCommandLine commandLine, @Nonnull final Process process, @Nullable final Runnable launchTask)
+	protected void checkCreatedProcess(@Nullable final WebBrowser browser, @Nullable final Project project, @Nonnull final GeneralCommandLine commandLine, @Nonnull final Process process, @Nullable final Runnable launchTask)
 	{
 		if(isOpenCommandUsed(commandLine))
 		{
