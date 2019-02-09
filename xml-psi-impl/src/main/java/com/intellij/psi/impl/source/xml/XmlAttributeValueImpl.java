@@ -15,9 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.swing.Icon;
-
 import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.ItemPresentationWithSeparator;
@@ -43,6 +42,7 @@ import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
+import consulo.ui.image.Image;
 
 /**
  * @author Mike
@@ -198,7 +198,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
       }
 
       @Override
-      public Icon getIcon(boolean open) {
+      public Image getIcon() {
         return null;
       }
     };

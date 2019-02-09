@@ -21,6 +21,7 @@ import com.intellij.psi.meta.PsiPresentableMetaData;
 import com.intellij.psi.meta.PsiWritableMetaData;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
+import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 
@@ -89,7 +90,7 @@ public class DomMetaData<T extends DomElement> implements PsiWritableMetaData, P
     return ElementPresentationManager.getTypeNameForObject(myElement);
   }
 
-  public Icon getIcon() {
+  public Image getIcon() {
     return ElementPresentationManager.getIcon(myElement);
   }
 }

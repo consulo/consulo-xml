@@ -16,15 +16,15 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
+import javax.annotation.Nullable;
+
+import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import com.intellij.icons.AllIcons;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomMetaData;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
-import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
-
-import javax.annotation.Nullable;
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,7 +49,7 @@ public class RngDefineMetaData extends DomMetaData<RngDefine> {
   }
 
   @Override
-  public Icon getIcon() {
+  public Image getIcon() {
     return AllIcons.Nodes.Property;
   }
 

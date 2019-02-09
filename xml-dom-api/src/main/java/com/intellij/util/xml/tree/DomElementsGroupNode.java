@@ -16,6 +16,11 @@
 
 package com.intellij.util.xml.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.IdeBundle;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.ui.SimpleTextAttributes;
@@ -28,11 +33,7 @@ import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import javax.annotation.Nonnull;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
+import consulo.ui.image.Image;
 
 public class DomElementsGroupNode extends AbstractDomElementNode {
   private final DomElement myParentElement;
@@ -67,7 +68,7 @@ public class DomElementsGroupNode extends AbstractDomElementNode {
   }
 
   protected void doUpdate() {
-    setUniformIcon(getNodeIcon());
+    setIcon(getNodeIcon());
 
     clearColoredText();
 
@@ -120,7 +121,7 @@ public class DomElementsGroupNode extends AbstractDomElementNode {
   }
 
 
-  public Icon getNodeIcon() {
+  public Image getNodeIcon() {
     Class clazz = ReflectionUtil.getRawType(myChildDescription.getType());
 //        Class arrayClass = Array.newInstance(clazz, 0).getClass();
     ElementPresentationTemplate template = myChildDescription.getPresentationTemplate();

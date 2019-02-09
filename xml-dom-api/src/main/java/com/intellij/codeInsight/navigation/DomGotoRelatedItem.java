@@ -15,10 +15,11 @@
  */
 package com.intellij.codeInsight.navigation;
 
+import javax.swing.Icon;
+
 import com.intellij.navigation.GotoRelatedItem;
 import com.intellij.util.xml.DomElement;
-
-import javax.swing.*;
+import consulo.awt.TargetAWT;
 
 /**
  * @author Dmitry Avdeev
@@ -46,6 +47,6 @@ public class DomGotoRelatedItem extends GotoRelatedItem {
 
   @Override
   public Icon getCustomIcon() {
-    return myElement.getPresentation().getIcon();
+    return TargetAWT.to(myElement.getPresentation().getIcon());
   }
 }

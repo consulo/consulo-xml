@@ -21,13 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -59,6 +58,7 @@ import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -74,9 +74,9 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
   private List<T> myCollectionElements = new ArrayList<T>();
   private ColumnInfo<T, ?>[] myColumnInfos;
   private boolean myEditable = false;
-  public static final Icon ADD_ICON = IconUtil.getAddIcon();
-  public static final Icon EDIT_ICON = IconUtil.getEditIcon();
-  public static final Icon REMOVE_ICON = IconUtil.getRemoveIcon();
+  public static final Image ADD_ICON = IconUtil.getAddIcon();
+  public static final Image EDIT_ICON = IconUtil.getEditIcon();
+  public static final Image REMOVE_ICON = IconUtil.getRemoveIcon();
 
   public DomCollectionControl(DomElement parentElement,
                               DomCollectionChildDescription description,
@@ -305,7 +305,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
     return null;
   }
 
-  protected DefaultAddAction createDefaultAction(final String name, final Icon icon, final Type type) {
+  protected DefaultAddAction createDefaultAction(final String name, final Image icon, final Type type) {
     return new ControlAddAction(name, name, icon) {
       protected Type getElementType() {
         return type;
@@ -347,7 +347,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
       super(text);
     }
 
-    public ControlAddAction(final String text, final String description, final Icon icon) {
+    public ControlAddAction(final String text, final String description, final Image icon) {
       super(text, description, icon);
     }
 
@@ -421,7 +421,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
 
     protected DefaultAddAction createAddingAction(final AnActionEvent e,
                                                   final String name,
-                                                  final Icon icon,
+                                                  final Image icon,
                                                   final Type type,
                                                   final DomCollectionChildDescription description) {
       return getDomCollectionControl(e).createDefaultAction(name, icon, type);

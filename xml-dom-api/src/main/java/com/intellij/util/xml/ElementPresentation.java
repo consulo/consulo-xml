@@ -17,7 +17,7 @@ package com.intellij.util.xml;
 
 import javax.annotation.Nullable;
 
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -31,7 +31,7 @@ public abstract class ElementPresentation {
   public abstract String getTypeName();
 
   @Nullable
-  public abstract Icon getIcon();
+  public abstract Image getIcon();
 
   @Nullable
   public String getDocumentation() { return null;}

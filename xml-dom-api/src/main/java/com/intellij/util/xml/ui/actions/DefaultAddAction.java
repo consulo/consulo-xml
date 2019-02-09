@@ -16,6 +16,11 @@
 
 package com.intellij.util.xml.ui.actions;
 
+import java.lang.reflect.Type;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationBundle;
@@ -25,13 +30,13 @@ import com.intellij.psi.SmartPointerManager;
 import com.intellij.psi.SmartPsiElementPointer;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.StableElement;
+import com.intellij.util.xml.TypeChooser;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import javax.annotation.Nonnull;
-
-import javax.annotation.Nullable;
-import javax.swing.*;
-import java.lang.reflect.Type;
+import consulo.ui.image.Image;
 
 /**
  * User: Sergey.Vasiliev
@@ -47,7 +52,7 @@ public abstract class DefaultAddAction<T extends DomElement> extends AnAction {
     super(text);
   }
 
-  public DefaultAddAction(String text, String description, Icon icon) {
+  public DefaultAddAction(String text, String description, Image icon) {
     super(text, description, icon);
   }
 

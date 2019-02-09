@@ -21,7 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
@@ -29,8 +30,6 @@ import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.navigation.ColoredItemPresentation;
 import com.intellij.navigation.ItemPresentation;
@@ -57,6 +56,7 @@ import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.NanoXmlUtil;
+import consulo.ui.image.Image;
 import consulo.vfs.ArchiveFileSystem;
 
 /*
@@ -228,8 +228,8 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
 
     @Override
     @Nullable
-    public Icon getIcon(boolean open) {
-      return myPresentation.getIcon(open);
+    public Image getIcon() {
+      return myPresentation.getIcon();
     }
 
     @Nullable
@@ -287,7 +287,7 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
 
             @Override
             @Nullable
-            public Icon getIcon(boolean open) {
+            public Image getIcon() {
               return metaData.getIcon();
             }
 

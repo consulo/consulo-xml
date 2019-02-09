@@ -15,26 +15,30 @@
  */
 package com.intellij.util.xml.ui;
 
+import java.awt.Component;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.Icon;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.containers.HashMap;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author peter
  */
 public class ComboTableCellEditor extends DefaultCellEditor {
   private final boolean myNullable;
-  private final Factory<List<Pair<String, Icon>>> myDataFactory;
-  private Map<String, Icon> myData;
+  private final Factory<List<Pair<String, consulo.ui.image.Image>>> myDataFactory;
+  private Map<String, consulo.ui.image.Image> myData;
   private static final Pair<String,Icon> EMPTY = Pair.create(" ", null);
 
-  public ComboTableCellEditor(Factory<List<Pair<String, Icon>>> dataFactory, final boolean nullable) {
+  public ComboTableCellEditor(Factory<List<Pair<String, consulo.ui.image.Image>>> dataFactory, final boolean nullable) {
     super(new JComboBox());
     myDataFactory = dataFactory;
     myNullable = nullable;
@@ -59,19 +63,19 @@ public class ComboTableCellEditor extends DefaultCellEditor {
   }
 
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    final List<Pair<String, Icon>> list = myDataFactory.create();
-    myData = new HashMap<String,Icon>();
+    final List<Pair<String, consulo.ui.image.Image>> list = myDataFactory.create();
+    myData = new HashMap<>();
 
     final JComboBox comboBox = (JComboBox)editorComponent;
     comboBox.removeAllItems();
     if (myNullable) {
       comboBox.addItem(EMPTY);
     }
-    for (final Pair<String, Icon> pair : list) {
+    for (final Pair<String, consulo.ui.image.Image> pair : list) {
       myData.put(pair.first, pair.second);
       comboBox.addItem(pair);
     }
-    final Pair<Object, Icon> pair = Pair.create(value, myData.get(value));
+    final Pair<Object, consulo.ui.image.Image> pair = Pair.create(value, myData.get(value));
     comboBox.setEditable(true);
     super.getTableCellEditorComponent(table, pair, isSelected, row, column);
     comboBox.setEditable(false);

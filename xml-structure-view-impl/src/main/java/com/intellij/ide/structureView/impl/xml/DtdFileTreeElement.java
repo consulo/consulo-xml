@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.openapi.util.Comparing;
@@ -39,9 +39,9 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlElementDecl;
 import com.intellij.psi.xml.XmlEntityDecl;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.PlatformIcons;
 import com.intellij.xml.impl.dtd.XmlElementDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.ui.image.Image;
 
 public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 {
@@ -117,9 +117,9 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 		}
 
 		@Override
-		public Icon getIcon(final boolean open)
+		public Image getIcon()
 		{
-			return PlatformIcons.XML_TAG_ICON;
+			return AllIcons.Nodes.Tag;
 		}
 
 		@Override

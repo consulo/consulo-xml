@@ -29,6 +29,8 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.ui.image.Image;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -43,10 +45,10 @@ import java.util.List;
  * @author peter
  */
 public class ComboControl extends BaseModifiableControl<JComboBox, String> {
-  private static final Pair<String, Icon> EMPTY = new ComboBoxItem(" ", null);
-  private final Factory<List<Pair<String, Icon>>> myDataFactory;
+  private static final Pair<String, Image> EMPTY = new ComboBoxItem(" ", null);
+  private final Factory<List<Pair<String, Image>>> myDataFactory;
   private boolean myNullable;
-  private final Map<String, Icon> myIcons = new HashMap<String, Icon>();
+  private final Map<String, Image> myIcons = new HashMap<>();
   private final ItemListener myCommitListener = new ItemListener() {
     public void itemStateChanged(ItemEvent e) {
       setModified();
@@ -54,11 +56,11 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     }
   };
 
-  public ComboControl(final GenericDomValue genericDomValue, final Factory<List<Pair<String, Icon>>> dataFactory) {
+  public ComboControl(final GenericDomValue genericDomValue, final Factory<List<Pair<String, Image>>> dataFactory) {
     this(new DomStringWrapper(genericDomValue), dataFactory);
   }
 
-  public ComboControl(final DomWrapper<String> domWrapper, final Factory<List<Pair<String, Icon>>> dataFactory) {
+  public ComboControl(final DomWrapper<String> domWrapper, final Factory<List<Pair<String, Image>>> dataFactory) {
     super(domWrapper);
     myDataFactory = dataFactory;
     reset();
@@ -82,9 +84,9 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     this(reference, createResolvingFunction(reference));
   }
 
-  public static Factory<List<Pair<String, Icon>>> createResolvingFunction(final GenericDomValue<?> reference) {
-    return new Factory<List<Pair<String, Icon>>>() {
-      public List<Pair<String, Icon>> create() {
+  public static Factory<List<Pair<String, Image>>> createResolvingFunction(final GenericDomValue<?> reference) {
+    return new Factory<List<Pair<String, Image>>>() {
+      public List<Pair<String, Image>> create() {
         final Converter converter = reference.getConverter();
         if (converter instanceof ResolvingConverter) {
           final AbstractConvertContext context = new AbstractConvertContext() {
@@ -95,8 +97,8 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
           };
           final ResolvingConverter resolvingConverter = (ResolvingConverter)converter;
           final Collection<Object> variants = resolvingConverter.getVariants(context);
-          final List<Pair<String, Icon>> all = ContainerUtil.map(variants, new Function<Object, Pair<String, Icon>>() {
-            public Pair<String, Icon> fun(final Object s) {
+          final List<Pair<String, Image>> all = ContainerUtil.map(variants, new Function<Object, Pair<String, Image>>() {
+            public Pair<String, Image> fun(final Object s) {
               return Pair.create(ElementPresentationManager.getElementName(s), ElementPresentationManager.getIcon(s));
             }
           });
@@ -112,12 +114,12 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     };
   }
 
-  public static Factory<List<Pair<String, Icon>>> createPresentationFunction(final Factory<Collection<? extends Object>> variantFactory) {
-    return new Factory<List<Pair<String, Icon>>>() {
-      public List<Pair<String, Icon>> create() {
+  public static Factory<List<Pair<String, Image>>> createPresentationFunction(final Factory<Collection<? extends Object>> variantFactory) {
+    return new Factory<List<Pair<String, Image>>>() {
+      public List<Pair<String, Image>> create() {
 
-        return ContainerUtil.map(variantFactory.create(), new Function<Object, Pair<String, Icon>>() {
-          public Pair<String, Icon> fun(final Object s) {
+        return ContainerUtil.map(variantFactory.create(), new Function<Object, Pair<String, Image>>() {
+          public Pair<String, Image> fun(final Object s) {
             return Pair.create(ElementPresentationManager.getElementName(s), ElementPresentationManager.getIcon(s));
           }
         });
@@ -126,11 +128,11 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     };
   }
 
-  static Factory<List<Pair<String, Icon>>> createEnumFactory(final Class<? extends Enum> aClass) {
-    return new Factory<List<Pair<String, Icon>>>() {
-      public List<Pair<String, Icon>> create() {
-        return ContainerUtil.map2List(aClass.getEnumConstants(), new Function<Enum, Pair<String, Icon>>() {
-          public Pair<String, Icon> fun(final Enum s) {
+  static Factory<List<Pair<String, Image>>> createEnumFactory(final Class<? extends Enum> aClass) {
+    return new Factory<List<Pair<String, Image>>>() {
+      public List<Pair<String, Image>> create() {
+        return ContainerUtil.map2List(aClass.getEnumConstants(), new Function<Enum, Pair<String, Image>>() {
+          public Pair<String, Image> fun(final Enum s) {
             return Pair.create(NamedEnumUtil.getEnumValueByElement(s), ElementPresentationManager.getIcon(s));
           }
         });
@@ -142,10 +144,10 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     return tuneUpComboBox(new JComboBox(), createEnumFactory(type));
   }
 
-  private static JComboBox tuneUpComboBox(final JComboBox comboBox, Factory<List<Pair<String, Icon>>> dataFactory) {
-    final List<Pair<String, Icon>> list = dataFactory.create();
-    final Set<String> standardValues = new HashSet<String>();
-    for (final Pair<String, Icon> pair : list) {
+  private static JComboBox tuneUpComboBox(final JComboBox comboBox, Factory<List<Pair<String, Image>>> dataFactory) {
+    final List<Pair<String, Image>> list = dataFactory.create();
+    final Set<String> standardValues = new HashSet<>();
+    for (final Pair<String, Image> pair : list) {
       comboBox.addItem(new ComboBoxItem(pair));
       standardValues.add(pair.first);
     }
@@ -156,13 +158,13 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     });
   }
 
-  private static class ComboBoxItem extends Pair<String,Icon> {
+  private static class ComboBoxItem extends Pair<String, Image> {
 
-    public ComboBoxItem(String first, Icon second) {
+    public ComboBoxItem(String first, Image second) {
       super(first, second);
     }
 
-    public ComboBoxItem(Pair<String,Icon> pair) {
+    public ComboBoxItem(Pair<String, Image> pair) {
       super(pair.first, pair.second);
     }
 
@@ -205,16 +207,16 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
     return myNullable && object == EMPTY.first || myIcons.containsKey(object);
   }
 
-  private boolean dataChanged(List<Pair<String, Icon>> newData) {
+  private boolean dataChanged(List<Pair<String, Image>> newData) {
     final JComboBox comboBox = getComponent();
     final int size = comboBox.getItemCount();
-    final List<Pair<String, Icon>> oldData = new ArrayList<Pair<String, Icon>>(size);
+    final List<Pair<String, Image>> oldData = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
-      oldData.add((Pair<String, Icon>)comboBox.getItemAt(i));
+      oldData.add((Pair<String, Image>)comboBox.getItemAt(i));
     }
 
     if (myNullable) {
-      final LinkedList<Pair<String, Icon>> list = new LinkedList<Pair<String, Icon>>(newData);
+      final LinkedList<Pair<String, Image>> list = new LinkedList<>(newData);
       list.addFirst(EMPTY);
       newData = list;
     }
@@ -227,7 +229,7 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
   }
 
   protected void doReset() {
-    final List<Pair<String, Icon>> data = myDataFactory.create();
+    final List<Pair<String, Image>> data = myDataFactory.create();
     final JComboBox comboBox = getComponent();
     comboBox.removeItemListener(myCommitListener);
     try {
@@ -242,7 +244,7 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
       if (myNullable) {
         comboBox.addItem(EMPTY);
       }
-      for (final Pair<String, Icon> s : data) {
+      for (final Pair<String, Image> s : data) {
         comboBox.addItem(new ComboBoxItem(s));
         myIcons.put(s.first, s.second);
       }
@@ -256,7 +258,7 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
 
   @Nullable
   protected final String getValue() {
-    final Pair<String, Icon> pair = (Pair<String, Icon>)getComponent().getSelectedItem();
+    final Pair<String, Image> pair = (Pair<String, Image>)getComponent().getSelectedItem();
     return pair == null || pair == EMPTY ? null : pair.first;
   }
 

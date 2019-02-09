@@ -22,10 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 
-import javax.annotation.Nullable;
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.ActionButtonComponent;
 import com.intellij.openapi.actionSystem.ActionGroup;
@@ -47,6 +46,7 @@ import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.TypeChooser;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.DomCollectionControl;
+import consulo.ui.image.Image;
 
 /**
  * User: Sergey.Vasiliev
@@ -136,7 +136,7 @@ public abstract class AddDomElementAction extends AnAction {
         final Class<?> rawType = ReflectionUtil.getRawType(type);
 
         String name = TypePresentationService.getInstance().getTypePresentableName(rawType);
-        Icon icon = null;
+        Image icon = null;
         if (!showAsPopup() || descriptions.length == 1) {
 //          if (descriptions.length > 1) {
             icon = ElementPresentationManager.getIconForClass(rawType);
@@ -166,7 +166,7 @@ public abstract class AddDomElementAction extends AnAction {
 
   protected abstract AnAction createAddingAction(final AnActionEvent e,
                                                  final String name,
-                                                 final Icon icon,
+                                                 final Image icon,
                                                  final Type type,
                                                  final DomCollectionChildDescription description);
 

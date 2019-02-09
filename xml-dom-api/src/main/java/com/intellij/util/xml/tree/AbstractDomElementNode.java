@@ -16,16 +16,20 @@
 
 package com.intellij.util.xml.tree;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import com.intellij.openapi.util.Key;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.SimpleNode;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-
-import javax.swing.*;
-import java.lang.reflect.Type;
-import java.util.*;
+import consulo.ui.image.Image;
 
 abstract public class AbstractDomElementNode extends SimpleNode {
 
@@ -59,7 +63,7 @@ abstract public class AbstractDomElementNode extends SimpleNode {
   abstract public String getTagName();
 
 
-  public Icon getNodeIcon() {
+  public Image getNodeIcon() {
     return getDomElement().getPresentation().getIcon();
   }
 

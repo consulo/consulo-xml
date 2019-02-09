@@ -16,16 +16,23 @@
 
 package com.intellij.util.xml.structure;
 
+import java.util.ArrayList;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.Function;
-import com.intellij.util.xml.*;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import java.util.ArrayList;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomElementNavigationProvider;
+import com.intellij.util.xml.DomElementVisitor;
+import com.intellij.util.xml.DomService;
+import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.ElementPresentation;
+import com.intellij.util.xml.GenericDomValue;
+import consulo.ui.image.Image;
 
 /**
  * @author Gregory.Shrago
@@ -108,7 +115,7 @@ public class DomStructureTreeElement implements StructureViewTreeElement, ItemPr
   }
 
   @Nullable
-  public Icon getIcon(boolean open) {
+  public Image getIcon() {
     if (!myElement.isValid()) return null;
     return myElement.getPresentation().getIcon();
   }

@@ -16,11 +16,12 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.xml.DomElement;
-import com.intellij.ui.SimpleTextAttributes;
 import javax.annotation.Nonnull;
+
+import com.intellij.ui.SimpleTextAttributes;
+import com.intellij.ui.treeStructure.SimpleNode;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericDomValue;
 
 public class GenericValueNode extends AbstractDomElementNode {
   protected GenericDomValue myModelElement;
@@ -46,7 +47,7 @@ public class GenericValueNode extends AbstractDomElementNode {
   }
 
   protected void doUpdate() {
-    setUniformIcon(getNodeIcon());
+    setIcon(getNodeIcon());
     clearColoredText();
     final String stringValue = myModelElement.getStringValue();
     final Object value = myModelElement.getValue();

@@ -15,8 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import javax.swing.Icon;
-
 import com.intellij.ide.TypePresentationServiceImpl;
 import com.intellij.ide.presentation.Presentation;
 import com.intellij.openapi.util.Ref;
@@ -27,7 +25,7 @@ import com.intellij.util.xml.ElementPresentation;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.ElementPresentationTemplate;
 import com.intellij.util.xml.GenericValue;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 /**
  * @author Dmitry Avdeev
@@ -54,8 +52,8 @@ public class ElementPresentationTemplateImpl extends TypePresentationServiceImpl
       }
 
       @Override
-      public Icon getIcon() {
-        return TargetAWT.to(ElementPresentationTemplateImpl.this.getIcon(element, 0));
+      public Image getIcon() {
+        return ElementPresentationTemplateImpl.this.getIcon(element, 0);
       }
 
       @Override

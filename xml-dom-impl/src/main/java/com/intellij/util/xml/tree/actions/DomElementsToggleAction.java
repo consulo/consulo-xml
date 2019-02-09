@@ -16,6 +16,9 @@
 
 package com.intellij.util.xml.tree.actions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -24,10 +27,7 @@ import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.tree.BaseDomElementNode;
 import com.intellij.util.xml.tree.DomModelTreeView;
-
-import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
+import consulo.ui.image.Image;
 
 /**
  * User: Sergey.Vasiliev
@@ -35,15 +35,14 @@ import java.util.Map;
 public class DomElementsToggleAction extends ToggleAction {
   private final DomModelTreeView myTreeView;
   private final Class myClass;
-  private final Icon myIcon;
+  private final Image myIcon;
   private final String myText;
-
 
   public DomElementsToggleAction(final DomModelTreeView treeView, final Class aClass) {
     myTreeView = treeView;
     myClass = aClass;
 
-    Icon myIcon = ElementPresentationManager.getIcon(myClass);
+    Image myIcon = ElementPresentationManager.getIcon(myClass);
     if (myIcon == null) {
       myIcon = AllIcons.Nodes.Pointcut;
     }

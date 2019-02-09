@@ -19,11 +19,9 @@ package com.intellij.util.xml.tree.actions;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.annotation.Nullable;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.JComponent;
 
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -44,8 +42,8 @@ import com.intellij.util.xml.tree.DomElementsGroupNode;
 import com.intellij.util.xml.tree.DomModelTreeView;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
+import consulo.ui.image.Image;
 
 /**
  * User: Sergey.Vasiliev
@@ -157,7 +155,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
 
   protected AnAction createAddingAction(final AnActionEvent e,
                                                 final String name,
-                                                final Icon icon,
+                                                final Image icon,
                                                 final Type type,
                                                 final DomCollectionChildDescription description) {
 
@@ -169,7 +167,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
 
       for (DomElement implementation : implementations) {
         final XmlFile xmlFile = DomUtil.getFile(implementation);
-        actionGroup.add(new MyDefaultAddAction(implementation, xmlFile.getName(), TargetAWT.to(IconDescriptorUpdaters.getIcon(xmlFile, 0)), e, type, description));
+        actionGroup.add(new MyDefaultAddAction(implementation, xmlFile.getName(), IconDescriptorUpdaters.getIcon(xmlFile, 0), e, type, description));
       }
       return actionGroup;
     }
@@ -186,7 +184,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
 
     public MyDefaultAddAction(final DomElement parent,
                               final String name,
-                              final Icon icon,
+                              final Image icon,
                               final AnActionEvent e,
                               final Type type,
                               final DomCollectionChildDescription description) {

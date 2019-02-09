@@ -15,6 +15,10 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -22,12 +26,8 @@ import com.intellij.psi.impl.RenameableFakePsiElement;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.util.PlatformIcons;
 import com.intellij.xml.XmlExtension;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 /**
  * @author Konstantin Bulenkov
@@ -56,8 +56,8 @@ public class SchemaPrefix extends RenameableFakePsiElement {
     return "XML Namespace Prefix";
   }
 
-  public Icon getIcon() {
-    return PlatformIcons.VARIABLE_ICON;
+  public Image getIcon() {
+    return AllIcons.Nodes.Variable;
   }
 
   @Override

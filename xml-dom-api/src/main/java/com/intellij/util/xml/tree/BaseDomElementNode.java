@@ -16,6 +16,18 @@
 
 package com.intellij.util.xml.tree;
 
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
@@ -25,7 +37,14 @@ import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.SimpleNode;
 import com.intellij.ui.treeStructure.SimpleTree;
 import com.intellij.util.ReflectionUtil;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomElementNavigationProvider;
+import com.intellij.util.xml.DomElementsNavigationManager;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.GenericDomValue;
+import com.intellij.util.xml.MergedObject;
+import com.intellij.util.xml.StableElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
@@ -33,13 +52,6 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.ui.TooltipUtils;
 import com.intellij.xml.XmlElementDescriptor;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.lang.reflect.Type;
-import java.util.*;
 
 
 public class BaseDomElementNode extends AbstractDomElementNode {
@@ -188,7 +200,7 @@ public class BaseDomElementNode extends AbstractDomElementNode {
     final Project project = myDomElement.getManager().getProject();
     if (project.isDisposed()) return;
 
-    setUniformIcon(getNodeIcon());
+    setIcon(getNodeIcon());
     clearColoredText();
 
     final DomElementAnnotationsManager manager = DomElementAnnotationsManager.getInstance(project);

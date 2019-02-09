@@ -1,5 +1,16 @@
 package com.intellij.util.xml.impl;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -10,20 +21,23 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.*;
-import com.intellij.util.xml.reflect.*;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomElementVisitor;
+import com.intellij.util.xml.DomFileDescription;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomNameStrategy;
+import com.intellij.util.xml.ElementPresentation;
+import com.intellij.util.xml.EvaluatedXmlNameImpl;
+import com.intellij.util.xml.GenericDomValue;
+import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
+import com.intellij.util.xml.reflect.DomAttributeChildDescription;
+import com.intellij.util.xml.reflect.DomChildrenDescription;
+import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import com.intellij.util.xml.reflect.DomFixedChildDescription;
+import com.intellij.util.xml.reflect.DomGenericInfo;
 import com.intellij.util.xml.stubs.FileStub;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -210,7 +224,7 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
         return "<ROOT>";
       }
 
-      public Icon getIcon() {
+      public Image getIcon() {
         return null;
       }
     };

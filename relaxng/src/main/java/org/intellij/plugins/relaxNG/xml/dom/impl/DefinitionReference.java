@@ -122,7 +122,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
         if (element != null) {
           final PsiPresentableMetaData data = (PsiPresentableMetaData)((PsiMetaOwner)element).getMetaData();
           if (data != null) {
-            return LookupValueFactory.createLookupValue(data.getName(), TargetAWT.from(data.getIcon()));
+            return LookupValueFactory.createLookupValue(data.getName(), data.getIcon());
           } else {
             return define.getName();
           }

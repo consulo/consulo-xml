@@ -21,13 +21,11 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
-
 import javax.annotation.Nullable;
+
 import com.intellij.ide.TypePresentationService;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -36,7 +34,7 @@ import com.intellij.util.NullableFunction;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.ContainerUtil;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -90,16 +88,12 @@ public abstract class ElementPresentationManager {
   public abstract <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags);
 
 
-  private static final List<Function<Object, String>> ourNameProviders = new ArrayList<Function<Object, String>>();
-  private static final List<Function<Object, String>> ourDocumentationProviders = new ArrayList<Function<Object, String>>();
-  private static final List<Function<Object, Icon>> ourIconProviders = new ArrayList<Function<Object, Icon>>();
+  private static final List<Function<Object, String>> ourNameProviders = new ArrayList<>();
+  private static final List<Function<Object, String>> ourDocumentationProviders = new ArrayList<>();
+  private static final List<Function<Object, Image>> ourIconProviders = new ArrayList<>();
 
   static {
-    ourIconProviders.add(new NullableFunction<Object, Icon>() {
-      public Icon fun(final Object o) {
-        return o instanceof Iconable ? TargetAWT.to(((Iconable) o).getIcon(Iconable.ICON_FLAG_READ_STATUS)) : null;
-      }
-    });
+    ourIconProviders.add(o -> o instanceof Iconable ? ((Iconable) o).getIcon(Iconable.ICON_FLAG_READ_STATUS) : null);
   }
 
   /**
@@ -190,15 +184,15 @@ public abstract class ElementPresentationManager {
     return TypePresentationService.getDefaultTypeName(o.getClass());
   }
 
-  public static Icon getIcon(@Nonnull Object o) {
-    for (final Function<Object, Icon> function : ourIconProviders) {
-      final Icon icon = function.fun(o);
+  public static Image getIcon(@Nonnull Object o) {
+    for (final Function<Object, Image> function : ourIconProviders) {
+      final Image icon = function.fun(o);
       if (icon != null) {
         return icon;
       }
     }
 
-    final Icon[] icons = getIconsForClass(o.getClass(), o);
+    final Image[] icons = getIconsForClass(o.getClass(), o);
     if (icons != null && icons.length > 0) {
       return icons[0];
     }
@@ -206,14 +200,14 @@ public abstract class ElementPresentationManager {
   }
 
   @Nullable
-  public static Icon getIconOld(Object o) {
-    for (final Function<Object, Icon> function : ourIconProviders) {
-      final Icon icon = function.fun(o);
+  public static Image getIconOld(Object o) {
+    for (final Function<Object, Image> function : ourIconProviders) {
+      final Image icon = function.fun(o);
       if (icon != null) {
         return icon;
       }
     }
-    final Icon[] icons = getIconsForClass(o.getClass(), o);
+    final Image[] icons = getIconsForClass(o.getClass(), o);
     if (icons != null && icons.length > 0) {
       return icons[0];
     }
@@ -227,16 +221,16 @@ public abstract class ElementPresentationManager {
 
 
   @Nullable
-  public static Icon getIconForClass(Class clazz) {
+  public static Image getIconForClass(Class clazz) {
     return getFirst(getIconsForClass(clazz, null));
   }
 
   @Nullable
-  private static Icon[] getIconsForClass(final Class clazz, @Nullable Object o) {
+  private static Image[] getIconsForClass(final Class clazz, @Nullable Object o) {
     TypePresentationService service = TypePresentationService.getInstance();
-    final Icon icon = TargetAWT.to(o == null ? service.getTypeIcon(clazz) : service.getIcon(o));
+    final Image icon = o == null ? service.getTypeIcon(clazz) : service.getIcon(o);
     if (icon != null) {
-      return new Icon[]{icon};
+      return new Image[]{icon};
     }
 
     return null;
@@ -250,11 +244,6 @@ public abstract class ElementPresentationManager {
 
   @Nullable
   public static <T> T findByName(Collection<T> collection, final String name) {
-    return ContainerUtil.find(collection, new Condition<T>() {
-      public boolean value(final T object) {
-        return Comparing.equal(name, getElementName(object), true);
-      }
-    });
+    return ContainerUtil.find(collection, object -> Comparing.equal(name, getElementName(object), true));
   }
-
 }
