@@ -24,11 +24,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
+import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.DeferredUserLookupValue;
 import com.intellij.codeInsight.lookup.LookupItem;
 import com.intellij.codeInsight.lookup.LookupValueWithPriority;
@@ -38,6 +36,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.ColorUtil;
+import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
+import consulo.ui.image.ImageEffects;
 
 /**
  * @author maxim
@@ -313,7 +314,7 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		return myIsStandard;
 	}
 
-	public Icon getIcon(int flags)
+	public Image getIcon(int flags)
 	{
 		if(myColor == null)
 		{
@@ -332,7 +333,7 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 
 		if(myColor != null)
 		{
-			return ColorIconCache.getIconCache().getIcon(myColor, 32);
+			return ImageEffects.colorFilled(32, 32, TargetAWT.from(myColor));
 		}
 
 		return null;

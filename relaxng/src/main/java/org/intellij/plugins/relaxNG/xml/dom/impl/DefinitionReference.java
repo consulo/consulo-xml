@@ -16,6 +16,16 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.intellij.plugins.relaxNG.model.Define;
+import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
+import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
+import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.lookup.LookupValueFactory;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -34,15 +44,7 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
-import org.intellij.plugins.relaxNG.model.Define;
-import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
-import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.Map;
-import java.util.Set;
+import consulo.awt.TargetAWT;
 
 /**
  * Created by IntelliJ IDEA.
@@ -120,7 +122,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
         if (element != null) {
           final PsiPresentableMetaData data = (PsiPresentableMetaData)((PsiMetaOwner)element).getMetaData();
           if (data != null) {
-            return LookupValueFactory.createLookupValue(data.getName(), data.getIcon());
+            return LookupValueFactory.createLookupValue(data.getName(), TargetAWT.from(data.getIcon()));
           } else {
             return define.getName();
           }

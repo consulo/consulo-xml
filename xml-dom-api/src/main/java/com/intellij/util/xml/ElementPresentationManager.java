@@ -97,7 +97,7 @@ public abstract class ElementPresentationManager {
   static {
     ourIconProviders.add(new NullableFunction<Object, Icon>() {
       public Icon fun(final Object o) {
-        return o instanceof Iconable ? ((Iconable)o).getIcon(Iconable.ICON_FLAG_READ_STATUS) : null;
+        return o instanceof Iconable ? TargetAWT.to(((Iconable) o).getIcon(Iconable.ICON_FLAG_READ_STATUS)) : null;
       }
     });
   }

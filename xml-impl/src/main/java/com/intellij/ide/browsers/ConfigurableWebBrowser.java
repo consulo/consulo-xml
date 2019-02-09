@@ -11,6 +11,7 @@ import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.PathUtil;
 import com.intellij.xml.XmlIcons;
+import consulo.awt.TargetAWT;
 
 final class ConfigurableWebBrowser extends WebBrowser
 {
@@ -84,7 +85,7 @@ final class ConfigurableWebBrowser extends WebBrowser
 				return XmlIcons.Browsers.Node_webkit16;
 			}
 		}
-		return family.getIcon();
+		return TargetAWT.to(family.getIcon());
 	}
 
 	private boolean checkNameAndPath(@Nonnull String what)
