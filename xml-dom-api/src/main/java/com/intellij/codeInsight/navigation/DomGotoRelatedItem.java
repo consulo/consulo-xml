@@ -42,7 +42,7 @@ public class DomGotoRelatedItem extends GotoRelatedItem {
   public String getCustomName() {
     return myElement.getPresentation().getElementName();
   }
-S
+
   @Override
   public Image getCustomIcon() {
     return myElement.getPresentation().getIcon();
