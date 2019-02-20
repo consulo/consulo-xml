@@ -34,6 +34,7 @@ import com.intellij.ui.ColorPickerListener;
 import com.intellij.ui.ColorPickerListenerFactory;
 import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.XmlBundle;
+import consulo.awt.TargetAWT;
 
 /**
  * @author maxim
@@ -62,7 +63,7 @@ public class UserColorLookup extends LookupElementDecorator<LookupElement>
 		context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
 
 		ColorPickerListener[] listeners = ColorPickerListenerFactory.createListenersFor(element);
-		ColorChooser.chooseColor(WindowManager.getInstance().suggestParentWindow(context.getProject()), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, listeners, true, color ->
+		ColorChooser.chooseColor(TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, listeners, true, color ->
 		{
 			if(color != null)
 			{

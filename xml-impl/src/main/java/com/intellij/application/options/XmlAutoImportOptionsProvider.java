@@ -16,16 +16,14 @@
 package com.intellij.application.options;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.Nls;
 import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.Configurable;
 import consulo.options.SimpleConfigurableByProperties;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.RequiredUIAccess;
-import consulo.ui.VerticalLayout;
+import consulo.ui.layout.VerticalLayout;
 
 /**
  * @author Dmitry Avdeev
