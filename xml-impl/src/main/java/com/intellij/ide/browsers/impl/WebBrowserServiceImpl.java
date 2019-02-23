@@ -26,12 +26,12 @@ import com.intellij.ide.browsers.OpenInBrowserRequest;
 import com.intellij.ide.browsers.WebBrowserService;
 import com.intellij.ide.browsers.WebBrowserUrlProvider;
 import com.intellij.openapi.project.DumbService;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.impl.http.HttpVirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.util.Url;
-import com.intellij.util.Urls;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.HtmlUtil;
 
@@ -45,7 +45,7 @@ public class WebBrowserServiceImpl extends WebBrowserService
 		VirtualFile virtualFile = request.getVirtualFile();
 		if(virtualFile instanceof HttpVirtualFile)
 		{
-			return Collections.singleton(Urls.newFromVirtualFile(virtualFile));
+			return Collections.singleton(VfsUtil.newFromVirtualFile(virtualFile));
 		}
 
 		if(!preferLocalUrl || !HtmlUtil.isHtmlFile(request.getFile()))
@@ -76,7 +76,7 @@ public class WebBrowserServiceImpl extends WebBrowserService
 			}
 		}
 		return virtualFile instanceof LightVirtualFile || !request.getFile().getViewProvider().isPhysical() ? Collections.<Url>emptySet() :
-				Collections.singleton(Urls.newFromVirtualFile(virtualFile));
+				Collections.singleton(VfsUtil.newFromVirtualFile(virtualFile));
 	}
 
 	@Nullable
