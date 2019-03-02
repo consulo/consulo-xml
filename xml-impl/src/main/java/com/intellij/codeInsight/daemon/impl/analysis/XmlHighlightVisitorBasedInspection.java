@@ -15,6 +15,8 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import java.util.Collections;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -52,7 +54,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 			@Nonnull final GlobalInspectionContext globalContext,
 			@Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
 	{
-		HighlightInfoHolder myHolder = new HighlightInfoHolder(file)
+		HighlightInfoHolder myHolder = new HighlightInfoHolder(file, Collections.emptyList())
 		{
 			@Override
 			public boolean add(@Nullable HighlightInfo info)
