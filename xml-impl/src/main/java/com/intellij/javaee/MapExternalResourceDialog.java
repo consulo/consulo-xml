@@ -15,41 +15,14 @@
  */
 package com.intellij.javaee;
 
-import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-
-import javax.annotation.Nullable;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.actionSystem.ActionGroup;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.ActionToolbar;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorFontType;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileSystemTree;
-import com.intellij.openapi.fileChooser.ex.FileSystemTreeImpl;
+import com.intellij.openapi.fileChooser.FileSystemTreeFactory;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
@@ -74,6 +47,20 @@ import com.intellij.xml.index.XsdNamespaceBuilder;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotations.RequiredDispatchThread;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Dmitry Avdeev
  *         Date: 7/17/12
@@ -87,7 +74,7 @@ public class MapExternalResourceDialog extends DialogWrapper
 	private JTree mySchemasTree;
 	private JPanel myExplorerPanel;
 	private JBTabbedPane myTabs;
-	private final FileSystemTreeImpl myExplorer;
+	private final FileSystemTree myExplorer;
 	private String myLocation;
 
 	public MapExternalResourceDialog(String uri, @Nonnull Project project, @Nullable PsiFile file, @Nullable String location)
@@ -164,12 +151,12 @@ public class MapExternalResourceDialog extends DialogWrapper
 			}
 		});
 
-		myExplorer = new FileSystemTreeImpl(project, new FileChooserDescriptor(true, false, false, false, true, false));
+		myExplorer = FileSystemTreeFactory.getInstance().createFileSystemTree(project, new FileChooserDescriptor(true, false, false, false, true, false));
 
 		myExplorer.addListener(new FileSystemTree.Listener()
 		{
 			@Override
-			public void selectionChanged(List<VirtualFile> selection)
+			public void selectionChanged(List<? extends VirtualFile> selection)
 			{
 				validateInput();
 			}
