@@ -30,7 +30,6 @@ import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceFactory;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.xml.XmlAttribute;
@@ -48,12 +47,6 @@ import com.intellij.util.xml.*;
 public class GenericValueReferenceProvider extends PsiReferenceProvider {
 
   private final static Logger LOG = Logger.getInstance("#com.intellij.util.xml.impl.GenericValueReferenceProvider");
-
-  private final Map<Class, PsiReferenceFactory> myProviders = new HashMap<Class, PsiReferenceFactory>();
-
-  public void addReferenceProviderForClass(Class clazz, PsiReferenceFactory provider) {
-    myProviders.put(clazz, provider);
-  }
 
   @Nonnull
   public final PsiReference[] getReferencesByElement(@Nonnull PsiElement psiElement, @Nonnull final ProcessingContext context) {
@@ -161,12 +154,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider {
     if (ReflectionUtil.isAssignable(String.class, clazz)) {
       return PsiReference.EMPTY_ARRAY;
     }
-    PsiReferenceFactory provider = myProviders.get(clazz);
-    if (provider != null) {
-      return provider.getReferencesByElement(psiElement);
-    }
 
     return PsiReference.EMPTY_ARRAY;
   }
-
 }
