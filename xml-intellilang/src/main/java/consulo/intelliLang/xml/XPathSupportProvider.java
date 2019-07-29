@@ -1,13 +1,13 @@
 package consulo.intelliLang.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jaxen.JaxenException;
-import org.jaxen.XPath;
 import com.intellij.lang.Language;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.PsiFile;
+import org.jaxen.JaxenException;
+import org.jaxen.XPath;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -20,7 +20,7 @@ public interface XPathSupportProvider
 	@Nullable
 	static XPathSupportProvider findProvider()
 	{
-		for(XPathSupportProvider provider : EP_NAME.getExtensions())
+		for(XPathSupportProvider provider : EP_NAME.getExtensionList())
 		{
 			return provider;
 		}

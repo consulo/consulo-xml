@@ -42,6 +42,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.intellij.intelliLang</artifactId>
 			<version>${project.version}</version>
