@@ -15,12 +15,8 @@
  */
 package com.intellij.ide.browsers.actions;
 
-import javax.annotation.Nullable;
 import com.intellij.ide.GeneralSettings;
-import com.intellij.ide.browsers.OpenInBrowserRequest;
-import com.intellij.ide.browsers.WebBrowser;
-import com.intellij.ide.browsers.WebBrowserManager;
-import com.intellij.ide.browsers.WebBrowserUrlProvider;
+import com.intellij.ide.browsers.*;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
@@ -28,6 +24,8 @@ import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.xml.util.HtmlUtil;
+
+import javax.annotation.Nullable;
 
 public class OpenFileInDefaultBrowserAction extends DumbAwareAction
 {
@@ -77,11 +75,11 @@ public class OpenFileInDefaultBrowserAction extends DumbAwareAction
 	private static WebBrowser findUsingBrowser()
 	{
 		WebBrowserManager browserManager = WebBrowserManager.getInstance();
-		if(browserManager.getDefaultBrowserMode() == WebBrowserManager.DefaultBrowser.FIRST)
+		if(browserManager.getDefaultBrowserPolicy() == DefaultBrowserPolicy.FIRST)
 		{
-			return browserManager.getDefaultBrowser();
+			return browserManager.getFirstActiveBrowser();
 		}
-		else if(browserManager.getDefaultBrowserMode() == WebBrowserManager.DefaultBrowser.ALTERNATIVE)
+		else if(browserManager.getDefaultBrowserPolicy() == DefaultBrowserPolicy.ALTERNATIVE)
 		{
 			String path = GeneralSettings.getInstance().getBrowserPath();
 			if(!StringUtil.isEmpty(path))

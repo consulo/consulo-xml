@@ -132,8 +132,6 @@
 		<extensionPoint name="embeddedTokenTypesProvider" interface="com.intellij.lexer.EmbeddedTokenTypesProvider"/>
 		<extensionPoint name="html5SchemaProvider" interface="com.intellij.xml.Html5SchemaProvider"/>
 
-		<extensionPoint qualifiedName="org.jetbrains.urlOpener" interface="com.intellij.ide.browsers.UrlOpener"/>
-
 		<extensionPoint name="html.scriptContentProvider"
 						beanClass="com.intellij.lang.LanguageExtensionPoint">
 			<with attribute="implementationClass" implements="com.intellij.lang.HtmlScriptContentProvider"/>
@@ -385,9 +383,6 @@
 		<applicationService serviceInterface="com.intellij.ide.browsers.WebBrowserService"
 							serviceImplementation="com.intellij.ide.browsers.impl.WebBrowserServiceImpl"/>
 
-		<applicationService serviceInterface="com.intellij.ide.browsers.BrowserLauncher"
-							serviceImplementation="com.intellij.ide.browsers.BrowserLauncherImpl"/>
-
 		<patterns.patternClass className="com.intellij.patterns.XmlPatterns" alias="xml"/>
 
 		<lang.smartEnterProcessor language="XML" implementationClass="com.intellij.codeInsight.completion.XmlSmartEnterProcessor"/>
@@ -566,17 +561,6 @@
 
 		<selectInTarget implementation="com.intellij.ide.browsers.actions.SelectInDefaultBrowserTarget"/>
 		<lang.inspectionSuppressor language="XML" implementationClass="com.intellij.codeInspection.XmlInspectionSuppressor"/>
-
-		<applicationService serviceInterface="com.intellij.ide.browsers.WebBrowserManager"
-							serviceImplementation="com.intellij.ide.browsers.WebBrowserManager"/>
-
-		<urlOpener implementation="com.intellij.ide.browsers.impl.DefaultUrlOpener" order="last"/>
-
-		<applicationConfigurable instance="com.intellij.ide.browsers.BrowserSettings"
-								 id="reference.settings.ide.settings.web.browsers"
-								 parentId="general"
-								 key="browsers.settings"
-								 bundle="messages.IdeBundle"/>
 
 		<lang.syntaxHighlighterFactory language="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>
 		<lang.syntaxHighlighterFactory language="XML" implementationClass="com.intellij.ide.highlighter.XmlSyntaxHighlighterFactory"/>
