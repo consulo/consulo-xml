@@ -73,7 +73,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
         }, LanguageVersionUtil.findDefaultVersion(DTDLanguage.INSTANCE), chars
       )
     );
-    if (contextFile != null) myBuilder.putUserDataUnprotected(FileContextUtil.CONTAINING_FILE_KEY, contextFile);
+    if (contextFile != null) myBuilder.putUserData(FileContextUtil.CONTAINING_FILE_KEY, contextFile);
   }
 
   public ASTNode parse() {
@@ -120,7 +120,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
     ASTNode astNode = myBuilder.getTreeBuilt();
 
     if (myRootType != DTD_FILE) {
-      PsiFile file = myBuilder.getUserDataUnprotected(FileContextUtil.CONTAINING_FILE_KEY);
+      PsiFile file = myBuilder.getUserData(FileContextUtil.CONTAINING_FILE_KEY);
       if (file != null) {
         final DummyHolder result = DummyHolderFactory.createHolder(file.getManager(), DTDLanguage.INSTANCE, file);
         final FileElement holder = result.getTreeElement();

@@ -19,13 +19,7 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.lang.LighterASTTokenNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
+import com.intellij.lang.*;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.tree.IElementType;
@@ -37,6 +31,8 @@ import com.intellij.util.ThreeState;
 import com.intellij.util.TripleFunction;
 import com.intellij.util.diff.FlyweightCapableTreeStructure;
 import consulo.lang.LanguageVersion;
+
+import javax.annotation.Nonnull;
 
 public class XmlParser implements PsiParser {
   // tries to match an old and new XmlTag by name
@@ -67,7 +63,7 @@ public class XmlParser implements PsiParser {
   @Nonnull
   public ASTNode parse(@Nonnull final IElementType root, @Nonnull final PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
-    builder.putUserDataUnprotected(PsiBuilderImpl.CUSTOM_COMPARATOR, REPARSE_XML_TAG_BY_NAME);
+    builder.putUserData(PsiBuilderImpl.CUSTOM_COMPARATOR, REPARSE_XML_TAG_BY_NAME);
     final PsiBuilder.Marker file = builder.mark();
     new XmlParsing(builder).parseDocument();
     file.done(root);

@@ -15,26 +15,7 @@
  */
 package com.intellij.util.xml.impl;
 
-import static com.intellij.patterns.XmlPatterns.or;
-import static com.intellij.patterns.XmlPatterns.psiElement;
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlEntityRef;
-import static com.intellij.patterns.XmlPatterns.xmlFile;
-import static com.intellij.patterns.XmlPatterns.xmlTag;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.util.NullableComputable;
-import com.intellij.openapi.util.RecursionGuard;
 import com.intellij.openapi.util.RecursionManager;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
@@ -59,6 +40,17 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+import static com.intellij.patterns.XmlPatterns.*;
 
 /**
  * @author peter
@@ -165,20 +157,13 @@ public class DomSemContributor extends SemContributor {
     });
 
     registrar.registerSemElementProvider(DomManagerImpl.DOM_CUSTOM_HANDLER_KEY, nonRootTag, new NullableFunction<XmlTag, CollectionElementInvocationHandler>() {
-      private final RecursionGuard myGuard = RecursionManager.createGuard("customDomParent");
-
       public CollectionElementInvocationHandler fun(XmlTag tag) {
         if (StringUtil.isEmpty(tag.getName())) return null;
 
         final XmlTag parentTag = PhysicalDomParentStrategy.getParentTag(tag);
         assert parentTag != null;
 
-        DomInvocationHandler parent = myGuard.doPreventingRecursion(tag, true, new NullableComputable<DomInvocationHandler>() {
-          @Override
-          public DomInvocationHandler compute() {
-            return getParentDom(parentTag);
-          }
-        });
+        DomInvocationHandler parent = RecursionManager.doPreventingRecursion(tag, true, () -> getParentDom(parentTag));
         if (parent == null) return null;
 
         DomGenericInfoEx info = parent.getGenericInfo();
