@@ -16,82 +16,81 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.util.SpinAllocator;
 import com.intellij.util.containers.ContainerUtil;
 import gnu.trove.THashSet;
 import org.kohsuke.rngom.digested.*;
 
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 19.07.2007
-*/
-public class RecursionSaveWalker extends DPatternWalker {
-  private THashSet<DPattern> myVisited;
+ * Created by IntelliJ IDEA.
+ * User: sweinreuter
+ * Date: 19.07.2007
+ */
+public class RecursionSaveWalker extends DPatternWalker
+{
+	private THashSet<DPattern> myVisited;
 
-  protected RecursionSaveWalker() {
-  }
+	protected RecursionSaveWalker()
+	{
+	}
 
-  @Override
-  public Void onGrammar(DGrammarPattern p) {
-    if (myVisited.add(p)) {
-      try {
-        return super.onGrammar(p);
-      } catch (NullPointerException e) {
-        return null; // missing start pattern
-      }
-    }
-    return null;
-  }
+	@Override
+	public Void onGrammar(DGrammarPattern p)
+	{
+		if(myVisited.add(p))
+		{
+			try
+			{
+				return super.onGrammar(p);
+			}
+			catch(NullPointerException e)
+			{
+				return null; // missing start pattern
+			}
+		}
+		return null;
+	}
 
-  @Override
-  public Void onRef(DRefPattern p) {
-    if (myVisited.add(p)) {
-      try {
-        return super.onRef(p);
-      } catch (NullPointerException e) {
-        return null; // unresolved ref
-      }
-    }
-    return null;
-  }
+	@Override
+	public Void onRef(DRefPattern p)
+	{
+		if(myVisited.add(p))
+		{
+			try
+			{
+				return super.onRef(p);
+			}
+			catch(NullPointerException e)
+			{
+				return null; // unresolved ref
+			}
+		}
+		return null;
+	}
 
-  @Override
-  protected Void onUnary(DUnaryPattern p) {
-    if (myVisited.add(p)) {
-      try {
-        return super.onUnary(p);
-      } catch (NullPointerException e) {
-        return null; // empty element
-      }
-    }
-    return null;
-  }
+	@Override
+	protected Void onUnary(DUnaryPattern p)
+	{
+		if(myVisited.add(p))
+		{
+			try
+			{
+				return super.onUnary(p);
+			}
+			catch(NullPointerException e)
+			{
+				return null; // empty element
+			}
+		}
+		return null;
+	}
 
-  protected void doAccept(DPattern... p) {
-    myVisited = ourAllocator.alloc();
-    try {
-      //noinspection ForLoopReplaceableByForEach
-      for (int i = 0; i < p.length; i++) {
-        p[i].accept(this);
-      }
-    } finally {
-      ourAllocator.dispose(myVisited);
-    }
-  }
-
-  private static final SpinAllocator<THashSet<DPattern>> ourAllocator = new SpinAllocator<>(
-    new SpinAllocator.ICreator<THashSet<DPattern>>() {
-      @Override
-      @SuppressWarnings({"unchecked"})
-      public THashSet<DPattern> createInstance() {
-        return ContainerUtil.<DPattern>newIdentityTroveSet(256);
-      }
-    },
-    new SpinAllocator.IDisposer<THashSet<DPattern>>() {
-      @Override
-      public void disposeInstance(THashSet<DPattern> instance) {
-        instance.clear();
-      }
-    });
+	protected void doAccept(DPattern... p)
+	{
+		myVisited = ContainerUtil.<DPattern>newIdentityTroveSet(256);
+		//noinspection ForLoopReplaceableByForEach
+		for(int i = 0; i < p.length; i++)
+		{
+			p[i].accept(this);
+		}
+	}
 }
