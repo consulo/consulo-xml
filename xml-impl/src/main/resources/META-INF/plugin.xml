@@ -1,4 +1,4 @@
-<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
+<consulo-plugin>
 	<id>com.intellij.xml</id>
 	<name>XML</name>
 	<version>SNAPSHOT</version>
@@ -7,8 +7,8 @@
 	<depends optional="true" config-file="org.intellij.intelliLang.xml">org.intellij.intelliLang</depends>
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
-	<xi:include href="/META-INF/XmlDom.xml" xpointer="xpointer(/idea-plugin/*)"/>
-	<xi:include href="/META-INF/relaxng-plugin.xml" xpointer="xpointer(/idea-plugin/*)"/>
+	<import path="/META-INF/XmlDom.xml" />
+	<import path="/META-INF/relaxng-plugin.xml" />
 
 	<actions>
 
@@ -621,4 +621,4 @@
 
 		<fileNSInfoProvider implementation="com.intellij.xml.util.HtmlFileNSInfoProvider"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>

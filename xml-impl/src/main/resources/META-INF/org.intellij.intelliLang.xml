@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<idea-plugin>
+<consulo-plugin>
 	<extensionPoints>
 		<extensionPoint name="intelliLang.xpathSupportProvider" interface="consulo.intelliLang.xml.XPathSupportProvider"/>
 	</extensionPoints>
@@ -14,4 +14,4 @@
 		<languageSupport implementation="org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport"/>
 		<injectionConfig config="resources/xmlInjections-html.xml"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
