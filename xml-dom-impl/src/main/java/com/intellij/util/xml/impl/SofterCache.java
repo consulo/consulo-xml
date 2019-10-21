@@ -17,8 +17,8 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.SofterReference;
-import com.intellij.util.containers.ConcurrentHashMap;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**

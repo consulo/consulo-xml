@@ -5,59 +5,62 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.xml.util.XmlUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * @author peter
  */
-public class EnumConverter<T extends Enum> extends ResolvingConverter<T>{
-  private static final ConcurrentFactoryMap<Class,EnumConverter> ourCache = new ConcurrentFactoryMap<Class, EnumConverter>() {
-    @Nonnull
-    protected EnumConverter create(final Class key) {
-      return new EnumConverter(key);
-    }
-  };
-  private final Class<T> myType;
+public class EnumConverter<T extends Enum> extends ResolvingConverter<T>
+{
+	private static final Map<Class, EnumConverter> ourCache = ConcurrentFactoryMap.createMap(EnumConverter::new);
 
-  private EnumConverter(final Class<T> aClass) {
-    myType = aClass;
-  }
+	private final Class<T> myType;
 
-  public static <T extends Enum> EnumConverter<T>  createEnumConverter(Class<T> aClass) {
-    return ourCache.get(aClass);
-  }
+	private EnumConverter(final Class<T> aClass)
+	{
+		myType = aClass;
+	}
 
-  private String getStringValue(final T anEnum) {
-    return NamedEnumUtil.getEnumValueByElement(anEnum);
-  }
+	public static <T extends Enum> EnumConverter<T> createEnumConverter(Class<T> aClass)
+	{
+		return ourCache.get(aClass);
+	}
 
-  public final T fromString(final String s, final ConvertContext context) {
-    return s==null?null:(T)NamedEnumUtil.getEnumElementByValue((Class)myType, s);
-  }
+	private String getStringValue(final T anEnum)
+	{
+		return NamedEnumUtil.getEnumValueByElement(anEnum);
+	}
 
-  public final String toString(final T t, final ConvertContext context) {
-    return t == null? null:getStringValue(t);
-  }
+	public final T fromString(final String s, final ConvertContext context)
+	{
+		return s == null ? null : (T) NamedEnumUtil.getEnumElementByValue((Class) myType, s);
+	}
 
-  public String getErrorMessage(@Nullable final String s, final ConvertContext context) {
-    return CodeInsightBundle.message("error.unknown.enum.value.message", s);
-  }
+	public final String toString(final T t, final ConvertContext context)
+	{
+		return t == null ? null : getStringValue(t);
+	}
 
-  @Nonnull
-  public Collection<? extends T> getVariants(final ConvertContext context) {
-    final XmlElement element = context.getXmlElement();
-    if (element instanceof XmlTag) {
-      final XmlTag simpleContent = XmlUtil.getSchemaSimpleContent((XmlTag)element);
-      if (simpleContent != null && XmlUtil.collectEnumerationValues(simpleContent, new HashSet<String>())) {
-        return Collections.emptyList();
-      }
-    }
-    return Arrays.asList(myType.getEnumConstants());
-  }
+	public String getErrorMessage(@Nullable final String s, final ConvertContext context)
+	{
+		return CodeInsightBundle.message("error.unknown.enum.value.message", s);
+	}
+
+	@Nonnull
+	public Collection<? extends T> getVariants(final ConvertContext context)
+	{
+		final XmlElement element = context.getXmlElement();
+		if(element instanceof XmlTag)
+		{
+			final XmlTag simpleContent = XmlUtil.getSchemaSimpleContent((XmlTag) element);
+			if(simpleContent != null && XmlUtil.collectEnumerationValues(simpleContent, new HashSet<String>()))
+			{
+				return Collections.emptyList();
+			}
+		}
+		return Arrays.asList(myType.getEnumConstants());
+	}
 }

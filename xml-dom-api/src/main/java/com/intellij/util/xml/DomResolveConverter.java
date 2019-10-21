@@ -15,13 +15,6 @@
  */
 package com.intellij.util.xml;
 
-import gnu.trove.THashMap;
-
-import java.util.Collection;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.ide.TypePresentationService;
@@ -35,6 +28,12 @@ import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.SoftFactoryMap;
 import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
+import gnu.trove.THashMap;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Converter which resolves {@link com.intellij.util.xml.DomElement}s by name in a defined scope. The scope is taken
@@ -43,12 +42,7 @@ import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
  * @author peter
  */
 public class DomResolveConverter<T extends DomElement> extends ResolvingConverter<T>{
-  private static final ConcurrentFactoryMap<Class<? extends DomElement>,DomResolveConverter> ourCache = new ConcurrentFactoryMap<Class<? extends DomElement>, DomResolveConverter>() {
-    @Nonnull
-    protected DomResolveConverter create(final Class<? extends DomElement> key) {
-      return new DomResolveConverter(key);
-    }
-  };
+  private static final Map<Class<? extends DomElement>,DomResolveConverter> ourCache = ConcurrentFactoryMap.createMap(DomResolveConverter::new);
   private final boolean myAttribute;
   private final SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>> myResolveCache = new SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>>() {
     @Nonnull

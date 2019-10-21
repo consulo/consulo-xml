@@ -15,19 +15,6 @@
  */
 package com.intellij.util.xml;
 
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.psi.xml.XmlDocument;
@@ -40,6 +27,12 @@ import com.intellij.util.containers.ConcurrentInstanceMap;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 import consulo.ui.image.Image;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * @author peter
@@ -49,7 +42,7 @@ public class DomFileDescription<T>
 {
 	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.fileDescription");
 
-	private final ConcurrentInstanceMap<ScopeProvider> myScopeProviders = new ConcurrentInstanceMap<>();
+	private final Map<Class<? extends ScopeProvider>, ScopeProvider> myScopeProviders = ConcurrentInstanceMap.create();
 	protected final Class<T> myRootElementClass;
 	protected final String myRootTagName;
 	private final String[] myAllPossibleRootTagNamespaces;

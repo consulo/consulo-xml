@@ -54,7 +54,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 			@Nonnull final GlobalInspectionContext globalContext,
 			@Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
 	{
-		HighlightInfoHolder myHolder = new HighlightInfoHolder(file, Collections.emptyList())
+		HighlightInfoHolder myHolder = new HighlightInfoHolder(file)
 		{
 			@Override
 			public boolean add(@Nullable HighlightInfo info)

@@ -72,7 +72,6 @@ public class XmlParameterInfoHandler implements ParameterInfoHandler<XmlTag,XmlE
     final XmlElementDescriptor descriptor = tag != null ? tag.getDescriptor() : null;
 
     if (descriptor == null) {
-      DaemonCodeAnalyzer.getInstance(context.getProject()).updateVisibleHighlighters(context.getEditor());
       return null;
     }
 

@@ -1,22 +1,18 @@
 package com.intellij.util.xml.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.intellij.openapi.paths.PathReference;
+import com.intellij.util.containers.ConcurrentFactoryMap;
+import com.intellij.util.containers.ConcurrentInstanceMap;
+import com.intellij.util.xml.*;
+import com.intellij.util.xml.converters.PathReferenceConverter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import com.intellij.openapi.paths.PathReference;
-import com.intellij.util.containers.ConcurrentInstanceMap;
-import com.intellij.util.xml.Converter;
-import com.intellij.util.xml.ConverterManager;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomResolveConverter;
-import com.intellij.util.xml.EnumConverter;
-import com.intellij.util.xml.ResolvingConverter;
-import com.intellij.util.xml.converters.PathReferenceConverter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author peter
@@ -26,16 +22,11 @@ public class ConverterManagerImpl implements ConverterManager
 {
 	private final ImplementationClassCache myImplementationClassCache = new ImplementationClassCache(DomImplementationClassEP.CONVERTER_EP_NAME);
 
-	private final ConcurrentInstanceMap<Object> myConverterInstances = new ConcurrentInstanceMap<Object>()
-	{
-		@Nonnull
-		@Override
-		protected Object create(Class key)
-		{
-			Class implementation = myImplementationClassCache.get(key);
-			return super.create(implementation == null ? key : implementation);
-		}
-	};
+	private final ConcurrentMap<Class, Object> myConverterInstances = ConcurrentFactoryMap.createMap(key -> {
+		Class implementation = myImplementationClassCache.get(key);
+		return ConcurrentInstanceMap.calculate(implementation == null ? key : implementation);
+	});
+
 	private final Map<Class, Converter> mySimpleConverters = new HashMap<Class, Converter>();
 
 	@Inject

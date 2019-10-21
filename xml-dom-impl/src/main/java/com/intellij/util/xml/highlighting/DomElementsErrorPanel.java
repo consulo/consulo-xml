@@ -16,14 +16,6 @@
 
 package com.intellij.util.xml.highlighting;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
-
-import javax.annotation.Nonnull;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import com.intellij.codeInsight.daemon.impl.SeverityRegistrar;
 import com.intellij.codeInsight.daemon.impl.TrafficLightRenderer;
 import com.intellij.icons.AllIcons;
@@ -42,6 +34,10 @@ import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ui.CommittablePanel;
 import com.intellij.util.xml.ui.Highlightable;
+
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * User: Sergey.Vasiliev
@@ -153,7 +149,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 	{
 		super.paintComponent(g);
 
-		myErrorStripeRenderer.paint(this, g, new Point(0, 0));
+		myErrorStripeRenderer.paint(this, g, new Rectangle(0, 0, getWidth(), getHeight()));
 	}
 
 	@Override

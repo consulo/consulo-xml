@@ -15,19 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import static com.intellij.util.containers.ContainerUtil.newArrayList;
-
-import gnu.trove.THashSet;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
-
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.extensions.Extensions;
@@ -40,6 +27,17 @@ import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileDescription;
 import com.intellij.util.xml.TypeChooserManager;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
+import gnu.trove.THashSet;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Singleton;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static com.intellij.util.containers.ContainerUtil.newArrayList;
 
 /**
  * @author peter
@@ -47,27 +45,16 @@ import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 @Singleton
 public class DomApplicationComponent
 {
-	private final FactoryMap<String, Set<DomFileDescription>> myRootTagName2FileDescription = new FactoryMap<String, Set<DomFileDescription>>()
-	{
-		protected Set<DomFileDescription> create(final String key)
-		{
-			return new THashSet<DomFileDescription>();
-		}
-	};
+	private final Map<String, Set<DomFileDescription>> myRootTagName2FileDescription = FactoryMap.create(k -> new THashSet<DomFileDescription>());
 	private final Set<DomFileDescription> myAcceptingOtherRootTagNamesDescriptions = new THashSet<DomFileDescription>();
 	private final ImplementationClassCache myCachedImplementationClasses = new ImplementationClassCache(DomImplementationClassEP.EP_NAME);
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	final ReflectionAssignabilityCache assignabilityCache = new ReflectionAssignabilityCache();
-	private final Map<Class, DomElementsAnnotator> myClass2Annotator = new ConcurrentFactoryMap<Class, DomElementsAnnotator>()
+	private final Map<Class, DomElementsAnnotator> myClass2Annotator = ConcurrentFactoryMap.createMap(key ->
 	{
-
-		@Override
-		protected DomElementsAnnotator create(Class key)
-		{
-			final DomFileDescription desc = findFileDescription(key);
-			return desc == null ? null : desc.createAnnotator();
-		}
-	};
+		final DomFileDescription desc = findFileDescription(key);
+		return desc == null ? null : desc.createAnnotator();
+	});
 
 	private final SofterCache<Type, StaticGenericInfo> myGenericInfos = SofterCache.create(new NotNullFunction<Type, StaticGenericInfo>()
 	{
@@ -87,16 +74,7 @@ public class DomApplicationComponent
 			return new InvocationCache(key);
 		}
 	});
-	private final ConcurrentFactoryMap<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions = new
-			ConcurrentFactoryMap<Class<? extends DomElementVisitor>, VisitorDescription>()
-	{
-		@Nonnull
-		protected VisitorDescription create(final Class<? extends DomElementVisitor> key)
-		{
-			return new VisitorDescription(key);
-		}
-	};
-
+	private final Map<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions = ConcurrentFactoryMap.createMap(key -> new VisitorDescription(key));
 
 	public DomApplicationComponent()
 	{
@@ -198,7 +176,7 @@ public class DomApplicationComponent
 	}
 
 	public final void registerImplementation(Class<? extends DomElement> domElementClass, Class<? extends DomElement> implementationClass,
-			@Nullable final Disposable parentDisposable)
+											 @Nullable final Disposable parentDisposable)
 	{
 		myCachedImplementationClasses.registerImplementation(domElementClass, implementationClass, parentDisposable);
 	}

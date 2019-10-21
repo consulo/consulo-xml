@@ -15,8 +15,6 @@
  */
 package com.intellij.util.xml.stubs.index;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileWithId;
 import com.intellij.psi.PsiFile;
@@ -27,6 +25,8 @@ import com.intellij.psi.stubs.StubIndexKey;
 import com.intellij.util.CommonProcessors;
 import com.intellij.util.indexing.IdFilter;
 import com.intellij.util.xml.DomFileElement;
+
+import javax.annotation.Nonnull;
 
 /**
  * @since 13.0
@@ -53,15 +53,14 @@ public class DomNamespaceKeyIndex extends StringStubIndexExtension<PsiFile>
 
 		final int virtualFileId = ((VirtualFileWithId) file).getId();
 		CommonProcessors.FindFirstProcessor<PsiFile> processor = new CommonProcessors.FindFirstProcessor<PsiFile>();
-		StubIndex.getInstance().process(KEY, namespaceKey, domFileElement.getFile().getProject(), GlobalSearchScope.fileScope(domFileElement.getFile
-				()), new IdFilter()
+		StubIndex.getInstance().processElements(KEY, namespaceKey, domFileElement.getFile().getProject(), GlobalSearchScope.fileScope(domFileElement.getFile()), new IdFilter()
 		{
 			@Override
 			public boolean containsFileId(int id)
 			{
 				return id == virtualFileId;
 			}
-		}, processor);
+		}, PsiFile.class, processor);
 		return processor.isFound();
 	}
 
