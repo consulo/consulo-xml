@@ -15,16 +15,6 @@
  */
 package com.intellij.xml.impl.schema;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -50,6 +40,9 @@ import com.intellij.xml.index.SchemaTypeInheritanceIndex;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
 
+import javax.annotation.Nonnull;
+import java.util.*;
+
 /**
  * User: Irina.Chernushina
  * Date: 7/5/12
@@ -58,7 +51,7 @@ import com.intellij.xml.util.XmlUtil;
 public class SchemaDefinitionsSearch implements QueryExecutor<PsiElement, DefinitionsScopedSearch.SearchParameters>
 {
 	@Override
-	public boolean execute(@Nonnull final DefinitionsScopedSearch.SearchParameters parameters, @Nonnull final Processor<PsiElement> consumer)
+	public boolean execute(@Nonnull final DefinitionsScopedSearch.SearchParameters parameters, @Nonnull final Processor<? super PsiElement> consumer)
 	{
 		PsiElement queryParameters = parameters.getElement();
 		if(queryParameters instanceof XmlTagImpl)
