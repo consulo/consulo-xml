@@ -45,9 +45,9 @@ import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import com.intellij.xml.util.XmlResourceResolver;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 import org.xml.sax.SAXParseException;
 
+import javax.annotation.Nonnull;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
@@ -147,7 +147,7 @@ public class ExternalDocumentValidator {
                 return;
               }
 
-              final VirtualFile errorFile = myHandler.getFile(e.getPublicId(), e.getSystemId());
+              final VirtualFile errorFile = myHandler.getProblemFile(e);
               if (!Comparing.equal(errorFile, file.getVirtualFile()) && errorFile != null) {
                 return; // error in attached schema
               }

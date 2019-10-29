@@ -148,6 +148,8 @@
 						beanClass="com.intellij.util.KeyedLazyInstanceEP">
 			<with attribute="implementationClass" implements="com.intellij.psi.impl.source.xml.XmlPsiPolicy"/>
 		</extensionPoint>
+
+		<extensionPoint name="validateHandler" interface="com.intellij.xml.actions.validate.ValidateXmlHandler"/>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">

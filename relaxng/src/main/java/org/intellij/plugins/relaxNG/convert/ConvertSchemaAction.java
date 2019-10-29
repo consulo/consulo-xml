@@ -20,7 +20,7 @@ import java.io.File;
 
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
-import org.intellij.plugins.relaxNG.validation.ValidateAction;
+import org.intellij.plugins.relaxNG.validation.RngValidateHandler;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -108,7 +108,7 @@ public class ConvertSchemaAction extends AnAction {
         return;
       }
 
-      ValidateAction.saveFiles(files);
+      RngValidateHandler.saveFiles(files);
 
       final ConvertSchemaSettings settings = dialog.getSettings();
       final IdeaErrorHandler errorHandler = new IdeaErrorHandler(project);

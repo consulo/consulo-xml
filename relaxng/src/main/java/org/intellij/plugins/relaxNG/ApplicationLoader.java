@@ -16,19 +16,8 @@
 
 package org.intellij.plugins.relaxNG;
 
-import javax.inject.Singleton;
-
-import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
-import org.intellij.plugins.relaxNG.inspections.RngDomInspection;
-import org.intellij.plugins.relaxNG.inspections.UnusedDefineInspection;
-import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
-import org.intellij.plugins.relaxNG.validation.ValidateAction;
-import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
-import org.intellij.plugins.relaxNG.xml.dom.impl.RngDefineMetaData;
 import com.intellij.javaee.ResourceRegistrar;
 import com.intellij.javaee.StandardResourceProvider;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.AndFilter;
 import com.intellij.psi.filters.ClassFilter;
@@ -39,27 +28,23 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
+import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
+import org.intellij.plugins.relaxNG.inspections.RngDomInspection;
+import org.intellij.plugins.relaxNG.inspections.UnusedDefineInspection;
+import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
+import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
+import org.intellij.plugins.relaxNG.xml.dom.impl.RngDefineMetaData;
+
+import javax.inject.Singleton;
 
 @Singleton
 public class ApplicationLoader
 {
-	private static final String RNG_EXT = "rng";
-	private static final String VALIDATE_XML = "ValidateXml";
 	public static final String RNG_NAMESPACE = "http://relaxng.org/ns/structure/1.0";
 
 	public ApplicationLoader()
 	{
 		registerMetaData();
-
-		installValidateXmlAction();
-	}
-
-	private static void installValidateXmlAction()
-	{
-		final ActionManager mgr = ActionManager.getInstance();
-		final AnAction validateAction = mgr.getAction(VALIDATE_XML);
-		mgr.unregisterAction(VALIDATE_XML);
-		mgr.registerAction(VALIDATE_XML, new ValidateAction(validateAction));
 	}
 
 	private static void registerMetaData()

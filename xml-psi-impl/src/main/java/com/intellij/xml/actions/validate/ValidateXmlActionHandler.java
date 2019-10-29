@@ -1,31 +1,23 @@
-/*
- * Copyright 2000-2009 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.xml.actions.validate;
 
-import java.io.StringReader;
-import java.util.Arrays;
-
-import javax.annotation.Nullable;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import com.intellij.javaee.UriUtil;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Key;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.xml.*;
+import com.intellij.util.ArrayUtilRt;
+import com.intellij.util.containers.ContainerUtil;
+import com.intellij.xml.util.XmlResourceResolver;
 import org.apache.xerces.impl.Constants;
+import org.apache.xerces.impl.XMLEntityManager;
 import org.apache.xerces.jaxp.JAXPConstants;
 import org.apache.xerces.jaxp.SAXParserFactoryImpl;
+import org.apache.xerces.util.SecurityManager;
 import org.apache.xerces.util.XMLGrammarPoolImpl;
 import org.apache.xerces.xni.grammars.XMLGrammarPool;
 import org.jetbrains.annotations.NonNls;
@@ -34,318 +26,501 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-import com.intellij.javaee.UriUtil;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.xml.util.XmlResourceResolver;
+
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author Mike
  */
-public class ValidateXmlActionHandler {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.actions.validate.ValidateXmlAction");
-  @NonNls private static final String SCHEMA_FULL_CHECKING_FEATURE_ID = "http://apache.org/xml/features/validation/schema-full-checking";
-  private static final String GRAMMAR_FEATURE_ID = Constants.XERCES_PROPERTY_PREFIX + Constants.XMLGRAMMAR_POOL_PROPERTY;
+public class ValidateXmlActionHandler implements ValidateXmlHandler
+{
+	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.actions.validate.ValidateXmlAction");
 
-  private static final Key<XMLGrammarPool> GRAMMAR_POOL_KEY = Key.create("GrammarPoolKey");
-  private static final Key<Long> GRAMMAR_POOL_TIME_STAMP_KEY = Key.create("GrammarPoolTimeStampKey");
-  private static final Key<VirtualFile[]> DEPENDENT_FILES_KEY = Key.create("GrammarPoolFilesKey");
-  private static final Key<String[]> KNOWN_NAMESPACES_KEY = Key.create("KnownNamespacesKey");
+	private static final String SCHEMA_FULL_CHECKING_FEATURE_ID = "http://apache.org/xml/features/validation/schema-full-checking";
+	private static final String GRAMMAR_FEATURE_ID = Constants.XERCES_PROPERTY_PREFIX + Constants.XMLGRAMMAR_POOL_PROPERTY;
+	private static final String ENTITY_MANAGER_PROPERTY_ID = Constants.XERCES_PROPERTY_PREFIX + Constants.ENTITY_MANAGER_PROPERTY;
 
-  private Project myProject;
-  private XmlFile myFile;
-  private ErrorReporter myErrorReporter;
-  private SAXParser myParser;
-  private XmlResourceResolver myXmlResourceResolver;
-  private final boolean myForceChecking;
-  @NonNls
-  private static final String ENTITY_RESOLVER_PROPERTY_NAME = "http://apache.org/xml/properties/internal/entity-resolver";
+	private static final Key<XMLGrammarPool> GRAMMAR_POOL_KEY = Key.create("GrammarPoolKey");
+	private static final Key<Long> GRAMMAR_POOL_TIME_STAMP_KEY = Key.create("GrammarPoolTimeStampKey");
+	private static final Key<VirtualFile[]> DEPENDENT_FILES_KEY = Key.create("GrammarPoolFilesKey");
+	private static final Key<String[]> KNOWN_NAMESPACES_KEY = Key.create("KnownNamespacesKey");
+	private static final Key<Map<String, XMLEntityManager.Entity>> ENTITIES_KEY = Key.create("EntityManagerKey");
+	public static final String JDK_XML_MAX_OCCUR_LIMIT = "jdk.xml.maxOccurLimit";
 
-  public ValidateXmlActionHandler(boolean _forceChecking) {
-    myForceChecking = _forceChecking;
-  }
+	private Project myProject;
+	private XmlFile myFile;
+	private ErrorReporter myErrorReporter;
+	private SAXParser myParser;
+	private XmlResourceResolver myXmlResourceResolver;
+	private final boolean myForceChecking;
+	@NonNls
+	private static final String ENTITY_RESOLVER_PROPERTY_NAME = "http://apache.org/xml/properties/internal/entity-resolver";
 
-  public void setErrorReporter(ErrorReporter errorReporter) {
-    myErrorReporter = errorReporter;
-  }
+	public ValidateXmlActionHandler(boolean _forceChecking)
+	{
+		myForceChecking = _forceChecking;
+	}
 
-  public VirtualFile getFile(String publicId, String systemId) {
-    if (publicId == null) {
-      if (systemId != null) {
-        final String path = myXmlResourceResolver.getPathByPublicId(systemId);
-        if (path != null) return UriUtil.findRelativeFile(path,null);
-        final PsiFile file = myXmlResourceResolver.resolve(null, systemId);
-        if (file != null) return file.getVirtualFile();
-      }
-      return myFile.getVirtualFile();
-    }
-    final String path = myXmlResourceResolver.getPathByPublicId(publicId);
-    if (path != null) return UriUtil.findRelativeFile(path,null);
-    return null;
-  }
+	public void setErrorReporter(ErrorReporter errorReporter)
+	{
+		myErrorReporter = errorReporter;
+	}
 
-  public enum ProblemType { WARNING, ERROR, FATAL }
+	public VirtualFile getProblemFile(SAXParseException ex)
+	{
+		String publicId = ex.getPublicId();
+		String systemId = ex.getSystemId();
+		if(publicId == null)
+		{
+			if(systemId != null)
+			{
+				if(systemId.startsWith("file:/"))
+				{
+					VirtualFile file = VirtualFileManager.getInstance()
+							.findFileByUrl(systemId.startsWith("file://") ? systemId : systemId.replace("file:/", "file://"));
+					if(file != null)
+					{
+						return file;
+					}
+				}
+				final String path = myXmlResourceResolver.getPathByPublicId(systemId);
+				if(path != null)
+				{
+					return UriUtil.findRelativeFile(path, null);
+				}
+				final PsiFile file = myXmlResourceResolver.resolve(null, systemId);
+				if(file != null)
+				{
+					return file.getVirtualFile();
+				}
+			}
+			return myFile.getVirtualFile();
+		}
+		final String path = myXmlResourceResolver.getPathByPublicId(publicId);
+		if(path != null)
+		{
+			return UriUtil.findRelativeFile(path, null);
+		}
+		return null;
+	}
 
-  public String buildMessageString(SAXParseException ex) {
-    String msg = "(" + ex.getLineNumber() + ":" + ex.getColumnNumber() + ") " + ex.getMessage();
-    final VirtualFile file = getFile(ex.getPublicId(), ex.getSystemId());
+	public enum ProblemType
+	{
+		WARNING,
+		ERROR,
+		FATAL
+	}
 
-    if ( file != null && !file.equals(myFile.getVirtualFile())) {
-      msg = file.getName() + ":" + msg;
-    }
-    return msg;
-  }
+	public String buildMessageString(SAXParseException ex)
+	{
+		String msg = "(" + ex.getLineNumber() + ":" + ex.getColumnNumber() + ") " + ex.getMessage();
+		final VirtualFile file = getProblemFile(ex);
 
-  public void doValidate(XmlFile file) {
-    myProject = file.getProject();
-    myFile = file;
+		if(file != null && !file.equals(myFile.getVirtualFile()))
+		{
+			msg = file.getName() + ":" + msg;
+		}
+		return msg;
+	}
 
-    myXmlResourceResolver = new XmlResourceResolver(myFile, myProject, myErrorReporter);
-    myXmlResourceResolver.setStopOnUnDeclaredResource( myErrorReporter.isStopOnUndeclaredResource() );
+	@Override
+	public boolean isAvailable(XmlFile file)
+	{
+		return true;
+	}
 
-    try {
-      try {
-        myParser = createParser();
-      }
-      catch (Exception e) {
-        filterAppException(e);
-      }
+	@Override
+	public void doValidate(XmlFile file)
+	{
+		myProject = file.getProject();
+		myFile = file;
 
-      if (myParser == null) return;
+		myXmlResourceResolver = new XmlResourceResolver(myFile, myProject, myErrorReporter);
+		myXmlResourceResolver.setStopOnUnDeclaredResource(myErrorReporter.isStopOnUndeclaredResource());
 
-      myErrorReporter.startProcessing();
-    }
-    catch (XmlResourceResolver.IgnoredResourceException ignore) {
-    }
-    catch (Exception exception) {
-      filterAppException(exception);
-    }
-  }
+		try
+		{
+			try
+			{
+				myParser = createParser();
+			}
+			catch(Exception e)
+			{
+				filterAppException(e);
+			}
 
-  private void filterAppException(Exception exception) {
-    if (!myErrorReporter.filterValidationException(exception)) {
-      LOG.error(exception);
-    }
-  }
+			if(myParser == null)
+			{
+				return;
+			}
 
-  public void doParse() {
-    try {
-      myParser.parse(new InputSource(new StringReader(myFile.getText())), new DefaultHandler() {
-        public void warning(SAXParseException e) throws SAXException {
-          if (myErrorReporter.isUniqueProblem(e)) myErrorReporter.processError(e, ProblemType.WARNING);
-        }
+			myErrorReporter.startProcessing();
+		}
+		catch(XmlResourceResolver.IgnoredResourceException ignore)
+		{
+		}
+		catch(Exception exception)
+		{
+			filterAppException(exception);
+		}
+	}
 
-        public void error(SAXParseException e) throws SAXException {
-          if (myErrorReporter.isUniqueProblem(e)) myErrorReporter.processError(e, ProblemType.ERROR);
-        }
+	private void filterAppException(Exception exception)
+	{
+		if(!myErrorReporter.filterValidationException(exception))
+		{
+			LOG.error(exception);
+		}
+	}
 
-        public void fatalError(SAXParseException e) throws SAXException {
-          if (myErrorReporter.isUniqueProblem(e)) myErrorReporter.processError(e, ProblemType.FATAL);
-        }
+	public void doParse()
+	{
+		try
+		{
+			InputSource inputSource = new InputSource(new StringReader(myFile.getText()));
+			inputSource.setSystemId(myFile.getVirtualFile().getUrl().replace("file:", "file:/"));
+			myParser.parse(inputSource, new DefaultHandler()
+			{
+				@Override
+				public void warning(SAXParseException e) throws SAXException
+				{
+					if(myErrorReporter.isUniqueProblem(e))
+					{
+						myErrorReporter.processError(e, ProblemType.WARNING);
+					}
+				}
 
-        public InputSource resolveEntity(String publicId, String systemId) {
-          final PsiFile psiFile = myXmlResourceResolver.resolve(null, systemId);
-          if (psiFile == null) return null;
-          return new InputSource(new StringReader(psiFile.getText()));
-        }
+				@Override
+				public void error(SAXParseException e) throws SAXException
+				{
+					if(myErrorReporter.isUniqueProblem(e))
+					{
+						myErrorReporter.processError(e, ProblemType.ERROR);
+					}
+				}
 
-        public void startDocument() throws SAXException {
-          super.startDocument();
-          myParser.setProperty(
-            ENTITY_RESOLVER_PROPERTY_NAME,
-            myXmlResourceResolver
-          );
-        }
-      });
+				@Override
+				public void fatalError(SAXParseException e) throws SAXException
+				{
+					if(myErrorReporter.isUniqueProblem(e))
+					{
+						myErrorReporter.processError(e, ProblemType.FATAL);
+					}
+				}
 
-      final String[] resourcePaths = myXmlResourceResolver.getResourcePaths();
-      if (resourcePaths.length > 0) { // if caches are used
-        final VirtualFile[] files = new VirtualFile[resourcePaths.length];
-        for (int i = 0; i < resourcePaths.length; ++i) {
-          files[i] = UriUtil.findRelativeFile(resourcePaths[i], null);
-        }
+				@Override
+				public InputSource resolveEntity(String publicId, String systemId)
+				{
+					final PsiFile psiFile = myXmlResourceResolver.resolve(null, systemId);
+					if(psiFile == null)
+					{
+						return null;
+					}
+					return new InputSource(new StringReader(psiFile.getText()));
+				}
 
-        myFile.putUserData(DEPENDENT_FILES_KEY, files);
-        myFile.putUserData(GRAMMAR_POOL_TIME_STAMP_KEY, new Long(calculateTimeStamp(files, myProject)));
-      }
-      myFile.putUserData(KNOWN_NAMESPACES_KEY, getNamespaces(myFile));
-    }
-    catch (SAXException e) {
-      LOG.debug(e);
-    }
-    catch (Exception exception) {
-      filterAppException(exception);
-    }
-    catch (StackOverflowError error) {
-      // http://issues.apache.org/jira/browse/XERCESJ-589
-    }
-  }
+				@Override
+				public void startDocument() throws SAXException
+				{
+					super.startDocument();
+					myParser.setProperty(
+							ENTITY_RESOLVER_PROPERTY_NAME,
+							myXmlResourceResolver
+					);
+					configureEntityManager(myFile, myParser);
+				}
+			});
 
-  protected SAXParser createParser() throws SAXException, ParserConfigurationException {
-    if (!needsDtdChecking() && !needsSchemaChecking() && !myForceChecking) {
-      return null;
-    }
+			final String[] resourcePaths = myXmlResourceResolver.getResourcePaths();
+			if(resourcePaths.length > 0)
+			{ // if caches are used
+				final VirtualFile[] files = new VirtualFile[resourcePaths.length];
+				for(int i = 0; i < resourcePaths.length; ++i)
+				{
+					files[i] = UriUtil.findRelativeFile(resourcePaths[i], null);
+				}
 
-    SAXParserFactory factory = new SAXParserFactoryImpl();
-    boolean schemaChecking = false;
+				myFile.putUserData(DEPENDENT_FILES_KEY, files);
+				myFile.putUserData(GRAMMAR_POOL_TIME_STAMP_KEY, calculateTimeStamp(files, myProject));
+			}
+			myFile.putUserData(KNOWN_NAMESPACES_KEY, getNamespaces(myFile));
+		}
+		catch(SAXException e)
+		{
+			LOG.debug(e);
+		}
+		catch(Exception exception)
+		{
+			filterAppException(exception);
+		}
+		catch(StackOverflowError error)
+		{
+			// http://issues.apache.org/jira/browse/XERCESJ-589
+		}
+	}
 
-    if (hasDtdDeclaration()) {
-      factory.setValidating(true);
-    }
+	protected SAXParser createParser() throws SAXException, ParserConfigurationException
+	{
+		if(!needsDtdChecking() && !needsSchemaChecking() && !myForceChecking)
+		{
+			return null;
+		}
 
-    if (needsSchemaChecking()) {
-      factory.setValidating(true);
-      factory.setNamespaceAware(true);
-      //jdk 1.5 API
-      try {
-        factory.setXIncludeAware(true);
-      } catch(NoSuchMethodError ignore) {}
-      schemaChecking = true;
-    }
+		SAXParserFactory factory = new SAXParserFactoryImpl();
+		boolean schemaChecking = false;
 
-    SAXParser parser = factory.newSAXParser();
+		if(hasDtdDeclaration())
+		{
+			factory.setValidating(true);
+		}
 
-    parser.setProperty(ENTITY_RESOLVER_PROPERTY_NAME, myXmlResourceResolver);
+		if(needsSchemaChecking())
+		{
+			factory.setValidating(true);
+			factory.setNamespaceAware(true);
+			//jdk 1.5 API
+			try
+			{
+				factory.setXIncludeAware(true);
+			}
+			catch(NoSuchMethodError ignore)
+			{
+			}
+			schemaChecking = true;
+		}
+		try
+		{
+			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		}
+		catch(Exception ignore)
+		{
+		}
 
-    if (schemaChecking) { // when dtd checking schema refs could not be validated @see http://marc.theaimsgroup.com/?l=xerces-j-user&m=112504202423704&w=2
-      XMLGrammarPool grammarPool = getGrammarPool(myFile, myForceChecking);
+		SAXParser parser = factory.newSAXParser();
 
-      parser.getXMLReader().setProperty(GRAMMAR_FEATURE_ID, grammarPool);
-    }
+		parser.setProperty(ENTITY_RESOLVER_PROPERTY_NAME, myXmlResourceResolver);
 
-    try {
-      if (schemaChecking) {
-        parser.setProperty(JAXPConstants.JAXP_SCHEMA_LANGUAGE,JAXPConstants.W3C_XML_SCHEMA);
-        parser.getXMLReader().setFeature(SCHEMA_FULL_CHECKING_FEATURE_ID, true);
+		try
+		{
+			parser.getXMLReader().setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		}
+		catch(Exception ignore)
+		{
+		}
 
-        if (Boolean.TRUE.equals(Boolean.getBoolean(XmlResourceResolver.HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY))) {
-          parser.getXMLReader().setFeature("http://apache.org/xml/features/honour-all-schemaLocations", true);
-        }
+		String property = System.getProperty(JDK_XML_MAX_OCCUR_LIMIT);
+		if(property != null)
+		{
+			SecurityManager securityManager = (SecurityManager) parser.getProperty(Constants.XERCES_PROPERTY_PREFIX + Constants.SECURITY_MANAGER_PROPERTY);
+			securityManager.setMaxOccurNodeLimit(Integer.parseInt(property));
+		}
 
-        parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/warn-on-undeclared-elemdef",Boolean.TRUE);
-        parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/warn-on-duplicate-attdef",Boolean.TRUE);
-      }
+		if(schemaChecking)
+		{ // when dtd checking schema refs could not be validated @see http://marc.theaimsgroup.com/?l=xerces-j-user&m=112504202423704&w=2
+			XMLGrammarPool grammarPool = getGrammarPool(myFile, myForceChecking);
+			configureEntityManager(myFile, parser);
+			parser.getXMLReader().setProperty(GRAMMAR_FEATURE_ID, grammarPool);
+		}
+		try
+		{
+			if(schemaChecking)
+			{
+				parser.setProperty(JAXPConstants.JAXP_SCHEMA_LANGUAGE, JAXPConstants.W3C_XML_SCHEMA);
+				parser.getXMLReader().setFeature(SCHEMA_FULL_CHECKING_FEATURE_ID, true);
 
-      parser.getXMLReader().setFeature("http://apache.org/xml/features/warn-on-duplicate-entitydef",Boolean.TRUE);
-      parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/unparsed-entity-checking",Boolean.FALSE);
-    } catch(SAXNotRecognizedException ex) {
-      // it is possible to continue work with configured parser
-      LOG.info("Xml parser installation seems screwed", ex);
-    }
+				if(Boolean.TRUE.equals(Boolean.getBoolean(XmlResourceResolver.HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY)))
+				{
+					parser.getXMLReader().setFeature("http://apache.org/xml/features/honour-all-schemaLocations", true);
+				}
 
-    return parser;
-  }
+				parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/warn-on-undeclared-elemdef", Boolean.TRUE);
+				parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/warn-on-duplicate-attdef", Boolean.TRUE);
+			}
 
-  public static XMLGrammarPool getGrammarPool(XmlFile file, boolean forceChecking) {
-    final XMLGrammarPool previousGrammarPool = getGrammarPool(file);
-    XMLGrammarPool grammarPool = null;
+			parser.getXMLReader().setFeature("http://apache.org/xml/features/warn-on-duplicate-entitydef", Boolean.TRUE);
+			parser.getXMLReader().setFeature("http://apache.org/xml/features/validation/unparsed-entity-checking", Boolean.FALSE);
+		}
+		catch(SAXNotRecognizedException ex)
+		{
+			// it is possible to continue work with configured parser
+			LOG.info("Xml parser installation seems screwed", ex);
+		}
 
-    // check if the pool is valid
-    if (!forceChecking && !isValidationDependentFilesOutOfDate(file)) {
-      grammarPool = previousGrammarPool;
-    }
+		return parser;
+	}
 
-    if (grammarPool == null) {
-      grammarPool = new XMLGrammarPoolImpl();
-      file.putUserData(GRAMMAR_POOL_KEY,grammarPool);
-    }
-    return grammarPool;
-  }
+	public static XMLGrammarPool getGrammarPool(XmlFile file, boolean forceChecking)
+	{
+		final XMLGrammarPool previousGrammarPool = getGrammarPool(file);
+		XMLGrammarPool grammarPool = null;
 
-  @Nullable
-  public static XMLGrammarPool getGrammarPool(XmlFile file) {
-    return file.getUserData(GRAMMAR_POOL_KEY);
-  }
+		// check if the pool is valid
+		if(!forceChecking && !isValidationDependentFilesOutOfDate(file))
+		{
+			grammarPool = previousGrammarPool;
+		}
 
-  public static boolean isValidationDependentFilesOutOfDate(XmlFile myFile) {
-    final VirtualFile[] files = myFile.getUserData(DEPENDENT_FILES_KEY);
-    final Long grammarPoolTimeStamp = myFile.getUserData(GRAMMAR_POOL_TIME_STAMP_KEY);
-    String[] ns = myFile.getUserData(KNOWN_NAMESPACES_KEY);
+		if(grammarPool == null)
+		{
+			invalidateEntityManager(file);
+			grammarPool = new XMLGrammarPoolImpl();
+			file.putUserData(GRAMMAR_POOL_KEY, grammarPool);
+		}
+		return grammarPool;
+	}
 
-    if (!Arrays.equals(ns, getNamespaces(myFile))) {
-      return true;
-    }
+	@Nullable
+	public static XMLGrammarPool getGrammarPool(XmlFile file)
+	{
+		return file.getUserData(GRAMMAR_POOL_KEY);
+	}
 
-    if (grammarPoolTimeStamp != null && files != null) {
-      long dependentFilesTimestamp = calculateTimeStamp(files,myFile.getProject());
+	public static boolean isValidationDependentFilesOutOfDate(XmlFile myFile)
+	{
+		final VirtualFile[] files = myFile.getUserData(DEPENDENT_FILES_KEY);
+		final Long grammarPoolTimeStamp = myFile.getUserData(GRAMMAR_POOL_TIME_STAMP_KEY);
+		String[] ns = myFile.getUserData(KNOWN_NAMESPACES_KEY);
 
-      if (dependentFilesTimestamp == grammarPoolTimeStamp.longValue()) {
-        return false;
-      }
-    }
+		if(!Arrays.equals(ns, getNamespaces(myFile)))
+		{
+			return true;
+		}
 
-    return true;
-  }
+		if(grammarPoolTimeStamp != null && files != null)
+		{
+			long dependentFilesTimestamp = calculateTimeStamp(files, myFile.getProject());
 
-  private static String[] getNamespaces(XmlFile file) {
-    XmlTag rootTag = file.getRootTag();
-    if (rootTag == null) return ArrayUtil.EMPTY_STRING_ARRAY;
-    return ContainerUtil.mapNotNull(rootTag.getAttributes(), new Function<XmlAttribute, String>() {
-      @Override
-      public String fun(XmlAttribute attribute) {
-        return attribute.getValue();
-      }
-    }, ArrayUtil.EMPTY_STRING_ARRAY);
-  }
+			if(dependentFilesTimestamp == grammarPoolTimeStamp.longValue())
+			{
+				return false;
+			}
+		}
 
-  private static long calculateTimeStamp(final VirtualFile[] files, Project myProject) {
-    long timestamp = 0;
+		return true;
+	}
 
-    for(VirtualFile file:files) {
-      if (file == null || !file.isValid()) break;
-      final PsiFile psifile = PsiManager.getInstance(myProject).findFile(file);
+	private static void invalidateEntityManager(XmlFile file)
+	{
+		file.putUserData(ENTITIES_KEY, null);
+	}
 
-      if (psifile != null && psifile.isValid()) {
-        timestamp += psifile.getViewProvider().getModificationStamp();
-      } else {
-        break;
-      }
-    }
-    return timestamp;
-  }
+	private static void configureEntityManager(XmlFile file, SAXParser parser) throws SAXException
+	{
+		XMLEntityManager entityManager = (XMLEntityManager) parser.getXMLReader().getProperty(ENTITY_MANAGER_PROPERTY_ID);
+		Map<String, XMLEntityManager.Entity> entities = file.getUserData(ENTITIES_KEY);
+		if(entities != null)
+		{
+			// passing of entityManager object would break validation, so we copy its entities
+			Map<String, XMLEntityManager.Entity> map = XercesAccessor.getEntities(entityManager);
+			for(Map.Entry<String, XMLEntityManager.Entity> entry : entities.entrySet())
+			{
+				if(entry.getValue().isEntityDeclInExternalSubset())
+				{
+					map.put(entry.getKey(), entry.getValue());
+				}
+			}
+		}
+		else
+		{
+			file.putUserData(ENTITIES_KEY, XercesAccessor.getEntities(entityManager));
+		}
+	}
 
-  private boolean hasDtdDeclaration() {
-    XmlDocument document = myFile.getDocument();
-    if (document == null) return false;
-    XmlProlog prolog = document.getProlog();
-    if (prolog == null) return false;
-    XmlDoctype doctype = prolog.getDoctype();
-    if (doctype == null) return false;
+	private static String[] getNamespaces(XmlFile file)
+	{
+		XmlTag rootTag = file.getRootTag();
+		if(rootTag == null)
+		{
+			return ArrayUtilRt.EMPTY_STRING_ARRAY;
+		}
+		return ContainerUtil.mapNotNull(rootTag.getAttributes(), attribute -> attribute.getValue(), ArrayUtilRt.EMPTY_STRING_ARRAY);
+	}
 
-    return true;
-  }
+	private static long calculateTimeStamp(final VirtualFile[] files, Project myProject)
+	{
+		long timestamp = 0;
 
-  private boolean needsDtdChecking() {
-    XmlDocument document = myFile.getDocument();
-    if (document == null) return false;
+		for(VirtualFile file : files)
+		{
+			if(file == null || !file.isValid())
+			{
+				break;
+			}
+			final PsiFile psifile = PsiManager.getInstance(myProject).findFile(file);
 
-    return (document.getProlog()!=null && document.getProlog().getDoctype()!=null);
-  }
+			if(psifile != null && psifile.isValid())
+			{
+				timestamp += psifile.getViewProvider().getModificationStamp();
+			}
+			else
+			{
+				break;
+			}
+		}
+		return timestamp;
+	}
 
-  private boolean needsSchemaChecking() {
-    XmlDocument document = myFile.getDocument();
-    if (document == null) return false;
-    XmlTag rootTag = document.getRootTag();
-    if (rootTag == null) return false;
+	private boolean hasDtdDeclaration()
+	{
+		XmlDocument document = myFile.getDocument();
+		if(document == null)
+		{
+			return false;
+		}
+		XmlProlog prolog = document.getProlog();
+		if(prolog == null)
+		{
+			return false;
+		}
+		XmlDoctype doctype = prolog.getDoctype();
+		if(doctype == null)
+		{
+			return false;
+		}
 
-    XmlAttribute[] attributes = rootTag.getAttributes();
-    for (XmlAttribute attribute : attributes) {
-      if (attribute.isNamespaceDeclaration()) return true;
-    }
+		return true;
+	}
 
-    return false;
-  }
+	private boolean needsDtdChecking()
+	{
+		XmlDocument document = myFile.getDocument();
+		if(document == null)
+		{
+			return false;
+		}
+
+		return (document.getProlog() != null && document.getProlog().getDoctype() != null);
+	}
+
+	private boolean needsSchemaChecking()
+	{
+		XmlDocument document = myFile.getDocument();
+		if(document == null)
+		{
+			return false;
+		}
+		XmlTag rootTag = document.getRootTag();
+		if(rootTag == null)
+		{
+			return false;
+		}
+
+		XmlAttribute[] attributes = rootTag.getAttributes();
+		for(XmlAttribute attribute : attributes)
+		{
+			if(attribute.isNamespaceDeclaration())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
