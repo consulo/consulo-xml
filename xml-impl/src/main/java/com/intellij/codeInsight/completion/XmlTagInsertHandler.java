@@ -15,15 +15,9 @@
  */
 package com.intellij.codeInsight.completion;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.annotation.Nullable;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeInsight.TailType;
+import com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer;
 import com.intellij.codeInsight.lookup.Lookup;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupItem;
@@ -38,11 +32,12 @@ import com.intellij.codeInspection.htmlInspections.XmlEntitiesInspection;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.command.undo.UndoManager;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.RangeMarker;
 import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiDocumentManager;
@@ -53,20 +48,18 @@ import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementDescriptorWithCDataContent;
-import com.intellij.xml.XmlExtension;
-import com.intellij.xml.XmlTagRuleProvider;
+import com.intellij.xml.*;
 import com.intellij.xml.actions.GenerateXmlTagAction;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotations.RequiredDispatchThread;
 
+import javax.annotation.Nullable;
+import java.util.*;
+
 public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 {
-	public static final Key<Boolean> ENFORCING_TAG = Key.create("xml.insert.handler.enforcing.tag");
 	public static final XmlTagInsertHandler INSTANCE = new XmlTagInsertHandler();
 
 	@Override
@@ -75,16 +68,22 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 	{
 		Project project = context.getProject();
 		Editor editor = context.getEditor();
-		// Need to insert " " to prevent creating tags like <tagThis is my text
-		InjectedLanguageUtil.getTopLevelEditor(editor).getDocument().putUserData(ENFORCING_TAG, Boolean.TRUE);
-		final int offset = editor.getCaretModel().getOffset();
-		editor.getDocument().insertString(offset, " ");
-		PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
-		PsiElement current = context.getFile().findElementAt(context.getStartOffset());
-		editor.getDocument().deleteString(offset, offset + 1);
-		InjectedLanguageUtil.getTopLevelEditor(editor).getDocument().putUserData(ENFORCING_TAG, null);
+		Document document = InjectedLanguageUtil.getTopLevelEditor(editor).getDocument();
+		int startOffset = context.getStartOffset();
+		Ref<PsiElement> currentElementRef = Ref.create();
 
-		final XmlTag tag = PsiTreeUtil.getContextOfType(current, XmlTag.class, true);
+		// Need to insert " " to prevent creating tags like <tagThis is my text
+		PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
+		// Need to insert " " to prevent creating tags like <tagThis is my text
+		XmlTagNameSynchronizer.runWithoutCancellingSyncTagsEditing(document, () -> {
+			final int offset = editor.getCaretModel().getOffset();
+			editor.getDocument().insertString(offset, " ");
+			PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
+			currentElementRef.set(context.getFile().findElementAt(startOffset));
+			editor.getDocument().deleteString(offset, offset + 1);
+		});
+
+		final XmlTag tag = PsiTreeUtil.getContextOfType(currentElementRef.get(), XmlTag.class, true);
 
 		if(tag == null)
 		{

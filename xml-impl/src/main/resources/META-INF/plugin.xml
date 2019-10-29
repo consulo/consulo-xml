@@ -590,7 +590,8 @@
 		<textEditorHighlightingPassFactory implementation="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory" />
 
 		<applicationService serviceImplementation="com.intellij.javaee.DefaultHtmlDoctypeInitialConfigurator" lazy="false" />
-		<applicationService serviceImplementation="com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer" lazy="false" />
+
+		<editorFactoryListener implementation="com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer" />
 
 		<projectService serviceInterface="com.intellij.pom.xml.XmlAspect" serviceImplementation="com.intellij.pom.xml.impl.XmlAspectImpl" lazy="false" />
 		<projectService serviceImplementation="com.intellij.javaee.PsiExternalResourceNotifier" lazy="false" />
