@@ -15,13 +15,6 @@
  */
 package com.intellij.util.xml.ui;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JTextArea;
-
-import javax.annotation.Nonnull;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.fileTypes.PlainTextFileType;
@@ -34,6 +27,12 @@ import com.intellij.ui.EditorTextField;
 import com.intellij.ui.ReferenceEditorWithBrowseButton;
 import com.intellij.ui.UIBundle;
 import com.intellij.util.Function;
+
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author peter
@@ -88,13 +87,8 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 				return boundedComponent1 instanceof MultiLineTextPanel ? makeBigEditor(editor, ((MultiLineTextPanel) boundedComponent1).getRowCount
 						()) : editor;
 			}
-
-			@Override
-			protected boolean isOneLineMode()
-			{
-				return false;
-			}
 		};
+		editorTextField.setOneLineMode(false);
 
 		if(boundedComponent instanceof BigTextPanel)
 		{
@@ -114,13 +108,8 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 							editor.setEmbeddedIntoDialogWrapper(true);
 							return makeBigEditor(editor, 5);
 						}
-
-						@Override
-						protected boolean isOneLineMode()
-						{
-							return false;
-						}
 					};
+					textArea.setOneLineMode(false);
 
 					DialogBuilder builder = new DialogBuilder(project);
 					builder.setDimensionServiceKey("TextControl");
