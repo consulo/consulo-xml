@@ -227,7 +227,7 @@ public class ModelMergerImpl implements ModelMerger
 	public <T> T mergeModels(final Class<T> aClass, final T... implementations)
 	{
 	/*final Object o = myMergedMap.get(aClass).get(implementations);
-    if (o != null) {
+	if (o != null) {
       return (T)o;
     }*/
 		if(implementations.length == 1)
@@ -398,23 +398,12 @@ public class ModelMergerImpl implements ModelMerger
 		if(returnType.isInterface())
 		{
 			final List<Object> orderedPrimaryKeys = new SmartList<Object>();
-			final FactoryMap<Object, List<Set<Object>>> map = new FactoryMap<Object, List<Set<Object>>>()
+			final Map<Object, List<Set<Object>>> map = FactoryMap.create(key ->
 			{
-				@Nonnull
-				protected List<Set<Object>> create(final Object key)
-				{
-					orderedPrimaryKeys.add(key);
-					return new SmartList<Set<Object>>();
-				}
-			};
-			final FactoryMap<Object, int[]> counts = new FactoryMap<Object, int[]>()
-			{
-				@Nonnull
-				protected int[] create(final Object key)
-				{
-					return new int[implementations.size()];
-				}
-			};
+				orderedPrimaryKeys.add(key);
+				return new SmartList<Set<Object>>();
+			});
+			final Map<Object, int[]> counts = FactoryMap.create(k -> new int[implementations.size()]);
 			for(int i = 0; i < implementations.size(); i++)
 			{
 				Object t = implementations.get(i);
@@ -483,8 +472,8 @@ public class ModelMergerImpl implements ModelMerger
 	}
 
 	private boolean addToMaps(final Object o,
-							  final FactoryMap<Object, int[]> counts,
-							  final FactoryMap<Object, List<Set<Object>>> map,
+							  final Map<Object, int[]> counts,
+							  final Map<Object, List<Set<Object>>> map,
 							  final int index,
 							  final List<Object> results,
 							  final boolean singleValuedInvocation,

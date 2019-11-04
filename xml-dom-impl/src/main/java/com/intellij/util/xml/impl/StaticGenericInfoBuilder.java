@@ -15,22 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-import gnu.trove.TIntObjectHashMap;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.MultiValuesMap;
 import com.intellij.openapi.util.Pair;
@@ -39,6 +23,17 @@ import com.intellij.util.ReflectionUtil;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.FactoryMap;
 import com.intellij.util.xml.*;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+import gnu.trove.TIntObjectHashMap;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * @author peter
@@ -56,11 +51,7 @@ public class StaticGenericInfoBuilder {
   private final Map<XmlName, Type> myCollectionChildrenTypes = new THashMap<XmlName, Type>();
   private final Map<JavaMethodSignature, String[]> myCompositeCollectionGetters = new THashMap<JavaMethodSignature, String[]>();
   private final Map<JavaMethodSignature, Pair<String,String[]>> myCompositeCollectionAdders = new THashMap<JavaMethodSignature, Pair<String,String[]>>();
-  private final FactoryMap<XmlName, TIntObjectHashMap<Collection<JavaMethod>>> myFixedChildrenGetters = new FactoryMap<XmlName, TIntObjectHashMap<Collection<JavaMethod>>>() {
-    protected TIntObjectHashMap<Collection<JavaMethod>> create(final XmlName key) {
-      return new TIntObjectHashMap<Collection<JavaMethod>>();
-    }
-  };
+  private final Map<XmlName, TIntObjectHashMap<Collection<JavaMethod>>> myFixedChildrenGetters = FactoryMap.create(k -> new TIntObjectHashMap<Collection<JavaMethod>>());
   private final Map<JavaMethodSignature, AttributeChildDescriptionImpl> myAttributes = new THashMap<JavaMethodSignature, AttributeChildDescriptionImpl>();
 
   private boolean myValueElement;
