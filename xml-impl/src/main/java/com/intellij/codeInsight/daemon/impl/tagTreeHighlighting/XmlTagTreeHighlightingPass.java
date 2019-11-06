@@ -15,13 +15,6 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.codeHighlighting.TextEditorHighlightingPass;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
@@ -55,8 +48,15 @@ import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
-import com.intellij.ui.breadcrumbs.BreadcrumbsWrapper;
+import com.intellij.ui.breadcrumbs.BreadcrumbsUtilEx;
+import com.intellij.ui.breadcrumbs.PsiFileBreadcrumbsCollector;
 import consulo.annotations.RequiredReadAction;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eugene.Kudelevsky
@@ -80,7 +80,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		myFile = file;
 		myEditor = editor;
 		final FileViewProvider viewProvider = file.getManager().findViewProvider(file.getVirtualFile());
-		myInfoProvider = BreadcrumbsWrapper.findInfoProvider(editor, viewProvider);
+		myInfoProvider = BreadcrumbsUtilEx.findProvider(false, viewProvider);
 	}
 
 	@RequiredReadAction
@@ -98,7 +98,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		}
 
 		final int offset = myEditor.getCaretModel().getOffset();
-		PsiElement[] elements = BreadcrumbsWrapper.getLinePsiElements(offset, myFile.getVirtualFile(), myProject, myInfoProvider);
+		PsiElement[] elements = PsiFileBreadcrumbsCollector.getLinePsiElements(myEditor.getDocument(), offset, myFile.getVirtualFile(), myProject, myInfoProvider);
 
 		if(elements == null || elements.length == 0 || !XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements))
 		{
