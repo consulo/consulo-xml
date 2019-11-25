@@ -15,11 +15,11 @@
  */
 package com.intellij.codeInsight.editorActions.moveLeftRight;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
+
+import javax.annotation.Nonnull;
 
 public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler
 {

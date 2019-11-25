@@ -15,13 +15,6 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -40,7 +33,13 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Konstantin Bulenkov
@@ -83,14 +82,14 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 			final Set<String> ns = tag.getLocalNamespaceDeclarations().keySet();
 			final String nsPrefix = Messages.showInputDialog(project, "Namespace Prefix:", NAME, Messages.getInformationIcon(), "", new InputValidator()
 			{
-				@RequiredDispatchThread
+				@RequiredUIAccess
 				@Override
 				public boolean checkInput(String inputString)
 				{
 					return !ns.contains(inputString);
 				}
 
-				@RequiredDispatchThread
+				@RequiredUIAccess
 				@Override
 				public boolean canClose(String inputString)
 				{

@@ -45,7 +45,7 @@ import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import com.intellij.xml.util.XmlUtil;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -111,7 +111,7 @@ public class MapExternalResourceDialog extends DialogWrapper
 
 		ColoredTreeCellRenderer renderer = new ColoredTreeCellRenderer()
 		{
-			@RequiredDispatchThread
+			@RequiredUIAccess
 			@Override
 			public void customizeCellRenderer(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus)
 			{

@@ -15,10 +15,6 @@
  */
 package com.intellij.codeInsight.completion;
 
-import java.util.Collections;
-import java.util.Set;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.openapi.diagnostic.Logger;
@@ -37,7 +33,11 @@ import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -60,7 +60,7 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler
 		myNamespacePrefix = namespacePrefix;
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	@Override
 	public void handleInsert(final InsertionContext context, final LookupElement item)
 	{

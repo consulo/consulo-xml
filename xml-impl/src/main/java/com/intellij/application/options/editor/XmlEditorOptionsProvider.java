@@ -15,14 +15,14 @@
  */
 package com.intellij.application.options.editor;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.options.Configurable;
 import consulo.options.SimpleConfigurableByProperties;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
-import consulo.ui.RequiredUIAccess;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

@@ -1,14 +1,13 @@
 package com.intellij.xml.breadcrumbs;
 
-import java.util.StringTokenizer;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
+
+import javax.annotation.Nonnull;
+import java.util.StringTokenizer;
 
 /**
  * @author VISTALL

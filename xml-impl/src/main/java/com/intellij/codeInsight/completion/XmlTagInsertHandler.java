@@ -53,7 +53,7 @@ import com.intellij.xml.actions.GenerateXmlTagAction;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -63,7 +63,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 	public static final XmlTagInsertHandler INSTANCE = new XmlTagInsertHandler();
 
 	@Override
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void handleInsert(InsertionContext context, LookupElement item)
 	{
 		Project project = context.getProject();

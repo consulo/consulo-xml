@@ -26,16 +26,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.util.containers.ContainerUtil;
-import consulo.annotations.RequiredDispatchThread;
 import consulo.codeInsight.TargetElementUtil;
 import consulo.codeInsight.TargetElementUtilEx;
+import consulo.ui.annotation.RequiredUIAccess;
 
 /**
  * @author yole
  */
 public class XmlVcsSelectionProvider implements VcsSelectionProvider
 {
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public VcsSelection getSelection(VcsContext context)
 	{
 		final Editor editor = context.getEditor();
