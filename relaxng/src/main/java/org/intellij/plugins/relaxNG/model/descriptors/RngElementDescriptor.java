@@ -16,45 +16,14 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.namespace.QName;
-
-import org.intellij.plugins.relaxNG.compact.RncElementTypes;
-import org.intellij.plugins.relaxNG.compact.RncFileType;
-import org.intellij.plugins.relaxNG.validation.RngSchemaValidator;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
-import org.kohsuke.rngom.digested.DAttributePattern;
-import org.kohsuke.rngom.digested.DElementPattern;
-import org.kohsuke.rngom.digested.DEmptyPattern;
-import org.kohsuke.rngom.digested.DPattern;
-import org.kohsuke.rngom.digested.DTextPattern;
-import org.kohsuke.rngom.nc.NameClass;
-import org.kohsuke.rngom.nc.NameClassVisitor;
-import org.xml.sax.Locator;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.SmartPointerManager;
-import com.intellij.psi.SmartPsiElementPointer;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.ParameterizedCachedValue;
-import com.intellij.psi.util.ParameterizedCachedValueProvider;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.util.*;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
@@ -63,6 +32,19 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.util.dataholder.Key;
+import org.intellij.plugins.relaxNG.compact.RncElementTypes;
+import org.intellij.plugins.relaxNG.compact.RncFileType;
+import org.intellij.plugins.relaxNG.validation.RngSchemaValidator;
+import org.jetbrains.annotations.NonNls;
+import org.kohsuke.rngom.digested.*;
+import org.kohsuke.rngom.nc.NameClass;
+import org.kohsuke.rngom.nc.NameClassVisitor;
+import org.xml.sax.Locator;
+
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
+import java.util.*;
 
 public class RngElementDescriptor implements XmlElementDescriptor {
   private static final Key<ParameterizedCachedValue<XmlElementDescriptor, RngElementDescriptor>> DESCR_KEY = Key.create("DESCR");

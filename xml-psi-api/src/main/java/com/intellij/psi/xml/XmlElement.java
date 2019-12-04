@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.PsiElementProcessor;
+import consulo.util.dataholder.Key;
 
 /**
  * @author Mike

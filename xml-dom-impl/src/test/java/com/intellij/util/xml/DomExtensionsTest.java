@@ -3,24 +3,16 @@
  */
 package com.intellij.util.xml;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.util.Key;
 import com.intellij.util.Consumer;
 import com.intellij.util.ParameterizedTypeImpl;
 import com.intellij.util.ReflectionUtil;
-import com.intellij.util.xml.reflect.DomAttributeChildDescription;
-import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import com.intellij.util.xml.reflect.DomExtender;
-import com.intellij.util.xml.reflect.DomExtenderEP;
-import com.intellij.util.xml.reflect.DomExtension;
-import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
-import com.intellij.util.xml.reflect.DomExtensionsRegistrarImpl;
-import com.intellij.util.xml.reflect.DomFixedChildDescription;
+import com.intellij.util.xml.reflect.*;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author peter

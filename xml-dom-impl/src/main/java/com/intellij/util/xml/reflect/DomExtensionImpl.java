@@ -15,7 +15,6 @@
  */
 package com.intellij.util.xml.reflect;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.SmartPointerManager;
 import com.intellij.psi.SmartPsiElementPointer;
@@ -27,9 +26,10 @@ import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.impl.ConvertAnnotationImpl;
 import com.intellij.util.xml.impl.DomAnchorImpl;
 import com.intellij.util.xml.impl.DomChildDescriptionImpl;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashMap;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;

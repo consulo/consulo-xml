@@ -27,7 +27,6 @@ import com.intellij.openapi.editor.impl.DesktopEditorImpl;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -41,8 +40,9 @@ import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import javax.annotation.Nonnull;
+import consulo.util.dataholder.Key;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Objects;
 import java.util.Set;

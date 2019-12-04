@@ -17,7 +17,6 @@
 package org.intellij.plugins.relaxNG.model.resolve;
 
 import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -30,13 +29,14 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.containers.HashSet;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashSet;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.*;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;

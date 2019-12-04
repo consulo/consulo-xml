@@ -15,13 +15,12 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.model.DomModel;
+import consulo.util.dataholder.UserDataHolder;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

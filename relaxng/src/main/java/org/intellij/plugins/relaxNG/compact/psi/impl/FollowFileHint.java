@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.openapi.util.Key;
+import consulo.util.dataholder.Key;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 
 /**

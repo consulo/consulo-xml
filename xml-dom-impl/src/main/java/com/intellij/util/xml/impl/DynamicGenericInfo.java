@@ -18,7 +18,6 @@ package com.intellij.util.xml.impl;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.RecursionGuard;
 import com.intellij.openapi.util.RecursionManager;
 import com.intellij.psi.xml.XmlElement;
@@ -32,6 +31,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.reflect.*;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 

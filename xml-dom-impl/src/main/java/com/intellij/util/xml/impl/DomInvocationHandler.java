@@ -15,28 +15,12 @@
  */
 package com.intellij.util.xml.impl;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
-
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.NullableFactory;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiInvalidElementAccessException;
 import com.intellij.psi.SmartPointerManager;
@@ -49,26 +33,30 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.semantic.SemElement;
 import com.intellij.semantic.SemKey;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.SmartFMap;
+import com.intellij.util.*;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
-import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
-import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
-import com.intellij.util.xml.reflect.DomAttributeChildDescription;
-import com.intellij.util.xml.reflect.DomCollectionChildDescription;
-import com.intellij.util.xml.reflect.DomFixedChildDescription;
+import com.intellij.util.xml.reflect.*;
 import com.intellij.util.xml.stubs.AttributeStub;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
 import com.intellij.util.xml.stubs.StubParentStrategy;
 import consulo.ui.image.Image;
+import consulo.util.dataholder.UserDataHolderBase;
+import net.sf.cglib.proxy.AdvancedProxy;
+import net.sf.cglib.proxy.InvocationHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author peter

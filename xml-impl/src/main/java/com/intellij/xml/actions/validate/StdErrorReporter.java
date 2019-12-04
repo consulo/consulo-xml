@@ -22,7 +22,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindowId;
 import com.intellij.openapi.wm.ToolWindowManager;
@@ -30,10 +29,11 @@ import com.intellij.psi.PsiFile;
 import com.intellij.ui.content.*;
 import com.intellij.util.ui.MessageCategory;
 import com.intellij.xml.XmlBundle;
+import consulo.util.dataholder.Key;
 import hack.ContentManagerUtilHack;
-import javax.annotation.Nonnull;
 import org.xml.sax.SAXParseException;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.Future;
 
 public class StdErrorReporter extends ErrorReporter

@@ -16,17 +16,17 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.Consumer;
 import com.intellij.xml.XmlBundle;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
 
 public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
 {

@@ -16,7 +16,6 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.patterns.XmlAttributeValuePattern;
 import com.intellij.patterns.XmlNamedElementPattern;
 import com.intellij.psi.PsiElement;
@@ -28,10 +27,11 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Set;
 
 class ResolvingVisitor extends XmlElementVisitor implements PsiElementProcessor {

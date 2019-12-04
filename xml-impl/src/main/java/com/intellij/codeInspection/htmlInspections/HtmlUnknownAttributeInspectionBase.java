@@ -15,15 +15,10 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
@@ -33,6 +28,11 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection
 {

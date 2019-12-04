@@ -15,29 +15,14 @@
  */
 package com.intellij.xml.util.documentation;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.lang.Language;
 import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.lang.documentation.DocumentationUtil;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.XmlElementFactory;
+import com.intellij.psi.*;
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.xml.SchemaPrefix;
 import com.intellij.psi.search.PsiElementProcessor;
@@ -51,12 +36,15 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
-import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
-import com.intellij.xml.impl.schema.TypeDescriptor;
-import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
-import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
+import com.intellij.xml.impl.schema.*;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author maxim

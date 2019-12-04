@@ -6,11 +6,12 @@ import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.util.dataholder.Key;
+
 import javax.annotation.Nonnull;
 
 /**

@@ -16,29 +16,9 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.xml.namespace.QName;
-
-import org.intellij.plugins.relaxNG.ApplicationLoader;
-import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import org.intellij.plugins.relaxNG.validation.RngParser;
-import org.intellij.plugins.relaxNG.validation.XmlInstanceValidator;
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import org.kohsuke.rngom.digested.DElementPattern;
-import org.kohsuke.rngom.digested.DPattern;
-import org.kohsuke.rngom.nc.NameClass;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -46,12 +26,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.ParameterizedCachedValue;
-import com.intellij.psi.util.ParameterizedCachedValueProvider;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.util.*;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
@@ -61,6 +36,20 @@ import com.intellij.util.containers.HashMap;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.util.dataholder.Key;
+import org.intellij.plugins.relaxNG.ApplicationLoader;
+import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
+import org.intellij.plugins.relaxNG.validation.RngParser;
+import org.intellij.plugins.relaxNG.validation.XmlInstanceValidator;
+import org.jetbrains.annotations.NonNls;
+import org.kohsuke.rngom.digested.DElementPattern;
+import org.kohsuke.rngom.digested.DPattern;
+import org.kohsuke.rngom.nc.NameClass;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.

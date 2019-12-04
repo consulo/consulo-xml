@@ -15,18 +15,6 @@
  */
 package com.intellij.html.impl.util;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.jetbrains.annotations.Nls;
-import javax.annotation.Nullable;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -44,6 +32,13 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.PairFunction;
 import com.intellij.util.text.StringTokenizer;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.util.dataholder.Key;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+import org.jetbrains.annotations.Nls;
+
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * @author: Fedor.Korotkov

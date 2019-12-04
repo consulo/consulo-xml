@@ -15,10 +15,6 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -28,6 +24,10 @@ import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlEntityDecl;
+import consulo.util.dataholder.Key;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class XmlEntityCache
 {

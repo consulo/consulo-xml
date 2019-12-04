@@ -62,6 +62,7 @@ import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashMap;
 import org.jetbrains.annotations.NonNls;
 

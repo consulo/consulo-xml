@@ -15,31 +15,24 @@
  */
 package com.intellij.xml.impl.dom;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightingAwareElementDescriptor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.pom.references.PomService;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.DomNameStrategy;
-import com.intellij.util.xml.DomService;
-import com.intellij.util.xml.ElementPresentationTemplate;
-import com.intellij.util.xml.XmlName;
+import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
+import consulo.util.dataholder.Key;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * @author mike

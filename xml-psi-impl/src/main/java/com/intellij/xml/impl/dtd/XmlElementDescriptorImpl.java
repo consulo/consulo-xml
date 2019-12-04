@@ -15,15 +15,7 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.UserDataCache;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.ClassFilter;
@@ -45,6 +37,14 @@ import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlNSDescriptorSequence;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * @author Mike

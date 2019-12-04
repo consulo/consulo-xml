@@ -16,44 +16,10 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import java.io.StringReader;
-import java.util.concurrent.ConcurrentMap;
-
-import javax.xml.transform.sax.SAXSource;
-
-import org.intellij.plugins.relaxNG.compact.RncFileType;
-import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import javax.annotation.Nonnull;
-import org.kohsuke.rngom.ast.builder.BuildException;
-import org.kohsuke.rngom.ast.builder.IncludedGrammar;
-import org.kohsuke.rngom.ast.builder.SchemaBuilder;
-import org.kohsuke.rngom.ast.om.ParsedPattern;
-import org.kohsuke.rngom.binary.SchemaBuilderImpl;
-import org.kohsuke.rngom.binary.SchemaPatternBuilder;
-import org.kohsuke.rngom.digested.DPattern;
-import org.kohsuke.rngom.digested.DSchemaBuilderImpl;
-import org.kohsuke.rngom.dt.CachedDatatypeLibraryFactory;
-import org.kohsuke.rngom.dt.CascadingDatatypeLibraryFactory;
-import org.kohsuke.rngom.dt.DoNothingDatatypeLibraryFactoryImpl;
-import org.kohsuke.rngom.dt.builtin.BuiltinDatatypeLibraryFactory;
-import org.kohsuke.rngom.parse.IllegalSchemaException;
-import org.kohsuke.rngom.parse.Parseable;
-import org.kohsuke.rngom.parse.compact.CompactParseable;
-import org.kohsuke.rngom.parse.xml.SAXParseable;
-import org.relaxng.datatype.DatatypeLibrary;
-import org.relaxng.datatype.DatatypeLibraryFactory;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
 import com.intellij.javaee.UriUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.AtomicNotNullLazyValue;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -77,6 +43,35 @@ import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.rng.impl.SchemaReaderImpl;
+import consulo.util.dataholder.Key;
+import org.intellij.plugins.relaxNG.compact.RncFileType;
+import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
+import org.kohsuke.rngom.ast.builder.BuildException;
+import org.kohsuke.rngom.ast.builder.IncludedGrammar;
+import org.kohsuke.rngom.ast.builder.SchemaBuilder;
+import org.kohsuke.rngom.ast.om.ParsedPattern;
+import org.kohsuke.rngom.binary.SchemaBuilderImpl;
+import org.kohsuke.rngom.binary.SchemaPatternBuilder;
+import org.kohsuke.rngom.digested.DPattern;
+import org.kohsuke.rngom.digested.DSchemaBuilderImpl;
+import org.kohsuke.rngom.dt.CachedDatatypeLibraryFactory;
+import org.kohsuke.rngom.dt.CascadingDatatypeLibraryFactory;
+import org.kohsuke.rngom.dt.DoNothingDatatypeLibraryFactoryImpl;
+import org.kohsuke.rngom.dt.builtin.BuiltinDatatypeLibraryFactory;
+import org.kohsuke.rngom.parse.IllegalSchemaException;
+import org.kohsuke.rngom.parse.Parseable;
+import org.kohsuke.rngom.parse.compact.CompactParseable;
+import org.kohsuke.rngom.parse.xml.SAXParseable;
+import org.relaxng.datatype.DatatypeLibrary;
+import org.relaxng.datatype.DatatypeLibraryFactory;
+import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.annotation.Nonnull;
+import javax.xml.transform.sax.SAXSource;
+import java.io.StringReader;
+import java.util.concurrent.ConcurrentMap;
 
 /*
 * Created by IntelliJ IDEA.

@@ -2,7 +2,6 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
@@ -10,8 +9,9 @@ import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
-import javax.annotation.Nullable;
+import consulo.util.dataholder.Key;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**

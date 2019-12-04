@@ -18,21 +18,20 @@ package com.intellij.util.xml.impl;
 import com.intellij.ide.presentation.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.util.NullableLazyValue;
 import com.intellij.pom.references.PomService;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.SmartPsiElementPointer;
-import com.intellij.util.xml.Stubbed;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomExtensionImpl;
+import consulo.util.dataholder.Key;
 import gnu.trove.THashMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.ArrayList;

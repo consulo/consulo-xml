@@ -16,11 +16,11 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.patterns.PatternCondition;
 import com.intellij.util.ProcessingContext;
-import javax.annotation.Nonnull;
+import consulo.util.dataholder.Key;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 class AddValueCondition<T> extends PatternCondition<T> {

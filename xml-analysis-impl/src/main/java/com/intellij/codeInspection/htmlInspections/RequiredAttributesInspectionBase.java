@@ -15,9 +15,6 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.InspectionProfileEntry;
 import com.intellij.codeInspection.InspectionsBundle;
@@ -25,8 +22,11 @@ import com.intellij.codeInspection.XmlInspectionGroupNames;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.codeInspection.ex.UnfairLocalInspectionTool;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Key;
 import com.intellij.xml.XmlBundle;
+import consulo.util.dataholder.Key;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 public class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements XmlEntitiesInspection, UnfairLocalInspectionTool
 {

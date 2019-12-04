@@ -16,16 +16,16 @@
 package com.intellij.util.xml;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.Type;
 
 /**
@@ -33,7 +33,8 @@ import java.lang.reflect.Type;
  *
  * @author peter
  */
-public interface DomElement extends AnnotatedElement, UserDataHolder {
+public interface DomElement extends AnnotatedElement, UserDataHolder
+{
   DomElement[] EMPTY_ARRAY = new DomElement[0];
 
   XmlTag getXmlTag();

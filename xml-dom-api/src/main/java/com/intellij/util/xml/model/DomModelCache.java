@@ -16,16 +16,15 @@
 
 package com.intellij.util.xml.model;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
+import consulo.util.dataholder.Key;
+import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -38,7 +37,7 @@ public abstract class DomModelCache<T, H extends UserDataHolder> {
 
   public DomModelCache(Project project, @NonNls String keyName) {
     myProject = project;
-    myKey = new Key<CachedValue<T>>(keyName);
+    myKey = Key.create(keyName);
   }
 
   @Nullable

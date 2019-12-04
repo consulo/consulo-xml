@@ -15,20 +15,6 @@
  */
 package com.intellij.codeInsight.completion;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
-import static com.intellij.xml.util.XmlUtil.VALUE_ATTR_NAME;
-import static com.intellij.xml.util.XmlUtil.findDescriptorFile;
-
-import gnu.trove.THashSet;
-
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.lookup.InsertHandlerDecorator;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -44,7 +30,6 @@ import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.patterns.XmlPatterns;
@@ -56,14 +41,7 @@ import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTokenType;
+import com.intellij.psi.xml.*;
 import com.intellij.util.ProcessingContext;
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlBundle;
@@ -73,6 +51,18 @@ import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
 import com.intellij.xml.util.XmlUtil;
 import consulo.codeInsight.completion.CompletionProvider;
+import consulo.util.dataholder.Key;
+import gnu.trove.THashSet;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Set;
+
+import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static com.intellij.xml.util.XmlUtil.VALUE_ATTR_NAME;
+import static com.intellij.xml.util.XmlUtil.findDescriptorFile;
 
 /**
  * @author Dmitry Avdeev

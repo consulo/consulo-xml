@@ -15,23 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.highlighter.DomSupportEnabled;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.Disposable;
@@ -42,15 +25,7 @@ import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Key;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileEvent;
-import com.intellij.openapi.vfs.VirtualFileListener;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.openapi.vfs.VirtualFileMoveEvent;
-import com.intellij.openapi.vfs.VirtualFilePropertyEvent;
-import com.intellij.openapi.vfs.VirtualFileVisitor;
+import com.intellij.openapi.vfs.*;
 import com.intellij.openapi.vfs.newvfs.NewVirtualFile;
 import com.intellij.pom.PomManager;
 import com.intellij.pom.PomModel;
@@ -78,6 +53,18 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.util.dataholder.Key;
+import net.sf.cglib.proxy.AdvancedProxy;
+import net.sf.cglib.proxy.InvocationHandler;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * @author peter

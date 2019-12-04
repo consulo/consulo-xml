@@ -15,13 +15,12 @@
  */
 package com.intellij.util.xml;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.util.ModificationTracker;
-import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.util.dataholder.UserDataHolder;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

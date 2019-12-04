@@ -15,24 +15,12 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import gnu.trove.TObjectIntHashMap;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.pom.PomManager;
 import com.intellij.pom.PomModel;
@@ -40,12 +28,7 @@ import com.intellij.pom.event.PomModelEvent;
 import com.intellij.pom.impl.PomTransactionBase;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.impl.events.XmlDocumentChangedImpl;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.XmlRecursiveElementVisitor;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.PsiCachedValueImpl;
 import com.intellij.psi.impl.meta.MetaRegistry;
 import com.intellij.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
@@ -58,14 +41,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.concurrency.AtomicFieldUpdater;
 import com.intellij.util.containers.ContainerUtil;
@@ -75,6 +51,15 @@ import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlNSDescriptorSequence;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
+import gnu.trove.TObjectIntHashMap;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Mike

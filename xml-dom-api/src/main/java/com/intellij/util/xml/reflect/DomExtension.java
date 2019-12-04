@@ -16,12 +16,12 @@
 
 package com.intellij.util.xml.reflect;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomElement;
-import javax.annotation.Nonnull;
+import consulo.util.dataholder.Key;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 

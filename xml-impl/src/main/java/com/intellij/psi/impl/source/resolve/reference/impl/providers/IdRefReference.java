@@ -15,7 +15,6 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -27,9 +26,10 @@ import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.util.XmlDeclareIdInCommentAction;
+import consulo.util.dataholder.Key;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

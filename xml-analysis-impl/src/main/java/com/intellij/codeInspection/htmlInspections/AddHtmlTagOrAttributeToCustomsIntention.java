@@ -16,19 +16,19 @@
 
 package com.intellij.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.InspectionProfileEntry;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.Consumer;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko

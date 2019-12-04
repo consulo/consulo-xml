@@ -29,7 +29,6 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiDocumentManager;
@@ -44,6 +43,7 @@ import com.intellij.xml.actions.validate.ErrorReporter;
 import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import com.intellij.xml.util.XmlResourceResolver;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXParseException;
 

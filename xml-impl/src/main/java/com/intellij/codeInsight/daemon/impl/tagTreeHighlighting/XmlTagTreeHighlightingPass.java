@@ -36,7 +36,6 @@ import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.FileViewProvider;
@@ -51,6 +50,7 @@ import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
 import com.intellij.ui.breadcrumbs.BreadcrumbsUtilEx;
 import com.intellij.ui.breadcrumbs.PsiFileBreadcrumbsCollector;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

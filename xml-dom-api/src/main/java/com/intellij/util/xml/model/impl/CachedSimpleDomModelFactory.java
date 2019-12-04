@@ -15,18 +15,17 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.DomModelCache;
+import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

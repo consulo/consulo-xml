@@ -20,7 +20,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
@@ -30,15 +29,11 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.indexing.FileBasedIndexImpl;
 import com.intellij.util.indexing.FileContent;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomFileDescription;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.DomService;
-import com.intellij.util.xml.XmlFileHeader;
+import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
 
 /**
  * @author Dmitry Avdeev

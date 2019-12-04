@@ -20,7 +20,6 @@ import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.UserDataCache;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -46,10 +45,11 @@ import com.intellij.util.xml.structure.DomStructureViewBuilder;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.util.xml.stubs.builder.DomStubBuilder;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.dataholder.Key;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

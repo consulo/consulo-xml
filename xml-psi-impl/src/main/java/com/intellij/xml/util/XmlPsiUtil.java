@@ -15,11 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlEntityCache;
@@ -29,6 +24,11 @@ import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
+import consulo.util.dataholder.Key;
+import org.jetbrains.annotations.NonNls;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class XmlPsiUtil
 {

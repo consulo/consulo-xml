@@ -17,16 +17,16 @@
 package com.intellij.util.xml.reflect;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.pom.PomTarget;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.AnnotatedElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.ElementPresentationTemplate;
+import consulo.util.dataholder.Key;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.Type;
 import java.util.List;
 
