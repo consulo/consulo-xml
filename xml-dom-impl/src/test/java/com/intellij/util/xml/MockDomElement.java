@@ -4,16 +4,16 @@
 package com.intellij.util.xml;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.reflect.DomGenericInfo;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.util.dataholder.UserDataHolderBase;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
