@@ -149,18 +149,6 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 		myInsertQuotesForAttributeValue = insertQuotesForAttributeValue;
 	}
 
-	@Nonnull
-	public File[] getExportFiles()
-	{
-		return new File[]{PathManager.getOptionsFile("editor")};
-	}
-
-	@Nonnull
-	public String getPresentableName()
-	{
-		return XmlBundle.message("xml.options");
-	}
-
 	@Nullable
 	public Object clone()
 	{

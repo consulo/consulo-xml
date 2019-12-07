@@ -15,31 +15,12 @@
  */
 package com.intellij.codeInsight.daemon.impl.quickfix;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.SwingUtilities;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.application.AccessToken;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileTypeManager;
@@ -63,19 +44,23 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.xml.XmlEntityCache;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.psi.xml.XmlTokenType;
+import com.intellij.psi.xml.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.io.HttpRequests;
 import com.intellij.util.net.HttpConfigurable;
 import com.intellij.util.net.IOExceptionDialog;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
+import consulo.container.boot.ContainerPathManager;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.*;
 
 /**
  * @author mike
@@ -384,7 +369,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction implements Wat
 
 	public static String getExternalResourcesPath()
 	{
-		return PathManager.getSystemPath() + File.separator + EXT_RESOURCES_FOLDER;
+		return ContainerPathManager.get().getSystemPath() + File.separator + EXT_RESOURCES_FOLDER;
 	}
 
 	private void cleanup(final List<String> resourceUrls, final List<String> downloadedResources)
