@@ -15,12 +15,11 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.util.SmartList;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
@@ -29,8 +28,6 @@ import java.util.List;
  * @author peter
  */
 public abstract class DomHighlightingHelper {
-  private final DomCustomAnnotationChecker[] myCustomCheckers = Extensions.getExtensions(DomCustomAnnotationChecker.EP_NAME);
-
   @Nonnull
   public abstract List<DomElementProblemDescriptor> checkRequired(DomElement element, DomElementAnnotationHolder holder);
 
@@ -52,10 +49,10 @@ public abstract class DomHighlightingHelper {
   @Nonnull
   public List<DomElementProblemDescriptor> checkCustomAnnotations(final DomElement element, final DomElementAnnotationHolder holder) {
     List<DomElementProblemDescriptor> result = null;
-    for (final DomCustomAnnotationChecker<?> checker : myCustomCheckers) {
+    for (final DomCustomAnnotationChecker<?> checker : DomCustomAnnotationChecker.EP_NAME.getExtensionList()) {
       final List<DomElementProblemDescriptor> list = checkAnno(element, checker, holder);
       if (!list.isEmpty()) {
-        if (result == null) result = new SmartList<DomElementProblemDescriptor>();
+        if (result == null) result = new SmartList<>();
         result.addAll(list);
       }
     }
