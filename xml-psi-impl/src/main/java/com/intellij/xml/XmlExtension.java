@@ -15,10 +15,6 @@
  */
 package com.intellij.xml;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.extensions.ExtensionPointName;
@@ -37,6 +33,10 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -194,6 +194,11 @@ public abstract class XmlExtension
 	public boolean useXmlTagInsertHandler()
 	{
 		return true;
+	}
+
+	public boolean isSingleTagException(@Nonnull XmlTag tag)
+	{
+		return false;
 	}
 
 	public boolean isCollapsibleTag(XmlTag tag)

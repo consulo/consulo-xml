@@ -49,6 +49,7 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 	private int myTagTreeHighlightingLevelCount = 6;
 	private int myTagTreeHighlightingOpacity = 10;
 
+	@Nonnull
 	public static XmlEditorOptions getInstance()
 	{
 		return ServiceManager.getService(XmlEditorOptions.class);

@@ -15,22 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.codeInspection.htmlInspections.XmlEntitiesInspection;
 import com.intellij.ide.highlighter.HtmlFileType;
@@ -59,23 +43,23 @@ import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.templateLanguages.OuterLanguageElement;
 import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTokenType;
+import com.intellij.psi.xml.*;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.xml.Html5SchemaProvider;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import com.intellij.xml.*;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.documentation.MimeTypeDictionary;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.nio.charset.Charset;
+import java.util.*;
 
 /**
  * @author Maxim.Mossienko
@@ -345,6 +329,15 @@ public class HtmlUtil
 	public static boolean isSingleHtmlTag(String tagName)
 	{
 		return EMPTY_TAGS_MAP.contains(tagName.toLowerCase(Locale.US));
+	}
+
+	public static boolean isSingleHtmlTag(@Nonnull XmlTag tag, boolean lowerCase)
+	{
+		final XmlExtension extension = XmlExtension.getExtensionByElement(tag);
+		final String name = tag.getName();
+		boolean result = EMPTY_TAGS_MAP.contains(!lowerCase || tag.isCaseSensitive()
+				? name : StringUtil.toLowerCase(name));
+		return result && (extension == null || !extension.isSingleTagException(tag));
 	}
 
 	public static boolean isSingleHtmlTagL(String tagName)

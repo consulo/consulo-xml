@@ -15,18 +15,16 @@
  */
 package com.intellij.psi.xml;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 /**
  * @author Mike
@@ -147,4 +145,9 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	@Nullable
 	@NonNls
 	String getSubTagText(@NonNls String qname);
+
+	default boolean isCaseSensitive()
+	{
+		return true;
+	}
 }
