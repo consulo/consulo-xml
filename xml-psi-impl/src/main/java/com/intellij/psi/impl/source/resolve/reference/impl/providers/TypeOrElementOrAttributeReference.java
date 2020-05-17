@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
@@ -30,7 +31,6 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.ResolveCache;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -48,7 +48,6 @@ import com.intellij.xml.util.XmlUtil;
 
 public class TypeOrElementOrAttributeReference implements PsiReference
 {
-
 	public enum ReferenceType
 	{
 		ElementReference, AttributeReference, GroupReference, AttributeGroupReference, TypeReference
@@ -147,17 +146,16 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 	@Nullable
 	public PsiElement resolve()
 	{
-		final PsiElement psiElement = ResolveCache.getInstance(getElement().getProject()).resolveWithCaching(this, MyResolver.INSTANCE, false, false);
-
-		return psiElement != PsiUtilCore.NULL_PSI_ELEMENT ? psiElement : null;
+		return ResolveCache.getInstance(getElement().getProject()).resolveWithCaching(this, (ref, incompleteCode) -> ref.resolveInner(), false, false);
 	}
 
+	@Nullable
 	private PsiElement resolveInner()
 	{
 		final XmlTag tag = PsiTreeUtil.getContextOfType(myElement, XmlTag.class, false);
 		if(tag == null)
 		{
-			return PsiUtilCore.NULL_PSI_ELEMENT;
+			return null;
 		}
 
 		String canonicalText = getCanonicalText();
@@ -177,7 +175,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 					XmlElementDescriptor descriptor = nsDescriptor.getElementDescriptor(XmlUtil.findLocalNameByQualifiedName(canonicalText), getNamespace(tag, canonicalText),
 							new HashSet<XmlNSDescriptorImpl>(), true);
 
-					return descriptor != null ? descriptor.getDeclaration() : PsiUtilCore.NULL_PSI_ELEMENT;
+					return descriptor != null ? descriptor.getDeclaration() :null;
 				}
 				case AttributeReference:
 				{
@@ -190,7 +188,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 						return descriptor.getDeclaration();
 					}
 
-					return PsiUtilCore.NULL_PSI_ELEMENT;
+					return null;
 				}
 				case TypeReference:
 				{
@@ -207,7 +205,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 			}
 		}
 
-		return PsiUtilCore.NULL_PSI_ELEMENT;
+		return null;
 	}
 
 	XmlNSDescriptorImpl getDescriptor(final XmlTag tag, String text)
@@ -425,23 +423,6 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 		processor.namespace = namespace;
 
 		XmlNSDescriptorImpl.processTagsInNamespace(nsDescriptor.getTag(), tagNames, processor);
-	}
-
-	@Override
-	public boolean isSoft()
-	{
-		return false;
-	}
-
-	private static class MyResolver implements ResolveCache.Resolver
-	{
-		static final MyResolver INSTANCE = new MyResolver();
-
-		@Override
-		public PsiElement resolve(@Nonnull PsiReference ref, boolean incompleteCode)
-		{
-			return ((TypeOrElementOrAttributeReference) ref).resolveInner();
-		}
 	}
 
 	private static class CompletionProcessor implements PsiElementProcessor<XmlTag>

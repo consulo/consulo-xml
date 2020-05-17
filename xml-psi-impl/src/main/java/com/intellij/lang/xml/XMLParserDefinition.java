@@ -23,13 +23,11 @@ import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XmlLexer;
 import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.parsing.xml.XmlParser;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import consulo.lang.LanguageVersion;
@@ -76,18 +74,12 @@ public class XMLParserDefinition implements ParserDefinition {
   }
 
   @Override
-  @Nonnull
-  public PsiElement createElement(ASTNode node) {
-    return PsiUtilCore.NULL_PSI_ELEMENT;
-  }
-
-  @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
     return new XmlFileImpl(viewProvider, XmlElementType.XML_FILE);
   }
 
   @Override
-  public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
+  public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
     final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE));
     return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
   }

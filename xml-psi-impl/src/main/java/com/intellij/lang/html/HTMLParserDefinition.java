@@ -24,12 +24,10 @@ import com.intellij.lang.xml.XMLParserDefinition;
 import com.intellij.lexer.HtmlLexer;
 import com.intellij.lexer.Lexer;
 import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import consulo.lang.LanguageVersion;
@@ -76,18 +74,12 @@ public class HTMLParserDefinition implements ParserDefinition {
   }
 
   @Override
-  @Nonnull
-  public PsiElement createElement(ASTNode node) {
-    return PsiUtilCore.NULL_PSI_ELEMENT;
-  }
-
-  @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
     return new HtmlFileImpl(viewProvider);
   }
 
   @Override
-  public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
+  public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
     final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE));
     return XMLParserDefinition.canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
   }
