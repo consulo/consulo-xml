@@ -24,23 +24,28 @@ import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 /**
  * @author Rustam Vishnyakov
  */
-public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
+public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider
+{
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  @Override
-  public String getCodeSample(@Nonnull SettingsType settingsType) {
-    if (settingsType == SettingsType.INDENT_SETTINGS) {
-      return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
-    }
-    return "";
-  }
+	@Override
+	public String getCodeSample(@Nonnull SettingsType settingsType)
+	{
+		if(settingsType == SettingsType.INDENT_SETTINGS)
+		{
+			return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
+		}
+		return "";
+	}
 
-  @Override
-  public IndentOptionsEditor getIndentOptionsEditor() {
-    return new SmartIndentOptionsEditor();
-  }
+	@Override
+	public IndentOptionsEditor getIndentOptionsEditor()
+	{
+		return new SmartIndentOptionsEditor();
+	}
 }
