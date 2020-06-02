@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
+import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 
 /**
@@ -41,6 +42,14 @@ public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSetti
 			return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
 		}
 		return "";
+	}
+
+	@Override
+	public CommonCodeStyleSettings getDefaultCommonSettings()
+	{
+		CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(XMLLanguage.INSTANCE);
+		defaultSettings.initIndentOptions();
+		return defaultSettings;
 	}
 
 	@Override
