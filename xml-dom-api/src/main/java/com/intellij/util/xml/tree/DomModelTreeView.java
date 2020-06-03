@@ -17,11 +17,9 @@
 package com.intellij.util.xml.tree;
 
 import com.intellij.ide.util.treeView.AbstractTreeBuilder;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.xml.XmlElement;
@@ -36,6 +34,8 @@ import com.intellij.ui.treeStructure.actions.ExpandAllAction;
 import com.intellij.util.ui.tree.TreeUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 
@@ -49,7 +49,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
-public class DomModelTreeView extends Wrapper implements DataProvider, Disposable {
+public class DomModelTreeView extends Wrapper implements DataProvider, Disposable
+{
   public static final Key<DomModelTreeView> DATA_KEY = Key.create("DOM_MODEL_TREE_VIEW_KEY");
   @NonNls public static String DOM_MODEL_TREE_VIEW_POPUP = "DOM_MODEL_TREE_VIEW_POPUP";
 

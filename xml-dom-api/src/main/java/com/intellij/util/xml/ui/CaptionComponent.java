@@ -16,7 +16,7 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.util.Disposer;
+import consulo.disposer.Disposer;
 import com.intellij.ui.JBColor;
 import com.intellij.util.xml.DomElement;
 

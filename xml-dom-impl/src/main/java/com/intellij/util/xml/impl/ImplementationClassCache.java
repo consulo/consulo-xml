@@ -23,13 +23,13 @@ import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomReflectionUtil;
 import com.intellij.util.xml.Implementation;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 
 /**
  * @author peter

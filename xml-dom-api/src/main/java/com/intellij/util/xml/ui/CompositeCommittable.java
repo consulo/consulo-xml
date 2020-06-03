@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.util.Disposer;
+import consulo.disposer.Disposer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -23,7 +23,6 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.Alarm;
@@ -34,6 +33,7 @@ import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ui.CommittablePanel;
 import com.intellij.util.xml.ui.Highlightable;
+import consulo.disposer.Disposer;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;

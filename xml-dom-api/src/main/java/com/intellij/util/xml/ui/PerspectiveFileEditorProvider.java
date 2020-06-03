@@ -19,8 +19,8 @@ import javax.annotation.Nonnull;
 
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
+import consulo.disposer.Disposer;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 

@@ -15,12 +15,13 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.Disposable;
+import consulo.disposer.Disposable;
 
 /**
  * author: lesya
  */
-public interface Committable extends Disposable {
+public interface Committable extends Disposable
+{
   void commit();
 
   void reset();

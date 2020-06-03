@@ -18,16 +18,17 @@ package com.intellij.util.xml.ui;
 
 import com.intellij.ui.UserActivityListener;
 import com.intellij.util.Alarm;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.ProgressIndicator;
+import consulo.disposer.Disposable;
 
 /**
  * User: Sergey.Vasiliev
  */
-public class CommitablePanelUserActivityListener implements UserActivityListener, Disposable {
+public class CommitablePanelUserActivityListener implements UserActivityListener, Disposable
+{
   private final Committable myPanel;
   private final Project myProject;
   private final Alarm myAlarm = new Alarm();
