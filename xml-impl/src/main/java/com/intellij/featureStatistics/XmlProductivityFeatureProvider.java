@@ -39,8 +39,4 @@ public class XmlProductivityFeatureProvider extends ProductivityFeaturesProvider
   public GroupDescriptor[] getGroupDescriptors() {
     return new GroupDescriptor[0];
   }
-
-  public ApplicabilityFilter[] getApplicabilityFilters() {
-    return new ApplicabilityFilter[0];
-  }
 }
