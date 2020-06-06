@@ -15,10 +15,10 @@
  */
 package com.intellij.featureStatistics;
 
+import java.util.Collections;
+
 import com.intellij.codeInsight.completion.XmlCompletionContributor;
 import com.intellij.xml.XmlBundle;
-
-import java.util.Collections;
 
 /**
  * @author Dmitry Avdeev

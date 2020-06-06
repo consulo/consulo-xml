@@ -40,7 +40,7 @@ public enum ResourceRelevance {
                                                @Nullable GlobalSearchScope additionalScope) {
     boolean inTest = fileIndex.isInTestSourceContent(resource);
     if (module != null) {
-      GlobalSearchScope scope = module.getModuleRuntimeScope(inTest);
+      GlobalSearchScope scope = GlobalSearchScope.moduleRuntimeScope(module, inTest);
       Module resourceModule = fileIndex.getModuleForFile(resource);
       if (resourceModule != null &&
           (resourceModule == module || scope.isSearchInModuleContent(resourceModule)) ||

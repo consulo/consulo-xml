@@ -16,6 +16,7 @@
 package com.intellij.util.xml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -28,8 +29,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-
-import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -79,10 +78,10 @@ public abstract class AbstractConvertContext extends ConvertContext {
 
         for (Module module : modules) {
           if (scope == null) {
-            scope = module.getModuleRuntimeScope(tests);
+            scope = GlobalSearchScope.moduleRuntimeScope(module, tests);
           }
           else {
-            scope = scope.union(module.getModuleRuntimeScope(tests));
+            scope = scope.union(GlobalSearchScope.moduleRuntimeScope(module, tests));
           }
         }
       }
@@ -105,10 +104,10 @@ public abstract class AbstractConvertContext extends ConvertContext {
     GlobalSearchScope scope = null;
     for (Module module : modules) {
       if (scope == null) {
-        scope = module.getModuleRuntimeScope(tests);
+        scope = GlobalSearchScope.moduleRuntimeScope(module, tests);
       }
       else {
-        scope.union(module.getModuleRuntimeScope(tests));
+        scope.union(GlobalSearchScope.moduleRuntimeScope(module, tests));
       }
     }
     return scope;
