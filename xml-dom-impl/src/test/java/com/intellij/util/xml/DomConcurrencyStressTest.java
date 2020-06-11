@@ -3,14 +3,7 @@
  */
 package com.intellij.util.xml;
 
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CountDownLatch;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -20,12 +13,16 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.semantic.SemService;
 import com.intellij.testFramework.PlatformTestUtil;
-import com.intellij.testFramework.PsiTestExtensionUtil;
 import com.intellij.testFramework.Timings;
 import com.intellij.util.xml.impl.DomFileElementImpl;
 import com.intellij.util.xml.reflect.DomExtender;
 import com.intellij.util.xml.reflect.DomExtenderEP;
 import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author peter
@@ -95,7 +92,7 @@ public abstract class DomConcurrencyStressTest extends DomTestCase {
     final DomExtenderEP extenderEP = new DomExtenderEP();
     extenderEP.domClassName = elementClass.getName();
     extenderEP.extenderClassName = extenderClass.getName();
-    PsiTestExtensionUtil.registerExtension(Extensions.getRootArea(), DomExtenderEP.EP_NAME, extenderEP, myTestRootDisposable);
+    //PsiTestExtensionUtil.registerExtension(Extensions.getRootArea(), DomExtenderEP.EP_NAME, extenderEP, myTestRootDisposable);
   }
 
   private static void runThreads(int threadCount, final Runnable runnable) throws Throwable {
