@@ -21,9 +21,10 @@ import com.intellij.openapi.util.Factory;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.MergedObject;
 import com.intellij.util.xml.StableElement;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
+import consulo.util.advandedProxy.ObjectMethods;
+import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
@@ -47,7 +48,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
     final Class superClass = initial.getClass().getSuperclass();
     final Set<Class> classes = new HashSet<Class>();
     ContainerUtil.addAll(classes, initial.getClass().getInterfaces());
-    ContainerUtil.addIfNotNull(superClass, classes);
+    ContainerUtil.addIfNotNull(classes, superClass);
     classes.remove(MergedObject.class);
     myClasses = classes;
   }
@@ -63,7 +64,9 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       }
     }
 
-    if (AdvancedProxy.FINALIZE_METHOD.equals(method)) return null;
+    if(InvocationHandlerOwner.METHOD.equals(method)) return this;
+
+    if (ObjectMethods.FINALIZE_METHOD.equals(method)) return null;
 
     if (isNotValid(myCachedValue)) {
       if (myCachedValue != null) {
@@ -71,13 +74,13 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       }
       myCachedValue = myProvider.create();
       if (isNotValid(myCachedValue)) {
-        if (AdvancedProxy.EQUALS_METHOD.equals(method)) {
+        if (ObjectMethods.EQUALS_METHOD.equals(method)) {
 
           final Object arg = args[0];
           if (!(arg instanceof StableElement)) return false;
 
           final StableInvocationHandler handler = DomManagerImpl.getStableInvocationHandler(arg);
-          if (handler == null || handler.getWrappedElement() != null) return false;
+          if (handler.getWrappedElement() != null) return false;
 
           return Comparing.equal(myOldValue, handler.myOldValue);
         }
@@ -93,7 +96,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       }
     }
 
-    if (AdvancedProxy.EQUALS_METHOD.equals(method)) {
+    if (ObjectMethods.EQUALS_METHOD.equals(method)) {
       final Object arg = args[0];
       if (arg instanceof StableElement) {
         return myCachedValue.equals(((StableElement)arg).getWrappedElement());
@@ -101,7 +104,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       return myCachedValue.equals(arg);
 
     }
-    if (AdvancedProxy.HASHCODE_METHOD.equals(method)) {
+    if (ObjectMethods.HASHCODE_METHOD.equals(method)) {
       return myCachedValue.hashCode();
     }
 

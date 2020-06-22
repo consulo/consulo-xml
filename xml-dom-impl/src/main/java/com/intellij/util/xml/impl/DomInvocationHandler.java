@@ -35,6 +35,7 @@ import com.intellij.semantic.SemElement;
 import com.intellij.semantic.SemKey;
 import com.intellij.util.*;
 import com.intellij.util.containers.ContainerUtil;
+import com.intellij.util.xml.AnnotatedElement;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.reflect.*;
@@ -43,17 +44,14 @@ import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
 import com.intellij.util.xml.stubs.StubParentStrategy;
 import consulo.ui.image.Image;
+import consulo.util.advandedProxy.AdvancedProxyBuilder;
 import consulo.util.dataholder.UserDataHolderBase;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
+import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,8 +59,7 @@ import java.util.List;
 /**
  * @author peter
  */
-public abstract class DomInvocationHandler<T extends AbstractDomChildDescriptionImpl, Stub extends DomStub> extends UserDataHolderBase implements InvocationHandler, DomElement,
-                                                                                                                            SemElement {
+public abstract class DomInvocationHandler<T extends AbstractDomChildDescriptionImpl, Stub extends DomStub> extends UserDataHolderBase implements InvocationHandler, DomElement,  SemElement {
   private static final Logger LOG = Logger.getInstance("#com.intellij.util.xml.impl.DomInvocationHandler");
   public static final Method ACCEPT_METHOD = ReflectionUtil.getMethod(DomElement.class, "accept", DomElementVisitor.class);
   public static final Method ACCEPT_CHILDREN_METHOD = ReflectionUtil.getMethod(DomElement.class, "acceptChildren", DomElementVisitor.class);
@@ -105,7 +102,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
     if (implementation == null && !isInterface) {
       implementation = (Class<? extends DomElement>)rawType;
     }
-    myProxy = AdvancedProxy.createProxy(this, implementation, isInterface ? new Class[]{rawType} : ArrayUtil.EMPTY_CLASS_ARRAY);
+    myProxy = AdvancedProxyBuilder.create(implementation).withInvocationHandler(this).withInterfaces(ArrayUtil.append(isInterface ? new Class[]{rawType} : ArrayUtil.EMPTY_CLASS_ARRAY, InvocationHandlerOwner.class)).build();
     refreshGenericInfo(dynamic);
     if (stub != null) {
       stub.setHandler(this);
@@ -643,6 +640,8 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
   @Nullable
   public final Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     try {
+      if(method.equals(InvocationHandlerOwner.METHOD)) return this;
+
       return findInvocation(method).invoke(this, args);
     }
     catch (InvocationTargetException ex) {

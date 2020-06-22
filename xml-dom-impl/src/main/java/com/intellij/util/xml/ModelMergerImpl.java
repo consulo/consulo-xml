@@ -8,13 +8,14 @@ import com.intellij.util.containers.FactoryMap;
 import com.intellij.util.xml.impl.DomInvocationHandler;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.util.advandedProxy.AdvancedProxyBuilder;
+import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 import gnu.trove.THashSet;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -244,12 +245,15 @@ public class ModelMergerImpl implements ModelMerger
 	}
 
 
-	private <T> T _mergeModels(final Class<? super T> aClass, final MergingInvocationHandler<T> handler, final T... implementations)
+	@SafeVarargs
+	@SuppressWarnings("unchecked")
+	private final <T> T _mergeModels(final Class<? super T> aClass, final MergingInvocationHandler<T> handler, final T... implementations)
 	{
-		final Set<Class> commonClasses = getCommonClasses(new THashSet<Class>(), implementations);
+		final Set<Class> commonClasses = getCommonClasses(new THashSet<>(), implementations);
 		commonClasses.add(MERGED_OBJECT_CLASS);
 		commonClasses.add(aClass);
-		final T t = AdvancedProxy.<T>createProxy(handler, null, commonClasses.toArray(new Class[commonClasses.size()]));
+		commonClasses.add(InvocationHandlerOwner.class);
+		final T t = (T) AdvancedProxyBuilder.create(Object.class).withInvocationHandler(handler).withInterfaces(commonClasses.toArray(new Class[commonClasses.size()])).build();
 		//myMergedMap.get(aClass).put(implementations, t);
 		return t;
 	}
@@ -312,6 +316,11 @@ public class ModelMergerImpl implements ModelMerger
 		{
 			try
 			{
+				if(InvocationHandlerOwner.METHOD.equals(method))
+				{
+					return this;
+				}
+
 				return findStrategy(proxy, method).invokeMethod(getJavaMethod(method), proxy, args, myImplementations);
 			}
 			catch(InvocationTargetException e)

@@ -17,13 +17,11 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.ide.highlighter.DomSupportEnabled;
 import com.intellij.ide.highlighter.XmlFileType;
-import consulo.disposer.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.util.Condition;
-import consulo.disposer.Disposer;
 import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.vfs.*;
 import com.intellij.openapi.vfs.newvfs.NewVirtualFile;
@@ -53,9 +51,11 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
+import consulo.util.advandedProxy.AdvancedProxyBuilder;
 import consulo.util.dataholder.Key;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
+import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -63,6 +63,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -295,7 +296,7 @@ public final class DomManagerImpl extends DomManager
 		{
 			return (DomInvocationHandler) proxy;
 		}
-		final InvocationHandler handler = AdvancedProxy.getInvocationHandler(proxy);
+		final InvocationHandler handler = InvocationHandlerOwner.getHandler(proxy);
 		if(handler instanceof StableInvocationHandler)
 		{
 			//noinspection unchecked
@@ -322,7 +323,7 @@ public final class DomManagerImpl extends DomManager
 
 	public static StableInvocationHandler getStableInvocationHandler(Object proxy)
 	{
-		return (StableInvocationHandler) AdvancedProxy.getInvocationHandler(proxy);
+		return (StableInvocationHandler) InvocationHandlerOwner.getHandler(proxy);
 	}
 
 	public DomApplicationComponent getApplicationComponent()
@@ -547,9 +548,10 @@ public final class DomManagerImpl extends DomManager
 		final Set<Class> intf = new HashSet<>();
 		ContainerUtil.addAll(intf, initial.getClass().getInterfaces());
 		intf.add(StableElement.class);
-		//noinspection unchecked
+		intf.add(InvocationHandlerOwner.class);
 
-		return (T) AdvancedProxy.createProxy(initial.getClass().getSuperclass(), intf.toArray(new Class[intf.size()]), handler);
+		//noinspection unchecked
+		return (T) AdvancedProxyBuilder.create(initial.getClass().getSuperclass()).withInvocationHandler(handler).withInterfaces(intf.toArray(new Class[intf.size()])).build();
 	}
 
 	public final <T extends DomElement> void registerFileDescription(final DomFileDescription<T> description, Disposable parentDisposable)
