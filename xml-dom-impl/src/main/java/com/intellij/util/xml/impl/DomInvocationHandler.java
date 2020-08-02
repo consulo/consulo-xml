@@ -73,7 +73,8 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 	private DomParentStrategy myParentStrategy;
 	private volatile long myLastModCount;
 
-	private final DomElement myProxy;
+	@Nullable
+	private DomElement myProxy;
 	private DomGenericInfoEx myGenericInfo;
 	private final InvocationCache myInvocationCache;
 	private volatile Converter myScalarConverter = null;
@@ -97,16 +98,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 
 		myType = narrowType(type);
 
-		final Class<?> rawType = getRawType();
-		myInvocationCache = manager.getApplicationComponent().getInvocationCache(rawType);
-		Class<? extends DomElement> implementation = manager.getApplicationComponent().getImplementation(rawType);
-		final boolean isInterface = rawType.isInterface();
-		if(implementation == null && !isInterface)
-		{
-			implementation = (Class<? extends DomElement>) rawType;
-		}
-		myProxy = AdvancedProxyBuilder.create(implementation).withInvocationHandler(this).withInterfaces(ArrayUtil.append(isInterface ? new Class[]{rawType} : ArrayUtil.EMPTY_CLASS_ARRAY,
-				InvocationHandlerOwner.class)).build();
+		myInvocationCache = manager.getApplicationComponent().getInvocationCache(getRawType());
 		refreshGenericInfo(dynamic);
 		if(stub != null)
 		{
@@ -237,7 +229,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 
 		if(!myManager.getSemService().isInsideAtomicChange())
 		{
-			myManager.fireEvent(new DomEvent(myProxy, false));
+			myManager.fireEvent(new DomEvent(getProxy(), false));
 		}
 	}
 
@@ -619,8 +611,21 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 	}
 
 	@Nonnull
+	@SuppressWarnings("unchecked")
 	public final DomElement getProxy()
 	{
+		if(myProxy == null)
+		{
+			final Class<?> rawType = getRawType();
+			Class<? extends DomElement> implementation = getManager().getApplicationComponent().getImplementation(rawType);
+			final boolean isInterface = rawType.isInterface();
+			if(implementation == null && !isInterface)
+			{
+				implementation = (Class<? extends DomElement>) rawType;
+			}
+			Class[] interfaces = ArrayUtil.append(isInterface ? new Class[]{rawType} : ArrayUtil.EMPTY_CLASS_ARRAY, InvocationHandlerOwner.class);
+			myProxy = AdvancedProxyBuilder.create(implementation).withInvocationHandler(this).withInterfaces(interfaces).build();
+		}
 		return myProxy;
 	}
 
