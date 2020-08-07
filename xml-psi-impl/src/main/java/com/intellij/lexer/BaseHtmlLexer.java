@@ -15,14 +15,6 @@
  */
 package com.intellij.lexer;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.completion.CompletionUtilCore;
 import com.intellij.lang.HtmlScriptContentProvider;
 import com.intellij.lang.Language;
@@ -38,12 +30,25 @@ import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.util.documentation.HtmlDescriptorsTable;
 import consulo.lang.LanguageVersion;
 import consulo.lang.util.LanguageVersionUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author Maxim.Mossienko
  */
 public abstract class BaseHtmlLexer extends DelegateLexer
 {
+	@Nullable
+	public static final Language ourDefaultLanguage = Language.findLanguageByID("JavaScript");
+	@Nullable
+	public static final Language ourDefaultStyleLanguage = Language.findLanguageByID("CSS");
+
 	protected static final int BASE_STATE_MASK = 0x3F;
 	private static final int SEEN_STYLE = 0x40;
 	private static final int SEEN_TAG = 0x80;
@@ -52,10 +57,6 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	private static final int SEEN_CONTENT_TYPE = 0x400;
 	private static final int SEEN_STYLESHEET_TYPE = 0x800;
 	protected static final int BASE_STATE_SHIFT = 11;
-	@Nullable
-	protected static final Language ourDefaultLanguage = Language.findLanguageByID("JavaScript");
-	@Nullable
-	protected static final Language ourDefaultStyleLanguage = Language.findLanguageByID("CSS");
 
 	protected boolean seenTag;
 	protected boolean seenAttribute;

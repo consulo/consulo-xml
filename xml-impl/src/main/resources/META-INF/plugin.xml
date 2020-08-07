@@ -594,7 +594,10 @@
 		<editorFactoryListener implementation="com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer" />
 
 		<projectService serviceInterface="com.intellij.pom.xml.XmlAspect" serviceImplementation="com.intellij.pom.xml.impl.XmlAspectImpl" lazy="false" />
+
 		<projectService serviceImplementation="com.intellij.javaee.PsiExternalResourceNotifier" lazy="false" />
+
+		<applicationService serviceImplementation="consulo.xml.html.lexer.InlineElementTypeHolder" />
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.copyright">

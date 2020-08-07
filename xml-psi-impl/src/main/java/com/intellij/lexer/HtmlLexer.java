@@ -15,47 +15,42 @@
  */
 package com.intellij.lexer;
 
-import javax.annotation.Nonnull;
-import com.intellij.lang.HtmlInlineScriptTokenTypesProvider;
 import com.intellij.lang.Language;
-import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
 import com.intellij.lang.LanguageUtil;
-import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.xml.html.lexer.InlineElementTypeHolder;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
  */
 public class HtmlLexer extends BaseHtmlLexer
 {
-	private static final IElementType ourInlineStyleElementType;
-	private static final IElementType ourInlineScriptElementType;
-
 	public static final String INLINE_STYLE_NAME = "css-ruleset-block";
-
-	static
-	{
-		EmbeddedTokenTypesProvider[] extensions = Extensions.getExtensions(EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME);
-		IElementType inlineStyleElementType = null;
-		for(EmbeddedTokenTypesProvider extension : extensions)
-		{
-			if(INLINE_STYLE_NAME.equals(extension.getName()))
-			{
-				inlineStyleElementType = extension.getElementType();
-				break;
-			}
-		}
-		ourInlineStyleElementType = inlineStyleElementType;
-		// At the moment only JS.
-		HtmlInlineScriptTokenTypesProvider provider = LanguageHtmlInlineScriptTokenTypesProvider.getInlineScriptProvider(ourDefaultLanguage);
-		ourInlineScriptElementType = provider != null ? provider.getElementType() : null;
-	}
 
 	private IElementType myTokenType;
 	private int myTokenStart;
 	private int myTokenEnd;
+
+	private IElementType myInlineStyleElementType;
+	private IElementType myInlineScriptElementType;
+
+	public HtmlLexer()
+	{
+		this(new MergingLexerAdapter(new FlexAdapter(new _HtmlLexer()), TOKENS_TO_MERGE), true);
+	}
+
+	protected HtmlLexer(Lexer _baseLexer, boolean _caseInsensitive)
+	{
+		super(_baseLexer, _caseInsensitive);
+
+		InlineElementTypeHolder elementTypeHolder = InlineElementTypeHolder.getInstance();
+		myInlineStyleElementType = elementTypeHolder.getInlineStyleElementType();
+		myInlineScriptElementType = elementTypeHolder.getInlineScriptElementType();
+	}
 
 	@Override
 	public void start(@Nonnull CharSequence buffer, int startOffset, int endOffset, int initialState)
@@ -91,9 +86,9 @@ public class HtmlLexer extends BaseHtmlLexer
 				IElementType currentStylesheetElementType = getCurrentStylesheetElementType();
 				tokenType = currentStylesheetElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentStylesheetElementType;
 			}
-			else if(ourInlineStyleElementType != null && isStartOfEmbeddmentAttributeValue(tokenType) && hasSeenAttribute())
+			else if(myInlineStyleElementType != null && isStartOfEmbeddmentAttributeValue(tokenType) && hasSeenAttribute())
 			{
-				tokenType = ourInlineStyleElementType;
+				tokenType = myInlineStyleElementType;
 			}
 		}
 		else if(hasSeenScript())
@@ -108,10 +103,10 @@ public class HtmlLexer extends BaseHtmlLexer
 					tokenType = currentScriptElementType == null ? XmlTokenType.XML_DATA_CHARACTERS : currentScriptElementType;
 				}
 			}
-			else if(hasSeenAttribute() && isStartOfEmbeddmentAttributeValue(tokenType) && ourInlineScriptElementType != null)
+			else if(hasSeenAttribute() && isStartOfEmbeddmentAttributeValue(tokenType) && myInlineScriptElementType != null)
 			{
 				myTokenEnd = skipToTheEndOfTheEmbeddment();
-				tokenType = ourInlineScriptElementType;
+				tokenType = myInlineScriptElementType;
 			}
 		}
 
@@ -127,16 +122,6 @@ public class HtmlLexer extends BaseHtmlLexer
 	{
 		return (tokenType == XmlTokenType.XML_DATA_CHARACTERS || tokenType == XmlTokenType.XML_CDATA_START || tokenType == XmlTokenType.XML_COMMENT_START || tokenType == XmlTokenType
 				.XML_REAL_WHITE_SPACE || tokenType == TokenType.WHITE_SPACE);
-	}
-
-	public HtmlLexer()
-	{
-		this(new MergingLexerAdapter(new FlexAdapter(new _HtmlLexer()), TOKENS_TO_MERGE), true);
-	}
-
-	protected HtmlLexer(Lexer _baseLexer, boolean _caseInsensitive)
-	{
-		super(_baseLexer, _caseInsensitive);
 	}
 
 	@Override
