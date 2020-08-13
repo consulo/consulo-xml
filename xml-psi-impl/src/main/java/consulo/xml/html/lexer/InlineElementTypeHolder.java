@@ -9,6 +9,7 @@ import com.intellij.psi.tree.IElementType;
 import consulo.application.internal.PerApplicationInstance;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
@@ -50,13 +51,13 @@ public class InlineElementTypeHolder
 		myInlineScriptElementType = provider != null ? provider.getElementType() : null;
 	}
 
-	@Nonnull
+	@Nullable
 	public IElementType getInlineScriptElementType()
 	{
 		return myInlineScriptElementType;
 	}
 
-	@Nonnull
+	@Nullable
 	public IElementType getInlineStyleElementType()
 	{
 		return myInlineStyleElementType;
