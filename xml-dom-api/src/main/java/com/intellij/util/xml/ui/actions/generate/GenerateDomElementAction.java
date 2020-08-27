@@ -25,10 +25,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
+import consulo.ui.image.Image;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import javax.swing.*;
 
 /**
  * User: Sergey.Vasiliev
@@ -37,7 +37,7 @@ public class GenerateDomElementAction extends CodeInsightAction {
 
   protected final GenerateDomElementProvider myProvider;
 
-  public GenerateDomElementAction(@Nonnull final GenerateDomElementProvider generateProvider, @Nullable Icon icon) {
+  public GenerateDomElementAction(@Nonnull final GenerateDomElementProvider generateProvider, @Nullable Image icon) {
     getTemplatePresentation().setDescription(generateProvider.getDescription());
     getTemplatePresentation().setText(generateProvider.getDescription());
     getTemplatePresentation().setIcon(icon);
