@@ -16,13 +16,6 @@
 
 package com.intellij.util.xml.highlighting;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.swing.Icon;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -37,15 +30,16 @@ import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.Consumer;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.xml.DomBundle;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomUtil;
-import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.xml.ModelMergerUtil;
+import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
+import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -137,8 +131,8 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
             return super.onChosen(selectedValue, finalChoice);
           }
 
-          public Icon getIconFor(final DomElement aValue) {
-            return TargetAWT.to(IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0));
+          public Image getIconFor(final DomElement aValue) {
+            return IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0);
           }
 
           @Nonnull
