@@ -16,6 +16,7 @@
 
 package org.intellij.plugins.intelliLang.inject.xml;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -32,7 +33,6 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
 import com.intellij.util.Consumer;
-import com.intellij.util.PlatformIcons;
 import com.intellij.util.containers.ContainerUtil;
 import org.intellij.plugins.intelliLang.Configuration;
 import org.intellij.plugins.intelliLang.inject.AbstractLanguageInjectionSupport;
@@ -47,9 +47,9 @@ import org.intellij.plugins.intelliLang.inject.config.ui.configurables.XmlAttrib
 import org.intellij.plugins.intelliLang.inject.config.ui.configurables.XmlTagInjectionConfigurable;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -351,14 +351,14 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
   @Override
   public AnAction[] createAddActions(final Project project, final Consumer<BaseInjection> consumer) {
     return new AnAction[] {
-      new AnAction("XML Tag Injection", null, PlatformIcons.XML_TAG_ICON) {
+      new AnAction("XML Tag Injection", null, AllIcons.Nodes.Tag) {
         @Override
         public void actionPerformed(final AnActionEvent e) {
           final BaseInjection newInjection = showInjectionUI(project, new XmlTagInjection());
           if (newInjection != null) consumer.consume(newInjection);
         }
       },
-      new AnAction("XML Attribute Injection", null, PlatformIcons.ANNOTATION_TYPE_ICON) {
+      new AnAction("XML Attribute Injection", null, AllIcons.Nodes.Annotationtype) {
         @Override
         public void actionPerformed(final AnActionEvent e) {
           final BaseInjection injection = showInjectionUI(project, new XmlAttributeInjection());

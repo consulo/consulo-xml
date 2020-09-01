@@ -20,7 +20,6 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 import javax.swing.JList;
 
 import com.intellij.icons.AllIcons;
@@ -59,6 +58,7 @@ import com.intellij.util.ObjectUtils;
 import com.intellij.util.Url;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.ui.image.Image;
 
 public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 {
@@ -70,7 +70,7 @@ public abstract class BaseOpenInBrowserAction extends DumbAwareAction
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	protected BaseOpenInBrowserAction(@Nullable String text, @Nullable String description, @Nullable Icon icon)
+	protected BaseOpenInBrowserAction(@Nullable String text, @Nullable String description, @Nullable Image icon)
 	{
 		super(text, description, icon);
 	}
