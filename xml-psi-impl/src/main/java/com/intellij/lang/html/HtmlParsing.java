@@ -19,10 +19,6 @@
  */
 package com.intellij.lang.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeInsight.completion.CompletionUtil;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.lang.PsiBuilder;
@@ -34,7 +30,11 @@ import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.util.containers.Stack;
 import com.intellij.xml.util.HtmlUtil;
-import consulo.consulo.psi.impl.source.codeStyle.IndentHelperExtension;
+import consulo.psi.impl.source.codeStyle.IndentHelperExtension;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class HtmlParsing {
   @NonNls private static final String TR_TAG = "tr";
