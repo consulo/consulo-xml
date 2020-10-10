@@ -177,7 +177,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 
 	private static Dimension getDimension()
 	{
-		return new Dimension(AllIcons.General.ErrorsInProgress.getIconWidth() + 2, AllIcons.General.ErrorsInProgress.getIconHeight() + 2);
+		return new Dimension(AllIcons.General.ErrorsInProgress.getWidth() + 2, AllIcons.General.ErrorsInProgress.getHeight() + 2);
 	}
 
 	private class DomElementsTrafficLightRenderer extends TrafficLightRenderer

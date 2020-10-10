@@ -19,11 +19,14 @@ package com.intellij.util.xml.ui;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.ui.image.Image;
+
 import javax.annotation.Nonnull;
 
 import javax.annotation.Nullable;
@@ -93,7 +96,7 @@ public class ErrorableTableCellRenderer<T extends DomElement> extends DefaultTab
 
         wrapper.setBackground(component.getBackground());
 
-        final JLabel errorLabel = new JLabel(getErrorIcon());
+        final JLabel errorLabel = new JBLabel(getErrorIcon());
 
         wrapper.setToolTipText(TooltipUtils.getTooltipText(errorDescriptors));
 
@@ -117,7 +120,7 @@ public class ErrorableTableCellRenderer<T extends DomElement> extends DefaultTab
     return component;
   }
 
-  private static Icon getErrorIcon() {
+  private static Image getErrorIcon() {
     return AllIcons.General.ExclMark;
   }
 }

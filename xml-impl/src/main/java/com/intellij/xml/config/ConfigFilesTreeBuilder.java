@@ -179,7 +179,7 @@ public class ConfigFilesTreeBuilder {
     final Object object = ((DefaultMutableTreeNode)value).getUserObject();
     if (object instanceof FileType) {
       final FileType fileType = (FileType)object;
-      renderer.setIcon(TargetAWT.to(fileType.getIcon()));
+      renderer.setIcon(fileType.getIcon());
       renderer.append(getFileTypeNodeName(fileType), SimpleTextAttributes.REGULAR_ATTRIBUTES);
     }
     else if (object instanceof Module) {
@@ -191,7 +191,7 @@ public class ConfigFilesTreeBuilder {
     else if (object instanceof PsiFile) {
       final PsiFile psiFile = (PsiFile)object;
       final Image icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
-      renderer.setIcon(TargetAWT.to(icon));
+      renderer.setIcon(icon);
       final String fileName = psiFile.getName();
       renderer.append(fileName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
       final VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -206,7 +206,7 @@ public class ConfigFilesTreeBuilder {
     }
     else if (object instanceof VirtualFile) {
       VirtualFile file = (VirtualFile)object;
-      renderer.setIcon(TargetAWT.to(VirtualFilePresentation.getIcon(file)));
+      renderer.setIcon(VirtualFilePresentation.getIcon(file));
       renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
       String path = file.getPath();
       final int i = path.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);

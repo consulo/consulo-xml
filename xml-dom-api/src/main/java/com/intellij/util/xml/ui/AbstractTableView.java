@@ -24,11 +24,11 @@ import com.intellij.ui.PopupHandler;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.table.TableView;
 import com.intellij.util.EventDispatcher;
-import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.xml.util.XmlStringUtil;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 
@@ -92,7 +92,7 @@ public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDat
     });
     header.setReorderingAllowed(false);
 
-    myTable.setRowHeight(PlatformIcons.CLASS_ICON.getIconHeight());
+    myTable.setRowHeight(PlatformIconGroup.nodesClass().getHeight());
     myTable.setPreferredScrollableViewportSize(new Dimension(-1, 150));
     myTable.setSelectionMode(allowMultipleRowsSelection() ? ListSelectionModel.MULTIPLE_INTERVAL_SELECTION : ListSelectionModel.SINGLE_SELECTION);
 

@@ -32,6 +32,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import com.intellij.icons.AllIcons;
+import consulo.awt.TargetAWT;
 import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Ref;
@@ -39,7 +41,6 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.FieldPanel;
 import com.intellij.util.Function;
-import com.intellij.util.PlatformIcons;
 
 public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
 {
@@ -94,7 +95,7 @@ public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
 				);
 			}
 		}, null);
-		((JButton) additionalAttributesPanel.getComponent(1)).setIcon(PlatformIcons.OPEN_EDIT_DIALOG_ICON);
+		((JButton) additionalAttributesPanel.getComponent(1)).setIcon(TargetAWT.to(AllIcons.Actions.ShowViewer));
 		panelRef.set(additionalAttributesPanel);
 		additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter()
 		{

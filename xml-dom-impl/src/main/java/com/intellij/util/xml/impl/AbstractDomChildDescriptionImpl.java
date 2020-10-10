@@ -50,7 +50,7 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
     protected ElementPresentationTemplate compute() {
       Class clazz = ReflectionUtil.getRawType(getType());
       Presentation presentation = DomApplicationComponent.getInstance().getInvocationCache(clazz).getClassAnnotation(Presentation.class);
-      return presentation == null ? null : new ElementPresentationTemplateImpl(presentation, clazz);
+      return presentation == null ? null : new ElementPresentationTemplateImpl(presentation);
     }
   };
 

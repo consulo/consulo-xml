@@ -32,8 +32,8 @@ import consulo.ui.image.Image;
  */
 public class ElementPresentationTemplateImpl extends TypePresentationServiceImpl.PresentationTemplateImpl implements ElementPresentationTemplate {
 
-  public ElementPresentationTemplateImpl(Presentation presentation, Class<?> aClass) {
-    super(presentation, aClass);
+  public ElementPresentationTemplateImpl(Presentation presentation) {
+    super(presentation);
   }
 
   @Override

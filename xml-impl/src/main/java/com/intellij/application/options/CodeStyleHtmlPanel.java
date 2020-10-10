@@ -28,6 +28,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
 import com.intellij.openapi.application.ApplicationBundle;
@@ -41,7 +42,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ArrayUtil;
-import com.intellij.util.PlatformIcons;
 
 public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
@@ -109,7 +109,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
   private static void customizeField(final String title, final TextFieldWithBrowseButton uiField) {
     uiField.getTextField().setEditable(false);
-    uiField.setButtonIcon(PlatformIcons.OPEN_EDIT_DIALOG_ICON);
+    uiField.setButtonIcon(AllIcons.Actions.ShowViewer);
     uiField.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         final TagListDialog tagListDialog = new TagListDialog(title);

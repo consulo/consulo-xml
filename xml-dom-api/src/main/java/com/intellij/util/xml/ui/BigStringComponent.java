@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml.ui;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.util.PlatformIcons;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +35,7 @@ public class BigStringComponent extends TextFieldWithBrowseButton {
   public BigStringComponent(boolean hasBorder, String windowTitle) {
     super();
     myWindowTitle = windowTitle;
-    setButtonIcon(PlatformIcons.OPEN_EDIT_DIALOG_ICON);
+    setButtonIcon(AllIcons.Actions.ShowViewer);
     addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         Messages.showTextAreaDialog(getTextField(), myWindowTitle, "DescriptionDialogEditor");
