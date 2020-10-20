@@ -41,10 +41,10 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManagerImpl;
 import com.intellij.util.xml.highlighting.DomElementsErrorPanel;
+import jakarta.inject.Singleton;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import javax.inject.Singleton;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;

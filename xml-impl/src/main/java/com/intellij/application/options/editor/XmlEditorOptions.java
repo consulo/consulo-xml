@@ -15,20 +15,16 @@
  */
 package com.intellij.application.options.editor;
 
-import java.io.File;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
-
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.intellij.xml.XmlBundle;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner

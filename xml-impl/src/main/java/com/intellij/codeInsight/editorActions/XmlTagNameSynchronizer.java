@@ -41,9 +41,9 @@ import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.disposer.Disposable;
 import consulo.util.dataholder.Key;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 import java.util.Objects;
 import java.util.Set;
 

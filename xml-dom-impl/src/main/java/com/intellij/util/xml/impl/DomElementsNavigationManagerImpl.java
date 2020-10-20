@@ -16,25 +16,20 @@
 
 package com.intellij.util.xml.impl;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementNavigationProvider;
-import com.intellij.util.xml.DomElementsNavigationManager;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.*;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * User: Sergey.Vasiliev

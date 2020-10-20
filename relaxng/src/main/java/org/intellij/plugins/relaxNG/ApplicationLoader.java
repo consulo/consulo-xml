@@ -28,14 +28,13 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
+import jakarta.inject.Singleton;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
 import org.intellij.plugins.relaxNG.inspections.RngDomInspection;
 import org.intellij.plugins.relaxNG.inspections.UnusedDefineInspection;
 import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngDefineMetaData;
-
-import javax.inject.Singleton;
 
 @Singleton
 public class ApplicationLoader

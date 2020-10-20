@@ -7,11 +7,11 @@ import com.intellij.lexer.EmbeddedTokenTypesProvider;
 import com.intellij.lexer.HtmlLexer;
 import com.intellij.psi.tree.IElementType;
 import consulo.application.internal.PerApplicationInstance;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.List;
 
 /**

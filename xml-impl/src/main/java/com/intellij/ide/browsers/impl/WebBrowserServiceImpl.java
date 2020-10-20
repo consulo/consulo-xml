@@ -15,13 +15,6 @@
  */
 package com.intellij.ide.browsers.impl;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
-
 import com.intellij.ide.browsers.OpenInBrowserRequest;
 import com.intellij.ide.browsers.WebBrowserService;
 import com.intellij.ide.browsers.WebBrowserUrlProvider;
@@ -34,6 +27,12 @@ import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.util.Url;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.HtmlUtil;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Collections;
 
 @Singleton
 public class WebBrowserServiceImpl extends WebBrowserService

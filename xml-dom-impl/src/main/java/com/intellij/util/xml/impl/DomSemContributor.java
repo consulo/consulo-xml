@@ -40,10 +40,10 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -56,12 +56,12 @@ import consulo.disposer.Disposer;
 import consulo.util.advandedProxy.AdvancedProxyBuilder;
 import consulo.util.dataholder.Key;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;

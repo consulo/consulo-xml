@@ -15,13 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.intellij.codeInsight.template.Template;
 import com.intellij.codeInsight.template.TemplateManager;
 import com.intellij.codeInsight.template.impl.TemplateSettings;
@@ -32,6 +25,12 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.actions.generate.DomTemplateRunner;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 /**
  * User: Sergey.Vasiliev

@@ -15,7 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import consulo.disposer.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.util.NotNullFunction;
@@ -27,11 +26,12 @@ import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileDescription;
 import com.intellij.util.xml.TypeChooserManager;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
+import consulo.disposer.Disposable;
 import gnu.trove.THashSet;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Singleton;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;

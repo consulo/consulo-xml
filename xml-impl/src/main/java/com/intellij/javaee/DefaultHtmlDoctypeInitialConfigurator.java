@@ -1,11 +1,10 @@
 package com.intellij.javaee;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.xml.Html5SchemaProvider;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * @author Eugene.Kudelevsky

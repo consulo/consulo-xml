@@ -23,7 +23,6 @@ import com.intellij.codeInspection.InspectionProfileEntry;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ex.InspectionToolWrapper;
 import com.intellij.lang.annotation.HighlightSeverity;
-import consulo.disposer.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -45,13 +44,14 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.impl.DomApplicationComponent;
+import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.util.dataholder.Key;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
 

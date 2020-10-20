@@ -16,15 +16,15 @@
 
 package com.intellij.application.options.editor;
 
-import javax.annotation.Nonnull;
-import javax.inject.Singleton;
-
 import com.intellij.lang.XmlCodeFoldingSettings;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
 
 @Singleton
 @State(name = "XmlFoldingSettings", storages = @Storage("editor.codeinsight.xml"))

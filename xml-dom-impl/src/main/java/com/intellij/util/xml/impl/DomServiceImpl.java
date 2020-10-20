@@ -46,10 +46,10 @@ import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.util.xml.stubs.builder.DomStubBuilder;
 import com.intellij.xml.util.XmlUtil;
 import consulo.util.dataholder.Key;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

@@ -15,42 +15,14 @@
  */
 package com.intellij.javaee;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.io.File;
-import java.net.URL;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.annotation.Nonnull;
-
-import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
-
-import org.jetbrains.annotations.TestOnly;
 import com.intellij.application.options.PathMacrosImpl;
 import com.intellij.application.options.ReplacePathToMacroMap;
-import consulo.disposer.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ExpandMacroToPathMap;
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.AtomicNotNullLazyValue;
-import consulo.disposer.Disposer;
 import com.intellij.openapi.util.NotNullLazyKey;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.util.SystemInfo;
@@ -69,6 +41,20 @@ import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+import jakarta.inject.Singleton;
+import org.jdom.Element;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.TestOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.net.URL;
+import java.util.*;
 
 @Singleton
 @State(name = "ExternalResourceManagerImpl", storages = {

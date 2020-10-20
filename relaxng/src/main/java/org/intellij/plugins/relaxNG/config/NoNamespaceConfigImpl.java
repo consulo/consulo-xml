@@ -15,15 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import consulo.disposer.Disposable;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -38,6 +29,14 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xmlb.annotations.MapAnnotation;
+import consulo.disposer.Disposable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 @State(name = "NoNamespaceConfig.Mappings", storages = @Storage(file = StoragePathMacros.WORKSPACE_FILE))

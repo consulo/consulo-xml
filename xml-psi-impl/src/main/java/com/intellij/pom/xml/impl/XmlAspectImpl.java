@@ -36,10 +36,10 @@ import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
 import com.intellij.util.CharTable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Collections;
 
 @Singleton

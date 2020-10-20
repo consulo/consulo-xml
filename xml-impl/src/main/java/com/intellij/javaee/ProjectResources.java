@@ -15,15 +15,14 @@
  */
 package com.intellij.javaee;
 
-import java.util.Collections;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.inject.Singleton;
-
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author Dmitry Avdeev

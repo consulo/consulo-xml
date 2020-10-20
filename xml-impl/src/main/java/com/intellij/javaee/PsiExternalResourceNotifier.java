@@ -15,13 +15,12 @@
  */
 package com.intellij.javaee;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.PsiManagerEx;
 import consulo.disposer.Disposable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * @author yole
