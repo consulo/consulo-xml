@@ -24,68 +24,87 @@ import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xmlb.JDOMXIncluder;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
-* @author peter
-*/
-class InclusionProvider implements CachedValueProvider<PsiElement[]> {
-  private final XmlTag myXincludeTag;
+ * @author peter
+ */
+class InclusionProvider implements CachedValueProvider<PsiElement[]>
+{
+	//xpointer($1)
+	public static Pattern XPOINTER_PATTERN = Pattern.compile("xpointer\\((.*)\\)");
 
-  public InclusionProvider(XmlTag xincludeTag) {
-    myXincludeTag = xincludeTag;
-  }
+	// /$1(/$2)?/*
+	public static Pattern CHILDREN_PATTERN = Pattern.compile("/([^/]*)(/[^/]*)?/\\*");
 
-  @Nonnull
-  public static PsiElement[] getIncludedTags(XmlTag xincludeTag) {
-    return CachedValuesManager.getManager(xincludeTag.getProject()).getCachedValue(xincludeTag, new InclusionProvider(xincludeTag));
-  }
+	private final XmlTag myXincludeTag;
 
-  public Result<PsiElement[]> compute() {
-    PsiElement[] result = RecursionManager.doPreventingRecursion(myXincludeTag, true, new NullableComputable<PsiElement[]>() {
-      @Override
-      public PsiElement[] compute() {
-        return computeInclusion(myXincludeTag);
-      }
-    });
-    return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
-  }
+	public InclusionProvider(XmlTag xincludeTag)
+	{
+		myXincludeTag = xincludeTag;
+	}
 
-  private static XmlTag[] extractXpointer(@Nonnull XmlTag rootTag, @Nullable final String xpointer) {
-    if (xpointer != null) {
-      Matcher matcher = JDOMXIncluder.XPOINTER_PATTERN.matcher(xpointer);
-      if (matcher.matches()) {
-        String pointer = matcher.group(1);
-        matcher = JDOMXIncluder.CHILDREN_PATTERN.matcher(pointer);
-        if (matcher.matches() && matcher.group(1).equals(rootTag.getName())) {
-          return rootTag.getSubTags();
-        }
-      }
-    }
+	@Nonnull
+	public static PsiElement[] getIncludedTags(XmlTag xincludeTag)
+	{
+		return CachedValuesManager.getManager(xincludeTag.getProject()).getCachedValue(xincludeTag, new InclusionProvider(xincludeTag));
+	}
 
-    return new XmlTag[]{rootTag};
-  }
+	public Result<PsiElement[]> compute()
+	{
+		PsiElement[] result = RecursionManager.doPreventingRecursion(myXincludeTag, true, new NullableComputable<PsiElement[]>()
+		{
+			@Override
+			public PsiElement[] compute()
+			{
+				return computeInclusion(myXincludeTag);
+			}
+		});
+		return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+	}
 
-  @Nullable
-  private static PsiElement[] computeInclusion(final XmlTag xincludeTag) {
-    final XmlFile included = XmlIncludeHandler.resolveXIncludeFile(xincludeTag);
-    final XmlDocument document = included != null ? included.getDocument() : null;
-    final XmlTag rootTag = document != null ? document.getRootTag() : null;
-    if (rootTag != null) {
-      final String xpointer = xincludeTag.getAttributeValue("xpointer", XmlUtil.XINCLUDE_URI);
-      final XmlTag[] includeTag = extractXpointer(rootTag, xpointer);
-      PsiElement[] result = new PsiElement[includeTag.length];
-      for (int i = 0; i < includeTag.length; i++) {
-        result[i] = new IncludedXmlTag(includeTag[i], xincludeTag.getParentTag());
-      }
-      return result;
-    }
+	private static XmlTag[] extractXpointer(@Nonnull XmlTag rootTag, @Nullable final String xpointer)
+	{
+		if(xpointer != null)
+		{
+			Matcher matcher = XPOINTER_PATTERN.matcher(xpointer);
+			if(matcher.matches())
+			{
+				String pointer = matcher.group(1);
+				matcher = CHILDREN_PATTERN.matcher(pointer);
+				if(matcher.matches() && matcher.group(1).equals(rootTag.getName()))
+				{
+					return rootTag.getSubTags();
+				}
+			}
+		}
 
-    return null;
-  }
+		return new XmlTag[]{rootTag};
+	}
+
+	@Nullable
+	private static PsiElement[] computeInclusion(final XmlTag xincludeTag)
+	{
+		final XmlFile included = XmlIncludeHandler.resolveXIncludeFile(xincludeTag);
+		final XmlDocument document = included != null ? included.getDocument() : null;
+		final XmlTag rootTag = document != null ? document.getRootTag() : null;
+		if(rootTag != null)
+		{
+			final String xpointer = xincludeTag.getAttributeValue("xpointer", XmlUtil.XINCLUDE_URI);
+			final XmlTag[] includeTag = extractXpointer(rootTag, xpointer);
+			PsiElement[] result = new PsiElement[includeTag.length];
+			for(int i = 0; i < includeTag.length; i++)
+			{
+				result[i] = new IncludedXmlTag(includeTag[i], xincludeTag.getParentTag());
+			}
+			return result;
+		}
+
+		return null;
+	}
 
 }
