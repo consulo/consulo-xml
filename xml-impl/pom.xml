@@ -51,7 +51,6 @@
 					<repositoryChannel>nightly</repositoryChannel>
 					<dependencies>
 						<dependency>com.intellij.spellchecker</dependency>
-						<dependency>org.intellij.intelliLang</dependency>
 						<dependency>com.intellij.regexp</dependency>
 					</dependencies>
 					<packaging>

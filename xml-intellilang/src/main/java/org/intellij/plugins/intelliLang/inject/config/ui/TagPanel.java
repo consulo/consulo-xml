@@ -16,17 +16,12 @@
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.util.Computable;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
 import consulo.util.dataholder.Key;
 import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
-import org.intellij.plugins.intelliLang.inject.config.JspSupportProxy;
 import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
 
 import javax.swing.*;
@@ -64,34 +59,34 @@ public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection>
 		final List<String> urls = new ArrayList<String>(Arrays.asList(ExternalResourceManager.getInstance().getResourceUrls(null, true)));
 		Collections.sort(urls);
 
-		final JspSupportProxy jspSupport = JspSupportProxy.getInstance();
-		if(jspSupport != null)
-		{
-			final List<String> tlds = new ArrayList<String>();
-			final Module[] modules = ModuleManager.getInstance(project).getModules();
-			for(final Module module : modules)
-			{
-				final String[] tldUris = ApplicationManager.getApplication().runReadAction(new Computable<String[]>()
-				{
-					@Override
-					public String[] compute()
-					{
-						return jspSupport.getPossibleTldUris(module);
-					}
-				});
-				for(String uri : tldUris)
-				{
-					if(!tlds.contains(uri))
-					{
-						tlds.add(uri);
-					}
-				}
-			}
-			Collections.sort(tlds);
-
-			// TLD URIs are intentionally kept above the other URIs to make it easier to find them
-			urls.addAll(0, tlds);
-		}
+//		final JspSupportProxy jspSupport = JspSupportProxy.getInstance();
+//		if(jspSupport != null)
+//		{
+//			final List<String> tlds = new ArrayList<String>();
+//			final Module[] modules = ModuleManager.getInstance(project).getModules();
+//			for(final Module module : modules)
+//			{
+//				final String[] tldUris = ApplicationManager.getApplication().runReadAction(new Computable<String[]>()
+//				{
+//					@Override
+//					public String[] compute()
+//					{
+//						return jspSupport.getPossibleTldUris(module);
+//					}
+//				});
+//				for(String uri : tldUris)
+//				{
+//					if(!tlds.contains(uri))
+//					{
+//						tlds.add(uri);
+//					}
+//				}
+//			}
+//			Collections.sort(tlds);
+//
+//			// TLD URIs are intentionally kept above the other URIs to make it easier to find them
+//			urls.addAll(0, tlds);
+//		}
 
 		project.putUserData(URI_MODEL, urls);
 		return new DefaultComboBoxModel(urls.toArray());

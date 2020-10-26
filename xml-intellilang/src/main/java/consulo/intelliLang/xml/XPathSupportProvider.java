@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  */
 public interface XPathSupportProvider
 {
-	ExtensionPointName<XPathSupportProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.intelliLang.xpathSupportProvider");
+	ExtensionPointName<XPathSupportProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.xpathSupportProvider");
 
 	@Nullable
 	static XPathSupportProvider findProvider()

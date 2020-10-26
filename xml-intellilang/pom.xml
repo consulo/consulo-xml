@@ -48,12 +48,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>org.intellij.intelliLang</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>com.intellij.xml-xml.psi.impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>

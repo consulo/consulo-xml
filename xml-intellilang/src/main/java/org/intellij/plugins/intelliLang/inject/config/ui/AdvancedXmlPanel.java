@@ -15,16 +15,14 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.LanguageTextField;
 import consulo.intelliLang.xml.XPathSupportProvider;
+import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
+
+import javax.swing.*;
 
 public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjection>
 {
@@ -69,7 +67,7 @@ public class AdvancedXmlPanel extends AbstractInjectionPanel<AbstractTagInjectio
 			@Override
 			public void customizePsiFile(PsiFile psiFile)
 			{
-				psiFile.putCopyableUserData(ValueRegExpAnnotator.KEY, Boolean.TRUE);
+				psiFile.putCopyableUserData(AdvancedPanel.KEY, Boolean.TRUE);
 			}
 		});
 

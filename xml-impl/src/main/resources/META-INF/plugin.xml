@@ -4,7 +4,6 @@
 	<version>SNAPSHOT</version>
 	<category>Custom Languages</category>
 
-	<depends optional="true" config-file="org.intellij.intelliLang.xml">org.intellij.intelliLang</depends>
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
 	<import path="/META-INF/XmlDom.xml" />
@@ -59,7 +58,7 @@
 		</group>
 
 		<group id="NewXmlDescriptor" class="com.intellij.ide.actions.NonEmptyActionGroup" text="XML Configuration File" popup="true"
-			   icon="AllIcons.FileTypes.Xml">
+			   icon="consulo.platform.base.PlatformIconGroup@filetypes.xml">
 			<add-to-group group-id="NewGroup" anchor="last"/>
 		</group>
 
@@ -150,6 +149,8 @@
 		</extensionPoint>
 
 		<extensionPoint name="validateHandler" interface="com.intellij.xml.actions.validate.ValidateXmlHandler"/>
+
+		<extensionPoint name="xpathSupportProvider" interface="consulo.intelliLang.xml.XPathSupportProvider"/>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij">
@@ -159,6 +160,12 @@
 
 		<fileTypeFactory implementation="com.intellij.xml.XmlFileTypeFactory"/>
 		<bidiRegionsSeparator language="XML" implementationClass="com.intellij.openapi.editor.bidi.XmlBidiRegionsSeparator"/>
+
+		<multiHostInjector forClass="com.intellij.psi.xml.XmlTag" implementationClass="org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjector"/>
+		<multiHostInjector forClass="com.intellij.psi.xml.XmlAttributeValue" implementationClass="org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjector"/>
+
+		<injectionLanguageSupport implementation="org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport"/>
+		<injectionConfig config="resources/xmlInjections-html.xml"/>
 
 		<filetype.stubBuilder filetype="XML" implementationClass="com.intellij.util.xml.stubs.builder.DomStubBuilder"/>
 		<stubElementTypeHolder class="com.intellij.util.xml.stubs.DomElementTypeHolder"/>

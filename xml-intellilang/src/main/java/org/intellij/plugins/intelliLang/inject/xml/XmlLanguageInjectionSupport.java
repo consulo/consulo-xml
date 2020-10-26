@@ -34,8 +34,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
 import com.intellij.util.Consumer;
 import com.intellij.util.containers.ContainerUtil;
+import consulo.psi.injection.AbstractLanguageInjectionSupport;
 import org.intellij.plugins.intelliLang.Configuration;
-import org.intellij.plugins.intelliLang.inject.AbstractLanguageInjectionSupport;
 import org.intellij.plugins.intelliLang.inject.EditInjectionSettingsAction;
 import org.intellij.plugins.intelliLang.inject.InjectLanguageAction;
 import org.intellij.plugins.intelliLang.inject.InjectorUtils;
@@ -57,7 +57,8 @@ import java.util.Collections;
 /**
  * @author Gregory.Shrago
  */
-public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSupport {
+public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSupport
+{
 
   @NonNls public static final String XML_SUPPORT_ID = "xml";
 
