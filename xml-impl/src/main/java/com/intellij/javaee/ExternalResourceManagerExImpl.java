@@ -18,6 +18,7 @@ package com.intellij.javaee;
 import com.intellij.application.options.PathMacrosImpl;
 import com.intellij.application.options.ReplacePathToMacroMap;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.PathMacros;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileTypes.FileType;
@@ -579,7 +580,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 		}
 
 		ReplacePathToMacroMap macroReplacements = new ReplacePathToMacroMap();
-		PathMacrosImpl.getInstanceEx().addMacroReplacements(macroReplacements);
+		((PathMacrosImpl) PathMacros.getInstance()).addMacroReplacements(macroReplacements);
 		macroReplacements.substitute(element, SystemInfo.isFileSystemCaseSensitive);
 		return element;
 	}
@@ -588,7 +589,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	public void loadState(Element state)
 	{
 		ExpandMacroToPathMap macroExpands = new ExpandMacroToPathMap();
-		PathMacrosImpl.getInstanceEx().addMacroExpands(macroExpands);
+		((PathMacrosImpl)PathMacros.getInstance()).addMacroExpands(macroExpands);
 		macroExpands.substitute(state, SystemInfo.isFileSystemCaseSensitive);
 
 		incModificationCount();
