@@ -15,10 +15,9 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import java.awt.Color;
-
 import com.intellij.ui.breadcrumbs.BreadcrumbsComponent;
 import com.intellij.ui.breadcrumbs.CrumbPresentation;
+import consulo.ui.color.ColorValue;
 
 /**
  * @author Eugene.Kudelevsky
@@ -26,7 +25,7 @@ import com.intellij.ui.breadcrumbs.CrumbPresentation;
 public class DefaultCrumbsPresentation extends CrumbPresentation
 {
 	@Override
-	public Color getBackgroundColor(boolean selected, boolean hovered, boolean light)
+	public ColorValue getBackgroundColor(boolean selected, boolean hovered, boolean light)
 	{
 		return BreadcrumbsComponent.ButtonSettings.getBackgroundColor(selected, hovered, light, false);
 	}

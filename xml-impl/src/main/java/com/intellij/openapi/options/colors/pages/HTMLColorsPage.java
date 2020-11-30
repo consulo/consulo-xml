@@ -15,21 +15,20 @@
  */
 package com.intellij.openapi.options.colors.pages;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
 import com.intellij.openapi.application.ApplicationNamesInfo;
 import com.intellij.openapi.editor.XmlHighlighterColors;
-import com.intellij.openapi.editor.colors.ColorKey;
+import com.intellij.openapi.editor.colors.EditorColorKey;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.options.OptionsBundle;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class HTMLColorsPage implements ColorSettingsPage {
   private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
@@ -57,7 +56,7 @@ public class HTMLColorsPage implements ColorSettingsPage {
   public ColorDescriptor[] getColorDescriptors() {
     // todo: make preview for it
 
-    final ColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
+    final EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
     final ColorDescriptor[] colorDescriptors = new ColorDescriptor[colorKeys.length];
 
     for (int i = 0; i < colorDescriptors.length; i++) {

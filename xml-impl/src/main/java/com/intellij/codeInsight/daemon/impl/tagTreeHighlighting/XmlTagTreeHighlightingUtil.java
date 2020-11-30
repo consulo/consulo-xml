@@ -17,7 +17,7 @@ package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.colors.ColorKey;
+import com.intellij.openapi.editor.colors.EditorColorKey;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.psi.PsiElement;
@@ -25,9 +25,10 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.containers.HashSet;
-import javax.annotation.Nonnull;
+import consulo.ui.color.ColorValue;
+import consulo.ui.color.RGBColor;
 
-import java.awt.*;
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 /**
@@ -76,12 +77,14 @@ class XmlTagTreeHighlightingUtil {
     return false;
   }
 
-  static Color makeTransparent(@Nonnull Color color, @Nonnull Color backgroundColor, double transparency) {
+  static RGBColor makeTransparent(@Nonnull ColorValue c, @Nonnull ColorValue bc, double transparency) {
+    RGBColor color = c.toRGB();
+    RGBColor backgroundColor = bc.toRGB();
     int r = makeTransparent(transparency, color.getRed(), backgroundColor.getRed());
     int g = makeTransparent(transparency, color.getGreen(), backgroundColor.getGreen());
     int b = makeTransparent(transparency, color.getBlue(), backgroundColor.getBlue());
 
-    return new Color(r, g, b);
+    return new RGBColor(r, g, b);
   }
 
   private static int makeTransparent(double transparency, int channel, int backgroundChannel) {
@@ -95,9 +98,9 @@ class XmlTagTreeHighlightingUtil {
     return result;
   }
 
-  static Color[] getBaseColors() {
-    final ColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
-    final Color[] colors = new Color[colorKeys.length];
+  static ColorValue[] getBaseColors() {
+    final EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
+    final ColorValue[] colors = new ColorValue[colorKeys.length];
 
     final EditorColorsScheme colorsScheme = EditorColorsManager.getInstance().getGlobalScheme();
 

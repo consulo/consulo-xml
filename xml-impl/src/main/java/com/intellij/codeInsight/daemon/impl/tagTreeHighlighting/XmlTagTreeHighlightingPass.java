@@ -50,6 +50,9 @@ import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
 import com.intellij.ui.breadcrumbs.BreadcrumbsUtilEx;
 import com.intellij.ui.breadcrumbs.PsiFileBreadcrumbsCollector;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.awt.TargetAWT;
+import consulo.ui.color.ColorValue;
+import consulo.ui.color.RGBColor;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
@@ -223,11 +226,11 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		final List<HighlightInfo> highlightInfos = new ArrayList<>(count * 2);
 		final MarkupModel markupModel = myEditor.getMarkupModel();
 
-		final Color[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
-		final Color[] colorsForEditor = count > 1 ? toColorsForEditor(baseColors) : new Color[]{
+		final ColorValue[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
+		final ColorValue[] colorsForEditor = count > 1 ? toColorsForEditor(baseColors) : new ColorValue[]{
 				myEditor.getColorsScheme().getAttributes(CodeInsightColors.MATCHED_BRACE_ATTRIBUTES).getBackgroundColor()
 		};
-		final Color[] colorsForLineMarkers = toColorsForLineMarkers(baseColors);
+		final ColorValue[] colorsForLineMarkers = toColorsForLineMarkers(baseColors);
 
 		final List<RangeHighlighter> newHighlighters = new ArrayList<>();
 
@@ -242,7 +245,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 				continue;
 			}
 
-			Color color = colorsForEditor[i];
+			ColorValue color = colorsForEditor[i];
 
 			if(color == null)
 			{
@@ -262,7 +265,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 			final int start = pair.first != null ? pair.first.getStartOffset() : pair.second.getStartOffset();
 			final int end = pair.second != null ? pair.second.getEndOffset() : pair.first.getEndOffset();
 
-			final Color lineMarkerColor = colorsForLineMarkers[i];
+			final ColorValue lineMarkerColor = colorsForLineMarkers[i];
 			if(count > 1 && lineMarkerColor != null && start != end)
 			{
 				final RangeHighlighter highlighter = createHighlighter(markupModel, new TextRange(start, end), lineMarkerColor);
@@ -295,29 +298,29 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 	}
 
 	@Nonnull
-	private static HighlightInfo createHighlightInfo(Color color, @Nonnull TextRange range)
+	private static HighlightInfo createHighlightInfo(ColorValue color, @Nonnull TextRange range)
 	{
 		TextAttributes attributes = new TextAttributes(null, color, null, null, Font.PLAIN);
 		return HighlightInfo.newHighlightInfo(TYPE).range(range).textAttributes(attributes).severity(HighlightSeverity.INFORMATION).createUnconditionally();
 	}
 
 	@Nonnull
-	private static RangeHighlighter createHighlighter(final MarkupModel mm, @Nonnull final TextRange range, final Color color)
+	private static RangeHighlighter createHighlighter(final MarkupModel mm, @Nonnull final TextRange range, final ColorValue color)
 	{
 		final RangeHighlighter highlighter = mm.addRangeHighlighter(range.getStartOffset(), range.getEndOffset(), 0, null, HighlighterTargetArea.LINES_IN_RANGE);
 
 		highlighter.setLineMarkerRenderer((editor, g, r) ->
 		{
-			g.setColor(color);
+			g.setColor(TargetAWT.to(color));
 			g.fillRect(r.x - 1, r.y, 2, r.height);
 		});
 		return highlighter;
 	}
 
-	static Color toLineMarkerColor(int gray, Color color)
+	static ColorValue toLineMarkerColor(int gray, @Nullable ColorValue c)
 	{
-		//noinspection UseJBColor
-		return color == null ? null : new Color(toLineMarkerColor(gray, color.getRed()), toLineMarkerColor(gray, color.getGreen()), toLineMarkerColor(gray, color.getBlue()));
+		RGBColor color = c == null ? null : c.toRGB();
+		return color == null ? null : new RGBColor(toLineMarkerColor(gray, color.getRed()), toLineMarkerColor(gray, color.getGreen()), toLineMarkerColor(gray, color.getBlue()));
 	}
 
 	private static int toLineMarkerColor(int gray, int color)
@@ -326,9 +329,9 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		return value < 0 ? 0 : value > 255 ? 255 : value;
 	}
 
-	private static Color[] toColorsForLineMarkers(Color[] baseColors)
+	private static ColorValue[] toColorsForLineMarkers(ColorValue[] baseColors)
 	{
-		final Color[] colors = new Color[baseColors.length];
+		final ColorValue[] colors = new ColorValue[baseColors.length];
 		for(int i = 0; i < colors.length; i++)
 		{
 			colors[i] = toLineMarkerColor(239, baseColors[i]);
@@ -336,24 +339,24 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
 		return colors;
 	}
 
-	private Color[] toColorsForEditor(Color[] baseColors)
+	private ColorValue[] toColorsForEditor(ColorValue[] baseColors)
 	{
-		final Color tagBackground = myEditor.getBackgroundColor();
+		final ColorValue tagBackground = myEditor.getBackgroundColor();
 
 		if(tagBackground == null)
 		{
 			return baseColors;
 		}
 
-		final Color[] resultColors = new Color[baseColors.length];
+		final ColorValue[] resultColors = new ColorValue[baseColors.length];
 		// todo: make configurable
 		final double transparency = XmlEditorOptions.getInstance().getTagTreeHighlightingOpacity() * 0.01;
 
 		for(int i = 0; i < resultColors.length; i++)
 		{
-			final Color color = baseColors[i];
+			final ColorValue color = baseColors[i];
 
-			final Color color1 = color != null ? XmlTagTreeHighlightingUtil.makeTransparent(color, tagBackground, transparency) : null;
+			final ColorValue color1 = color != null ? XmlTagTreeHighlightingUtil.makeTransparent(color, tagBackground, transparency) : null;
 			resultColors[i] = color1;
 		}
 

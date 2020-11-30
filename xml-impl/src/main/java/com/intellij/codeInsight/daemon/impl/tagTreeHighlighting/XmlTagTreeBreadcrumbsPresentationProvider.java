@@ -15,16 +15,17 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import java.awt.Color;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.breadcrumbs.BreadcrumbsPresentationProvider;
 import com.intellij.ui.breadcrumbs.CrumbPresentation;
 import com.intellij.xml.breadcrumbs.DefaultCrumbsPresentation;
+import consulo.ui.color.ColorValue;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
 
 /**
  * @author Eugene.Kudelevsky
@@ -55,14 +56,14 @@ public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresen
 		}
 
 		final CrumbPresentation[] result = new CrumbPresentation[elements.length];
-		final Color[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
+		final ColorValue[] baseColors = XmlTagTreeHighlightingUtil.getBaseColors();
 		int index = 0;
 
 		for(int i = result.length - 1; i >= 0; i--)
 		{
 			if(elements[i] instanceof XmlTag)
 			{
-				final Color color = baseColors[index % baseColors.length];
+				final ColorValue color = baseColors[index % baseColors.length];
 				result[i] = new MyCrumbPresentation(color);
 				index++;
 			}
@@ -72,17 +73,17 @@ public class XmlTagTreeBreadcrumbsPresentationProvider extends BreadcrumbsPresen
 
 	private static class MyCrumbPresentation extends DefaultCrumbsPresentation
 	{
-		private final Color myColor;
+		private final ColorValue myColor;
 
-		private MyCrumbPresentation(@Nullable Color color)
+		private MyCrumbPresentation(@Nullable ColorValue color)
 		{
 			myColor = color;
 		}
 
 		@Override
-		public Color getBackgroundColor(boolean selected, boolean hovered, boolean light)
+		public ColorValue getBackgroundColor(boolean selected, boolean hovered, boolean light)
 		{
-			final Color baseColor = super.getBackgroundColor(selected, hovered, light);
+			final ColorValue baseColor = super.getBackgroundColor(selected, hovered, light);
 			return baseColor == null ? XmlTagTreeHighlightingPass.toLineMarkerColor(0x92, myColor) : myColor != null ? XmlTagTreeHighlightingUtil.makeTransparent(myColor, baseColor, 0.1) : baseColor;
 		}
 	}
