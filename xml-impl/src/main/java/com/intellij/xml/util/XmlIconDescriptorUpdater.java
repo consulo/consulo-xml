@@ -15,14 +15,17 @@
  */
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.ide.IconDescriptor;
 import consulo.ide.IconDescriptorUpdater;
+import consulo.platform.base.icon.PlatformIconGroup;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -30,25 +33,33 @@ import consulo.ide.IconDescriptorUpdater;
  */
 public class XmlIconDescriptorUpdater implements IconDescriptorUpdater
 {
-  @NonNls
-  private static final String XSD_FILE_EXTENSION = "xsd";
-  @NonNls
-  private static final String WSDL_FILE_EXTENSION = "wsdl";
+	private static final String XSD_FILE_EXTENSION = "xsd";
+	private static final String WSDL_FILE_EXTENSION = "wsdl";
 
-  @Override
-  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
-    if (element instanceof XmlFile) {
-      final VirtualFile vf = ((XmlFile)element).getVirtualFile();
-      if (vf != null) {
-        final String extension = vf.getExtension();
+	@RequiredReadAction
+	@Override
+	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags)
+	{
+		if(element instanceof XmlFile)
+		{
+			final VirtualFile vf = ((XmlFile) element).getVirtualFile();
+			if(vf != null)
+			{
+				final String extension = vf.getExtension();
 
-        if (XSD_FILE_EXTENSION.equals(extension)) {
-          iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
-        }
-        if (WSDL_FILE_EXTENSION.equals(extension)) {
-          iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
-        }
-      }
-    }
-  }
+				if(XSD_FILE_EXTENSION.equals(extension))
+				{
+					iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
+				}
+				if(WSDL_FILE_EXTENSION.equals(extension))
+				{
+					iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
+				}
+			}
+		}
+		else if(element instanceof XmlTag)
+		{
+			iconDescriptor.setMainIcon(PlatformIconGroup.nodesTag());
+		}
+	}
 }

@@ -587,12 +587,7 @@
 		<codeInsight.unresolvedReferenceQuickFixProvider
 				implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReferenceQuickFixProvider"/>
 
-		<breadcrumbsPresentationProvider
-				implementation="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeBreadcrumbsPresentationProvider"/>
-
-		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XHtmlLanguageBreadcrumbsInfoProvider"/>
-		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.HtmlLanguageBreadcrumbsInfoProvider"/>
-		<breadcrumbsInfoProvider implementation="com.intellij.xml.breadcrumbs.XmlLanguageBreadcrumbsInfoProvider"/>
+		<navbar implementation="consulo.xml.navbar.XmlNavBarExtension" />
 
 		<textEditorHighlightingPassFactory implementation="com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory" />
 
