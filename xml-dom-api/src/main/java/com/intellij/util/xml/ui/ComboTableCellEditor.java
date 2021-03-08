@@ -15,19 +15,15 @@
  */
 package com.intellij.util.xml.ui;
 
-import java.awt.Component;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.Icon;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.util.Pair;
-import com.intellij.util.containers.HashMap;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author peter

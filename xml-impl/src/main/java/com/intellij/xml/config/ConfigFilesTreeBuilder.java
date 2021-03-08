@@ -15,21 +15,6 @@
  */
 package com.intellij.xml.config;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.presentation.VirtualFilePresentation;
 import com.intellij.openapi.fileTypes.FileType;
@@ -41,10 +26,16 @@ import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.TreeSpeedSearch;
 import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 import consulo.ui.image.Image;
 import consulo.vfs.ArchiveFileSystem;
+
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import java.util.*;
 
 public class ConfigFilesTreeBuilder {
 
@@ -56,7 +47,7 @@ public class ConfigFilesTreeBuilder {
   }
 
   public Set<PsiFile> buildTree(DefaultMutableTreeNode root, ConfigFileSearcher... searchers) {
-    final Set<PsiFile> psiFiles = new com.intellij.util.containers.HashSet<PsiFile>();
+    final Set<PsiFile> psiFiles = new HashSet<PsiFile>();
 
     final MultiMap<Module, PsiFile> files = new MultiMap<Module, PsiFile>();
     final MultiMap<VirtualFile, PsiFile> jars = new MultiMap<VirtualFile, PsiFile>();

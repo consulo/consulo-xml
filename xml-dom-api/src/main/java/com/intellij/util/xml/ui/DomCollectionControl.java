@@ -30,7 +30,6 @@ import com.intellij.util.EventDispatcher;
 import com.intellij.util.IconUtil;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.containers.HashSet;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomCollectionProblemDescriptor;
@@ -49,6 +48,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -194,7 +194,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
     for (final T t : toDelete) {
       final XmlElement element = t.getXmlElement();
       if (element != null) {
-        ContainerUtil.addIfNotNull(element.getContainingFile(), files);
+        ContainerUtil.addIfNotNull(files, element.getContainingFile());
       }
     }
 

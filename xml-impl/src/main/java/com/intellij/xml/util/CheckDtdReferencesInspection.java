@@ -16,11 +16,6 @@
 
 package com.intellij.xml.util;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -31,13 +26,13 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlElementContentSpec;
-import com.intellij.psi.xml.XmlEntityRef;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.HashMap;
+import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlBundle;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Maxim Mossienko

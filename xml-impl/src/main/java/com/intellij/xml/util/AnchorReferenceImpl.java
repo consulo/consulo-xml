@@ -31,7 +31,6 @@ import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.HashMap;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlExtension;
 import consulo.util.dataholder.Key;
@@ -39,6 +38,7 @@ import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**

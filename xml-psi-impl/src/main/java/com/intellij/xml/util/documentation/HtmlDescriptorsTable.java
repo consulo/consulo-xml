@@ -15,21 +15,15 @@
  */
 package com.intellij.xml.util.documentation;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.JDOMUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.JDOMUtil;
-import com.intellij.util.containers.HashSet;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author maxim

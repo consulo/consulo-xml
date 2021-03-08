@@ -15,31 +15,25 @@
  */
 package com.intellij.xml.index;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.HashMap;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.indexing.ScalarIndexExtension;
+import com.intellij.util.indexing.*;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.util.XmlUtil;
+
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Dmitry Avdeev
  */
 public class XmlTagNamesIndex extends XmlIndex<Void>
 {
-
 	public static Collection<VirtualFile> getFilesByTagName(String tagName, final Project project)
 	{
 		return FileBasedIndex.getInstance().getContainingFiles(NAME, tagName, createFilter(project));

@@ -21,12 +21,9 @@ import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.HashSet;
-import javax.annotation.Nonnull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,8 +61,8 @@ public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
       if (psiFile instanceof XmlFile) {
         final XmlFile xmlFile = (XmlFile)psiFile;
 
-        for (RelatedToHtmlFilesContributor contributor : RelatedToHtmlFilesContributor.EP_NAME.getExtensions()) {
-          HashSet<PsiFile> resultSet = new HashSet<PsiFile>();
+        for (RelatedToHtmlFilesContributor contributor : RelatedToHtmlFilesContributor.EP_NAME.getExtensionList()) {
+          Set<PsiFile> resultSet = new HashSet<PsiFile>();
           contributor.fillRelatedFiles(xmlFile, resultSet);
           for (PsiFile f: resultSet) {
             items.add(new GotoRelatedItem(f, contributor.getGroupName()));

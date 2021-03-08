@@ -15,13 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import java.lang.ref.WeakReference;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -33,16 +26,18 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.semantic.SemElement;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.containers.HashSet;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomFileDescription;
-import com.intellij.util.xml.DomService;
-import com.intellij.util.xml.EvaluatedXmlNameImpl;
-import com.intellij.util.xml.XmlFileHeader;
-import com.intellij.util.xml.XmlName;
+import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author peter

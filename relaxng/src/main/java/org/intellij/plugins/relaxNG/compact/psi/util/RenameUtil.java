@@ -20,16 +20,16 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.PsiManager;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.HashSet;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.jdom.Verifier;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
