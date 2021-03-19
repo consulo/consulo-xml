@@ -50,11 +50,11 @@ import com.intellij.xml.*;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.documentation.MimeTypeDictionary;
+import consulo.localize.LocalizeValue;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -866,7 +866,7 @@ public class HtmlUtil
 				}
 
 				@Override
-				public void error(String message, int startOffset, int endOffset)
+				public void error(LocalizeValue message, int startOffset, int endOffset)
 				{
 				}
 			});

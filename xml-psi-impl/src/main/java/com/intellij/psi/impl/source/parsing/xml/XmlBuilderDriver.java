@@ -19,6 +19,7 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
+import consulo.localize.LocalizeValue;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import com.intellij.lang.LanguageParserDefinitions;
@@ -152,7 +153,7 @@ public class XmlBuilderDriver {
 
   private void processErrorNode(PsiBuilder psiBuilder, LighterASTNode node, XmlBuilder builder) {
     assert node.getTokenType() == TokenType.ERROR_ELEMENT;
-    String message = PsiBuilderImpl.getErrorMessage(node);
+    LocalizeValue message = PsiBuilderImpl.getErrorMessage(node);
     assert message != null;
     builder.error(message, node.getStartOffset(), node.getEndOffset());
   }

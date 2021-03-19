@@ -19,6 +19,8 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
+import consulo.localize.LocalizeValue;
+
 import javax.annotation.Nullable;
 
 public interface XmlBuilder {
@@ -40,5 +42,5 @@ public interface XmlBuilder {
 
   void entityRef(CharSequence ref, int startOffset, int endOffset);
 
-  void error(String message, int startOffset, int endOffset);
+  void error(LocalizeValue message, int startOffset, int endOffset);
 }
