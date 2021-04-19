@@ -1,6 +1,6 @@
 <consulo-plugin>
 	<id>com.intellij.xml</id>
-	<name>XML</name>
+	<name>XML/HTML</name>
 	<version>SNAPSHOT</version>
 	<category>Custom Languages</category>
 
