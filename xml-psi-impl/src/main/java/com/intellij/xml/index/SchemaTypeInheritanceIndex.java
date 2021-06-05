@@ -15,16 +15,6 @@
  */
 package com.intellij.xml.index;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
@@ -34,7 +24,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.PairConvertor;
 import com.intellij.util.containers.EncoderDecoder;
 import com.intellij.util.containers.MultiMap;
-import com.intellij.util.containers.hash.HashMap;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.FileContent;
@@ -43,6 +32,12 @@ import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.DataInputOutputUtil;
 import com.intellij.util.io.IOUtil;
 import com.intellij.util.text.CharArrayUtil;
+
+import javax.annotation.Nonnull;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.

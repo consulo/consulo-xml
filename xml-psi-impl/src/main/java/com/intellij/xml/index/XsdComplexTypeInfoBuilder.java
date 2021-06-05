@@ -15,17 +15,17 @@
  */
 package com.intellij.xml.index;
 
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.util.containers.MultiMap;
+import com.intellij.util.xml.NanoXmlUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.Map;
-
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.containers.MultiMap;
-import com.intellij.util.containers.hash.HashMap;
-import com.intellij.util.xml.NanoXmlUtil;
 
 /**
  * Created with IntelliJ IDEA.
