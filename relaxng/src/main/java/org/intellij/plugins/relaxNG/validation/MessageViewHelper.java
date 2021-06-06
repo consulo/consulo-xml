@@ -30,13 +30,13 @@ import com.intellij.ui.content.*;
 import com.intellij.util.ui.ErrorTreeView;
 import com.intellij.util.ui.MessageCategory;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashSet;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,11 +45,11 @@ import java.util.Set;
  * Date: 19.11.2007
  */
 public class MessageViewHelper {
-  private static final Logger LOG = Logger.getInstance("#org.intellij.plugins.relaxNG.validation.MessageViewHelper");
+  private static final Logger LOG = Logger.getInstance(MessageViewHelper.class);
 
   private final Project myProject;
 
-  private final Set<String> myErrors = new THashSet<>();
+  private final Set<String> myErrors = new HashSet<>();
 
   private final String myContentName;
   private final Key<NewErrorTreeViewPanel> myKey;

@@ -16,14 +16,14 @@
 
 package org.intellij.plugins.relaxNG.compact.lexer;
 
-import gnu.trove.TIntArrayList;
-import gnu.trove.TIntIntHashMap;
+import consulo.util.collection.primitive.ints.IntIntMap;
+import consulo.util.collection.primitive.ints.IntList;
+import consulo.util.collection.primitive.ints.IntLists;
+import org.kohsuke.rngom.util.Utf16;
 
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-
-import org.kohsuke.rngom.util.Utf16;
 
 /**
  * A reader that deals with escape sequences in RNC files (\x{xx}) and keeps track of their positions to build correct
@@ -34,15 +34,15 @@ import org.kohsuke.rngom.util.Utf16;
  * Date: 05.08.2007
  */
 class EscapePreprocessor extends FilterReader {
-  private final TIntArrayList myQueuedChars;
-  private final TIntIntHashMap myLengthMap;
+  private final IntList myQueuedChars;
+  private final IntIntMap myLengthMap;
 
   private int myOffset;
 
-  public EscapePreprocessor(Reader reader, int startOffset, TIntIntHashMap map) {
+  public EscapePreprocessor(Reader reader, int startOffset, IntIntMap map) {
     super(reader);
     myOffset = startOffset;
-    myQueuedChars = new TIntArrayList();
+    myQueuedChars = IntLists.newArrayList();
     myLengthMap = map;
   }
 
@@ -72,7 +72,7 @@ class EscapePreprocessor extends FilterReader {
         assert false : "Unexpected newline character";  // IDEA document's are supposed to newlines normalized to \n
         if (peek() == '\n') {
           consume();
-          myLengthMap.put(myOffset - 1, 2);
+          myLengthMap.putInt(myOffset - 1, 2);
         }
       case '\n':
         return '\u0000';
@@ -99,7 +99,7 @@ class EscapePreprocessor extends FilterReader {
         }
         consume(n);
 
-        myLengthMap.put(myOffset - 1, n);
+        myLengthMap.putInt(myOffset - 1, n);
         myOffset += n;
 
         if (value <= 0xFFFF) {
@@ -122,13 +122,13 @@ class EscapePreprocessor extends FilterReader {
   private int consume() {
     if (myQueuedChars.size() > 0) {
       myOffset++;
-      return myQueuedChars.remove(0);
+      return myQueuedChars.removeByIndex(0);
     }
     return -1;
   }
 
   private void consume(int n) {
-    myQueuedChars.remove(0, n);
+    myQueuedChars.removeRange(0, n);
   }
 
   private int peek() throws IOException {

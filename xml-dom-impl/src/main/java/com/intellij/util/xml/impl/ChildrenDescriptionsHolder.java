@@ -16,17 +16,16 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.util.xml.XmlName;
-import gnu.trove.THashMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**
  * @author peter
  */
 public class ChildrenDescriptionsHolder<T extends DomChildDescriptionImpl> {
-  private final Map<XmlName, T> myMap = new THashMap<XmlName, T>();
+  private final Map<XmlName, T> myMap = new HashMap<XmlName, T>();
   private final ChildrenDescriptionsHolder<T> myDelegate;
   private volatile List<T> myCached = null;
 

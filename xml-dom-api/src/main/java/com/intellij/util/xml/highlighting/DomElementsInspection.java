@@ -31,26 +31,22 @@ import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
  * @see com.intellij.util.xml.highlighting.BasicDomElementsInspection
  */
 public abstract class DomElementsInspection<T extends DomElement> extends XmlSuppressableInspectionTool {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.util.xml.highlighting.DomElementsInspection");
+  private static final Logger LOG = Logger.getInstance(DomElementsInspection.class);
 
   private final Set<Class<? extends T>> myDomClasses;
 
   public DomElementsInspection(Class<? extends T> domClass, @Nonnull Class<? extends T>... additionalClasses) {
-    myDomClasses = new THashSet<Class<? extends T>>(Arrays.asList(additionalClasses));
+    myDomClasses = new HashSet<Class<? extends T>>(Arrays.asList(additionalClasses));
     myDomClasses.add(domClass);
   }
 

@@ -16,7 +16,8 @@
 package org.intellij.plugins.relaxNG.model.annotation;
 
 import com.intellij.psi.xml.XmlFile;
-import gnu.trove.TIntArrayList;
+import consulo.util.collection.primitive.ints.IntList;
+import consulo.util.collection.primitive.ints.IntLists;
 import org.intellij.plugins.relaxNG.model.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 */
 class OverriddenDefineSearcher extends CommonElement.Visitor {
   private final Define myDefine;
-  private final TIntArrayList myIncludes = new TIntArrayList();
+  private final IntList myIncludes = IntLists.newArrayList();
   private final XmlFile myLocalFile;
   private final List<Define> myResult;
 

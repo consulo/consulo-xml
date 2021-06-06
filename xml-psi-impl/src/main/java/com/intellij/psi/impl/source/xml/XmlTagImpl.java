@@ -63,7 +63,6 @@ import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashMap;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -76,7 +75,7 @@ import java.util.*;
 
 public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenceHost
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.xml.XmlTagImpl");
+	private static final Logger LOG = Logger.getInstance(XmlTagImpl.class);
 	@NonNls
 	private static final String XML_NS_PREFIX = "xml";
 	private static final RecursionGuard<String> ourGuard = RecursionManager.createGuard("xmlTag");
@@ -436,7 +435,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	{
 		if(map == null)
 		{
-			map = new THashMap<>();
+			map = new HashMap<>();
 		}
 
 		// We put cached value in any case to cause its value update on e.g. mapping change
@@ -751,7 +750,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		Map<String, String> map = myAttributeValueMap;
 		if(map == null)
 		{
-			map = new THashMap<>();
+			map = new HashMap<>();
 			for(XmlAttribute attribute : getAttributes())
 			{
 				cacheOneAttributeValue(attribute.getName(), attribute.getValue(), map);
@@ -1164,7 +1163,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	@Nonnull
 	public Map<String, String> getLocalNamespaceDeclarations()
 	{
-		Map<String, String> namespaces = new THashMap<>();
+		Map<String, String> namespaces = new HashMap<>();
 		for(final XmlAttribute attribute : getAttributes())
 		{
 			if(!attribute.isNamespaceDeclaration() || attribute.getValue() == null)

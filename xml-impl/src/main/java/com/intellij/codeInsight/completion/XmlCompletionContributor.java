@@ -52,11 +52,11 @@ import com.intellij.xml.util.XmlEnumeratedValueReference;
 import com.intellij.xml.util.XmlUtil;
 import consulo.codeInsight.completion.CompletionProvider;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -151,7 +151,7 @@ public class XmlCompletionContributor extends CompletionContributor
 					return;
 				}
 
-				final Set<String> usedWords = new THashSet<>();
+				final Set<String> usedWords = new HashSet<>();
 				final Ref<Boolean> addWordVariants = Ref.create(true);
 				result.runRemainingContributors(parameters, r ->
 				{

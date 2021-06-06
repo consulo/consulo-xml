@@ -16,9 +16,8 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.DomElement;
 import com.intellij.util.containers.ContainerUtil;
-import gnu.trove.THashMap;
+import com.intellij.util.xml.DomElement;
 
 import java.util.*;
 
@@ -33,7 +32,7 @@ class GetCompositeCollectionInvocation implements Invocation {
   }
 
   public Object invoke(final DomInvocationHandler<?, ?> handler, final Object[] args) throws Throwable {
-    Map<XmlTag,DomElement> map = new THashMap<XmlTag, DomElement>();
+    Map<XmlTag,DomElement> map = new HashMap<XmlTag, DomElement>();
     for (final CollectionChildDescriptionImpl qname : myQnames) {
       for (DomElement element : handler.getCollectionChildren(qname, qname.getTagsGetter())) {
         map.put(element.getXmlTag(), element);
@@ -44,7 +43,7 @@ class GetCompositeCollectionInvocation implements Invocation {
 
     final List<DomElement> list = new ArrayList<DomElement>();
     for (final XmlTag subTag : tag.getSubTags()) {
-      ContainerUtil.addIfNotNull(map.get(subTag), list);
+      ContainerUtil.addIfNotNull(list, map.get(subTag));
     }
     return list;
   }

@@ -15,18 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import gnu.trove.THashSet;
-
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import org.jdom.Document;
-
-import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.JDOMUtil;
 import com.intellij.openapi.util.io.FileUtilRt;
@@ -37,6 +25,15 @@ import com.intellij.util.xmlb.Converter;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
+import org.jdom.Document;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Dennis.Ushakov
@@ -126,7 +123,7 @@ public class HTMLControls
 		@Override
 		public Set<String> fromString(@Nonnull String value)
 		{
-			final THashSet<String> result = new THashSet<String>();
+			final Set<String> result = new HashSet<String>();
 			for(String closingTag : StringUtil.split(value, ","))
 			{
 				result.add(closingTag.trim().toLowerCase(Locale.US));

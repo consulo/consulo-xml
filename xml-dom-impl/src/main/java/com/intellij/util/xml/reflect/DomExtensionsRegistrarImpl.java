@@ -21,11 +21,11 @@ import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.XmlName;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public class DomExtensionsRegistrarImpl implements DomExtensionsRegistrar {
   private final List<DomExtensionImpl> myAttributes = new SmartList<DomExtensionImpl>();
   private final List<DomExtensionImpl> myFixeds = new SmartList<DomExtensionImpl>();
   private final List<DomExtensionImpl> myCollections = new SmartList<DomExtensionImpl>();
-  private final Set<Object> myDependencies = new THashSet<Object>();
+  private final Set<Object> myDependencies = new HashSet<Object>();
   private final List<DomExtensionImpl> myCustoms = new SmartList<DomExtensionImpl>();
 
   public List<DomExtensionImpl> getAttributes() {

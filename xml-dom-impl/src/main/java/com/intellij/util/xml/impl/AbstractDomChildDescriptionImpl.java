@@ -28,13 +28,13 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomExtensionImpl;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +59,7 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
   }
 
   public final void addCustomAnnotation(@Nonnull Annotation annotation) {
-    if (myCustomAnnotations == null) myCustomAnnotations = new THashMap<Class, Annotation>();
+    if (myCustomAnnotations == null) myCustomAnnotations = new HashMap<Class, Annotation>();
     myCustomAnnotations.put(annotation.annotationType(), annotation);
   }
 

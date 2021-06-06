@@ -38,7 +38,8 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
-import gnu.trove.TIntArrayList;
+import consulo.util.collection.primitive.ints.IntList;
+import consulo.util.collection.primitive.ints.IntLists;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -226,8 +227,8 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 			valueTextRange = new TextRange(child.getTextLength(), valueTextRange.getEndOffset());
 			child = child.getTreeNext();
 		}
-		final TIntArrayList gapsStarts = new TIntArrayList();
-		final TIntArrayList gapsShifts = new TIntArrayList();
+		final IntList gapsStarts = IntLists.newArrayList();
+		final IntList gapsShifts = IntLists.newArrayList();
 		StringBuilder buffer = new StringBuilder(getTextLength());
 		while(child != null)
 		{

@@ -16,22 +16,6 @@
 
 package org.intellij.plugins.relaxNG.compact.lexer;
 
-import gnu.trove.TIntIntHashMap;
-
-import java.io.CharArrayReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-
-import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
-import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
-import org.kohsuke.rngom.parse.compact.Token;
-import org.kohsuke.rngom.parse.compact.TokenMgrError;
 import com.intellij.lexer.LexerBase;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.io.FileUtil;
@@ -39,6 +23,22 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.text.CharArrayCharSequence;
 import com.intellij.util.text.CharArrayUtil;
+import consulo.util.collection.primitive.ints.IntIntMap;
+import consulo.util.collection.primitive.ints.IntMaps;
+import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
+import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
+import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
+import org.kohsuke.rngom.parse.compact.Token;
+import org.kohsuke.rngom.parse.compact.TokenMgrError;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.CharArrayReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Field;
+import java.util.LinkedList;
 
 /**
  * An adapter to use the lexer ("TokenManager") generated from a javacc grammar.
@@ -75,7 +75,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 	private IElementType myCurrentTokenType;
 	private CharSequence myBuffer;
 	private int myEndOffset;
-	private TIntIntHashMap myLengthMap;
+	private IntIntMap myLengthMap;
 
 	@Override
 	public void advance()
@@ -91,7 +91,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 				myCurrentEnd = myCurrentOffset + myCurrentToken.image.length();
 				for(int i = myCurrentOffset; i < myCurrentEnd; i++)
 				{
-					myCurrentEnd += myLengthMap.get(i);
+					myCurrentEnd += myLengthMap.getInt(i);
 				}
 
 				if(myCurrentToken.kind == CompactSyntaxConstants.EOF)
@@ -231,7 +231,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 	private void init(int startOffset, int endOffset, Reader reader, int initialState)
 	{
 		myEndOffset = endOffset;
-		myLengthMap = new TIntIntHashMap();
+		myLengthMap = IntMaps.newIntIntHashMap();
 
 		myLexer = createTokenManager(initialState, new EscapePreprocessor(reader, startOffset, myLengthMap));
 

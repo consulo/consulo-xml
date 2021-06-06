@@ -28,11 +28,11 @@ import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.SoftFactoryMap;
 import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
-import gnu.trove.THashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,7 +51,7 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
       final Project project = domManager.getProject();
       return CachedValuesManager.getManager(project).createCachedValue(new CachedValueProvider<Map<String, DomElement>>() {
         public Result<Map<String, DomElement>> compute() {
-          final Map<String, DomElement> map = new THashMap<String, DomElement>();
+          final Map<String, DomElement> map = new HashMap<String, DomElement>();
           visitDomElement(scope, map);
           return new Result<Map<String, DomElement>>(map, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
         }

@@ -10,7 +10,6 @@ import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.util.advandedProxy.AdvancedProxyBuilder;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -249,7 +248,7 @@ public class ModelMergerImpl implements ModelMerger
 	@SuppressWarnings("unchecked")
 	private final <T> T _mergeModels(final Class<? super T> aClass, final MergingInvocationHandler<T> handler, final T... implementations)
 	{
-		final Set<Class> commonClasses = getCommonClasses(new THashSet<>(), implementations);
+		final Set<Class> commonClasses = getCommonClasses(new HashSet<>(), implementations);
 		commonClasses.add(MERGED_OBJECT_CLASS);
 		commonClasses.add(aClass);
 		commonClasses.add(InvocationHandlerOwner.class);

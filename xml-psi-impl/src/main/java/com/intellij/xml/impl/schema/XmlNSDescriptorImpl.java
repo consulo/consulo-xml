@@ -15,23 +15,6 @@
  */
 package com.intellij.xml.impl.schema;
 
-import gnu.trove.THashSet;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.openapi.diagnostic.Logger;
@@ -61,6 +44,11 @@ import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.ExternalDocumentValidator;
 import com.intellij.xml.util.XmlUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * @author Mike
@@ -1176,7 +1164,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 			myTargetNamespace = myTag.getAttributeValue("targetNamespace");
 		}
 
-		final THashSet<PsiFile> dependenciesSet = new THashSet<>();
+		final Set<PsiFile> dependenciesSet = new HashSet<>();
 		final Set<PsiFile> redefineProcessingSet = myRedefinedDescriptorsInProcessing.get();
 		if(redefineProcessingSet != null)
 		{

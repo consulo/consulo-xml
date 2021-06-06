@@ -15,24 +15,8 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import gnu.trove.THashMap;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -49,6 +33,16 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nullable;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Konstantin Bulenkov
@@ -121,7 +115,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
 
       pathToUse = tempDir.getPath() + File.separatorChar + Xsd2InstanceUtils.processAndSaveAllSchemas(
         (XmlFile) file,
-        new THashMap<String, String>(),
+        new HashMap<String, String>(),
         new Xsd2InstanceUtils.SchemaReferenceProcessor() {
           public void processSchema(String schemaFileName, byte[] schemaContent) {
             try {

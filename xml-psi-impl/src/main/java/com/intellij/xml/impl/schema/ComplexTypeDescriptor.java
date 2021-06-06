@@ -32,7 +32,6 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlUtil;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
@@ -92,8 +91,8 @@ public class ComplexTypeDescriptor extends TypeDescriptor
 				@Override
 				public Result<CanContainAttributeType> compute()
 				{
-					THashSet<PsiFile> dependencies = new THashSet<>();
-					CanContainAttributeType type = _canContainAttribute(key, myTag, null, new THashSet<String>(), dependencies);
+					Set<PsiFile> dependencies = new HashSet<>();
+					CanContainAttributeType type = _canContainAttribute(key, myTag, null, new HashSet<String>(), dependencies);
 					if(dependencies.isEmpty())
 					{
 						dependencies.add(myTag.getContainingFile());
@@ -484,7 +483,7 @@ public class ComplexTypeDescriptor extends TypeDescriptor
 		{
 			return myAnyAttributeCache.get(namespace).getValue();
 		}
-		return _canContainAttribute(namespace, myTag, qName, new THashSet<String>(), null);
+		return _canContainAttribute(namespace, myTag, qName, new HashSet<String>(), null);
 	}
 
 	enum CanContainAttributeType

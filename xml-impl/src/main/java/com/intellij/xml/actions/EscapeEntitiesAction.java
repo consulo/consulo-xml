@@ -17,7 +17,9 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.util.XmlUtil;
-import gnu.trove.TIntObjectHashMap;
+import consulo.util.collection.primitive.ints.IntMaps;
+import consulo.util.collection.primitive.ints.IntObjectMap;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -25,7 +27,7 @@ import javax.annotation.Nonnull;
  */
 public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeInsightActionHandler
 {
-	private static String escape(XmlFile file, TIntObjectHashMap<String> map, String text, int start)
+	private static String escape(XmlFile file, IntObjectMap<String> map, String text, int start)
 	{
 		final StringBuilder result = new StringBuilder();
 		for(int i = 0; i < text.length(); i++)
@@ -50,12 +52,12 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 	}
 
 	@Nonnull
-	private static TIntObjectHashMap<String> computeMap(XmlFile xmlFile)
+	private static IntObjectMap<String> computeMap(XmlFile xmlFile)
 	{
 		final XmlFile file = XmlUtil.findXmlFile(xmlFile, Html5SchemaProvider.getCharsDtdLocation());
 		assert file != null;
 
-		final TIntObjectHashMap<String> result = new TIntObjectHashMap<>();
+		final IntObjectMap<String> result = IntMaps.newIntObjectHashMap();
 		XmlUtil.processXmlElements(file, element -> {
 			if(element instanceof XmlEntityDecl)
 			{
@@ -123,7 +125,7 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 		int[] ends = editor.getSelectionModel().getBlockSelectionEnds();
 		final Document document = editor.getDocument();
 		XmlFile xmlFile = (XmlFile) file;
-		TIntObjectHashMap<String> map = computeMap(xmlFile);
+		IntObjectMap<String> map = computeMap(xmlFile);
 		for(int i = starts.length - 1; i >= 0; i--)
 		{
 			final int start = starts[i];

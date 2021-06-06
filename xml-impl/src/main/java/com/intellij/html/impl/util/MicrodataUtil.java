@@ -33,8 +33,6 @@ import com.intellij.util.PairFunction;
 import com.intellij.util.text.StringTokenizer;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.Nls;
 
 import javax.annotation.Nullable;
@@ -90,7 +88,7 @@ public class MicrodataUtil
 			@Override
 			public Result<Map<String, XmlTag>> compute()
 			{
-				final Map<String, XmlTag> result = new THashMap<>();
+				final Map<String, XmlTag> result = new HashMap<>();
 				file.accept(new XmlRecursiveElementVisitor()
 				{
 					@Override
@@ -191,7 +189,7 @@ public class MicrodataUtil
 
 	private static class CollectNamesVisitor extends XmlRecursiveElementVisitor
 	{
-		protected final Set<String> myValues = new THashSet<>();
+		protected final Set<String> myValues = new HashSet<>();
 
 		public List<String> getValues()
 		{

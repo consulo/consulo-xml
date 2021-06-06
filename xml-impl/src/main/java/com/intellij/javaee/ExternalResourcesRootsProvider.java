@@ -15,13 +15,6 @@
  */
 package com.intellij.javaee;
 
-import gnu.trove.THashSet;
-
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -29,6 +22,11 @@ import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.indexing.IndexableSetContributor;
+
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -42,8 +40,8 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor
 		protected Set<String> compute()
 		{
 			ExternalResourceManagerExImpl manager = (ExternalResourceManagerExImpl) ExternalResourceManager.getInstance();
-			Set<ExternalResourceManagerExImpl.Resource> dirs = new THashSet<>();
-			Set<String> set = new THashSet<>();
+			Set<ExternalResourceManagerExImpl.Resource> dirs = new HashSet<>();
+			Set<String> set = new HashSet<>();
 			for(Map<String, ExternalResourceManagerExImpl.Resource> map : manager.getStandardResources())
 			{
 				for(ExternalResourceManagerExImpl.Resource resource : map.values())
@@ -68,7 +66,7 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor
 	@Override
 	public Set<VirtualFile> getAdditionalRootsToIndex()
 	{
-		Set<VirtualFile> roots = new THashSet<>();
+		Set<VirtualFile> roots = new HashSet<>();
 		for(String url : myStandardResources.getValue())
 		{
 			VirtualFile file = VfsUtilCore.findRelativeFile(url, null);

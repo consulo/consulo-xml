@@ -27,12 +27,12 @@ import com.intellij.util.xml.DomFileDescription;
 import com.intellij.util.xml.TypeChooserManager;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 import consulo.disposer.Disposable;
-import gnu.trove.THashSet;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,8 +45,8 @@ import static com.intellij.util.containers.ContainerUtil.newArrayList;
 @Singleton
 public class DomApplicationComponent
 {
-	private final Map<String, Set<DomFileDescription>> myRootTagName2FileDescription = FactoryMap.create(k -> new THashSet<DomFileDescription>());
-	private final Set<DomFileDescription> myAcceptingOtherRootTagNamesDescriptions = new THashSet<DomFileDescription>();
+	private final Map<String, Set<DomFileDescription>> myRootTagName2FileDescription = FactoryMap.create(k -> new HashSet<DomFileDescription>());
+	private final Set<DomFileDescription> myAcceptingOtherRootTagNamesDescriptions = new HashSet<DomFileDescription>();
 	private final ImplementationClassCache myCachedImplementationClasses = new ImplementationClassCache(DomImplementationClassEP.EP_NAME);
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	final ReflectionAssignabilityCache assignabilityCache = new ReflectionAssignabilityCache();

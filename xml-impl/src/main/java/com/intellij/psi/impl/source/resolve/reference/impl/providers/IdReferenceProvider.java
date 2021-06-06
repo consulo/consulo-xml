@@ -24,14 +24,14 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
-import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlAttributeDescriptor;
+import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.XmlUtil;
-import gnu.trove.THashSet;
+import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -42,7 +42,7 @@ public class IdReferenceProvider extends PsiReferenceProvider {
   @NonNls public static final String STYLE_ID_ATTR_NAME = "styleId";
   @NonNls public static final String NAME_ATTR_NAME = "name";
 
-  private static final THashSet<String> ourNamespacesWithoutNameReference = new THashSet<String>();
+  private static final Set<String> ourNamespacesWithoutNameReference = new HashSet<String>();
   static {
     ourNamespacesWithoutNameReference.add( XmlUtil.JSP_URI );
     ourNamespacesWithoutNameReference.add( XmlUtil.STRUTS_BEAN_URI );

@@ -28,16 +28,16 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlStringUtil;
-import gnu.trove.THashSet;
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngXmlAttributeDescriptor;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
 import org.kohsuke.rngom.digested.DElementPattern;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /*
 * Created by IntelliJ IDEA.
@@ -65,7 +65,7 @@ public class RngDocumentationProvider implements DocumentationProvider {
         final StringBuilder sb = new StringBuilder();
         final CompositeDescriptor d = (CompositeDescriptor)descriptor;
         final DElementPattern[] patterns = d.getElementPatterns();
-        final THashSet<PsiElement> elements = ContainerUtil.newIdentityTroveSet();
+        final Set<PsiElement> elements = ContainerUtil.newIdentityTroveSet();
         for (DElementPattern pattern : patterns) {
           final PsiElement psiElement = d.getDeclaration(pattern.getLocation());
           if (psiElement instanceof XmlTag && elements.add(psiElement)) {

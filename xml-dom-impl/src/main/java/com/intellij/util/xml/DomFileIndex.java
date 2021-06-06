@@ -15,28 +15,17 @@
  */
 package com.intellij.util.xml;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.indexing.ScalarIndexExtension;
+import com.intellij.util.indexing.*;
 import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.impl.DomApplicationComponent;
+
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * @author peter
@@ -54,7 +43,7 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 			@Nonnull
 			public Map<String, Void> map(final FileContent inputData)
 			{
-				final Set<String> namespaces = new THashSet<String>();
+				final Set<String> namespaces = new HashSet<String>();
 				final XmlFileHeader header = NanoXmlUtil.parseHeader(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
 				ContainerUtil.addIfNotNull(namespaces, header.getPublicId());
 				ContainerUtil.addIfNotNull(namespaces, header.getSystemId());
@@ -62,7 +51,7 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 				final String tagName = header.getRootTagLocalName();
 				if(StringUtil.isNotEmpty(tagName))
 				{
-					final THashMap<String, Void> result = new THashMap<String, Void>();
+					final Map<String, Void> result = new HashMap<String, Void>();
 					final DomApplicationComponent component = DomApplicationComponent.getInstance();
 					for(final DomFileDescription description : component.getFileDescriptions(tagName))
 					{

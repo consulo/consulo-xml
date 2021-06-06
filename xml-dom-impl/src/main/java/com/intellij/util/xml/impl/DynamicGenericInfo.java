@@ -32,15 +32,11 @@ import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.reflect.*;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -261,7 +257,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
 
   @Override
   public boolean processAttributeChildrenDescriptions(final Processor<AttributeChildDescriptionImpl> processor) {
-    final Set<AttributeChildDescriptionImpl> visited = new THashSet<AttributeChildDescriptionImpl>();
+    final Set<AttributeChildDescriptionImpl> visited = new HashSet<AttributeChildDescriptionImpl>();
     if (!myStaticGenericInfo.processAttributeChildrenDescriptions(new Processor<AttributeChildDescriptionImpl>() {
       public boolean process(AttributeChildDescriptionImpl attributeChildDescription) {
         visited.add(attributeChildDescription);

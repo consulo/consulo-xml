@@ -34,7 +34,6 @@ import com.intellij.util.PairProcessor;
 import com.intellij.util.PatternValuesIndex;
 import consulo.psi.injection.LanguageInjectionSupport;
 import consulo.psi.injection.impl.ProjectInjectionConfiguration;
-import gnu.trove.THashMap;
 import org.intellij.plugins.intelliLang.Configuration;
 import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
 import org.intellij.plugins.intelliLang.inject.InjectorUtils;
@@ -232,7 +231,7 @@ public final class XmlLanguageInjector implements MultiHostInjector {
   private Trinity<Long, Pattern, Collection<String>> getXmlAnnotatedElementsValue() {
     Trinity<Long, Pattern, Collection<String>> index = myXmlIndex;
     if (index == null || myConfiguration.getModificationCount() != index.first.longValue()) {
-      final Map<ElementPattern<?>, BaseInjection> map = new THashMap<ElementPattern<?>, BaseInjection>();
+      final Map<ElementPattern<?>, BaseInjection> map = new HashMap<ElementPattern<?>, BaseInjection>();
       for (BaseInjection injection : myConfiguration.getInjections(XmlLanguageInjectionSupport.XML_SUPPORT_ID)) {
         for (InjectionPlace place : injection.getInjectionPlaces()) {
           if (!place.isEnabled() || place.getElementPattern() == null) continue;

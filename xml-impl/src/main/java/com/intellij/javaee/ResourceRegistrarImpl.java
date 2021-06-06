@@ -15,22 +15,21 @@
  */
 package com.intellij.javaee;
 
-import gnu.trove.THashMap;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Dmitry Avdeev
  */
 public class ResourceRegistrarImpl implements ResourceRegistrar
 {
-	private final Map<String, Map<String, ExternalResourceManagerExImpl.Resource>> myResources = new THashMap<>();
+	private final Map<String, Map<String, ExternalResourceManagerExImpl.Resource>> myResources = new HashMap<>();
 	private final List<String> myIgnored = new ArrayList<>();
 
 	@Override

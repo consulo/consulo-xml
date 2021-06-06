@@ -17,8 +17,9 @@
 package org.intellij.plugins.relaxNG.model.descriptors;
 
 import com.intellij.util.containers.ContainerUtil;
-import gnu.trove.THashSet;
 import org.kohsuke.rngom.digested.*;
+
+import java.util.Set;
 
 /*
  * Created by IntelliJ IDEA.
@@ -27,7 +28,7 @@ import org.kohsuke.rngom.digested.*;
  */
 public class RecursionSaveWalker extends DPatternWalker
 {
-	private THashSet<DPattern> myVisited;
+	private Set<DPattern> myVisited;
 
 	protected RecursionSaveWalker()
 	{

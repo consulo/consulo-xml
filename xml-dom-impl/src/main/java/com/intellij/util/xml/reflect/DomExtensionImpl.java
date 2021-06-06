@@ -27,11 +27,11 @@ import com.intellij.util.xml.impl.ConvertAnnotationImpl;
 import com.intellij.util.xml.impl.DomAnchorImpl;
 import com.intellij.util.xml.impl.DomChildDescriptionImpl;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashMap;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +110,7 @@ public class DomExtensionImpl implements DomExtension {
   }
 
   public <T> void putUserData(final Key<T> key, final T value) {
-    if (myUserMap == null) myUserMap = new THashMap();
+    if (myUserMap == null) myUserMap = new HashMap();
     myUserMap.put(key, value);
   }
 

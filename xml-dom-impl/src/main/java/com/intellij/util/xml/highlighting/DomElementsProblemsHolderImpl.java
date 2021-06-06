@@ -28,8 +28,6 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,7 +61,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
       return new SmartList<DomElementProblemDescriptor>();
     }
   };
-  private final Set<Class<? extends DomElementsInspection>> myPassedInspections = new THashSet<Class<? extends DomElementsInspection>>();
+  private final Set<Class<? extends DomElementsInspection>> myPassedInspections = new HashSet<Class<? extends DomElementsInspection>>();
 
   public DomElementsProblemsHolderImpl(final DomFileElement element) {
     myElement = element;
@@ -142,7 +140,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
       return map;
     }
 
-    final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> problems = new THashMap<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>();
+    final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> problems = new HashMap<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>();
     if (domElement == myElement) {
       for (Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> listMap : myCachedErrors.values()) {
         mergeMaps(problems, listMap);

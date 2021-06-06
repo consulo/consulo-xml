@@ -32,11 +32,11 @@ import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,7 +45,7 @@ import java.util.Set;
 public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
   private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.CheckEmptyTagInspection");
   @NonNls private static final String SCRIPT_TAG_NAME = "script";
-  private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new THashSet<String>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
+  private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new HashSet<String>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
 
   public boolean isEnabledByDefault() {
     return true;

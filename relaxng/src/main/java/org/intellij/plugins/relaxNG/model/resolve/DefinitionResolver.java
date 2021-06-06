@@ -29,7 +29,6 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashSet;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.*;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
@@ -118,7 +117,7 @@ public class DefinitionResolver extends CommonElement.Visitor implements
 
   @Override
   public Set<Define> create() {
-    return new THashSet<>();
+    return new HashSet<>();
   }
 
   @Override

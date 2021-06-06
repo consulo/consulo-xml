@@ -27,14 +27,13 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
-import gnu.trove.THashSet;
-import gnu.trove.TObjectHashingStrategy;
+import consulo.util.collection.HashingStrategy;
+import consulo.util.collection.Sets;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-
 import org.kohsuke.rngom.digested.DAttributePattern;
 import org.xml.sax.Locator;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
@@ -43,9 +42,9 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
   @NonNls
   private static final QName UNKNOWN = new QName("", "#unknown");
 
-  private static final TObjectHashingStrategy<Locator> HASHING_STRATEGY = new TObjectHashingStrategy<Locator>() {
+  private static final HashingStrategy<Locator> HASHING_STRATEGY = new HashingStrategy<Locator>() {
     @Override
-    public int computeHashCode(Locator o) {
+    public int hashCode(Locator o) {
       final String s = o.getSystemId();
       return o.getLineNumber() * 31 + o.getColumnNumber() * 23 + (s != null ? s.hashCode() * 11 : 0);
     }
@@ -63,7 +62,7 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
   private final Map<String, String> myValues;
   private final boolean myOptional;
   private final RngElementDescriptor myElementDescriptor;
-  private final THashSet<Locator> myDeclarations = new THashSet<>(HASHING_STRATEGY);
+  private final Set<Locator> myDeclarations = Sets.newHashSet(HASHING_STRATEGY);
   private final QName myName;
 
   RngXmlAttributeDescriptor(RngElementDescriptor elementDescriptor, DAttributePattern pattern, Map<String, String> values, boolean optional) {
@@ -89,7 +88,7 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
     final HashMap<String, String> values = new HashMap<>(myValues);
     values.putAll(d.myValues);
 
-    final THashSet<Locator> locations = new THashSet<>(myDeclarations, HASHING_STRATEGY);
+    final Set<Locator> locations = Sets.newHashSet(myDeclarations, HASHING_STRATEGY);
     locations.addAll(d.myDeclarations);
 
     return new RngXmlAttributeDescriptor(myElementDescriptor, name, values, myOptional || d.myOptional, locations.toArray(new Locator[locations.size()]));

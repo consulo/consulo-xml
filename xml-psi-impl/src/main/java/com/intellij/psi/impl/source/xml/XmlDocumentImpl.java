@@ -51,8 +51,9 @@ import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlNSDescriptorSequence;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.collection.primitive.objects.ObjectIntMap;
+import consulo.util.collection.primitive.objects.ObjectMaps;
 import consulo.util.dataholder.Key;
-import gnu.trove.TObjectIntHashMap;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -73,7 +74,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 		return file.getUserData(AUTO_GENERATED) != null;
 	}
 
-	private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.xml.XmlDocumentImpl");
+	private static final Logger LOG = Logger.getInstance(XmlDocumentImpl.class);
 	private static final AtomicFieldUpdater<XmlDocumentImpl, XmlProlog> MY_PROLOG_UPDATER = AtomicFieldUpdater.forFieldOfType(XmlDocumentImpl.class, XmlProlog.class);
 	private static final AtomicFieldUpdater<XmlDocumentImpl, XmlTag> MY_ROOT_TAG_UPDATER = AtomicFieldUpdater.forFieldOfType(XmlDocumentImpl.class, XmlTag.class);
 
@@ -494,7 +495,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 	public void dumpStatistics()
 	{
 		System.out.println("Statistics:");
-		final TObjectIntHashMap<Object> map = new TObjectIntHashMap<>();
+		final ObjectIntMap<Object> map = ObjectMaps.newObjectIntHashMap();
 
 		final PsiElementVisitor psiRecursiveElementVisitor = new XmlRecursiveElementVisitor()
 		{
@@ -518,17 +519,15 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 
 			private void inc(final String key)
 			{
-				map.put(key, map.get(key) + 1);
+				map.putInt(key, map.getInt(key) + 1);
 			}
 		};
 
 		accept(psiRecursiveElementVisitor);
 
-		final Object[] keys = map.keys();
-		for(final Object key : keys)
-		{
-			System.out.println(key + ": " + map.get(key));
-		}
+		map.forEach((key, value) -> {
+			System.out.println(key + ": " + value);
+		});
 	}
 
 	@Override

@@ -51,8 +51,6 @@ import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.documentation.MimeTypeDictionary;
 import consulo.localize.LocalizeValue;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NonNls;
 
@@ -66,7 +64,7 @@ import java.util.*;
  */
 public class HtmlUtil
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.HtmlUtil");
+	private static final Logger LOG = Logger.getInstance(HtmlUtil.class);
 
 	@NonNls
 	private static final String JSFC = "jsfc";
@@ -146,7 +144,7 @@ public class HtmlUtil
 	{
 	}
 
-	private static final Set<String> EMPTY_TAGS_MAP = new THashSet<>();
+	private static final Set<String> EMPTY_TAGS_MAP = new HashSet<>();
 	@NonNls
 	private static final String[] OPTIONAL_END_TAGS = {
 			//"html",
@@ -167,7 +165,7 @@ public class HtmlUtil
 			"embed",
 			"noembed"
 	};
-	private static final Set<String> OPTIONAL_END_TAGS_MAP = new THashSet<>();
+	private static final Set<String> OPTIONAL_END_TAGS_MAP = new HashSet<>();
 
 	@NonNls
 	private static final String[] BLOCK_TAGS = {
@@ -256,7 +254,7 @@ public class HtmlUtil
 			"var"
 	};
 
-	private static final Set<String> BLOCK_TAGS_MAP = new THashSet<>();
+	private static final Set<String> BLOCK_TAGS_MAP = new HashSet<>();
 
 	@NonNls
 	private static final String[] INLINE_ELEMENTS_CONTAINER = {
@@ -270,9 +268,9 @@ public class HtmlUtil
 			"pre",
 			"dt"
 	};
-	private static final Set<String> INLINE_ELEMENTS_CONTAINER_MAP = new THashSet<>();
+	private static final Set<String> INLINE_ELEMENTS_CONTAINER_MAP = new HashSet<>();
 
-	private static final Set<String> POSSIBLY_INLINE_TAGS_MAP = new THashSet<>();
+	private static final Set<String> POSSIBLY_INLINE_TAGS_MAP = new HashSet<>();
 
 	@NonNls
 	private static final String[] HTML5_TAGS = {
@@ -305,8 +303,8 @@ public class HtmlUtil
 			"wbr",
 			"main"
 	};
-	private static final Set<String> HTML5_TAGS_SET = new THashSet<>();
-	private static final Map<String, Set<String>> AUTO_CLOSE_BY_MAP = new THashMap<>();
+	private static final Set<String> HTML5_TAGS_SET = new HashSet<>();
+	private static final Map<String, Set<String>> AUTO_CLOSE_BY_MAP = new HashMap<>();
 
 	static
 	{
@@ -317,7 +315,7 @@ public class HtmlUtil
 			{
 				EMPTY_TAGS_MAP.add(tagName);
 			}
-			AUTO_CLOSE_BY_MAP.put(tagName, new THashSet<>(control.autoClosedBy));
+			AUTO_CLOSE_BY_MAP.put(tagName, new HashSet<>(control.autoClosedBy));
 		}
 		ContainerUtil.addAll(OPTIONAL_END_TAGS_MAP, OPTIONAL_END_TAGS);
 		ContainerUtil.addAll(BLOCK_TAGS_MAP, BLOCK_TAGS);
@@ -765,7 +763,7 @@ public class HtmlUtil
 			new HtmlBuilderDriver(content).build(new XmlBuilder()
 			{
 				@NonNls
-				final Set<String> inTag = new THashSet<>();
+				final Set<String> inTag = new HashSet<>();
 				boolean metHttpEquiv = false;
 				boolean metHttml5Charset = false;
 

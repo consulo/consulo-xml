@@ -15,22 +15,6 @@
  */
 package com.intellij.util.xml.impl;
 
-import gnu.trove.THashSet;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.text.StringUtil;
@@ -44,6 +28,15 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author peter
@@ -270,7 +263,7 @@ public class DomImplUtil {
     }
 
     final DomGenericInfoEx info = handler.getGenericInfo();
-    final Set<XmlName> usedNames = new THashSet<XmlName>();
+    final Set<XmlName> usedNames = new HashSet<XmlName>();
     List<? extends DomCollectionChildDescription> collectionChildrenDescriptions = info.getCollectionChildrenDescriptions();
     //noinspection ForLoopReplaceableByForEach
     for (int i = 0, size = collectionChildrenDescriptions.size(); i < size; i++) {

@@ -44,8 +44,6 @@ import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import jakarta.inject.Singleton;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
@@ -78,8 +76,8 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	private static final String CATALOG_PROPERTIES_ELEMENT = "CATALOG_PROPERTIES";
 	private static final String XSD_1_1 = new Resource("/standardSchemas/XMLSchema-1_1/XMLSchema.xsd", ExternalResourceManagerExImpl.class, null).getResourceUrl();
 
-	private final Map<String, Map<String, String>> myResources = new THashMap<>();
-	private final Set<String> myResourceLocations = new THashSet<>();
+	private final Map<String, Map<String, String>> myResources = new HashMap<>();
+	private final Set<String> myResourceLocations = new HashSet<>();
 
 	private final Set<String> myIgnoredResources = new TreeSet<>();
 	private final Set<String> myStandardIgnoredResources = new TreeSet<>();
@@ -182,7 +180,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 		{
 			if(create)
 			{
-				map = new THashMap<>();
+				map = new HashMap<>();
 				resources.put(version, map);
 			}
 			else if(!version.equals(DEFAULT_VERSION))
@@ -403,7 +401,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	@Override
 	public String[] getAvailableUrls()
 	{
-		Set<String> urls = new THashSet<>();
+		Set<String> urls = new HashSet<>();
 		for(Map<String, String> map : myResources.values())
 		{
 			urls.addAll(map.keySet());
@@ -509,7 +507,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 			return ArrayUtil.toStringArray(myStandardIgnoredResources);
 		}
 
-		Set<String> set = new THashSet<>(myIgnoredResources.size() + myStandardIgnoredResources.size());
+		Set<String> set = new HashSet<>(myIgnoredResources.size() + myStandardIgnoredResources.size());
 		set.addAll(myIgnoredResources);
 		set.addAll(myStandardIgnoredResources);
 		return ArrayUtil.toStringArray(set);
