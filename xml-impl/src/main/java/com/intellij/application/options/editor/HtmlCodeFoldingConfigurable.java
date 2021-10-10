@@ -20,9 +20,10 @@
  */
 package com.intellij.application.options.editor;
 
-import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.Configurable;
+import consulo.disposer.Disposable;
 import consulo.options.SimpleConfigurableByProperties;
+import consulo.platform.base.localize.ApplicationLocalize;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
@@ -35,13 +36,13 @@ public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties 
 	@RequiredUIAccess
 	@Nonnull
 	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder)
+	protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable)
 	{
 		VerticalLayout layout = VerticalLayout.create();
 
 		XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
 
-		CheckBox collapseHtmlStyles = CheckBox.create(ApplicationBundle.message("checkbox.collapse.html.style.attribute"));
+		CheckBox collapseHtmlStyles = CheckBox.create(ApplicationLocalize.checkboxCollapseHtmlStyleAttribute());
 		layout.add(collapseHtmlStyles);
 		propertyBuilder.add(collapseHtmlStyles, settings::isCollapseHtmlStyleAttribute, settings::setCollapseHtmlStyleAttribute);
 

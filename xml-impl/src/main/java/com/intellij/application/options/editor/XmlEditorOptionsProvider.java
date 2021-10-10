@@ -16,6 +16,8 @@
 package com.intellij.application.options.editor;
 
 import com.intellij.openapi.options.Configurable;
+import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
 import consulo.options.SimpleConfigurableByProperties;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
@@ -32,25 +34,25 @@ public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties imp
 	@RequiredUIAccess
 	@Nonnull
 	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder)
+	protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable)
 	{
 		VerticalLayout layout = VerticalLayout.create();
 
 		XmlEditorOptions options = XmlEditorOptions.getInstance();
 
-		CheckBox automaticallyInsertClosingTag = CheckBox.create("Automatically insert closing tag");
+		CheckBox automaticallyInsertClosingTag = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert closing tag"));
 		layout.add(automaticallyInsertClosingTag);
 		propertyBuilder.add(automaticallyInsertClosingTag, options::isAutomaticallyInsertClosingTag, options::setAutomaticallyInsertClosingTag);
 
-		CheckBox automaticallyInsertRequiredAttributes = CheckBox.create("Automatically insert required attributes");
+		CheckBox automaticallyInsertRequiredAttributes = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required attributes"));
 		layout.add(automaticallyInsertRequiredAttributes);
 		propertyBuilder.add(automaticallyInsertRequiredAttributes, options::isAutomaticallyInsertRequiredAttributes, options::setAutomaticallyInsertRequiredAttributes);
 
-		CheckBox automaticallyStartAttribute = CheckBox.create("Automatically start attribute");
+		CheckBox automaticallyStartAttribute = CheckBox.create(LocalizeValue.localizeTODO("Automatically start attribute"));
 		layout.add(automaticallyStartAttribute);
 		propertyBuilder.add(automaticallyStartAttribute, options::isAutomaticallyStartAttribute, options::setAutomaticallyStartAttribute);
 
-		CheckBox automaticallyInsertRequiredSubTags = CheckBox.create("Automatically insert required subtags");
+		CheckBox automaticallyInsertRequiredSubTags = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required subtags"));
 		layout.add(automaticallyInsertRequiredSubTags);
 		propertyBuilder.add(automaticallyInsertRequiredSubTags, options::isAutomaticallyInsertRequiredSubTags, options::setAutomaticallyInsertRequiredSubTags);
 

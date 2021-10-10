@@ -15,9 +15,10 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.openapi.application.ApplicationBundle;
 import com.intellij.openapi.options.Configurable;
+import consulo.disposer.Disposable;
 import consulo.options.SimpleConfigurableByProperties;
+import consulo.platform.base.localize.ApplicationLocalize;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
@@ -33,13 +34,13 @@ public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties
 	@RequiredUIAccess
 	@Nonnull
 	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder)
+	protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable)
 	{
 		VerticalLayout layout = VerticalLayout.create();
 
 		XmlSettings settings = XmlSettings.getInstance();
 
-		CheckBox showAddImports = CheckBox.create(ApplicationBundle.message("checkbox.show.import.popup"));
+		CheckBox showAddImports = CheckBox.create(ApplicationLocalize.checkboxShowImportPopup());
 		layout.add(showAddImports);
 		propertyBuilder.add(showAddImports, settings::isShowXmlImportsHints, settings::setShowXmlImportHints);
 
