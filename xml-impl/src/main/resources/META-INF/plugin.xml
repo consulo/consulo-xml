@@ -3,6 +3,10 @@
 	<name>XML/HTML</name>
 	<version>SNAPSHOT</version>
 	<category>Custom Languages</category>
+	<tags>
+		<tag>custom.language</tag>
+		<tag>markup.language</tag>
+	</tags>
 
 	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
 
