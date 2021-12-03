@@ -1,4 +1,4 @@
-<consulo-plugin>
+<consulo-plugin url="https://github.com/consulo/consulo-xml">
 	<id>com.intellij.xml</id>
 	<name>XML/HTML</name>
 	<version>SNAPSHOT</version>
