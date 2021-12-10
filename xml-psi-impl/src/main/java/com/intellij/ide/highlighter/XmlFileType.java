@@ -15,25 +15,22 @@
  */
 package com.intellij.ide.highlighter;
 
-import java.nio.charset.Charset;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IdeBundle;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.fileTypes.FileTypeWithPredefinedCharset;
+import consulo.localize.LocalizeValue;
+import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import java.nio.charset.Charset;
 
 public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset
 {
 	public static final XmlFileType INSTANCE = new XmlFileType();
-	@NonNls
 	public static final String DEFAULT_EXTENSION = "xml";
-	@NonNls
 	public static final String DOT_DEFAULT_EXTENSION = "." + DEFAULT_EXTENSION;
 
 	private XmlFileType()
@@ -50,9 +47,9 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 
 	@Override
 	@Nonnull
-	public String getDescription()
+	public LocalizeValue getDescription()
 	{
-		return IdeBundle.message("filetype.description.xml");
+		return IdeLocalize.filetypeDescriptionXml();
 	}
 
 	@Override
@@ -62,6 +59,7 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 		return DEFAULT_EXTENSION;
 	}
 
+	@Nonnull
 	@Override
 	public Image getIcon()
 	{

@@ -15,13 +15,14 @@
  */
 package com.intellij.ide.highlighter;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IdeBundle;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.localize.LocalizeValue;
+import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
 
 public class DTDFileType extends LanguageFileType {
   public static final DTDFileType INSTANCE = new DTDFileType();
@@ -36,8 +37,8 @@ public class DTDFileType extends LanguageFileType {
   }
 
   @Nonnull
-  public String getDescription() {
-    return IdeBundle.message("filetype.description.dtd");
+  public LocalizeValue getDescription() {
+    return IdeLocalize.filetypeDescriptionDtd();
   }
 
   @Nonnull
@@ -45,6 +46,8 @@ public class DTDFileType extends LanguageFileType {
     return "dtd";
   }
 
+  @Nonnull
+  @Override
   public Image getIcon() {
     return AllIcons.FileTypes.Dtd;
   }

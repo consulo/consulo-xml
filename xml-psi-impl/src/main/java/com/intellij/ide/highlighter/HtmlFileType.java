@@ -15,15 +15,7 @@
  */
 package com.intellij.ide.highlighter;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IdeBundle;
 import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.openapi.project.Project;
@@ -31,7 +23,15 @@ import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.text.XmlCharsetDetector;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.localize.LocalizeValue;
+import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 public class HtmlFileType extends XmlLikeFileType
 {
@@ -57,9 +57,9 @@ public class HtmlFileType extends XmlLikeFileType
 	}
 
 	@Nonnull
-	public String getDescription()
+	public LocalizeValue getDescription()
 	{
-		return IdeBundle.message("filetype.description.html");
+		return IdeLocalize.filetypeDescriptionHtml();
 	}
 
 	@Nonnull
@@ -68,6 +68,8 @@ public class HtmlFileType extends XmlLikeFileType
 		return "html";
 	}
 
+	@Nonnull
+	@Override
 	public Image getIcon()
 	{
 		return AllIcons.FileTypes.Html;

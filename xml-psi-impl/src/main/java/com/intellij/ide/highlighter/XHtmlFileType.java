@@ -15,12 +15,13 @@
  */
 package com.intellij.ide.highlighter;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.IdeBundle;
 import com.intellij.lang.xhtml.XHTMLLanguage;
+import consulo.localize.LocalizeValue;
+import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
 
 public class XHtmlFileType extends HtmlFileType {
   public static final XHtmlFileType INSTANCE = new XHtmlFileType();
@@ -35,8 +36,8 @@ public class XHtmlFileType extends HtmlFileType {
   }
 
   @Nonnull
-  public String getDescription() {
-    return IdeBundle.message("filetype.description.xhtml");
+  public LocalizeValue getDescription() {
+    return IdeLocalize.filetypeDescriptionXhtml();
   }
 
   @Nonnull
@@ -44,6 +45,8 @@ public class XHtmlFileType extends HtmlFileType {
     return "xhtml";
   }
 
+  @Nonnull
+  @Override
   public Image getIcon() {
     return AllIcons.FileTypes.Xhtml;
   }

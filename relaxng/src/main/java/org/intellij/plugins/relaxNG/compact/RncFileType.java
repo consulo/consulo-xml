@@ -16,16 +16,16 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.
@@ -43,20 +43,18 @@ public class RncFileType extends LanguageFileType  {
 
   @Override
   @Nonnull
-  @NonNls
   public String getId() {
     return "RNG Compact";
   }
 
   @Override
   @Nonnull
-  public String getDescription() {
-    return "RELAX NG Compact Syntax";
+  public LocalizeValue getDescription() {
+    return LocalizeValue.localizeTODO("RELAX NG Compact Syntax");
   }
 
   @Override
   @Nonnull
-  @NonNls
   public String getDefaultExtension() {
     return "rnc";
   }
