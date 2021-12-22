@@ -79,11 +79,5 @@
 			<artifactId>consulo-util-advanced-proxy</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!--provided -->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 </project>
