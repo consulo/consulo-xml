@@ -17,44 +17,46 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.ide.highlighter.DomSupportEnabled;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.vfs.*;
-import com.intellij.openapi.vfs.newvfs.NewVirtualFile;
-import com.intellij.pom.PomManager;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.PomModelAspect;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.event.PomModelListener;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.XmlChangeSet;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.impl.PsiManagerEx;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.reference.SoftReference;
-import com.intellij.semantic.SemKey;
-import com.intellij.semantic.SemService;
-import com.intellij.util.EventDispatcher;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
-import consulo.util.advandedProxy.AdvancedProxyBuilder;
+import consulo.ide.ServiceManager;
+import consulo.language.impl.internal.psi.PsiManagerEx;
+import consulo.language.pom.PomManager;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.PomModelAspect;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.pom.event.PomModelListener;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiManager;
+import consulo.module.content.ProjectFileIndex;
+import consulo.project.Project;
+import consulo.proxy.EventDispatcher;
+import consulo.proxy.advanced.AdvancedProxyBuilder;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.function.Condition;
+import consulo.util.lang.ref.SoftReference;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.event.VirtualFileEvent;
+import consulo.virtualFileSystem.event.VirtualFileListener;
+import consulo.virtualFileSystem.event.VirtualFileMoveEvent;
+import consulo.virtualFileSystem.event.VirtualFilePropertyEvent;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.virtualFileSystem.util.VirtualFileVisitor;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -66,6 +68,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -202,12 +205,12 @@ public final class DomManagerImpl extends DomManager
 		}
 
 		final List<DomEvent> events = ContainerUtil.newArrayList();
-		VfsUtilCore.visitChildrenRecursively(file, new VirtualFileVisitor()
+		VirtualFileUtil.visitChildrenRecursively(file, new VirtualFileVisitor()
 		{
 			@Override
 			public boolean visitFile(@Nonnull VirtualFile file)
 			{
-				if(myProject.isDisposed() || !ProjectFileIndex.SERVICE.getInstance(myProject).isInContent(file))
+				if(myProject.isDisposed() || !ProjectFileIndex.getInstance(myProject).isInContent(file))
 				{
 					return false;
 				}
@@ -533,15 +536,15 @@ public final class DomManagerImpl extends DomManager
 	}
 
 	@Override
-	public final <T extends DomElement> T createStableValue(final Factory<T> provider)
+	public final <T extends DomElement> T createStableValue(final Supplier<T> provider)
 	{
 		return createStableValue(provider, t -> t.isValid());
 	}
 
 	@Override
-	public final <T> T createStableValue(final Factory<T> provider, final Condition<T> validator)
+	public final <T> T createStableValue(final Supplier<T> provider, final Condition<T> validator)
 	{
-		final T initial = provider.create();
+		final T initial = provider.get();
 		assert initial != null;
 		final StableInvocationHandler handler = new StableInvocationHandler<>(initial, provider, validator);
 

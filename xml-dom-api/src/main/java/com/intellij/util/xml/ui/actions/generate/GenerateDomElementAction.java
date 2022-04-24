@@ -16,15 +16,15 @@
 
 package com.intellij.util.xml.ui.actions.generate;
 
-import com.intellij.codeInsight.CodeInsightActionHandler;
-import com.intellij.codeInsight.actions.CodeInsightAction;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
+import consulo.application.Result;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.action.CodeInsightAction;
+import consulo.language.editor.action.CodeInsightActionHandler;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
@@ -43,7 +43,6 @@ public class GenerateDomElementAction extends CodeInsightAction {
     getTemplatePresentation().setIcon(icon);
 
     myProvider = generateProvider;
-    
   }
 
   public GenerateDomElementAction(final GenerateDomElementProvider generateProvider) {

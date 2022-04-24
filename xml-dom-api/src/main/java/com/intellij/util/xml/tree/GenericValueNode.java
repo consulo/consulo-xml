@@ -16,12 +16,12 @@
 
 package com.intellij.util.xml.tree;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.tree.SimpleNode;
+
+import javax.annotation.Nonnull;
 
 public class GenericValueNode extends AbstractDomElementNode {
   protected GenericDomValue myModelElement;

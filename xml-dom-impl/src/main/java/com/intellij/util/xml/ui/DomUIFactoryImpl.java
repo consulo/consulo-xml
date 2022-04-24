@@ -15,32 +15,23 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.codeHighlighting.HighlightingPass;
-import com.intellij.codeInsight.daemon.impl.DefaultHighlightInfoProcessor;
-import com.intellij.codeInsight.daemon.impl.GeneralHighlightingPass;
-import com.intellij.codeInsight.daemon.impl.HighlightInfoProcessor;
-import com.intellij.codeInsight.daemon.impl.LocalInspectionsPass;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.event.DocumentAdapter;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.impl.EditorComponentImpl;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.ProperTextRange;
-import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.ui.BooleanTableCellEditor;
-import com.intellij.ui.UserActivityListener;
-import com.intellij.ui.UserActivityWatcher;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ClassMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManagerImpl;
 import com.intellij.util.xml.highlighting.DomElementsErrorPanel;
+import consulo.component.extension.Extensions;
+import consulo.document.Document;
+import consulo.document.util.ProperTextRange;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.fileEditor.highlight.HighlightingPass;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.UserActivityWatcher;
+import consulo.ui.ex.awt.event.DocumentAdapter;
+import consulo.ui.ex.event.UserActivityListener;
+import consulo.util.collection.ClassMap;
+import consulo.util.lang.reflect.ReflectionUtil;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -50,6 +41,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.lang.reflect.Type;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author peter

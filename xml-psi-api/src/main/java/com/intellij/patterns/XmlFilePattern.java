@@ -15,17 +15,21 @@
  */
 package com.intellij.patterns;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.PsiFilePattern;
+import consulo.language.util.ProcessingContext;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
-public class XmlFilePattern<Self extends XmlFilePattern<Self>> extends PsiFilePattern<XmlFile, Self>{
+public class XmlFilePattern<Self extends XmlFilePattern<Self>> extends PsiFilePattern<XmlFile, Self> {
 
   public XmlFilePattern() {
     super(XmlFile.class);

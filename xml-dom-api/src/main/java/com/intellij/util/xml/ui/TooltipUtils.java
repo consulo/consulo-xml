@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.List;

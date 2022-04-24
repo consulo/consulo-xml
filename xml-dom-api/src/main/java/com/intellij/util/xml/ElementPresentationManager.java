@@ -15,18 +15,16 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Iconable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.Function;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.application.util.TypePresentationService;
+import consulo.component.util.Iconable;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -55,7 +54,7 @@ public abstract class ElementPresentationManager
 	private final static Function<Object, String> DEFAULT_NAMER = new Function<Object, String>()
 	{
 		@Nullable
-		public String fun(final Object element)
+		public String apply(final Object element)
 		{
 			return getElementName(element);
 		}
@@ -122,29 +121,23 @@ public abstract class ElementPresentationManager
 	}
 
 
-	public static final <T> NullableFunction<T, String> NAMER()
+	public static final <T> Function<T, String> NAMER()
 	{
-		return new NullableFunction<T, String>()
+		return new Function<T, String>()
 		{
-			public String fun(final T o)
+			public String apply(final T o)
 			{
 				return getElementName(o);
 			}
 		};
 	}
 
-	public static final NullableFunction<Object, String> NAMER = new NullableFunction<Object, String>()
-	{
-		public String fun(final Object o)
-		{
-			return getElementName(o);
-		}
-	};
+	public static final Function<Object, String> NAMER = o -> getElementName(o);
 
-	public static <T> NullableFunction<T, String> namer()
+	public static <T> Function<T, String> namer()
 	{
 		//noinspection unchecked
-		return (NullableFunction<T, String>) NAMER;
+		return (Function<T, String>) NAMER;
 	}
 
 	@Nullable
@@ -152,7 +145,7 @@ public abstract class ElementPresentationManager
 	{
 		for(final Function<Object, String> function : ourNameProviders)
 		{
-			final String s = function.fun(element);
+			final String s = function.apply(element);
 			if(s != null)
 			{
 				return s;
@@ -185,7 +178,7 @@ public abstract class ElementPresentationManager
 	{
 		for(final Function<Object, String> function : ourDocumentationProviders)
 		{
-			final String s = function.fun(element);
+			final String s = function.apply(element);
 			if(s != null)
 			{
 				return s;
@@ -227,7 +220,7 @@ public abstract class ElementPresentationManager
 	{
 		for(final Function<Object, Image> function : ourIconProviders)
 		{
-			final Image icon = function.fun(o);
+			final Image icon = function.apply(o);
 			if(icon != null)
 			{
 				return icon;
@@ -247,7 +240,7 @@ public abstract class ElementPresentationManager
 	{
 		for(final Function<Object, Image> function : ourIconProviders)
 		{
-			final Image icon = function.fun(o);
+			final Image icon = function.apply(o);
 			if(icon != null)
 			{
 				return icon;

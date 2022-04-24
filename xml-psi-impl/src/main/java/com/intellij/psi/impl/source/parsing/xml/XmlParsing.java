@@ -16,13 +16,14 @@
 package com.intellij.psi.impl.source.parsing.xml;
 
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.psi.tree.CustomParsingType;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.ILazyParseableElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.containers.Stack;
+import consulo.language.ast.CustomParsingType;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.ILazyParseableElementType;
+import consulo.language.parser.PsiBuilder;
+import consulo.util.collection.Stack;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

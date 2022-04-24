@@ -16,15 +16,15 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInspection.CommonProblemDescriptor;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.CommonProblemDescriptor;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 public interface DomElementProblemDescriptor extends CommonProblemDescriptor {

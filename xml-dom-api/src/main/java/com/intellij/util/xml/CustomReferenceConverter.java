@@ -15,10 +15,10 @@
  */
 package com.intellij.util.xml;
 
-import javax.annotation.Nonnull;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiElement;
+import javax.annotation.Nonnull;
 
 /**
  * Can be implemented by {@link com.intellij.util.xml.Converter} instance, or used with

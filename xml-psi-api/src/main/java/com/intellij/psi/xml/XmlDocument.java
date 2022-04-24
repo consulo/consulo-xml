@@ -15,8 +15,9 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.language.psi.meta.PsiMetaOwner;
+
 import javax.annotation.Nullable;
 
 /**

@@ -15,17 +15,14 @@
  */
 package com.intellij.patterns;
 
+import com.intellij.psi.xml.*;
+import consulo.language.pattern.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ProcessingContext;
+import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlProcessingInstruction;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.ProcessingContext;
 
 /**
  * @author peter

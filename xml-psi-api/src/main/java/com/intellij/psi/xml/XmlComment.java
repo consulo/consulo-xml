@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.PsiComment;
+import consulo.language.psi.PsiComment;
 
 /**
  * @author Mike

@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.IconDescriptor;
-import consulo.ide.IconDescriptorUpdater;
+import consulo.language.icon.IconDescriptor;
+import consulo.language.icon.IconDescriptorUpdater;
+import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
@@ -28,23 +28,18 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 1:16/19.07.13
  */
-public class DomIconDescriptorUpdater implements IconDescriptorUpdater
-{
-	@RequiredReadAction
-	@Override
-	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags)
-	{
-		if(element instanceof XmlFile)
-		{
-			DomFileDescription<?> description = DomManager.getDomManager(element.getProject()).getDomFileDescription((XmlFile) element);
-			if(description != null)
-			{
-				final Image fileIcon = description.getFileIcon(flags);
-				if(fileIcon != null)
-				{
-					iconDescriptor.setMainIcon(fileIcon);
-				}
-			}
-		}
-	}
+public class DomIconDescriptorUpdater implements IconDescriptorUpdater {
+    @RequiredReadAction
+    @Override
+    public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
+        if (element instanceof XmlFile) {
+            DomFileDescription<?> description = DomManager.getDomManager(element.getProject()).getDomFileDescription((XmlFile) element);
+            if (description != null) {
+                final Image fileIcon = description.getFileIcon(flags);
+                if (fileIcon != null) {
+                    iconDescriptor.setMainIcon(fileIcon);
+                }
+            }
+        }
+    }
 }

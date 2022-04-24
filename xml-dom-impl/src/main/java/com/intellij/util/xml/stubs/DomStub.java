@@ -15,15 +15,6 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.psi.stubs.ObjectStubBase;
-import com.intellij.util.SmartList;
-import com.intellij.util.io.StringRef;
 import com.intellij.util.xml.EvaluatedXmlNameImpl;
 import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.impl.CollectionElementInvocationHandler;
@@ -31,6 +22,15 @@ import com.intellij.util.xml.impl.DomChildDescriptionImpl;
 import com.intellij.util.xml.impl.DomInvocationHandler;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.index.io.StringRef;
+import consulo.language.psi.stub.ObjectStubBase;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.Comparing;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

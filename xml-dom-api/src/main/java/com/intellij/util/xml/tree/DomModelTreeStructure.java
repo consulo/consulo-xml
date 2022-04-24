@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ui.treeStructure.SimpleTreeStructure;
 import com.intellij.util.xml.DomElement;
+import consulo.ui.ex.awt.tree.SimpleTreeStructure;
 
 public class DomModelTreeStructure extends SimpleTreeStructure {
   private final DomElement myDomElement;

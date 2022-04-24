@@ -15,17 +15,16 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.stubs.IndexSink;
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.psi.stubs.StubInputStream;
-import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.xml.stubs.index.DomElementClassIndex;
 import com.intellij.util.xml.stubs.index.DomNamespaceKeyIndex;
+import consulo.language.psi.stub.IndexSink;
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.language.psi.stub.StubInputStream;
+import consulo.language.psi.stub.StubOutputStream;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
+import java.io.IOException;
 
 /**
  * @author Dmitry Avdeev

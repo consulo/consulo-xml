@@ -15,28 +15,29 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.reflect.ReflectionUtil;
+
+import java.util.function.Function;
 
 /**
  * @author peter
  */
 public class NamedEnumUtil {
   private static final Function<Enum, String> NAMED_SHOW = new Function<Enum, String>() {
-    public String fun(final Enum s) {
+    public String apply(final Enum s) {
       return ((NamedEnum) s).getValue();
     }
   };
   private static final Function<Enum, String> SIMPLE_SHOW = new Function<Enum, String>() {
-    public String fun(final Enum s) {
+    public String apply(final Enum s) {
       return s.name();
     }
   };
   
   public static <T extends Enum> T getEnumElementByValue(final Class<T> enumClass, final String value, Function<Enum, String> show) {
     for (final T t : enumClass.getEnumConstants()) {
-      if (Comparing.equal(value, show.fun(t))) {
+      if (Comparing.equal(value, show.apply(t))) {
         return t;
       }
     }
@@ -51,7 +52,7 @@ public class NamedEnumUtil {
   }
 
   public static <T extends Enum> String getEnumValueByElement(final T element) {
-    return element == null ? null : getShow(element.getClass()).fun(element);
+    return element == null ? null : getShow(element.getClass()).apply(element);
   }
 
 }

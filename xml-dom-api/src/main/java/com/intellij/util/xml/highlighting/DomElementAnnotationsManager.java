@@ -16,15 +16,15 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.ProblemDescriptor;
-import consulo.disposer.Disposable;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
-import javax.annotation.Nonnull;
+import consulo.disposer.Disposable;
+import consulo.ide.ServiceManager;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.project.Project;
 
+import javax.annotation.Nonnull;
 import java.util.EventListener;
 import java.util.List;
 

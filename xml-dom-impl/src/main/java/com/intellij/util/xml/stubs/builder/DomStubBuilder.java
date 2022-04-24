@@ -16,24 +16,24 @@
 package com.intellij.util.xml.stubs.builder;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.stubs.BinaryFileStubBuilder;
-import com.intellij.psi.stubs.Stub;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.indexing.FileBasedIndexImpl;
-import com.intellij.util.indexing.FileContent;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
+import consulo.component.extension.Extensions;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.stub.BinaryFileStubBuilder;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.Stub;
+import consulo.logging.Logger;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
 
 /**
  * @author Dmitry Avdeev
@@ -98,8 +98,7 @@ public class DomStubBuilder implements BinaryFileStubBuilder
 	public int getStubVersion()
 	{
 		int version = 11;
-		DomFileDescription[] descriptions = Extensions.getExtensions(DomFileDescription.EP_NAME);
-		for(DomFileDescription description : descriptions)
+		for(DomFileDescription description : DomFileDescription.EP_NAME.getExtensionList())
 		{
 			version += description.getStubVersion();
 		}

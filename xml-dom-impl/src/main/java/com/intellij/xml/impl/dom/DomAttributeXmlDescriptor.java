@@ -15,11 +15,6 @@
  */
 package com.intellij.xml.impl.dom;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.XmlName;
@@ -28,8 +23,12 @@ import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.xml.NamespaceAwareXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiElement;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

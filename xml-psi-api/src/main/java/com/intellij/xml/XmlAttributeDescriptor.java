@@ -16,10 +16,10 @@
 
 package com.intellij.xml;
 
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayFactory;
-import javax.annotation.Nonnull;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.util.collection.ArrayFactory;
+
 import javax.annotation.Nullable;
 
 /**
@@ -27,13 +27,7 @@ import javax.annotation.Nullable;
  */
 public interface XmlAttributeDescriptor extends PsiMetaData {
   XmlAttributeDescriptor[] EMPTY = new XmlAttributeDescriptor[0];
-  ArrayFactory<XmlAttributeDescriptor> ARRAY_FACTORY = new ArrayFactory<XmlAttributeDescriptor>() {
-    @Nonnull
-    @Override
-    public XmlAttributeDescriptor[] create(int count) {
-      return new XmlAttributeDescriptor[count];
-    }
-  };
+  ArrayFactory<XmlAttributeDescriptor> ARRAY_FACTORY = count -> new XmlAttributeDescriptor[count];
 
   boolean isRequired();
   boolean isFixed();

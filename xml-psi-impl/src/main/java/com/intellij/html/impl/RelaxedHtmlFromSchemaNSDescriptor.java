@@ -15,18 +15,18 @@
  */
 package com.intellij.html.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.collection.ArrayUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor
 {

@@ -19,10 +19,14 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.TreeElementPattern;
+import consulo.language.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

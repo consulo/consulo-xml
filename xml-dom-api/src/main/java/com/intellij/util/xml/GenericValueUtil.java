@@ -16,13 +16,13 @@
 
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.containers.ContainerUtil;
-import javax.annotation.Nonnull;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago
@@ -31,13 +31,13 @@ public class GenericValueUtil {
   private GenericValueUtil() {
   }
 
-  public static NullableFunction<GenericValue, String> STRING_VALUE = new NullableFunction<GenericValue, String>() {
-    public String fun(final GenericValue genericValue) {
+  public static Function<GenericValue, String> STRING_VALUE = new Function<GenericValue, String>() {
+    public String apply(final GenericValue genericValue) {
       return genericValue.getStringValue();
     }
   };
-  public static NullableFunction<GenericValue, Object> OBJECT_VALUE = new NullableFunction<GenericValue, Object>() {
-    public Object fun(final GenericValue genericValue) {
+  public static Function<GenericValue, Object> OBJECT_VALUE = new Function<GenericValue, Object>() {
+    public Object apply(final GenericValue genericValue) {
       return genericValue.getValue();
     }
   };
@@ -60,7 +60,7 @@ public class GenericValueUtil {
   @Nonnull
   public static <T> Collection<T> getValueCollection(final Collection<? extends GenericValue<? extends T>> collection, Collection<T> result) {
     for (GenericValue<? extends T> o : collection) {
-      ContainerUtil.addIfNotNull(o.getValue(), result);
+      ContainerUtil.addIfNotNull(result, o.getValue());
     }
     return result;
   }
@@ -68,7 +68,7 @@ public class GenericValueUtil {
   @Nonnull
   public static Collection<String> getStringCollection(final Collection<? extends GenericValue> collection, Collection<String> result) {
     for (GenericValue o : collection) {
-      ContainerUtil.addIfNotNull(o.getStringValue(), result);
+      ContainerUtil.addIfNotNull(result, o.getStringValue());
     }
     return result;
   }

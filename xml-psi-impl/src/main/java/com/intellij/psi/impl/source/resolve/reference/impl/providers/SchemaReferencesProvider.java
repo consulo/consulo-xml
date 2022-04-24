@@ -15,28 +15,26 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.ProcessingContext;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.document.util.TextRange;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.util.ProcessingContext;
+import consulo.util.collection.ArrayUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Konstantin Bulenkov

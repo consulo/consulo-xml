@@ -16,14 +16,8 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.ui.treeStructure.SimpleTree;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
@@ -32,7 +26,13 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.ui.TooltipUtils;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.project.Project;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.tree.SimpleNode;
+import consulo.ui.ex.awt.tree.SimpleTree;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -16,16 +16,6 @@
 
 package com.intellij.util.xml.tree;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.ide.IdeBundle;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.ElementPresentationTemplate;
@@ -33,7 +23,16 @@ import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.ide.IdeBundle;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.ui.image.Image;
+import consulo.util.lang.reflect.ReflectionUtil;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DomElementsGroupNode extends AbstractDomElementNode {
   private final DomElement myParentElement;
@@ -92,7 +91,7 @@ public class DomElementsGroupNode extends AbstractDomElementNode {
     if (!myParentElement.isValid()) return false;
 
     for (DomElement domElement : myChildDescription.getStableValues(myParentElement)) {
-      final DomElementAnnotationsManager annotationsManager = DomElementAnnotationsManager.getInstance(getProject());
+      final DomElementAnnotationsManager annotationsManager = DomElementAnnotationsManager.getInstance(myRootDomElement.getManager().getProject());
       final DomElementsProblemsHolder holder = annotationsManager.getCachedProblemHolder(domElement);
       final List<DomElementProblemDescriptor> problems = holder.getProblems(domElement, true, HighlightSeverity.ERROR);
       if (problems.size() > 0) return true;

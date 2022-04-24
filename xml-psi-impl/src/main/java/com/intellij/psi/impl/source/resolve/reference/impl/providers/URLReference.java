@@ -15,32 +15,25 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.ElementManipulator;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.document.util.TextRange;
+import consulo.language.psi.*;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.virtualFileSystem.VirtualFile;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 /**
  * @author Dmitry Avdeev
@@ -263,7 +256,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 		return XmlErrorMessages.message(myIncorrectResourceMapped ? "registered.resource.is.not.recognized" : "uri.is.not.registered");
 	}
 
-	public static void processWsdlSchemas(final XmlTag rootTag, Processor<XmlTag> processor)
+	public static void processWsdlSchemas(final XmlTag rootTag, Predicate<XmlTag> processor)
 	{
 		if("definitions".equals(rootTag.getLocalName()))
 		{
@@ -278,7 +271,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 					final XmlTag[] tags = subTag.findSubTags("schema", XmlUtil.SCHEMA_URIS[i]);
 					for(XmlTag t : tags)
 					{
-						if(!processor.process(t))
+						if(!processor.test(t))
 						{
 							return;
 						}

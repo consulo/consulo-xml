@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml.actions.generate;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.util.xml.DomElement;
-import javax.annotation.Nonnull;
+import consulo.codeEditor.Editor;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 /**

@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ui.treeStructure.SimpleNode;
 import com.intellij.util.xml.DomFileElement;
+import consulo.ui.ex.awt.tree.SimpleNode;
 
 public class DomFileElementNode extends BaseDomElementNode {
   private final DomFileElement myFileElement;
@@ -32,11 +32,9 @@ public class DomFileElementNode extends BaseDomElementNode {
     return doGetChildren(myFileElement.getRootElement());
   }
 
-
   public DomFileElement getDomElement() {
     return (DomFileElement)super.getDomElement();
   }
-
 
   public boolean isShowContainingFileInfo() {
     return false;

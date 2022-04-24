@@ -15,25 +15,25 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.WriteAction;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.event.DocumentAdapter;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.event.DocumentListener;
-import com.intellij.openapi.editor.markup.EffectType;
-import com.intellij.openapi.editor.markup.MarkupModel;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.EditorTextField;
-import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.application.ApplicationManager;
+import consulo.application.WriteAction;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.markup.MarkupModel;
+import consulo.colorScheme.EffectType;
+import consulo.colorScheme.TextAttributes;
+import consulo.document.Document;
+import consulo.document.event.DocumentAdapter;
+import consulo.document.event.DocumentEvent;
+import consulo.document.event.DocumentListener;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.project.Project;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.undoRedo.CommandProcessor;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;

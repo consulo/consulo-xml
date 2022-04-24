@@ -16,10 +16,10 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
-import javax.annotation.Nonnull;
+import consulo.language.editor.annotation.HighlightSeverity;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface DomElementsProblemsHolder {

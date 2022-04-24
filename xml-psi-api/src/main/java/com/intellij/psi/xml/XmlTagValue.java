@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.xml;
 
-import javax.annotation.Nonnull;
+import consulo.document.util.TextRange;
 
-import com.intellij.openapi.util.TextRange;
+import javax.annotation.Nonnull;
 
 public interface XmlTagValue
 {

@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ReflectionUtil;
-import javax.annotation.Nullable;
+import consulo.component.ProcessCanceledException;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
+import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Arrays;

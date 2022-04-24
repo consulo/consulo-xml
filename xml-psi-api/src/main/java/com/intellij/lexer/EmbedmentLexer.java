@@ -15,7 +15,7 @@
  */
 package com.intellij.lexer;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 
 /**
  * @author Maxim.Mossienko

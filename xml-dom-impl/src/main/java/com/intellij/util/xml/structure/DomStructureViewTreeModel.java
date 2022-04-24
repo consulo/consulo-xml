@@ -16,21 +16,17 @@
 
 package com.intellij.util.xml.structure;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlFileTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.Function;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementNavigationProvider;
-import com.intellij.util.xml.DomElementsNavigationManager;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.DomService;
+import com.intellij.util.xml.*;
+import consulo.codeEditor.Editor;
 import consulo.disposer.Disposable;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago

@@ -71,16 +71,6 @@
 				description="Generate a new XML tag according to schema information">
 			<add-to-group group-id="GenerateGroup" anchor="first"/>
 		</action>
-
-		<group id="OpenInBrowserGroup" class="com.intellij.ide.browsers.actions.OpenInBrowserBaseGroupAction$OpenInBrowserGroupAction">
-			<add-to-group group-id="ViewMenu" anchor="after" relative-to-action="ViewSource"/>
-			<add-to-group group-id="RunContextPopupGroup" anchor="last"/>
-		</group>
-		<group id="OpenInBrowserEditorContextBarGroupAction"
-			   class="com.intellij.ide.browsers.actions.OpenInBrowserBaseGroupAction$OpenInBrowserEditorContextBarGroupAction"
-			   description="Open In...">
-			<add-to-group group-id="EditorContextBarMenu" anchor="last"/>
-		</group>
 	</actions>
 
 	<extensionPoints>
@@ -114,11 +104,6 @@
 
 		<extensionPoint name="structureViewBuilderProvider"
 						interface="com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider"/>
-
-		<extensionPoint name="webBrowserUrlProvider"
-						interface="com.intellij.ide.browsers.WebBrowserUrlProvider"/>
-		<extensionPoint name="remoteFileUpdater"
-						interface="com.intellij.ide.browsers.RemoteFileUpdater"/>
 
 		<extensionPoint name="standardResourceProvider" interface="com.intellij.javaee.StandardResourceProvider"/>
 		<extensionPoint name="standardResource" beanClass="com.intellij.javaee.StandardResourceEP"/>
@@ -157,7 +142,7 @@
 		<extensionPoint name="xpathSupportProvider" interface="consulo.intelliLang.xml.XPathSupportProvider"/>
 	</extensionPoints>
 
-	<extensions defaultExtensionNs="com.intellij">
+	<extensions defaultExtensionNs="consulo">
 		<internalFileTemplate name="HTML File"/>
 		<internalFileTemplate name="HTML4 File"/>
 		<internalFileTemplate name="XHTML File"/>
@@ -392,9 +377,6 @@
 
 		<moveLeftRightHandler language="XML" implementationClass="com.intellij.codeInsight.editorActions.moveLeftRight.XmlMoveLeftRightHandler"/>
 
-		<applicationService serviceInterface="com.intellij.ide.browsers.WebBrowserService"
-							serviceImplementation="com.intellij.ide.browsers.impl.WebBrowserServiceImpl"/>
-
 		<patterns.patternClass className="com.intellij.patterns.XmlPatterns" alias="xml"/>
 
 		<lang.smartEnterProcessor language="XML" implementationClass="com.intellij.codeInsight.completion.XmlSmartEnterProcessor"/>
@@ -571,7 +553,6 @@
 			<configurable instance="com.intellij.javaee.XMLCatalogConfigurable" displayName="XML Catalog" id="xml.catalog"/>
 		</projectConfigurable>
 
-		<selectInTarget implementation="com.intellij.ide.browsers.actions.SelectInDefaultBrowserTarget"/>
 		<lang.inspectionSuppressor language="XML" implementationClass="com.intellij.codeInspection.XmlInspectionSuppressor"/>
 
 		<lang.syntaxHighlighterFactory language="DTD" implementationClass="com.intellij.ide.highlighter.DTDSyntaxHighlighterFactory"/>

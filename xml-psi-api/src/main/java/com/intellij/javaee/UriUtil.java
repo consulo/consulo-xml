@@ -19,41 +19,36 @@
  */
 package com.intellij.javaee;
 
+import consulo.language.psi.PsiFileSystemItem;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFileSystemItem;
+public class UriUtil {
+    private UriUtil() {
+    }
 
-public class UriUtil
-{
-	private UriUtil()
-	{
-	}
+    /**
+     * @see #findRelative(String, PsiFileSystemItem)
+     */
+    @Deprecated
+    @Nullable
+    public static VirtualFile findRelativeFile(String uri, VirtualFile base) {
+        return VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
+    }
 
-	/**
-	 * @see #findRelative(String, com.intellij.psi.PsiFileSystemItem)
-	 */
-	@Deprecated
-	@Nullable
-	public static VirtualFile findRelativeFile(String uri, VirtualFile base)
-	{
-		return VfsUtilCore.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
-	}
+    @Nullable
+    public static VirtualFile findRelative(String uri, @Nonnull PsiFileSystemItem base) {
+        String location = ExternalResourceManager.getInstance().getResourceLocation(uri, base.getProject());
+        return VirtualFileUtil.findRelativeFile(location, base.getVirtualFile());
+    }
 
-	@Nullable
-	public static VirtualFile findRelative(String uri, @Nonnull PsiFileSystemItem base)
-	{
-		String location = ExternalResourceManager.getInstance().getResourceLocation(uri, base.getProject());
-		return VfsUtilCore.findRelativeFile(location, base.getVirtualFile());
-	}
-
-	// cannot use UriUtil.SLASH_MATCHER.trimFrom - we don't depend on guava
-	@Nonnull
-	public static String trimSlashFrom(@Nonnull String path)
-	{
-		return StringUtil.trimStart(StringUtil.trimEnd(path, "/"), "/");
-	}
+    // cannot use UriUtil.SLASH_MATCHER.trimFrom - we don't depend on guava
+    @Nonnull
+    public static String trimSlashFrom(@Nonnull String path) {
+        return StringUtil.trimStart(StringUtil.trimEnd(path, "/"), "/");
+    }
 }

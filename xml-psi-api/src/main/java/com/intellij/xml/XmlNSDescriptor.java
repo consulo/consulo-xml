@@ -15,13 +15,13 @@
  */
 package com.intellij.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.meta.PsiMetaData;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Mike

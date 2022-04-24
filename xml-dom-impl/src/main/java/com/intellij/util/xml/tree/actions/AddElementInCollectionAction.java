@@ -16,23 +16,7 @@
 
 package com.intellij.util.xml.tree.actions;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.MergedObject;
@@ -42,8 +26,23 @@ import com.intellij.util.xml.tree.DomElementsGroupNode;
 import com.intellij.util.xml.tree.DomModelTreeView;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
-import consulo.ide.IconDescriptorUpdaters;
+import consulo.application.ApplicationBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.util.TypePresentationService;
+import consulo.language.icon.IconDescriptorUpdaters;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.DefaultActionGroup;
+import consulo.ui.ex.awt.tree.SimpleNode;
+import consulo.ui.ex.popup.ListPopup;
 import consulo.ui.image.Image;
+import consulo.util.lang.reflect.ReflectionUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * User: Sergey.Vasiliev
@@ -154,10 +153,10 @@ public class AddElementInCollectionAction extends AddDomElementAction {
 
 
   protected AnAction createAddingAction(final AnActionEvent e,
-                                                final String name,
-                                                final Image icon,
-                                                final Type type,
-                                                final DomCollectionChildDescription description) {
+                                        final String name,
+                                        final Image icon,
+                                        final Type type,
+                                        final DomCollectionChildDescription description) {
 
     final DomElement parentDomElement = getParentDomElement(e);
 

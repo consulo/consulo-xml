@@ -16,19 +16,19 @@
 
 package com.intellij.util.xml.model.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.SimpleModelFactory;
+import consulo.util.collection.ContainerUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev

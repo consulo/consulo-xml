@@ -16,27 +16,26 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ide.util.treeView.AbstractTreeBuilder;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.pom.Navigatable;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.ui.components.panels.Wrapper;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.ui.treeStructure.SimpleTree;
-import com.intellij.ui.treeStructure.SimpleTreeStructure;
-import com.intellij.ui.treeStructure.WeightBasedComparator;
-import com.intellij.ui.treeStructure.actions.CollapseAllAction;
-import com.intellij.ui.treeStructure.actions.ExpandAllAction;
-import com.intellij.util.ui.tree.TreeUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.application.ApplicationManager;
+import consulo.dataContext.DataProvider;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.navigation.Navigatable;
+import consulo.project.Project;
+import consulo.ui.ex.action.ActionGroup;
+import consulo.ui.ex.action.ActionManager;
+import consulo.ui.ex.action.DefaultActionGroup;
+import consulo.ui.ex.awt.Wrapper;
+import consulo.ui.ex.awt.tree.*;
+import consulo.ui.ex.awt.tree.action.CollapseAllAction;
+import consulo.ui.ex.awt.tree.action.ExpandAllAction;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

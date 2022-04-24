@@ -15,9 +15,10 @@
  */
 package com.intellij.ide.structureView.xml;
 
-import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.psi.xml.XmlFile;
+import consulo.fileEditor.structureView.StructureViewBuilder;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

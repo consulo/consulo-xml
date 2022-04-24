@@ -15,24 +15,23 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.fileTypes.PlainTextFileType;
-import com.intellij.openapi.fileTypes.PlainTextLanguage;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogBuilder;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.ui.EditorTextField;
-import com.intellij.ui.ReferenceEditorWithBrowseButton;
-import com.intellij.ui.UIBundle;
-import com.intellij.util.Function;
+import consulo.codeEditor.EditorEx;
+import consulo.document.Document;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.language.plain.PlainTextFileType;
+import consulo.language.plain.PlainTextLanguage;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiFileFactory;
+import consulo.project.Project;
+import consulo.ui.ex.UIBundle;
+import consulo.ui.ex.awt.DialogBuilder;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.Function;
 
 /**
  * @author peter

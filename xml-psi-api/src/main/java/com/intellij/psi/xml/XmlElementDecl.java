@@ -15,10 +15,10 @@
  */
 package com.intellij.psi.xml;
 
-import javax.annotation.Nullable;
+import consulo.language.psi.PsiNameIdentifierOwner;
+import consulo.language.psi.meta.PsiMetaOwner;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.psi.meta.PsiMetaOwner;
+import javax.annotation.Nullable;
 
 
 /**

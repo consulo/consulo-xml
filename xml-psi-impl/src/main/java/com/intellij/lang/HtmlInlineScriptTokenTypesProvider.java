@@ -15,11 +15,11 @@
  */
 package com.intellij.lang;
 
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
+import consulo.virtualFileSystem.fileType.FileType;
 
 public interface HtmlInlineScriptTokenTypesProvider {
-  IElementType getElementType();
+    IElementType getElementType();
 
-  FileType getFileType();
+    FileType getFileType();
 }

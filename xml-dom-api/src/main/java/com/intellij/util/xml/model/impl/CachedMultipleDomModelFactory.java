@@ -15,11 +15,7 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
@@ -27,6 +23,10 @@ import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.DomModelCache;
 import com.intellij.util.xml.model.MultipleDomModelFactory;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.CachedValueProvider;
+import consulo.project.Project;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 
@@ -108,7 +108,7 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
       for (M model: models) {
         final Set<XmlFile> files = model.getConfigFiles();
         for (XmlFile file: files) {
-          ContainerUtil.addIfNotNull(getDomRoot(file), list);
+          ContainerUtil.addIfNotNull(list, getDomRoot(file));
         }
         configFiles.addAll(files);
       }

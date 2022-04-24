@@ -16,13 +16,13 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import java.lang.reflect.Type;
 import java.util.*;

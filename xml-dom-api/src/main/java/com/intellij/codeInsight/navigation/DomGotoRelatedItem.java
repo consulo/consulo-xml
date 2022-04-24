@@ -15,8 +15,8 @@
  */
 package com.intellij.codeInsight.navigation;
 
-import com.intellij.navigation.GotoRelatedItem;
 import com.intellij.util.xml.DomElement;
+import consulo.language.editor.gutter.GotoRelatedItem;
 import consulo.ui.image.Image;
 
 /**

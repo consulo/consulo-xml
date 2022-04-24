@@ -15,8 +15,8 @@
  */
 package com.intellij.ide.highlighter;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.lang.xhtml.XHTMLLanguage;
+import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
 import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;

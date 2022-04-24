@@ -15,12 +15,12 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.ArrayUtil;
 
 /**
  * @author peter

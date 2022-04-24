@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
-import com.intellij.util.containers.ConcurrentFactoryMap;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.language.psi.util.CachedValue;
+import consulo.language.psi.util.CachedValueProvider;
+import consulo.language.psi.util.CachedValuesManager;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

@@ -15,17 +15,18 @@
  */
 package com.intellij.psi;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.Language;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.IncorrectOperationException;
+import consulo.ide.ServiceManager;
+import consulo.language.Language;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

@@ -15,29 +15,10 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.resolve.ResolveCache;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
@@ -45,6 +26,24 @@ import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
 import com.intellij.xml.impl.schema.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.util.function.Processor;
+import consulo.document.util.TextRange;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.resolve.ResolveCache;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class TypeOrElementOrAttributeReference implements PsiReference
 {

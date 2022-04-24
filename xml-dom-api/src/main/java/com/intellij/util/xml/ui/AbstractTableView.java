@@ -15,21 +15,23 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.ide.actions.ContextHelpAction;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.ui.JBColor;
-import com.intellij.ui.PopupHandler;
-import com.intellij.ui.ScrollPaneFactory;
-import com.intellij.ui.table.TableView;
-import com.intellij.util.EventDispatcher;
-import com.intellij.util.ui.ColumnInfo;
-import com.intellij.util.ui.ListTableModel;
-import com.intellij.util.ui.UIUtil;
-import com.intellij.xml.util.XmlStringUtil;
+import consulo.dataContext.DataSink;
+import consulo.dataContext.TypeSafeDataProvider;
+import consulo.language.editor.PlatformDataKeys;
 import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.project.Project;
+import consulo.proxy.EventDispatcher;
+import consulo.ui.ex.JBColor;
+import consulo.ui.ex.action.*;
+import consulo.ui.ex.awt.ColumnInfo;
+import consulo.ui.ex.awt.PopupHandler;
+import consulo.ui.ex.awt.ScrollPaneFactory;
+import consulo.ui.ex.awt.UIUtil;
+import consulo.ui.ex.awt.table.ListTableModel;
+import consulo.ui.ex.awt.table.TableView;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.xml.XmlStringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

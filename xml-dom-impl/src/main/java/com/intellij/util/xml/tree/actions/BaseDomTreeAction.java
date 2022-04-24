@@ -16,9 +16,9 @@
 
 package com.intellij.util.xml.tree.actions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.util.xml.tree.DomModelTreeView;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
 
 /**
  * User: Sergey.Vasiliev

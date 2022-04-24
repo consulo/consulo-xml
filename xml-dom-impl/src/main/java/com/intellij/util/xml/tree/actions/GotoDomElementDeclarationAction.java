@@ -16,14 +16,14 @@
 
 package com.intellij.util.xml.tree.actions;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.util.xml.tree.DomModelTreeView;
-import com.intellij.util.xml.tree.BaseDomElementNode;
-import com.intellij.util.xml.DomElementsNavigationManager;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementNavigationProvider;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.idea.ActionsBundle;
+import com.intellij.util.xml.DomElementsNavigationManager;
+import com.intellij.util.xml.tree.BaseDomElementNode;
+import com.intellij.util.xml.tree.DomModelTreeView;
+import consulo.ui.ex.action.ActionsBundle;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.awt.tree.SimpleNode;
 
 /**
  * User: Sergey.Vasiliev

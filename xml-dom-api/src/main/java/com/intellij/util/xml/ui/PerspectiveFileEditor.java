@@ -16,25 +16,28 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.fileEditor.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.components.panels.Wrapper;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.ScrollType;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.fileEditor.*;
+import consulo.fileEditor.event.FileEditorManagerAdapter;
+import consulo.fileEditor.event.FileEditorManagerEvent;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.ui.ex.awt.Wrapper;
 import consulo.util.dataholder.UserDataHolderBase;
+import consulo.virtualFileSystem.VirtualFile;
 import kava.beans.PropertyChangeListener;
 import kava.beans.PropertyChangeSupport;
 

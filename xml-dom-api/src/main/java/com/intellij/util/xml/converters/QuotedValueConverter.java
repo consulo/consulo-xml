@@ -22,15 +22,13 @@
  */
 package com.intellij.util.xml.converters;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
 import com.intellij.util.xml.*;
-import com.intellij.xml.util.XmlTagTextUtil;
+import consulo.document.util.TextRange;
+import consulo.language.psi.*;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Collections;
 
@@ -81,13 +79,14 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
                                          final ConvertContext context) {
     final String originalValue = genericDomValue.getStringValue();
     if (originalValue == null) return PsiReference.EMPTY_ARRAY;
-    final String unquotedValue = unquote(originalValue, getQuoteSigns());
-    int startOffset = originalValue == unquotedValue? 0 : XmlTagTextUtil.escapeString(originalValue.substring(0, 1), false).length();
-    int endOffset = originalValue == unquotedValue || quotationIsNotClosed(originalValue)? 0 : startOffset;
-    final ElementManipulator<PsiElement> manipulator = ElementManipulators.getManipulator(element);
-    assert manipulator != null : "manipulator not found";
-    final TextRange range = manipulator.getRangeInElement(element);
-    return new PsiReference[]{createPsiReference(element, range.getStartOffset()+startOffset, range.getEndOffset() - endOffset, true, context, genericDomValue, startOffset != endOffset)};
+    TextRange range = ElementManipulators.getValueTextRange(element);
+    String unquotedValue = unquote(originalValue, getQuoteSigns());
+    int valueOffset = range.substring(element.getText()).indexOf(unquotedValue);
+    if (valueOffset < 0) return PsiReference.EMPTY_ARRAY;
+    int start = range.getStartOffset() + valueOffset;
+    int end = start + unquotedValue.length();
+    boolean unclosedQuotation = valueOffset > 0 && end == range.getEndOffset();
+    return new PsiReference[]{createPsiReference(element, start, end, true, context, genericDomValue, unclosedQuotation)};
   }
 
   @Nullable

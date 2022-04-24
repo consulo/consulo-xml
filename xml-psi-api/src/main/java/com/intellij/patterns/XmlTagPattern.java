@@ -15,18 +15,20 @@
  */
 package com.intellij.patterns;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
+import com.intellij.psi.xml.XmlTag;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.StandardPatterns;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.util.ProcessingContext;
+import consulo.util.lang.Comparing;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author spleaner

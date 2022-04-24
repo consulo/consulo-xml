@@ -15,20 +15,20 @@
  */
 package com.intellij.util.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -53,7 +53,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     final DomFileElement<DomElement> fileElement = DomUtil.getFileElement(getInvocationElement());
     if (fileElement == null) {
       final XmlElement xmlElement = getInvocationElement().getXmlElement();
-      return xmlElement == null ? null : ModuleUtil.findModuleForPsiElement(xmlElement);
+      return xmlElement == null ? null : ModuleUtilCore.findModuleForPsiElement(xmlElement);
     }
     return fileElement.getRootElement().getModule();
   }

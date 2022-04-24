@@ -15,28 +15,28 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.ArrayUtil;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Map;                             
 import java.util.Set;
 
 /**
  * @author peter
  */
 @SuppressWarnings({"HardCodedStringLiteral"})
-public class XmlTagUtil extends XmlTagUtilBase {
+public class XmlTagUtil {
   private static final Map<String, Character> ourCharacterEntities;
 
   static {

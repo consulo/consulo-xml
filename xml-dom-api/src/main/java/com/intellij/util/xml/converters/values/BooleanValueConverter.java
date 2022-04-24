@@ -16,14 +16,14 @@
 
 package com.intellij.util.xml.converters.values;
 
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.ResolvingConverter;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
 

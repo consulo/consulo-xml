@@ -15,16 +15,15 @@
  */
 package com.intellij.javaee;
 
-import javax.annotation.Nonnull;
-
+import consulo.component.util.SimpleModificationTracker;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.SimpleModificationTracker;
-import com.intellij.psi.PsiFile;
 
 public abstract class ExternalResourceManager extends SimpleModificationTracker
 {

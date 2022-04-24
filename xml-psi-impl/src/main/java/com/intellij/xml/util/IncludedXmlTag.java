@@ -15,24 +15,22 @@
  */
 package com.intellij.xml.util;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlTagValueImpl;
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagChild;
 import com.intellij.psi.xml.XmlTagValue;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 /**
  * @author peter

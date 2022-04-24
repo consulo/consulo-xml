@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import consulo.application.AllIcons;
+import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

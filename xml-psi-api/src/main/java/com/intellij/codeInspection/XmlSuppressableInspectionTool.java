@@ -16,16 +16,17 @@
 
 package com.intellij.codeInspection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.codeInsight.daemon.HighlightDisplayKey;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.inspection.*;
+import consulo.language.editor.rawHighlight.HighlightDisplayKey;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool implements BatchSuppressableTool
 {

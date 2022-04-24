@@ -15,14 +15,9 @@
  */
 package com.intellij.util.xml.stubs.builder;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.io.StringRef;
 import com.intellij.util.xml.Stubbed;
 import com.intellij.util.xml.StubbedOccurrence;
 import com.intellij.util.xml.impl.DomInvocationHandler;
@@ -32,6 +27,11 @@ import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
 import com.intellij.util.xml.stubs.AttributeStub;
 import com.intellij.util.xml.stubs.ElementStub;
+import consulo.index.io.StringRef;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Dmitry Avdeev

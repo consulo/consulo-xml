@@ -15,26 +15,25 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.ResolveState;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.PsiFileImpl;
 import com.intellij.psi.impl.source.html.ScriptSupportUtil;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.ProjectScope;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.ast.IElementType;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.psi.PsiFileImpl;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.virtualFileSystem.fileType.FileType;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Mike

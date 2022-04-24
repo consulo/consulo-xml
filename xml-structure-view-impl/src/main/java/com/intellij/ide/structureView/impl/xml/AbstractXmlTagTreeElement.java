@@ -15,15 +15,14 @@
  */
 package com.intellij.ide.structureView.impl.xml;
 
-import java.util.Collection;
-
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.ide.structureView.xml.XmlStructureViewElementProvider;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.util.collection.ContainerUtil;
+
+import java.util.Collection;
+import java.util.function.Function;
 
 public abstract class AbstractXmlTagTreeElement<T extends XmlElement> extends PsiTreeElementBase<T> {
   protected AbstractXmlTagTreeElement(final T psiElement) {
@@ -34,7 +33,7 @@ public abstract class AbstractXmlTagTreeElement<T extends XmlElement> extends Ps
     final XmlStructureViewElementProvider[] providers = XmlStructureViewElementProvider.EP_NAME.getExtensions();
 
     return ContainerUtil.map2List(subTags, new Function<XmlTag, StructureViewTreeElement>() {
-      public StructureViewTreeElement fun(final XmlTag xmlTag) {
+      public StructureViewTreeElement apply(final XmlTag xmlTag) {
         for (final XmlStructureViewElementProvider provider : providers) {
           final StructureViewTreeElement element = provider.createCustomXmlTagTreeElement(xmlTag);
           if (element != null) {

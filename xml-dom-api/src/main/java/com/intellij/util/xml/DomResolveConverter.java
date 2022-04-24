@@ -15,19 +15,19 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.project.Project;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.SoftFactoryMap;
 import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.application.util.TypePresentationService;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.pom.PomService;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.language.psi.util.CachedValue;
+import consulo.language.psi.util.CachedValueProvider;
+import consulo.language.psi.util.CachedValuesManager;
+import consulo.project.Project;
+import consulo.util.collection.SoftFactoryMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

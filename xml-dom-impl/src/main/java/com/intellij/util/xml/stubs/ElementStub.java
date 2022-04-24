@@ -15,76 +15,67 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.util.List;
+import consulo.index.io.StringRef;
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.util.SmartList;
-import com.intellij.util.io.StringRef;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/2/12
+ * Date: 8/2/12
  */
-public class ElementStub extends DomStub
-{
+public class ElementStub extends DomStub {
 
-	private final List<DomStub> myChildren = new SmartList<DomStub>();
-	private final int myIndex;
-	private final boolean myCustom;
+    private final List<DomStub> myChildren = new SmartList<DomStub>();
+    private final int myIndex;
+    private final boolean myCustom;
 
-	@Nullable
-	private final StringRef myElementClass;
+    @Nullable
+    private final StringRef myElementClass;
 
-	public ElementStub(@Nullable ElementStub parent, @Nonnull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
-			@Nullable StringRef elementClass)
-	{
-		super(parent, name, namespace);
-		myIndex = index;
-		myCustom = custom;
-		myElementClass = elementClass;
-	}
+    public ElementStub(@Nullable ElementStub parent, @Nonnull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
+                       @Nullable StringRef elementClass) {
+        super(parent, name, namespace);
+        myIndex = index;
+        myCustom = custom;
+        myElementClass = elementClass;
+    }
 
-	void addChild(DomStub child)
-	{
-		myChildren.add(child);
-	}
+    void addChild(DomStub child) {
+        myChildren.add(child);
+    }
 
-	@Override
-	public List<DomStub> getChildrenStubs()
-	{
-		return myChildren;
-	}
+    @Override
+    public List<DomStub> getChildrenStubs() {
+        return myChildren;
+    }
 
-	@Override
-	public ObjectStubSerializer getStubType()
-	{
-		return ElementStubSerializer.INSTANCE;
-	}
+    @Override
+    public ObjectStubSerializer getStubType() {
+        return ElementStubSerializer.INSTANCE;
+    }
 
-	@Override
-	public String toString()
-	{
-		String key = getNamespaceKey();
-		return StringUtil.isEmpty(key) ? getName() : key + ":" + getName();
-	}
+    @Override
+    public String toString() {
+        String key = getNamespaceKey();
+        return StringUtil.isEmpty(key) ? getName() : key + ":" + getName();
+    }
 
-	public boolean isCustom()
-	{
-		return myCustom;
-	}
+    public boolean isCustom() {
+        return myCustom;
+    }
 
-	@Override
-	public int getIndex()
-	{
-		return myIndex;
-	}
+    @Override
+    public int getIndex() {
+        return myIndex;
+    }
 
-	@Nullable
-	String getElementClass()
-	{
-		return myElementClass == null ? null : myElementClass.getString();
-	}
+    @Nullable
+    String getElementClass() {
+        return myElementClass == null ? null : myElementClass.getString();
+    }
 }

@@ -24,23 +24,22 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.search.SearchScope;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlPsiUtil;
+import consulo.content.scope.SearchScope;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.impl.ast.CompositeElement;
+import consulo.language.impl.psi.CompositePsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.scope.GlobalSearchScope;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class XmlElementImpl extends CompositePsiElement implements XmlElement {
   public XmlElementImpl(IElementType type) {

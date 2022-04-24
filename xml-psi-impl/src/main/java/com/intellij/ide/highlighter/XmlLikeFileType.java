@@ -15,17 +15,16 @@
  */
 package com.intellij.ide.highlighter;
 
-import java.nio.charset.Charset;
+import com.intellij.xml.util.XmlUtil;
+import consulo.language.Language;
+import consulo.language.file.LanguageFileType;
+import consulo.project.Project;
+import consulo.util.io.CharsetToolkit;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.CharsetToolkit;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.xml.util.XmlUtil;
+import java.nio.charset.Charset;
 
 public abstract class XmlLikeFileType extends LanguageFileType {
   public XmlLikeFileType(Language language) {

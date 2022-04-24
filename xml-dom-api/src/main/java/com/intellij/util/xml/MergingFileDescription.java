@@ -16,10 +16,10 @@
 package com.intellij.util.xml;
 
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

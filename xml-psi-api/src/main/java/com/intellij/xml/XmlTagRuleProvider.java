@@ -15,11 +15,12 @@
  */
 package com.intellij.xml;
 
+import com.intellij.psi.xml.XmlTag;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.editor.inspection.ProblemsHolder;
+
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.psi.xml.XmlTag;
 
 public abstract class XmlTagRuleProvider {
 
@@ -39,5 +40,4 @@ public abstract class XmlTagRuleProvider {
       return false;
     }
   }
-
 }

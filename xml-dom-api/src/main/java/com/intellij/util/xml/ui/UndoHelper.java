@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.command.CommandAdapter;
-import com.intellij.openapi.command.CommandEvent;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.event.DocumentAdapter;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
+import consulo.document.Document;
+import consulo.document.event.DocumentAdapter;
+import consulo.document.event.DocumentEvent;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
+import consulo.undoRedo.CommandProcessor;
+import consulo.undoRedo.event.CommandAdapter;
+import consulo.undoRedo.event.CommandEvent;
 
 import java.util.HashSet;
 import java.util.Set;

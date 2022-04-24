@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.ui.BooleanTableCellRenderer;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.ui.ex.awt.BooleanTableCellRenderer;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

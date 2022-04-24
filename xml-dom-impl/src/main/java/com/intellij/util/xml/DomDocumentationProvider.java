@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.lang.documentation.DocumentationProvider;
-import com.intellij.pom.PomTarget;
-import com.intellij.pom.PomTargetPsiElement;
-import com.intellij.psi.DelegatePsiTarget;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
+import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.impl.psi.DelegatePsiTarget;
+import consulo.language.pom.PomTarget;
+import consulo.language.pom.PomTargetPsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
 
 import java.util.List;
 

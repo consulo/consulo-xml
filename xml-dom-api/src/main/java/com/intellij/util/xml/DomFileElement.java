@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.component.util.ModificationTracker;
 import consulo.util.dataholder.UserDataHolder;
 
 import javax.annotation.Nonnull;

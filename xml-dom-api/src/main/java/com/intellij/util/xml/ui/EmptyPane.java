@@ -16,8 +16,8 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.ui.treeStructure.Tree;
-import com.intellij.util.ui.UIUtil;
+import consulo.ui.ex.awt.UIUtil;
+import consulo.ui.ex.awt.tree.Tree;
 
 import javax.swing.*;
 import java.awt.*;

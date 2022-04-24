@@ -15,8 +15,6 @@
  */
 package com.intellij.psi.xml;
 
-
-
 /**
  * @author mike
  */

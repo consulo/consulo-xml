@@ -15,17 +15,16 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.meta.PsiWritableMetaData;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiPresentableMetaData;
+import consulo.language.psi.meta.PsiWritableMetaData;
+import consulo.language.util.IncorrectOperationException;
 import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
 
-import javax.swing.*;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

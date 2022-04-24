@@ -15,14 +15,14 @@
  */
 package com.intellij.psi.xml;
 
+import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.util.IncorrectOperationException;
+import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.xml.XmlAttributeDescriptor;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Mike

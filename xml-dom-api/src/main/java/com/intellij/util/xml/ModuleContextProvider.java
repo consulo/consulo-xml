@@ -1,10 +1,10 @@
 package com.intellij.util.xml;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.util.collection.ContainerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

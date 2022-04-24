@@ -15,25 +15,25 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.reflect.*;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.application.progress.ProgressManager;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Pair;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -288,7 +288,7 @@ public class DomUtil
 		{
 			XmlTag tag = (XmlTag) xmlElement;
 			final DomManager domManager = parent.getManager();
-			final SmartList<DomElement> result = new SmartList<DomElement>();
+			final SmartList<DomElement> result = new SmartList<>();
 			if(attributes)
 			{
 				for(final XmlAttribute attribute : tag.getAttributes())
@@ -301,7 +301,7 @@ public class DomUtil
 					GenericAttributeValue element = domManager.getDomElement(attribute);
 					if(checkHasXml(attribute, element))
 					{
-						ContainerUtil.addIfNotNull(element, result);
+						ContainerUtil.addIfNotNull(result, element);
 					}
 				}
 			}
@@ -317,7 +317,7 @@ public class DomUtil
 					DomElement element = domManager.getDomElement(subTag);
 					if(checkHasXml(subTag, element))
 					{
-						ContainerUtil.addIfNotNull(element, result);
+						ContainerUtil.addIfNotNull(result, element);
 					}
 				}
 			}

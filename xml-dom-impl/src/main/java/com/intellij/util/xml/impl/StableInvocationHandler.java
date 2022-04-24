@@ -15,13 +15,11 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.MergedObject;
 import com.intellij.util.xml.StableElement;
-import consulo.util.advandedProxy.ObjectMethods;
+import consulo.proxy.advanced.ObjectMethods;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 
 import java.lang.reflect.InvocationHandler;
@@ -29,6 +27,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -37,10 +37,10 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
   private T myOldValue;
   private T myCachedValue;
   private final Set<Class> myClasses;
-  private final Factory<T> myProvider;
-  private final Condition<T> myValidator;
+  private final Supplier<T> myProvider;
+  private final Predicate<T> myValidator;
 
-  public StableInvocationHandler(final T initial, final Factory<T> provider, Condition<T> validator) {
+  public StableInvocationHandler(final T initial, final Supplier<T> provider, Predicate<T> validator) {
     myProvider = provider;
     myCachedValue = initial;
     myOldValue = initial;
@@ -72,7 +72,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       if (myCachedValue != null) {
         myOldValue = myCachedValue;
       }
-      myCachedValue = myProvider.create();
+      myCachedValue = myProvider.get();
       if (isNotValid(myCachedValue)) {
         if (ObjectMethods.EQUALS_METHOD.equals(method)) {
 
@@ -131,7 +131,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
 
   public final T getWrappedElement() {
     if (isNotValid(myCachedValue)) {
-      myCachedValue = myProvider.create();
+      myCachedValue = myProvider.get();
     }
     return myCachedValue;
   }
@@ -141,7 +141,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
   }
 
   private boolean isNotValid(final T t) {
-    if (t == null || !myValidator.value(t)) return true;
+    if (t == null || !myValidator.test(t)) return true;
     for (final Class aClass : myClasses) {
       if (!aClass.isInstance(t)) return true;
     }

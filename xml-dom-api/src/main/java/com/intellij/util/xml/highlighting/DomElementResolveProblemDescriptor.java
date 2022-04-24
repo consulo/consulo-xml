@@ -15,10 +15,10 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.util.xml.GenericDomValue;
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiReference;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

@@ -15,9 +15,10 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.ide.IdeBundle;
+import consulo.ide.IdeBundle;
+import consulo.language.editor.CodeInsightBundle;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
 
 /**
@@ -46,7 +47,6 @@ public abstract class Converter<T> {
   public String getErrorMessage(@Nullable String s, final ConvertContext context) {
     return CodeInsightBundle.message("error.cannot.convert.default.message", s);
   }
-
 
   /**
    * @deprecated {@link com.intellij.util.xml.converters.values.NumberValueConverter}

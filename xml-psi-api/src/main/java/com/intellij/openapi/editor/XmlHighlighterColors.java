@@ -15,7 +15,9 @@
  */
 package com.intellij.openapi.editor;
 
-import com.intellij.openapi.editor.colors.TextAttributesKey;
+import consulo.codeEditor.DefaultLanguageHighlighterColors;
+import consulo.codeEditor.HighlighterColors;
+import consulo.colorScheme.TextAttributesKey;
 
 /**
  * @author yole

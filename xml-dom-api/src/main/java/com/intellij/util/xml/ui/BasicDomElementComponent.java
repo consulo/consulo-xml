@@ -16,27 +16,27 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
-import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
-import javax.annotation.Nonnull;
+import consulo.application.ApplicationManager;
+import consulo.logging.Logger;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * User: Sergey.Vasiliev
@@ -78,8 +78,8 @@ public abstract class BasicDomElementComponent<T extends DomElement> extends Abs
       if (boundComponent != null) {
         if (description instanceof DomFixedChildDescription && DomUtil.isGenericValueType(description.getType())) {
           if ((description.getValues(domElement)).size() == 1) {
-            final GenericDomValue element = domElement.getManager().createStableValue(new Factory<GenericDomValue>() {
-              public GenericDomValue create() {
+            final GenericDomValue element = domElement.getManager().createStableValue(new Supplier<GenericDomValue>() {
+              public GenericDomValue get() {
                 return domElement.isValid() ? (GenericDomValue)description.getValues(domElement).get(0) : null;
               }
             });

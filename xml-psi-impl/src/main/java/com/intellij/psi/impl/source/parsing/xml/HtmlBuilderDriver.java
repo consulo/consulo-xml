@@ -19,14 +19,14 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.ParserDefinition;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilderFactory;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.html.HtmlParsing;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.parser.LanguageParserDefinitions;
+import consulo.language.parser.ParserDefinition;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.parser.PsiBuilderFactory;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
 
 public class HtmlBuilderDriver extends XmlBuilderDriver {
   public HtmlBuilderDriver(final CharSequence text) {

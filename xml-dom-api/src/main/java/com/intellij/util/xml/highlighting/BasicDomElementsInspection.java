@@ -16,12 +16,12 @@
 
 package com.intellij.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.util.lang.reflect.ReflectionUtil;
+
+import javax.annotation.Nonnull;
 
 /**
  * Provides basic inspection functionality (resolving, required values, duplicate names, custom annotations).

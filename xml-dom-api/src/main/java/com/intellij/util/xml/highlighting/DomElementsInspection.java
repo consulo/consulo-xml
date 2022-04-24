@@ -16,25 +16,27 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.application.ApplicationManager;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiFile;
+import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
@@ -61,12 +63,12 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
     final DomHighlightingHelper helper =
       DomElementAnnotationsManager.getInstance(domFileElement.getManager().getProject()).getHighlightingHelper();
     final Consumer<DomElement> consumer = new Consumer<DomElement>() {
-      public void consume(final DomElement element) {
+      public void accept(final DomElement element) {
         checkChildren(element, this);
         checkDomElement(element, holder, helper);
       }
     };
-    consumer.consume(domFileElement.getRootElement());
+    consumer.accept(domFileElement.getRootElement());
   }
 
   @SuppressWarnings({"MethodMayBeStatic"})
@@ -79,7 +81,7 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
           LOG.error("child=" + child + " of class " + child.getClass() + "; parent=" + element);
         }
         if (element1.isPhysical()) {
-          visitor.consume(child);
+          visitor.accept(child);
         }
       }
 
@@ -87,7 +89,7 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
         if (description.getAnnotation(Required.class) != null) {
           for (final DomElement child : description.getValues(element)) {
             if (!DomUtil.hasXml(child)) {
-              visitor.consume(child);
+              visitor.accept(child);
             }
           }
         }
@@ -143,11 +145,7 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
     if (list.isEmpty()) return ProblemDescriptor.EMPTY_ARRAY;
 
     List<ProblemDescriptor> problems =
-      ContainerUtil.concat(list, new Function<DomElementProblemDescriptor, Collection<? extends ProblemDescriptor>>() {
-        public Collection<ProblemDescriptor> fun(final DomElementProblemDescriptor s) {
-          return annotationsManager.createProblemDescriptors(manager, s);
-        }
-      });
+      ContainerUtil.concat(list, s -> annotationsManager.createProblemDescriptors(manager, s));
     return problems.toArray(new ProblemDescriptor[problems.size()]);
   }
 

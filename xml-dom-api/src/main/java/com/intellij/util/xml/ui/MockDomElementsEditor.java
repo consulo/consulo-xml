@@ -15,24 +15,24 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import consulo.disposer.Disposer;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.StableElement;
-import javax.annotation.Nonnull;
+import consulo.application.ApplicationManager;
+import consulo.application.Result;
+import consulo.disposer.Disposer;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiUtilCore;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -49,8 +49,8 @@ public class MockDomElementsEditor {
 
   protected final <T extends DomElement> T addEditedElement(final Class<T> aClass, final EditedElementDescription<T> description) {
     final DomManager domManager = DomManager.getDomManager(myModule.getProject());
-    final T t = domManager.createStableValue(new Factory<T>() {
-      public T create() {
+    final T t = domManager.createStableValue(new Supplier<T>() {
+      public T get() {
         T t = description.find();
         if (t == null) {
           return createMockElement(aClass);
@@ -67,8 +67,8 @@ public class MockDomElementsEditor {
   }
 
   protected final DomFileEditor initFileEditor(final BasicDomElementComponent component, final VirtualFile virtualFile, final String name) {
-    initFileEditor(component.getProject(), virtualFile, name, new Factory<BasicDomElementComponent>() {
-      public BasicDomElementComponent create() {
+    initFileEditor(component.getProject(), virtualFile, name, new Supplier<BasicDomElementComponent>() {
+      public BasicDomElementComponent get() {
         return component;
       }
     });
@@ -76,7 +76,7 @@ public class MockDomElementsEditor {
     return myFileEditor;
   }
 
-  protected final DomFileEditor initFileEditor(final Project project, final VirtualFile virtualFile, final String name, final Factory<? extends BasicDomElementComponent> component) {
+  protected final DomFileEditor initFileEditor(final Project project, final VirtualFile virtualFile, final String name, final Supplier<? extends BasicDomElementComponent> component) {
     myFileEditor = new DomFileEditor<BasicDomElementComponent>(project, virtualFile, name, component) {
       public JComponent getPreferredFocusedComponent() {
         return null;

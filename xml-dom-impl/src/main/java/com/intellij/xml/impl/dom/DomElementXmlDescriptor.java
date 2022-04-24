@@ -16,16 +16,16 @@
 package com.intellij.xml.impl.dom;
 
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightingAwareElementDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomChildrenDescription;
+import consulo.language.pom.PomService;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

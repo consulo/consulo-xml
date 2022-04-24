@@ -15,13 +15,13 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
-import javax.annotation.Nonnull;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
+import javax.annotation.Nonnull;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;

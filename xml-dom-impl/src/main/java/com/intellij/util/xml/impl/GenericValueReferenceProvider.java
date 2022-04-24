@@ -15,38 +15,27 @@
  */
 package com.intellij.util.xml.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.intellij.javaee.web.PsiReferenceConverter;
+import com.intellij.psi.xml.*;
+import com.intellij.util.xml.*;
+import consulo.application.ApplicationManager;
+import consulo.language.psi.*;
+import consulo.language.util.ProcessingContext;
+import consulo.logging.Logger;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.javaee.web.PsiReferenceConverter;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.xml.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author peter
  */
 public class GenericValueReferenceProvider extends PsiReferenceProvider {
 
-  private final static Logger LOG = Logger.getInstance("#com.intellij.util.xml.impl.GenericValueReferenceProvider");
+  private final static Logger LOG = Logger.getInstance(GenericValueReferenceProvider.class);
 
   @Nonnull
   public final PsiReference[] getReferencesByElement(@Nonnull PsiElement psiElement, @Nonnull final ProcessingContext context) {

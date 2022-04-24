@@ -16,13 +16,13 @@
 
 package com.intellij.util.xml.reflect;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.pom.PomTarget;
-import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.AnnotatedElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.ElementPresentationTemplate;
+import consulo.language.pom.PomTarget;
+import consulo.language.psi.PsiElement;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

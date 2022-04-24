@@ -16,12 +16,12 @@
 
 package com.intellij.util.xml.reflect;
 
-import com.intellij.pom.PomTarget;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.EvaluatedXmlName;
+import consulo.language.pom.PomTarget;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Set;

@@ -15,27 +15,27 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.UserActivityWatcher;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.Required;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.component.extension.ExtensionPointName;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.ColumnInfo;
+import consulo.ui.ex.awt.UserActivityWatcher;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.table.TableCellEditor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author peter

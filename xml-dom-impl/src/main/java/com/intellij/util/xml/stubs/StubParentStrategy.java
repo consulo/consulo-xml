@@ -15,18 +15,14 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.impl.DomInvocationHandler;
-import com.intellij.util.xml.impl.DomManagerImpl;
-import com.intellij.util.xml.impl.DomParentStrategy;
-import com.intellij.util.xml.impl.PhysicalDomParentStrategy;
-import com.intellij.util.xml.impl.VirtualDomParentStrategy;
+import com.intellij.util.xml.impl.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

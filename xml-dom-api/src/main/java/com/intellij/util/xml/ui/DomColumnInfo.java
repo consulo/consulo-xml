@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.util.ui.ColumnInfo;
+import consulo.ui.ex.awt.ColumnInfo;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -42,5 +42,4 @@ public abstract class DomColumnInfo<T, Aspect> extends ColumnInfo<T, Aspect> {
   public TableCellRenderer getRenderer(T value) {
     return myRenderer;
   }
-
 }

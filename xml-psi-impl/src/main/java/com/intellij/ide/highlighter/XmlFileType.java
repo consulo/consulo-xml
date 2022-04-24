@@ -15,61 +15,54 @@
  */
 package com.intellij.ide.highlighter;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.fileTypes.FileTypeWithPredefinedCharset;
+import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
 import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+import consulo.util.lang.Pair;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.Charset;
 
-public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset
-{
-	public static final XmlFileType INSTANCE = new XmlFileType();
-	public static final String DEFAULT_EXTENSION = "xml";
-	public static final String DOT_DEFAULT_EXTENSION = "." + DEFAULT_EXTENSION;
+public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset {
+    public static final XmlFileType INSTANCE = new XmlFileType();
+    public static final String DEFAULT_EXTENSION = "xml";
+    public static final String DOT_DEFAULT_EXTENSION = "." + DEFAULT_EXTENSION;
 
-	private XmlFileType()
-	{
-		super(XMLLanguage.INSTANCE);
-	}
+    private XmlFileType() {
+        super(XMLLanguage.INSTANCE);
+    }
 
-	@Override
-	@Nonnull
-	public String getId()
-	{
-		return "XML";
-	}
+    @Override
+    @Nonnull
+    public String getId() {
+        return "XML";
+    }
 
-	@Override
-	@Nonnull
-	public LocalizeValue getDescription()
-	{
-		return IdeLocalize.filetypeDescriptionXml();
-	}
+    @Override
+    @Nonnull
+    public LocalizeValue getDescription() {
+        return IdeLocalize.filetypeDescriptionXml();
+    }
 
-	@Override
-	@Nonnull
-	public String getDefaultExtension()
-	{
-		return DEFAULT_EXTENSION;
-	}
+    @Override
+    @Nonnull
+    public String getDefaultExtension() {
+        return DEFAULT_EXTENSION;
+    }
 
-	@Nonnull
-	@Override
-	public Image getIcon()
-	{
-		return AllIcons.FileTypes.Xml;
-	}
+    @Nonnull
+    @Override
+    public Image getIcon() {
+        return AllIcons.FileTypes.Xml;
+    }
 
-	@Nonnull
-	@Override
-	public Pair<Charset, String> getPredefinedCharset(@Nonnull VirtualFile virtualFile)
-	{
-		return Pair.create(virtualFile.getCharset(), "XML file");
-	}
+    @Nonnull
+    @Override
+    public Pair<Charset, String> getPredefinedCharset(@Nonnull VirtualFile virtualFile) {
+        return Pair.create(virtualFile.getCharset(), "XML file");
+    }
 }

@@ -15,14 +15,13 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.util.List;
+import consulo.index.io.StringRef;
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.language.psi.stub.Stub;
+import consulo.util.xml.fastReader.XmlFileHeader;
 
 import javax.annotation.Nullable;
-
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.psi.stubs.Stub;
-import com.intellij.util.io.StringRef;
-import com.intellij.util.xml.XmlFileHeader;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

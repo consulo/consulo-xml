@@ -15,23 +15,27 @@
  */
 package com.intellij.util.xml;
 
-import consulo.disposer.Disposable;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.*;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.component.util.CompositeModificationTracker;
+import consulo.component.util.ModificationTracker;
+import consulo.disposer.Disposable;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
+import consulo.util.dataholder.NotNullLazyKey;
+import consulo.util.lang.function.Condition;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -122,14 +126,13 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * @param provider provides values to be wrapped
 	 * @return stable DOM element
 	 */
-	public abstract <T extends DomElement> T createStableValue(Factory<T> provider);
+	public abstract <T extends DomElement> T createStableValue(Supplier<T> provider);
 
-	public abstract <T> T createStableValue(final Factory<T> provider, final Condition<T> validator);
+	public abstract <T> T createStableValue(final Supplier<T> provider, final Condition<T> validator);
 
 	/**
 	 * Registers a new {@link com.intellij.util.xml.DomFileDescription} within the manager. The description parameter describes some DOM
-	 * parameters and restrictions to the particular XML files, that need DOM support. Should be called on
-	 * {@link com.intellij.openapi.components.ProjectComponent} loading.
+	 * parameters and restrictions to the particular XML files, that need DOM support.
 	 *
 	 * @param description The description in question
 	 * @deprecated Make your file description an extension (see {@link com.intellij.util.xml.DomFileDescription#EP_NAME})

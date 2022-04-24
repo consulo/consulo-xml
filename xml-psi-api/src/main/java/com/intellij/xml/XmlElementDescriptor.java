@@ -15,10 +15,11 @@
  */
 package com.intellij.xml;
 
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.meta.PsiMetaData;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
 
 /**

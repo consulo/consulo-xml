@@ -15,30 +15,29 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.openapi.MnemonicHelper;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.*;
-import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.events.DomEvent;
+import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.disposer.Disposer;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.internal.MnemonicHelper;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Supplier;
 
 /**
  * @author peter
  */
 public class DomFileEditor<T extends BasicDomElementComponent> extends PerspectiveFileEditor implements CommittablePanel, Highlightable {
   private final String myName;
-  private final Factory<? extends T> myComponentFactory;
+  private final Supplier<? extends T> myComponentFactory;
   private T myComponent;
 
   public DomFileEditor(final DomElement element, final String name, final T component) {
@@ -46,14 +45,14 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
   }
 
   public DomFileEditor(final Project project, final VirtualFile file, final String name, final T component) {
-    this(project, file, name, new Factory<T>() {
-      public T create() {
+    this(project, file, name, new Supplier<T>() {
+      public T get() {
         return component;
       }
     });
   }
 
-  public DomFileEditor(final Project project, final VirtualFile file, final String name, final Factory<? extends T> component) {
+  public DomFileEditor(final Project project, final VirtualFile file, final String name, final Supplier<? extends T> component) {
     super(project, file);
     myComponentFactory = component;
     myName = name;
@@ -98,7 +97,7 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
   @Nonnull
   protected JComponent createCustomComponent() {
     new MnemonicHelper().register(getComponent());
-    myComponent = myComponentFactory.create();
+    myComponent = myComponentFactory.get();
     DomUIFactory.getDomUIFactory().setupErrorOutdatingUserActivityWatcher(this, getDomElement());
     DomManager.getDomManager(getProject()).addDomEventListener(new DomEventListener() {
       public void eventOccured(DomEvent event) {
@@ -148,15 +147,15 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
   public static DomFileEditor createDomFileEditor(final String name,
                                                   @Nullable final Icon icon,
                                                   final DomElement element,
-                                                  final Factory<? extends CommittablePanel> committablePanel) {
+                                                  final Supplier<? extends CommittablePanel> committablePanel) {
 
     final XmlFile file = DomUtil.getFile(element);
-    final Factory<BasicDomElementComponent> factory = new Factory<BasicDomElementComponent>() {
-      public BasicDomElementComponent create() {
+    final Supplier<BasicDomElementComponent> factory = new Supplier<BasicDomElementComponent>() {
+      public BasicDomElementComponent get() {
 
         CaptionComponent captionComponent = new CaptionComponent(name, icon);
         captionComponent.initErrorPanel(element);
-        BasicDomElementComponent component = createComponentWithCaption(committablePanel.create(), captionComponent, element);
+        BasicDomElementComponent component = createComponentWithCaption(committablePanel.get(), captionComponent, element);
         Disposer.register(component, captionComponent);
         return component;
       }

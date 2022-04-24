@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml.stubs;
 
+import consulo.index.io.StringRef;
+import consulo.language.psi.stub.ObjectStubSerializer;
+
 import java.util.Collections;
 import java.util.List;
-
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.util.io.StringRef;
 
 /**
  * @author Dmitry Avdeev

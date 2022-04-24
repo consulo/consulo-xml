@@ -22,25 +22,25 @@
  */
 package com.intellij.util.xml.converters;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.ResolvingConverter;
+import consulo.document.util.TextRange;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
+import java.util.function.Function;
 
 public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<T>> implements CustomReferenceConverter<List<T>> {
 
@@ -224,7 +224,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
     private Function<PsiElement, PsiElement> getSuperBindToElementFunction(final Ref<IncorrectOperationException> ref) {
       return new Function<PsiElement, PsiElement>() {
-        public PsiElement fun(final PsiElement s) {
+        public PsiElement apply(final PsiElement s) {
           try {
             return MyPsiReference.super.bindToElement(s);
           }
@@ -238,7 +238,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
     private Function<String, PsiElement> getSuperElementRenameFunction(final Ref<IncorrectOperationException> ref) {
       return new Function<String, PsiElement>() {
-        public PsiElement fun(final String s) {
+        public PsiElement apply(final String s) {
           try {
             return MyPsiReference.super.handleElementRename(s);
           }
@@ -261,7 +261,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
                                               final Function<PsiElement, PsiElement> superBindToElementFunction,
                                               final Function<String, PsiElement> superElementRenameFunction)
       throws IncorrectOperationException {
-    return superBindToElementFunction.fun(element);
+    return superBindToElementFunction.apply(element);
   }
 
   protected PsiElement referenceHandleElementRename(final PsiReference psiReference,
@@ -269,7 +269,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
                                                     final Function<String, PsiElement> superHandleElementRename)
       throws IncorrectOperationException {
 
-    return superHandleElementRename.fun(newName);
+    return superHandleElementRename.apply(newName);
   }
 
 }

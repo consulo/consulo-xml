@@ -15,16 +15,21 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 
 /**
  * @author Mike
  */
 public interface XmlDoctype extends XmlElement {
-  XmlElement getNameElement();
-  String getDtdUri();
-  PsiElement getDtdUrlElement();
-  XmlMarkupDecl getMarkupDecl();
-  String getPublicId();
-  String getSystemId();
+    XmlElement getNameElement();
+
+    String getDtdUri();
+
+    PsiElement getDtdUrlElement();
+
+    XmlMarkupDecl getMarkupDecl();
+
+    String getPublicId();
+
+    String getSystemId();
 }

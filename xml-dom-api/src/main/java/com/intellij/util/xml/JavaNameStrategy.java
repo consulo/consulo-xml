@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.codeStyle.NameUtil;
-import com.intellij.util.Function;
+import consulo.application.util.matcher.NameUtil;
+import consulo.util.lang.StringUtil;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 /**
  * This strategy decapitalizes property name, e.g. getXmlElementName() will correspond to xmlElementName
@@ -28,7 +28,7 @@ import java.util.Arrays;
  */
 public class JavaNameStrategy extends DomNameStrategy {
   public static final Function<String,String> DECAPITALIZE_FUNCTION = new Function<String, String>() {
-    public String fun(final String s) {
+    public String apply(final String s) {
       return StringUtil.decapitalize(s);
     }
   };

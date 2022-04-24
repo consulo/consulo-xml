@@ -16,13 +16,13 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.ui.UserActivityListener;
-import com.intellij.util.Alarm;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.ProgressIndicator;
+import consulo.application.progress.ProgressIndicator;
+import consulo.application.progress.ProgressManager;
 import consulo.disposer.Disposable;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.util.Alarm;
+import consulo.ui.ex.event.UserActivityListener;
 
 /**
  * User: Sergey.Vasiliev

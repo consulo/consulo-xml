@@ -16,20 +16,20 @@
 
 package com.intellij.xml;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.util.Condition;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.component.extension.ExtensionPointName;
+import consulo.component.extension.Extensions;
+import consulo.language.psi.PsiDirectory;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.DumbService;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -63,7 +63,7 @@ public abstract class XmlSchemaProvider {
   @Nullable
   public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nonnull PsiFile baseFile) {
     final PsiDirectory directory = baseFile.getParent();
-    final Module module = ModuleUtil.findModuleForPsiElement(directory == null ? baseFile : directory);
+    final Module module = ModuleUtilCore.findModuleForPsiElement(directory == null ? baseFile : directory);
     return findSchema(namespace, module, baseFile);
   }
 

@@ -16,30 +16,30 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.ide.DataManager;
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
-import com.intellij.openapi.ui.popup.PopupStep;
-import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.Consumer;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
-import consulo.ide.IconDescriptorUpdaters;
+import consulo.application.util.TypePresentationService;
+import consulo.codeEditor.Editor;
+import consulo.dataContext.DataManager;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.icon.IconDescriptorUpdaters;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.ui.ex.popup.BaseListPopupStep;
+import consulo.ui.ex.popup.JBPopupFactory;
+import consulo.ui.ex.popup.PopupStep;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
@@ -99,7 +99,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
 
   private void applyFix() {
     chooseParent(myParents, new Consumer<DomElement>() {
-      public void consume(final DomElement parent) {
+      public void accept(final DomElement parent) {
         new WriteCommandAction.Simple(parent.getManager().getProject(), DomUtil.getFile(parent)) {
           protected void run() throws Throwable {
             doFix(parent, myChildDescription, myNewName);
@@ -122,12 +122,12 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
       case 0:
         return;
       case 1:
-        onChoose.consume(files.iterator().next());
+        onChoose.accept(files.iterator().next());
         return;
       default:
         JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<DomElement>(DomBundle.message("choose.file"), files) {
           public PopupStep onChosen(final DomElement selectedValue, final boolean finalChoice) {
-            onChoose.consume(selectedValue);
+            onChoose.accept(selectedValue);
             return super.onChosen(selectedValue, finalChoice);
           }
 

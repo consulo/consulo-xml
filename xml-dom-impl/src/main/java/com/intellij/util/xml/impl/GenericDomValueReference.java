@@ -15,27 +15,26 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupValueFactory;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomTarget;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.psi.impl.PomTargetPsiElementImpl;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.*;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.document.util.TextRange;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.completion.lookup.LookupValueFactory;
+import consulo.language.pom.PomService;
+import consulo.language.pom.PomTarget;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 

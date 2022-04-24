@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 

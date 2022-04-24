@@ -15,13 +15,13 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.util.EventDispatcher;
 import com.intellij.util.xml.DomElement;
+import consulo.application.Result;
+import consulo.language.editor.WriteCommandAction;
+import consulo.project.Project;
+import consulo.proxy.EventDispatcher;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.util.lang.Comparing;
 
 import javax.annotation.Nullable;
 import javax.swing.*;

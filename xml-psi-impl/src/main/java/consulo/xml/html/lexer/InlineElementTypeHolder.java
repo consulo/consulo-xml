@@ -5,8 +5,8 @@ import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
 import com.intellij.lexer.BaseHtmlLexer;
 import com.intellij.lexer.EmbeddedTokenTypesProvider;
 import com.intellij.lexer.HtmlLexer;
-import com.intellij.psi.tree.IElementType;
-import consulo.application.internal.PerApplicationInstance;
+import consulo.application.util.PerApplicationInstance;
+import consulo.language.ast.IElementType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

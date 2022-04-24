@@ -16,10 +16,10 @@
 
 package com.intellij.util.xml.model;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
+import consulo.language.psi.util.CachedValue;
+import consulo.language.psi.util.CachedValueProvider;
+import consulo.language.psi.util.CachedValuesManager;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;

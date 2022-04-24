@@ -16,12 +16,11 @@
 
 package com.intellij.psi.xml;
 
-import javax.annotation.Nonnull;
-
+import consulo.component.extension.ExtensionPointName;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.extensions.ExtensionPointName;
 
 /**
  * Implementations of this interface add default mappings

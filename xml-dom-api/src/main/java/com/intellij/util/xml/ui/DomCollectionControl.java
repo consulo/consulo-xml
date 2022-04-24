@@ -15,22 +15,7 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.ui.CommonActionsPanel;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.EventDispatcher;
-import com.intellij.util.IconUtil;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomCollectionProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
@@ -38,8 +23,25 @@ import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
+import consulo.application.AllIcons;
+import consulo.application.ApplicationBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.Result;
+import consulo.dataContext.DataSink;
+import consulo.dataContext.TypeSafeDataProvider;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiUtilCore;
+import consulo.project.Project;
+import consulo.proxy.EventDispatcher;
+import consulo.ui.ex.action.*;
+import consulo.ui.ex.awt.ColumnInfo;
+import consulo.ui.ex.awt.CommonActionsPanel;
 import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -66,9 +68,9 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
   private List<T> myCollectionElements = new ArrayList<T>();
   private ColumnInfo<T, ?>[] myColumnInfos;
   private boolean myEditable = false;
-  public static final Image ADD_ICON = IconUtil.getAddIcon();
-  public static final Image EDIT_ICON = IconUtil.getEditIcon();
-  public static final Image REMOVE_ICON = IconUtil.getRemoveIcon();
+  public static final Image ADD_ICON = AllIcons.General.Add;
+  public static final Image EDIT_ICON = AllIcons.Actions.Edit;
+  public static final Image REMOVE_ICON = AllIcons.General.Remove;
 
   public DomCollectionControl(DomElement parentElement,
                               DomCollectionChildDescription description,

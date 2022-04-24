@@ -15,18 +15,14 @@
  */
 package com.intellij.util.xml;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import consulo.application.util.function.CommonProcessors;
+import consulo.application.util.function.Processor;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.util.CommonProcessors;
-import com.intellij.util.Processor;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ContainerUtil;
+import java.util.*;
 
 /**
  * @author peter

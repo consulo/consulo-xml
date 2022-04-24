@@ -1,14 +1,14 @@
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Pair;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.FactoryMap;
 import com.intellij.util.xml.impl.DomInvocationHandler;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.util.advandedProxy.AdvancedProxyBuilder;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.proxy.advanced.AdvancedProxyBuilder;
+import consulo.util.collection.FactoryMap;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.Pair;
+import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 import org.jetbrains.annotations.NonNls;
 

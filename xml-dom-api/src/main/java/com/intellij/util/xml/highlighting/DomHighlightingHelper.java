@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.util.SmartList;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.util.collection.SmartList;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;

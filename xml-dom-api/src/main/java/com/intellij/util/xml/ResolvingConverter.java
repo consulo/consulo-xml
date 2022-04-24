@@ -15,21 +15,21 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 /**
- * If converter extends this class, the corresponding XML {@link com.intellij.psi.PsiReference}
+ * If converter extends this class, the corresponding XML {@link consulo.language.psi.PsiReference}
  * will take completion variants from {@link #getVariants(ConvertContext)} method.
  *
  * @author peter

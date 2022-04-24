@@ -16,15 +16,15 @@
 
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.Function;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.PsiElement;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Dmitry Avdeev
@@ -36,7 +36,7 @@ public class ElementPresentationManagerImpl extends ElementPresentationManager {
   public <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags) {
     List<Object> result = new ArrayList<Object>(elements.size());
     for (T element : elements) {
-      String name = namer.fun(element);
+      String name = namer.apply(element);
       if (name != null) {
         Object value = createVariant(element, name, null);
         result.add(value);

@@ -16,18 +16,18 @@
 
 package com.intellij.util.xml.converters;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.util.xml.Converter;
+import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.ConvertContext;
+import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
-import com.intellij.openapi.paths.PathReferenceManager;
-import com.intellij.openapi.paths.PathReference;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.xml.XmlElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.path.PathReference;
+import consulo.language.psi.path.PathReferenceManager;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

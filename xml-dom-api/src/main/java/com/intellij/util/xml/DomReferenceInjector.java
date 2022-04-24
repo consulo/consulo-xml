@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml;
 
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 
 public interface DomReferenceInjector {
   @Nullable

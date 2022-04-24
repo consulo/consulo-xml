@@ -16,13 +16,19 @@
 package com.intellij.util.xml;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.indexing.*;
-import com.intellij.util.io.EnumeratorStringDescriptor;
-import com.intellij.util.io.KeyDescriptor;
-import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.impl.DomApplicationComponent;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.EnumeratorStringDescriptor;
+import consulo.index.io.ID;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ScalarIndexExtension;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.util.xml.fastReader.XmlFileHeader;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -30,87 +36,72 @@ import java.util.*;
 /**
  * @author peter
  */
-public class DomFileIndex extends ScalarIndexExtension<String>
-{
-	public static final ID<String, Void> NAME = ID.create("DomFileIndex");
-	private final DataIndexer<String, Void, FileContent> myDataIndexer;
+public class DomFileIndex extends ScalarIndexExtension<String> {
+    public static final ID<String, Void> NAME = ID.create("DomFileIndex");
+    private final DataIndexer<String, Void, FileContent> myDataIndexer;
 
-	public DomFileIndex()
-	{
-		myDataIndexer = new DataIndexer<String, Void, FileContent>()
-		{
-			@Override
-			@Nonnull
-			public Map<String, Void> map(final FileContent inputData)
-			{
-				final Set<String> namespaces = new HashSet<String>();
-				final XmlFileHeader header = NanoXmlUtil.parseHeader(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
-				ContainerUtil.addIfNotNull(namespaces, header.getPublicId());
-				ContainerUtil.addIfNotNull(namespaces, header.getSystemId());
-				ContainerUtil.addIfNotNull(namespaces, header.getRootTagNamespace());
-				final String tagName = header.getRootTagLocalName();
-				if(StringUtil.isNotEmpty(tagName))
-				{
-					final Map<String, Void> result = new HashMap<String, Void>();
-					final DomApplicationComponent component = DomApplicationComponent.getInstance();
-					for(final DomFileDescription description : component.getFileDescriptions(tagName))
-					{
-						final String[] strings = description.getAllPossibleRootTagNamespaces();
-						if(strings.length == 0 || ContainerUtil.intersects(Arrays.asList(strings), namespaces))
-						{
-							result.put(description.getRootElementClass().getName(), null);
-						}
-					}
-					for(final DomFileDescription description : component.getAcceptingOtherRootTagNameDescriptions())
-					{
-						final String[] strings = description.getAllPossibleRootTagNamespaces();
-						if(strings.length == 0 || ContainerUtil.intersects(Arrays.asList(strings), namespaces))
-						{
-							result.put(description.getRootElementClass().getName(), null);
-						}
-					}
-					return result;
-				}
-				return Collections.emptyMap();
-			}
-		};
-	}
+    public DomFileIndex() {
+        myDataIndexer = new DataIndexer<String, Void, FileContent>() {
+            @Override
+            @Nonnull
+            public Map<String, Void> map(final FileContent inputData) {
+                final Set<String> namespaces = new HashSet<String>();
+                final XmlFileHeader header = NanoXmlUtil.parseHeader(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+                ContainerUtil.addIfNotNull(namespaces, header.getPublicId());
+                ContainerUtil.addIfNotNull(namespaces, header.getSystemId());
+                ContainerUtil.addIfNotNull(namespaces, header.getRootTagNamespace());
+                final String tagName = header.getRootTagLocalName();
+                if (StringUtil.isNotEmpty(tagName)) {
+                    final Map<String, Void> result = new HashMap<String, Void>();
+                    final DomApplicationComponent component = DomApplicationComponent.getInstance();
+                    for (final DomFileDescription description : component.getFileDescriptions(tagName)) {
+                        final String[] strings = description.getAllPossibleRootTagNamespaces();
+                        if (strings.length == 0 || ContainerUtil.intersects(Arrays.asList(strings), namespaces)) {
+                            result.put(description.getRootElementClass().getName(), null);
+                        }
+                    }
+                    for (final DomFileDescription description : component.getAcceptingOtherRootTagNameDescriptions()) {
+                        final String[] strings = description.getAllPossibleRootTagNamespaces();
+                        if (strings.length == 0 || ContainerUtil.intersects(Arrays.asList(strings), namespaces)) {
+                            result.put(description.getRootElementClass().getName(), null);
+                        }
+                    }
+                    return result;
+                }
+                return Collections.emptyMap();
+            }
+        };
+    }
 
-	@Override
-	@Nonnull
-	public ID<String, Void> getName()
-	{
-		return NAME;
-	}
+    @Override
+    @Nonnull
+    public ID<String, Void> getName() {
+        return NAME;
+    }
 
-	@Override
-	@Nonnull
-	public DataIndexer<String, Void, FileContent> getIndexer()
-	{
-		return myDataIndexer;
-	}
+    @Override
+    @Nonnull
+    public DataIndexer<String, Void, FileContent> getIndexer() {
+        return myDataIndexer;
+    }
 
-	@Override
-	public KeyDescriptor<String> getKeyDescriptor()
-	{
-		return new EnumeratorStringDescriptor();
-	}
+    @Override
+    public KeyDescriptor<String> getKeyDescriptor() {
+        return new EnumeratorStringDescriptor();
+    }
 
-	@Override
-	public FileBasedIndex.InputFilter getInputFilter()
-	{
-		return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE);
-	}
+    @Override
+    public FileBasedIndex.InputFilter getInputFilter() {
+        return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE);
+    }
 
-	@Override
-	public boolean dependsOnFileContent()
-	{
-		return true;
-	}
+    @Override
+    public boolean dependsOnFileContent() {
+        return true;
+    }
 
-	@Override
-	public int getVersion()
-	{
-		return DomApplicationComponent.getInstance().getCumulativeVersion();
-	}
+    @Override
+    public int getVersion() {
+        return DomApplicationComponent.getInstance().getCumulativeVersion();
+    }
 }

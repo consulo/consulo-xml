@@ -1,10 +1,9 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.paths.PathReference;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.ConcurrentInstanceMap;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.converters.PathReferenceConverter;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.language.psi.path.PathReference;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

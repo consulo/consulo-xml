@@ -16,9 +16,9 @@
 package com.intellij.util.xml.highlighting;
 
 import com.intellij.util.xml.DomElement;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import javax.annotation.Nonnull;
+import consulo.component.extension.ExtensionPointName;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.List;
 

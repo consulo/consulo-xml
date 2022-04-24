@@ -15,16 +15,14 @@
  */
 package com.intellij.ide.structureView.impl.xml;
 
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
 
 public class XmlTagTreeElement extends AbstractXmlTagTreeElement<XmlTag>{
   @NonNls private static final String ID_ATTR_NAME = "id";

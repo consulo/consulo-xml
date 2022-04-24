@@ -15,13 +15,13 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.DomModelCache;
+import consulo.language.psi.util.CachedValueProvider;
+import consulo.project.Project;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 

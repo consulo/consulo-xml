@@ -1,10 +1,10 @@
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.language.editor.CodeInsightBundle;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

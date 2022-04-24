@@ -16,19 +16,19 @@
 
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.model.DomModel;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,8 +41,7 @@ public abstract class DomModelFactory<T extends DomElement, M extends DomModel<T
   }
 
   protected Module getModelScope(final XmlFile file) {
-
-    return ModuleUtil.findModuleForPsiElement(file);
+    return ModuleUtilCore.findModuleForPsiElement(file);
   }
 
   @Nonnull

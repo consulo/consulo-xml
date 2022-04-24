@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml.ui;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.fileEditor.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 import consulo.disposer.Disposer;
+import consulo.fileEditor.*;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
@@ -50,17 +50,11 @@ public abstract class PerspectiveFileEditorProvider extends WeighedFileEditorPro
   @Nonnull
   @NonNls
   public final String getEditorTypeId() {
-    return getComponentName();
+    return getClass().getName();
   }
 
   @Nonnull
   public final FileEditorPolicy getPolicy() {
     return FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR;
   }
-
-  @NonNls
-  public final String getComponentName() {
-    return getClass().getName();
-  }
-
 }

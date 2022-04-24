@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml.reflect;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.pom.PomNamedTarget;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.XmlName;
+import consulo.language.pom.PomNamedTarget;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

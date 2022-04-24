@@ -16,8 +16,9 @@
 
 package com.intellij.javaee.web;
 
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 
 /**

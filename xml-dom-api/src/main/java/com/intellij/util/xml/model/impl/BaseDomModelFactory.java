@@ -15,13 +15,7 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
@@ -29,6 +23,12 @@ import com.intellij.util.xml.ModelMerger;
 import com.intellij.util.xml.model.DomModel;
 import com.intellij.util.xml.model.MultipleDomModelFactory;
 import com.intellij.util.xml.model.SimpleModelFactory;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 

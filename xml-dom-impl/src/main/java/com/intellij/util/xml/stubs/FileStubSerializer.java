@@ -15,16 +15,11 @@
  */
 package com.intellij.util.xml.stubs;
 
-import java.io.IOException;
+import consulo.language.psi.stub.*;
+import consulo.util.xml.fastReader.XmlFileHeader;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.psi.stubs.IndexSink;
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.psi.stubs.Stub;
-import com.intellij.psi.stubs.StubInputStream;
-import com.intellij.psi.stubs.StubOutputStream;
-import com.intellij.util.xml.XmlFileHeader;
+import java.io.IOException;
 
 /**
  * @author Dmitry Avdeev

@@ -15,10 +15,10 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.util.SmartFMap;
+import consulo.util.collection.SmartFMap;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

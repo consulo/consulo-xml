@@ -15,15 +15,14 @@
  */
 package com.intellij.util.xml.ui;
 
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.xml.XmlFile;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.InvocationTargetException;
 
 /**
