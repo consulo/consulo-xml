@@ -24,6 +24,7 @@ import consulo.codeEditor.HighlighterColors;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.highlight.SyntaxHighlighterBase;
+import consulo.language.lexer.Lexer;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

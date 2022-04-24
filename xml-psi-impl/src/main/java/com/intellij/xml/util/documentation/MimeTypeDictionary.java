@@ -15,15 +15,15 @@
  */
 package com.intellij.xml.util.documentation;
 
+import consulo.logging.Logger;
+import consulo.util.io.FileUtil;
+import consulo.util.lang.StringUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
 
 /**
  * @author Dennis.Ushakov

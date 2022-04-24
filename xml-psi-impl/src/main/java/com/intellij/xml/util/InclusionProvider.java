@@ -18,11 +18,11 @@ package com.intellij.xml.util;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
 import consulo.application.util.RecursionManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiModificationTracker;
-import consulo.language.psi.util.CachedValueProvider;
-import consulo.language.psi.util.CachedValuesManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

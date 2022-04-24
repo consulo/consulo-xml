@@ -1,16 +1,17 @@
 package com.intellij.xml.actions.validate;
 
-import com.intellij.openapi.util.NotNullLazyValue;
+import consulo.util.lang.lazy.LazyValue;
 import org.apache.xerces.impl.XMLEntityManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.function.Supplier;
 
 // FIXME [VISTALL] we can't move it to org.apache.xerces.impl due java9 module package restriction
 public class XercesAccessor
 {
-	private static final NotNullLazyValue<Method> ourGetDeclaredEntitiesMethod = NotNullLazyValue.createValue(() ->
+	private static final Supplier<Method> ourGetDeclaredEntitiesMethod = LazyValue.notNull(() ->
 	{
 		try
 		{
@@ -28,7 +29,7 @@ public class XercesAccessor
 	{
 		try
 		{
-			return (Map<String, XMLEntityManager.Entity>) ourGetDeclaredEntitiesMethod.getValue().invoke(entityManager);
+			return (Map<String, XMLEntityManager.Entity>) ourGetDeclaredEntitiesMethod.get().invoke(entityManager);
 		}
 		catch(IllegalAccessException | InvocationTargetException e)
 		{

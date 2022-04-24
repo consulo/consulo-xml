@@ -15,10 +15,11 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.containers.MultiMap;
-import com.intellij.util.xml.NanoXmlUtil;
+import consulo.logging.Logger;
+import consulo.util.collection.MultiMap;
+import consulo.util.lang.StringUtil;
+import consulo.util.xml.fastReader.NanoXmlBuilder;
+import consulo.util.xml.fastReader.NanoXmlUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +34,7 @@ import java.util.Map;
  * Date: 7/4/12
  * Time: 6:37 PM
  */
-public class XsdComplexTypeInfoBuilder extends NanoXmlUtil.IXMLBuilderAdapter {
+public class XsdComplexTypeInfoBuilder implements NanoXmlBuilder {
   private final static String SIGN = "";
   public static final String HTTP_WWW_W3_ORG_2001_XMLSCHEMA = "http://www.w3.org/2001/XMLSchema";
   // base type -> inherited types

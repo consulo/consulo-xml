@@ -1,9 +1,9 @@
  /* It's an automatically generated code. Do not modify it. */
 package com.intellij.lexer;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.FlexLexer;
 
 %%
 

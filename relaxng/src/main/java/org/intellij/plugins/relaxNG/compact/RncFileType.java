@@ -16,13 +16,13 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
-import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.application.AllIcons;
+import consulo.language.file.LanguageFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.virtualFileSystem.fileType.FileTypeConsumer;
+import consulo.virtualFileSystem.fileType.FileTypeFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +32,7 @@ import javax.annotation.Nullable;
 * User: sweinreuter
 * Date: 01.08.2007
 */
-public class RncFileType extends LanguageFileType  {
+public class RncFileType extends LanguageFileType {
   public static final String RNC_EXT = "rnc";
 
   private static final FileType INSTANCE = new RncFileType();

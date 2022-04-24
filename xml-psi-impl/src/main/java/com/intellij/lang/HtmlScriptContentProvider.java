@@ -15,9 +15,10 @@
  */
 package com.intellij.lang;
 
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.Lexer;
+
 import javax.annotation.Nullable;
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.tree.IElementType;
 
 public interface HtmlScriptContentProvider {
   /**

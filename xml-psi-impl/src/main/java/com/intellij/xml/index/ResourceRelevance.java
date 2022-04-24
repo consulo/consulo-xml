@@ -15,13 +15,14 @@
  */
 package com.intellij.xml.index;
 
-import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

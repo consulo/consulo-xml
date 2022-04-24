@@ -15,13 +15,17 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.indexing.*;
-import com.intellij.util.io.DataExternalizer;
-import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.ID;
+import consulo.index.io.data.DataExternalizer;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ScalarIndexExtension;
+import consulo.project.Project;
+import consulo.util.io.Readers;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -68,7 +72,7 @@ public class XmlTagNamesIndex extends XmlIndex<Void>
 				{
 					return Collections.emptyMap();
 				}
-				Collection<String> tags = XsdTagNameBuilder.computeTagNames(CharArrayUtil.readerFromCharSequence(text));
+				Collection<String> tags = XsdTagNameBuilder.computeTagNames(Readers.readerFromCharSequence(text));
 				Map<String, Void> map = new HashMap<String, Void>(tags.size());
 				for(String tag : tags)
 				{

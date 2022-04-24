@@ -16,9 +16,9 @@
 
 package org.intellij.plugins.relaxNG.model;
 
-import javax.annotation.Nullable;
+import consulo.language.psi.PsiElement;
 
-import com.intellij.psi.PsiElement;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.

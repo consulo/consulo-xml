@@ -15,32 +15,25 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import com.intellij.psi.XmlElementFactory;
+import com.intellij.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
+import com.intellij.psi.xml.*;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagChild;
-import com.intellij.psi.xml.XmlTagValue;
-import com.intellij.psi.xml.XmlText;
-import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
-
 public class XmlTagValueImpl implements XmlTagValue
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.xml.XmlTagValueImpl");
+	private static final Logger LOG = Logger.getInstance(XmlTagValueImpl.class);
 
 	private final XmlTag myTag;
 	private final XmlTagChild[] myElements;
@@ -244,7 +237,7 @@ public class XmlTagValueImpl implements XmlTagValue
 			}
 		}, tag);
 
-		XmlTagChild[] tagChildren = ContainerUtil.toArray(bodyElements, new XmlTagChild[bodyElements.size()]);
+		XmlTagChild[] tagChildren = bodyElements.toArray(new XmlTagChild[bodyElements.size()]);
 		return new XmlTagValueImpl(tagChildren, tag);
 	}
 }

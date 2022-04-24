@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.JDOMUtil;
+import consulo.logging.Logger;
+import consulo.util.jdom.JDOMUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;

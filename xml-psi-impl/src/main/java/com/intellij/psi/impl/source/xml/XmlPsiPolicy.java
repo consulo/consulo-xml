@@ -15,8 +15,8 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
 
 public interface XmlPsiPolicy
 {

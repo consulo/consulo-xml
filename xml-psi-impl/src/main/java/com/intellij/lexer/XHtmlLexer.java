@@ -15,6 +15,8 @@
  */
 package com.intellij.lexer;
 
+import consulo.language.lexer.Lexer;
+
 /**
  * @author Maxim.Mossienko
  */

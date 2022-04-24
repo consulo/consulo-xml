@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2009 JetBrains s.r.o.
+ * Copyright 2000-2013 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.ide.util.treeView;
+package com.intellij.codeInsight.daemon;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+
+import javax.annotation.Nonnull;
 
 /**
- * @author Mike
+ * @author yole
  */
-public class XmlDoctypeNodeDescriptor  extends SmartElementDescriptor {
-  public XmlDoctypeNodeDescriptor(Project project, NodeDescriptor parentDescriptor, PsiElement element) {
-    super(project, parentDescriptor, element);
-    //noinspection HardCodedStringLiteral
-    myName = "DOCTYPE";
-  }
+public interface IdeValidationHost extends Validator.ValidationHost {
+    void addMessageWithFixes(PsiElement context, String message, @Nonnull ErrorType type, @Nonnull IntentionAction... fixes);
 }

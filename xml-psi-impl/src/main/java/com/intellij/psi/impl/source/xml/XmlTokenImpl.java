@@ -15,18 +15,17 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.ide.util.EditSourceUtil;
-import com.intellij.pom.Navigatable;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.impl.source.tree.LeafPsiElement;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.tree.xml.IDTDElementType;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.psi.LeafPsiElement;
+import consulo.language.psi.*;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.navigation.Navigatable;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author ik

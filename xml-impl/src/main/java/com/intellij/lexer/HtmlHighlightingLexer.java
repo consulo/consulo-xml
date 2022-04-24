@@ -15,13 +15,23 @@
  */
 package com.intellij.lexer;
 
-import javax.annotation.Nullable;
-
-import com.intellij.lang.*;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.*;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.HtmlInlineScriptTokenTypesProvider;
+import com.intellij.lang.HtmlScriptContentProvider;
+import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.language.editor.highlight.SyntaxHighlighterFactory;
+import consulo.language.file.FileTypeManager;
+import consulo.language.lexer.FlexAdapter;
+import consulo.language.lexer.Lexer;
+import consulo.language.lexer.MergingLexerAdapter;
+import consulo.language.plain.PlainTextLanguage;
+import consulo.logging.Logger;
+import consulo.virtualFileSystem.fileType.FileType;
+
+import javax.annotation.Nullable;
 
 public class HtmlHighlightingLexer extends BaseHtmlLexer {
   private static final Logger LOG = Logger.getInstance("#com.intellij.lexer.HtmlHighlightingLexer");

@@ -15,24 +15,24 @@
  */
 package com.intellij.lang.dtd;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LanguageUtil;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
 import com.intellij.lang.xml.XMLParserDefinition;
 import com.intellij.lexer.DtdLexer;
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.parsing.xml.DtdParsing;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlEntityDecl;
-import consulo.lang.LanguageVersion;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.IFileElementType;
+import consulo.language.file.FileViewProvider;
+import consulo.language.lexer.Lexer;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.parser.PsiParser;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.LanguageUtil;
+import consulo.language.version.LanguageVersion;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author max

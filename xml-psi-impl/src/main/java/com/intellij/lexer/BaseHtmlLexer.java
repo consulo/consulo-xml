@@ -15,21 +15,23 @@
  */
 package com.intellij.lexer;
 
-import com.intellij.codeInsight.completion.CompletionUtilCore;
 import com.intellij.lang.HtmlScriptContentProvider;
-import com.intellij.lang.Language;
 import com.intellij.lang.LanguageHtmlScriptContentProvider;
 import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.util.documentation.HtmlDescriptorsTable;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.editor.completion.CompletionUtilCore;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.lexer.DelegateLexer;
+import consulo.language.lexer.Lexer;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

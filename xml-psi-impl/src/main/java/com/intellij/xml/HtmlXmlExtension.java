@@ -1,10 +1,11 @@
 package com.intellij.xml;
 
-import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.language.psi.PsiFile;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -12,7 +13,6 @@ import com.intellij.xml.util.HtmlUtil;
  */
 public class HtmlXmlExtension extends DefaultXmlExtension
 {
-
 	@Override
 	public boolean isAvailable(PsiFile file)
 	{

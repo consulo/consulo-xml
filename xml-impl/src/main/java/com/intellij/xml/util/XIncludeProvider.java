@@ -15,19 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import java.util.ArrayList;
+import com.intellij.ide.highlighter.XmlFileType;
+import consulo.util.io.Readers;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.impl.include.FileIncludeInfo;
-import com.intellij.psi.impl.include.FileIncludeProvider;
-import com.intellij.util.Consumer;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.text.CharArrayUtil;
-import com.intellij.util.xml.NanoXmlUtil;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
@@ -63,7 +60,7 @@ public class XIncludeProvider extends FileIncludeProvider
 			return FileIncludeInfo.EMPTY;
 		}
 		final ArrayList<FileIncludeInfo> infos = new ArrayList<FileIncludeInfo>();
-		NanoXmlUtil.parse(CharArrayUtil.readerFromCharSequence(contentAsText), new NanoXmlUtil.IXMLBuilderAdapter()
+		NanoXmlUtil.parse(Readers.readerFromCharSequence(contentAsText), new NanoXmlUtil.IXMLBuilderAdapter()
 		{
 
 			boolean isXInclude;

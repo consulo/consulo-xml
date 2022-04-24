@@ -15,6 +15,38 @@
  */
 package com.intellij.xml.util;
 
+import com.intellij.codeInsight.daemon.XmlErrorMessages;
+import com.intellij.javaee.ExternalResourceManager;
+import com.intellij.javaee.ExternalResourceManagerEx;
+import com.intellij.javaee.UriUtil;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.xml.actions.validate.ErrorReporter;
+import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
+import com.intellij.xml.index.XmlNamespaceIndex;
+import consulo.application.ApplicationManager;
+import consulo.application.util.function.Computable;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiReference;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import org.apache.xerces.xni.XMLResourceIdentifier;
+import org.apache.xerces.xni.XNIException;
+import org.apache.xerces.xni.parser.XMLEntityResolver;
+import org.apache.xerces.xni.parser.XMLInputSource;
+import org.jetbrains.annotations.NonNls;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -23,39 +55,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.xerces.xni.XMLResourceIdentifier;
-import org.apache.xerces.xni.XNIException;
-import org.apache.xerces.xni.parser.XMLEntityResolver;
-import org.apache.xerces.xni.parser.XMLInputSource;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.javaee.UriUtil;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.openapi.vfs.ex.http.HttpFileSystem;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.actions.validate.ErrorReporter;
-import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
-import com.intellij.xml.index.XmlNamespaceIndex;
 
 /**
  * @author Maxim.Mossienko
@@ -271,7 +270,7 @@ public class XmlResourceResolver implements XMLEntityResolver
 		{
 			try
 			{
-				vFile = VirtualFileManager.getInstance().findFileByUrl(VfsUtilCore.convertFromUrl(new URL(baseSystemId)));
+				vFile = VirtualFileManager.getInstance().findFileByUrl(VirtualFileUtil.convertFromUrl(new URL(baseSystemId)));
 			}
 			catch(MalformedURLException ignore)
 			{
@@ -343,7 +342,7 @@ public class XmlResourceResolver implements XMLEntityResolver
 			VirtualFile virtualFile = psiFile.getVirtualFile();
 			if(virtualFile != null)
 			{
-				final String url = VfsUtilCore.fixIDEAUrl(virtualFile.getUrl());
+				final String url = VirtualFileUtil.fixIDEAUrl(virtualFile.getUrl());
 				source.setBaseSystemId(url);
 				source.setSystemId(url);
 			}

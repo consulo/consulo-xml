@@ -1,13 +1,14 @@
 package com.intellij.xml.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -15,7 +16,6 @@ import com.intellij.xml.util.XmlEnumeratedValueReference;
  */
 public abstract class XmlEnumerationDescriptor<T extends XmlElement>
 {
-
 	public abstract boolean isFixed();
 
 	public abstract String getDefaultValue();

@@ -15,30 +15,22 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.pom.Navigatable;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
 import com.intellij.psi.impl.source.parsing.xml.DtdParsing;
 import com.intellij.psi.tree.xml.IXmlLeafElementType;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlElementContentSpec;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.psi.xml.XmlEntityRef;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.IncorrectOperationException;
+import com.intellij.psi.xml.*;
 import com.intellij.xml.util.XmlUtil;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.util.IncorrectOperationException;
+import consulo.navigation.Navigatable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author mike

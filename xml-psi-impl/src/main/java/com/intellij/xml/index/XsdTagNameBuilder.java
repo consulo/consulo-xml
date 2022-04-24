@@ -15,17 +15,16 @@
  */
 package com.intellij.xml.index;
 
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.util.xml.NanoXmlUtil;
 
 /**
  * @author Dmitry Avdeev

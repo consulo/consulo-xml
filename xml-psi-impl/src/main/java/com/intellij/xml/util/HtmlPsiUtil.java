@@ -1,9 +1,9 @@
 package com.intellij.xml.util;
 
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.templateLanguages.TemplateLanguageUtil;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
+import consulo.language.psi.PsiFile;
+
 import javax.annotation.Nullable;
 
 public class HtmlPsiUtil {

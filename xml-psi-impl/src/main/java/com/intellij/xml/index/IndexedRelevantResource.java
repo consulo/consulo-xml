@@ -15,23 +15,22 @@
  */
 package com.intellij.xml.index;
 
+import consulo.index.io.ID;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.indexing.AdditionalIndexedRootsScope;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.ID;
+import java.util.function.Function;
 
 /**
  * @author Dmitry Avdeev
@@ -62,7 +61,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
   public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getAllResources(ID<K, V> indexId,
                                                                                               @Nullable final Module module,
                                                                                               @Nonnull Project project,
-                                                                                              @Nullable NullableFunction<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser) {
+                                                                                              @Nullable Function<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser) {
     ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<IndexedRelevantResource<K, V>>();
     Collection<K> allKeys = FileBasedIndex.getInstance().getAllKeys(indexId, project);
     for (K key : allKeys) {
@@ -72,7 +71,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
           all.add(resources.get(0));
         }
         else {
-          IndexedRelevantResource<K, V> resource = chooser.fun(resources);
+          IndexedRelevantResource<K, V> resource = chooser.apply(resources);
           if (resource != null) {
             all.add(resource);
           }

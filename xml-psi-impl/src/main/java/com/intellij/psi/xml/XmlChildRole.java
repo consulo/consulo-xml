@@ -15,18 +15,16 @@
  */
 package com.intellij.psi.xml;
 
+import com.intellij.xml.util.XmlTagUtil;
+import consulo.component.extension.ExtensionPointName;
+import consulo.component.extension.Extensions;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.DefaultRoleFinder;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.RoleFinder;
-import com.intellij.util.ArrayUtil;
-import com.intellij.xml.util.XmlTagUtil;
 
 public interface XmlChildRole {
 

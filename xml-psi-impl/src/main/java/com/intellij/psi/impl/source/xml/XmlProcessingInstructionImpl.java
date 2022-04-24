@@ -24,14 +24,17 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.psi.xml.XmlProcessingInstruction;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlTagChild;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ReferenceProvidersRegistry;
+
+import javax.annotation.Nonnull;
 
 public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlProcessingInstruction {
   public XmlProcessingInstructionImpl() {

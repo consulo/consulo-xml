@@ -15,19 +15,19 @@
  */
 package com.intellij.psi.impl.source.xml.behavior;
 
-import com.intellij.lang.ASTFactory;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.GeneratedMarkerVisitor;
-import com.intellij.psi.impl.source.DummyHolderFactory;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.SharedImplUtil;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.CharTable;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.ast.ASTFactory;
+import consulo.language.impl.ast.CompositeElement;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.internal.ast.SharedImplUtil;
+import consulo.language.impl.internal.psi.GeneratedMarkerVisitor;
+import consulo.language.impl.psi.DummyHolderFactory;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
+import consulo.language.util.CharTable;
 
 public class CDATAOnAnyEncodedPolicy extends DefaultXmlPsiPolicy{
   public ASTNode encodeXmlTextContents(String displayText, PsiElement text) {

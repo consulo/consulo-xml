@@ -16,6 +16,13 @@
 
 package com.intellij.xml.index;
 
+import com.intellij.xml.util.XmlUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,14 +31,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.openapi.util.Comparing;
-import com.intellij.util.xml.NanoXmlUtil;
-import com.intellij.xml.util.XmlUtil;
 
 /**
  * @author Dmitry Avdeev

@@ -15,31 +15,31 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.search.searches.DefinitionsScopedSearch;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.PairConvertor;
-import com.intellij.util.Processor;
-import com.intellij.util.QueryExecutor;
 import com.intellij.xml.index.SchemaTypeInfo;
 import com.intellij.xml.index.SchemaTypeInheritanceIndex;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.ApplicationManager;
+import consulo.application.util.function.Computable;
+import consulo.application.util.function.Processor;
+import consulo.application.util.query.QueryExecutor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.search.DefinitionsScopedSearch;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.function.BiFunction;
 
 /**
  * User: Irina.Chernushina
@@ -71,7 +71,7 @@ public class SchemaDefinitionsSearch implements QueryExecutor<PsiElement, Defini
 				{
 					XmlFile file = XmlUtil.getContainingFile(xml);
 					final Project project = file.getProject();
-					final Module module = ModuleUtil.findModuleForPsiElement(queryParameters);
+					final Module module = ModuleUtilCore.findModuleForPsiElement(queryParameters);
 					//if (module == null) return false;
 
 					final VirtualFile vf = file.getVirtualFile();
@@ -267,11 +267,11 @@ public class SchemaDefinitionsSearch implements QueryExecutor<PsiElement, Defini
 
 		queue.add(new SchemaTypeInfo(localName, true, nsUri));
 
-		final PairConvertor<String, String, List<Set<SchemaTypeInfo>>> worker = SchemaTypeInheritanceIndex.getWorker(project, file.getContainingFile().getVirtualFile());
+		final BiFunction<String, String, List<Set<SchemaTypeInfo>>> worker = SchemaTypeInheritanceIndex.getWorker(project, file.getContainingFile().getVirtualFile());
 		while(!queue.isEmpty())
 		{
 			final SchemaTypeInfo info = queue.removeFirst();
-			final List<Set<SchemaTypeInfo>> childrenOfType = worker.convert(info.getNamespaceUri(), info.getTagName());
+			final List<Set<SchemaTypeInfo>> childrenOfType = worker.apply(info.getNamespaceUri(), info.getTagName());
 			for(Set<SchemaTypeInfo> infos : childrenOfType)
 			{
 				for(SchemaTypeInfo typeInfo : infos)

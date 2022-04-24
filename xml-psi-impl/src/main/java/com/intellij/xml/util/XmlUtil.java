@@ -53,6 +53,7 @@ import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
+import consulo.module.Module;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
@@ -62,6 +63,7 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -69,8 +71,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-
-iptor;
+import java.util.function.Predicate;
 
 /**
  * @author Mike
@@ -261,7 +262,7 @@ public class XmlUtil
 	static
 	{
 		final URL xhtml4SchemaLocationUrl = XmlUtil.class.getResource(ExternalResourceManagerEx.STANDARD_SCHEMAS + "xhtml1-transitional.xsd");
-		XHTML4_SCHEMA_LOCATION = VfsUtilCore.urlToPath(VfsUtilCore.toIdeaUrl(FileUtil.unquote(xhtml4SchemaLocationUrl.toExternalForm()), false));
+		XHTML4_SCHEMA_LOCATION = VirtualFileUtil.urlToPath(VirtualFileUtil.toIdeaUrl(FileUtil.unquote(xhtml4SchemaLocationUrl.toExternalForm()), false));
 	}
 
 	public static String getSchemaLocation(XmlTag tag, final String namespace)
@@ -377,7 +378,7 @@ public class XmlUtil
 	{
 		final List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources = XmlNamespaceIndex.getResourcesByNamespace(namespace, project, module);
 		final PsiManager psiManager = PsiManager.getInstance(project);
-		return ContainerUtil.mapNotNull(resources, (NullableFunction<IndexedRelevantResource<String, XsdNamespaceBuilder>, XmlFile>) resource ->
+		return ContainerUtil.mapNotNull(resources, resource ->
 		{
 			PsiFile file = psiManager.findFile(resource.getFile());
 			return file instanceof XmlFile ? (XmlFile) file : null;
@@ -1254,7 +1255,7 @@ public class XmlUtil
 	/**
 	 * @return true if enumeration is exhaustive
 	 */
-	public static boolean processEnumerationValues(final XmlTag element, final Processor<XmlTag> tagProcessor)
+	public static boolean processEnumerationValues(final XmlTag element, final Predicate<XmlTag> tagProcessor)
 	{
 		boolean exhaustiveEnum = true;
 
@@ -1267,7 +1268,7 @@ public class XmlUtil
 				final String attributeValue = tag.getAttributeValue(VALUE_ATTR_NAME);
 				if(attributeValue != null)
 				{
-					if(!tagProcessor.process(tag))
+					if(!tagProcessor.test(tag))
 					{
 						return exhaustiveEnum;
 					}

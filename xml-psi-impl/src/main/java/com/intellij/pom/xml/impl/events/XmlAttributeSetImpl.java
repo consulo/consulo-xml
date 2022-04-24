@@ -15,8 +15,6 @@
  */
 package com.intellij.pom.xml.impl.events;
 
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.XmlChangeVisitor;
 import com.intellij.pom.xml.events.XmlAttributeSet;
@@ -24,6 +22,8 @@ import com.intellij.pom.xml.impl.XmlAspectChangeSetImpl;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.event.PomModelEvent;
 
 public class XmlAttributeSetImpl implements XmlAttributeSet {
   private final String myName;

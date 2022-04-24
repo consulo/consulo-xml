@@ -16,24 +16,24 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.lang.BracePair;
-import com.intellij.lang.Commenter;
-import com.intellij.lang.Language;
-import com.intellij.lang.PairedBraceMatcher;
-import com.intellij.lang.documentation.DocumentationProvider;
-import com.intellij.lang.refactoring.NamesValidator;
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.BracePair;
+import consulo.language.Commenter;
+import consulo.language.Language;
+import consulo.language.PairedBraceMatcher;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.editor.highlight.SingleLazyInstanceSyntaxHighlighterFactory;
+import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.language.editor.refactoring.NamesValidator;
+import consulo.language.psi.*;
+import consulo.project.Project;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 /*

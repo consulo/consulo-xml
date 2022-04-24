@@ -21,11 +21,12 @@ import consulo.index.io.DataIndexer;
 import consulo.index.io.EnumeratorStringDescriptor;
 import consulo.index.io.ID;
 import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;
 import consulo.language.psi.stub.FileBasedIndex;
 import consulo.language.psi.stub.FileContent;
 import consulo.language.psi.stub.ScalarIndexExtension;
 import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.CharArrayUtil;
+import consulo.util.io.Readers;
 import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.util.xml.fastReader.XmlFileHeader;
@@ -46,7 +47,7 @@ public class DomFileIndex extends ScalarIndexExtension<String> {
             @Nonnull
             public Map<String, Void> map(final FileContent inputData) {
                 final Set<String> namespaces = new HashSet<String>();
-                final XmlFileHeader header = NanoXmlUtil.parseHeader(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+                final XmlFileHeader header = NanoXmlUtil.parseHeader(Readers.readerFromCharSequence(inputData.getContentAsText()));
                 ContainerUtil.addIfNotNull(namespaces, header.getPublicId());
                 ContainerUtil.addIfNotNull(namespaces, header.getSystemId());
                 ContainerUtil.addIfNotNull(namespaces, header.getRootTagNamespace());

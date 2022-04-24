@@ -15,16 +15,16 @@
  */
 package com.intellij.pom.xml.impl.events;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.XmlChangeVisitor;
 import com.intellij.pom.xml.events.XmlTextChanged;
 import com.intellij.pom.xml.impl.XmlAspectChangeSetImpl;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlText;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.StringUtil;
 
 public class XmlTextChangedImpl implements XmlTextChanged {
   private final String myOldText;

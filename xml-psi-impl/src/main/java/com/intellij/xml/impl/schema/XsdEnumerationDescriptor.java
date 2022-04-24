@@ -15,21 +15,21 @@
  */
 package com.intellij.xml.impl.schema;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.PairProcessor;
-import com.intellij.util.SmartList;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.ref.Ref;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.BiPredicate;
 
 /**
  * @author Dmitry Avdeev
@@ -87,7 +87,7 @@ public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends Xml
 		return ArrayUtil.toStringArray(list);
 	}
 
-	private boolean processEnumeration(XmlElement context, PairProcessor<PsiElement, String> processor, boolean forCompletion)
+	private boolean processEnumeration(XmlElement context, BiPredicate<PsiElement, String> processor, boolean forCompletion)
 	{
 		XmlTag contextTag = context != null ? PsiTreeUtil.getContextOfType(context, XmlTag.class, false) : null;
 		final XmlElementDescriptorImpl elementDescriptor = (XmlElementDescriptorImpl) XmlUtil.findXmlDescriptorByType(getDeclaration(), contextTag);
@@ -108,18 +108,18 @@ public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends Xml
 		return false;
 	}
 
-	private boolean processEnumerationImpl(final XmlTag declaration, final PairProcessor<PsiElement, String> pairProcessor, boolean forCompletion)
+	private boolean processEnumerationImpl(final XmlTag declaration, final BiPredicate<PsiElement, String> pairProcessor, boolean forCompletion)
 	{
 		XmlAttribute name = declaration.getAttribute("name");
 		if(name != null && "boolean".equals(name.getValue()))
 		{
 			XmlAttributeValue valueElement = name.getValueElement();
-			pairProcessor.process(valueElement, "true");
-			pairProcessor.process(valueElement, "false");
+			pairProcessor.test(valueElement, "true");
+			pairProcessor.test(valueElement, "false");
 			if(!forCompletion)
 			{
-				pairProcessor.process(valueElement, "1");
-				pairProcessor.process(valueElement, "0");
+				pairProcessor.test(valueElement, "1");
+				pairProcessor.test(valueElement, "0");
 			}
 			myExhaustiveEnum = true;
 			return true;
@@ -132,7 +132,7 @@ public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends Xml
 			{
 				found.set(Boolean.TRUE);
 				XmlAttribute name1 = tag.getAttribute("value");
-				return name1 == null || pairProcessor.process(tag, name1.getValue());
+				return name1 == null || pairProcessor.test(tag, name1.getValue());
 			});
 			return found.get();
 		}

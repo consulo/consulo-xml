@@ -15,134 +15,113 @@
  */
 package com.intellij.xml.index;
 
-import java.util.List;
+import com.intellij.ide.highlighter.DTDFileType;
+import com.intellij.ide.highlighter.XmlFileType;
+import consulo.index.io.EnumeratorStringDescriptor;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileBasedIndexExtension;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.module.content.layer.orderEntry.OrderEntry;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileFilter;
+import consulo.virtualFileSystem.fileType.FileType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.ide.highlighter.DTDFileType;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.OrderEntry;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileFilter;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileBasedIndexExtension;
-import com.intellij.util.io.EnumeratorStringDescriptor;
-import com.intellij.util.io.KeyDescriptor;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
-{
-	protected static GlobalSearchScope createFilter(final Project project)
-	{
-		final GlobalSearchScope projectScope = GlobalSearchScope.allScope(project);
-		return new GlobalSearchScope(project)
-		{
-			@Override
-			public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2)
-			{
-				return projectScope.compare(file1, file2);
-			}
+public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
+    protected static GlobalSearchScope createFilter(final Project project) {
+        final GlobalSearchScope projectScope = GlobalSearchScope.allScope(project);
+        return new GlobalSearchScope(project) {
+            @Override
+            public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2) {
+                return projectScope.compare(file1, file2);
+            }
 
-			@Override
-			public boolean isSearchInModuleContent(@Nonnull Module aModule)
-			{
-				return true;
-			}
+            @Override
+            public boolean isSearchInModuleContent(@Nonnull Module aModule) {
+                return true;
+            }
 
-			@Override
-			public boolean contains(@Nonnull VirtualFile file)
-			{
-				final VirtualFile parent = file.getParent();
-				return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
-			}
+            @Override
+            public boolean contains(@Nonnull VirtualFile file) {
+                final VirtualFile parent = file.getParent();
+                return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
+            }
 
-			@Override
-			public boolean isSearchInLibraries()
-			{
-				return true;
-			}
-		};
-	}
+            @Override
+            public boolean isSearchInLibraries() {
+                return true;
+            }
+        };
+    }
 
 
-	protected static VirtualFileFilter createFilter(@Nonnull final Module module)
-	{
+    protected static VirtualFileFilter createFilter(@Nonnull final Module module) {
 
-		final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
-		return new VirtualFileFilter()
-		{
-			@Override
-			public boolean accept(final VirtualFile file)
-			{
-				Module moduleForFile = fileIndex.getModuleForFile(file);
-				if(moduleForFile != null)
-				{ // in module content
-					return module.equals(moduleForFile);
-				}
-				if(fileIndex.isInLibraryClasses(file))
-				{
-					List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(file);
-					if(orderEntries.isEmpty())
-					{
-						return false;
-					}
-					for(OrderEntry orderEntry : orderEntries)
-					{
-						Module ownerModule = orderEntry.getOwnerModule();
-						if(ownerModule.equals(module))
-						{
-							return true;
-						}
-					}
-				}
-				final VirtualFile parent = file.getParent();
-				assert parent != null;
-				return parent.getName().equals("standardSchemas");
-			}
-		};
-	}
+        final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
+        return new VirtualFileFilter() {
+            @Override
+            public boolean accept(final VirtualFile file) {
+                Module moduleForFile = fileIndex.getModuleForFile(file);
+                if (moduleForFile != null) { // in module content
+                    return module.equals(moduleForFile);
+                }
+                if (fileIndex.isInLibraryClasses(file)) {
+                    List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(file);
+                    if (orderEntries.isEmpty()) {
+                        return false;
+                    }
+                    for (OrderEntry orderEntry : orderEntries) {
+                        Module ownerModule = orderEntry.getOwnerModule();
+                        if (ownerModule.equals(module)) {
+                            return true;
+                        }
+                    }
+                }
+                final VirtualFile parent = file.getParent();
+                assert parent != null;
+                return parent.getName().equals("standardSchemas");
+            }
+        };
+    }
 
-	@Override
-	@Nonnull
-	public KeyDescriptor<String> getKeyDescriptor()
-	{
-		return EnumeratorStringDescriptor.INSTANCE;
-	}
+    @Override
+    @Nonnull
+    public KeyDescriptor<String> getKeyDescriptor() {
+        return EnumeratorStringDescriptor.INSTANCE;
+    }
 
-	@Override
-	@Nonnull
-	public FileBasedIndex.InputFilter getInputFilter()
-	{
-		return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE)
-		{
-			@Override
-			public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file)
-			{
-				FileType fileType = file.getFileType();
-				final String extension = file.getExtension();
-				return XmlFileType.INSTANCE.equals(fileType) && "xsd".equals(extension) || DTDFileType.INSTANCE.equals(fileType) && "dtd".equals(extension);
-			}
-		};
-	}
+    @Override
+    @Nonnull
+    public FileBasedIndex.InputFilter getInputFilter() {
+        return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE) {
+            @Override
+            public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file) {
+                FileType fileType = file.getFileType();
+                final String extension = file.getExtension();
+                return XmlFileType.INSTANCE.equals(fileType) && "xsd".equals(extension) || DTDFileType.INSTANCE.equals(fileType) && "dtd".equals(extension);
+            }
+        };
+    }
 
-	@Override
-	public boolean dependsOnFileContent()
-	{
-		return true;
-	}
+    @Override
+    public boolean dependsOnFileContent() {
+        return true;
+    }
 
-	@Override
-	public int getVersion()
-	{
-		return 0;
-	}
+    @Override
+    public int getVersion() {
+        return 0;
+    }
 }

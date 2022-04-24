@@ -15,13 +15,11 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.codeInsight.navigation.GotoTargetHandler;
-import com.intellij.codeInsight.navigation.GotoTargetRendererProvider;
-import com.intellij.ide.util.PsiElementListCellRenderer;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
 import com.intellij.psi.xml.XmlAttribute;
+import consulo.language.editor.ui.PsiElementListCellRenderer;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 
 /**
  * Created with IntelliJ IDEA.

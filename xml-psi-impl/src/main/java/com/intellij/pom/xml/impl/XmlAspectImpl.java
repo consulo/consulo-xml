@@ -15,27 +15,27 @@
  */
 package com.intellij.pom.xml.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.tree.TreeAspect;
-import com.intellij.pom.tree.events.ChangeInfo;
-import com.intellij.pom.tree.events.TreeChange;
-import com.intellij.pom.tree.events.TreeChangeEvent;
-import com.intellij.pom.tree.events.impl.ChangeInfoImpl;
-import com.intellij.pom.tree.events.impl.TreeChangeImpl;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.impl.events.*;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
-import com.intellij.util.CharTable;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.impl.ast.CompositeElement;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.pom.ChangeInfoImpl;
+import consulo.language.impl.internal.pom.TreeChangeImpl;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.TreeAspect;
+import consulo.language.pom.event.ChangeInfo;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.pom.event.TreeChange;
+import consulo.language.pom.event.TreeChangeEvent;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.CharTable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

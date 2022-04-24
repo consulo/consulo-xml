@@ -15,18 +15,18 @@
  */
 package com.intellij.lang.xhtml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.xml.XMLParserDefinition;
-import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlLexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.xml.XmlElementType;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.file.FileViewProvider;
+import consulo.language.lexer.Lexer;
+import consulo.language.psi.PsiFile;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author max

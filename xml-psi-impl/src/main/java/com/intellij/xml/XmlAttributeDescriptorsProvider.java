@@ -15,10 +15,10 @@
  */
 package com.intellij.xml;
 
-import javax.annotation.Nullable;
-
-import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlTag;
+import consulo.component.extension.ExtensionPointName;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
