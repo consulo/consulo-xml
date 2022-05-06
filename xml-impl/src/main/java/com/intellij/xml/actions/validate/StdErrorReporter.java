@@ -30,7 +30,7 @@ import com.intellij.util.ui.MessageCategory;
 import com.intellij.xml.XmlBundle;
 import consulo.disposer.Disposer;
 import consulo.util.dataholder.Key;
-import hack.ContentManagerUtilHack;
+import consulo.relaxng.ContentManagerUtilHack;
 import org.xml.sax.SAXParseException;
 
 import javax.annotation.Nonnull;

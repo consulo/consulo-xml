@@ -25,7 +25,6 @@ import consulo.ui.color.ColorValue;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
 
 /**
  * @author Eugene.Kudelevsky

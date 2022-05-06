@@ -121,7 +121,12 @@
 			<artifactId>com.intellij.xml-xml.spellchecker</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.spellchecker</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>consulo</groupId>
 			<artifactId>consulo-lang-impl-testing</artifactId>
@@ -161,6 +166,11 @@
 			<groupId>consulo.internal</groupId>
 			<artifactId>rngom</artifactId>
 			<version>20051226</version>
+		</dependency>
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.thaiopensource</groupId>

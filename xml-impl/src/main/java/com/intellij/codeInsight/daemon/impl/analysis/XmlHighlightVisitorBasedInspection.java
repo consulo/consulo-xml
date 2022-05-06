@@ -15,8 +15,6 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import java.util.Collections;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

@@ -15,7 +15,6 @@
  */
 package com.intellij.ide.actions;
 
-import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
@@ -23,7 +22,6 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.xml.XmlBundle;
-import consulo.awt.TargetAWT;
 
 /**
  * @author Eugene.Kudelevsky
