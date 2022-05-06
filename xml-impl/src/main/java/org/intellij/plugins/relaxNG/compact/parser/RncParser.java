@@ -16,13 +16,13 @@
 
 package org.intellij.plugins.relaxNG.compact.parser;
 
+import consulo.language.parser.PsiParser;
+import consulo.language.version.LanguageVersion;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import javax.annotation.Nonnull;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
-import com.intellij.psi.tree.IElementType;
-import consulo.lang.LanguageVersion;
+import consulo.language.ast.ASTNode;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.ast.IElementType;
 
 /**
  * Created by IntelliJ IDEA.

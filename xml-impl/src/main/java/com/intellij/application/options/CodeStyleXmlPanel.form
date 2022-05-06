@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="a9b52" class="com.intellij.ui.components.JBScrollPane" binding="myJBScrollPane" custom-create="true">
+      <scrollpane id="a9b52" class="consulo.ui.ex.awt.JBScrollPane" binding="myJBScrollPane" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

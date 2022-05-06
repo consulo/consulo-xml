@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import org.kohsuke.rngom.digested.*;
 
 import java.util.Set;

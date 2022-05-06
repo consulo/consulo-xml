@@ -15,16 +15,16 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis.encoding;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.CharsetToolkit;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.util.io.CharsetToolkit;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -80,7 +80,7 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     return null;
   }
 
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
     return null;
   }
 

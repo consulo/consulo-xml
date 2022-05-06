@@ -16,6 +16,7 @@
 
 package com.intellij.util.xml.reflect;
 
+import com.intellij.util.xml.CustomChildren;
 import com.intellij.util.xml.XmlName;
 import javax.annotation.Nonnull;
 
@@ -46,7 +47,7 @@ public interface DomExtensionsRegistrar {
   /**
    * @param type
    * @return
-   * @see com.intellij.util.xml.CustomChildren
+   * @see CustomChildren
    */
   @Nonnull
   DomExtension registerCustomChildrenExtension(@Nonnull final Type type);

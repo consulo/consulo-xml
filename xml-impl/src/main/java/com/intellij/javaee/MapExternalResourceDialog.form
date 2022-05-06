@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="95c44" class="com.intellij.ui.components.JBLabel">
+      <component id="95c44" class="consulo.ui.ex.awt.JBLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -33,7 +33,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <tabbedpane id="c9457" class="com.intellij.ui.components.JBTabbedPane" binding="myTabs">
+          <tabbedpane id="c9457" class="consulo.ui.ex.awt.JBTabbedPane" binding="myTabs">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -48,14 +48,14 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <scrollpane id="ec831" class="com.intellij.ui.components.JBScrollPane">
+                  <scrollpane id="ec831" class="consulo.ui.ex.awt.JBScrollPane">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="a85b4" class="com.intellij.ui.treeStructure.Tree" binding="mySchemasTree">
+                      <component id="a85b4" class="javax.swing.JTree" binding="mySchemasTree">
                         <constraints/>
                         <properties/>
                       </component>

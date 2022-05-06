@@ -16,10 +16,10 @@
 
 package org.intellij.plugins.relaxNG;
 
-import com.intellij.navigation.ChooseByNameContributor;
-import com.intellij.navigation.NavigationItem;
-import com.intellij.openapi.project.Project;
-import com.intellij.util.ArrayUtil;
+import consulo.ide.navigation.ChooseByNameContributor;
+import consulo.navigation.NavigationItem;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxSymbolIndex;
 import javax.annotation.Nonnull;
 

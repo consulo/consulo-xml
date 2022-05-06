@@ -1,8 +1,8 @@
 package com.intellij.javaee;
 
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.project.ProjectManager;
+import consulo.ide.impl.idea.ide.util.PropertiesComponent;
 import com.intellij.xml.Html5SchemaProvider;
+import consulo.project.ProjectManager;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

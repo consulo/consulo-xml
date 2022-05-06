@@ -15,49 +15,45 @@
  */
 package org.intellij.plugins.relaxNG.model.resolve;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.intellij.ide.highlighter.XmlFileType;
+import com.intellij.psi.xml.XmlFile;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.EnumeratorStringDescriptor;
+import consulo.index.io.ID;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementNavigationItem;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.meta.PsiPresentableMetaData;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ScalarIndexExtension;
+import consulo.navigation.ItemPresentation;
+import consulo.navigation.NavigationItem;
+import consulo.project.Project;
+import consulo.ui.ex.ColoredItemPresentation;
+import consulo.ui.image.Image;
+import consulo.util.io.Readers;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.archive.ArchiveFileSystem;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.navigation.ColoredItemPresentation;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.NavigationItem;
-import com.intellij.navigation.PsiElementNavigationItem;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.indexing.ScalarIndexExtension;
-import com.intellij.util.io.EnumeratorStringDescriptor;
-import com.intellij.util.io.KeyDescriptor;
-import com.intellij.util.text.CharArrayUtil;
-import com.intellij.util.xml.NanoXmlUtil;
-import consulo.ui.image.Image;
-import consulo.vfs.ArchiveFileSystem;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
 
 /*
 * Created by IntelliJ IDEA.
@@ -77,7 +73,7 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
     final Collection<NavigationItem> result = new ArrayList<>();
     PsiManager psiManager = PsiManager.getInstance(project);
 
-    for(VirtualFile file:FileBasedIndex.getInstance().getContainingFiles(NAME, name, scope)) {
+    for(VirtualFile file: FileBasedIndex.getInstance().getContainingFiles(NAME, name, scope)) {
       final PsiFile psiFile = psiManager.findFile(file);
 
       if (psiFile instanceof XmlFile) {
@@ -118,7 +114,7 @@ public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
         if (inputData.getFileType() == XmlFileType.INSTANCE) {
           CharSequence inputDataContentAsText = inputData.getContentAsText();
           if (CharArrayUtil.indexOf(inputDataContentAsText, ApplicationLoader.RNG_NAMESPACE, 0) == -1) return Collections.emptyMap();
-          NanoXmlUtil.parse(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()), new NanoXmlUtil.IXMLBuilderAdapter() {
+          NanoXmlUtil.parse(Readers.readerFromCharSequence(inputData.getContentAsText()), new NanoXmlUtil.IXMLBuilderAdapter() {
             NanoXmlUtil.IXMLBuilderAdapter attributeHandler;
             int depth;
 

@@ -1,18 +1,18 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.NullableFactory;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.ide.impl.idea.openapi.util.NullableFactory;
+import consulo.logging.Logger;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomNameStrategy;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.stubs.ElementStub;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

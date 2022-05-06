@@ -15,32 +15,33 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.ide.IdeBundle;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.ide.IdeBundle;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.util.collection.ContainerUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.lang.StringUtil;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.util.ProcessingContext;
+import consulo.util.collection.SmartList;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
 import com.intellij.xml.XmlBundle;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.intention.IntentionAction;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -262,7 +263,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
       return true;
     }
 
-    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws consulo.language.util.IncorrectOperationException {
       doFix();
     }
 

@@ -22,7 +22,7 @@ import java.util.Map;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.io.StringRef;
+import consulo.index.io.StringRef;
 import com.intellij.util.xml.Stubbed;
 import com.intellij.util.xml.StubbedOccurrence;
 import com.intellij.util.xml.impl.DomInvocationHandler;

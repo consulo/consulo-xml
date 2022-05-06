@@ -19,10 +19,10 @@ import javax.annotation.Nonnull;
 
 import com.intellij.javaee.MapExternalResourceDialog;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.IncorrectOperationException;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.application.ApplicationManager;
 
 /**
  * @author mike

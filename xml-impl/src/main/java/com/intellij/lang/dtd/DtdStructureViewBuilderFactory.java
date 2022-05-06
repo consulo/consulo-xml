@@ -21,14 +21,15 @@ package com.intellij.lang.dtd;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.ide.structureView.StructureViewModel;
-import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
+
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import com.intellij.lang.PsiStructureViewFactory;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiFile;
+import consulo.language.editor.structureView.PsiStructureViewFactory;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.fileEditor.structureView.StructureViewModel;
 
 public class DtdStructureViewBuilderFactory implements PsiStructureViewFactory
 {

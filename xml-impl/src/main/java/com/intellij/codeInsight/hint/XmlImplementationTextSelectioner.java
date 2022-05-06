@@ -22,14 +22,15 @@ package com.intellij.codeInsight.hint;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.ImplementationTextSelectioner;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
 
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
-  private static final Logger LOG = Logger.getInstance("#" + XmlImplementationTextSelectioner.class.getName());
+  private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
 
   public int getTextStartOffset(@Nonnull final PsiElement parent) {
     return parent.getTextRange().getStartOffset();

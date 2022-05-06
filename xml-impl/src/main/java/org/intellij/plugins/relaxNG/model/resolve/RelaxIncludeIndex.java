@@ -15,20 +15,20 @@
  */
 package org.intellij.plugins.relaxNG.model.resolve;
 
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.language.psi.PsiManager;
+import consulo.util.collection.ContainerUtil;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.impl.include.FileIncludeManager;
-import com.intellij.psi.search.PsiElementProcessor;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.include.FileIncludeManager;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomManager;
 
 /*
@@ -62,7 +62,7 @@ public class RelaxIncludeIndex {
   private static boolean processRelatedFiles(PsiFile file, VirtualFile[] files, PsiElementProcessor<XmlFile> processor) {
     Project project = file.getProject();
     final PsiManager psiManager = PsiManager.getInstance(project);
-    final PsiFile[] psiFiles = ContainerUtil.map2Array(files, PsiFile.class, (NullableFunction<VirtualFile, PsiFile>)file1 -> psiManager.findFile(file1));
+    final PsiFile[] psiFiles = ContainerUtil.map2Array(files, PsiFile.class, (NullableFunction<VirtualFile, PsiFile>) file1 -> psiManager.findFile(file1));
 
     for (final PsiFile psiFile : psiFiles) {
       if (!processFile(psiFile, processor)) {

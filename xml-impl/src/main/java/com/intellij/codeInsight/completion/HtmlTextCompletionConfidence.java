@@ -15,16 +15,18 @@
  */
 package com.intellij.codeInsight.completion;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.ThreeState;
+import consulo.ide.impl.idea.codeInsight.completion.CompletionConfidence;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ThreeState;
+
+import javax.annotation.Nonnull;
 
 public class HtmlTextCompletionConfidence extends CompletionConfidence
 {

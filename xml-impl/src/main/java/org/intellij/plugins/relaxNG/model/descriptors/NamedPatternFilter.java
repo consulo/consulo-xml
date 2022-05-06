@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.openapi.util.Condition;
+import consulo.util.lang.function.Condition;
 import org.kohsuke.rngom.digested.DXmlTokenPattern;
 
 final class NamedPatternFilter implements Condition<DXmlTokenPattern> {

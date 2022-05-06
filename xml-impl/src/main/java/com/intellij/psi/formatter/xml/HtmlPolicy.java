@@ -15,15 +15,15 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.FormattingDocumentModel;
-import com.intellij.formatting.WrapType;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
-import com.intellij.psi.impl.source.tree.LeafElement;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.FormattingDocumentModel;
+import consulo.language.codeStyle.WrapType;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.psi.PsiElement;
+import consulo.language.ast.TokenType;
+import consulo.language.impl.ast.LeafElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;

@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.SofterReference;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.application.util.SofterReference;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

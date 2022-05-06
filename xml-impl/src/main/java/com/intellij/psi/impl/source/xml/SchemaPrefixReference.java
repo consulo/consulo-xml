@@ -17,19 +17,20 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.psi.ResolvingHint;
-import com.intellij.psi.util.PsiTreeUtil;
+
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.xml.XmlExtension;
+import consulo.document.util.TextRange;
+import consulo.language.psi.ResolvingHint;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Konstantin Bulenkov

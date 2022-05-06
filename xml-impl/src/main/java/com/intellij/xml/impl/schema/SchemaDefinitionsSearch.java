@@ -15,28 +15,28 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
+import consulo.application.ApplicationManager;
+import consulo.application.util.query.QueryExecutor;
+import consulo.ide.impl.idea.util.PairConvertor;
+import consulo.module.Module;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.project.Project;
+import consulo.application.util.function.Computable;
+import consulo.util.lang.StringUtil;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.search.searches.DefinitionsScopedSearch;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.search.DefinitionsScopedSearch;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.PairConvertor;
-import com.intellij.util.Processor;
-import com.intellij.util.QueryExecutor;
+import consulo.application.util.function.Processor;
 import com.intellij.xml.index.SchemaTypeInfo;
 import com.intellij.xml.index.SchemaTypeInheritanceIndex;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.lang.Comparing;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.util.*;

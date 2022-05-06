@@ -15,11 +15,14 @@
  */
 package com.intellij.lexer;
 
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageUtil;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.Language;
+import consulo.language.ast.TokenType;
+import consulo.language.lexer.FlexAdapter;
+import consulo.language.lexer.Lexer;
+import consulo.language.lexer.MergingLexerAdapter;
+import consulo.language.util.LanguageUtil;
 import consulo.xml.html.lexer.InlineElementTypeHolder;
 
 import javax.annotation.Nonnull;

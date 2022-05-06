@@ -18,17 +18,17 @@ package com.intellij.util.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.language.psi.PsiManager;
+import consulo.module.content.ProjectRootManager;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.scope.GlobalSearchScope;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.virtualFileSystem.VirtualFile;
 
 /**
  * @author peter
@@ -49,7 +49,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     return DomUtil.getFile(getInvocationElement());
   }
 
-  public Module getModule() {
+  public consulo.module.Module getModule() {
     final DomFileElement<DomElement> fileElement = DomUtil.getFileElement(getInvocationElement());
     if (fileElement == null) {
       final XmlElement xmlElement = getInvocationElement().getXmlElement();
@@ -66,7 +66,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
   public GlobalSearchScope getSearchScope() {
     GlobalSearchScope scope = null;
 
-    Module[] modules = getConvertContextModules(this);
+    consulo.module.Module[] modules = getConvertContextModules(this);
     if (modules.length != 0) {
 
       PsiFile file = getFile();
@@ -76,7 +76,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(file.getProject()).getFileIndex();
         boolean tests = fileIndex.isInTestSourceContent(virtualFile);
 
-        for (Module module : modules) {
+        for (consulo.module.Module module : modules) {
           if (scope == null) {
             scope = GlobalSearchScope.moduleRuntimeScope(module, tests);
           }
@@ -90,7 +90,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
   }
 
   public static GlobalSearchScope getSearchScope(@Nonnull ConvertContext context) {
-    Module[] modules = getConvertContextModules(context);
+    consulo.module.Module[] modules = getConvertContextModules(context);
     if (modules.length == 0) return null;
 
     PsiFile file = context.getFile();
@@ -102,7 +102,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
 
 
     GlobalSearchScope scope = null;
-    for (Module module : modules) {
+    for (consulo.module.Module module : modules) {
       if (scope == null) {
         scope = GlobalSearchScope.moduleRuntimeScope(module, tests);
       }
@@ -116,12 +116,12 @@ public abstract class AbstractConvertContext extends ConvertContext {
 
   @Nonnull
   private static Module[] getConvertContextModules(@Nonnull ConvertContext context) {
-    Module[] modules = ModuleContextProvider.getModules(context.getFile());
+    consulo.module.Module[] modules = ModuleContextProvider.getModules(context.getFile());
     if (modules.length > 0) return modules;
 
-    final Module module = context.getModule();
-    if (module != null) return new Module[]{module};
+    final consulo.module.Module module = context.getModule();
+    if (module != null) return new consulo.module.Module[]{module};
 
-    return new Module[0];
+    return new consulo.module.Module[0];
   }
 }

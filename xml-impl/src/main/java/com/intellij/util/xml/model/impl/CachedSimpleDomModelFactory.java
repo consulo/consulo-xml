@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.util.CachedValueProvider;
+import consulo.project.Project;
+import consulo.application.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ModelMerger;

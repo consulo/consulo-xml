@@ -15,25 +15,11 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.util.NullableFactory;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiInvalidElementAccessException;
-import com.intellij.psi.SmartPointerManager;
-import com.intellij.psi.SmartPsiElementPointer;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.semantic.SemElement;
-import com.intellij.semantic.SemKey;
-import com.intellij.util.*;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.AnnotatedElement;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
@@ -42,10 +28,30 @@ import com.intellij.util.xml.stubs.AttributeStub;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
 import com.intellij.util.xml.stubs.StubParentStrategy;
+import consulo.application.progress.ProgressManager;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.util.NullableFactory;
+import consulo.ide.impl.idea.util.Function;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.language.psi.PsiInvalidElementAccessException;
+import consulo.language.psi.SmartPointerManager;
+import consulo.language.psi.SmartPsiElementPointer;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.sem.SemElement;
+import consulo.language.sem.SemKey;
+import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
+import consulo.module.Module;
+import consulo.proxy.advanced.AdvancedProxyBuilder;
 import consulo.ui.image.Image;
-import consulo.util.advandedProxy.AdvancedProxyBuilder;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartFMap;
 import consulo.util.dataholder.UserDataHolderBase;
+import consulo.util.lang.Pair;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 
 import javax.annotation.Nonnull;
@@ -333,7 +339,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 			{
 				return XmlElementFactory.getInstance(myManager.getProject()).createTagFromText("<" + localName + "/>");
 			}
-			catch(IncorrectOperationException e)
+			catch(consulo.language.util.IncorrectOperationException e)
 			{
 				LOG.error(e);
 			}
@@ -420,7 +426,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		{
 			tag.delete();
 		}
-		catch(IncorrectOperationException e)
+		catch(consulo.language.util.IncorrectOperationException e)
 		{
 			LOG.error(e);
 		}
@@ -934,7 +940,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	private XmlTag addEmptyTag(final EvaluatedXmlName tagName, int index) throws IncorrectOperationException
+	private XmlTag addEmptyTag(final EvaluatedXmlName tagName, int index) throws consulo.language.util.IncorrectOperationException
 	{
 		final XmlTag tag = ensureTagExists();
 		final List<XmlTag> subTags = DomImplUtil.findSubTags(tag, tagName, getFile());

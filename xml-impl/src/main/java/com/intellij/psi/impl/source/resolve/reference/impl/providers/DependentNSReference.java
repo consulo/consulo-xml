@@ -19,11 +19,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.ArrayUtil;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.xml.util.XmlUtil;
+import consulo.util.collection.ArrayUtil;
 
 public class DependentNSReference extends BasicAttributeValueReference
 {

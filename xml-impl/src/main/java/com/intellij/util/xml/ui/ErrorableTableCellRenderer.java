@@ -16,15 +16,15 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.ui.JBColor;
-import com.intellij.ui.components.JBLabel;
+import consulo.ui.ex.JBColor;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.application.AllIcons;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.ui.ex.awt.JBLabel;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;

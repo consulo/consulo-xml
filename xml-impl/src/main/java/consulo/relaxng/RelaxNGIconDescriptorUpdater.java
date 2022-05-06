@@ -1,10 +1,10 @@
 package consulo.relaxng;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.psi.PsiElement;
+import consulo.language.icon.IconDescriptor;
+import consulo.language.icon.IconDescriptorUpdater;
+import consulo.language.psi.PsiElement;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.IconDescriptor;
-import consulo.ide.IconDescriptorUpdater;
+import consulo.application.AllIcons;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 
 import javax.annotation.Nonnull;

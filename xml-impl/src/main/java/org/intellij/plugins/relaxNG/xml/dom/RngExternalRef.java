@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.Convert;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -42,6 +43,6 @@ public interface RngExternalRef extends RngDomElement, Pattern<XmlElement> {
   @Nonnull
   @Required
   @Convert(RngHrefConverter.class)
-  @com.intellij.util.xml.Attribute("href")
+  @Attribute("href")
   GenericAttributeValue<XmlFile> getReferencedFile();
 }

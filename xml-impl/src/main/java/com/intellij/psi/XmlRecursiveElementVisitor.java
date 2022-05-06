@@ -19,6 +19,10 @@
  */
 package com.intellij.psi;
 
+import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+
 import java.util.List;
 
 public class XmlRecursiveElementVisitor extends XmlElementVisitor {

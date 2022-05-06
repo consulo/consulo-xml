@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.psi.codeStyle.NameUtil;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.application.util.matcher.NameUtil;
+import consulo.util.lang.StringUtil;
 
 /**
  * This strategy splits property name into words, decapitalizes them and joins using hyphen as separator,

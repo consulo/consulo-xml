@@ -36,7 +36,7 @@
           <toolTipText value="Specifies the value for the processContents attribute of any Attribute &#10;elements. The default is skip (corresponding to RELAX NG semantics).  "/>
         </properties>
       </component>
-      <component id="480bc" class="com.intellij.openapi.ui.ComboBox" binding="myAnyProcessContents">
+      <component id="480bc" class="consulo.ui.ex.awt.ComboBox" binding="myAnyProcessContents">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -48,7 +48,7 @@
           </model>
         </properties>
       </component>
-      <component id="6d96a" class="com.intellij.openapi.ui.ComboBox" binding="myAnyAttributeProcessContents">
+      <component id="6d96a" class="consulo.ui.ex.awt.ComboBox" binding="myAnyAttributeProcessContents">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

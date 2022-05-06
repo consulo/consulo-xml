@@ -15,18 +15,18 @@
  */
 package org.intellij.html;
 
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.meta.MetaDataRegistrar;
 import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncNsDecl;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.filters.AndFilter;
-import com.intellij.psi.filters.ClassFilter;
+import consulo.language.psi.filter.AndFilter;
+import consulo.language.psi.filter.ClassFilter;
 import com.intellij.psi.filters.XmlTextFilter;
-import com.intellij.psi.meta.MetaDataContributor;
-import com.intellij.psi.meta.MetaDataRegistrar;
-import com.intellij.util.ReflectionUtil;
+import consulo.language.psi.meta.MetaDataContributor;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.xml.util.XmlUtil;
 
 /**

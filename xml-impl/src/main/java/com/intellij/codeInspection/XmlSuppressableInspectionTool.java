@@ -19,11 +19,16 @@ package com.intellij.codeInspection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.language.editor.inspection.BatchSuppressableTool;
+import consulo.language.editor.inspection.InspectionsBundle;
+import consulo.language.editor.inspection.LocalInspectionTool;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.editor.rawHighlight.HighlightDisplayKey;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.codeInsight.daemon.HighlightDisplayKey;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 

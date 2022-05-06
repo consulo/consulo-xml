@@ -15,8 +15,9 @@
  */
 package com.intellij.openapi.editor.bidi;
 
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.ide.impl.idea.openapi.editor.bidi.TokenSetBidiRegionsSeparator;
 
 public class XmlBidiRegionsSeparator extends TokenSetBidiRegionsSeparator
 {

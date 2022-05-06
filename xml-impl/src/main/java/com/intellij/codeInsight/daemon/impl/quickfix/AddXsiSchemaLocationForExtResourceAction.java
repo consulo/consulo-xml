@@ -15,25 +15,25 @@
  */
 package com.intellij.codeInsight.daemon.impl.quickfix;
 
-import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
 import com.intellij.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.CodeStyleManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.codeStyle.CodeStyleManager;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.FileModificationService;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
@@ -52,7 +52,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     return KEY;
   }
 
-  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
+  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws consulo.language.util.IncorrectOperationException {
     final XmlTag tag = PsiTreeUtil.getParentOfType(file.findElementAt(offset), XmlTag.class);
     if (tag == null) return;
     final List<String> schemaLocations = new ArrayList<String>();

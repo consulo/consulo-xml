@@ -21,6 +21,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import consulo.document.Document;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.ExternalAnnotator;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.Comparing;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
@@ -32,25 +40,17 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.ExternalAnnotator;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiRecursiveElementVisitor;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.ast.ASTNode;
+import consulo.application.ApplicationManager;
+import consulo.logging.Logger;
+import consulo.util.lang.Pair;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiRecursiveElementVisitor;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlDocument;
@@ -64,7 +64,7 @@ import com.intellij.psi.xml.XmlTag;
  */
 public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyValidationMessageConsumer, RngSchemaValidator.MyValidationMessageConsumer>
 {
-	private static final Logger LOG = Logger.getInstance(RngSchemaValidator.class.getName());
+	private static final Logger LOG = Logger.getInstance(RngSchemaValidator.class);
 
 	@Nullable
 	@Override

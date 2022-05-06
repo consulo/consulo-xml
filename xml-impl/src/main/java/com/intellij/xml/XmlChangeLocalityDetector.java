@@ -17,11 +17,11 @@ package com.intellij.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.daemon.ChangeLocalityDetector;
 import com.intellij.codeInspection.DefaultXmlSuppressionProvider;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiComment;
+import consulo.ide.impl.idea.codeInsight.daemon.ChangeLocalityDetector;
+import consulo.language.psi.PsiElement;
 
 public class XmlChangeLocalityDetector implements ChangeLocalityDetector {
   @Override

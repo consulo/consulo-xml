@@ -18,10 +18,10 @@ package com.intellij.codeInsight.daemon.impl.quickfix;
 import javax.annotation.Nonnull;
 
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.psi.PsiFile;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.util.IncorrectOperationException;
+import consulo.codeEditor.Editor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.application.ApplicationManager;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author mike

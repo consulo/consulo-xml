@@ -26,15 +26,16 @@ import javax.swing.JTextField;
 
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import consulo.codeEditor.EditorHighlighter;
+import consulo.language.psi.PsiFile;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.language.codeStyle.CodeStyleSettings;
 import com.intellij.psi.formatter.xml.XmlCodeStyleSettings;
-import com.intellij.ui.components.JBScrollPane;
+import consulo.ui.ex.awt.JBScrollPane;
+import consulo.colorScheme.EditorColorsScheme;
+import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
 
-public class CodeStyleXmlPanel extends CodeStyleAbstractPanel{
+public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
   private JTextField myKeepBlankLines;
   private JComboBox myWrapAttributes;
   private JCheckBox myAlignAttributes;

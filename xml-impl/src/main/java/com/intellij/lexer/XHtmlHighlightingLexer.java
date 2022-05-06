@@ -15,6 +15,8 @@
  */
 package com.intellij.lexer;
 
+import consulo.language.lexer.Lexer;
+
 public class XHtmlHighlightingLexer extends HtmlHighlightingLexer {
   public XHtmlHighlightingLexer() {
     this(new XmlLexer(true));

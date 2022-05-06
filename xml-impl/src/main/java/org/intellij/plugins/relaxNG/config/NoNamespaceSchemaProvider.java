@@ -16,16 +16,16 @@
 
 package org.intellij.plugins.relaxNG.config;
 
+import consulo.language.psi.PsiFile;
+import consulo.module.Module;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
+import consulo.project.Project;
+import consulo.language.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.xml.XmlSchemaProvider;
 

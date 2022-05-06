@@ -16,17 +16,15 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInsight.daemon.impl.SeverityRegistrar;
-import com.intellij.codeInsight.daemon.impl.TrafficLightRenderer;
-import com.intellij.icons.AllIcons;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.psi.PsiDocumentManager;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.SeverityRegistrarImpl;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.TrafficLightRenderer;
+import consulo.language.editor.rawHighlight.SeverityRegistrar;
+import consulo.application.AllIcons;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.application.ApplicationManager;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.Alarm;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomChangeAdapter;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
@@ -34,6 +32,9 @@ import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ui.CommittablePanel;
 import com.intellij.util.xml.ui.Highlightable;
 import consulo.disposer.Disposer;
+import consulo.ui.ex.awt.util.Alarm;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -189,7 +190,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 
 		@Nonnull
 		@Override
-		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@Nonnull SeverityRegistrar severityRegistrar)
+		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@Nonnull SeverityRegistrarImpl severityRegistrar)
 		{
 			final DaemonCodeAnalyzerStatus status = super.getDaemonCodeAnalyzerStatus(severityRegistrar);
 			if(isInspectionCompleted())
@@ -200,7 +201,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 		}
 
 		@Override
-		protected void fillDaemonCodeAnalyzerErrorsStatus(@Nonnull DaemonCodeAnalyzerStatus status, @Nonnull SeverityRegistrar severityRegistrar)
+		protected void fillDaemonCodeAnalyzerErrorsStatus(@Nonnull DaemonCodeAnalyzerStatus status, @Nonnull SeverityRegistrarImpl severityRegistrar)
 		{
 			for(int i = 0; i < status.errorCount.length; i++)
 			{

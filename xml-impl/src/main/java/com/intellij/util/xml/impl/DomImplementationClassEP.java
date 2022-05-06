@@ -2,9 +2,9 @@ package com.intellij.util.xml.impl;
 
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.extensions.AbstractExtensionPointBean;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.util.xmlb.annotations.Attribute;
+import consulo.component.extension.AbstractExtensionPointBean;
+import consulo.component.extension.ExtensionPointName;
+import consulo.util.xml.serializer.annotation.Attribute;
 
 /**
  * @author peter

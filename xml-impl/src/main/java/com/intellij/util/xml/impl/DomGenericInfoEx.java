@@ -15,14 +15,15 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.Processor;
+import consulo.application.util.function.Processor;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

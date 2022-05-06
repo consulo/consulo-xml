@@ -17,12 +17,13 @@ package com.intellij.refactoring.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.ElementDescriptionLocation;
-import com.intellij.psi.ElementDescriptionProvider;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.refactoring.util.NonCodeSearchDescriptionLocation;
+import consulo.language.psi.ElementDescriptionProvider;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.ElementDescriptionLocation;
 
 /**
  * @author yole

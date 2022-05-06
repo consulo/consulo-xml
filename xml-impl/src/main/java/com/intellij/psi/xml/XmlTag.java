@@ -15,11 +15,11 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.meta.PsiMetaOwner;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

@@ -19,6 +19,8 @@
 /* It's an automatically generated code. Do not modify it. */
 package com.intellij.lexer;
 
+import consulo.language.lexer.FlexAdapter;
+
 public class _XmlLexer extends FlexAdapter {
   private int myState = __XmlLexer.YYINITIAL;
 

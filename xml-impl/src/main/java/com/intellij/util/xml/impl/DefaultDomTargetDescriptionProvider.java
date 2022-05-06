@@ -15,15 +15,16 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomDescriptionProvider;
-import com.intellij.pom.PomTarget;
-import com.intellij.psi.ElementDescriptionLocation;
-import com.intellij.usageView.UsageViewNodeTextLocation;
-import com.intellij.usageView.UsageViewTypeLocation;
-import com.intellij.usageView.UsageViewLongNameLocation;
+import consulo.language.psi.ElementDescriptionLocation;
+import consulo.usage.UsageViewNodeTextLocation;
+import consulo.usage.UsageViewTypeLocation;
 import com.intellij.util.xml.*;
-import com.intellij.codeInsight.highlighting.HighlightUsagesDescriptionLocation;
+import consulo.language.editor.highlight.HighlightUsagesDescriptionLocation;
+import consulo.language.pom.PomDescriptionProvider;
+import consulo.language.pom.PomTarget;
+import consulo.usage.UsageViewLongNameLocation;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 
 /**

@@ -15,24 +15,25 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TagNameReference implements PsiReference
 {
@@ -201,7 +202,7 @@ public class TagNameReference implements PsiReference
 		}
 
 		final XmlTag tag = getTagElement();
-		throw new IncorrectOperationException("Cant bind to not a xml element definition!" + element + "," + metaData + "," + tag + "," + (tag != null ? tag.getDescriptor() : "unknown descriptor"));
+		throw new consulo.language.util.IncorrectOperationException("Cant bind to not a xml element definition!" + element + "," + metaData + "," + tag + "," + (tag != null ? tag.getDescriptor() : "unknown descriptor"));
 	}
 
 	@Override

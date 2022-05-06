@@ -15,6 +15,11 @@
  */
 package com.intellij.codeInsight.completion;
 
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.CompletionType;
+
 /**
  * @author Dmitry Avdeev
  *         Date: 12/19/11

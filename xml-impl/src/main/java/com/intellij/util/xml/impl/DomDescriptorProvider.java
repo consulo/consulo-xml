@@ -15,10 +15,10 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.project.Project;
 import com.intellij.psi.impl.source.xml.XmlElementDescriptorProvider;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.PsiElement;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.dom.DomElementXmlDescriptor;
 import com.intellij.util.xml.DomElement;

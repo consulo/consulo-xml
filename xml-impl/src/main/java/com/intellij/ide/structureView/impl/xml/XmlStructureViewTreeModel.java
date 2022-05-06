@@ -17,14 +17,15 @@ package com.intellij.ide.structureView.impl.xml;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewExtension;
-import com.intellij.ide.structureView.StructureViewFactoryEx;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.TextEditorBasedStructureViewModel;
-import com.intellij.ide.util.treeView.smartTree.Sorter;
+
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.fileEditor.structureView.tree.Sorter;
+import consulo.language.editor.structureView.StructureViewExtension;
+import consulo.language.editor.structureView.StructureViewFactoryEx;
+import consulo.language.editor.structureView.TextEditorBasedStructureViewModel;
 import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttlistDecl;
 import com.intellij.psi.xml.XmlConditionalSection;
 import com.intellij.psi.xml.XmlElementDecl;

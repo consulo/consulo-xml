@@ -15,6 +15,9 @@
  */
 package com.intellij.lang;
 
+import consulo.language.Language;
+import consulo.language.LanguageExtension;
+
 import javax.annotation.Nonnull;
 
 public class LanguageHtmlScriptContentProvider extends LanguageExtension<HtmlScriptContentProvider> {

@@ -18,13 +18,21 @@ package com.intellij.lexer;
 import javax.annotation.Nullable;
 
 import com.intellij.lang.*;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.*;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.language.editor.highlight.SyntaxHighlighterFactory;
+import consulo.language.file.FileTypeManager;
+import consulo.language.plain.PlainTextLanguage;
+import consulo.logging.Logger;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.Language;
+import consulo.language.lexer.FlexAdapter;
+import consulo.language.lexer.Lexer;
+import consulo.language.lexer.MergingLexerAdapter;
+import consulo.virtualFileSystem.fileType.FileType;
 
 public class HtmlHighlightingLexer extends BaseHtmlLexer {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.lexer.HtmlHighlightingLexer");
+  private static final Logger LOG = Logger.getInstance(HtmlHighlightingLexer.class);
 
   private static final int EMBEDDED_LEXER_ON = 0x1 << BASE_STATE_SHIFT;
   private static final int EMBEDDED_LEXER_STATE_SHIFT = BASE_STATE_SHIFT + 1;

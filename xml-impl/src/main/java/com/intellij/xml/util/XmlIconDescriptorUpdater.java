@@ -15,14 +15,14 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
+import consulo.language.icon.IconDescriptorUpdater;
+import consulo.language.psi.PsiElement;
+import consulo.virtualFileSystem.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.IconDescriptor;
-import consulo.ide.IconDescriptorUpdater;
+import consulo.application.AllIcons;
+import consulo.language.icon.IconDescriptor;
 import consulo.platform.base.icon.PlatformIconGroup;
 
 import javax.annotation.Nonnull;

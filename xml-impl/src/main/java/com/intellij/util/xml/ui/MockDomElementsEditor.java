@@ -15,20 +15,21 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
+import consulo.application.ApplicationManager;
+import consulo.application.Result;
+import consulo.language.editor.WriteCommandAction;
+import consulo.module.Module;
 import consulo.disposer.Disposer;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilCore;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiUtilCore;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.StableElement;
+import consulo.project.Project;
+
 import javax.annotation.Nonnull;
 
 import javax.swing.*;
@@ -39,11 +40,11 @@ import java.util.*;
  */
 public class MockDomElementsEditor {
   private final Map<EditedElementDescription<? extends DomElement>, DomElement> myDomElements = new HashMap<EditedElementDescription<? extends DomElement>, DomElement>();
-  private final Module myModule;
+  private final consulo.module.Module myModule;
   private CommittablePanel myContents;
   private DomFileEditor myFileEditor;
 
-  public MockDomElementsEditor(final Module module) {
+  public MockDomElementsEditor(final consulo.module.Module module) {
     myModule = module;
   }
 

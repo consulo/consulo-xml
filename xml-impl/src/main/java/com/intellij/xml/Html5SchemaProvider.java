@@ -4,10 +4,10 @@ import java.net.URL;
 
 import javax.annotation.Nonnull;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.util.io.URLUtil;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.util.io.URLUtil;
+import consulo.component.extension.ExtensionPointName;
+import consulo.logging.Logger;
 
 /**
  * @author Eugene.Kudelevsky

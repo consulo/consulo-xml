@@ -16,23 +16,22 @@
 
 package com.intellij.codeInspection;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.command.undo.UndoUtil;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.codeStyle.CodeStyleManager;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.refactoring.util.CommonRefactoringUtil;
-import com.intellij.util.ArrayUtil;
+import consulo.document.Document;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.CodeStyleManager;
+import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
+import consulo.language.editor.util.LanguageUndoUtil;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -132,7 +131,7 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
       final String suppressionText = getSuppressionText(inspectionId, null);
       doc.insertString(offset, suppressionText);
       CodeStyleManager.getInstance(project).adjustLineIndent(doc, offset + suppressionText.length());
-      UndoUtil.markPsiFileForUndo(file);
+      LanguageUndoUtil.markPsiFileForUndo(file);
     }
   }
 

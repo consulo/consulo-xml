@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.lang.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 

@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiElement;
+import consulo.xml.Validator;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 /**
@@ -42,7 +42,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
   @NonNls private static final String NAME_ATTR_NAME = "name";
 
   private static final Validator<XmlTag> ELEMENT_VALIDATOR = new Validator<XmlTag>() {
-    public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
+    public void validate(@Nonnull final XmlTag tag, @Nonnull Validator.ValidationHost host) {
       if (!isFromSchemaNs(tag)) return;
       final boolean hasRefAttribute = tag.getAttributeValue(REF_ATTR_NAME) != null;
 

@@ -16,13 +16,20 @@
 package com.intellij.util.xml;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.indexing.*;
-import com.intellij.util.io.EnumeratorStringDescriptor;
-import com.intellij.util.io.KeyDescriptor;
-import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.impl.DomApplicationComponent;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.EnumeratorStringDescriptor;
+import consulo.index.io.ID;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ScalarIndexExtension;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.io.Readers;
+import consulo.util.lang.StringUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.util.xml.fastReader.XmlFileHeader;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -44,7 +51,7 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 			public Map<String, Void> map(final FileContent inputData)
 			{
 				final Set<String> namespaces = new HashSet<String>();
-				final XmlFileHeader header = NanoXmlUtil.parseHeader(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+				final XmlFileHeader header = NanoXmlUtil.parseHeader(Readers.readerFromCharSequence(inputData.getContentAsText()));
 				ContainerUtil.addIfNotNull(namespaces, header.getPublicId());
 				ContainerUtil.addIfNotNull(namespaces, header.getSystemId());
 				ContainerUtil.addIfNotNull(namespaces, header.getRootTagNamespace());

@@ -15,12 +15,12 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.openapi.util.UserDataCache;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.UserDataCache;
+import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiFile;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValuesManager;
 import consulo.util.dataholder.Key;
 
 /**

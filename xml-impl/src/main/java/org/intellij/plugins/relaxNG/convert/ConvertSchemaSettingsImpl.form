@@ -83,7 +83,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <component id="2ab32" class="com.intellij.openapi.ui.ComboBox" binding="myEncoding">
+          <component id="2ab32" class="consulo.ui.ex.awt.ComboBox" binding="myEncoding">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -136,7 +136,7 @@
         </clientProperties>
         <border type="none" title="Output Destination"/>
         <children>
-          <component id="5b279" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myOutputDestination">
+          <component id="5b279" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myOutputDestination">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

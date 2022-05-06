@@ -20,25 +20,25 @@ import java.awt.Color;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
+import consulo.codeEditor.Editor;
+import consulo.ide.impl.idea.codeInsight.intention.PsiElementBaseIntentionAction;
+import consulo.ide.impl.idea.ui.ColorChooser;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.FileModificationService;
+import consulo.application.Result;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.ui.ColorChooser;
-import com.intellij.ui.ColorUtil;
-import com.intellij.ui.JBColor;
-import com.intellij.util.IncorrectOperationException;
+import consulo.ui.ex.JBColor;
+import consulo.ui.ex.awt.util.ColorUtil;
+import consulo.util.lang.Comparing;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.lang.StringUtil;
 
 /**
  * @author Konstantin Bulenkov

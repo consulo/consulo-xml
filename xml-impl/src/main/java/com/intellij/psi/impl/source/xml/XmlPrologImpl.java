@@ -17,11 +17,11 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElementVisitor;
+import consulo.language.ast.ASTNode;
+import consulo.logging.Logger;
+import consulo.language.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.tree.ChildRoleBase;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlDoctype;
 import com.intellij.psi.xml.XmlElementType;

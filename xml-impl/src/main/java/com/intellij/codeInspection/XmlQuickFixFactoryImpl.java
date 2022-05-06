@@ -18,10 +18,12 @@ package com.intellij.codeInspection;
 import com.intellij.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import com.intellij.codeInsight.daemon.impl.analysis.InsertRequiredAttributeFix;
 import com.intellij.codeInspection.htmlInspections.AddAttributeValueIntentionFix;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;

@@ -17,8 +17,8 @@ package com.intellij.xml.impl.dtd;
 
 import java.util.HashMap;
 
-import com.intellij.openapi.util.FieldCache;
-import com.intellij.openapi.util.SimpleFieldCache;
+import consulo.application.util.FieldCache;
+import consulo.application.util.SimpleFieldCache;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
@@ -52,7 +52,7 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 	protected abstract XmlElementDescriptor[] doCollectXmlDescriptors(final XmlTag context);
 
 	static final FieldCache<XmlElementDescriptor[], BaseXmlElementDescriptorImpl, Object, XmlTag> myElementDescriptorsCache = new FieldCache<XmlElementDescriptor[], BaseXmlElementDescriptorImpl,
-			Object, XmlTag>()
+				Object, XmlTag>()
 	{
 		@Override
 		protected final XmlElementDescriptor[] compute(final BaseXmlElementDescriptorImpl xmlElementDescriptor, XmlTag tag)
@@ -80,7 +80,7 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 	}
 
 	private static final SimpleFieldCache<XmlAttributeDescriptor[], BaseXmlElementDescriptorImpl> myAttributeDescriptorsCache = new SimpleFieldCache<XmlAttributeDescriptor[],
-			BaseXmlElementDescriptorImpl>()
+				BaseXmlElementDescriptorImpl>()
 	{
 		@Override
 		protected final XmlAttributeDescriptor[] compute(final BaseXmlElementDescriptorImpl xmlElementDescriptor)
@@ -142,7 +142,7 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 	protected abstract HashMap<String, XmlAttributeDescriptor> collectAttributeDescriptorsMap(final XmlTag context);
 
 	private static final FieldCache<HashMap<String, XmlElementDescriptor>, BaseXmlElementDescriptorImpl, Object, XmlTag> myElementDescriptorsMapCache = new FieldCache<HashMap<String,
-			XmlElementDescriptor>, BaseXmlElementDescriptorImpl, Object, XmlTag>()
+				XmlElementDescriptor>, BaseXmlElementDescriptorImpl, Object, XmlTag>()
 	{
 		@Override
 		protected final HashMap<String, XmlElementDescriptor> compute(final BaseXmlElementDescriptorImpl baseXmlElementDescriptor, final XmlTag p)

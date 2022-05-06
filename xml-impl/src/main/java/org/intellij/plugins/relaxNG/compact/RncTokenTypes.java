@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
 import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.collection.primitive.ints.IntObjectMap;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;

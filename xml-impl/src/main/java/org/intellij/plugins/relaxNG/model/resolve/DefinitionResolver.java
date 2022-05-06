@@ -16,18 +16,18 @@
 
 package org.intellij.plugins.relaxNG.model.resolve;
 
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.ModificationTracker;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
+import consulo.application.util.CachedValuesManager;
+import consulo.component.util.ModificationTracker;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.*;
@@ -35,10 +35,7 @@ import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
 * Created by IntelliJ IDEA.
@@ -51,12 +48,7 @@ public class DefinitionResolver extends CommonElement.Visitor implements
   private static final Key<CachedValue<Map<String, Set<Define>>>> KEY = Key.create("CACHED_DEFINES");
 
   private static final ThreadLocal<Set<PsiFile>> myVisitedFiles = new ThreadLocal<>();
-  private static final ThreadLocal<Map<String, Set<Define>>> myDefines = new ThreadLocal<Map<String, Set<Define>>>() {
-    @Override
-    protected Map<String, Set<Define>> initialValue() {
-      return ContainerUtil.newHashMap();
-    }
-  };
+  private static final ThreadLocal<Map<String, Set<Define>>> myDefines = ThreadLocal.withInitial(() -> new HashMap<>());
 
   private final Grammar myScope;
 
@@ -99,7 +91,7 @@ public class DefinitionResolver extends CommonElement.Visitor implements
 
   @Override
   public void visitDefine(Define def) {
-    ContainerUtil.getOrCreate(myDefines.get(), def.getName(), this).add(def);
+    consulo.ide.impl.idea.util.containers.ContainerUtil.getOrCreate(myDefines.get(), def.getName(), this).add(def);
   }
 
   @Override

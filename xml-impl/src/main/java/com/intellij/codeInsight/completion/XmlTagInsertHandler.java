@@ -16,36 +16,32 @@
 package com.intellij.codeInsight.completion;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
-import com.intellij.codeInsight.TailType;
+import consulo.document.Document;
+import consulo.document.RangeMarker;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.completion.lookup.*;
 import com.intellij.codeInsight.editorActions.XmlTagNameSynchronizer;
-import com.intellij.codeInsight.lookup.Lookup;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupItem;
-import com.intellij.codeInsight.template.Template;
-import com.intellij.codeInsight.template.TemplateEditingAdapter;
-import com.intellij.codeInsight.template.TemplateManager;
-import com.intellij.codeInsight.template.impl.MacroCallNode;
-import com.intellij.codeInsight.template.macro.CompleteMacro;
-import com.intellij.codeInsight.template.macro.CompleteSmartMacro;
-import com.intellij.codeInspection.InspectionProfile;
+import consulo.language.editor.inspection.scheme.InspectionProfile;
+import consulo.language.editor.template.Template;
+import consulo.language.editor.template.event.TemplateEditingAdapter;
+import consulo.language.editor.template.TemplateManager;
+import consulo.language.editor.template.macro.MacroCallNode;
+import consulo.ide.impl.idea.codeInsight.template.macro.CompleteMacro;
+import consulo.ide.impl.idea.codeInsight.template.macro.CompleteSmartMacro;
 import com.intellij.codeInspection.htmlInspections.XmlEntitiesInspection;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.command.undo.UndoManager;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.RangeMarker;
-import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.ScrollType;
+import consulo.project.Project;
+import consulo.undoRedo.ProjectUndoManager;
+import consulo.util.lang.StringUtil;
+import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.*;
@@ -53,7 +49,11 @@ import com.intellij.xml.actions.GenerateXmlTagAction;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.editor.completion.lookup.InsertHandler;
+import consulo.language.editor.completion.lookup.InsertionContext;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.undoRedo.UndoManager;
+import consulo.util.lang.ref.Ref;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -204,7 +204,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement>
 					return;
 				}
 
-				final UndoManager manager = UndoManager.getInstance(project);
+				final UndoManager manager = ProjectUndoManager.getInstance(project);
 				if(manager.isUndoInProgress() || manager.isRedoInProgress())
 				{
 					return;

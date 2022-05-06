@@ -15,10 +15,11 @@
  */
 package com.intellij.psi.filters.position;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.filters.ElementFilter;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.filter.ElementFilter;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.filter.position.PositionElementFilter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +28,7 @@ import com.intellij.psi.xml.XmlTag;
  * Time: 18:29:13
  * To change this template use Options | File Templates.
  */
-public class RootTagFilter extends PositionElementFilter{
+public class RootTagFilter extends PositionElementFilter {
   public RootTagFilter(ElementFilter filter){
     setFilter(filter);
   }

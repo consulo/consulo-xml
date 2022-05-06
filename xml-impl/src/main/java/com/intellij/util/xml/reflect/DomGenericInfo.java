@@ -15,7 +15,9 @@
  */
 package com.intellij.util.xml.reflect;
 
+import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
@@ -68,7 +70,7 @@ public interface DomGenericInfo {
   /**
    *
    * @param element
-   * @return {@link com.intellij.psi.xml.XmlAttributeValue} or {@link com.intellij.psi.xml.XmlTag}
+   * @return {@link XmlAttributeValue} or {@link XmlTag}
    */
   @Deprecated
   @Nullable

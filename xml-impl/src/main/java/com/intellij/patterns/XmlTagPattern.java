@@ -20,13 +20,17 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.StandardPatterns;
+import consulo.language.psi.meta.PsiMetaData;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.psi.meta.PsiMetaData;
+import consulo.util.lang.Comparing;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
+import consulo.language.util.ProcessingContext;
 
 /**
  * @author spleaner

@@ -17,21 +17,21 @@ package com.intellij.lang.html;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.ParserDefinition;
-import com.intellij.lang.PsiParser;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IFileElementType;
+import consulo.language.lexer.Lexer;
+import consulo.language.parser.ParserDefinition;
 import com.intellij.lang.xml.XMLParserDefinition;
 import com.intellij.lexer.HtmlLexer;
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiFile;
+import consulo.language.file.FileViewProvider;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
+import consulo.language.parser.PsiParser;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author max

@@ -17,21 +17,21 @@ package com.intellij.lang.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.ParserDefinition;
-import com.intellij.lang.PsiParser;
-import com.intellij.lexer.Lexer;
+import consulo.language.ast.ASTNode;
+import consulo.language.lexer.Lexer;
+import consulo.language.parser.ParserDefinition;
 import com.intellij.lexer.XmlLexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiFile;
+import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.impl.source.parsing.xml.XmlParser;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
+import consulo.language.parser.PsiParser;
 
 /**
  * @author max

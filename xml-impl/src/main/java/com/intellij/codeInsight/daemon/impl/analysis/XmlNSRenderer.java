@@ -15,11 +15,11 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.ui.ColoredListCellRenderer;
-import com.intellij.ui.SimpleTextAttributes;
+import consulo.ui.ex.awt.ColoredListCellRenderer;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.application.AllIcons;
+import consulo.colorScheme.EditorColorsManager;
+import consulo.colorScheme.EditorColorsScheme;
 
 import javax.swing.*;
 import java.awt.*;

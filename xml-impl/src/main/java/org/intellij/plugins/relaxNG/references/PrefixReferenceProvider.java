@@ -18,25 +18,26 @@ package org.intellij.plugins.relaxNG.references;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.LocalQuickFixProvider;
+
+import consulo.language.editor.inspection.LocalQuickFix;
 import com.intellij.codeInspection.XmlQuickFixFactory;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.BasicAttributeValueReference;
 import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ProcessingContext;
+import consulo.language.util.ProcessingContext;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
 
 /*
 * Created by IntelliJ IDEA.

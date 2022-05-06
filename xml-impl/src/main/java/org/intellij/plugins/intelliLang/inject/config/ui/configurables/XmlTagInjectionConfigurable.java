@@ -15,9 +15,10 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui.configurables;
 
+import consulo.ide.impl.intelliLang.inject.config.ui.configurables.InjectionConfigurable;
+import consulo.project.Project;
 import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
 import org.intellij.plugins.intelliLang.inject.config.ui.XmlTagPanel;
-import com.intellij.openapi.project.Project;
 
 public class XmlTagInjectionConfigurable extends InjectionConfigurable<XmlTagInjection, XmlTagPanel>
 {

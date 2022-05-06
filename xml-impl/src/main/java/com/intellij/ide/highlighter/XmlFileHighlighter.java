@@ -20,15 +20,15 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import com.intellij.lexer.DtdLexer;
-import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlHighlightingLexer;
 import com.intellij.lexer.XmlHighlightingLexer;
-import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.XmlHighlighterColors;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.tree.IElementType;
+import consulo.colorScheme.TextAttributesKey;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.codeEditor.HighlighterColors;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.highlight.SyntaxHighlighterBase;
+import consulo.language.lexer.Lexer;
 
 public class XmlFileHighlighter extends SyntaxHighlighterBase
 {

@@ -15,10 +15,11 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nullable;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.xml.XmlElement;
-import consulo.extensions.CompositeExtensionPointName;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.component.extension.ExtensionPointName;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -26,7 +27,7 @@ import consulo.extensions.CompositeExtensionPointName;
  */
 public interface XmlNSColorProvider
 {
-	CompositeExtensionPointName<XmlNSColorProvider> EP_NAME = CompositeExtensionPointName.applicationPoint("com.intellij.xml.nsColorProvider", XmlNSColorProvider.class);
+	ExtensionPointName<XmlNSColorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.nsColorProvider");
 
 	@Nullable
 	TextAttributesKey getKeyForNamespace(String namespace, XmlElement context);

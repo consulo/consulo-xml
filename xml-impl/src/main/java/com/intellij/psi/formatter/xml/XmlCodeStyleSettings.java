@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CommonCodeStyleSettings;
+import consulo.language.codeStyle.CustomCodeStyleSettings;
 
 /**
  * @author Rustam Vishnyakov

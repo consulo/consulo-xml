@@ -1,6 +1,6 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.Pair;
+import consulo.util.lang.Pair;
 
 /**
  * @author peter

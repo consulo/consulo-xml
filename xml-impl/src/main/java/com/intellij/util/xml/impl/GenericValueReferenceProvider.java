@@ -22,22 +22,22 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.intellij.javaee.web.PsiReferenceConverter;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.util.xml.*;
+import consulo.application.ApplicationManager;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.PsiReference;
+import consulo.language.util.ProcessingContext;
+import consulo.logging.Logger;
 
 /**
  * @author peter

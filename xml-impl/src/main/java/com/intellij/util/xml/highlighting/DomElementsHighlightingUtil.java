@@ -18,20 +18,20 @@ package com.intellij.util.xml.highlighting;
 
 import javax.annotation.Nullable;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.editor.colors.CodeInsightColors;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.Function;
-import com.intellij.xml.util.XmlStringUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.annotation.Annotation;
+import consulo.codeEditor.CodeInsightColors;
+import consulo.util.lang.Pair;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.util.lang.xml.XmlStringUtil;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.util.lang.StringUtil;
 
 /**
  * User: Sergey.Vasiliev

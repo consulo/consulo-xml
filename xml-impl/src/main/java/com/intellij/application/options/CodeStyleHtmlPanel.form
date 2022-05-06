@@ -25,7 +25,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <scrollpane id="3e3f1" class="com.intellij.ui.components.JBScrollPane" binding="myJBScrollPane" custom-create="true">
+          <scrollpane id="3e3f1" class="consulo.ui.ex.awt.JBScrollPane" binding="myJBScrollPane" custom-create="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -96,7 +96,7 @@
                           <text resource-bundle="messages/ApplicationBundle" key="label.do.not.indent.children.of"/>
                         </properties>
                       </component>
-                      <component id="d6b64" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myInsertNewLineTagNames">
+                      <component id="d6b64" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myInsertNewLineTagNames">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>
@@ -106,7 +106,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="47f60" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myRemoveNewLineTagNames">
+                      <component id="47f60" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myRemoveNewLineTagNames">
                         <constraints>
                           <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>
@@ -116,7 +116,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="655c2" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myDoNotAlignChildrenTagNames">
+                      <component id="655c2" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myDoNotAlignChildrenTagNames">
                         <constraints>
                           <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>
@@ -126,7 +126,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="c0d93" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myInlineElementsTagNames">
+                      <component id="c0d93" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myInlineElementsTagNames">
                         <constraints>
                           <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>
@@ -160,7 +160,7 @@
                           <text resource-bundle="messages/ApplicationBundle" key="don.t.break.if.inline.content"/>
                         </properties>
                       </component>
-                      <component id="77303" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myKeepWhiteSpacesTagNames">
+                      <component id="77303" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myKeepWhiteSpacesTagNames">
                         <constraints>
                           <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>
@@ -170,7 +170,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="c854c" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myDontBreakIfInlineContent">
+                      <component id="c854c" class="consulo.ui.ex.awt.TextFieldWithBrowseButton" binding="myDontBreakIfInlineContent">
                         <constraints>
                           <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="100" height="-1"/>

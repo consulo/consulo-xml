@@ -15,9 +15,10 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
+import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
+import consulo.language.psi.PsiElement;
 
 class XmlElementSelectioner extends ExtendWordSelectionHandlerBase {
   public boolean canSelect(PsiElement e) {

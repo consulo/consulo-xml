@@ -21,20 +21,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.OrderEntry;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileFilter;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileBasedIndexExtension;
-import com.intellij.util.io.EnumeratorStringDescriptor;
-import com.intellij.util.io.KeyDescriptor;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.module.content.layer.orderEntry.OrderEntry;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileFilter;
+import consulo.language.psi.stub.FileBasedIndexExtension;
+import consulo.index.io.EnumeratorStringDescriptor;
 
 /**
  * @author Dmitry Avdeev
@@ -53,7 +53,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 			}
 
 			@Override
-			public boolean isSearchInModuleContent(@Nonnull Module aModule)
+			public boolean isSearchInModuleContent(@Nonnull consulo.module.Module aModule)
 			{
 				return true;
 			}
@@ -74,7 +74,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 	}
 
 
-	protected static VirtualFileFilter createFilter(@Nonnull final Module module)
+	protected static VirtualFileFilter createFilter(@Nonnull final consulo.module.Module module)
 	{
 
 		final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
@@ -97,7 +97,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
 					}
 					for(OrderEntry orderEntry : orderEntries)
 					{
-						Module ownerModule = orderEntry.getOwnerModule();
+						consulo.module.Module ownerModule = orderEntry.getOwnerModule();
 						if(ownerModule.equals(module))
 						{
 							return true;

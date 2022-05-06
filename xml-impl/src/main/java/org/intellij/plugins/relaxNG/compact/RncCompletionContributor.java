@@ -15,30 +15,30 @@
  */
 package org.intellij.plugins.relaxNG.compact;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
-import static com.intellij.patterns.StandardPatterns.and;
-import static com.intellij.patterns.StandardPatterns.not;
+import static consulo.language.pattern.PlatformPatterns.psiElement;
+import static consulo.language.pattern.StandardPatterns.and;
+import static consulo.language.pattern.StandardPatterns.not;
 
-import com.intellij.patterns.PlatformPatterns;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.ProcessingContext;
 import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import javax.annotation.Nonnull;
-import com.intellij.codeInsight.TailType;
-import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.lookup.TailTypeDecorator;
-import com.intellij.patterns.ElementPattern;
-import com.intellij.patterns.PsiElementPattern;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ProcessingContext;
-import consulo.codeInsight.completion.CompletionProvider;
+import consulo.language.editor.completion.lookup.TailType;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.editor.completion.lookup.TailTypeDecorator;
+import consulo.language.pattern.PsiElementPattern;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.editor.completion.CompletionProvider;
 
 /**
  * @author Dennis.Ushakov

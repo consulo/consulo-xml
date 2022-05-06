@@ -15,10 +15,12 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import javax.swing.JPanel;
-
+import consulo.ide.impl.intelliLang.inject.config.ui.AbstractInjectionPanel;
+import consulo.ide.impl.intelliLang.inject.config.ui.LanguagePanel;
+import consulo.project.Project;
 import org.intellij.plugins.intelliLang.inject.config.XmlTagInjection;
-import com.intellij.openapi.project.Project;
+
+import javax.swing.*;
 
 public class XmlTagPanel extends AbstractInjectionPanel<XmlTagInjection>
 {

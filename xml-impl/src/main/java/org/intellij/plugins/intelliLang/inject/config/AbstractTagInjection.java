@@ -15,28 +15,28 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport;
-import org.intellij.plugins.intelliLang.util.StringMatcher;
-import org.jaxen.JaxenException;
-import org.jaxen.XPath;
-import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.JDOMExternalizer;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.openapi.util.JDOMExternalizer;
+import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
+import consulo.ide.impl.intelliLang.util.StringMatcher;
 import consulo.intelliLang.xml.XPathSupportProvider;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
+import org.intellij.plugins.intelliLang.inject.xml.XmlLanguageInjectionSupport;
+import org.jaxen.JaxenException;
+import org.jaxen.XPath;
+import org.jdom.Element;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Base class for XML-related injections (XML tags and attributes).

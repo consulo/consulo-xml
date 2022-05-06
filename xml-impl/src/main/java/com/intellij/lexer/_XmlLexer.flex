@@ -1,10 +1,11 @@
- /* It's an automatically generated code. Do not modify it. */
- package com.intellij.lexer;
+/* It's an automatically generated code. Do not modify it. */
+package com.intellij.lexer;
 
- import com.intellij.psi.tree.IElementType;
- import com.intellij.psi.xml.*;
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.FlexLexer;
+import com.intellij.psi.xml.*;
 
- %%
+%%
 
 %{
   private IElementType elTokenType = XmlTokenType.XML_DATA_CHARACTERS;

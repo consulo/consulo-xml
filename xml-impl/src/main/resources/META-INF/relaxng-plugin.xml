@@ -6,7 +6,7 @@
 		<html5SchemaProvider implementation="org.intellij.plugins.relaxNG.xml.RngHtml5SchemaProvider"/>
 	</extensions>
 
-	<extensions defaultExtensionNs="com.intellij">
+	<extensions defaultExtensionNs="consulo">
 		<gotoSymbolContributor implementation="org.intellij.plugins.relaxNG.GotoSymbolContributor"/>
 		<hectorComponentProvider implementation="org.intellij.plugins.relaxNG.config.NoNamespaceConfigImpl$HectorProvider"/>
 

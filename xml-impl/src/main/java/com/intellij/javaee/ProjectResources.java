@@ -15,9 +15,9 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
+import consulo.component.persist.State;
+import consulo.component.persist.Storage;
+import consulo.component.persist.StoragePathMacros;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;

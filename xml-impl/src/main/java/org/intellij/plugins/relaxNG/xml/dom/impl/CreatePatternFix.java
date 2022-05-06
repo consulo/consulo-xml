@@ -18,20 +18,20 @@ package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.logging.Logger;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
@@ -73,7 +73,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
     }
     try {
       doFix();
-    } catch (IncorrectOperationException e) {
+    } catch (consulo.language.util.IncorrectOperationException e) {
       Logger.getInstance(getClass().getName()).error(e);
     }
   }
@@ -98,7 +98,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
   }
 
   @Override
-  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
     doFix();
   }
 

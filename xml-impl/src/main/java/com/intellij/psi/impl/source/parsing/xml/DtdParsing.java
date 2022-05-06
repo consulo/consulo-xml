@@ -16,26 +16,26 @@
 package com.intellij.psi.impl.source.parsing.xml;
 
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilderFactory;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.lexer.DtdLexer;
 import com.intellij.lexer._DtdLexer;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.DummyHolder;
-import com.intellij.psi.impl.source.DummyHolderFactory;
-import com.intellij.psi.impl.source.resolve.FileContextUtil;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlEntityDecl;
 import com.intellij.xml.XmlBundle;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.psi.FileContextUtil;
+import consulo.language.impl.psi.DummyHolder;
+import consulo.language.impl.psi.DummyHolderFactory;
+import consulo.language.parser.LanguageParserDefinitions;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.parser.PsiBuilderFactory;
+import consulo.language.psi.PsiFile;
+import consulo.language.version.LanguageVersionUtil;
+import consulo.logging.Logger;
 
 /**
  * @author Mike

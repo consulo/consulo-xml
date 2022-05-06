@@ -15,18 +15,19 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.lang.ASTFactory;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.formatter.WhiteSpaceFormattingStrategyAdapter;
-import com.intellij.psi.impl.source.codeStyle.CodeEditUtil;
-import com.intellij.psi.impl.source.tree.Factory;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.SharedImplUtil;
-import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.CharTable;
+import consulo.ide.impl.psi.formatter.WhiteSpaceFormattingStrategyAdapter;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.ast.ASTFactory;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.ast.Factory;
+import consulo.language.impl.internal.ast.SharedImplUtil;
+import consulo.language.impl.psi.CodeEditUtil;
+import consulo.language.util.CharTable;
+
 import javax.annotation.Nonnull;
 
 /**

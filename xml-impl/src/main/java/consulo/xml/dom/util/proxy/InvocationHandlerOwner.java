@@ -1,6 +1,6 @@
 package consulo.xml.dom.util.proxy;
 
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationHandler;

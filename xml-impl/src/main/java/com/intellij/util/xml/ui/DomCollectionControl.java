@@ -15,22 +15,18 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilCore;
+import consulo.dataContext.DataSink;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.ui.CommonActionsPanel;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.EventDispatcher;
-import com.intellij.util.IconUtil;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.ui.ColumnInfo;
+import consulo.proxy.EventDispatcher;
+import consulo.ui.ex.action.ActionManager;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.awt.ColumnInfo;
+import consulo.ui.ex.awt.CommonActionsPanel;
+import consulo.ide.impl.idea.util.IconUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.highlighting.DomCollectionProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
@@ -38,8 +34,18 @@ import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.actions.AddDomElementAction;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
+import consulo.application.ApplicationBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.Result;
+import consulo.dataContext.TypeSafeDataProvider;
+import consulo.language.psi.PsiUtilCore;
+import consulo.project.Project;
+import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -116,7 +122,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
 
 
   public boolean canNavigate(DomElement element) {
-    final Class<DomElement> aClass = (Class<DomElement>)ReflectionUtil.getRawType(myChildDescription.getType());
+    final Class<DomElement> aClass = (Class<DomElement>) ReflectionUtil.getRawType(myChildDescription.getType());
 
     final DomElement domElement = element.getParentOfType(aClass, false);
 
@@ -170,7 +176,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
 
   protected DefaultActionGroup createPopupActionGroup() {
     final DefaultActionGroup group = new DefaultActionGroup();
-    group.addAll((DefaultActionGroup)ActionManager.getInstance().getAction("DomCollectionControl"));
+    group.addAll((DefaultActionGroup) ActionManager.getInstance().getAction("DomCollectionControl"));
     return group;
   }
 
@@ -306,7 +312,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
   }
 
   protected final Class<? extends T> getCollectionElementClass() {
-    return (Class<? extends T>)ReflectionUtil.getRawType(myChildDescription.getType());
+    return (Class<? extends T>) ReflectionUtil.getRawType(myChildDescription.getType());
   }
 
 

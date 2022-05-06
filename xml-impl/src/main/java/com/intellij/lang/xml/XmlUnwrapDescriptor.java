@@ -15,19 +15,19 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.codeInsight.unwrap.LanguageUnwrappers;
-import com.intellij.codeInsight.unwrap.UnwrapDescriptor;
-import com.intellij.codeInsight.unwrap.Unwrapper;
-import com.intellij.lang.Language;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.ide.impl.idea.codeInsight.unwrap.LanguageUnwrappers;
+import consulo.language.Language;
+import consulo.language.editor.refactoring.unwrap.UnwrapDescriptor;
+import consulo.language.editor.refactoring.unwrap.Unwrapper;
+import consulo.codeEditor.Editor;
+import consulo.util.lang.Pair;
+import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
+import consulo.project.Project;
 
 import java.util.ArrayList;
 import java.util.Collections;

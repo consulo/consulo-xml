@@ -17,8 +17,8 @@ package com.intellij.spellchecker.tokenizer;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlText;
 

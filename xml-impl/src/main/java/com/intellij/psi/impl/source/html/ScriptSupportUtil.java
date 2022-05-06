@@ -15,15 +15,15 @@
  */
 package com.intellij.psi.impl.source.html;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.ResolveState;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceUtil;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
+import consulo.application.util.CachedValue;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.language.psi.path.FileReferenceUtil;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;

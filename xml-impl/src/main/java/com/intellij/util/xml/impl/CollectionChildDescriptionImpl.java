@@ -1,11 +1,11 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.lang.StringUtil;
+import consulo.ide.impl.idea.util.NotNullFunction;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.psi.xml.XmlTag;

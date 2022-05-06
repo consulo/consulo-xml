@@ -16,23 +16,22 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.LocalQuickFixProvider;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.codeStyle.CodeStyleManager;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.document.util.TextRange;
+import consulo.fileEditor.FileEditorManager;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.ast.ASTNode;
+import consulo.language.codeStyle.CodeStyleManager;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.psi.*;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.virtualFileSystem.VirtualFile;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.*;
@@ -40,9 +39,9 @@ import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -52,7 +51,7 @@ import java.util.Set;
  * Date: 13.08.2007
  */
 class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function<Define, ResolveResult>,
-                                                                        LocalQuickFixProvider, EmptyResolveMessageProvider {
+    LocalQuickFixProvider, EmptyResolveMessageProvider {
 
   public PatternReference(RncRef ref) {
     super(ref);
@@ -122,7 +121,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+  public PsiElement handleElementRename(String newElementName) throws consulo.language.util.IncorrectOperationException {
     final ASTNode newNode = RenameUtil.createIdentifierNode(getElement().getManager(), newElementName);
 
     final ASTNode nameNode = findNameNode();
@@ -190,7 +189,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
 
     @Override
     public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-      final RncFile rncfile = (RncFile)PsiFileFactory.getInstance(myReference.getElement().getProject()).createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
+      final RncFile rncfile = (RncFile) PsiFileFactory.getInstance(myReference.getElement().getProject()).createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
 
       final RncGrammar grammar = rncfile.getGrammar();
       assert grammar != null;
@@ -228,7 +227,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
 
       VirtualFile virtualFile = myReference.getElement().getContainingFile().getVirtualFile();
       if (virtualFile != null) {
-        FileEditorManager.getInstance(project).openTextEditor(new OpenFileDescriptor(project, virtualFile, offset), true);
+        FileEditorManager.getInstance(project).openTextEditor(OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build(), true);
       }
     }
   }

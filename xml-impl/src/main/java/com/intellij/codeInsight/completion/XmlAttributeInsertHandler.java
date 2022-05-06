@@ -15,36 +15,38 @@
  */
 package com.intellij.codeInsight.completion;
 
-import java.util.Collections;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.application.options.editor.XmlEditorOptions;
-import com.intellij.codeInsight.AutoPopupController;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.text.CharArrayUtil;
 import com.intellij.xml.XmlNamespaceHelper;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.ScrollType;
+import consulo.document.Document;
+import consulo.language.editor.AutoPopupController;
+import consulo.language.editor.completion.lookup.InsertHandler;
+import consulo.language.editor.completion.lookup.InsertionContext;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 
 /**
  * @author peter
  */
 public class XmlAttributeInsertHandler implements InsertHandler<LookupElement>
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.XmlAttributeInsertHandler");
+	private static final Logger LOG = Logger.getInstance(XmlAttributeInsertHandler.class);
 
 	public static final XmlAttributeInsertHandler INSTANCE = new XmlAttributeInsertHandler();
 

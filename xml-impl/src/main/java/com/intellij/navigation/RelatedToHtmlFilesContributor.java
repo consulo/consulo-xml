@@ -15,9 +15,10 @@
  */
 package com.intellij.navigation;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.psi.PsiFile;
+
 import javax.annotation.Nonnull;
 
 import java.util.Set;

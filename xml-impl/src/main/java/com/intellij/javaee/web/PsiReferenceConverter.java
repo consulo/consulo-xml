@@ -16,22 +16,25 @@
 
 package com.intellij.javaee.web;
 
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiElement;
+import com.intellij.util.xml.Converter;
+import com.intellij.util.xml.CustomReferenceConverter;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 
 /**
- * Can be implemented by {@link com.intellij.util.xml.Converter} instance
+ * Can be implemented by {@link Converter} instance
  *
- * @deprecated use {@link com.intellij.util.xml.CustomReferenceConverter} instead
+ * @deprecated use {@link CustomReferenceConverter} instead
  * @author Dmitry Avdeev
  */
 public interface PsiReferenceConverter {
 
   /**
    *
-   * @param psiElement underlying element for created references ({@link com.intellij.psi.PsiReference#getElement()})
-   * @param soft true if created references should be soft ({@link com.intellij.psi.PsiReference#isSoft()})
+   * @param psiElement underlying element for created references ({@link PsiReference#getElement()})
+   * @param soft true if created references should be soft ({@link PsiReference#isSoft()})
    * @return empty array if the converter cannot get any references
    */
   @Nonnull

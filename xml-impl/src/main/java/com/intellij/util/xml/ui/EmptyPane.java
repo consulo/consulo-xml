@@ -16,8 +16,7 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.ui.treeStructure.Tree;
-import com.intellij.util.ui.UIUtil;
+import consulo.ui.ex.awt.UIUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +33,7 @@ public class EmptyPane {
     final Color color = UIUtil.getSeparatorColor();
     myLabel.setForeground(color);
     myLabel.setText(text);
-    myPanel.setBackground(new Tree().getBackground());
+    myPanel.setBackground(UIUtil.getTreeBackground());
   }
 
   public JComponent getComponent() {

@@ -15,11 +15,11 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
 import com.intellij.psi.xml.XmlProcessingInstruction;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
+import consulo.document.util.TextRange;
+import consulo.language.psi.AbstractElementManipulator;
 
 /**
  * User: anna

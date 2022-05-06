@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 /**
  * @author peter

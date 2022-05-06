@@ -15,17 +15,17 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.psi.impl.source.parsing.xml.DtdParsing;
-import com.intellij.psi.tree.CustomParsingType;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
+import consulo.language.ast.CustomParsingType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.tree.xml.IXmlElementType;
-import com.intellij.util.CharTable;
+import consulo.language.ast.IFileElementType;
+import consulo.language.util.CharTable;
 
 
 public interface XmlElementType extends XmlTokenType {

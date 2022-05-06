@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import com.intellij.ui.breadcrumbs.BreadcrumbsComponent;
-import com.intellij.ui.breadcrumbs.CrumbPresentation;
+import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsComponent;
+import consulo.ide.impl.idea.ui.breadcrumbs.CrumbPresentation;
 import consulo.ui.color.ColorValue;
 
 /**

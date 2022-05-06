@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;

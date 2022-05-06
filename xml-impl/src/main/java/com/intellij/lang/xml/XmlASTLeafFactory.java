@@ -15,18 +15,19 @@
  */
 package com.intellij.lang.xml;
 
-import static com.intellij.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
+import com.intellij.psi.impl.source.xml.XmlTokenImpl;
+import com.intellij.psi.tree.xml.IXmlLeafElementType;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.ASTLeafFactory;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.internal.parser.PsiBuilderImpl;
+import consulo.language.impl.psi.PsiWhiteSpaceImpl;
+import consulo.language.version.LanguageVersion;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.lang.impl.PsiBuilderImpl;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
-import com.intellij.psi.impl.source.xml.XmlTokenImpl;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.xml.IXmlLeafElementType;
-import consulo.lang.LanguageVersion;
-import consulo.psi.tree.ASTLeafFactory;
+
+import static com.intellij.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
 
 /**
  * @author VISTALL

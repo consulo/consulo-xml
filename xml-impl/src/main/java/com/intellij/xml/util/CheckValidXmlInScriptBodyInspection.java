@@ -22,37 +22,38 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XmlLexer;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.lexer.Lexer;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim Mossienko
@@ -184,11 +185,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
     public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor) {
       if (!FileModificationService.getInstance().prepareFileForWrite(psiFile)) return;
       final TextRange range = psiElement.getTextRange();
-      OpenFileDescriptor descriptor = new OpenFileDescriptor(
-        project,
-        psiFile.getVirtualFile(),
-        range.getStartOffset() + startInElement
-      );
+      OpenFileDescriptor descriptor = OpenFileDescriptorFactory.getInstance(project).builder(psiFile.getVirtualFile()).offset(range.getStartOffset() + startInElement).build();
 
       final Editor editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true);
       if (editor == null) return;

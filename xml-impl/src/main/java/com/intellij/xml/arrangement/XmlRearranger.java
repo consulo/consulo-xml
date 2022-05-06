@@ -1,11 +1,11 @@
 package com.intellij.xml.arrangement;
 
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_TAG;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.General.ORDER;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.General.TYPE;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.Order.BY_NAME;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.Order.KEEP;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_TAG;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.General.ORDER;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.General.TYPE;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.Order.BY_NAME;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.Order.KEEP;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,28 +16,28 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.arrangement.ArrangementSettings;
-import com.intellij.psi.codeStyle.arrangement.ArrangementSettingsSerializer;
-import com.intellij.psi.codeStyle.arrangement.ArrangementUtil;
-import com.intellij.psi.codeStyle.arrangement.DefaultArrangementSettingsSerializer;
-import com.intellij.psi.codeStyle.arrangement.Rearranger;
-import com.intellij.psi.codeStyle.arrangement.group.ArrangementGroupingRule;
-import com.intellij.psi.codeStyle.arrangement.match.ArrangementEntryMatcher;
-import com.intellij.psi.codeStyle.arrangement.match.StdArrangementEntryMatcher;
-import com.intellij.psi.codeStyle.arrangement.match.StdArrangementMatchRule;
-import com.intellij.psi.codeStyle.arrangement.model.ArrangementAtomMatchCondition;
-import com.intellij.psi.codeStyle.arrangement.model.ArrangementMatchCondition;
-import com.intellij.psi.codeStyle.arrangement.std.ArrangementSettingsToken;
-import com.intellij.psi.codeStyle.arrangement.std.ArrangementStandardSettingsAware;
-import com.intellij.psi.codeStyle.arrangement.std.CompositeArrangementSettingsToken;
-import com.intellij.psi.codeStyle.arrangement.std.StdArrangementSettings;
-import com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens;
-import com.intellij.util.containers.ContainerUtilRt;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.arrangement.ArrangementSettingsSerializer;
+import consulo.language.codeStyle.arrangement.ArrangementUtil;
+import consulo.language.codeStyle.arrangement.group.ArrangementGroupingRule;
+import consulo.language.codeStyle.arrangement.match.StdArrangementEntryMatcher;
+import consulo.language.codeStyle.arrangement.model.ArrangementAtomMatchCondition;
+import consulo.language.codeStyle.arrangement.model.ArrangementMatchCondition;
+import consulo.language.codeStyle.arrangement.std.ArrangementStandardSettingsAware;
+import consulo.util.lang.Pair;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.codeStyle.arrangement.ArrangementSettings;
+import consulo.language.codeStyle.arrangement.DefaultArrangementSettingsSerializer;
+import consulo.language.codeStyle.arrangement.Rearranger;
+import consulo.language.codeStyle.arrangement.match.ArrangementEntryMatcher;
+import consulo.language.codeStyle.arrangement.match.StdArrangementMatchRule;
+import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
+import consulo.language.codeStyle.arrangement.std.CompositeArrangementSettingsToken;
+import consulo.language.codeStyle.arrangement.std.StdArrangementSettings;
+import consulo.language.codeStyle.arrangement.std.StdArrangementTokens;
+import consulo.ide.impl.idea.util.containers.ContainerUtilRt;
+import consulo.document.Document;
 
 /**
  * @author Eugene.Kudelevsky

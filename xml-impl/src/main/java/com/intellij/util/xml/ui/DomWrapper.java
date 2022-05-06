@@ -17,8 +17,8 @@ package com.intellij.util.xml.ui;
 
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
 import com.intellij.psi.xml.XmlFile;
 
 import javax.annotation.Nonnull;

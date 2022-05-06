@@ -15,111 +15,109 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInsight.template.Template;
-import com.intellij.codeInsight.template.TemplateManager;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.template.Template;
+import consulo.language.editor.template.TemplateManager;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
+import javax.annotation.Nonnull;
+
 class CreateXmlElementIntentionAction implements IntentionAction {
-	private final String myMessageKey;
-	protected final TypeOrElementOrAttributeReference myRef;
-	private boolean myIsAvailableEvaluated;
-	private XmlFile myTargetFile;
-	private final String myDeclarationTagName;
+  private final String myMessageKey;
+  protected final TypeOrElementOrAttributeReference myRef;
+  private boolean myIsAvailableEvaluated;
+  private XmlFile myTargetFile;
+  private final String myDeclarationTagName;
 
-	CreateXmlElementIntentionAction(
-			@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
-			@NonNls @Nonnull String declarationTagName,
-			TypeOrElementOrAttributeReference ref) {
+  CreateXmlElementIntentionAction(
+      @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
+      @NonNls @Nonnull String declarationTagName,
+      TypeOrElementOrAttributeReference ref) {
 
-		myMessageKey = messageKey;
-		myRef = ref;
-		myDeclarationTagName = declarationTagName;
-	}
+    myMessageKey = messageKey;
+    myRef = ref;
+    myDeclarationTagName = declarationTagName;
+  }
 
-	@Override
-	@Nonnull
-	public String getText() {
-		return XmlBundle.message(myMessageKey, XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
-	}
+  @Override
+  @Nonnull
+  public String getText() {
+    return XmlBundle.message(myMessageKey, XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
+  }
 
-	@Override
-	@Nonnull
-	public String getFamilyName() {
-		return XmlBundle.message("xml.create.xml.declaration.intention.type");
-	}
+  @Override
+  @Nonnull
+  public String getFamilyName() {
+    return XmlBundle.message("xml.create.xml.declaration.intention.type");
+  }
 
-	@Override
-	public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
-		if (!myIsAvailableEvaluated) {
-			final XmlTag tag = PsiTreeUtil.getParentOfType(myRef.getElement(), XmlTag.class);
-			if (tag != null) {
-				final XmlNSDescriptorImpl descriptor = myRef.getDescriptor(tag, myRef.getCanonicalText());
+  @Override
+  public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
+    if (!myIsAvailableEvaluated) {
+      final XmlTag tag = PsiTreeUtil.getParentOfType(myRef.getElement(), XmlTag.class);
+      if (tag != null) {
+        final XmlNSDescriptorImpl descriptor = myRef.getDescriptor(tag, myRef.getCanonicalText());
 
-				if (descriptor != null &&
-						descriptor.getDescriptorFile() != null &&
-						descriptor.getDescriptorFile().isWritable()
-						) {
-					myTargetFile = descriptor.getDescriptorFile();
-				}
-			}
-			myIsAvailableEvaluated = true;
-		}
-		return myTargetFile != null;
-	}
+        if (descriptor != null &&
+            descriptor.getDescriptorFile() != null &&
+            descriptor.getDescriptorFile().isWritable()
+        ) {
+          myTargetFile = descriptor.getDescriptorFile();
+        }
+      }
+      myIsAvailableEvaluated = true;
+    }
+    return myTargetFile != null;
+  }
 
-	@Override
-	public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
-		if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
+  @Override
+  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
+    if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
 
-		final XmlTag rootTag = myTargetFile.getDocument().getRootTag();
+    final XmlTag rootTag = myTargetFile.getDocument().getRootTag();
 
-		OpenFileDescriptor descriptor = new OpenFileDescriptor(
-				project,
-				myTargetFile.getVirtualFile(),
-				rootTag.getValue().getTextRange().getEndOffset()
-		);
-		Editor targetEditor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true);
-		TemplateManager manager = TemplateManager.getInstance(project);
-		final Template template = manager.createTemplate("", "");
+    OpenFileDescriptor descriptor = OpenFileDescriptorFactory.getInstance(project).builder(myTargetFile.getVirtualFile()).offset(rootTag.getValue().getTextRange().getEndOffset()).build();
 
-		addTextTo(template, rootTag);
+    Editor targetEditor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true);
+    TemplateManager manager = TemplateManager.getInstance(project);
+    final Template template = manager.createTemplate("", "");
 
-		manager.startTemplate(targetEditor, template);
-	}
+    addTextTo(template, rootTag);
 
-	protected void addTextTo(Template template, XmlTag rootTag) {
-		String schemaPrefix = rootTag.getPrefixByNamespace(XmlUtil.XML_SCHEMA_URI);
-		if (!schemaPrefix.isEmpty()) schemaPrefix += ":";
+    manager.startTemplate(targetEditor, template);
+  }
 
-		template.addTextSegment(
-				"<" + schemaPrefix + myDeclarationTagName + " name=\"" + XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()) + "\">"
-		);
-		template.addEndVariable();
-		template.addTextSegment(
-				"</" + schemaPrefix + myDeclarationTagName + ">\n"
-		);
-		template.setToReformat(true);
-	}
+  protected void addTextTo(Template template, XmlTag rootTag) {
+    String schemaPrefix = rootTag.getPrefixByNamespace(XmlUtil.XML_SCHEMA_URI);
+    if (!schemaPrefix.isEmpty()) schemaPrefix += ":";
 
-	@Override
-	public boolean startInWriteAction() {
-		return true;
-	}
+    template.addTextSegment(
+        "<" + schemaPrefix + myDeclarationTagName + " name=\"" + XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()) + "\">"
+    );
+    template.addEndVariable();
+    template.addTextSegment(
+        "</" + schemaPrefix + myDeclarationTagName + ">\n"
+    );
+    template.setToReformat(true);
+  }
+
+  @Override
+  public boolean startInWriteAction() {
+    return true;
+  }
 }

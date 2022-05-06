@@ -15,14 +15,15 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.JBColor;
-import com.intellij.util.ArrayUtil;
+import consulo.ui.ex.JBColor;
+import consulo.ui.ex.awt.ComboBox;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlBundle;
+import consulo.project.Project;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+
 import javax.annotation.Nonnull;
 
 import javax.swing.*;

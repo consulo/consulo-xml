@@ -16,10 +16,10 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.util;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiManager;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiManager;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;

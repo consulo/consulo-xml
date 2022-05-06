@@ -16,7 +16,7 @@
 
 package com.intellij.javaee;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
+import consulo.component.extension.ExtensionPointName;
 
 /**
  * @author Dmitry Avdeev

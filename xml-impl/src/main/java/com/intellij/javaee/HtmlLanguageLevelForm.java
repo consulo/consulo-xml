@@ -15,16 +15,16 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.openapi.editor.event.DocumentAdapter;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.TextFieldWithAutoCompletion;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.ui.UIUtil;
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.util.XmlUtil;
-import javax.annotation.Nonnull;
+import consulo.document.event.DocumentAdapter;
+import consulo.document.event.DocumentEvent;
+import consulo.ide.impl.idea.ui.TextFieldWithAutoCompletion;
+import consulo.project.Project;
+import consulo.ui.ex.awt.UIUtil;
+import consulo.util.collection.Lists;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +41,7 @@ public class HtmlLanguageLevelForm {
   private JPanel myContentPanel;
   private JPanel myOtherDoctypeWrapper;
   private final TextFieldWithAutoCompletion myDoctypeTextField;
-  private final List<MyListener> myListeners = ContainerUtil.createLockFreeCopyOnWriteList();
+  private final List<MyListener> myListeners = Lists.newLockFreeCopyOnWriteList();
 
   public HtmlLanguageLevelForm(Project project) {
     final String[] urls = ExternalResourceManager.getInstance().getResourceUrls(null, true);

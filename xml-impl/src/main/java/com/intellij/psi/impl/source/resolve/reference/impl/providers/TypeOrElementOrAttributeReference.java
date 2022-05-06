@@ -22,22 +22,22 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.application.util.function.Processor;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.resolve.ResolveCache;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.resolve.ResolveCache;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
@@ -334,7 +334,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference
 	@Override
 	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
-		throw new IncorrectOperationException();
+		throw new consulo.language.util.IncorrectOperationException();
 	}
 
 	@Override

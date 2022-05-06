@@ -1,7 +1,7 @@
 package com.intellij.xml.breadcrumbs;
 
 import javax.annotation.Nonnull;
-import com.intellij.lang.Language;
+import consulo.language.Language;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 
 /**

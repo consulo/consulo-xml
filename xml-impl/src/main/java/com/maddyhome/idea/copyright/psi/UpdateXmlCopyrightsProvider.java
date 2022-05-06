@@ -15,25 +15,21 @@
  */
 package com.maddyhome.idea.copyright.psi;
 
-import javax.annotation.Nonnull;
-import javax.swing.JPanel;
-
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlAttributeDecl;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.*;
 import com.intellij.xml.util.HtmlUtil;
-import com.maddyhome.idea.copyright.CopyrightProfile;
-import com.maddyhome.idea.copyright.ui.TemplateCommentPanel;
-import consulo.copyright.config.CopyrightFileConfig;
+import consulo.ide.impl.copyright.impl.CopyrightProfile;
+import consulo.ide.impl.copyright.impl.config.CopyrightFileConfig;
+import consulo.ide.impl.copyright.impl.psi.UpdateCopyrightsProvider;
+import consulo.ide.impl.copyright.impl.psi.UpdatePsiFileCopyright;
+import consulo.ide.impl.copyright.impl.ui.TemplateCommentPanel;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
+
+import javax.annotation.Nonnull;
+import javax.swing.*;
 
 /**
  * User: anna
@@ -201,7 +197,7 @@ public class UpdateXmlCopyrightsProvider extends UpdateCopyrightsProvider
 			return res;
 		}
 
-		private static final Logger logger = Logger.getInstance(UpdateXmlFileCopyright.class.getName());
+		private static final Logger logger = Logger.getInstance(UpdateXmlFileCopyright.class);
 	}
 
 	@Nonnull

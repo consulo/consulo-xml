@@ -15,13 +15,13 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.patterns.ElementPattern;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.refactoring.rename.RenameInputValidator;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.refactoring.rename.RenameInputValidator;
-import com.intellij.util.ProcessingContext;
+import consulo.language.util.ProcessingContext;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static consulo.language.pattern.PlatformPatterns.psiElement;
 
 public class XmlAttributeValueRenameValidator implements RenameInputValidator {
   @Override

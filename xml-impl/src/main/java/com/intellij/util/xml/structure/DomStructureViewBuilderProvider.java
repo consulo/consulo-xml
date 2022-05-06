@@ -15,13 +15,14 @@
  */
 package com.intellij.util.xml.structure;
 
-import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.Function;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.ide.impl.idea.util.Function;
+
 import javax.annotation.Nonnull;
 
 /**

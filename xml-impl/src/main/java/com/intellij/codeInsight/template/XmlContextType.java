@@ -17,11 +17,12 @@ package com.intellij.codeInsight.template;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.lang.Language;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilCore;
+import consulo.language.psi.PsiUtilCore;
+import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author yole

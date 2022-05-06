@@ -1,10 +1,10 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.util.Factory;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.logging.Logger;
+import consulo.module.Module;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.util.Factory;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;

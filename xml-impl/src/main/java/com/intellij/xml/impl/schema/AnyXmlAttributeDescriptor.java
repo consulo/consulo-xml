@@ -24,10 +24,10 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.util.collection.ArrayUtil;
 
 public class AnyXmlAttributeDescriptor implements XmlAttributeDescriptor {
   private final String myAttributeName;

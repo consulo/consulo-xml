@@ -15,22 +15,22 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.RecursionGuard;
-import com.intellij.openapi.util.RecursionManager;
+import consulo.application.util.RecursionGuard;
+import consulo.application.util.function.Computable;
+import consulo.application.util.function.Processor;
+import consulo.ide.impl.idea.util.Function;
+import consulo.project.Project;
+import consulo.application.util.RecursionManager;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.reference.SoftReference;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.Processor;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.ref.SoftReference;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.JavaMethod;
 import com.intellij.util.xml.reflect.*;
+import consulo.component.extension.Extensions;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 

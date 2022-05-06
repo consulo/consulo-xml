@@ -15,8 +15,10 @@
  */
 package com.intellij.ide.util.treeView;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.ide.impl.idea.ide.util.treeView.SmartElementDescriptor;
+import consulo.project.Project;
+import consulo.ui.ex.tree.NodeDescriptor;
 
 /**
  * @author Mike

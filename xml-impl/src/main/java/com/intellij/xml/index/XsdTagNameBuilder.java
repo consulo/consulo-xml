@@ -25,7 +25,7 @@ import java.util.Collection;
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
-import com.intellij.util.xml.NanoXmlUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
 
 /**
  * @author Dmitry Avdeev

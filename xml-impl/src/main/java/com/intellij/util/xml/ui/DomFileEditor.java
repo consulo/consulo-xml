@@ -15,17 +15,17 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.openapi.MnemonicHelper;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.vfs.VirtualFile;
+import consulo.project.Project;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.virtualFileSystem.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.events.DomEvent;
 import consulo.disposer.Disposer;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.ide.ServiceManager;
+import consulo.ui.ex.awt.internal.MnemonicHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

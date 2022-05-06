@@ -15,17 +15,19 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.util.JDOMExternalizer;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
-import org.intellij.plugins.intelliLang.inject.InjectorUtils;
-import org.intellij.plugins.intelliLang.util.StringMatcher;
+import consulo.ide.impl.idea.openapi.util.JDOMExternalizer;
+import consulo.ide.impl.intelliLang.inject.InjectorUtils;
+import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
+import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
+import consulo.ide.impl.intelliLang.util.StringMatcher;
+import consulo.language.psi.PsiElement;
+import consulo.util.lang.StringUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 public class XmlAttributeInjection extends AbstractTagInjection {
 

@@ -15,16 +15,20 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.formatter.common.AbstractBlock;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
-import com.intellij.psi.tree.IElementType;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.codeStyle.Alignment;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.Indent;
+import consulo.language.codeStyle.Wrap;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.logging.Logger;
+import consulo.language.codeStyle.AbstractBlock;
+import consulo.language.psi.OuterLanguageElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.codeStyle.WrapType;
 
 import java.util.List;
 
@@ -52,7 +56,7 @@ public abstract class AbstractSyntheticBlock implements Block {
 
   }
 
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.formatter.xml.AbstractSyntheticBlock");
+  private static final Logger LOG = Logger.getInstance(AbstractSyntheticBlock.class);
 
   private ASTNode getFirstNode(final List<Block> subBlocks) {
     LOG.assertTrue(!subBlocks.isEmpty());

@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiReference;
 
 /**
  * @author Dmitry Avdeev

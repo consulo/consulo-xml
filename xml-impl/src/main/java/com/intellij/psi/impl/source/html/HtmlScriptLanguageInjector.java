@@ -19,13 +19,13 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageUtil;
-import com.intellij.lang.injection.MultiHostInjector;
-import com.intellij.lang.injection.MultiHostRegistrar;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
+import consulo.document.util.TextRange;
+import consulo.language.Language;
+import consulo.language.inject.MultiHostRegistrar;
+import consulo.language.util.LanguageUtil;
+import consulo.language.inject.MultiHostInjector;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 

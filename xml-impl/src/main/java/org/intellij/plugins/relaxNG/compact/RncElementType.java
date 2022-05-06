@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 
 public class RncElementType extends IElementType {
   public RncElementType(String name) {

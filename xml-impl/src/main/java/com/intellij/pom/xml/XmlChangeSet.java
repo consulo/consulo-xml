@@ -15,10 +15,11 @@
  */
 package com.intellij.pom.xml;
 
-import com.intellij.pom.PomModelAspect;
-import com.intellij.pom.event.PomChangeSet;
+import consulo.language.pom.event.PomChangeSet;
 import com.intellij.pom.xml.events.XmlChange;
 import com.intellij.psi.xml.XmlFile;
+import consulo.language.pom.PomModelAspect;
+
 import javax.annotation.Nonnull;
 
 import java.util.List;

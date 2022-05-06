@@ -1,8 +1,8 @@
 package com.intellij.xml.refactoring;
 
-import com.intellij.lang.refactoring.InlineHandler;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiElement;
+import consulo.ide.impl.idea.lang.refactoring.InlineHandler;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiElement;
 
 /**
  * @author Eugene.Kudelevsky

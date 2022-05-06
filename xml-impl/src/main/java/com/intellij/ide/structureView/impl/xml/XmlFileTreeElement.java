@@ -20,14 +20,14 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.psi.PsiElement;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 import com.intellij.psi.xml.XmlDoctype;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlMarkupDecl;
 import com.intellij.psi.xml.XmlProlog;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.PsiElement;
 
 public class XmlFileTreeElement extends AbstractXmlTagTreeElement<XmlFile> {
   public XmlFileTreeElement(XmlFile file) {

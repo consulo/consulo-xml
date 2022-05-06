@@ -15,8 +15,9 @@
  */
 package com.intellij.lexer;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.lexer.DelegateLexer;
 
 /**
  * @author mike

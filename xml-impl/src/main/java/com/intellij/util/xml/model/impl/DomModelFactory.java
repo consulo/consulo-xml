@@ -16,10 +16,10 @@
 
 package com.intellij.util.xml.model.impl;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
+import consulo.module.Module;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;

@@ -15,12 +15,16 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlFile;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.language.editor.WriteCommandAction;
 import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 
@@ -42,7 +46,7 @@ public interface DomElement extends AnnotatedElement, UserDataHolder
   /**
    * Returns the underlying XML element/file.
    *
-   * @return {@link com.intellij.psi.xml.XmlFile}, {@link com.intellij.psi.xml.XmlTag} or {@link com.intellij.psi.xml.XmlAttribute}
+   * @return {@link XmlFile}, {@link XmlTag} or {@link XmlAttribute}
    */
   @Nullable
   XmlElement getXmlElement();
@@ -123,11 +127,11 @@ public interface DomElement extends AnnotatedElement, UserDataHolder
   <T extends DomElement> T createMockCopy(final boolean physical);
 
   /**
-   * @return stable element (see {@link DomManager#createStableValue(com.intellij.openapi.util.Factory)}}),
+   * @return stable element (see {@link DomManager#createStableValue(Factory)}}),
    * that holds the complete 'XPath' to this element in XML. If this element is in collection, and something
    * is inserted before it, the stable copy behaviour may be unexpected. So use this method only when you
    * are sure that nothing serious will happen during the lifetime of the stable copy. The most usual use
-   * case is when one creates something inside {@link com.intellij.openapi.command.WriteCommandAction} and
+   * case is when one creates something inside {@link WriteCommandAction} and
    * wants to use it outside the action. Due to formatting done on the command finish the element may become
    * invalidated, but the stable copy will survive, because nothing in fact has changed in its 'XPath'.
    */

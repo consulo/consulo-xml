@@ -15,14 +15,14 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.filters.ElementFilter;
-import com.intellij.psi.meta.MetaDataContributor;
-import com.intellij.psi.meta.MetaDataRegistrar;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.MetaDataRegistrar;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomMetaData;
+import consulo.language.psi.filter.ElementFilter;
+import consulo.language.psi.meta.MetaDataContributor;
 
 /**
  * @author yole

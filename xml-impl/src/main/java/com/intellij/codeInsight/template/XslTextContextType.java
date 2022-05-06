@@ -15,11 +15,12 @@ package com.intellij.codeInsight.template;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.util.io.FileUtilRt;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.ide.impl.idea.openapi.util.io.FileUtilRt;
+import consulo.language.psi.PsiElement;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author Eugene.Kudelevsky

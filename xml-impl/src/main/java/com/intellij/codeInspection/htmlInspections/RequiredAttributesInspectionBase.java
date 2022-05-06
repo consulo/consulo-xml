@@ -15,13 +15,13 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.InspectionProfileEntry;
-import com.intellij.codeInspection.InspectionsBundle;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
+import consulo.language.editor.inspection.InspectionsBundle;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.codeInspection.ex.UnfairLocalInspectionTool;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.language.editor.inspection.scheme.UnfairLocalInspectionTool;
+import consulo.logging.Logger;
 import com.intellij.xml.XmlBundle;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;

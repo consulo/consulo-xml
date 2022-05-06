@@ -19,14 +19,14 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.util.collection.ArrayUtil;
 
 public class NullElementDescriptor implements XmlElementDescriptor {
   private static final NullElementDescriptor INSTANCE = new NullElementDescriptor();

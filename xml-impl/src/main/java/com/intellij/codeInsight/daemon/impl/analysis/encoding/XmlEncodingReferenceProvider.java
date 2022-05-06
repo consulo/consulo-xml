@@ -17,22 +17,22 @@ package com.intellij.codeInsight.daemon.impl.analysis.encoding;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.util.ProcessingContext;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
 
 /**
  * @author cdr
  */
 public class XmlEncodingReferenceProvider extends PsiReferenceProvider {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider");
+  private static final Logger LOG = Logger.getInstance(XmlEncodingReferenceProvider.class);
   @NonNls private static final String CHARSET_PREFIX = "charset=";
 
   @Nonnull

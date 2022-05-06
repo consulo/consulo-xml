@@ -15,14 +15,14 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.DtdResolveUtil;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlContentParticle;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.psi.PsiWhiteSpace;
 
 /**
  * @author Dmitry Avdeev

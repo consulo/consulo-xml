@@ -15,15 +15,15 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.codeInsight.unwrap.Unwrapper;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.refactoring.unwrap.Unwrapper;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.lang.ASTNode;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.ast.ASTNode;
 
 import java.util.Set;
 import java.util.List;

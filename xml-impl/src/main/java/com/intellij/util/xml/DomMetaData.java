@@ -15,13 +15,13 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.meta.PsiWritableMetaData;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiPresentableMetaData;
+import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.ui.image.Image;
+import consulo.language.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 

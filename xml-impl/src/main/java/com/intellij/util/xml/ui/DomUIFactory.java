@@ -15,20 +15,20 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.UserActivityWatcher;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.ui.ColumnInfo;
+import consulo.ide.ServiceManager;
+import consulo.component.extension.ExtensionPointName;
+import consulo.ide.impl.idea.util.Consumer;
+import consulo.ui.ex.awt.ColumnInfo;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.Required;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
+import consulo.ide.impl.idea.util.Function;
+import consulo.project.Project;
+import consulo.ui.ex.awt.UserActivityWatcher;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
@@ -145,7 +145,7 @@ public abstract class DomUIFactory {
   }
 
   public ColumnInfo createColumnInfo(final DomCollectionChildDescription description,
-                                     final DomElement element) {
+                                                       final DomElement element) {
     final String presentableName = description.getCommonPresentableName(element);
     final Class aClass = DomUtil.extractParameterClassFromGenericType(description.getType());
     if (aClass != null) {

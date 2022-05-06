@@ -15,54 +15,35 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.formatting.Alignment;
-import com.intellij.formatting.Block;
-import com.intellij.formatting.DelegatingFormattingModelBuilder;
-import com.intellij.formatting.FormattingModelBuilder;
-import com.intellij.formatting.Indent;
-import com.intellij.formatting.Spacing;
-import com.intellij.formatting.Wrap;
-import com.intellij.formatting.WrapType;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageFormatting;
-import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.formatter.WhiteSpaceFormattingStrategy;
-import com.intellij.psi.formatter.WhiteSpaceFormattingStrategyFactory;
-import com.intellij.psi.formatter.common.AbstractBlock;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.psi.xml.XmlTokenType;
+import com.intellij.psi.xml.*;
+import consulo.document.util.TextRange;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.ast.TokenType;
+import consulo.language.codeStyle.*;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.parser.LanguageParserDefinitions;
+import consulo.language.parser.ParserDefinition;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.template.TemplateLanguageFileViewProvider;
+import consulo.logging.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class AbstractXmlBlock extends AbstractBlock {
@@ -419,7 +400,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
 
   public abstract boolean isTextElement();
 
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.formatter.xml.AbstractXmlBlock");
+  private static final Logger LOG = Logger.getInstance(AbstractXmlBlock.class);
 
   protected void createJspTextNode(final List<Block> localResult, final ASTNode child, final Indent indent) {
   }

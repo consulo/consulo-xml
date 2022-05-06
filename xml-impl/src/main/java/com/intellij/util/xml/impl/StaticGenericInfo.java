@@ -1,13 +1,18 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.Pair;
+import consulo.application.util.function.Processor;
+import consulo.ide.impl.idea.util.ConstantFunction;
+import consulo.ide.impl.idea.util.Function;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.ide.impl.idea.util.ObjectUtils;
+import consulo.util.lang.Pair;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.*;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
+import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -158,15 +163,11 @@ public class StaticGenericInfo extends DomGenericInfoEx {
   private static Function<Object[], Type> getTypeGetter(final JavaMethod method) {
     final Class<?>[] parameterTypes = method.getParameterTypes();
     if (parameterTypes.length >= 1 && parameterTypes[0].equals(Class.class)) {
-      return new Function.First<Object, Type>();
+      return s -> (Type) s[0];
     }
 
     if (parameterTypes.length == 2 && parameterTypes[1].equals(Class.class)) {
-      return new Function<Object[], Type>() {
-        public Type fun(final Object[] s) {
-          return (Type)s[1];
-        }
-      };
+      return s -> (Type)s[1];
     }
 
     return new Function<Object[], Type>() {
@@ -180,15 +181,11 @@ public class StaticGenericInfo extends DomGenericInfoEx {
   private static Function<Object[], Integer> getIndexGetter(final JavaMethod method) {
     final Class<?>[] parameterTypes = method.getParameterTypes();
     if (parameterTypes.length >= 1 && parameterTypes[0].equals(int.class)) {
-      return new Function.First<Object, Integer>();
+      return s -> (Integer) s[0];
     }
 
     if (parameterTypes.length == 2 && parameterTypes[1].equals(int.class)) {
-      return new Function<Object[], Integer>() {
-        public Integer fun(final Object[] s) {
-          return (Integer)s[1];
-        }
-      };
+      return s -> (Integer)s[1];
     }
 
     return new ConstantFunction<Object[], Integer>(Integer.MAX_VALUE);

@@ -15,22 +15,28 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.*;
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.formatter.common.AbstractBlock;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.codeStyle.Alignment;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.ChildAttributes;
+import consulo.language.codeStyle.Indent;
+import consulo.language.codeStyle.Spacing;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.codeStyle.AbstractBlock;
+import consulo.language.psi.OuterLanguageElement;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.SmartList;
+import consulo.util.collection.SmartList;
+import consulo.language.codeStyle.Wrap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -41,7 +47,7 @@ public class XmlBlock extends AbstractXmlBlock {
   private final Indent myIndent;
   private final TextRange myTextRange;
 
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.formatter.xml.XmlBlock");
+  private static final Logger LOG = Logger.getInstance(XmlBlock.class);
 
   public XmlBlock(final ASTNode node,
                     final Wrap wrap,
@@ -215,7 +221,8 @@ public class XmlBlock extends AbstractXmlBlock {
     }
   }
 
-  protected @Nullable Wrap getDefaultWrap(ASTNode node) {
+  protected @Nullable
+  Wrap getDefaultWrap(ASTNode node) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.util.Function;
+import consulo.ide.impl.idea.util.Function;
 
 import java.lang.reflect.Type;
 

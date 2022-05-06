@@ -16,9 +16,9 @@
 
 package com.intellij.util.xml.reflect;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomElement;
+import consulo.language.psi.PsiElement;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

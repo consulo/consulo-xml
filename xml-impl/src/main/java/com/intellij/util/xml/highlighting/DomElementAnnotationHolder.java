@@ -17,15 +17,15 @@ package com.intellij.util.xml.highlighting;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiReference;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.document.util.TextRange;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.psi.PsiReference;
 
 import javax.annotation.Nullable;
 
@@ -52,7 +52,7 @@ public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDe
   DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference);
 
   /**
-   * Is useful only if called from {@link com.intellij.util.xml.highlighting.DomElementsAnnotator} instance
+   * Is useful only if called from {@link DomElementsAnnotator} instance
    * @param element element
    * @param severity highlight severity
    * @param message description

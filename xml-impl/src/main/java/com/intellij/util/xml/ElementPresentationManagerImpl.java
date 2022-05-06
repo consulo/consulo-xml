@@ -16,9 +16,9 @@
 
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.Function;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.PsiElement;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;

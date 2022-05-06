@@ -16,14 +16,15 @@
 package com.intellij.util.xml.highlighting;
 
 import com.intellij.util.xml.DomElement;
-import com.intellij.openapi.extensions.ExtensionPointName;
+import consulo.component.extension.ExtensionPointName;
+
 import javax.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
- * Basic DOM inspection (see {@link com.intellij.util.xml.highlighting.BasicDomElementsInspection})
+ * Basic DOM inspection (see {@link BasicDomElementsInspection})
  * calls this annotator on all DOM elements with the given custom user-defined annotation.
  *
  * @author peter

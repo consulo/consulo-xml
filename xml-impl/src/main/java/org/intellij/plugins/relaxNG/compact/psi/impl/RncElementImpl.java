@@ -16,14 +16,14 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.impl.psi.ASTWrapperPsiElement;
+import consulo.language.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
@@ -52,7 +52,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
+  public PsiElement add(@Nonnull PsiElement psiElement) throws consulo.language.util.IncorrectOperationException {
     final ASTNode astNode = psiElement.getNode();
     assert astNode != null;
 
@@ -64,7 +64,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement addBefore(@Nonnull PsiElement psiElement, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addBefore(@Nonnull PsiElement psiElement, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     final ASTNode child = psiElement.getNode();
     assert child != null;
 
@@ -79,7 +79,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement addAfter(@Nonnull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addAfter(@Nonnull PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     final ASTNode astNode = anchor.getNode();
     assert astNode != null;
 

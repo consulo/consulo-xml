@@ -15,24 +15,25 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import javax.annotation.Nullable;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.RawText;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.tree.TreeUtil;
 import com.intellij.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlText;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.RawText;
+import consulo.document.Document;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.action.CopyPastePreProcessor;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiUtilCore;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

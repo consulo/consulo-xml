@@ -1,22 +1,23 @@
 package org.intellij.plugins.relaxNG.model.resolve;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.impl.include.FileIncludeInfo;
-import com.intellij.psi.impl.include.FileIncludeProvider;
-import com.intellij.util.Consumer;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.text.CharArrayUtil;
-import com.intellij.util.xml.NanoXmlUtil;
+import consulo.language.psi.include.FileIncludeInfo;
+import consulo.language.psi.include.FileIncludeProvider;
+import consulo.language.psi.stub.FileContent;
+import consulo.util.io.Readers;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncInclude;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /*
 * Created by IntelliJ IDEA.
@@ -38,8 +39,8 @@ public class RelaxIncludeProvider extends FileIncludeProvider {
 
   @Override
   public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
-    fileTypeSink.consume(XmlFileType.INSTANCE);
-    fileTypeSink.consume(RncFileType.getInstance());
+    fileTypeSink.accept(XmlFileType.INSTANCE);
+    fileTypeSink.accept(RncFileType.getInstance());
   }
 
   @Nonnull
@@ -51,10 +52,10 @@ public class RelaxIncludeProvider extends FileIncludeProvider {
       CharSequence inputDataContentAsText = content.getContentAsText();
       if (CharArrayUtil.indexOf(inputDataContentAsText, ApplicationLoader.RNG_NAMESPACE, 0) == -1) return FileIncludeInfo.EMPTY;
       infos = new ArrayList<>();
-      NanoXmlUtil.parse(CharArrayUtil.readerFromCharSequence(content.getContentAsText()), new RngBuilderAdapter(infos));
+      NanoXmlUtil.parse(Readers.readerFromCharSequence(content.getContentAsText()), new RngBuilderAdapter(infos));
     } else if (content.getFileType() == RncFileType.getInstance()) {
       infos = new ArrayList<>();
-      content.getPsiFile().acceptChildren(new RncElementVisitor() {
+      content.getPsiFile().acceptChildren(new RncElementVisitor() {                      
         @Override
         public void visitElement(RncElement element) {
           element.acceptChildren(this);

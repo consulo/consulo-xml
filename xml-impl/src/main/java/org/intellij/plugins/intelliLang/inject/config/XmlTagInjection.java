@@ -15,11 +15,13 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.xml.XmlTag;
-import org.intellij.plugins.intelliLang.inject.InjectorUtils;
+import consulo.ide.impl.intelliLang.inject.InjectorUtils;
+import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
+import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
 
 public class XmlTagInjection extends AbstractTagInjection {
 

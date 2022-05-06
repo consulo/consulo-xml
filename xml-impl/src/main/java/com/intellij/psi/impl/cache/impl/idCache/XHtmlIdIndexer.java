@@ -15,10 +15,10 @@
  */
 package com.intellij.psi.impl.cache.impl.idCache;
 
-import com.intellij.lexer.Lexer;
 import com.intellij.lexer.XHtmlHighlightingLexer;
-import com.intellij.psi.impl.cache.impl.OccurrenceConsumer;
-import com.intellij.psi.impl.cache.impl.id.LexerBasedIdIndexer;
+import consulo.ide.impl.psi.impl.cache.impl.OccurrenceConsumer;
+import consulo.ide.impl.psi.impl.cache.impl.id.LexerBasedIdIndexer;
+import consulo.language.lexer.Lexer;
 
 public class XHtmlIdIndexer extends LexerBasedIdIndexer {
   public Lexer createLexer(final OccurrenceConsumer consumer) {

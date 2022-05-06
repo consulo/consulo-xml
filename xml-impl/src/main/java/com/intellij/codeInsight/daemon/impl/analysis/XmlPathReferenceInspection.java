@@ -17,12 +17,12 @@ package com.intellij.codeInsight.daemon.impl.analysis;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlDoctype;

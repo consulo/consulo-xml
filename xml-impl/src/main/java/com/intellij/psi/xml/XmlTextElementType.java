@@ -19,7 +19,7 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.tree.IStrongWhitespaceHolderElementType;
+import consulo.language.ast.IStrongWhitespaceHolderElementType;
 import com.intellij.psi.tree.xml.IXmlElementType;
 
 class XmlTextElementType extends IXmlElementType implements IStrongWhitespaceHolderElementType {

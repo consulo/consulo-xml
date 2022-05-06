@@ -21,19 +21,20 @@ import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.IdeBundle;
-import com.intellij.ide.structureView.StructureViewTreeElement;
+
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.tree.NodeProvider;
+import consulo.ide.IdeBundle;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import com.intellij.ide.util.treeView.smartTree.ActionPresentation;
-import com.intellij.ide.util.treeView.smartTree.ActionPresentationData;
-import com.intellij.ide.util.treeView.smartTree.NodeProvider;
-import com.intellij.ide.util.treeView.smartTree.Sorter;
-import com.intellij.ide.util.treeView.smartTree.SorterUtil;
-import com.intellij.ide.util.treeView.smartTree.TreeStructureUtil;
-import com.intellij.openapi.editor.Editor;
+import consulo.fileEditor.structureView.tree.ActionPresentation;
+import consulo.fileEditor.structureView.tree.ActionPresentationData;
+import consulo.fileEditor.structureView.tree.Sorter;
+import consulo.fileEditor.structureView.tree.SorterUtil;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.ui.PlaceHolder;
+import consulo.application.AllIcons;
+import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
+import consulo.ui.ex.PlaceHolder;
 
 class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements PlaceHolder<String>
 {

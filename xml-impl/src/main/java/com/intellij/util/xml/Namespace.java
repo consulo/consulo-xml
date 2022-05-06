@@ -15,6 +15,8 @@
  */
 package com.intellij.util.xml;
 
+import com.intellij.psi.xml.XmlFile;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,8 +24,8 @@ import java.lang.annotation.Target;
 
 /**
  * @author peter
- * @see com.intellij.util.xml.DomFileDescription#getAllowedNamespaces(String, com.intellij.psi.xml.XmlFile)
- * @see com.intellij.util.xml.DomFileDescription#registerNamespacePolicy(String, String...)
+ * @see DomFileDescription#getAllowedNamespaces(String, XmlFile)
+ * @see DomFileDescription#registerNamespacePolicy(String, String...)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

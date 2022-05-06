@@ -17,7 +17,7 @@ package com.intellij.codeInsight.daemon.impl.analysis;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiReference;
 import com.intellij.xml.util.AnchorReferenceImpl;
 
 /**

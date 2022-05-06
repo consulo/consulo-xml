@@ -15,19 +15,19 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.project.Project;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.SoftFactoryMap;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.application.util.TypePresentationService;
+import consulo.language.psi.PsiElement;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.util.collection.SoftFactoryMap;
 import com.intellij.util.xml.highlighting.ResolvingElementQuickFix;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.pom.PomService;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.project.Project;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,8 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Converter which resolves {@link com.intellij.util.xml.DomElement}s by name in a defined scope. The scope is taken
- * from corresponding {@link com.intellij.util.xml.DomFileDescription#getResolveScope(GenericDomValue)}.
+ * Converter which resolves {@link DomElement}s by name in a defined scope. The scope is taken
+ * from corresponding {@link DomFileDescription#getResolveScope(GenericDomValue)}.
  *
  * @author peter
  */

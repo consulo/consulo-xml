@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.Comparing;
+import consulo.util.lang.Comparing;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

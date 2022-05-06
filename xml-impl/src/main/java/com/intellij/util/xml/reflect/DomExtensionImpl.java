@@ -15,10 +15,9 @@
  */
 package com.intellij.util.xml.reflect;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.SmartPointerManager;
-import com.intellij.psi.SmartPsiElementPointer;
-import com.intellij.util.SmartList;
+import consulo.language.psi.SmartPointerManager;
+import consulo.language.psi.SmartPsiElementPointer;
+import consulo.util.collection.SmartList;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomAnchor;
 import com.intellij.util.xml.DomElement;
@@ -26,6 +25,7 @@ import com.intellij.util.xml.XmlName;
 import com.intellij.util.xml.impl.ConvertAnnotationImpl;
 import com.intellij.util.xml.impl.DomAnchorImpl;
 import com.intellij.util.xml.impl.DomChildDescriptionImpl;
+import consulo.language.psi.PsiElement;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

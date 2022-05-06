@@ -1,10 +1,10 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.pom.Navigatable;
+import consulo.component.ProcessCanceledException;
 import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.util.containers.ConcurrentFactoryMap;
+import consulo.application.util.ConcurrentFactoryMap;
 import com.intellij.util.xml.*;
+import consulo.navigation.Navigatable;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nullable;

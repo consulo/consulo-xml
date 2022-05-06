@@ -16,10 +16,10 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.EvaluatedXmlName;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -37,7 +37,7 @@ class AddToCompositeCollectionInvocation implements Invocation {
   }
 
   public Object invoke(final DomInvocationHandler<?, ?> handler, final Object[] args) throws Throwable {
-    Set<XmlTag> set = ContainerUtil.newTroveSet();
+    Set<XmlTag> set = new HashSet<>();
     for (final CollectionChildDescriptionImpl qname : myQnames) {
       set.addAll(qname.getTagsGetter().fun(handler));
     }

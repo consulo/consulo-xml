@@ -15,10 +15,10 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.containers.MultiMap;
-import com.intellij.util.xml.NanoXmlUtil;
+import consulo.util.collection.MultiMap;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

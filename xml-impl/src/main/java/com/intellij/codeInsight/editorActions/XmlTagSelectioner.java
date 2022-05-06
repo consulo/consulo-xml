@@ -15,11 +15,12 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
 import com.intellij.psi.xml.*;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.editor.Editor;
+import consulo.document.util.TextRange;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 
 import java.util.List;
 

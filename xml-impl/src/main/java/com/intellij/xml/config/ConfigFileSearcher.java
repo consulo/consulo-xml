@@ -5,14 +5,14 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.util.containers.MultiMap;
-import consulo.vfs.util.ArchiveVfsUtil;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.language.util.ModuleUtilCore;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiFile;
+import consulo.util.collection.MultiMap;
+import consulo.virtualFileSystem.archive.ArchiveVfsUtil;
 
 public abstract class ConfigFileSearcher {
 

@@ -15,7 +15,7 @@
  */
 package com.intellij.pom.xml;
 
-import com.intellij.pom.PomModelAspect;
+import consulo.language.pom.PomModelAspect;
 
 public interface XmlAspect extends PomModelAspect {
 }

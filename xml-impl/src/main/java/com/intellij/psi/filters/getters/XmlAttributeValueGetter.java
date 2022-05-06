@@ -17,9 +17,9 @@ package com.intellij.psi.filters.getters;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.util.lang.StringUtil;
 import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;

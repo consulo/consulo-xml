@@ -29,8 +29,8 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.util.xml.NanoXmlUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.xml.fastReader.NanoXmlUtil;
 import com.intellij.xml.util.XmlUtil;
 
 /**

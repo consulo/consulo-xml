@@ -24,14 +24,14 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import consulo.application.AllIcons;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.search.PsiElementProcessor;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.language.editor.structureView.PsiTreeElementBase;
+import consulo.util.lang.Comparing;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlAttlistDecl;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlAttributeValue;

@@ -20,6 +20,7 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.JavaNameStrategy;
 import com.intellij.util.xml.NameStrategy;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ import javax.annotation.Nonnull;
  * User: sweinreuter
  * Date: 16.08.2007
  */
-@NameStrategy(com.intellij.util.xml.JavaNameStrategy.class)
+@NameStrategy(JavaNameStrategy.class)
 public interface RngDomElement extends DomElement, CommonElement<XmlElement> {
   /**
    * Returns the value of the ns child.

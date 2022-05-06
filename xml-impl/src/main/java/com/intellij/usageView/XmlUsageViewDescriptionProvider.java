@@ -17,11 +17,13 @@ package com.intellij.usageView;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.ElementDescriptionLocation;
-import com.intellij.psi.ElementDescriptionProvider;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.ElementDescriptionProvider;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.psi.ElementDescriptionLocation;
+import consulo.language.psi.PsiElement;
+import consulo.usage.UsageViewLongNameLocation;
+import consulo.usage.UsageViewShortNameLocation;
 
 /**
  * @author yole

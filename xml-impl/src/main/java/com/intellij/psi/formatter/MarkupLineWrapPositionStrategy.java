@@ -15,10 +15,10 @@
  */
 package com.intellij.psi.formatter;
 
-import com.intellij.openapi.editor.LineWrapPositionStrategy;
-import com.intellij.openapi.editor.PsiAwareDefaultLineWrapPositionStrategy;
-import com.intellij.psi.TokenType;
+import consulo.language.ast.TokenType;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.codeEditor.LineWrapPositionStrategy;
+import consulo.ide.impl.idea.openapi.editor.PsiAwareDefaultLineWrapPositionStrategy;
 
 /**
  * {@link LineWrapPositionStrategy} for markup languages like XML, HTML etc.

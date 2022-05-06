@@ -15,22 +15,23 @@
  */
 package com.intellij.codeInsight.completion;
 
+import com.intellij.patterns.XmlPatterns;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlElementType;
+import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.language.editor.completion.*;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.ProcessingContext;
+
+import javax.annotation.Nonnull;
+
 import static com.intellij.codeInsight.completion.XmlCompletionContributor.hasEnumerationReference;
-import static com.intellij.patterns.PlatformPatterns.psiElement;
 import static com.intellij.patterns.XmlPatterns.xmlAttribute;
 import static com.intellij.patterns.XmlPatterns.xmlTag;
 import static com.intellij.psi.filters.getters.XmlAttributeValueGetter.getEnumeratedValues;
-
-import javax.annotation.Nonnull;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.util.ProcessingContext;
-import com.intellij.xml.XmlAttributeDescriptor;
-import consulo.codeInsight.completion.CompletionProvider;
+import static consulo.language.pattern.PlatformPatterns.psiElement;
 
 /**
  * @author yole

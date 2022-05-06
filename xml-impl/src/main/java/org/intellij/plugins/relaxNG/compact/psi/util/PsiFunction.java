@@ -18,9 +18,9 @@ package org.intellij.plugins.relaxNG.compact.psi.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.NotNullFunction;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
 
 /**
  * Created by IntelliJ IDEA.

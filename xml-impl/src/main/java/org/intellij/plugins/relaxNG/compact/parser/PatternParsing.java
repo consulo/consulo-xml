@@ -16,11 +16,11 @@
 
 package org.intellij.plugins.relaxNG.compact.parser;
 
-import com.intellij.lang.PsiBuilder;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.ast.IElementType;
+import consulo.language.parser.PsiBuilder;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;
@@ -33,8 +33,7 @@ import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;
 public class PatternParsing extends DeclarationParsing {
 
   @SuppressWarnings({"unchecked"})
-  protected static final Map<IElementType, IElementType> TOKEN_MAP =
-    ContainerUtil.newIdentityTroveMap();
+  protected static final Map<IElementType, IElementType> TOKEN_MAP = new IdentityHashMap<>();
 
   static {
     TOKEN_MAP.put(COMMA, RncElementTypes.SEQUENCE);

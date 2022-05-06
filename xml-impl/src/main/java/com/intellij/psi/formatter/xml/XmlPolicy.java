@@ -15,15 +15,15 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.FormattingDocumentModel;
-import com.intellij.formatting.WrapType;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.codeStyle.CodeStyleSettings;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import consulo.language.codeStyle.FormattingDocumentModel;
+import consulo.language.codeStyle.WrapType;
+import consulo.language.psi.PsiErrorElement;
 
 public class XmlPolicy extends XmlFormattingPolicy{
   private final CodeStyleSettings mySettings;

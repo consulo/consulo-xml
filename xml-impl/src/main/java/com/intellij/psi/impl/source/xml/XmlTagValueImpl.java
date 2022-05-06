@@ -15,28 +15,20 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagChild;
-import com.intellij.psi.xml.XmlTagValue;
-import com.intellij.psi.xml.XmlText;
-import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.psi.xml.*;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class XmlTagValueImpl implements XmlTagValue
 {
@@ -78,7 +70,7 @@ public class XmlTagValueImpl implements XmlTagValue
 				textElementsList.add((XmlText) element);
 			}
 		}
-		return myTextElements = textElementsList.isEmpty() ? XmlText.EMPTY_ARRAY : ContainerUtil.toArray(textElementsList, new XmlText[textElementsList.size()]);
+		return myTextElements = textElementsList.isEmpty() ? XmlText.EMPTY_ARRAY : textElementsList.toArray(new XmlText[textElementsList.size()]);
 	}
 
 	@Override
@@ -244,7 +236,7 @@ public class XmlTagValueImpl implements XmlTagValue
 			}
 		}, tag);
 
-		XmlTagChild[] tagChildren = ContainerUtil.toArray(bodyElements, new XmlTagChild[bodyElements.size()]);
+		XmlTagChild[] tagChildren = bodyElements.toArray(new XmlTagChild[bodyElements.size()]);
 		return new XmlTagValueImpl(tagChildren, tag);
 	}
 }

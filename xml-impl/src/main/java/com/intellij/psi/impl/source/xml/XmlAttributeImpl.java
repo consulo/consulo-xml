@@ -15,29 +15,35 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.pom.PomManager;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.impl.PomTransactionBase;
+import consulo.language.ast.ASTNode;
+import consulo.document.util.TextRange;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.psi.CodeEditUtil;
+import consulo.language.pom.PomModel;
+import consulo.language.impl.internal.pom.PomTransactionBase;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.XmlChangeSet;
 import com.intellij.pom.xml.impl.XmlAspectChangeSetImpl;
 import com.intellij.pom.xml.impl.events.XmlAttributeSetImpl;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.codeStyle.CodeEditUtil;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.psi.HintedReferenceHost;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
 import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.language.pom.PomManager;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.psi.PsiReferenceService;
+import consulo.logging.Logger;
 import consulo.util.collection.primitive.ints.IntList;
 import consulo.util.collection.primitive.ints.IntLists;
 import org.jetbrains.annotations.NonNls;
@@ -46,7 +52,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
-import static com.intellij.codeInsight.completion.CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED;
+import static consulo.language.editor.completion.CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED;
 
 /**
  * @author Mike
@@ -384,7 +390,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 	}
 
 	@Override
-	public PsiElement setName(@Nonnull final String nameText) throws IncorrectOperationException
+	public PsiElement setName(@Nonnull final String nameText) throws consulo.language.util.IncorrectOperationException
 	{
 		final ASTNode name = XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild(this);
 		final String oldName = name.getText();

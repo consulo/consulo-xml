@@ -15,13 +15,18 @@
  */
 package com.intellij.navigation;
 
-import com.intellij.psi.*;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Processor;
+import consulo.application.util.function.Processor;
 import com.intellij.xml.util.HtmlLinkUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiPolyVariantReference;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ResolveResult;
+
 import javax.annotation.Nonnull;
 
 import java.util.Set;

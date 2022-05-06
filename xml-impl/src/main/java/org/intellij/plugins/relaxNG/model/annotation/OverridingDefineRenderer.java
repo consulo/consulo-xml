@@ -16,26 +16,26 @@
 
 package org.intellij.plugins.relaxNG.model.annotation;
 
-import java.awt.event.MouseEvent;
-import java.util.Collection;
-import java.util.Set;
+import consulo.application.AllIcons;
+import consulo.application.dumb.DumbAware;
+import consulo.codeEditor.markup.GutterIconRenderer;
+import consulo.language.editor.ui.PopupNavigationUtil;
+import consulo.language.psi.PsiElement;
+import consulo.navigation.Navigatable;
+import consulo.ui.ex.OpenSourceUtil;
+import consulo.ui.ex.RelativePoint;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.image.Image;
+import consulo.util.collection.ContainerUtil;
+import org.intellij.plugins.relaxNG.model.CommonElement;
+import org.intellij.plugins.relaxNG.model.Define;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.intellij.plugins.relaxNG.model.Define;
-import com.intellij.codeInsight.navigation.NavigationUtil;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.editor.markup.GutterIconRenderer;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.pom.Navigatable;
-import com.intellij.psi.PsiElement;
-import com.intellij.ui.awt.RelativePoint;
-import com.intellij.util.OpenSourceUtil;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.ui.image.Image;
+import java.awt.event.MouseEvent;
+import java.util.Collection;
+import java.util.Set;
 
 class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
 
@@ -83,7 +83,7 @@ class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
       OpenSourceUtil.navigate(true, n);
     } else {
       final Define[] array = set.toArray(new Define[set.size()]);
-      NavigationUtil.getPsiElementPopup(ContainerUtil.map(array, define -> define.getPsiElement(), PsiElement.EMPTY_ARRAY), title).show(new RelativePoint((MouseEvent)e.getInputEvent()));
+      PopupNavigationUtil.getPsiElementPopup(ContainerUtil.map(array, CommonElement::getPsiElement, PsiElement.EMPTY_ARRAY), title).show(new RelativePoint((MouseEvent)e.getInputEvent()));
     }
   }
 

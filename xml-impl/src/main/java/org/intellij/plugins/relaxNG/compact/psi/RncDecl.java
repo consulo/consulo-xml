@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import com.intellij.psi.PsiNamedElement;
+import consulo.language.psi.PsiNamedElement;
 
 /**
  * Created by IntelliJ IDEA.

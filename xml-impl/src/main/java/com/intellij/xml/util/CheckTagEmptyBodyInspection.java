@@ -18,24 +18,27 @@ package com.intellij.xml.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInspection.*;
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
+import consulo.language.editor.WriteCommandAction;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
+import consulo.application.Result;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
 /**

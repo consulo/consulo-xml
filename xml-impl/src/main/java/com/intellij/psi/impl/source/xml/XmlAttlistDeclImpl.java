@@ -15,15 +15,16 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.filters.ClassFilter;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.scope.processor.FilterElementProcessor;
-import com.intellij.psi.tree.ChildRoleBase;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.language.psi.resolve.FilterElementProcessor;
+import consulo.logging.Logger;
+import consulo.language.psi.filter.ClassFilter;
 import com.intellij.psi.xml.*;
+import consulo.language.ast.ASTNode;
+
 import javax.annotation.Nonnull;
 
 import java.util.ArrayList;

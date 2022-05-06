@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2010 JetBrains s.r.o.
+ * Copyright 2000-2009 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.intellij.ide.browsers;
+
+package consulo.xml;
+
+import consulo.language.psi.PsiElement;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-
 /**
- * @author nik
+ * @author Maxim.Mossienko
  */
-public abstract class RemoteFileUpdater {
-  public static final ExtensionPointName<RemoteFileUpdater> EP_NAME = ExtensionPointName.create("com.intellij.remoteFileUpdater");
+public interface Validator<T extends PsiElement> {
+  interface ValidationHost {
+    int WARNING = 0;
+    int ERROR = 1;
+    int INFO = 2;
 
-  public abstract boolean updateFile(@Nonnull VirtualFile file, Project project, @Nonnull Runnable onUpdateFinished);
+    enum ErrorType {
+      WARNING, ERROR, INFO
+    }
+
+    void addMessage(PsiElement context, String message, @Nonnull ErrorType type);
+  }
+
+
+  void validate(@Nonnull T context, @Nonnull ValidationHost host);
 }

@@ -3,22 +3,22 @@ package com.intellij.util.xml.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.logging.Logger;
+import consulo.util.lang.Comparing;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.util.lang.StringUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.AttributeStub;
-import com.intellij.xml.util.XmlStringUtil;
+import consulo.util.lang.xml.XmlStringUtil;
 
 /**
  * @author peter
@@ -107,7 +107,7 @@ public class AttributeChildInvocationHandler extends DomInvocationHandler<Attrib
             setXmlElement(null);
             tag.setAttribute(getXmlElementName(), getXmlApiCompatibleNamespace(getParentHandler()), null);
           }
-          catch (IncorrectOperationException e) {
+          catch (consulo.language.util.IncorrectOperationException e) {
             LOG.error(e);
           }
         }
@@ -162,7 +162,7 @@ public class AttributeChildInvocationHandler extends DomInvocationHandler<Attrib
           setXmlElement(attribute);
           getManager().cacheHandler(DomManagerImpl.DOM_ATTRIBUTE_HANDLER_KEY, attribute, AttributeChildInvocationHandler.this);
         }
-        catch (IncorrectOperationException e) {
+        catch (consulo.language.util.IncorrectOperationException e) {
           LOG.error(e);
         }
       }

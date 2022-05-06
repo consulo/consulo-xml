@@ -19,32 +19,32 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.formatting.Block;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.formatter.FormatterUtil;
-import com.intellij.psi.formatter.FormattingDocumentModelImpl;
-import com.intellij.psi.formatter.PsiBasedFormattingModel;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.FormatterUtil;
+import consulo.language.codeStyle.PsiBasedFormattingModel;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.logging.Logger;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
 
 public class XmlFormattingModel extends PsiBasedFormattingModel {
-  private static final Logger LOG =
-      Logger.getInstance("#com.intellij.psi.impl.source.codeStyle.PsiBasedFormatterModelWithShiftIndentInside");
+  private static final Logger LOG = Logger.getInstance(XmlFormattingModel.class);
 
   private final Project myProject;
 
   public XmlFormattingModel(final PsiFile file,
-                                                     final Block rootBlock,
-                                                     final FormattingDocumentModelImpl documentModel) {
+                            final Block rootBlock,
+                            final FormattingDocumentModelImpl documentModel) {
     super(file, rootBlock, documentModel);
     myProject = file.getProject();
   }
@@ -69,61 +69,61 @@ public class XmlFormattingModel extends PsiBasedFormattingModel {
   }
 
   protected String replaceWithPsiInLeaf(final TextRange textRange, String whiteSpace, ASTNode leafElement) {
-     if (!myCanModifyAllWhiteSpaces) {
-       if (leafElement.getElementType() == TokenType.WHITE_SPACE) return null;
-       LOG.assertTrue(leafElement.getPsi().isValid());
-       ASTNode prevNode = TreeUtil.prevLeaf(leafElement);
+    if (!myCanModifyAllWhiteSpaces) {
+      if (leafElement.getElementType() == TokenType.WHITE_SPACE) return null;
+      LOG.assertTrue(leafElement.getPsi().isValid());
+      ASTNode prevNode = TreeUtil.prevLeaf(leafElement);
 
-       if (prevNode != null) {
-         IElementType type = prevNode.getElementType();
-         if(type == TokenType.WHITE_SPACE) {
-           final String text = prevNode.getText();
+      if (prevNode != null) {
+        IElementType type = prevNode.getElementType();
+        if (type == TokenType.WHITE_SPACE) {
+          final String text = prevNode.getText();
 
-           final @NonNls String cdataStartMarker = "<![CDATA[";
-           final int cdataPos = text.indexOf(cdataStartMarker);
-           if (cdataPos != -1 && whiteSpace.indexOf(cdataStartMarker) == -1) {
-             whiteSpace = mergeWsWithCdataMarker(whiteSpace, text, cdataPos);
-             if (whiteSpace == null) return null;
-           }
+          final @NonNls String cdataStartMarker = "<![CDATA[";
+          final int cdataPos = text.indexOf(cdataStartMarker);
+          if (cdataPos != -1 && whiteSpace.indexOf(cdataStartMarker) == -1) {
+            whiteSpace = mergeWsWithCdataMarker(whiteSpace, text, cdataPos);
+            if (whiteSpace == null) return null;
+          }
 
-           prevNode = TreeUtil.prevLeaf(prevNode);
-           type = prevNode != null ? prevNode.getElementType():null;
-         }
+          prevNode = TreeUtil.prevLeaf(prevNode);
+          type = prevNode != null ? prevNode.getElementType() : null;
+        }
 
-         final @NonNls String cdataEndMarker = "]]>";
-         if(type == XmlElementType.XML_CDATA_END && whiteSpace.indexOf(cdataEndMarker) == -1) {
-           final ASTNode at = findElementAt(prevNode.getStartOffset());
+        final @NonNls String cdataEndMarker = "]]>";
+        if (type == XmlElementType.XML_CDATA_END && whiteSpace.indexOf(cdataEndMarker) == -1) {
+          final ASTNode at = findElementAt(prevNode.getStartOffset());
 
-           if (at != null && at.getPsi() instanceof PsiWhiteSpace) {
-             final String s = at.getText();
-             final int cdataEndPos = s.indexOf(cdataEndMarker);
-             whiteSpace = mergeWsWithCdataMarker(whiteSpace, s, cdataEndPos);
-             leafElement = at;
-           } else {
-             whiteSpace = null;
-           }
-           if (whiteSpace == null) return null;
-         }
-       }
-     }
-     FormatterUtil.replaceWhiteSpace(whiteSpace, leafElement, TokenType.WHITE_SPACE, textRange);
-     return whiteSpace;
-   }
+          if (at != null && at.getPsi() instanceof PsiWhiteSpace) {
+            final String s = at.getText();
+            final int cdataEndPos = s.indexOf(cdataEndMarker);
+            whiteSpace = mergeWsWithCdataMarker(whiteSpace, s, cdataEndPos);
+            leafElement = at;
+          } else {
+            whiteSpace = null;
+          }
+          if (whiteSpace == null) return null;
+        }
+      }
+    }
+    FormatterUtil.replaceWhiteSpace(whiteSpace, leafElement, TokenType.WHITE_SPACE, textRange);
+    return whiteSpace;
+  }
 
-   @Nullable
-   private static String mergeWsWithCdataMarker(String whiteSpace, final String s, final int cdataPos) {
-     final int firstCrInGeneratedWs = whiteSpace.indexOf('\n');
-     final int secondCrInGeneratedWs = firstCrInGeneratedWs != -1 ? whiteSpace.indexOf('\n', firstCrInGeneratedWs + 1):-1;
-     final int firstCrInPreviousWs = s.indexOf('\n');
-     final int secondCrInPreviousWs = firstCrInPreviousWs != -1 ? s.indexOf('\n', firstCrInPreviousWs + 1):-1;
+  @Nullable
+  private static String mergeWsWithCdataMarker(String whiteSpace, final String s, final int cdataPos) {
+    final int firstCrInGeneratedWs = whiteSpace.indexOf('\n');
+    final int secondCrInGeneratedWs = firstCrInGeneratedWs != -1 ? whiteSpace.indexOf('\n', firstCrInGeneratedWs + 1) : -1;
+    final int firstCrInPreviousWs = s.indexOf('\n');
+    final int secondCrInPreviousWs = firstCrInPreviousWs != -1 ? s.indexOf('\n', firstCrInPreviousWs + 1) : -1;
 
-     boolean knowHowToModifyCData = false;
+    boolean knowHowToModifyCData = false;
 
-     if (secondCrInPreviousWs != -1 && secondCrInGeneratedWs != -1 && cdataPos > firstCrInPreviousWs && cdataPos < secondCrInPreviousWs ) {
-       whiteSpace = whiteSpace.substring(0, secondCrInGeneratedWs) + s.substring(firstCrInPreviousWs + 1, secondCrInPreviousWs) + whiteSpace.substring(secondCrInGeneratedWs);
-       knowHowToModifyCData = true;
-     }
-     if (!knowHowToModifyCData) whiteSpace = null;
-     return whiteSpace;
-   }
+    if (secondCrInPreviousWs != -1 && secondCrInGeneratedWs != -1 && cdataPos > firstCrInPreviousWs && cdataPos < secondCrInPreviousWs) {
+      whiteSpace = whiteSpace.substring(0, secondCrInGeneratedWs) + s.substring(firstCrInPreviousWs + 1, secondCrInPreviousWs) + whiteSpace.substring(secondCrInGeneratedWs);
+      knowHowToModifyCData = true;
+    }
+    if (!knowHowToModifyCData) whiteSpace = null;
+    return whiteSpace;
+  }
 }

@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.patterns.PatternCondition;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.util.ProcessingContext;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

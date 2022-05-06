@@ -15,11 +15,13 @@
  */
 package com.intellij.codeInsight.navigation;
 
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.codeInsight.navigation.MethodNavigationOffsetProvider;
+import consulo.ide.impl.idea.codeInsight.navigation.MethodUpDownUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 
 import java.util.ArrayList;
 

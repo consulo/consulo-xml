@@ -22,26 +22,28 @@
  */
 package com.intellij.xml.refactoring;
 
-import com.intellij.codeInsight.daemon.impl.quickfix.EmptyExpression;
-import com.intellij.codeInsight.highlighting.HighlightManager;
-import com.intellij.codeInsight.template.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.colors.EditorColors;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.markup.RangeHighlighter;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.Editor;
+import consulo.colorScheme.EditorColorsManager;
+import consulo.ide.impl.idea.codeInsight.template.TemplateBuilderImpl;
+import consulo.language.editor.highlight.HighlightManager;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
+import consulo.language.editor.template.*;
+import consulo.project.Project;
+import consulo.undoRedo.CommandProcessor;
+import consulo.codeEditor.EditorColors;
+import consulo.codeEditor.markup.RangeHighlighter;
+import consulo.colorScheme.TextAttributes;
+import consulo.util.lang.Pair;
+import consulo.document.util.TextRange;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.refactoring.RefactoringBundle;
-import com.intellij.refactoring.util.CommonRefactoringUtil;
-import com.intellij.util.PairProcessor;
-import com.intellij.util.containers.Stack;
+import consulo.language.editor.refactoring.RefactoringBundle;
+import consulo.ide.impl.idea.util.PairProcessor;
+import consulo.util.collection.Stack;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.quickfix.EmptyExpression;
+import consulo.language.editor.template.event.TemplateEditingAdapter;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 

@@ -19,18 +19,19 @@
  */
 package com.intellij.lang.html;
 
-import com.intellij.formatting.FormattingModel;
-import com.intellij.formatting.FormattingModelBuilder;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.formatter.FormattingDocumentModelImpl;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.FormattingModelBuilder;
+import consulo.language.ast.ASTNode;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
 import com.intellij.psi.formatter.xml.HtmlPolicy;
 import com.intellij.psi.formatter.xml.XmlBlock;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
 import com.intellij.lang.xml.XmlFormattingModel;
+import consulo.language.codeStyle.FormattingModel;
+
 import javax.annotation.Nonnull;
 
 public class HtmlFormattingModelBuilder implements FormattingModelBuilder {

@@ -15,22 +15,16 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.util.RecursionManager;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.patterns.ElementPattern;
-import com.intellij.psi.PsiElement;
+import consulo.application.util.RecursionManager;
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.semantic.SemContributor;
-import com.intellij.semantic.SemRegistrar;
-import com.intellij.semantic.SemService;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.Processor;
+import consulo.language.sem.SemContributor;
+import consulo.util.collection.ArrayUtil;
+import consulo.application.util.function.Processor;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.EvaluatedXmlNameImpl;
 import com.intellij.util.xml.XmlName;
@@ -40,6 +34,12 @@ import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.DomStub;
 import com.intellij.util.xml.stubs.ElementStub;
+import consulo.application.ApplicationManager;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.sem.SemRegistrar;
+import consulo.language.sem.SemService;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
 import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;

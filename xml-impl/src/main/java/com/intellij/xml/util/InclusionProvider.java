@@ -15,15 +15,15 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.openapi.util.NullableComputable;
-import com.intellij.openapi.util.RecursionManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.psi.PsiElement;
+import consulo.application.util.CachedValueProvider;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.application.util.RecursionManager;
+import consulo.ide.impl.idea.openapi.util.NullableComputable;
+import consulo.language.psi.PsiModificationTracker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

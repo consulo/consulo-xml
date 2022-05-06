@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.psi.templateLanguages.TemplateLanguageUtil;
+import consulo.language.template.TemplateLanguageUtil;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import javax.annotation.Nonnull;

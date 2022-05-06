@@ -1,11 +1,11 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Factory;
+import consulo.logging.Logger;
+import consulo.ide.impl.idea.openapi.util.Factory;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.EvaluatedXmlName;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;

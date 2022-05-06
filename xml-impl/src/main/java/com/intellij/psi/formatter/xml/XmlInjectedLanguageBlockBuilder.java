@@ -15,17 +15,18 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.Alignment;
-import com.intellij.formatting.Block;
-import com.intellij.formatting.Indent;
-import com.intellij.formatting.Wrap;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.formatter.common.InjectedLanguageBlockBuilder;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.Indent;
+import consulo.language.codeStyle.Wrap;
+import consulo.language.ast.ASTNode;
+import consulo.language.Language;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.inject.InjectedLanguageBlockBuilder;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.language.codeStyle.Alignment;
+
 import javax.annotation.Nullable;
 
 /**

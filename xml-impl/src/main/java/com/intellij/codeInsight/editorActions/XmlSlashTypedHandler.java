@@ -15,23 +15,24 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorModificationUtil;
-import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
 import com.intellij.xml.util.XmlUtil;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.ScrollType;
+import consulo.ide.impl.idea.openapi.editor.EditorModificationUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.action.TypedHandlerDelegate;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.psi.OuterLanguageElement;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
 
 public class XmlSlashTypedHandler extends TypedHandlerDelegate {
   public Result beforeCharTyped(final char c, final Project project, final Editor editor, final PsiFile editedFile, final FileType fileType) {

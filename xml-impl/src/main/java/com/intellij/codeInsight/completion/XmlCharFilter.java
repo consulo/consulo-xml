@@ -25,18 +25,18 @@
 package com.intellij.codeInsight.completion;
 
 import com.intellij.codeInsight.editorActions.XmlAutoPopupHandler;
-import com.intellij.codeInsight.lookup.CharFilter;
-import com.intellij.codeInsight.lookup.Lookup;
-import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import consulo.ide.impl.idea.codeInsight.lookup.CharFilter;
+import consulo.language.Language;
+import consulo.language.editor.completion.lookup.Lookup;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiWhiteSpace;
 
 public class XmlCharFilter extends CharFilter
 {

@@ -15,17 +15,17 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.XmlRecursiveElementVisitor;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.application.util.CachedValue;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.util.XmlDeclareIdInCommentAction;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

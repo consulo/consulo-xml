@@ -15,22 +15,20 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import com.intellij.codeInsight.FileModificationService;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.intention.HighPriorityAction;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.template.*;
-import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.application.ApplicationManager;
+import consulo.language.editor.template.*;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.undoRedo.CommandProcessor;
+import consulo.codeEditor.Editor;
+import consulo.project.Project;
 import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
@@ -38,6 +36,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.access.RequiredWriteAction;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
+import consulo.language.editor.intention.HighPriorityAction;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

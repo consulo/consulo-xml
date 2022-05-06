@@ -18,23 +18,24 @@ package com.intellij.refactoring.rename;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.search.LocalSearchScope;
-import com.intellij.psi.search.searches.ReferencesSearch;
+import consulo.language.editor.refactoring.event.RefactoringElementListener;
+import consulo.language.editor.refactoring.rename.RenamePsiElementProcessor;
+import consulo.language.psi.scope.LocalSearchScope;
+import consulo.logging.Logger;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.search.ReferencesSearch;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.refactoring.listeners.RefactoringElementListener;
-import com.intellij.usageView.UsageInfo;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.Queue;
+import consulo.usage.UsageInfo;
+import consulo.language.util.IncorrectOperationException;
+import consulo.ide.impl.idea.util.containers.Queue;
 
 public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.refactoring.rename.RenameXmlAttributeProcessor");
+  private static final Logger LOG = Logger.getInstance(RenameXmlAttributeProcessor.class);
 
   public boolean canProcessElement(@Nonnull final PsiElement element) {
     return element instanceof XmlAttribute || element instanceof XmlAttributeValue;
@@ -70,7 +71,7 @@ public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
                                                 String newName,
                                                 UsageInfo[] infos,
                                                 @Nullable RefactoringElementListener listener)
-    throws IncorrectOperationException {
+    throws consulo.language.util.IncorrectOperationException {
     LOG.assertTrue(value.isValid());
 
     renameAll(value, infos, newName, value.getValue());

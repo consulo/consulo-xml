@@ -18,41 +18,12 @@ package com.intellij.psi.impl.source.xml;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.javaee.ImplicitNamespaceDescriptorProvider;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.*;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomManager;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.impl.PomTransactionBase;
-import com.intellij.pom.tree.events.TreeChangeEvent;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.impl.events.XmlAttributeSetImpl;
 import com.intellij.pom.xml.impl.events.XmlTagNameChangedImpl;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.impl.source.tree.Factory;
-import com.intellij.psi.impl.source.tree.*;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.*;
+import com.intellij.psi.XmlElementFactory;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.CharTable;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.BidirectionalMap;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
@@ -62,7 +33,45 @@ import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.progress.ProgressManager;
+import consulo.application.util.*;
+import consulo.component.extension.Extensions;
+import consulo.component.util.ModificationTracker;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.ChangeUtil;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.ast.Factory;
+import consulo.language.impl.internal.ast.SharedImplUtil;
+import consulo.language.impl.internal.pom.PomTransactionBase;
+import consulo.language.pom.PomManager;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.pom.event.TreeChangeEvent;
+import consulo.language.psi.*;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.util.LanguageCachedValueUtil;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.CharTable;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.util.ModuleUtilCore;
+import consulo.logging.Logger;
+import consulo.module.Module;
+import consulo.project.DumbService;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.BidirectionalMap;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -90,7 +99,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 			tag.fillSubTags(result);
 
 			final int s = result.size();
-			XmlTag[] tags = s > 0 ? ContainerUtil.toArray(result, new XmlTag[s]) : EMPTY;
+			XmlTag[] tags = s > 0 ? result.toArray(new XmlTag[s]) : EMPTY;
 			return CachedValueProvider.Result.create(tags, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT, tag.getContainingFile());
 		}
 	};
@@ -224,7 +233,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 			Collections.addAll(refs, ReferenceProvidersRegistry.getReferencesFromProviders(this, hints));
 		}
 
-		return ContainerUtil.toArray(refs, new PsiReference[refs.size()]);
+		return refs.toArray(new PsiReference[refs.size()]);
 	}
 
 	private static boolean childContainsOffset(PsiElement child, int offsetInTag)
@@ -254,7 +263,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		TextRange[] elements = myTextElements;
 		if(elements == null)
 		{
-			List<TextRange> list = ContainerUtil.newSmartList();
+			List<TextRange> list = new SmartList<>();
 			// don't use getValue().getXmlElements() because it processes includes & entities, and we only need textual AST here
 			for(ASTNode child = getFirstChildNode(); child != null; child = child.getTreeNext())
 			{
@@ -373,7 +382,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
 	protected final Map<String, CachedValue<XmlNSDescriptor>> getNSDescriptorsMap()
 	{
-		return CachedValuesManager.getCachedValue(this, () -> CachedValueProvider.Result.create(computeNsDescriptorMap(), PsiModificationTracker.MODIFICATION_COUNT,
+		return LanguageCachedValueUtil.getCachedValue(this, () -> CachedValueProvider.Result.create(computeNsDescriptorMap(), PsiModificationTracker.MODIFICATION_COUNT,
 				externalResourceModificationTracker()));
 	}
 
@@ -428,10 +437,10 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	private Map<String, CachedValue<XmlNSDescriptor>> initializeSchema(@Nonnull final String namespace,
-			@Nullable final String version,
-			final String fileLocation,
-			Map<String, CachedValue<XmlNSDescriptor>> map,
-			final boolean nsDecl)
+																																															@Nullable final String version,
+																																															final String fileLocation,
+																																															Map<String, CachedValue<XmlNSDescriptor>> map,
+																																															final boolean nsDecl)
 	{
 		if(map == null)
 		{
@@ -556,7 +565,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	@Override
 	public XmlElementDescriptor getDescriptor()
 	{
-		return CachedValuesManager.getCachedValue(this, () -> CachedValueProvider.Result.create(computeElementDescriptor(), PsiModificationTracker.MODIFICATION_COUNT,
+		return LanguageCachedValueUtil.getCachedValue(this, () -> CachedValueProvider.Result.create(computeElementDescriptor(), PsiModificationTracker.MODIFICATION_COUNT,
 				externalResourceModificationTracker()));
 	}
 
@@ -668,7 +677,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		model.runTransaction(new PomTransactionBase(this, aspect)
 		{
 			@Override
-			public PomModelEvent runInner() throws IncorrectOperationException
+			public PomModelEvent runInner() throws consulo.language.util.IncorrectOperationException
 			{
 				final String oldName = getName();
 				final XmlTagImpl dummyTag = (XmlTagImpl) XmlElementFactory.getInstance(getProject()).createTagFromText(XmlTagUtil.composeTagText(name, "aa"));
@@ -735,7 +744,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		}
 		else
 		{
-			return ContainerUtil.toArray(result, new XmlAttribute[result.size()]);
+			return result.toArray(new XmlAttribute[result.size()]);
 		}
 	}
 
@@ -858,7 +867,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 				result.add(subTag);
 			}
 		}
-		return ContainerUtil.toArray(result, new XmlTag[result.size()]);
+		return result.toArray(new XmlTag[result.size()]);
 	}
 
 	@Override
@@ -924,7 +933,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	@Nonnull
 	public String getNamespace()
 	{
-		return CachedValuesManager.getCachedValue(this, () -> CachedValueProvider.Result.create(getNamespaceByPrefix(getNamespacePrefix()), PsiModificationTracker.MODIFICATION_COUNT));
+		return LanguageCachedValueUtil.getCachedValue(this, () -> CachedValueProvider.Result.create(getNamespaceByPrefix(getNamespacePrefix()), PsiModificationTracker.MODIFICATION_COUNT));
 	}
 
 	@Override
@@ -1053,7 +1062,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	@Nullable
 	private BidirectionalMap<String, String> getNamespaceMap()
 	{
-		return CachedValuesManager.getCachedValue(this, () -> CachedValueProvider.Result.create(computeNamespaceMap(getParent()), PsiModificationTracker.MODIFICATION_COUNT));
+		return LanguageCachedValueUtil.getCachedValue(this, () -> CachedValueProvider.Result.create(computeNamespaceMap(getParent()), PsiModificationTracker.MODIFICATION_COUNT));
 	}
 
 	@Nullable
@@ -1178,7 +1187,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	}
 
 	@Override
-	public XmlAttribute setAttribute(String qname, String value) throws IncorrectOperationException
+	public XmlAttribute setAttribute(String qname, String value) throws consulo.language.util.IncorrectOperationException
 	{
 		final XmlAttribute attribute = getAttribute(qname);
 
@@ -1282,7 +1291,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 	@Override
 	public PsiMetaData getMetaData()
 	{
-		return MetaRegistry.getMeta(this);
+		return MetaDataService.getInstance().getMeta(this);
 	}
 
 	@Override
@@ -1396,7 +1405,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 					}
 				});
 			}
-			catch(IncorrectOperationException e)
+			catch(consulo.language.util.IncorrectOperationException e)
 			{
 				LOG.error(e);
 			}
@@ -1431,7 +1440,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		}
 	}
 
-	private ASTNode expandTag() throws IncorrectOperationException
+	private ASTNode expandTag() throws consulo.language.util.IncorrectOperationException
 	{
 		ASTNode endTagStart = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(this);
 		if(endTagStart == null)
@@ -1494,7 +1503,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 		}
 
 		@Override
-		public PomModelEvent runInner() throws IncorrectOperationException
+		public PomModelEvent runInner() throws consulo.language.util.IncorrectOperationException
 		{
 			final ASTNode anchor = expandTag();
 			if(myChild.getElementType() == XmlElementType.XML_TAG)

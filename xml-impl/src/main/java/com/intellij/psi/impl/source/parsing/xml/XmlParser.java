@@ -19,18 +19,22 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
-import com.intellij.lang.*;
-import com.intellij.lang.impl.PsiBuilderImpl;
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.TripleFunction;
-import com.intellij.util.diff.FlyweightCapableTreeStructure;
-import consulo.lang.LanguageVersion;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.util.FlyweightCapableTreeStructure;
+import consulo.util.lang.function.TripleFunction;
+import consulo.language.version.LanguageVersion;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.LighterASTNode;
+import consulo.language.ast.LighterASTTokenNode;
+import consulo.language.impl.internal.parser.PsiBuilderImpl;
+import consulo.language.parser.PsiParser;
 import consulo.util.lang.ThreeState;
+import consulo.util.lang.ref.Ref;
 
 import javax.annotation.Nonnull;
 

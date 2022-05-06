@@ -23,10 +23,10 @@ import javax.annotation.Nonnull;
 
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.xml.XmlTagImpl;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 
 /**
  * @author Maxim.Mossienko

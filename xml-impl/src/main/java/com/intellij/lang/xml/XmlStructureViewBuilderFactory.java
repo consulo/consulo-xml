@@ -19,78 +19,61 @@
  */
 package com.intellij.lang.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.ide.structureView.StructureViewModel;
-import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageStructureViewBuilder;
-import com.intellij.lang.PsiStructureViewFactory;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.fileEditor.structureView.StructureViewModel;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
+import consulo.ide.impl.idea.lang.LanguageStructureViewBuilder;
+import consulo.language.Language;
+import consulo.language.editor.structureView.PsiStructureViewFactory;
+import consulo.language.psi.PsiFile;
 
-public class XmlStructureViewBuilderFactory implements PsiStructureViewFactory
-{
-	@Override
-	@Nullable
-	public StructureViewBuilder getStructureViewBuilder(final PsiFile psiFile)
-	{
-		if(!(psiFile instanceof XmlFile))
-		{
-			return null;
-		}
-		StructureViewBuilder builder = getStructureViewBuilderForExtensions(psiFile);
-		if(builder != null)
-		{
-			return builder;
-		}
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-		for(XmlStructureViewBuilderProvider xmlStructureViewBuilderProvider : getStructureViewBuilderProviders())
-		{
-			final StructureViewBuilder structureViewBuilder = xmlStructureViewBuilderProvider.createStructureViewBuilder((XmlFile) psiFile);
-			if(structureViewBuilder != null)
-			{
-				return structureViewBuilder;
-			}
-		}
+public class XmlStructureViewBuilderFactory implements PsiStructureViewFactory {
+  @Override
+  @Nullable
+  public StructureViewBuilder getStructureViewBuilder(final PsiFile psiFile) {
+    if (!(psiFile instanceof XmlFile)) {
+      return null;
+    }
+    StructureViewBuilder builder = getStructureViewBuilderForExtensions(psiFile);
+    if (builder != null) {
+      return builder;
+    }
 
-		return new TreeBasedStructureViewBuilder()
-		{
-			@Override
-			@Nonnull
-			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
-			{
-				return new XmlStructureViewTreeModel((XmlFile) psiFile, editor);
-			}
-		};
-	}
+    for (XmlStructureViewBuilderProvider xmlStructureViewBuilderProvider : XmlStructureViewBuilderProvider.EP_NAME.getExtensionList()) {
+      final StructureViewBuilder structureViewBuilder = xmlStructureViewBuilderProvider.createStructureViewBuilder((XmlFile) psiFile);
+      if (structureViewBuilder != null) {
+        return structureViewBuilder;
+      }
+    }
 
-	private static XmlStructureViewBuilderProvider[] getStructureViewBuilderProviders()
-	{
-		return (XmlStructureViewBuilderProvider[]) Extensions.getExtensions(XmlStructureViewBuilderProvider.EXTENSION_POINT_NAME);
-	}
+    return new TreeBasedStructureViewBuilder() {
+      @Override
+      @Nonnull
+      public StructureViewModel createStructureViewModel(@Nullable Editor editor) {
+        return new XmlStructureViewTreeModel((XmlFile) psiFile, editor);
+      }
+    };
+  }
 
-	@Nullable
-	private static StructureViewBuilder getStructureViewBuilderForExtensions(final PsiFile psiFile)
-	{
-		for(Language language : XMLLanguage.INSTANCE.getLanguageExtensionsForFile(psiFile))
-		{
-			PsiStructureViewFactory factory = LanguageStructureViewBuilder.INSTANCE.forLanguage(language);
-			if(factory == null)
-			{
-				continue;
-			}
-			final StructureViewBuilder builder = factory.getStructureViewBuilder(psiFile);
-			if(builder != null)
-			{
-				return builder;
-			}
-		}
-		return null;
-	}
+  @Nullable
+  private static StructureViewBuilder getStructureViewBuilderForExtensions(final PsiFile psiFile) {
+    for (Language language : XMLLanguage.INSTANCE.getLanguageExtensionsForFile(psiFile)) {
+      PsiStructureViewFactory factory = LanguageStructureViewBuilder.INSTANCE.forLanguage(language);
+      if (factory == null) {
+        continue;
+      }
+      final StructureViewBuilder builder = factory.getStructureViewBuilder(psiFile);
+      if (builder != null) {
+        return builder;
+      }
+    }
+    return null;
+  }
 }

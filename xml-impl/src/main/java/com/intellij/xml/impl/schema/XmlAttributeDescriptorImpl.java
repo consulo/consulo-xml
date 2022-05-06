@@ -15,17 +15,17 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.meta.PsiWritableMetaData;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.PsiWritableMetaData;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -140,7 +140,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
   public String[] getEnumeratedValues(XmlElement context) {
     final XmlElementDescriptorImpl elementDescriptor = (XmlElementDescriptorImpl)XmlUtil.findXmlDescriptorByType(
       myTag,
-      context != null ?PsiTreeUtil.getContextOfType(context, XmlTag.class, true):null
+      context != null ? PsiTreeUtil.getContextOfType(context, XmlTag.class, true):null
     );
 
     if (elementDescriptor!=null && elementDescriptor.getType() instanceof ComplexTypeDescriptor) {
@@ -160,7 +160,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
 
     if (type != null) {
       final EnumerationData data = getEnumeratedValuesImpl(type);
-      return data != null? data.enumeratedValues:ArrayUtil.EMPTY_STRING_ARRAY;
+      return data != null? data.enumeratedValues: ArrayUtil.EMPTY_STRING_ARRAY;
     }
 
     return ArrayUtil.EMPTY_STRING_ARRAY;

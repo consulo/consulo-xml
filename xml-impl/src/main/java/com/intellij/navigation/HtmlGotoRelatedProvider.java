@@ -15,12 +15,14 @@
  */
 package com.intellij.navigation;
 
-import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.language.Language;
+import consulo.language.navigation.GotoRelatedItem;
+import consulo.language.navigation.GotoRelatedProvider;
 
 import javax.annotation.Nonnull;
 import java.util.*;

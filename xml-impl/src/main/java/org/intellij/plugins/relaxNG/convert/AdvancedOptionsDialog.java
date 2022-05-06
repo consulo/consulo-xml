@@ -16,9 +16,10 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.components.JBTabbedPane;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.project.Project;
+import consulo.ui.ex.awt.JBTabbedPane;
+
 import javax.annotation.Nullable;
 
 import javax.swing.*;

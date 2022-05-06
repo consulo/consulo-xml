@@ -18,14 +18,15 @@ package com.intellij.psi;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.language.Language;
+import consulo.language.psi.PsiElement;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.Language;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
+import consulo.ide.ServiceManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Dmitry Avdeev
@@ -44,7 +45,7 @@ public abstract class XmlElementFactory
 	 *
 	 * @param s the text of the element to create.
 	 * @return the created element.
-	 * @throws com.intellij.util.IncorrectOperationException if the creation failed for some reason.
+	 * @throws IncorrectOperationException if the creation failed for some reason.
 	 */
 	@Nonnull
 	public abstract XmlText createDisplayText(@Nonnull @NonNls String s) throws IncorrectOperationException;
@@ -74,7 +75,7 @@ public abstract class XmlElementFactory
 	 *
 	 * @param text the text of an XML tag (which can contain attributes and subtags).
 	 * @return the created tag instance.
-	 * @throws com.intellij.util.IncorrectOperationException if the text does not specify a valid XML fragment.
+	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence text, Language language)
 	 */
 	@Nonnull
@@ -86,7 +87,7 @@ public abstract class XmlElementFactory
 	 * @param text     the text of an XML tag (which can contain attributes and subtags).
 	 * @param language the language for tag to be created.
 	 * @return the created tag instance.
-	 * @throws com.intellij.util.IncorrectOperationException if the text does not specify a valid XML fragment.
+	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence)
 	 */
 	@Nonnull
@@ -101,7 +102,7 @@ public abstract class XmlElementFactory
 	 * @throws IncorrectOperationException if either {@code name} or {@code value} are not valid.
 	 */
 	@Nonnull
-	public abstract XmlAttribute createXmlAttribute(@Nonnull @NonNls String name, @Nonnull String value) throws IncorrectOperationException;
+	public abstract XmlAttribute createXmlAttribute(@Nonnull @NonNls String name, @Nonnull String value) throws consulo.language.util.IncorrectOperationException;
 
 	/**
 	 * Creates an attribute with the specified name and value  with given context.

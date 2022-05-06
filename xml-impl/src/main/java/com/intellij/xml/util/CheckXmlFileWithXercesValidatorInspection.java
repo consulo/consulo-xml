@@ -18,16 +18,17 @@ package com.intellij.xml.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.codeInspection.ex.UnfairLocalInspectionTool;
 import com.intellij.xml.XmlBundle;
+import com.intellij.xml.impl.ExternalDocumentValidator;
+import consulo.language.editor.inspection.scheme.UnfairLocalInspectionTool;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim Mossienko
- * @see com.intellij.xml.impl.ExternalDocumentValidator
+ * @see ExternalDocumentValidator
  */
 public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
   public static final @NonNls String SHORT_NAME = "CheckXmlFileWithXercesValidator";

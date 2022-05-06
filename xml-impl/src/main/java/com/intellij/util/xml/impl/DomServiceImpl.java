@@ -17,35 +17,37 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.UserDataCache;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileWithId;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.impl.PsiFileEx;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.stubs.ObjectStubTree;
-import com.intellij.psi.stubs.Stub;
-import com.intellij.psi.stubs.StubTreeLoader;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
-import com.intellij.util.Function;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.text.CharSequenceReader;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.structure.DomStructureViewBuilder;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.util.xml.stubs.builder.DomStubBuilder;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.application.util.UserDataCache;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.impl.internal.psi.stub.StubTreeLoader;
+import consulo.language.internal.PsiFileEx;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ObjectStubTree;
+import consulo.language.psi.stub.Stub;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
+import consulo.util.io.CharSequenceReader;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileWithId;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -99,7 +101,7 @@ public class DomServiceImpl extends DomService {
         return NanoXmlUtil.parseHeader(new CharSequenceReader(fileContent.getContentAsText()));
       }
     }
-    return NanoXmlUtil.parseHeader(file);
+    return NanoXmlUtil.parseHeaderWithException(file.getViewProvider().getContents());
   }
 
   private static XmlFileHeader computeHeaderByPsi(XmlFile file) {

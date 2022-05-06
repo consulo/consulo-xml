@@ -16,13 +16,13 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
-import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.virtualFileSystem.fileType.FileTypeConsumer;
+import consulo.language.file.LanguageFileType;
+import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.virtualFileSystem.fileType.FileTypeFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

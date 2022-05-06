@@ -19,10 +19,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.util.SmartList;
-import com.intellij.util.io.StringRef;
+
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.StringUtil;
+import consulo.index.io.StringRef;
 
 /**
  * @author Dmitry Avdeev
@@ -39,7 +40,7 @@ public class ElementStub extends DomStub
 	private final StringRef myElementClass;
 
 	public ElementStub(@Nullable ElementStub parent, @Nonnull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
-			@Nullable StringRef elementClass)
+										 @Nullable StringRef elementClass)
 	{
 		super(parent, name, namespace);
 		myIndex = index;

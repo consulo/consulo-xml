@@ -15,12 +15,18 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.codeStyle.Alignment;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.ChildAttributes;
+import consulo.language.codeStyle.Indent;
+import consulo.language.codeStyle.Spacing;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.codeStyle.Wrap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -251,7 +257,7 @@ public class XmlTagBlock extends AbstractXmlBlock{
     if (syntheticBlock2.startsWithTag() ) {
       final XmlTag startTag = syntheticBlock2.getStartTag();
       if (myXmlFormattingPolicy.keepWhiteSpacesInsideTag(startTag) && startTag.textContains('\n')) {
-        return getChildrenIndent() != Indent.getNoneIndent() ? Spacing.getReadOnlySpacing():Spacing.createSpacing(0,0,0,true,myXmlFormattingPolicy.getKeepBlankLines());
+        return getChildrenIndent() != Indent.getNoneIndent() ? Spacing.getReadOnlySpacing(): Spacing.createSpacing(0,0,0,true,myXmlFormattingPolicy.getKeepBlankLines());
       }
     }
 

@@ -17,31 +17,26 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.ItemPresentationWithSeparator;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.LiteralTextEscaper;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.PsiReference;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.*;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.util.SymbolPresentationUtil;
+import consulo.navigation.ItemPresentation;
+import consulo.navigation.ItemPresentationWithSeparator;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.util.lang.StringUtil;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.CheckUtil;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
+import consulo.language.impl.psi.CheckUtil;
 import com.intellij.psi.impl.source.tree.injected.XmlAttributeLiteralEscaper;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.presentation.java.SymbolPresentationUtil;
+import consulo.language.psi.meta.PsiMetaOwner;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 import consulo.ui.image.Image;
 
 /**

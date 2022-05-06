@@ -15,9 +15,10 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Pair;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.ui.image.Image;
+import consulo.util.lang.function.Condition;
+import consulo.util.lang.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,11 +31,11 @@ import java.util.Map;
  */
 public class ComboTableCellEditor extends DefaultCellEditor {
   private final boolean myNullable;
-  private final Factory<List<Pair<String, consulo.ui.image.Image>>> myDataFactory;
+  private final Factory<List<Pair<String, Image>>> myDataFactory;
   private Map<String, consulo.ui.image.Image> myData;
   private static final Pair<String,Icon> EMPTY = Pair.create(" ", null);
 
-  public ComboTableCellEditor(Factory<List<Pair<String, consulo.ui.image.Image>>> dataFactory, final boolean nullable) {
+  public ComboTableCellEditor(Factory<List<Pair<String, Image>>> dataFactory, final boolean nullable) {
     super(new JComboBox());
     myDataFactory = dataFactory;
     myNullable = nullable;
@@ -67,11 +68,11 @@ public class ComboTableCellEditor extends DefaultCellEditor {
     if (myNullable) {
       comboBox.addItem(EMPTY);
     }
-    for (final Pair<String, consulo.ui.image.Image> pair : list) {
+    for (final Pair<String, Image> pair : list) {
       myData.put(pair.first, pair.second);
       comboBox.addItem(pair);
     }
-    final Pair<Object, consulo.ui.image.Image> pair = Pair.create(value, myData.get(value));
+    final Pair<Object, Image> pair = Pair.create(value, myData.get(value));
     comboBox.setEditable(true);
     super.getTableCellEditorComponent(table, pair, isSelected, row, column);
     comboBox.setEditable(false);

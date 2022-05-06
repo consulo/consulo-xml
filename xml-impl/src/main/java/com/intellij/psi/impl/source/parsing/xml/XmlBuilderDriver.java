@@ -19,28 +19,28 @@
  */
 package com.intellij.psi.impl.source.parsing.xml;
 
+import consulo.language.parser.ParserDefinition;
+import consulo.language.parser.PsiBuilderFactory;
 import consulo.localize.LocalizeValue;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
-import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.lang.ParserDefinition;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilderFactory;
-import com.intellij.lang.impl.PsiBuilderImpl;
+import consulo.language.parser.LanguageParserDefinitions;
+import consulo.language.ast.LighterASTNode;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.impl.internal.parser.PsiBuilderImpl;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.ref.Ref;
+import consulo.language.ast.TokenType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.containers.Stack;
-import com.intellij.util.diff.FlyweightCapableTreeStructure;
+import consulo.util.collection.Stack;
+import consulo.language.util.FlyweightCapableTreeStructure;
 import com.intellij.xml.util.XmlUtil;
-import consulo.lang.LanguageVersion;
-import consulo.lang.util.LanguageVersionUtil;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
 
 public class XmlBuilderDriver {
   private final Stack<String> myNamespacesStack = new Stack<String>();

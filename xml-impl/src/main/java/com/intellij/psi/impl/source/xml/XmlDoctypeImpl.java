@@ -15,26 +15,22 @@
  */
 package com.intellij.psi.impl.source.xml;
 
+import com.intellij.psi.XmlElementVisitor;
+import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
+import com.intellij.psi.xml.*;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.*;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.injection.InjectedLanguageManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtil;
 
 /**
  * @author Mike

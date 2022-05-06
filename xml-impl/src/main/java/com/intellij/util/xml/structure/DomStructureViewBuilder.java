@@ -2,24 +2,24 @@
 
 package com.intellij.util.xml.structure;
 
-import com.intellij.ide.structureView.StructureView;
-import com.intellij.ide.structureView.StructureViewModel;
-import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
-import com.intellij.ide.structureView.newStructureView.StructureViewComponent;
-import com.intellij.ide.util.treeView.AbstractTreeNode;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditor;
-import com.intellij.openapi.fileEditor.TextEditor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Function;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomService;
-import org.jetbrains.concurrency.Promise;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.FileEditor;
+import consulo.fileEditor.TextEditor;
+import consulo.fileEditor.structureView.StructureView;
+import consulo.fileEditor.structureView.StructureViewModel;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
+import consulo.ide.impl.idea.ide.structureView.newStructureView.StructureViewComponent;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.project.ui.view.tree.AbstractTreeNode;
+import consulo.util.concurrent.Promise;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

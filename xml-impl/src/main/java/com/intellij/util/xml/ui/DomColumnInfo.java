@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.util.ui.ColumnInfo;
+import consulo.ui.ex.awt.ColumnInfo;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;

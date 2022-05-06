@@ -15,21 +15,20 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.formatter.common.AbstractBlock;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
-import javax.annotation.Nonnull;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.codeStyle.*;
+import consulo.language.psi.PsiElement;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class SyntheticBlock extends AbstractSyntheticBlock implements Block, ReadOnlyBlockContainer {
+public class SyntheticBlock extends AbstractSyntheticBlock implements Block {
   private final List<Block> mySubBlocks;
   private final Indent myChildIndent;
 
@@ -74,7 +73,7 @@ public class SyntheticBlock extends AbstractSyntheticBlock implements Block, Rea
         return Spacing.getReadOnlySpacing();
       }
       if (type1 == XmlElementType.XML_CDATA_START && type2 == XmlElementType.XML_CDATA_END) {
-        return Spacing.createSpacing(0, 0, 0, myXmlFormattingPolicy.getShouldKeepLineBreaks(), myXmlFormattingPolicy.getKeepBlankLines()); 
+        return Spacing.createSpacing(0, 0, 0, myXmlFormattingPolicy.getShouldKeepLineBreaks(), myXmlFormattingPolicy.getKeepBlankLines());
       }
       if (type1 == XmlElementType.XML_CDATA_START && child2 instanceof AnotherLanguageBlockWrapper ||
           type2 == XmlElementType.XML_CDATA_END && child1 instanceof AnotherLanguageBlockWrapper) {

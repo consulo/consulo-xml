@@ -15,21 +15,21 @@
  */
 package com.intellij.psi.impl.source.xml.behavior;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.impl.source.DummyHolderFactory;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.SharedImplUtil;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.impl.source.tree.TreeUtil;
 import com.intellij.psi.impl.source.xml.XmlPsiPolicy;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagChild;
-import com.intellij.util.CharTable;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.impl.internal.ast.SharedImplUtil;
+import consulo.language.impl.psi.DummyHolderFactory;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.util.CharTable;
+import consulo.logging.Logger;
 
 public class DefaultXmlPsiPolicy implements XmlPsiPolicy{
   private static final Logger LOG = Logger.getInstance("#DefaultXmlPsiPolicy");

@@ -16,7 +16,7 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.util.xml.JavaMethod;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

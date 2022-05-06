@@ -16,23 +16,26 @@
 
 package com.intellij.lang;
 
-import com.intellij.lang.folding.FoldingBuilder;
-import com.intellij.lang.folding.FoldingDescriptor;
-import com.intellij.lang.folding.LanguageFolding;
+import consulo.language.editor.folding.FoldingDescriptor;
+import consulo.language.editor.internal.LanguageFolding;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.UnfairTextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.document.Document;
+import consulo.application.progress.ProgressManager;
+import consulo.application.dumb.DumbAware;
+import consulo.document.util.TextRange;
+import consulo.document.util.UnfairTextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.*;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.folding.FoldingBuilder;
+import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -70,7 +73,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
       doAddForChildren(xmlDocument, foldings, document);
     }
 
-    return foldings != null ? foldings.toArray(new FoldingDescriptor[foldings.size()]):FoldingDescriptor.EMPTY;
+    return foldings != null ? foldings.toArray(new FoldingDescriptor[foldings.size()]): FoldingDescriptor.EMPTY;
   }
 
   protected void addElementsToFold(List<FoldingDescriptor> foldings, XmlElement tag, Document document) {

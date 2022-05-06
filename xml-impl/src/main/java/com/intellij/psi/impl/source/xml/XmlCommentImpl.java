@@ -15,18 +15,17 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.psi.*;
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.tree.injected.XmlCommentLiteralEscaper;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
+import consulo.language.ast.IElementType;
+import consulo.language.psi.*;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.util.PsiTreeUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -77,14 +76,14 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
 
   @Nullable
   public PsiMetaData getMetaData() {
-    return MetaRegistry.getMetaBase(this);
+    return MetaDataService.getInstance().getMeta(this);
   }
 
   public PsiLanguageInjectionHost updateText(@Nonnull final String text) {
     final PsiFile psiFile = getContainingFile();
 
     final XmlDocument document =
-      ((XmlFile)PsiFileFactory.getInstance(getProject()).createFileFromText("dummy", psiFile.getFileType(), text)).getDocument();
+      ((XmlFile) PsiFileFactory.getInstance(getProject()).createFileFromText("dummy", psiFile.getFileType(), text)).getDocument();
     assert document != null;
 
     final XmlComment comment = PsiTreeUtil.getChildOfType(document, XmlComment.class);

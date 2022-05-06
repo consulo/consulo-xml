@@ -2,17 +2,17 @@
 package com.intellij.xml.actions.validate;
 
 import com.intellij.javaee.UriUtil;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
+import consulo.ide.impl.idea.util.ArrayUtilRt;
+import consulo.language.psi.PsiFile;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiManager;
 import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtilRt;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.util.XmlResourceResolver;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFileManager;
 import org.apache.xerces.impl.Constants;
 import org.apache.xerces.impl.XMLEntityManager;
 import org.apache.xerces.jaxp.JAXPConstants;

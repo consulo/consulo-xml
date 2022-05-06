@@ -15,21 +15,22 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileWithId;
-import com.intellij.psi.impl.PsiFileEx;
-import com.intellij.psi.stubs.ObjectStubTree;
-import com.intellij.psi.stubs.StubTreeLoader;
+import consulo.application.ApplicationManager;
+import consulo.language.impl.internal.psi.stub.StubTreeLoader;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.semantic.SemElement;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.sem.SemElement;
+import consulo.util.collection.SmartList;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.internal.PsiFileEx;
+import consulo.language.psi.stub.ObjectStubTree;
+import consulo.util.lang.function.Condition;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileWithId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

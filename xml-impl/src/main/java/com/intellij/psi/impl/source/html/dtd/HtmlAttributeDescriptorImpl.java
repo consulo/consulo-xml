@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.impl.source.html.dtd;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 
 /**

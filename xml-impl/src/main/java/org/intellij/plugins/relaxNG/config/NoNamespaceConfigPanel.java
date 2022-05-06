@@ -16,29 +16,26 @@
 
 package org.intellij.plugins.relaxNG.config;
 
+import com.intellij.ide.highlighter.XmlFileType;
+import consulo.configurable.ConfigurationException;
+import consulo.fileChooser.FileChooserDescriptor;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.language.editor.HectorComponentPanel;
+import consulo.language.editor.LangDataKeys;
+import consulo.language.psi.PsiFile;
+import consulo.module.Module;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.ComponentWithBrowseButton;
+import consulo.ui.ex.awt.TextComponentAccessor;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
+import org.intellij.plugins.relaxNG.compact.RncFileType;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.intellij.plugins.relaxNG.compact.RncFileType;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.editor.HectorComponentPanel;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.ui.ComponentWithBrowseButton;
-import com.intellij.openapi.ui.TextComponentAccessor;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
 
 /**
  * Created by IntelliJ IDEA.

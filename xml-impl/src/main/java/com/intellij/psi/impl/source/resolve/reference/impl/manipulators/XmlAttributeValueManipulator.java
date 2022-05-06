@@ -15,21 +15,21 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.CheckUtil;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.Factory;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.SharedImplUtil;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.CompositeElement;
+import consulo.language.impl.internal.ast.Factory;
+import consulo.language.impl.internal.ast.SharedImplUtil;
+import consulo.language.impl.psi.CheckUtil;
+import consulo.language.psi.AbstractElementManipulator;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.impl.ast.LeafElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.CharTable;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.CharTable;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,7 +39,7 @@ import com.intellij.util.IncorrectOperationException;
  * To change this template use Options | File Templates.
  */
 public class XmlAttributeValueManipulator extends AbstractElementManipulator<XmlAttributeValue> {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.resolve.reference.impl.manipulators.XmlAttributeValueManipulator");
+  private static final Logger LOG = Logger.getInstance(XmlAttributeValueManipulator.class);
 
   public XmlAttributeValue handleContentChange(XmlAttributeValue element, TextRange range, String newContent) throws IncorrectOperationException {
     return handleContentChange(element, range, newContent, XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN);

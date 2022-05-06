@@ -22,10 +22,10 @@ package com.intellij.javaee;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFileSystemItem;
+import consulo.util.lang.StringUtil;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiFileSystemItem;
 
 public class UriUtil
 {
@@ -34,7 +34,7 @@ public class UriUtil
 	}
 
 	/**
-	 * @see #findRelative(String, com.intellij.psi.PsiFileSystemItem)
+	 * @see #findRelative(String, PsiFileSystemItem)
 	 */
 	@Deprecated
 	@Nullable

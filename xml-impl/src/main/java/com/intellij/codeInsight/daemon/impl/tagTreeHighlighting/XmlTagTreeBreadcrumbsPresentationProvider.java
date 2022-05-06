@@ -15,12 +15,12 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsPresentationProvider;
+import consulo.ide.impl.idea.ui.breadcrumbs.CrumbPresentation;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.breadcrumbs.BreadcrumbsPresentationProvider;
-import com.intellij.ui.breadcrumbs.CrumbPresentation;
 import com.intellij.xml.breadcrumbs.DefaultCrumbsPresentation;
+import consulo.language.psi.PsiFile;
 import consulo.ui.color.ColorValue;
 
 import javax.annotation.Nonnull;

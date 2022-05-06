@@ -15,24 +15,28 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.codeInsight.completion.*;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.filters.getters.XmlAttributeValueGetter;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
+import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
+import consulo.language.editor.completion.CompletionType;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.ProcessingContext;
 
 import java.util.HashSet;
 
 /**
  * @author peter
  */
-public class DomCompletionContributor extends CompletionContributor{
+public class DomCompletionContributor extends CompletionContributor {
   private final GenericValueReferenceProvider myProvider = new GenericValueReferenceProvider();
 
   @Override

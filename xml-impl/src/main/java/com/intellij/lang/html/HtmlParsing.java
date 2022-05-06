@@ -19,18 +19,18 @@
  */
 package com.intellij.lang.html;
 
-import com.intellij.codeInsight.completion.CompletionUtil;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.tree.CustomParsingType;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.ILazyParseableElementType;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.containers.Stack;
 import com.intellij.xml.util.HtmlUtil;
-import consulo.psi.impl.source.codeStyle.IndentHelperExtension;
+import consulo.ide.impl.psi.impl.source.codeStyle.IndentHelperExtension;
+import consulo.language.ast.CustomParsingType;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.ILazyParseableElementType;
+import consulo.language.editor.impl.internal.completion.CompletionUtil;
+import consulo.language.parser.PsiBuilder;
+import consulo.util.collection.Stack;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

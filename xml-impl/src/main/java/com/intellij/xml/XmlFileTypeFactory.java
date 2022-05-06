@@ -15,14 +15,15 @@
  */
 package com.intellij.xml;
 
-import com.intellij.codeInsight.editorActions.TypedHandler;
 import com.intellij.ide.highlighter.DTDFileType;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import consulo.virtualFileSystem.fileType.FileTypeFactory;
+import consulo.ide.impl.idea.codeInsight.editorActions.TypedHandler;
+import consulo.virtualFileSystem.fileType.FileTypeConsumer;
+
 import javax.annotation.Nonnull;
 
 /**

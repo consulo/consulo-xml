@@ -15,14 +15,14 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.FixedSizeButton;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xml.XmlBundle;
+import consulo.fileChooser.FileChooserDescriptor;
+import consulo.fileChooser.IdeaFileChooser;
+import consulo.project.Project;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.ui.ex.awt.FixedSizeButton;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +97,7 @@ public class EditLocationDialog extends DialogWrapper {
           new ActionListener() {
             public void actionPerformed(ActionEvent ignored) {
               FileChooserDescriptor descriptor = getChooserDescriptor();
-              VirtualFile file = FileChooser.chooseFile(descriptor, myProject, null);
+              VirtualFile file = IdeaFileChooser.chooseFile(descriptor, myProject, null);
               if (file != null) {
                 myTfPath.setText(file.getPath().replace('/', File.separatorChar));
               }

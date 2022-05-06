@@ -22,16 +22,17 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.indexing.AdditionalIndexedRootsScope;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.ID;
+
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.AdditionalIndexedRootsScope;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.index.io.ID;
+import consulo.project.Project;
 
 /**
  * @author Dmitry Avdeev
@@ -40,7 +41,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
 
   public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getResources(ID<K, V> indexId,
                                                                                            final K key,
-                                                                                           @Nullable final Module module,
+                                                                                           @Nullable final consulo.module.Module module,
                                                                                            @Nonnull Project project,
                                                                                            @Nullable final GlobalSearchScope additionalScope) {
 

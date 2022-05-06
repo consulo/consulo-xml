@@ -15,8 +15,8 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.psi.PsiReferenceContributor;
-import com.intellij.psi.PsiReferenceRegistrar;
+import consulo.language.psi.PsiReferenceContributor;
+import consulo.language.psi.PsiReferenceRegistrar;
 import com.intellij.patterns.XmlPatterns;
 
 /**

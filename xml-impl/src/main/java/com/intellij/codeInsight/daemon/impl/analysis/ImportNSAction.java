@@ -15,20 +15,21 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import com.intellij.codeInsight.hint.QuestionAction;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.RangeMarker;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.PopupChooserBuilder;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.ui.components.JBList;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlNamespaceHelper;
-import javax.annotation.Nonnull;
+import consulo.codeEditor.Editor;
+import consulo.document.RangeMarker;
+import consulo.ide.impl.ui.impl.PopupChooserBuilder;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.hint.QuestionAction;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.ui.ex.awt.JBList;
+import consulo.ui.ex.popup.JBPopup;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +65,7 @@ public class ImportNSAction implements QuestionAction {
     final Runnable runnable = new Runnable() {
 
       public void run() {
-        final String namespace = (String)list.getSelectedValue();
+        final String namespace = (String) list.getSelectedValue();
         if (namespace != null) {
           final Project project = myFile.getProject();
           new WriteCommandAction.Simple(project, myFile) {
@@ -73,18 +74,18 @@ public class ImportNSAction implements QuestionAction {
               final XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(myFile);
               final String prefix = extension.getNamespacePrefix(myElement);
               extension.insertNamespaceDeclaration(myFile,
-                                                   myEditor,
-                                                   Collections.singleton(namespace),
-                                                   prefix,
-                                                   new XmlNamespaceHelper.Runner<String, IncorrectOperationException>() {
-                                                     public void run(final String s) throws IncorrectOperationException {
-                                                       PsiDocumentManager.getInstance(myFile.getProject()).doPostponedOperationsAndUnblockDocument(myEditor.getDocument());
-                                                       PsiElement element = myFile.findElementAt(marker.getStartOffset());
-                                                       if (element != null) {
-                                                         extension.qualifyWithPrefix(s, element, myEditor.getDocument());
-                                                       }
-                                                     }
-                                                   }
+                  myEditor,
+                  Collections.singleton(namespace),
+                  prefix,
+                  new XmlNamespaceHelper.Runner<String, consulo.language.util.IncorrectOperationException>() {
+                    public void run(final String s) throws IncorrectOperationException {
+                      PsiDocumentManager.getInstance(myFile.getProject()).doPostponedOperationsAndUnblockDocument(myEditor.getDocument());
+                      PsiElement element = myFile.findElementAt(marker.getStartOffset());
+                      if (element != null) {
+                        extension.qualifyWithPrefix(s, element, myEditor.getDocument());
+                      }
+                    }
+                  }
               );
             }
           }.execute();
@@ -94,11 +95,12 @@ public class ImportNSAction implements QuestionAction {
     if (list.getModel().getSize() == 1) {
       runnable.run();
     } else {
-      new PopupChooserBuilder(list).
-        setTitle(myTitle).
-        setItemChoosenCallback(runnable).
-        createPopup().
-        showInBestPositionFor(myEditor);
+      JBPopup popup = new PopupChooserBuilder(list).
+          setTitle(myTitle).
+          setItemChoosenCallback(runnable).
+          createPopup();
+
+      myEditor.showPopupInBestPositionFor(popup);
     }
 
     return true;

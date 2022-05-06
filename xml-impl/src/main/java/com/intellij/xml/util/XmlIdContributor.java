@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlFile;
+import consulo.component.extension.ExtensionPointName;
 
 /**
  * @author yole

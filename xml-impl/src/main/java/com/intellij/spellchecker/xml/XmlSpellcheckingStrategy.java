@@ -1,7 +1,7 @@
 package com.intellij.spellchecker.xml;
 
-import com.intellij.codeInspection.SuppressQuickFix;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.psi.PsiElement;
 import com.intellij.spellchecker.tokenizer.SuppressibleSpellcheckingStrategy;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;

@@ -15,17 +15,11 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.ide.TypePresentationServiceImpl;
-import com.intellij.ide.presentation.Presentation;
-import com.intellij.openapi.util.Ref;
-import com.intellij.util.xml.Documentation;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementVisitor;
-import com.intellij.util.xml.ElementPresentation;
-import com.intellij.util.xml.ElementPresentationManager;
-import com.intellij.util.xml.ElementPresentationTemplate;
-import com.intellij.util.xml.GenericValue;
+import com.intellij.util.xml.*;
+import consulo.ide.impl.idea.ide.TypePresentationServiceImpl;
+import consulo.ide.impl.idea.ide.presentation.Presentation;
 import consulo.ui.image.Image;
+import consulo.util.lang.ref.Ref;
 
 /**
  * @author Dmitry Avdeev

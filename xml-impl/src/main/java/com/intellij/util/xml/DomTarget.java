@@ -15,16 +15,17 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomRenameableTarget;
-import com.intellij.pom.PsiDeclaredTarget;
-import com.intellij.psi.DelegatePsiTarget;
-import com.intellij.psi.PsiElement;
+import consulo.document.util.TextRange;
+import consulo.language.pom.PomRenameableTarget;
+import consulo.language.impl.psi.DelegatePsiTarget;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.language.pom.PsiDeclaredTarget;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

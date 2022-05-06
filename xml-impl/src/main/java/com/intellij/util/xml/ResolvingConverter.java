@@ -15,21 +15,26 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.psi.PsiElement;
+import com.intellij.util.xml.converters.values.BooleanValueConverter;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.lang.Object;
+import java.lang.String;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 /**
- * If converter extends this class, the corresponding XML {@link com.intellij.psi.PsiReference}
+ * If converter extends this class, the corresponding XML {@link PsiReference}
  * will take completion variants from {@link #getVariants(ConvertContext)} method.
  *
  * @author peter
@@ -51,7 +56,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
     }
   };
 
-  /** @see com.intellij.util.xml.converters.values.BooleanValueConverter */
+  /** @see BooleanValueConverter */
   @Deprecated
   public static final Converter<Boolean> BOOLEAN_CONVERTER = new ResolvingConverter<Boolean>() {
     public Boolean fromString(final String s, final ConvertContext context) {
@@ -110,7 +115,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
   }
 
   /**
-   * Delegate from {@link com.intellij.psi.PsiReference#handleElementRename(String)}
+   * Delegate from {@link PsiReference#handleElementRename(String)}
    * @param genericValue generic value
    * @param context context
    * @param newElementName new element name
@@ -121,7 +126,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
   }
 
   /**
-   * Delegate from {@link com.intellij.psi.PsiReference#bindToElement(com.intellij.psi.PsiElement)}
+   * Delegate from {@link PsiReference#bindToElement(PsiElement)}
    * @param genericValue generic value
    * @param context context
    * @param newTarget new target
@@ -137,7 +142,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
 
   /**
    * @param resolvedValue {@link #fromString(String, ConvertContext)} result
-   * @return the PSI element to which the {@link com.intellij.psi.PsiReference} will resolve
+   * @return the PSI element to which the {@link PsiReference} will resolve
    */
   @Nullable
   public PsiElement getPsiElement(@Nullable T resolvedValue) {
@@ -151,7 +156,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
   }
 
   /**
-   * Delegate from {@link com.intellij.psi.PsiReference#isReferenceTo(com.intellij.psi.PsiElement)}
+   * Delegate from {@link PsiReference#isReferenceTo(PsiElement)}
    * @param element element
    * @param stringValue string value
    * @param resolveResult resolve result
@@ -164,7 +169,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
   }
 
   /**
-   * Delegate from {@link com.intellij.psi.PsiReference#resolve()}
+   * Delegate from {@link PsiReference#resolve()}
    * @param o {@link #fromString(String, ConvertContext)} result
    * @param context context
    * @return PSI element to resolve to. By default calls {@link #getPsiElement(Object)} method
@@ -187,7 +192,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
    * Override to provide custom lookup elements in completion.
    * <p/>
    * Default is {@code null} which will create lookup via
-   * {@link ElementPresentationManager#createVariant(java.lang.Object, java.lang.String, com.intellij.psi.PsiElement)}.
+   * {@link ElementPresentationManager#createVariant(Object, String, PsiElement)}.
    *
    * @param t DOM to create lookup element for.
    * @return Lookup element.

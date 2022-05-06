@@ -15,52 +15,53 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.codeInsight.CodeInsightUtilBase;
-import com.intellij.codeInsight.actions.SimpleCodeInsightAction;
-import com.intellij.codeInsight.hint.HintManager;
-import com.intellij.codeInsight.lookup.impl.LookupCellRenderer;
-import com.intellij.codeInsight.template.TemplateBuilder;
-import com.intellij.codeInsight.template.TemplateBuilderFactory;
-import com.intellij.codeInsight.template.impl.MacroCallNode;
-import com.intellij.codeInsight.template.macro.CompleteMacro;
-import com.intellij.codeInsight.template.macro.CompleteSmartMacro;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.colors.EditorFontType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.impl.source.tree.Factory;
-import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.impl.source.xml.XmlContentDFA;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.refactoring.util.CommonRefactoringUtil;
-import com.intellij.ui.components.JBList;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
-import javax.annotation.Nonnull;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.Editor;
+import consulo.colorScheme.EditorColorsManager;
+import consulo.colorScheme.EditorColorsScheme;
+import consulo.colorScheme.EditorFontType;
+import consulo.document.Document;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.idea.codeInsight.CodeInsightUtilBase;
+import consulo.ide.impl.idea.codeInsight.lookup.impl.LookupCellRenderer;
+import consulo.ide.impl.idea.codeInsight.template.macro.CompleteMacro;
+import consulo.ide.impl.idea.codeInsight.template.macro.CompleteSmartMacro;
+import consulo.ide.impl.idea.util.Function;
+import consulo.ide.impl.ui.impl.PopupChooserBuilder;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.action.SimpleCodeInsightAction;
+import consulo.language.editor.hint.HintManager;
+import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
+import consulo.language.editor.template.TemplateBuilder;
+import consulo.language.editor.template.TemplateBuilderFactory;
+import consulo.language.editor.template.macro.MacroCallNode;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.internal.ast.Factory;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.ui.ex.awt.JBList;
+import consulo.ui.ex.popup.JBPopup;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -91,7 +92,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
       Runnable runnable = new Runnable() {
         @Override
         public void run() {
-          final XmlElementDescriptor selected = (XmlElementDescriptor)list.getSelectedValue();
+          final XmlElementDescriptor selected = (XmlElementDescriptor) list.getSelectedValue();
           new WriteCommandAction.Simple(project, "Generate XML Tag", file) {
             @Override
             protected void run() {
@@ -105,9 +106,8 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                 document.insertString(offset, newTag.getText());
                 PsiDocumentManager.getInstance(project).commitDocument(document);
                 newTag = PsiTreeUtil.getParentOfType(file.findElementAt(offset + 1), XmlTag.class, false);
-              }
-              else {
-                newTag = (XmlTag)contextTag.addAfter(newTag, anchor);
+              } else {
+                newTag = (XmlTag) contextTag.addAfter(newTag, anchor);
               }
               generateTag(newTag);
             }
@@ -123,22 +123,21 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         });
         list.setSelectedValue(descriptor, false);
         runnable.run();
+      } else {
+        JBPopup popup = new PopupChooserBuilder<>(list)
+            .setTitle("Choose Tag Name")
+            .setItemChoosenCallback(runnable)
+            .setFilteringEnabled(new Function<Object, String>() {
+              @Override
+              public String fun(Object o) {
+                return ((XmlElementDescriptor) o).getName();
+              }
+            })
+            .createPopup();
+
+        editor.showPopupInBestPositionFor(popup);
       }
-      else {
-        JBPopupFactory.getInstance().createListPopupBuilder(list)
-          .setTitle("Choose Tag Name")
-          .setItemChoosenCallback(runnable)
-          .setFilteringEnabled(new Function<Object, String>() {
-            @Override
-            public String fun(Object o) {
-              return ((XmlElementDescriptor)o).getName();
-            }
-          })
-          .createPopup()
-          .showInBestPositionFor(editor);
-      }
-    }
-    catch (CommonRefactoringUtil.RefactoringErrorHintException e) {
+    } catch (CommonRefactoringUtil.RefactoringErrorHintException e) {
       HintManager.getInstance().showErrorHint(editor, e.getMessage());
     }
   }
@@ -159,8 +158,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         }
         anchor = subTag;
         previousPositionIsPossible = true;
-      }
-      else {
+      } else {
         previousPositionIsPossible = false;
       }
       contentDFA.transition(subTag);
@@ -206,8 +204,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
       if (descriptor == null) {
         XmlTag tag = XmlElementFactory.getInstance(newTag.getProject()).createTagFromText("<", newTag.getLanguage());
         newTag.addSubTag(tag, false);
-      }
-      else {
+      } else {
         XmlTag subTag = newTag.addSubTag(createTag(newTag, descriptor), false);
         generateRaw(subTag);
       }
@@ -229,8 +226,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     }
     if ("<".equals(tag.getText())) {
       builder.replaceElement(tag, TextRange.from(1, 0), new MacroCallNode(new CompleteSmartMacro()));
-    }
-    else if (tag.getSubTags().length == 0) {
+    } else if (tag.getSubTags().length == 0) {
       int i = tag.getText().indexOf("></");
       if (i > 0) {
         builder.replaceElement(tag, TextRange.from(i + 1, 0), new MacroCallNode(new CompleteMacro()));
@@ -251,7 +247,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
   }
 
   private static String getNamespace(XmlElementDescriptor descriptor) {
-    return descriptor instanceof XmlElementDescriptorImpl ? ((XmlElementDescriptorImpl)descriptor).getNamespace() : "";
+    return descriptor instanceof XmlElementDescriptorImpl ? ((XmlElementDescriptorImpl) descriptor).getNamespace() : "";
   }
 
   @Nullable
@@ -262,7 +258,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
       tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
     }
     if (tag == null) {
-      tag = ((XmlFile)file).getRootTag();
+      tag = ((XmlFile) file).getRootTag();
     }
     return tag;
   }
@@ -280,8 +276,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
           List<XmlElementDescriptor> descriptors = computeRequiredSubTags(subGroup);
           if (set == null) {
             set = new LinkedHashSet<XmlElementDescriptor>(descriptors);
-          }
-          else {
+          } else {
             set.retainAll(descriptors);
           }
         }
@@ -335,7 +330,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
-      XmlElementDescriptor descriptor = (XmlElementDescriptor)value;
+      XmlElementDescriptor descriptor = (XmlElementDescriptor) value;
       Color backgroundColor = isSelected ? list.getSelectionBackground() : list.getBackground();
 
       myNameLabel.setText(descriptor.getName());

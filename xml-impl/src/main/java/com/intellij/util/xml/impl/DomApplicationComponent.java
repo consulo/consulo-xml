@@ -15,18 +15,18 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.ReflectionAssignabilityCache;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.FactoryMap;
+import consulo.component.extension.Extensions;
+import consulo.ide.ServiceManager;
+import consulo.application.util.ConcurrentFactoryMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileDescription;
 import com.intellij.util.xml.TypeChooserManager;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 import consulo.disposer.Disposable;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.ide.impl.idea.util.ReflectionAssignabilityCache;
+import consulo.util.collection.FactoryMap;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.intellij.util.containers.ContainerUtil.newArrayList;
+import static consulo.util.collection.ContainerUtil.newArrayList;
 
 /**
  * @author peter

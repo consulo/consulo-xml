@@ -15,9 +15,9 @@
  */
 package com.intellij.lang.xml;
 
+import consulo.language.CompositeLanguage;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.CompositeLanguage;
-import com.intellij.lang.Language;
+import consulo.language.Language;
 
 /**
  * @author max

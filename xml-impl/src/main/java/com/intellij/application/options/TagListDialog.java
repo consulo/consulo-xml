@@ -15,13 +15,8 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.ui.AnActionButton;
-import com.intellij.ui.AnActionButtonRunnable;
-import com.intellij.ui.ToolbarDecorator;
-import com.intellij.ui.components.JBList;
+import consulo.application.ApplicationBundle;
+import consulo.ui.ex.awt.*;
 
 import javax.swing.*;
 import java.util.ArrayList;

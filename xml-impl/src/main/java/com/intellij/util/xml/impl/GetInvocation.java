@@ -1,15 +1,15 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.util.collection.Lists;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Pair;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -40,7 +40,7 @@ public class GetInvocation implements Invocation {
       handler.putUserData(DOM_VALUE_KEY, value = cachedValuesManager.createCachedValue(new CachedValueProvider<List<Pair<Converter,Object>>>() {
         @Override
         public Result<List<Pair<Converter,Object>>> compute() {
-          List<Pair<Converter, Object>> list = ContainerUtil.createLockFreeCopyOnWriteList();
+          List<Pair<Converter, Object>> list = Lists.newLockFreeCopyOnWriteList();
           return Result
             .create(list, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT, domManager, ProjectRootManager.getInstance(project));
         }

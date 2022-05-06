@@ -15,24 +15,17 @@
  */
 package com.intellij.lang.xml;
 
-import javax.annotation.Nonnull;
+import com.intellij.psi.xml.*;
+import consulo.language.LangBundle;
+import consulo.language.cacheBuilder.WordsScanner;
+import consulo.language.findUsage.DescriptiveNameUtil;
+import consulo.language.findUsage.FindUsagesProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.meta.PsiMetaData;
 
-import com.intellij.find.impl.HelpID;
-import com.intellij.lang.LangBundle;
-import com.intellij.lang.cacheBuilder.WordsScanner;
-import com.intellij.lang.findUsages.DescriptiveNameUtil;
-import com.intellij.lang.findUsages.FindUsagesProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeDecl;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlComment;
-import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.psi.xml.XmlTag;
+import javax.annotation.Nonnull;
 
 /**
  * @author ven
@@ -84,12 +77,6 @@ public class XmlFindUsagesProvider implements FindUsagesProvider
 			return LangBundle.message("xml.terms.variable");
 		}
 		throw new IllegalArgumentException("Cannot get type for " + element);
-	}
-
-	@Override
-	public String getHelpId(@Nonnull PsiElement element)
-	{
-		return HelpID.FIND_OTHER_USAGES;
 	}
 
 	@Override

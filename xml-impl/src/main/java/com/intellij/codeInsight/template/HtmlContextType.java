@@ -16,12 +16,14 @@
 package com.intellij.codeInsight.template;
 
 import javax.annotation.Nonnull;
-import com.intellij.codeInsight.CodeInsightBundle;
+
 import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.lang.Language;
 import com.intellij.lang.html.HTMLLanguage;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.psi.PsiFile;
+import consulo.ide.impl.idea.codeInsight.template.FileTypeBasedContextType;
+import consulo.language.Language;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author yole

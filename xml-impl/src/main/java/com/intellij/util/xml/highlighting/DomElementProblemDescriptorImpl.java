@@ -16,19 +16,20 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
+import consulo.application.ApplicationManager;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.logging.Logger;
+import consulo.util.lang.Pair;
+import consulo.document.util.TextRange;
+import consulo.util.lang.StringUtil;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.*;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.*;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -129,7 +130,7 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
     }
   }
 
-  public Pair<TextRange,PsiElement> getProblemRange() {
+  public Pair<TextRange, PsiElement> getProblemRange() {
     if (myPair == null) {
       myPair = computeProblemRange();
     }
@@ -141,7 +142,7 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
   }
 
   @Nonnull
-  protected Pair<TextRange,PsiElement> computeProblemRange() {
+  protected Pair<TextRange, PsiElement> computeProblemRange() {
     final PsiElement element = getPsiElement();
 
     if (element != null) {

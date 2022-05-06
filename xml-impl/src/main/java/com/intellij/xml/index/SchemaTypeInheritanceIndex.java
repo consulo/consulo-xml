@@ -15,23 +15,23 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.PairConvertor;
-import com.intellij.util.containers.EncoderDecoder;
-import com.intellij.util.containers.MultiMap;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.io.DataExternalizer;
-import com.intellij.util.io.DataInputOutputUtil;
-import com.intellij.util.io.IOUtil;
-import com.intellij.util.text.CharArrayUtil;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.ide.impl.idea.util.PairConvertor;
+import consulo.ide.impl.idea.util.containers.EncoderDecoder;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.ID;
+import consulo.index.io.data.DataExternalizer;
+import consulo.index.io.data.DataInputOutputUtil;
+import consulo.index.io.data.IOUtil;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.collection.MultiMap;
+import consulo.util.io.Readers;
+import consulo.util.lang.Pair;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.io.DataInput;
@@ -90,7 +90,7 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
 				{
 					try
 					{
-						myMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(VfsUtilCore.loadText(myCurrentFile)));
+						myMap = XsdComplexTypeInfoBuilder.parse(Readers.readerFromCharSequence(VfsUtilCore.loadText(myCurrentFile)));
 						type.add(new HashSet<SchemaTypeInfo>(myMap.get(new SchemaTypeInfo(name, true, ns))));
 					}
 					catch(IOException e)
@@ -133,7 +133,7 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>>
 			public Map<String, Set<SchemaTypeInfo>> map(@Nonnull FileContent inputData)
 			{
 				final Map<String, Set<SchemaTypeInfo>> map = new HashMap<String, Set<SchemaTypeInfo>>();
-				final MultiMap<SchemaTypeInfo, SchemaTypeInfo> multiMap = XsdComplexTypeInfoBuilder.parse(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+				final MultiMap<SchemaTypeInfo, SchemaTypeInfo> multiMap = XsdComplexTypeInfoBuilder.parse(Readers.readerFromCharSequence(inputData.getContentAsText()));
 				for(SchemaTypeInfo key : multiMap.keySet())
 				{
 					map.put(NsPlusTag.INSTANCE.encode(Pair.create(key.getNamespaceUri(), key.getTagName())), new HashSet<SchemaTypeInfo>(multiMap.get(key)));

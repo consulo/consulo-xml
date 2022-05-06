@@ -16,7 +16,7 @@
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
-import com.intellij.openapi.editor.colors.EditorColorKey;
+import consulo.colorScheme.EditorColorKey;
 import consulo.ui.color.ColorValue;
 import consulo.ui.style.StandardColors;
 

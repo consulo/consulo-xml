@@ -18,18 +18,18 @@ package com.intellij.codeInspection.htmlInspections;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.ProblemsHolder;
+import consulo.language.editor.inspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.language.psi.OuterLanguageElement;
+import consulo.language.psi.PsiWhiteSpace;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
 import org.jetbrains.annotations.Nls;
 
 /**

@@ -18,16 +18,17 @@ package com.intellij.xml.impl.schema;
 import java.util.List;
 
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
+
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.ref.Ref;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.PairProcessor;
-import com.intellij.util.SmartList;
+import consulo.ide.impl.idea.util.PairProcessor;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.util.XmlUtil;
 

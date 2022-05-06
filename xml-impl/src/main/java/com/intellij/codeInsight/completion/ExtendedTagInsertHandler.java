@@ -15,25 +15,26 @@
  */
 package com.intellij.codeInsight.completion;
 
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.featureStatistics.FeatureUsageTracker;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.RangeMarker;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.application.statistic.FeatureUsageTracker;
+import consulo.codeEditor.Editor;
+import consulo.document.Document;
+import consulo.document.RangeMarker;
+import consulo.language.editor.completion.lookup.InsertionContext;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -45,7 +46,7 @@ import java.util.Set;
 public class ExtendedTagInsertHandler extends XmlTagInsertHandler
 {
 
-	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.ExtendedTagInsertHandler");
+	private static final Logger LOG = Logger.getInstance(ExtendedTagInsertHandler.class);
 
 	protected final String myElementName;
 	@Nullable

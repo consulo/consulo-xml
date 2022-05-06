@@ -17,18 +17,18 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiReference;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlElementContentGroup;
 import com.intellij.psi.xml.XmlElementContentSpec;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.logging.Logger;
 
 /**
  * @author Mike

@@ -15,13 +15,16 @@
  */
 package com.intellij.codeInsight.completion;
 
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.application.ApplicationManager;
 import com.intellij.psi.impl.source.xml.XmlContentDFA;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 
 import java.util.List;

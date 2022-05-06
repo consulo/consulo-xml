@@ -16,52 +16,53 @@
 package com.intellij.codeInsight.daemon.impl.analysis;
 
 import com.intellij.application.options.XmlSettings;
-import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.completion.ExtendedTagInsertHandler;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.daemon.impl.ShowAutoImportPass;
-import com.intellij.codeInsight.daemon.impl.VisibleHighlightingPassFactory;
-import com.intellij.codeInsight.hint.HintManager;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.HintAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.RangeMarker;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.PopupChooserBuilder;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiAnchor;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.cache.impl.id.IdTableBuilding;
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.ui.components.JBList;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
+import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.ApplicationManager;
+import consulo.application.progress.ProgressIndicator;
+import consulo.application.progress.ProgressManager;
+import consulo.codeEditor.Editor;
+import consulo.document.RangeMarker;
+import consulo.fileEditor.FileEditorManager;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.ShowAutoImportPass;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.VisibleHighlightingPassFactory;
+import consulo.ide.impl.psi.impl.cache.impl.id.IdTableBuilding;
+import consulo.ide.impl.ui.impl.PopupChooserBuilder;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.hint.HintManager;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.intention.HintAction;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.impl.internal.psi.PsiAnchor;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.ui.ex.awt.JBList;
+import consulo.ui.ex.popup.JBPopup;
+import consulo.undoRedo.CommandProcessor;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +74,7 @@ import java.util.Set;
  */
 public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFix {
 
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix");
+  private static final Logger LOG = Logger.getInstance(CreateNSDeclarationIntentionFix.class);
 
   private final String myNamespacePrefix;
   private final PsiAnchor myElement;
@@ -81,7 +82,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
   @Nonnull
   private XmlFile getFile() {
-    return (XmlFile)myElement.getFile();
+    return (XmlFile) myElement.getFile();
   }
 
   @Nullable
@@ -130,10 +131,12 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
     final PsiFile containingFile = descriptor.getPsiElement().getContainingFile();
     Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
-    final PsiFile file = editor != null ? PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument()):null;
+    final PsiFile file = editor != null ? PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument()) : null;
     if (file == null || !Comparing.equal(file.getVirtualFile(), containingFile.getVirtualFile())) return;
 
-    try { invoke(project, editor, containingFile); } catch (IncorrectOperationException ex) {
+    try {
+      invoke(project, editor, containingFile);
+    } catch (IncorrectOperationException ex) {
       LOG.error(ex);
     }
   }
@@ -155,44 +158,43 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     Arrays.sort(namespaces);
 
     runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
-      namespaces,
-      project,
-      new StringToAttributeProcessor() {
-        @Override
-        public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String namespace) throws IncorrectOperationException {
-          String prefix = myNamespacePrefix;
-          if (StringUtil.isEmpty(prefix)) {
-            final XmlFile xmlFile = XmlExtension.getExtension(file).getContainingFile(element);
-            prefix = ExtendedTagInsertHandler.getPrefixByNamespace(xmlFile, namespace);
-            if (StringUtil.isNotEmpty(prefix)) {
-              // namespace already declared
-              ExtendedTagInsertHandler.qualifyWithPrefix(prefix, element);
-              return;
-            }
-            else {
-              prefix = ExtendedTagInsertHandler.suggestPrefix(xmlFile, namespace);
-              if (!StringUtil.isEmpty(prefix)) {
+        namespaces,
+        project,
+        new StringToAttributeProcessor() {
+          @Override
+          public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String namespace) throws IncorrectOperationException {
+            String prefix = myNamespacePrefix;
+            if (StringUtil.isEmpty(prefix)) {
+              final XmlFile xmlFile = XmlExtension.getExtension(file).getContainingFile(element);
+              prefix = ExtendedTagInsertHandler.getPrefixByNamespace(xmlFile, namespace);
+              if (StringUtil.isNotEmpty(prefix)) {
+                // namespace already declared
                 ExtendedTagInsertHandler.qualifyWithPrefix(prefix, element);
-                PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(editor.getDocument());
+                return;
+              } else {
+                prefix = ExtendedTagInsertHandler.suggestPrefix(xmlFile, namespace);
+                if (!StringUtil.isEmpty(prefix)) {
+                  ExtendedTagInsertHandler.qualifyWithPrefix(prefix, element);
+                  PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(editor.getDocument());
+                }
               }
             }
+            final int offset = editor.getCaretModel().getOffset();
+            final RangeMarker marker = editor.getDocument().createRangeMarker(offset, offset);
+            final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(file);
+            helper.insertNamespaceDeclaration((XmlFile) file, editor, Collections.singleton(namespace), prefix,
+                new XmlNamespaceHelper.Runner<String, consulo.language.util.IncorrectOperationException>() {
+                  @Override
+                  public void run(final String param) throws IncorrectOperationException {
+                    if (!namespace.isEmpty()) {
+                      editor.getCaretModel().moveToOffset(marker.getStartOffset());
+                    }
+                  }
+                });
           }
-          final int offset = editor.getCaretModel().getOffset();
-          final RangeMarker marker = editor.getDocument().createRangeMarker(offset, offset);
-          final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(file);
-          helper.insertNamespaceDeclaration((XmlFile)file, editor, Collections.singleton(namespace), prefix,
-                                            new XmlNamespaceHelper.Runner<String, IncorrectOperationException>() {
-                                              @Override
-                                              public void run(final String param) throws IncorrectOperationException {
-                                                if (!namespace.isEmpty()) {
-                                                  editor.getCaretModel().moveToOffset(marker.getStartOffset());
-                                                }
-                                              }
-                                            });
-        }
-      }, getTitle(),
-      this,
-      editor);
+        }, getTitle(),
+        this,
+        editor);
   }
 
   private String getTitle() {
@@ -207,7 +209,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   @Override
   public boolean showHint(@Nonnull final Editor editor) {
     if (myToken == null) return false;
-    XmlToken token = (XmlToken)myToken.retrieve();
+    XmlToken token = (XmlToken) myToken.retrieve();
     if (token == null) return false;
     if (!XmlSettings.getInstance().SHOW_XML_ADD_IMPORT_HINTS || myNamespacePrefix.isEmpty()) {
       return false;
@@ -222,14 +224,14 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
       if (element instanceof XmlTag) {
         if (VisibleHighlightingPassFactory.calculateVisibleRange(editor).contains(token.getTextRange())) {
           HintManager.getInstance().showQuestionHint(editor, message,
-                                                     token.getTextOffset(),
-                                                     token.getTextOffset() + myNamespacePrefix.length(), action);
+              token.getTextOffset(),
+              token.getTextOffset() + myNamespacePrefix.length(), action);
           return true;
         }
       } else {
         HintManager.getInstance().showQuestionHint(editor, message,
-                                                   element.getTextOffset(),
-                                                   element.getTextRange().getEndOffset(), action);
+            element.getTextOffset(),
+            element.getTextRange().getEndOffset(), action);
         return true;
       }
     }
@@ -238,7 +240,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
   private static boolean checkIfGivenXmlHasTheseWords(final String name, final XmlFile tldFileByUri) {
     if (name == null || name.isEmpty()) return true;
-    final List<String> list = StringUtil.getWordsIn(name);
+    final List<String> list = consulo.ide.impl.idea.openapi.util.text.StringUtil.getWordsIn(name);
     final String[] words = ArrayUtil.toStringArray(list);
     final boolean[] wordsFound = new boolean[words.length];
     final int[] wordsFoundCount = new int[1];
@@ -281,7 +283,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
                                                                                            final Project project, final StringToAttributeProcessor onSelection,
                                                                                            String title,
                                                                                            final IntentionAction requestor,
-                                                                                           final Editor editor) throws IncorrectOperationException {
+                                                                                           final Editor editor) throws consulo.language.util.IncorrectOperationException {
 
     if (namespacesToChooseFrom.length > 1 && !ApplicationManager.getApplication().isUnitTestMode()) {
       final JList list = new JBList(namespacesToChooseFrom);
@@ -294,35 +296,35 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
           PsiDocumentManager.getInstance(project).commitAllDocuments();
 
           CommandProcessor.getInstance().executeCommand(
-            project,
-            new Runnable() {
-              @Override
-              public void run() {
-                ApplicationManager.getApplication().runWriteAction(
-                  new Runnable() {
-                    @Override
-                    public void run() {
-                      try {
-                        onSelection.doSomethingWithGivenStringToProduceXmlAttributeNowPlease(namespacesToChooseFrom[index]);
-                      } catch (IncorrectOperationException ex) {
-                        throw new RuntimeException(ex);
+              project,
+              new Runnable() {
+                @Override
+                public void run() {
+                  ApplicationManager.getApplication().runWriteAction(
+                      new Runnable() {
+                        @Override
+                        public void run() {
+                          try {
+                            onSelection.doSomethingWithGivenStringToProduceXmlAttributeNowPlease(namespacesToChooseFrom[index]);
+                          } catch (IncorrectOperationException ex) {
+                            throw new RuntimeException(ex);
+                          }
+                        }
                       }
-                    }
-                  }
-                );
-              }
-            },
-            requestor.getText(),
-            requestor.getFamilyName()
+                  );
+                }
+              },
+              requestor.getText(),
+              requestor.getFamilyName()
           );
         }
       };
 
-      new PopupChooserBuilder(list).
-        setTitle(title).
-        setItemChoosenCallback(runnable).
-        createPopup().
-        showInBestPositionFor(editor);
+      JBPopup popup = new PopupChooserBuilder(list).
+          setTitle(title).
+          setItemChoosenCallback(runnable).
+          createPopup();
+      editor.showPopupInBestPositionFor(popup);
     } else {
       onSelection.doSomethingWithGivenStringToProduceXmlAttributeNowPlease(namespacesToChooseFrom.length == 0 ? "" : namespacesToChooseFrom[0]);
     }
@@ -334,24 +336,24 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
                                          final boolean showProgress) {
     if (!showProgress || ApplicationManager.getApplication().isUnitTestMode()) {
       processExternalUrisImpl(metaHandler, file, processor);
-    }
-    else {
+    } else {
       ProgressManager.getInstance().runProcessWithProgressSynchronously(
-        new Runnable() {
-          @Override
-          public void run() {
-            processExternalUrisImpl(metaHandler, file, processor);
-          }
-        },
-        XmlErrorMessages.message("finding.acceptable.uri"),
-        false,
-        file.getProject()
+          new Runnable() {
+            @Override
+            public void run() {
+              processExternalUrisImpl(metaHandler, file, processor);
+            }
+          },
+          XmlErrorMessages.message("finding.acceptable.uri"),
+          false,
+          file.getProject()
       );
     }
   }
 
   public interface MetaHandler {
     boolean isAcceptableMetaData(PsiMetaData metadata, final String url);
+
     String searchFor();
   }
 
@@ -366,7 +368,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     @Override
     public boolean isAcceptableMetaData(final PsiMetaData metaData, final String url) {
       if (metaData instanceof XmlNSDescriptorImpl) {
-        final XmlNSDescriptorImpl nsDescriptor = (XmlNSDescriptorImpl)metaData;
+        final XmlNSDescriptorImpl nsDescriptor = (XmlNSDescriptorImpl) metaData;
 
         final XmlElementDescriptor descriptor = nsDescriptor.getElementDescriptor(searchFor(), url);
         return descriptor != null && !(descriptor instanceof AnyXmlElementDescriptor);
@@ -394,7 +396,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
     for (String url : availableUrls) {
       if (pi != null) {
-        pi.setFraction((double)i / availableUrls.length);
+        pi.setFraction((double) i / availableUrls.length);
         pi.setText2(url);
         ++i;
       }
@@ -408,8 +410,8 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         final PsiMetaData metaData = document.getMetaData();
 
         if (metaHandler.isAcceptableMetaData(metaData, url)) {
-          final XmlNSDescriptorImpl descriptor = metaData instanceof XmlNSDescriptorImpl ? (XmlNSDescriptorImpl)metaData:null;
-          final String defaultNamespace = descriptor != null ? descriptor.getDefaultNamespace():url;
+          final XmlNSDescriptorImpl descriptor = metaData instanceof XmlNSDescriptorImpl ? (XmlNSDescriptorImpl) metaData : null;
+          final String defaultNamespace = descriptor != null ? descriptor.getDefaultNamespace() : url;
 
           // Skip rare stuff
           if (!XmlUtil.XML_SCHEMA_URI2.equals(defaultNamespace) && !XmlUtil.XML_SCHEMA_URI3.equals(defaultNamespace)) {
@@ -421,6 +423,6 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   public interface ExternalUriProcessor {
-    void process(@Nonnull String uri,@Nullable final String url);
+    void process(@Nonnull String uri, @Nullable final String url);
   }
 }

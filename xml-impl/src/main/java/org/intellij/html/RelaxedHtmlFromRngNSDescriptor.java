@@ -20,12 +20,12 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.util.collection.ArrayUtil;
 import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 import com.intellij.html.RelaxedHtmlNSDescriptor;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.logging.Logger;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
@@ -71,7 +71,7 @@ public class RelaxedHtmlFromRngNSDescriptor extends RngNsDescriptor implements R
     final XmlElementDescriptor[] descriptors = super.getRootElementsDescriptors(doc);
     /**
      * HTML 5 descriptor list contains not only HTML elements, but also SVG and MathML. To prevent conflicts
-     * we need to prioritize HTML ones {@link org.intellij.html.RelaxedHtmlFromRngElementDescriptor#compareTo(Object)}
+     * we need to prioritize HTML ones {@link RelaxedHtmlFromRngElementDescriptor#compareTo(Object)}
      */
     Arrays.sort(descriptors);
     return ArrayUtil.mergeArrays(descriptors, HtmlUtil.getCustomTagDescriptors(doc));

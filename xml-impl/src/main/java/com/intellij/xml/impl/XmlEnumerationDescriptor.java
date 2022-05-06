@@ -2,12 +2,13 @@ package com.intellij.xml.impl;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.util.lang.Comparing;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
+import consulo.util.lang.StringUtil;
 
 /**
  * @author Dmitry Avdeev

@@ -16,7 +16,8 @@
 package com.intellij.application.options;
 
 import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.ide.impl.idea.application.options.TabbedLanguageCodeStylePanel;
 
 /**
  * @author Rustam Vishnyakov

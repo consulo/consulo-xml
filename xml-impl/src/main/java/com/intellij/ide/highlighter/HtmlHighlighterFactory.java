@@ -19,9 +19,10 @@
  */
 package com.intellij.ide.highlighter;
 
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
+import consulo.codeEditor.EditorHighlighter;
+import consulo.colorScheme.EditorColorsScheme;
+import consulo.language.editor.highlight.HighlighterFactory;
+import consulo.language.editor.highlight.SyntaxHighlighter;
 
 public class HtmlHighlighterFactory {
   public static EditorHighlighter createHTMLHighlighter(EditorColorsScheme settings){

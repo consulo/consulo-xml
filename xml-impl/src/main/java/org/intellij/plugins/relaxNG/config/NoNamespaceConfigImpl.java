@@ -15,21 +15,21 @@
  */
 package org.intellij.plugins.relaxNG.config;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
-import com.intellij.openapi.editor.HectorComponentPanel;
-import com.intellij.openapi.editor.HectorComponentPanelsProvider;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
-import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xmlb.annotations.MapAnnotation;
+import consulo.component.persist.PersistentStateComponent;
+import consulo.component.persist.State;
+import consulo.component.persist.Storage;
+import consulo.component.persist.StoragePathMacros;
 import consulo.disposer.Disposable;
+import consulo.language.editor.HectorComponentPanel;
+import consulo.language.editor.HectorComponentPanelsProvider;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.util.xml.serializer.annotation.MapAnnotation;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.pointer.VirtualFilePointer;
+import consulo.virtualFileSystem.pointer.VirtualFilePointerManager;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

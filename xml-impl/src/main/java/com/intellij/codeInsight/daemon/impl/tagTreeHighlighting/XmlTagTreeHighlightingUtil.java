@@ -16,14 +16,14 @@
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import com.intellij.application.options.editor.XmlEditorOptions;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.colors.EditorColorKey;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.colorScheme.EditorColorKey;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.application.ApplicationManager;
+import consulo.colorScheme.EditorColorsManager;
+import consulo.colorScheme.EditorColorsScheme;
 import consulo.ui.color.ColorValue;
 import consulo.ui.color.RGBColor;
 

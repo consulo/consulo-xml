@@ -18,8 +18,7 @@ package com.intellij.psi.impl.source.html.dtd;
 import java.util.HashMap;
 
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
@@ -28,6 +27,7 @@ import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 
 /**
  * @by Maxim.Mossienko

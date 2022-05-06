@@ -16,21 +16,21 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.patterns.PatternCondition;
 import com.intellij.patterns.XmlAttributeValuePattern;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.psi.PsiReferenceProvider;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.AttributeValueSelfReference;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
+import consulo.language.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.document.util.TextRange;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.psi.PsiReferenceProvider;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

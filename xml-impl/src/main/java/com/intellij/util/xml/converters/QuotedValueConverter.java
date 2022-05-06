@@ -22,10 +22,15 @@
  */
 package com.intellij.util.xml.converters;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
+import consulo.language.psi.ElementManipulator;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiPolyVariantReferenceBase;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ResolveResult;
+import consulo.util.lang.StringUtil;
 import com.intellij.util.xml.*;
 import com.intellij.xml.util.XmlTagTextUtil;
 import javax.annotation.Nonnull;
@@ -77,8 +82,8 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
 
   @Nonnull
   public PsiReference[] createReferences(final GenericDomValue<T> genericDomValue,
-                                         final PsiElement element,
-                                         final ConvertContext context) {
+                                                              final PsiElement element,
+                                                              final ConvertContext context) {
     final String originalValue = genericDomValue.getStringValue();
     if (originalValue == null) return PsiReference.EMPTY_ARRAY;
     final String unquotedValue = unquote(originalValue, getQuoteSigns());
@@ -114,11 +119,11 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
 
   @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
-                                            int start, int end,
-                                            final boolean isSoft,
-                                            final ConvertContext context,
-                                            final GenericDomValue<T> genericDomValue,
-                                            final boolean badQuotation) {
+                                                                 int start, int end,
+                                                                 final boolean isSoft,
+                                                                 final ConvertContext context,
+                                                                 final GenericDomValue<T> genericDomValue,
+                                                                 final boolean badQuotation) {
 
     return new MyPsiReference(element, new TextRange(start, end), isSoft, context, genericDomValue, badQuotation);
   }

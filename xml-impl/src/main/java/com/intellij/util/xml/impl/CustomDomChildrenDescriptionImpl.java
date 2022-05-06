@@ -17,8 +17,8 @@ package com.intellij.util.xml.impl;
 
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.NotNullFunction;
+import consulo.util.collection.ArrayUtil;
+import consulo.ide.impl.idea.util.NotNullFunction;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.CustomDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomExtensionImpl;

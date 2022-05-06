@@ -24,23 +24,23 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.codeInsight.editorActions.wordSelection.AbstractWordSelectioner;
-import com.intellij.codeInsight.highlighting.BraceMatchingUtil;
-import com.intellij.ide.highlighter.HighlighterFactory;
-import com.intellij.lang.Language;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.editor.highlighter.HighlighterIterator;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.UnfairTextRange;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorHighlighter;
+import consulo.codeEditor.HighlighterIterator;
+import consulo.document.util.UnfairTextRange;
+import consulo.ide.impl.idea.codeInsight.editorActions.wordSelection.AbstractWordSelectioner;
+import consulo.language.editor.action.BraceMatchingUtil;
+import consulo.language.editor.highlight.HighlighterFactory;
+import consulo.language.Language;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.language.file.FileViewProvider;
+import consulo.util.collection.ContainerUtil;
+import consulo.virtualFileSystem.fileType.FileType;
 
 import java.util.List;
 

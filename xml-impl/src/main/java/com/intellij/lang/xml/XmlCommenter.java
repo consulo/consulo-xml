@@ -15,7 +15,7 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.lang.Commenter;
+import consulo.language.Commenter;
 
 /**
  * @author max

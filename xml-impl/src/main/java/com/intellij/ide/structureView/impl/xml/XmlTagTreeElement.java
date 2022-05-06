@@ -19,10 +19,11 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewTreeElement;
+
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 

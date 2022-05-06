@@ -16,21 +16,20 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
-import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
-
-import javax.annotation.Nullable;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlProlog;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlNSDescriptor;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
+import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RncDocument extends RncElementImpl implements XmlDocument {
   public RncDocument(ASTNode node) {
@@ -66,7 +65,7 @@ public class RncDocument extends RncElementImpl implements XmlDocument {
   @Override
   @Nullable
   public PsiMetaData getMetaData() {
-    return MetaRegistry.getMeta(this);
+    return MetaDataService.getInstance().getMeta(this);
   }
 
   public boolean isMetaEnough() {

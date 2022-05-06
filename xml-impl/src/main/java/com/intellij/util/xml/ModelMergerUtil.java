@@ -23,10 +23,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.util.CommonProcessors;
-import com.intellij.util.Processor;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.application.util.function.CommonProcessors;
+import consulo.application.util.function.Processor;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 /**
  * @author peter

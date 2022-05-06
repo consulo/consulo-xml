@@ -17,12 +17,13 @@ package com.intellij.codeInsight.hint;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.IElementType;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.ide.impl.idea.codeInsight.hint.DeclarationRangeHandler;
 
 public class TagDeclarationRangeHandler implements DeclarationRangeHandler {
   @Nonnull

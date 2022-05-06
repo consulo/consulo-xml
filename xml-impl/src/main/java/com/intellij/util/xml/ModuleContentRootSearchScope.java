@@ -17,10 +17,10 @@ package com.intellij.util.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.vfs.VirtualFile;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.content.ModuleRootManager;
+import consulo.module.Module;
+import consulo.virtualFileSystem.VirtualFile;
 
 public class ModuleContentRootSearchScope extends GlobalSearchScope {
   private final ModuleRootManager myRootManager;

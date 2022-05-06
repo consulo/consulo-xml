@@ -16,23 +16,16 @@
 
 package com.intellij.util.xml.structure;
 
-import java.util.ArrayList;
+import com.intellij.util.xml.*;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.fileEditor.structureView.tree.TreeElement;
+import consulo.ide.impl.idea.util.Function;
+import consulo.navigation.ItemPresentation;
+import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.util.Function;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementNavigationProvider;
-import com.intellij.util.xml.DomElementVisitor;
-import com.intellij.util.xml.DomService;
-import com.intellij.util.xml.DomUtil;
-import com.intellij.util.xml.ElementPresentation;
-import com.intellij.util.xml.GenericDomValue;
-import consulo.ui.image.Image;
+import java.util.ArrayList;
 
 /**
  * @author Gregory.Shrago

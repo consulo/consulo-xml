@@ -21,12 +21,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.ArrayUtil;
+import consulo.ui.ex.awt.Messages;
+import consulo.virtualFileSystem.VirtualFile;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.input.InputFormat;

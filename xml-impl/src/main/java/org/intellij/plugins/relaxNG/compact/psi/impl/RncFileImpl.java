@@ -16,29 +16,28 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.psi.PsiFileBase;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.util.IncorrectOperationException;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
-import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.ProjectScope;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+
+import javax.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -107,7 +106,7 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  public PsiElement addBefore(@Nonnull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addBefore(@Nonnull PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     return getDocument().addBefore(element, anchor);
   }
 
@@ -119,7 +118,7 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   @Nonnull
   @Override
   public GlobalSearchScope getFileResolveScope() {
-    return ProjectScope.getAllScope(getProject());
+    return GlobalSearchScope.allScope(getProject());
   }
 
   @Override

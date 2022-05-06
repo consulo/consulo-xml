@@ -16,7 +16,7 @@
 package com.intellij.psi.impl.source.xml;
 
 import com.intellij.psi.filters.position.XmlTokenTypeFilter;
-import com.intellij.psi.scope.processor.FilterElementProcessor;
+import consulo.language.psi.resolve.FilterElementProcessor;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlEnumeratedType;

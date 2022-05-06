@@ -19,17 +19,19 @@ import java.util.StringTokenizer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.codeInsight.folding.impl.AbstractElementSignatureProvider;
+import consulo.logging.Logger;
 
 /**
  * @author yole
  */
 public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.folding.impl.XmlElementSignatureProvider");
+  private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 
   public String getSignature(@Nonnull PsiElement element) {
     if (element instanceof XmlTag) {

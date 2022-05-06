@@ -15,14 +15,15 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.psi.PsiElement;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.*;
+import consulo.language.editor.annotation.AnnotationHolder;
+
 import javax.annotation.Nullable;
 
 import java.util.List;

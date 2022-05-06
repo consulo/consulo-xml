@@ -22,19 +22,19 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.application.AllIcons;
+import consulo.application.dumb.DumbAware;
+import consulo.language.psi.PsiElement;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.editor.markup.GutterIconRenderer;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.search.PsiElementProcessor;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.codeEditor.markup.GutterIconRenderer;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.SmartList;
+import consulo.util.collection.SmartList;
 import consulo.ui.image.Image;
 
 class OverriddenDefineRenderer extends GutterIconRenderer implements DumbAware {

@@ -16,16 +16,21 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiRecursiveElementVisitor;
+import consulo.application.AllIcons;
+import consulo.language.psi.PsiRecursiveElementVisitor;
+import consulo.ui.ex.action.ActionManager;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.ActionToolbar;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlElementDecl;
+import consulo.project.Project;
+import consulo.ui.ex.action.DefaultActionGroup;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;

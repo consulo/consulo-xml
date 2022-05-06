@@ -1,9 +1,10 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomAttributeChildDescription;
+import consulo.util.collection.ArrayUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

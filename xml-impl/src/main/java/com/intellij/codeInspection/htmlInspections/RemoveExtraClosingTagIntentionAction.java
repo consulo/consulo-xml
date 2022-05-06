@@ -18,25 +18,25 @@ package com.intellij.codeInspection.htmlInspections;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.FileModificationService;
+import consulo.application.Result;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.ast.ASTNode;
+import consulo.document.Document;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author spleaner
@@ -83,7 +83,7 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Inte
     return true;
   }
 
-  private static void doFix(@Nonnull final PsiElement element) throws IncorrectOperationException {
+  private static void doFix(@Nonnull final PsiElement element) throws consulo.language.util.IncorrectOperationException {
     final XmlToken endNameToken = (XmlToken)element;
     final PsiElement tagElement = endNameToken.getParent();
     if (!(tagElement instanceof XmlTag) && !(tagElement instanceof PsiErrorElement)) return;

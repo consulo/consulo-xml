@@ -15,20 +15,20 @@
  */
 package com.intellij.xml.config;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.presentation.VirtualFilePresentation;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.ui.ColoredTreeCellRenderer;
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.TreeSpeedSearch;
-import com.intellij.util.containers.Convertor;
-import com.intellij.util.containers.MultiMap;
-import consulo.ide.IconDescriptorUpdaters;
+import consulo.application.AllIcons;
+import consulo.ide.impl.idea.util.containers.Convertor;
+import consulo.language.icon.IconDescriptorUpdaters;
+import consulo.language.psi.PsiFile;
+import consulo.module.Module;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.speedSearch.TreeSpeedSearch;
+import consulo.ui.ex.awt.tree.ColoredTreeCellRenderer;
 import consulo.ui.image.Image;
-import consulo.vfs.ArchiveFileSystem;
+import consulo.util.collection.MultiMap;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFilePresentation;
+import consulo.virtualFileSystem.archive.ArchiveFileSystem;
+import consulo.virtualFileSystem.fileType.FileType;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -49,7 +49,7 @@ public class ConfigFilesTreeBuilder {
   public Set<PsiFile> buildTree(DefaultMutableTreeNode root, ConfigFileSearcher... searchers) {
     final Set<PsiFile> psiFiles = new HashSet<PsiFile>();
 
-    final MultiMap<Module, PsiFile> files = new MultiMap<Module, PsiFile>();
+    final MultiMap<Module, PsiFile> files = new MultiMap<consulo.module.Module, PsiFile>();
     final MultiMap<VirtualFile, PsiFile> jars = new MultiMap<VirtualFile, PsiFile>();
     final MultiMap<VirtualFile, PsiFile> virtualFiles = new MultiMap<VirtualFile, PsiFile>();
 
@@ -90,9 +90,9 @@ public class ConfigFilesTreeBuilder {
                                        DefaultMutableTreeNode root) {
 
     final HashSet<PsiFile> psiFiles = new HashSet<PsiFile>();
-    final List<Module> modules = new ArrayList<Module>(files.keySet());
+    final List<Module> modules = new ArrayList<consulo.module.Module>(files.keySet());
     Collections.sort(modules, new Comparator<Module>() {
-      public int compare(final Module o1, final Module o2) {
+      public int compare(final consulo.module.Module o1, final Module o2) {
         return o1.getName().compareTo(o2.getName());
       }
     });
@@ -173,8 +173,8 @@ public class ConfigFilesTreeBuilder {
       renderer.setIcon(fileType.getIcon());
       renderer.append(getFileTypeNodeName(fileType), SimpleTextAttributes.REGULAR_ATTRIBUTES);
     }
-    else if (object instanceof Module) {
-      final Module module = (Module)object;
+    else if (object instanceof consulo.module.Module) {
+      final consulo.module.Module module = (consulo.module.Module)object;
       renderer.setIcon(AllIcons.Nodes.Module);
       final String moduleName = module.getName();
       renderer.append(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES);

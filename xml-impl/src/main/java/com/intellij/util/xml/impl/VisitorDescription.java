@@ -18,8 +18,8 @@ package com.intellij.util.xml.impl;
 import java.lang.reflect.Method;
 
 import org.jetbrains.annotations.NonNls;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ConcurrentClassMap;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.ide.impl.idea.util.containers.ConcurrentClassMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomReflectionUtil;

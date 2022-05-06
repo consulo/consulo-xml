@@ -17,18 +17,19 @@ package com.intellij.lang.xml;
 
 import com.intellij.codeInsight.template.HtmlContextType;
 import com.intellij.codeInsight.template.XmlContextType;
-import com.intellij.codeInsight.template.impl.TemplateContext;
-import com.intellij.codeInsight.template.impl.TemplateImpl;
-import com.intellij.lang.surroundWith.SurroundDescriptor;
-import com.intellij.lang.surroundWith.Surrounder;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtilBase;
+import consulo.ide.impl.idea.codeInsight.template.impl.TemplateImpl;
+import consulo.language.psi.PsiElement;
+import consulo.language.editor.internal.PsiUtilBase;
 import com.intellij.psi.xml.XmlTagChild;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.util.XmlUtil;
+import consulo.ide.impl.idea.codeInsight.template.impl.TemplateContext;
+import consulo.language.editor.surroundWith.SurroundDescriptor;
+import consulo.language.editor.surroundWith.Surrounder;
+import consulo.language.psi.PsiFile;
+import consulo.util.lang.Pair;
+
 import javax.annotation.Nonnull;
 
 import java.util.ArrayList;

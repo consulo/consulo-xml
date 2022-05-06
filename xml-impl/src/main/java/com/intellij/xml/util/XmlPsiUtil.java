@@ -15,14 +15,14 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlEntityCache;
 import com.intellij.psi.impl.source.xml.XmlEntityRefImpl;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.application.util.CachedValueProvider;
 import com.intellij.psi.xml.*;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;

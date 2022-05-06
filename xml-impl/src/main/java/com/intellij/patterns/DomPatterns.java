@@ -18,11 +18,17 @@ package com.intellij.patterns;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomTarget;
-import com.intellij.pom.PomTargetPsiElement;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.ObjectPattern;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.pattern.PsiElementPattern;
+import consulo.language.pom.PomTargetPsiElement;
+import consulo.language.util.ProcessingContext;
+
 import javax.annotation.Nonnull;
 
 /**

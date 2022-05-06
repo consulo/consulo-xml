@@ -19,12 +19,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nullable;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
+import consulo.language.psi.PsiReference;
+import consulo.util.collection.ArrayUtil;
 
 /**
  * @author Dmitry Avdeev

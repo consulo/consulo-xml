@@ -17,11 +17,12 @@ package com.intellij.psi.impl.smartPointers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.language.psi.SmartPointerAnchorProvider;
 
 /**
  * @author Dennis.Ushakov

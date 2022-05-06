@@ -15,18 +15,18 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.filters.ElementFilter;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
+import consulo.language.psi.OuterLanguageElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.filter.ElementFilter;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

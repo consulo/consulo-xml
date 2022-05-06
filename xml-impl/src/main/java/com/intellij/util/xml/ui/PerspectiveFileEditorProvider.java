@@ -17,10 +17,14 @@ package com.intellij.util.xml.ui;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.fileEditor.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
+import consulo.fileEditor.FileEditor;
+import consulo.fileEditor.FileEditorPolicy;
+import consulo.fileEditor.FileEditorState;
+import consulo.fileEditor.FileEditorStateLevel;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.disposer.Disposer;
+import consulo.fileEditor.WeighedFileEditorProvider;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 

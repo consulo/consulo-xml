@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import javax.annotation.Nullable;
 
 public interface XmlText extends XmlTagChild {

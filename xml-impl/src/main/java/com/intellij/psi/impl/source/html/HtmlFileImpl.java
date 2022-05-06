@@ -15,13 +15,13 @@
  */
 package com.intellij.psi.impl.source.html;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.impl.source.tree.CompositeElement;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.ast.CompositeElement;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
-import com.intellij.psi.tree.IFileElementType;
+import consulo.language.ast.IFileElementType;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.language.ast.ASTNode;
 
 /**
  * @author maxim

@@ -15,16 +15,17 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.pom.PomDeclarationSearcher;
-import com.intellij.pom.PomTarget;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
+import consulo.language.pom.PomDeclarationSearcher;
+import consulo.language.pom.PomTarget;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.*;
-import com.intellij.util.Consumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 /**
  * @author Eugene Zhuravlev
@@ -69,7 +70,7 @@ public abstract class AbstractDomDeclarationSearcher extends PomDeclarationSearc
 
     final DomTarget target = createDomTarget(parent, nameElement);
     if (target != null) {
-      consumer.consume(target);
+      consumer.accept(target);
     }
   }
 

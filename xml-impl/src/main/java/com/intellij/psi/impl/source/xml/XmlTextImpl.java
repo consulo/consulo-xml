@@ -15,36 +15,38 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.ASTFactory;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.pom.PomManager;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.impl.PomTransactionBase;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.events.XmlChange;
 import com.intellij.pom.xml.impl.XmlAspectChangeSetImpl;
 import com.intellij.pom.xml.impl.events.XmlTagChildAddImpl;
 import com.intellij.pom.xml.impl.events.XmlTextChangedImpl;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.DummyHolderFactory;
-import com.intellij.psi.impl.source.PsiFileImpl;
-import com.intellij.psi.impl.source.codeStyle.CodeEditUtil;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
+import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.tree.injected.XmlTextLiteralEscaper;
 import com.intellij.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.impl.ast.ASTFactory;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.pom.PomTransactionBase;
+import consulo.language.impl.psi.CodeEditUtil;
+import consulo.language.impl.psi.DummyHolderFactory;
+import consulo.language.impl.psi.PsiFileImpl;
+import consulo.language.pom.PomManager;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.psi.*;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.primitive.ints.IntList;
 import consulo.util.collection.primitive.ints.IntLists;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -372,7 +374,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 					model.runTransaction(new PomTransactionBase(this, aspect)
 					{
 						@Override
-						public PomModelEvent runInner() throws IncorrectOperationException
+						public PomModelEvent runInner() throws consulo.language.util.IncorrectOperationException
 						{
 							final String oldText = getText();
 

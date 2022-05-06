@@ -15,11 +15,11 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.IconDescriptor;
-import consulo.ide.IconDescriptorUpdater;
+import consulo.language.icon.IconDescriptor;
+import consulo.language.icon.IconDescriptorUpdater;
+import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;

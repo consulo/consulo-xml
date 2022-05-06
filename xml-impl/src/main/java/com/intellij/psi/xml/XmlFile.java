@@ -15,8 +15,9 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.FileResolveScopeProvider;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.FileResolveScopeProvider;
+import consulo.language.psi.PsiFile;
+
 import javax.annotation.Nullable;
 
 /**

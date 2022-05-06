@@ -15,15 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.openapi.paths.PathReference;
-import com.intellij.openapi.paths.PathReferenceProvider;
-import com.intellij.openapi.paths.DynamicContextProvider;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReference;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.path.PathReference;
+import consulo.language.psi.path.DynamicContextProvider;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.path.FileReference;
+import consulo.component.extension.Extensions;
+import consulo.language.psi.path.PathReferenceProvider;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

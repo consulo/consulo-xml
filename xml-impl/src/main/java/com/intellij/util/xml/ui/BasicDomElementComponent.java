@@ -16,12 +16,11 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.application.ApplicationManager;
+import consulo.logging.Logger;
+import consulo.module.Module;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.util.lang.StringUtil;
+import consulo.application.ApplicationManager;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
@@ -31,6 +30,8 @@ import com.intellij.util.xml.reflect.DomChildrenDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.project.Project;
+
 import javax.annotation.Nonnull;
 
 import javax.swing.*;

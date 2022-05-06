@@ -15,9 +15,10 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.util.lang.reflect.ReflectionUtil;
+
 import javax.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;

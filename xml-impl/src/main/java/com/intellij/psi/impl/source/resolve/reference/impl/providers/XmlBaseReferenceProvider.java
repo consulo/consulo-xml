@@ -20,22 +20,15 @@ import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileSystemItem;
-import com.intellij.psi.PsiPolyVariantReference;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.ResolveResult;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.*;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.path.FileReferenceSet;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ContainerUtil;
 
 /**
  * @author Dmitry Avdeev

@@ -15,18 +15,23 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.util.Iconable;
+import com.intellij.util.xml.highlighting.BasicDomElementsInspection;
+import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.application.util.CachedValue;
+import consulo.component.extension.ExtensionPointName;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ConstantFunction;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ConcurrentInstanceMap;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.util.collection.SmartList;
+import consulo.ide.impl.idea.util.containers.ConcurrentInstanceMap;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.highlighting.DomElementsAnnotator;
+import consulo.component.util.Iconable;
+import consulo.ide.impl.idea.util.ConstantFunction;
+import consulo.project.Project;
 import consulo.ui.image.Image;
+import consulo.util.xml.fastReader.XmlFileHeader;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -36,7 +41,7 @@ import java.util.*;
 
 /**
  * @author peter
- * @see com.intellij.util.xml.MergingFileDescription
+ * @see MergingFileDescription
  */
 public class DomFileDescription<T>
 {
@@ -82,9 +87,9 @@ public class DomFileDescription<T>
 	 * @param namespaceKey namespace identifier
 	 * @param policy       function that takes XML file root tag and returns (maybe empty) list of possible namespace URLs or DTD public ids. This
 	 *                     function shouldn't use DOM since it may be not initialized for the file at the moment
-	 * @see com.intellij.util.xml.Namespace
+	 * @see Namespace
 	 * @deprecated use {@link #registerNamespacePolicy(String, String...)} or override {@link #getAllowedNamespaces(String,
-	 * com.intellij.psi.xml.XmlFile)} instead
+	 * XmlFile)} instead
 	 */
 	protected final void registerNamespacePolicy(@Nonnull String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
 	{
@@ -94,7 +99,7 @@ public class DomFileDescription<T>
 	/**
 	 * @param namespaceKey namespace identifier
 	 * @param namespaces   XML namespace or DTD public or system id value for the given namespaceKey
-	 * @see com.intellij.util.xml.Namespace
+	 * @see Namespace
 	 */
 	public final void registerNamespacePolicy(@Nonnull String namespaceKey, final String... namespaces)
 	{
@@ -102,7 +107,7 @@ public class DomFileDescription<T>
 	}
 
 	/**
-	 * Consider using {@link DomService#getXmlFileHeader(com.intellij.psi.xml.XmlFile)} when implementing this.
+	 * Consider using {@link DomService#getXmlFileHeader(XmlFile)} when implementing this.
 	 */
 	@SuppressWarnings({"MethodMayBeStatic"})
 	@Nonnull
@@ -136,7 +141,7 @@ public class DomFileDescription<T>
 	/**
 	 * @return some version. Override and change (e.g. <code>super.getVersion()+1</code>) when after some changes some files stopped being
 	 * described by this description or vice versa, so that the
-	 * {@link com.intellij.util.xml.DomService#getDomFileCandidates(Class, com.intellij.openapi.project.Project)} index is rebuilt correctly.
+	 * {@link DomService#getDomFileCandidates(Class, Project)} index is rebuilt correctly.
 	 */
 	public int getVersion()
 	{
@@ -177,7 +182,7 @@ public class DomFileDescription<T>
 	/**
 	 * The right place to call
 	 * {@link #registerNamespacePolicy(String, String...)}
-	 * and {@link #registerTypeChooser(java.lang.reflect.Type, TypeChooser)}.
+	 * and {@link #registerTypeChooser(Type, TypeChooser)}.
 	 */
 	protected void initializeFileDescription()
 	{
@@ -185,8 +190,8 @@ public class DomFileDescription<T>
 
 	/**
 	 * Create custom DOM annotator that will be used when error-highlighting DOM. The results will be collected to
-	 * {@link com.intellij.util.xml.highlighting.DomElementsProblemsHolder}. The highlighting will be most probably done in an
-	 * {@link com.intellij.util.xml.highlighting.BasicDomElementsInspection} instance.
+	 * {@link DomElementsProblemsHolder}. The highlighting will be most probably done in an
+	 * {@link BasicDomElementsInspection} instance.
 	 *
 	 * @return Annotator or null
 	 */
@@ -242,8 +247,8 @@ public class DomFileDescription<T>
 	}
 
 	/**
-	 * Get dependency items (the same, as in {@link com.intellij.psi.util.CachedValue}) for file. On any dependency item change, the
-	 * {@link #isMyFile(com.intellij.psi.xml.XmlFile)} method will be invoked once more to ensure that the file description still
+	 * Get dependency items (the same, as in {@link CachedValue}) for file. On any dependency item change, the
+	 * {@link #isMyFile(XmlFile)} method will be invoked once more to ensure that the file description still
 	 * accepts this file
 	 *
 	 * @param file XML file to get dependencies of

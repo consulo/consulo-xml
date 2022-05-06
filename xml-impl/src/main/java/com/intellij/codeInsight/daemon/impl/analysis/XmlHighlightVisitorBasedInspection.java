@@ -15,95 +15,84 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
+import com.intellij.psi.XmlRecursiveElementVisitor;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.idea.codeInspection.GlobalInspectionUtil;
+import consulo.ide.impl.idea.codeInspection.GlobalSimpleInspectionTool;
+import consulo.ide.impl.language.editor.rawHighlight.HighlightInfoImpl;
+import consulo.language.editor.inspection.GlobalInspectionContext;
+import consulo.language.editor.inspection.ProblemDescriptionsProcessor;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.editor.rawHighlight.HighlightInfo;
+import consulo.language.editor.rawHighlight.HighlightInfoHolder;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import org.jetbrains.annotations.Nls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.Nls;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInsight.daemon.impl.HighlightInfo;
-import com.intellij.codeInspection.GlobalInspectionContext;
-import com.intellij.codeInspection.GlobalInspectionUtil;
-import com.intellij.codeInspection.GlobalSimpleInspectionTool;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.InspectionProfileEntry;
-import com.intellij.codeInspection.ProblemDescriptionsProcessor;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.XmlRecursiveElementVisitor;
 
 /**
  * @author yole
  */
-public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool
-{
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool {
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.ERROR;
+  }
 
-	@Override
-	public void checkFile(@Nonnull final PsiFile file,
-			@Nonnull final InspectionManager manager,
-			@Nonnull ProblemsHolder problemsHolder,
-			@Nonnull final GlobalInspectionContext globalContext,
-			@Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor)
-	{
-		HighlightInfoHolder myHolder = new HighlightInfoHolder(file)
-		{
-			@Override
-			public boolean add(@Nullable HighlightInfo info)
-			{
-				if(info != null)
-				{
-					GlobalInspectionUtil.createProblem(file, info, new TextRange(info.startOffset, info.endOffset), null, manager, problemDescriptionsProcessor, globalContext);
-				}
-				return true;
-			}
-		};
-		final XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
-		highlightVisitor.analyze(file, true, myHolder, new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				file.accept(new XmlRecursiveElementVisitor()
-				{
-					@Override
-					public void visitElement(PsiElement element)
-					{
-						highlightVisitor.visit(element);
-						super.visitElement(element);
-					}
-				});
-			}
-		});
+  @Override
+  public void checkFile(@Nonnull final PsiFile file,
+                        @Nonnull final InspectionManager manager,
+                        @Nonnull ProblemsHolder problemsHolder,
+                        @Nonnull final GlobalInspectionContext globalContext,
+                        @Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor) {
+    HighlightInfoHolder myHolder = new HighlightInfoHolder(file) {
+      @Override
+      public boolean add(@Nullable HighlightInfo info) {
+        if (info != null) {
+          GlobalInspectionUtil.createProblem(file, (HighlightInfoImpl) info, new TextRange(info.getStartOffset(), info.getEndOffset()), null, manager, problemDescriptionsProcessor, globalContext);
+        }
+        return true;
+      }
+    };
+    final XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
+    highlightVisitor.analyze(file, true, myHolder, new Runnable() {
+      @Override
+      public void run() {
+        file.accept(new XmlRecursiveElementVisitor() {
+          @Override
+          public void visitElement(PsiElement element) {
+            highlightVisitor.visit(element);
+            super.visitElement(element);
+          }
+        });
+      }
+    });
 
-	}
+  }
 
-	@Nls
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return InspectionProfileEntry.GENERAL_GROUP_NAME;
-	}
+  @Nls
+  @Nonnull
+  @Override
+  public String getGroupDisplayName() {
+    return InspectionProfileEntry.GENERAL_GROUP_NAME;
+  }
 
-	@Nls
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "XML highlighting";
-	}
+  @Nls
+  @Nonnull
+  @Override
+  public String getDisplayName() {
+    return "XML highlighting";
+  }
 
-	@Nonnull
-	@Override
-	public String getShortName()
-	{
-		return "XmlHighlighting";
-	}
+  @Nonnull
+  @Override
+  public String getShortName() {
+    return "XmlHighlighting";
+  }
 }

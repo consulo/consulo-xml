@@ -15,20 +15,20 @@
  */
 package com.intellij.util.xml.ui;
 
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.ui.JBColor;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.application.ApplicationManager;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.util.lang.function.Condition;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.util.lang.Pair;
+import consulo.util.lang.StringUtil;
+import consulo.ui.ex.JBColor;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
 import com.intellij.util.xml.highlighting.DomElementProblemDescriptor;
 import com.intellij.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.project.Project;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;

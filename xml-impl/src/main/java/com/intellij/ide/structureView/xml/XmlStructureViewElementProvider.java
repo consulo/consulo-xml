@@ -18,9 +18,9 @@ package com.intellij.ide.structureView.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.psi.xml.XmlTag;
+import consulo.component.extension.ExtensionPointName;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 
 /**
  * @author peter

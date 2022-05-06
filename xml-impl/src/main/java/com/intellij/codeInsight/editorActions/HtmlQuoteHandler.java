@@ -15,8 +15,9 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.highlighter.HighlighterIterator;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.HighlighterIterator;
+import consulo.language.editor.action.QuoteHandler;
 
 /**
  * @author peter

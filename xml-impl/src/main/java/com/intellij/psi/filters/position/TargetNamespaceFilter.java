@@ -15,11 +15,11 @@
  */
 package com.intellij.psi.filters.position;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.XmlTextFilter;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.language.psi.PsiElement;
 
 /**
  * Created by IntelliJ IDEA.

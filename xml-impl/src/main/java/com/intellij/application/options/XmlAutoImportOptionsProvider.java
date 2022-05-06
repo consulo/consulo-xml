@@ -15,9 +15,9 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.openapi.options.Configurable;
+import consulo.configurable.Configurable;
+import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
-import consulo.options.SimpleConfigurableByProperties;
 import consulo.platform.base.localize.ApplicationLocalize;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;

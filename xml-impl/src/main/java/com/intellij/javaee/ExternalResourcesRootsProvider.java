@@ -16,12 +16,12 @@
 package com.intellij.javaee;
 
 import com.intellij.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
-import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.indexing.IndexableSetContributor;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.util.collection.ContainerUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.stub.IndexableSetContributor;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;

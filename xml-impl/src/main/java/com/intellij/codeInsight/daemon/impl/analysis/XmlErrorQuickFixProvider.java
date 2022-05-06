@@ -15,20 +15,21 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.daemon.impl.HighlightInfo;
-import com.intellij.codeInsight.daemon.impl.quickfix.QuickFixAction;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
+import consulo.codeEditor.Editor;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.analysis.ErrorQuickFixProvider;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.QuickFixAction;
+import consulo.language.editor.rawHighlight.HighlightInfo;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
   @NonNls private static final String AMP_ENTITY = "&amp;";

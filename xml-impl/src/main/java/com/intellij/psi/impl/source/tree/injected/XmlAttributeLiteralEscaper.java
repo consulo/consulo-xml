@@ -17,9 +17,9 @@ package com.intellij.psi.impl.source.tree.injected;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.LiteralTextEscaper;
-import com.intellij.psi.PsiElement;
+import consulo.document.util.TextRange;
+import consulo.language.psi.LiteralTextEscaper;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl;
 import com.intellij.psi.xml.XmlAttribute;

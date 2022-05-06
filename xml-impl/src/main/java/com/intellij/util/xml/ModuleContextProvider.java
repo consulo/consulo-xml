@@ -1,10 +1,10 @@
 package com.intellij.util.xml;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.component.extension.ExtensionPointName;
+import consulo.module.Module;
+import consulo.language.util.ModuleUtilCore;
+import consulo.language.psi.PsiFile;
+import consulo.util.collection.ContainerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ public abstract class ModuleContextProvider {
   public static Module[] getModules(@Nullable PsiFile context) {
     if (context == null) return Module.EMPTY_ARRAY;
 
-    final Set<Module> modules = new HashSet<>();
+    final Set<consulo.module.Module> modules = new HashSet<>();
     for (ModuleContextProvider moduleContextProvider : EP_NAME.getExtensionList()) {
       ContainerUtil.addAllNotNull(modules, moduleContextProvider.getContextModules(context));
     }

@@ -15,18 +15,16 @@
  */
 package com.intellij.codeInspection.htmlInspections;
 
-import java.awt.BorderLayout;
+import consulo.ide.impl.idea.ui.FieldPanel;
+import consulo.language.editor.inspection.InspectionsBundle;
+import consulo.ui.ex.awt.event.DocumentAdapter;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import javax.annotation.Nullable;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-
-import javax.annotation.Nullable;
-import com.intellij.codeInspection.InspectionsBundle;
-import com.intellij.ui.DocumentAdapter;
-import com.intellij.ui.FieldPanel;
+import java.awt.*;
 
 /**
  * User: anna

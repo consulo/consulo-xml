@@ -15,8 +15,10 @@
  */
 package com.intellij.lexer;
 
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.lexer.Lexer;
+import consulo.language.lexer.MergingLexerAdapter;
 
 import java.io.Reader;
 

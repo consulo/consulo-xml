@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml.reflect;
 
-import com.intellij.util.ParameterizedTypeImpl;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.XmlName;
+import consulo.ide.impl.idea.util.ParameterizedTypeImpl;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

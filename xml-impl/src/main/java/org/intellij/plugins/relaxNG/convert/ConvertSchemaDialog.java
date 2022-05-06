@@ -16,9 +16,10 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.vfs.VirtualFile;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.project.Project;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

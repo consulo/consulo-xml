@@ -16,9 +16,8 @@
 package com.intellij.psi.impl.source.html.dtd;
 
 import com.intellij.html.RelaxedHtmlNSDescriptor;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.util.SimpleFieldCache;
-import com.intellij.psi.PsiElement;
+import consulo.application.util.SimpleFieldCache;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
@@ -26,6 +25,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSTypeDescriptorProvider;
+import consulo.application.dumb.DumbAware;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

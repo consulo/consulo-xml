@@ -15,15 +15,16 @@
  */
 package com.intellij.lang.html.structureView;
 
-import com.intellij.ide.IdeBundle;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.ide.structureView.impl.xml.XmlTagTreeElement;
-import com.intellij.navigation.LocationPresentation;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.StringUtil;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.ide.IdeBundle;
+import consulo.language.editor.structureView.PsiTreeElementBase;
+import consulo.navigation.LocationPresentation;
+
 import javax.annotation.Nonnull;
 
 import java.util.Collection;

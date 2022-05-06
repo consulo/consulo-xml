@@ -16,7 +16,7 @@
 
 package com.intellij.util.xml.ui;
 
-import com.intellij.util.ui.UIUtil;
+import consulo.ui.ex.awt.UIUtil;
 import com.intellij.util.xml.DomElement;
 
 import java.awt.*;

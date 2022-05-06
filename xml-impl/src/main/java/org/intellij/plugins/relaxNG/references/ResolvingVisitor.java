@@ -18,15 +18,15 @@ package org.intellij.plugins.relaxNG.references;
 
 import com.intellij.patterns.XmlAttributeValuePattern;
 import com.intellij.patterns.XmlNamedElementPattern;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ProcessingContext;
+import consulo.language.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

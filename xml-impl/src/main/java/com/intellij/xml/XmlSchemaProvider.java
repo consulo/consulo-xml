@@ -16,16 +16,16 @@
 
 package com.intellij.xml;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.util.Condition;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiFile;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.psi.PsiDirectory;
+import consulo.module.Module;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.project.DumbService;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.component.extension.Extensions;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,7 +68,7 @@ public abstract class XmlSchemaProvider {
   }
 
   /**
-   * @see #getAvailableProviders(com.intellij.psi.xml.XmlFile)
+   * @see #getAvailableProviders(XmlFile)
    */
   @Deprecated
   @Nullable

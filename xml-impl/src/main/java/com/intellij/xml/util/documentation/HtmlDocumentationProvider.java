@@ -15,23 +15,23 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.lang.documentation.DocumentationUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiWhiteSpace;
 import org.jetbrains.annotations.NonNls;
 
 import java.awt.*;

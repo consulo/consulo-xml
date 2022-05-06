@@ -15,9 +15,9 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.codeStyle.NameUtil;
-import com.intellij.util.Function;
+import consulo.util.lang.StringUtil;
+import consulo.application.util.matcher.NameUtil;
+import consulo.ide.impl.idea.util.Function;
 
 import java.util.Arrays;
 

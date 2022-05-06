@@ -17,7 +17,7 @@ package com.intellij.util.xml.impl;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 

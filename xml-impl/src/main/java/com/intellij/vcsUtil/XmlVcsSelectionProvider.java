@@ -15,20 +15,23 @@
  */
 package com.intellij.vcsUtil;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vcs.VcsBundle;
-import com.intellij.openapi.vcs.actions.VcsContext;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.codeInsight.TargetElementUtil;
-import consulo.codeInsight.TargetElementUtilEx;
+import consulo.codeEditor.Editor;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.idea.openapi.vcs.VcsBundle;
+import consulo.ide.impl.idea.openapi.vcs.actions.VcsContext;
+import consulo.ide.impl.idea.vcsUtil.VcsSelection;
+import consulo.ide.impl.idea.vcsUtil.VcsSelectionProvider;
+import consulo.language.editor.TargetElementUtil;
+import consulo.language.editor.TargetElementUtilExtender;
+import consulo.language.psi.PsiElement;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.virtualFileSystem.VirtualFile;
+
+import java.util.Set;
 
 /**
  * @author yole
@@ -43,7 +46,7 @@ public class XmlVcsSelectionProvider implements VcsSelectionProvider
 		{
 			return null;
 		}
-		PsiElement psiElement = TargetElementUtil.findTargetElement(editor, ContainerUtil.newHashSet(TargetElementUtilEx.ELEMENT_NAME_ACCEPTED));
+		PsiElement psiElement = TargetElementUtil.findTargetElement(editor, Set.of(TargetElementUtilExtender.ELEMENT_NAME_ACCEPTED));
 		if(psiElement == null || !psiElement.isValid())
 		{
 			return null;

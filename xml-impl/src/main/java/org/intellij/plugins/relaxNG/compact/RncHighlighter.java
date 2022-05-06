@@ -21,13 +21,13 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import consulo.codeEditor.DefaultLanguageHighlighterColors;
+import consulo.codeEditor.HighlighterColors;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.highlight.SyntaxHighlighterBase;
+import consulo.language.lexer.Lexer;
 import org.intellij.plugins.relaxNG.compact.lexer.CompactSyntaxLexerAdapter;
-import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
-import com.intellij.openapi.editor.HighlighterColors;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.tree.IElementType;
+import consulo.colorScheme.TextAttributesKey;
 
 /**
  * Created by IntelliJ IDEA.

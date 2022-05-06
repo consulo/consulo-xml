@@ -15,16 +15,11 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.formatting.Block;
-import com.intellij.formatting.FormattingDocumentModel;
-import com.intellij.formatting.FormattingModelBuilder;
-import com.intellij.formatting.WrapType;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageFormatting;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import consulo.language.ast.ASTNode;
+import consulo.language.codeStyle.*;
+import consulo.language.Language;
+import consulo.util.lang.Pair;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 

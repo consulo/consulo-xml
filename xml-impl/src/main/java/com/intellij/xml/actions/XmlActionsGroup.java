@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import consulo.ui.ex.action.DefaultActionGroup;
 
 /**
  * @author Konstantin Bulenkov

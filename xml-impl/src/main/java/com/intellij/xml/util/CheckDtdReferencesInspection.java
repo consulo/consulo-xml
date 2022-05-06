@@ -16,15 +16,15 @@
 
 package com.intellij.xml.util;
 
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.codeInspection.ProblemsHolder;
+import consulo.language.editor.inspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlInspectionGroupNames;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
+import consulo.application.progress.ProgressManager;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlBundle;

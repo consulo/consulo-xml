@@ -26,17 +26,17 @@ import java.util.StringTokenizer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.component.util.Iconable;
+import consulo.language.LangBundle;
+import consulo.language.editor.completion.lookup.DeferredUserLookupValue;
+import consulo.language.editor.completion.lookup.LookupItem;
+import consulo.language.editor.completion.lookup.LookupValueWithPriority;
+import consulo.language.editor.completion.lookup.LookupValueWithUIHint;
+import consulo.ui.ex.awt.util.ColorUtil;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.codeInsight.lookup.DeferredUserLookupValue;
-import com.intellij.codeInsight.lookup.LookupItem;
-import com.intellij.codeInsight.lookup.LookupValueWithPriority;
-import com.intellij.codeInsight.lookup.LookupValueWithUIHint;
-import com.intellij.lang.LangBundle;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Iconable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.ui.ColorUtil;
-import consulo.awt.TargetAWT;
+import consulo.project.Project;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.ui.image.Image;
 import consulo.ui.image.ImageEffects;
 

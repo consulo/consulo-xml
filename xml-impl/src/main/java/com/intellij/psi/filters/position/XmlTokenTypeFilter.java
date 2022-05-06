@@ -15,12 +15,12 @@
  */
 package com.intellij.psi.filters.position;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.filters.ElementFilter;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.ReflectionUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.filter.ElementFilter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,7 +29,7 @@ import com.intellij.util.ReflectionUtil;
  * Time: 12:10:08
  * To change this template use Options | File Templates.
  */
-public class XmlTokenTypeFilter implements ElementFilter{
+public class XmlTokenTypeFilter implements ElementFilter {
   private IElementType myType = null;
 
   public XmlTokenTypeFilter(){}

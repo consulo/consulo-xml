@@ -15,26 +15,24 @@
  */
 package com.intellij.codeInsight.completion;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.TailType;
-import com.intellij.codeInsight.lookup.AutoCompletionPolicy;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.lookup.LookupElementDecorator;
-import com.intellij.codeInsight.lookup.TailTypeDecorator;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
 import com.intellij.psi.impl.source.xml.TagNameReference;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Consumer;
-import com.intellij.util.ProcessingContext;
 import com.intellij.xml.XmlTagNameProvider;
-import consulo.codeInsight.completion.CompletionProvider;
+import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.completion.AutoCompletionPolicy;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionProvider;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.lookup.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ProcessingContext;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author yole
@@ -65,7 +63,7 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider
 				TagNameReference tagNameReference = ((SchemaPrefixReference) reference).getTagNameReference();
 				if(tagNameReference != null && !tagNameReference.isStartTagFlag())
 				{
-					set.consume(createClosingTagLookupElement((XmlTag) tagNameReference.getElement(), true, tagNameReference.getNameElement()));
+					set.accept(createClosingTagLookupElement((XmlTag) tagNameReference.getElement(), true, tagNameReference.getNameElement()));
 				}
 			}
 		});
@@ -78,14 +76,14 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider
 		{
 			if(!tagNameReference.isStartTagFlag())
 			{
-				consumer.consume(createClosingTagLookupElement((XmlTag) element, false, tagNameReference.getNameElement()));
+				consumer.accept(createClosingTagLookupElement((XmlTag) element, false, tagNameReference.getNameElement()));
 			}
 			else
 			{
 				XmlTag tag = (XmlTag) element;
 				for(LookupElement variant : getTagNameVariants(tag, tag.getNamespacePrefix()))
 				{
-					consumer.consume(variant);
+					consumer.accept(variant);
 				}
 			}
 		}

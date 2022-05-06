@@ -17,20 +17,21 @@ package com.intellij.xml.actions.xmlbeans;
 
 
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.ui.ex.JBColor;
+import consulo.util.collection.ArrayUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.template.TemplateLanguageFileViewProvider;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.JBColor;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+
 import javax.annotation.Nonnull;
 
 import javax.annotation.Nullable;

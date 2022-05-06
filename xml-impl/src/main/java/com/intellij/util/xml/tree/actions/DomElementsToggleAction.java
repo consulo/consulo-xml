@@ -19,10 +19,10 @@ package com.intellij.util.xml.tree.actions;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.ToggleAction;
+import consulo.application.AllIcons;
+import consulo.application.util.TypePresentationService;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.ToggleAction;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.tree.BaseDomElementNode;

@@ -18,17 +18,17 @@ package com.intellij.util.xml.highlighting;
 import javax.annotation.Nonnull;
 
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.UnfairTextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReference;
+import consulo.document.util.TextRange;
+import consulo.document.util.UnfairTextRange;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.psi.path.FileReference;
+import consulo.util.lang.Pair;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.language.editor.inspection.LocalQuickFix;
 
 /**
  * @author peter

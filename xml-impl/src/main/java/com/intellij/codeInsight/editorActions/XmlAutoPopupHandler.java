@@ -15,21 +15,22 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.codeInsight.AutoPopupController;
-import com.intellij.lang.Language;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.AutoPopupController;
+import consulo.language.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.project.Project;
+import consulo.util.lang.ref.Ref;
+import consulo.language.file.FileViewProvider;
+import consulo.language.template.TemplateLanguageFileViewProvider;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.editor.action.TypedHandlerDelegate;
+import consulo.util.lang.function.Condition;
 
 public class XmlAutoPopupHandler extends TypedHandlerDelegate {
   public Result checkAutoPopup(final char charTyped, final Project project, final Editor editor, final PsiFile file) {

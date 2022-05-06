@@ -15,12 +15,15 @@
  */
 package com.intellij.patterns;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.StandardPatterns;
+import consulo.language.util.ProcessingContext;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

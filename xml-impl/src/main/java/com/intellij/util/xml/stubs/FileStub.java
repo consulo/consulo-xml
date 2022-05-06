@@ -19,10 +19,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.psi.stubs.Stub;
-import com.intellij.util.io.StringRef;
-import com.intellij.util.xml.XmlFileHeader;
+import consulo.index.io.StringRef;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.language.psi.stub.Stub;
 
 /**
  * @author Dmitry Avdeev

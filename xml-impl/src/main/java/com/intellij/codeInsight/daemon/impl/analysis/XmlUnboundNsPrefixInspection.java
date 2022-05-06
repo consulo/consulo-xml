@@ -17,17 +17,16 @@ package com.intellij.codeInsight.daemon.impl.analysis;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.analysis.HighlightLevelUtil;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightInfoType;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.lang.injection.InjectedLanguageManager;
-import com.intellij.openapi.util.TextRange;
+import consulo.document.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
 import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
@@ -35,6 +34,13 @@ import com.intellij.xml.XmlExtension;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.OuterLanguageElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiWhiteSpace;
 import org.jetbrains.annotations.NonNls;
 
 /**
@@ -141,7 +147,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
     if (namespacePrefix.length() == 0) {
       final XmlTag tag = (XmlTag)element;
       if (!XmlUtil.JSP_URI.equals(tag.getNamespace())) {
-        reportTagProblem(tag, localizedMessage, null, ProblemHighlightType.INFORMATION, 
+        reportTagProblem(tag, localizedMessage, null, ProblemHighlightType.INFORMATION,
                          isOnTheFly ? new CreateNSDeclarationIntentionFix(context, namespacePrefix, token) : null,
                          holder);
       }

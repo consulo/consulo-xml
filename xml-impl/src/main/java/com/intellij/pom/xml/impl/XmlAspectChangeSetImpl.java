@@ -22,9 +22,9 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.PomModelAspect;
-import com.intellij.pom.event.PomChangeSet;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.PomModelAspect;
+import consulo.language.pom.event.PomChangeSet;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.XmlChangeSet;
 import com.intellij.pom.xml.events.XmlChange;

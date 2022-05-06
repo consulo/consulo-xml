@@ -17,15 +17,16 @@ package com.intellij.codeInsight.template;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.psi.PsiErrorElement;
 
 /**
  * @author Eugene.Kudelevsky

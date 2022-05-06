@@ -17,16 +17,18 @@ package com.intellij.javaee;
 
 import javax.annotation.Nonnull;
 
+import consulo.component.extension.ExtensionPointName;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.PsiFile;
+
+import consulo.module.Module;
+import consulo.language.psi.PsiFile;
 import com.intellij.xml.XmlNSDescriptor;
 
 public interface ImplicitNamespaceDescriptorProvider {
-  @NonNls ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.implicitNamespaceDescriptorProvider");
+  @NonNls
+  ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.implicitNamespaceDescriptorProvider");
 
   @Nullable
   XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, @Nonnull final String ns, @Nullable PsiFile file);

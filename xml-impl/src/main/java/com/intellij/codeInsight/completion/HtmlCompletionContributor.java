@@ -15,29 +15,33 @@
  */
 package com.intellij.codeInsight.completion;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static consulo.language.pattern.PlatformPatterns.psiElement;
 
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.CompletionType;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ProcessingContext;
+import consulo.util.io.CharsetToolkit;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ProcessingContext;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import consulo.codeInsight.completion.CompletionProvider;
+import consulo.language.editor.completion.CompletionProvider;
 
 public class HtmlCompletionContributor extends CompletionContributor
 {

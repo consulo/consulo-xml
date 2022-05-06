@@ -17,11 +17,11 @@ package org.intellij.plugins.relaxNG;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
-import com.intellij.psi.PsiManager;
-import com.intellij.util.IncorrectOperationException;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.psi.AbstractElementManipulator;
+import consulo.language.psi.PsiManager;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;

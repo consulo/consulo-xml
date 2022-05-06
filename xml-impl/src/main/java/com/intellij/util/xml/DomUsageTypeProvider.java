@@ -19,11 +19,11 @@ package com.intellij.util.xml;
 import javax.annotation.Nullable;
 
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.usages.impl.rules.UsageType;
-import com.intellij.usages.impl.rules.UsageTypeProvider;
+import consulo.usage.UsageTypeProvider;
+import consulo.language.psi.PsiFile;
+import consulo.usage.UsageType;
 
 /**
  * @author Gregory.Shrago

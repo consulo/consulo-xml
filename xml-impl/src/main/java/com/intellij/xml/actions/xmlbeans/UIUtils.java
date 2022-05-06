@@ -16,15 +16,15 @@
 package com.intellij.xml.actions.xmlbeans;
 
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.util.SystemInfo;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xml.XmlBundle;
+import consulo.application.util.SystemInfo;
+import consulo.fileChooser.FileChooserDescriptor;
+import consulo.fileChooser.IdeaFileChooser;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.project.Project;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,7 +68,7 @@ public class UIUtils {
             if (fileByPath != null) initialFile = fileByPath;
           }
 
-          final VirtualFile[] virtualFiles = FileChooser.chooseFiles(fileChooserDescriptor, myProject, initialFile);
+          final VirtualFile[] virtualFiles = IdeaFileChooser.chooseFiles(fileChooserDescriptor, myProject, initialFile);
           if (virtualFiles.length == 1) {
             String url = fixIDEAUrl(virtualFiles[0].getUrl());
             wsdlUrl.setText(url);

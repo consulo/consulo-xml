@@ -15,10 +15,11 @@
  */
 package com.intellij.lang.html.structureView;
 
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
-import com.intellij.openapi.util.Computable;
+import consulo.application.util.function.Computable;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.structureView.PsiTreeElementBase;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

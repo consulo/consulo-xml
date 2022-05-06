@@ -15,24 +15,24 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.util.SimpleFieldCache;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.filters.ClassFilter;
-import com.intellij.psi.scope.processor.FilterElementProcessor;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.ExternalDocumentValidator;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.dumb.DumbAware;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.application.util.SimpleFieldCache;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.filter.ClassFilter;
+import consulo.language.psi.resolve.FilterElementProcessor;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.xml.Validator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 	private XmlFile myDescriptorFile;
 
 	private static final SimpleFieldCache<CachedValue<Map<String, XmlElementDescriptor>>, XmlNSDescriptorImpl> myCachedDeclsCache = new SimpleFieldCache<CachedValue<Map<String,
-			XmlElementDescriptor>>, XmlNSDescriptorImpl>()
+				XmlElementDescriptor>>, XmlNSDescriptorImpl>()
 	{
 		@Override
 		protected final CachedValue<Map<String, XmlElementDescriptor>> compute(final XmlNSDescriptorImpl xmlNSDescriptor)

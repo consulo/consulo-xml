@@ -26,7 +26,7 @@ import java.util.Set;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import com.intellij.openapi.progress.ProcessCanceledException;
+import consulo.component.ProcessCanceledException;
 import com.intellij.xml.util.XmlResourceResolver;
 
 public abstract class ErrorReporter {

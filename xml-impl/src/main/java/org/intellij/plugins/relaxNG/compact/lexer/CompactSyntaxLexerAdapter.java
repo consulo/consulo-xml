@@ -16,15 +16,15 @@
 
 package org.intellij.plugins.relaxNG.compact.lexer;
 
-import com.intellij.lexer.LexerBase;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.util.text.CharArrayCharSequence;
-import com.intellij.util.text.CharArrayUtil;
+import consulo.ide.impl.idea.openapi.util.io.FileUtil;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.lexer.LexerBase;
+import consulo.logging.Logger;
 import consulo.util.collection.primitive.ints.IntIntMap;
 import consulo.util.collection.primitive.ints.IntMaps;
+import consulo.util.lang.CharArrayCharSequence;
+import consulo.util.lang.CharArrayUtil;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
@@ -47,7 +47,7 @@ import java.util.LinkedList;
  */
 public class CompactSyntaxLexerAdapter extends LexerBase
 {
-	private static final Logger LOG = Logger.getInstance(CompactSyntaxLexerAdapter.class.getName());
+	private static final Logger LOG = Logger.getInstance(CompactSyntaxLexerAdapter.class);
 
 	private static final Field myStateField;
 

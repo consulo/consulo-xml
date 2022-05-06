@@ -17,7 +17,7 @@ package com.intellij.psi.tree.xml;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 
 /**
  * @author max

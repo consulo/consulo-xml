@@ -15,33 +15,36 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.ide.util.EditSourceUtil;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.pom.Navigatable;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.util.EditSourceUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.navigation.Navigatable;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Mike
  */
 public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttributeDecl, XmlElementType {
   private static final Logger LOG = Logger.getInstance("#XmlAttributeDeclImpl");
-  @NonNls private static final String ID_ATT = "ID";
-  @NonNls private static final String IDREF_ATT = "IDREF";
+  @NonNls
+  private static final String ID_ATT = "ID";
+  @NonNls
+  private static final String IDREF_ATT = "IDREF";
 
   public XmlAttributeDeclImpl() {
     super(XML_ATTRIBUTE_DECL);
@@ -52,23 +55,17 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     IElementType i = child.getElementType();
     if (i == XML_NAME) {
       return XmlChildRole.XML_NAME;
-    }
-    else if (i == XML_ATT_REQUIRED) {
+    } else if (i == XML_ATT_REQUIRED) {
       return XmlChildRole.XML_ATT_REQUIRED;
-    }
-    else if (i == XML_ATT_FIXED) {
+    } else if (i == XML_ATT_FIXED) {
       return XmlChildRole.XML_ATT_FIXED;
-    }
-    else if (i == XML_ATT_IMPLIED) {
+    } else if (i == XML_ATT_IMPLIED) {
       return XmlChildRole.XML_ATT_IMPLIED;
-    }
-    else if (i == XML_ATTRIBUTE_VALUE) {
+    } else if (i == XML_ATTRIBUTE_VALUE) {
       return XmlChildRole.XML_DEFAULT_VALUE;
-    }
-    else if (i == XML_ENUMERATED_TYPE) {
+    } else if (i == XML_ENUMERATED_TYPE) {
       return XmlChildRole.XML_ENUMERATED_TYPE;
-    }
-    else {
+    } else {
       return ChildRoleBase.NONE;
     }
   }
@@ -90,7 +87,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
   }
 
   public XmlAttributeValue getDefaultValue() {
-    return (XmlAttributeValue)findElementByTokenType(XML_ATTRIBUTE_VALUE);
+    return (XmlAttributeValue) findElementByTokenType(XML_ATTRIBUTE_VALUE);
   }
 
   public String getDefaultValueText() {
@@ -114,11 +111,10 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
   }
 
   public XmlElement[] getEnumeratedValues() {
-    XmlEnumeratedType enumeratedType = (XmlEnumeratedType)findElementByTokenType(XML_ENUMERATED_TYPE);
+    XmlEnumeratedType enumeratedType = (XmlEnumeratedType) findElementByTokenType(XML_ENUMERATED_TYPE);
     if (enumeratedType != null) {
       return enumeratedType.getEnumeratedValues();
-    }
-    else {
+    } else {
       return XmlElement.EMPTY_ARRAY;
     }
   }
@@ -144,7 +140,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
   }
 
   public PsiMetaData getMetaData() {
-    return MetaRegistry.getMeta(this);
+    return MetaDataService.getInstance().getMeta(this);
   }
 
   public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
@@ -160,7 +156,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
   public boolean canNavigate() {
     if (isPhysical()) return super.canNavigate();
     final PsiNamedElement psiNamedElement = XmlUtil.findRealNamedElement(this);
-    return psiNamedElement != null && psiNamedElement != this && ((Navigatable)psiNamedElement).canNavigate();
+    return psiNamedElement != null && psiNamedElement != this && ((Navigatable) psiNamedElement).canNavigate();
   }
 
   public void navigate(final boolean requestFocus) {
@@ -172,12 +168,9 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     Navigatable navigatable = EditSourceUtil.getDescriptor(psiNamedElement);
 
     if (psiNamedElement instanceof XmlEntityDecl) {
-      final OpenFileDescriptor fileDescriptor = (OpenFileDescriptor)navigatable;
-      navigatable = new OpenFileDescriptor(
-        fileDescriptor.getProject(),
-        fileDescriptor.getFile(),
-        psiNamedElement.getTextRange().getStartOffset() + psiNamedElement.getText().indexOf(getName())
-      );
+      final OpenFileDescriptor fileDescriptor = (OpenFileDescriptor) navigatable;
+      navigatable = OpenFileDescriptorFactory.getInstance(
+          fileDescriptor.getProject()).builder(fileDescriptor.getFile()).offset(psiNamedElement.getTextRange().getStartOffset() + psiNamedElement.getText().indexOf(getName())).build();
     }
     navigatable.navigate(requestFocus);
   }

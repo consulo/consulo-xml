@@ -15,43 +15,34 @@
  */
 package com.intellij.javaee;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.intellij.xml.XmlBundle;
+import consulo.application.ApplicationManager;
+import consulo.configurable.BaseConfigurable;
+import consulo.configurable.Configurable;
+import consulo.ide.impl.idea.ui.AddEditRemovePanel;
+import consulo.project.Project;
+import consulo.ui.ex.awt.UIUtil;
+import consulo.ui.ex.awt.table.JBTable;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.io.FileUtil;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.VirtualFileSystem;
+import consulo.virtualFileSystem.archive.ArchiveFileSystem;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.annotation.Nullable;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import javax.annotation.Nullable;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.options.BaseConfigurable;
-import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.openapi.vfs.VirtualFileSystem;
-import com.intellij.ui.AddEditRemovePanel;
-import com.intellij.ui.table.JBTable;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.ui.UIUtil;
-import com.intellij.xml.XmlBundle;
-import consulo.vfs.ArchiveFileSystem;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ExternalResourceConfigurable extends BaseConfigurable
   implements Configurable.NoScroll {

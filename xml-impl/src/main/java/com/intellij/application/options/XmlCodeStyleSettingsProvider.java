@@ -15,12 +15,15 @@
  */
 package com.intellij.application.options;
 
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.options.Configurable;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
-import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
+import consulo.application.ApplicationBundle;
+import consulo.configurable.Configurable;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CustomCodeStyleSettings;
 import com.intellij.psi.formatter.xml.XmlCodeStyleSettings;
+import consulo.ide.impl.idea.application.options.CodeStyleAbstractConfigurable;
+import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
+import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
+
 import javax.annotation.Nonnull;
 
 /**

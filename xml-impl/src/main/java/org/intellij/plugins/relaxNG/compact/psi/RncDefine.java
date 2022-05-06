@@ -18,7 +18,7 @@ package org.intellij.plugins.relaxNG.compact.psi;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.PsiNamedElement;
+import consulo.language.psi.PsiNamedElement;
 import org.intellij.plugins.relaxNG.model.Define;
 
 /**

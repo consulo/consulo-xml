@@ -22,15 +22,15 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
-import com.intellij.psi.impl.source.tree.Factory;
+import consulo.language.impl.internal.ast.Factory;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 
 public class XmlElementChangeUtil {
   private XmlElementChangeUtil() {}

@@ -15,18 +15,18 @@
  */
 package com.intellij.util.xml.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.diagnostic.LogMessageEx;
-import com.intellij.openapi.diagnostic.Attachment;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.DebugUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlEntityRef;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.diagnostic.LogMessageEx;
+import consulo.language.impl.DebugUtil;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.logging.attachment.AttachmentFactory;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -48,7 +48,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
   }
 
   public static XmlTag getParentTag(final XmlElement xmlElement) {
-    return (XmlTag)getParentTagCandidate(xmlElement);
+    return (XmlTag) getParentTagCandidate(xmlElement);
   }
 
   public static PsiElement getParentTagCandidate(final XmlElement xmlElement) {
@@ -107,7 +107,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
 
     if (strategy == o) return true;
     if (!(o instanceof DomParentStrategy)) return false;
-    final XmlElement thatElement = ((DomParentStrategy)o).getXmlElement();
+    final XmlElement thatElement = ((DomParentStrategy) o).getXmlElement();
     if (thatElement == null) return false;
     XmlElement element = strategy.getXmlElement();
     if (element == null) return false;
@@ -120,17 +120,17 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
           PsiElement curContext = findIncluder(element);
           PsiElement navContext = findIncluder(nav1);
           LOG.error(LogMessageEx.createEvent(
-            "x:include processing error",
-            "nav1,nav2=" + nav1 + ", " + nav2 + ";\n" +
-            nav1.getContainingFile() + ":" + nav1.getTextRange().getStartOffset() + "!=" + nav2.getContainingFile() + ":" + nav2.getTextRange().getStartOffset() + ";\n" +
-            (nav1 == element) + ";" + (nav2 == thatElement) + ";\n" +
-            "contexts equal: " +  (curContext == navContext) + ";\n" +
-            "curContext?.physical=" + (curContext != null && curContext.isPhysical()) + ";\n" +
-            "navContext?.physical=" + (navContext != null && navContext.isPhysical()) + ";\n" +
-            "myElement.physical=" + element.isPhysical() + ";\n" +
-            "thatElement.physical=" + thatElement.isPhysical() + "\n" + DebugUtil.currentStackTrace(),
-            new Attachment("Including tag text 1.xml", curContext == null ? "null" : curContext.getText()),
-            new Attachment("Including tag text 2.xml", navContext == null ? "null" : navContext.getText())
+              "x:include processing error",
+              "nav1,nav2=" + nav1 + ", " + nav2 + ";\n" +
+                  nav1.getContainingFile() + ":" + nav1.getTextRange().getStartOffset() + "!=" + nav2.getContainingFile() + ":" + nav2.getTextRange().getStartOffset() + ";\n" +
+                  (nav1 == element) + ";" + (nav2 == thatElement) + ";\n" +
+                  "contexts equal: " + (curContext == navContext) + ";\n" +
+                  "curContext?.physical=" + (curContext != null && curContext.isPhysical()) + ";\n" +
+                  "navContext?.physical=" + (navContext != null && navContext.isPhysical()) + ";\n" +
+                  "myElement.physical=" + element.isPhysical() + ";\n" +
+                  "thatElement.physical=" + thatElement.isPhysical() + "\n" + DebugUtil.currentStackTrace(),
+              AttachmentFactory.get().create("Including tag text 1.xml", curContext == null ? "null" : curContext.getText()),
+              AttachmentFactory.get().create("Including tag text 2.xml", navContext == null ? "null" : navContext.getText())
           ));
           throw new AssertionError();
         }

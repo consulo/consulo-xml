@@ -17,10 +17,13 @@ package com.intellij.application.options;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
+import consulo.language.codeStyle.setting.LanguageCodeStyleSettingsProvider;
+import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
+import consulo.ide.impl.idea.application.options.SmartIndentOptionsEditor;
+import consulo.language.Language;
+import consulo.language.codeStyle.CommonCodeStyleSettings;
+import consulo.language.codeStyle.setting.IndentOptionsEditor;
 
 /**
  * @author Rustam Vishnyakov

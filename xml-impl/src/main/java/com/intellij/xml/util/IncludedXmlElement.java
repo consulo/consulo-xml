@@ -18,17 +18,17 @@ package com.intellij.xml.util;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.psi.PsiAnchor;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiInvalidElementAccessException;
-import com.intellij.psi.impl.light.LightElement;
-import com.intellij.psi.search.PsiElementProcessor;
+import consulo.language.impl.internal.psi.PsiAnchor;
+import consulo.language.impl.psi.LightElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.reference.SoftReference;
+import consulo.util.lang.ref.SoftReference;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiInvalidElementAccessException;
 
 /**
  * @author peter

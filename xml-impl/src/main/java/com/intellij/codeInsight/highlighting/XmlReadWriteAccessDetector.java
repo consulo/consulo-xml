@@ -15,12 +15,13 @@
  */
 package com.intellij.codeInsight.highlighting;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlElementDecl;
 import com.intellij.psi.xml.XmlComment;
+import consulo.language.editor.highlight.ReadWriteAccessDetector;
 
 /**
  * @author yole

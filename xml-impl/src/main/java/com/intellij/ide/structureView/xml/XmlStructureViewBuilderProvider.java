@@ -15,14 +15,15 @@
  */
 package com.intellij.ide.structureView.xml;
 
-import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
+import consulo.component.extension.ExtensionPointName;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface XmlStructureViewBuilderProvider {
-  @NonNls String EXTENSION_POINT_NAME = "com.intellij.xml.structureViewBuilderProvider";
+  ExtensionPointName<XmlStructureViewBuilderProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.structureViewBuilderProvider");
 
   @Nullable
   StructureViewBuilder createStructureViewBuilder(@Nonnull XmlFile file);

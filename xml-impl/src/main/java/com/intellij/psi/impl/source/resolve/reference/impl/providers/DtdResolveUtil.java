@@ -15,16 +15,17 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nullable;
-import com.intellij.codeInsight.completion.CompletionUtilCoreImpl;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlMarkupDecl;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.dtd.XmlNSDescriptorImpl;
+import consulo.language.editor.completion.CompletionUtilCore;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.util.PsiTreeUtil;
+
+import javax.annotation.Nullable;
 
 /**
  * @author yole
@@ -34,7 +35,7 @@ public class DtdResolveUtil
 	@Nullable
 	static XmlNSDescriptor getNsDescriptor(XmlElement element)
 	{
-		final XmlElement parentThatProvidesMetaData = PsiTreeUtil.getParentOfType(CompletionUtilCoreImpl.getOriginalElement(element), XmlDocument.class, XmlMarkupDecl.class);
+		final XmlElement parentThatProvidesMetaData = PsiTreeUtil.getParentOfType(CompletionUtilCore.getOriginalElement(element), XmlDocument.class, XmlMarkupDecl.class);
 
 		if(parentThatProvidesMetaData instanceof XmlDocument)
 		{

@@ -22,27 +22,27 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementResolveResult;
+import consulo.language.psi.util.PsiTreeUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInsight.lookup.LookupValueFactory;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.LocalQuickFixProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementResolveResult;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.psi.ResolveResult;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.editor.completion.lookup.LookupValueFactory;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.psi.ResolveResult;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.meta.PsiPresentableMetaData;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 
 /**
@@ -52,7 +52,7 @@ import com.intellij.util.xml.GenericAttributeValue;
  */
 public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue>
         implements LocalQuickFixProvider,
-        EmptyResolveMessageProvider, Function<Define, ResolveResult> {
+    EmptyResolveMessageProvider, Function<Define, ResolveResult> {
 
   private final boolean myIsParentRef;
   private final GenericAttributeValue<String> myValue;

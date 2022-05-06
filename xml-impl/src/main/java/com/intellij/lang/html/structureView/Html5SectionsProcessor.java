@@ -15,12 +15,12 @@
  */
 package com.intellij.lang.html.structureView;
 
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.openapi.util.Computable;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.application.util.function.Computable;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.containers.SortedList;
-import com.intellij.util.containers.Stack;
+import consulo.util.collection.ArrayUtil;
+import consulo.ide.impl.idea.util.containers.SortedList;
+import consulo.util.collection.Stack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

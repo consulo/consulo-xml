@@ -16,14 +16,17 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.util.Condition;
-import com.intellij.patterns.PsiFilePattern;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReference;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileSystemItem;
+import consulo.language.psi.PsiReference;
+import consulo.util.lang.function.Condition;
+import consulo.language.pattern.PsiFilePattern;
+import consulo.language.psi.path.FileReference;
+import consulo.language.psi.path.FileReferenceSet;
+import consulo.util.collection.ContainerUtil;
+import consulo.virtualFileSystem.fileType.FileType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -43,7 +46,7 @@ public class FileReferenceUtil {
   public static PsiReference[] restrict(FileReferenceSet set, final Condition<PsiFile> cond, final Boolean soft) {
     final FileReference[] references = set.getAllReferences();
 
-    return ContainerUtil.map2Array(references, PsiReference.class, (NotNullFunction<FileReference, PsiReference>)fileReference -> new MyFileReference(fileReference, cond, soft));
+    return ContainerUtil.map2Array(references, PsiReference.class, (NotNullFunction<FileReference, PsiReference>) fileReference -> new MyFileReference(fileReference, cond, soft));
   }
 
   public static Condition<PsiFile> byType(FileType instance) {

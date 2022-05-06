@@ -26,9 +26,9 @@ package com.intellij.xml.impl;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.PsiElement;
+import consulo.ide.impl.idea.util.ArrayUtilRt;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayUtilRt;
 import com.intellij.xml.XmlAttributeDescriptor;
 
 public abstract class BasicXmlAttributeDescriptor extends XmlEnumerationDescriptor implements XmlAttributeDescriptor {

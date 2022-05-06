@@ -16,7 +16,7 @@
 
 package com.intellij.util.xml.converters.values;
 
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.ResolvingConverter;

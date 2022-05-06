@@ -15,16 +15,16 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.openapi.util.NullableLazyValue;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.meta.PsiMetaOwner;
+import consulo.ide.impl.idea.openapi.util.NullableLazyValue;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.util.collection.ArrayUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.lang.StringUtil;
+import consulo.language.psi.meta.PsiMetaOwner;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
@@ -69,7 +69,7 @@ public class XmlAttributeReference implements PsiReference {
     return myAttribute.getName();
   }
 
-  public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+  public PsiElement handleElementRename(String newElementName) throws consulo.language.util.IncorrectOperationException {
     String newName = newElementName;
     if (getDescriptor() instanceof XmlAttributeDescriptorEx) {
       final XmlAttributeDescriptorEx xmlAttributeDescriptorEx = (XmlAttributeDescriptorEx)getDescriptor();
@@ -89,7 +89,7 @@ public class XmlAttributeReference implements PsiReference {
         myAttribute.setName(owner.getMetaData().getName());
       }
     }
-    throw new IncorrectOperationException("Cant bind to not a xml element definition!");
+    throw new consulo.language.util.IncorrectOperationException("Cant bind to not a xml element definition!");
   }
 
   public boolean isReferenceTo(PsiElement element) {

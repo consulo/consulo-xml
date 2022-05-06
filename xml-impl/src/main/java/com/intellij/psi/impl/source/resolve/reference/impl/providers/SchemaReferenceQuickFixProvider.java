@@ -17,10 +17,10 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
 import javax.annotation.Nonnull;
 
+import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
-import com.intellij.codeInsight.daemon.QuickFixActionRegistrar;
-import com.intellij.codeInsight.quickfix.UnresolvedReferenceQuickFixProvider;
+import consulo.language.editor.intention.QuickFixActionRegistrar;
 import com.intellij.xml.XmlBundle;
 
 /**

@@ -16,10 +16,10 @@
 package com.intellij.html.impl;
 
 import javax.annotation.Nullable;
-import com.intellij.openapi.extensions.Extensions;
+
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;
 import com.intellij.xml.XmlElementDescriptor;
@@ -28,6 +28,7 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.component.extension.Extensions;
 
 /**
  * @author Maxim.Mossienko

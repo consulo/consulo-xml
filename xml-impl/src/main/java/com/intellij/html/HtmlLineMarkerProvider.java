@@ -15,13 +15,13 @@
  */
 package com.intellij.html;
 
-import com.intellij.codeInsight.daemon.LineMarkerInfo;
-import com.intellij.codeInsight.daemon.LineMarkerProvider;
-import com.intellij.codeInsight.daemon.LineMarkerProviders;
-import com.intellij.lang.Language;
+import consulo.ide.impl.idea.codeInsight.daemon.LineMarkerProviders;
+import consulo.language.Language;
+import consulo.language.editor.gutter.LineMarkerProvider;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.editor.gutter.LineMarkerInfo;
 
 import javax.annotation.Nonnull;
 import java.util.*;

@@ -19,14 +19,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>consulo</groupId>
-		<artifactId>arch.ide-provided</artifactId>
-		<version>2-SNAPSHOT</version>
+		<artifactId>arch.ide-api-provided</artifactId>
+		<version>3-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>consulo.plugin</groupId>
 	<artifactId>com.intellij.xml</artifactId>
-	<version>2-SNAPSHOT</version>
+	<version>3-SNAPSHOT</version>
 	<packaging>consulo-plugin</packaging>
 
 	<repositories>
@@ -45,14 +45,13 @@
 			<plugin>
 				<groupId>consulo.maven</groupId>
 				<artifactId>maven-consulo-plugin</artifactId>
-				<version>2-SNAPSHOT</version>
 				<extensions>true</extensions>
 				<configuration>
 					<repositoryChannel>nightly</repositoryChannel>
-					<dependencies>
-						<dependency>com.intellij.spellchecker</dependency>
-						<dependency>com.intellij.regexp</dependency>
-					</dependencies>
+					<!--<dependencies>-->
+						<!--<dependency>com.intellij.spellchecker</dependency>-->
+						<!--<dependency>com.intellij.regexp</dependency>-->
+					<!--</dependencies>-->
 					<packaging>
 						<skip>${dev.mode}</skip>
 						<version>${build.number}</version>
@@ -72,66 +71,23 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.psi.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.psi.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.dom.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.dom.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.analysis.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.analysis.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.structure.view.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>consulo.relaxng</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.intelliLang</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.spellchecker</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.spellchecker</artifactId>
+			<groupId>consulo</groupId>
+			<artifactId>consulo-language-impl</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>consulo</groupId>
-			<artifactId>consulo-lang-impl-testing</artifactId>
+			<artifactId>consulo-ide-impl</artifactId>
 			<version>${project.version}</version>
-			<scope>test</scope>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.spellchecker</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--runtime dependencies just copy from other projects-->

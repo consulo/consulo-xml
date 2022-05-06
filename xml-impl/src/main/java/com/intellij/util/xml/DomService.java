@@ -16,15 +16,17 @@
 
 package com.intellij.util.xml;
 
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.project.Project;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.scope.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.ide.ServiceManager;
+import consulo.util.lang.function.Condition;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -50,7 +52,7 @@ public abstract class DomService {
    * @param scope search scope
    * @return files containing given root element
    *
-   * @see #getFileElements(Class, com.intellij.openapi.project.Project, com.intellij.psi.search.GlobalSearchScope)
+   * @see #getFileElements(Class, Project, GlobalSearchScope)
    */
   public Collection<VirtualFile> getDomFileCandidates(Class<? extends DomElement> rootElementClass, Project project, final GlobalSearchScope scope) {
     return ContainerUtil.findAll(getDomFileCandidates(rootElementClass, project), new Condition<VirtualFile>() {

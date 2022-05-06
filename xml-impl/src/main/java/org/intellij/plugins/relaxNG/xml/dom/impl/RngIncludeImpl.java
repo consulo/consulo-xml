@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import com.intellij.psi.PsiFile;
 import com.intellij.util.xml.DomUtil;
+import consulo.language.psi.PsiFile;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
 import javax.annotation.Nonnull;

@@ -15,10 +15,10 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlMarkupDecl;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
 
 /**
  * @author Mike
@@ -29,7 +29,7 @@ public class XmlMarkupDeclImpl extends XmlElementImpl implements XmlMarkupDecl {
   }
 
   public PsiMetaData getMetaData(){
-    return MetaRegistry.getMeta(this);
+    return MetaDataService.getInstance().getMeta(this);
   }
 
 }

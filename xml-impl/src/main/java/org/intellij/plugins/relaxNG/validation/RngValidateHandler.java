@@ -1,19 +1,17 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package org.intellij.plugins.relaxNG.validation;
 
-import com.intellij.ide.errorTreeView.NewErrorTreeViewPanel;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.WindowManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.application.ApplicationManager;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.project.Project;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.project.ui.wm.WindowManager;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.actions.validate.ValidateXmlHandler;
@@ -25,7 +23,9 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanel;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.fileType.FileTypeRegistry;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.xml.sax.InputSource;
@@ -196,7 +196,7 @@ public class RngValidateHandler implements ValidateXmlHandler
 		catch(SAXException /*| MalformedURLException*/ e1)
 		{
 			// huh?
-			Logger.getInstance(RngValidateHandler.class.getName()).error(e1);
+			Logger.getInstance(RngValidateHandler.class).error(e1);
 		}
 	}
 

@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiElement;
 
 public class RncElementVisitor extends PsiElementVisitor {
 

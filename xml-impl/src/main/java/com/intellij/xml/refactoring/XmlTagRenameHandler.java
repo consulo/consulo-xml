@@ -24,31 +24,32 @@ package com.intellij.xml.refactoring;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.featureStatistics.FeatureUsageTracker;
-import com.intellij.ide.TitledHandler;
-import com.intellij.lang.Language;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiUtilCore;
+
+import consulo.language.Language;
+import consulo.dataContext.DataContext;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.refactoring.rename.PsiElementRenameHandler;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiUtilCore;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.refactoring.actions.BaseRefactoringAction;
-import com.intellij.refactoring.rename.PsiElementRenameHandler;
-import com.intellij.refactoring.rename.RenameHandler;
+import consulo.language.editor.refactoring.action.BaseRefactoringAction;
+import consulo.language.editor.refactoring.rename.RenameHandler;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.application.statistic.FeatureUsageTracker;
+import consulo.ide.impl.idea.ide.TitledHandler;
+import consulo.language.editor.LangDataKeys;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
 
 public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.refactoring.XmlTagRenameHandler");
+	private static final Logger LOG = Logger.getInstance(XmlTagRenameHandler.class);
 
 
 	public boolean isAvailableOnDataContext(final DataContext dataContext)

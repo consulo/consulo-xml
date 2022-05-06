@@ -15,26 +15,21 @@
  */
 package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
+import com.intellij.application.options.editor.XmlEditorOptions;
+import consulo.codeEditor.Editor;
+import consulo.configurable.ConfigurationException;
+import consulo.configurable.UnnamedConfigurable;
+import consulo.fileEditor.FileEditor;
+import consulo.fileEditor.FileEditorManager;
+import consulo.fileEditor.TextEditor;
+import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsWrapper;
+import consulo.project.Project;
+import consulo.project.ProjectManager;
+import consulo.ui.ex.awt.UIUtil;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-import com.intellij.application.options.editor.XmlEditorOptions;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.TextEditor;
-import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.options.UnnamedConfigurable;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.ui.breadcrumbs.BreadcrumbsWrapper;
-import com.intellij.util.ui.UIUtil;
 
 /**
  * @author Eugene.Kudelevsky

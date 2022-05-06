@@ -15,30 +15,29 @@
  */
 package com.intellij.xml.impl;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.codeInsight.highlighting.BraceMatchingUtil;
-import com.intellij.codeInsight.highlighting.XmlAwareBraceMatcher;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.highlighter.XmlLikeFileType;
-import com.intellij.lang.BracePair;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageBraceMatching;
-import com.intellij.lang.PairedBraceMatcher;
-import com.intellij.openapi.editor.highlighter.HighlighterIterator;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.xml.IXmlLeafElementType;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.containers.BidirectionalMap;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.codeEditor.HighlighterIterator;
+import consulo.language.BracePair;
+import consulo.language.Language;
+import consulo.language.LanguageBraceMatching;
+import consulo.language.PairedBraceMatcher;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.editor.action.BraceMatchingUtil;
+import consulo.language.editor.highlight.XmlAwareBraceMatcher;
+import consulo.language.psi.PsiFile;
+import consulo.util.collection.BidirectionalMap;
+import consulo.virtualFileSystem.fileType.FileType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Maxim.Mossienko
@@ -81,7 +80,7 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
   }
 
   public boolean isLBraceToken(HighlighterIterator iterator, CharSequence fileText, FileType fileType) {
-    final IElementType tokenType = iterator.getTokenType();
+    final IElementType tokenType = (IElementType) iterator.getTokenType();
     PairedBraceMatcher matcher = LanguageBraceMatching.INSTANCE.forLanguage(tokenType.getLanguage());
     if (matcher != null) {
       BracePair[] pairs = matcher.getPairs();
@@ -95,7 +94,7 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
   }
 
   public boolean isRBraceToken(HighlighterIterator iterator, CharSequence fileText, FileType fileType) {
-    final IElementType tokenType = iterator.getTokenType();
+    final IElementType tokenType = (IElementType) iterator.getTokenType();
     PairedBraceMatcher matcher = LanguageBraceMatching.INSTANCE.forLanguage(tokenType.getLanguage());
     if (matcher != null) {
       BracePair[] pairs = matcher.getPairs();
@@ -146,8 +145,8 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
     return keys != null && keys.contains(tokenType2);
   }
 
-  public boolean isStructuralBrace(HighlighterIterator iterator,CharSequence text, FileType fileType) {
-    IElementType tokenType = iterator.getTokenType();
+  public boolean isStructuralBrace(HighlighterIterator iterator, CharSequence text, FileType fileType) {
+    IElementType tokenType = (IElementType) iterator.getTokenType();
 
     PairedBraceMatcher matcher = LanguageBraceMatching.INSTANCE.forLanguage(tokenType.getLanguage());
     if (matcher != null) {
@@ -200,14 +199,14 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
   }
 
   private static boolean findEndTagStart(HighlighterIterator iterator) {
-    IElementType tokenType = iterator.getTokenType();
+    IElementType tokenType = (IElementType) iterator.getTokenType();
     int balance = 0;
     int count = 0;
     while(balance >= 0){
       iterator.retreat();
       count++;
       if (iterator.atEnd()) break;
-      tokenType = iterator.getTokenType();
+      tokenType = (IElementType) iterator.getTokenType();
       if (tokenType == XmlTokenType.XML_TAG_END || tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END){
         balance++;
       }
@@ -225,17 +224,17 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
   }
 
   public String getTagName(CharSequence fileText, HighlighterIterator iterator) {
-    final IElementType tokenType = iterator.getTokenType();
+    final IElementType tokenType = (IElementType) iterator.getTokenType();
     String name = null;
     if (tokenType == XmlTokenType.XML_START_TAG_START) {
       iterator.advance();
-      IElementType tokenType1 = iterator.atEnd() ? null : iterator.getTokenType();
+      IElementType tokenType1 = iterator.atEnd() ? null : (IElementType) iterator.getTokenType();
 
       boolean wasWhiteSpace = false;
       if (isWhitespace(tokenType1)) {
         wasWhiteSpace = true;
         iterator.advance();
-        tokenType1 = iterator.atEnd() ? null : iterator.getTokenType();
+        tokenType1 = iterator.atEnd() ? null : (IElementType) iterator.getTokenType();
       }
 
       if (tokenType1 == XmlTokenType.XML_TAG_NAME ||
@@ -250,12 +249,12 @@ public class XmlBraceMatcher implements XmlAwareBraceMatcher {
     else if (tokenType == XmlTokenType.XML_TAG_END || tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END) {
       int balance = 0;
       int count = 0;
-      IElementType tokenType1 = iterator.getTokenType();
+      IElementType tokenType1 = (IElementType) iterator.getTokenType();
       while (balance >=0) {
         iterator.retreat();
         count++;
         if (iterator.atEnd()) break;
-        tokenType1 = iterator.getTokenType();
+        tokenType1 = (IElementType) iterator.getTokenType();
 
         if (tokenType1 == XmlTokenType.XML_TAG_END || tokenType1 == XmlTokenType.XML_EMPTY_ELEMENT_END) {
           balance++;

@@ -15,19 +15,20 @@
  */
 package com.intellij.lang.xml;
 
-import static com.intellij.psi.xml.XmlElementType.*;
+import com.intellij.psi.impl.source.html.HtmlDocumentImpl;
+import com.intellij.psi.impl.source.html.HtmlTagImpl;
+import com.intellij.psi.impl.source.tree.XmlFileElement;
+import com.intellij.psi.impl.source.xml.*;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.ASTCompositeFactory;
+import consulo.language.impl.ast.CompositeElement;
+import consulo.language.impl.psi.CompositePsiElement;
+import consulo.language.impl.psi.template.TemplateDataElementType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.psi.impl.source.html.HtmlDocumentImpl;
-import com.intellij.psi.impl.source.html.HtmlTagImpl;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
-import com.intellij.psi.impl.source.tree.XmlFileElement;
-import com.intellij.psi.impl.source.xml.*;
-import com.intellij.psi.templateLanguages.TemplateDataElementType;
-import com.intellij.psi.tree.IElementType;
-import consulo.psi.tree.ASTCompositeFactory;
+
+import static com.intellij.psi.xml.XmlElementType.*;
 
 /**
  * @author VISTALL

@@ -16,18 +16,18 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInsight.daemon.impl.SeverityRegistrar;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.util.Function;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.rawHighlight.SeverityRegistrar;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.lang.function.Condition;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,22 +36,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder {
   private final Map<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> myCachedErrors =
-    new ConcurrentHashMap<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>();
+      new ConcurrentHashMap<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>();
   private final Map<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> myCachedChildrenErrors =
-    new ConcurrentHashMap<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>();
+      new ConcurrentHashMap<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>();
   private final List<Annotation> myAnnotations = new ArrayList<Annotation>();
 
   private final Function<DomElement, List<DomElementProblemDescriptor>> myDomProblemsGetter =
-    new Function<DomElement, List<DomElementProblemDescriptor>>() {
-      public List<DomElementProblemDescriptor> fun(final DomElement s) {
-        final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> map = myCachedErrors.get(s);
-        return map != null ? ContainerUtil.concat(map.values()) : Collections.<DomElementProblemDescriptor>emptyList();
-      }
-    };
+      new Function<DomElement, List<DomElementProblemDescriptor>>() {
+        public List<DomElementProblemDescriptor> fun(final DomElement s) {
+          final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> map = myCachedErrors.get(s);
+          return map != null ? ContainerUtil.concat(map.values()) : Collections.<DomElementProblemDescriptor>emptyList();
+        }
+      };
 
   private final DomFileElement myElement;
 
-  private static final Factory<Map<Class<? extends DomElementsInspection>,List<DomElementProblemDescriptor>>> CONCURRENT_HASH_MAP_FACTORY = new Factory<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>() {
+  private static final Factory<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> CONCURRENT_HASH_MAP_FACTORY = new Factory<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>() {
     public Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> create() {
       return new ConcurrentHashMap<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>();
     }
@@ -92,8 +92,8 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
   }
 
   public final void addProblem(final DomElementProblemDescriptor descriptor, final Class<? extends DomElementsInspection> inspection) {
-    ContainerUtil.getOrCreate(ContainerUtil.getOrCreate(myCachedErrors, descriptor.getDomElement(), CONCURRENT_HASH_MAP_FACTORY), inspection,
-                              SMART_LIST_FACTORY).add(descriptor);
+    consulo.ide.impl.idea.util.containers.ContainerUtil.getOrCreate(consulo.ide.impl.idea.util.containers.ContainerUtil.getOrCreate(myCachedErrors, descriptor.getDomElement(), CONCURRENT_HASH_MAP_FACTORY), inspection,
+        SMART_LIST_FACTORY).add(descriptor);
     myCachedChildrenErrors.clear();
   }
 
@@ -163,7 +163,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
   private static <T> void mergeMaps(final Map<T, List<DomElementProblemDescriptor>> accumulator, @Nullable final Map<T, List<DomElementProblemDescriptor>> toAdd) {
     if (toAdd == null) return;
     for (final Map.Entry<T, List<DomElementProblemDescriptor>> entry : toAdd.entrySet()) {
-      ContainerUtil.getOrCreate(accumulator, entry.getKey(), SMART_LIST_FACTORY).addAll(entry.getValue());
+      consulo.ide.impl.idea.util.containers.ContainerUtil.getOrCreate(accumulator, entry.getKey(), SMART_LIST_FACTORY).addAll(entry.getValue());
     }
   }
 

@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncNsDecl;
 

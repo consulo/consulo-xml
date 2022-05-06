@@ -15,15 +15,15 @@
  */
 package com.intellij.util.xml.stubs.index;
 
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileWithId;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.stubs.StringStubIndexExtension;
-import com.intellij.psi.stubs.StubIndex;
-import com.intellij.psi.stubs.StubIndexKey;
-import com.intellij.util.CommonProcessors;
-import com.intellij.util.indexing.IdFilter;
+import consulo.language.psi.stub.IdFilter;
+import consulo.language.psi.stub.StringStubIndexExtension;
+import consulo.language.psi.stub.StubIndex;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileWithId;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.StubIndexKey;
+import consulo.application.util.function.CommonProcessors;
 import com.intellij.util.xml.DomFileElement;
 
 import javax.annotation.Nonnull;

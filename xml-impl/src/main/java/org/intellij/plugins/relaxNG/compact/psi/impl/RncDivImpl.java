@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncDiv;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import javax.annotation.Nonnull;

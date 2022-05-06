@@ -15,18 +15,19 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Iconable;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.Function;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.component.util.Iconable;
+import consulo.util.lang.Comparing;
+import consulo.language.psi.PsiElement;
+import consulo.ide.impl.idea.util.Function;
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.application.util.ConcurrentFactoryMap;
+import consulo.util.collection.ContainerUtil;
+import consulo.application.util.TypePresentationService;
+import consulo.ide.ServiceManager;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.ui.image.Image;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -85,7 +86,7 @@ public abstract class ElementPresentationManager
 	}
 
 	/**
-	 * Use {@link com.intellij.codeInsight.lookup.LookupElementBuilder}
+	 * Use {@link LookupElementBuilder}
 	 */
 	@Deprecated
 	public abstract Object createVariant(final Object variant, final String name, final PsiElement psiElement);

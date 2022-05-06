@@ -1,9 +1,9 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.psi.PsiManager;
+import consulo.language.psi.PsiManager;
 import com.intellij.util.xml.AbstractConvertContext;
 import com.intellij.util.xml.DomElement;
-import com.intellij.openapi.module.Module;
+import consulo.module.Module;
 import javax.annotation.Nonnull;
 
 /**

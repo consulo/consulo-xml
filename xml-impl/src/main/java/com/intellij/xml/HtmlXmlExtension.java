@@ -2,7 +2,7 @@ package com.intellij.xml;
 
 import javax.annotation.Nullable;
 import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.xml.util.HtmlUtil;
 

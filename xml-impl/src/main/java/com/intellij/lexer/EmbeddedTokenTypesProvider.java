@@ -16,9 +16,10 @@
 package com.intellij.lexer;
 
 import javax.annotation.Nonnull;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.psi.tree.IElementType;
-import consulo.lang.LanguageVersion;
+
+import consulo.language.ast.IElementType;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.version.LanguageVersion;
 
 public interface EmbeddedTokenTypesProvider
 {

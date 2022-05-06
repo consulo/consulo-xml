@@ -16,7 +16,7 @@
 
 package com.intellij.util.xml.reflect;
 
-import com.intellij.pom.PomTarget;
+import consulo.language.pom.PomTarget;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.EvaluatedXmlName;
 import javax.annotation.Nonnull;

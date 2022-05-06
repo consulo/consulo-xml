@@ -18,7 +18,10 @@ package com.intellij.util.xml.highlighting;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.util.ReflectionUtil;
+import com.intellij.util.xml.DomFileDescription;
+import com.intellij.util.xml.NameValue;
+import com.intellij.util.xml.Required;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -44,11 +47,11 @@ public abstract class BasicDomElementsInspection<T extends DomElement> extends D
   }
 
   /**
-   * The default implementations checks for resolve problems (if {@link #shouldCheckResolveProblems(com.intellij.util.xml.GenericDomValue)}
-   * returns true), then runs annotators (see {@link com.intellij.util.xml.DomFileDescription#createAnnotator()}),
-   * checks for {@link com.intellij.util.xml.Required} and {@link com.intellij.util.xml.ExtendClass} annotation
-   * problems, checks for name identity (see {@link com.intellij.util.xml.NameValue} annotation) and custom annotation
-   * checkers (see {@link com.intellij.util.xml.highlighting.DomCustomAnnotationChecker}).
+   * The default implementations checks for resolve problems (if {@link #shouldCheckResolveProblems(GenericDomValue)}
+   * returns true), then runs annotators (see {@link DomFileDescription#createAnnotator()}),
+   * checks for {@link Required} and {@link com.intellij.util.xml.ExtendClass} annotation
+   * problems, checks for name identity (see {@link NameValue} annotation) and custom annotation
+   * checkers (see {@link DomCustomAnnotationChecker}).
    *
    * @param element element to check
    * @param holder  a place to add problems to

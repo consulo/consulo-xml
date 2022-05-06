@@ -17,12 +17,12 @@ package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
+import consulo.document.util.TextRange;
+import consulo.language.psi.AbstractElementManipulator;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagValue;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Maxim.Mossienko

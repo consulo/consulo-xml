@@ -16,9 +16,10 @@
 
 package com.intellij.xml;
 
-import com.intellij.psi.meta.PsiMetaData;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayFactory;
+import consulo.util.collection.ArrayFactory;
+import consulo.language.psi.meta.PsiMetaData;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

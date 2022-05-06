@@ -17,19 +17,19 @@ package com.intellij.codeInsight.completion;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.editorActions.smartEnter.SmartEnterProcessor;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.ide.impl.idea.codeInsight.editorActions.smartEnter.SmartEnterProcessor;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.document.Document;
+import consulo.codeEditor.Editor;
+import consulo.project.Project;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.text.CharArrayUtil;
+import consulo.util.lang.CharArrayUtil;
+import consulo.language.util.IncorrectOperationException;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
  * @author spleaner
  */
 public class XmlSmartEnterProcessor extends SmartEnterProcessor {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.completion.XmlSmartEnterProcessor");
+  private static final Logger LOG = Logger.getInstance(XmlSmartEnterProcessor.class);
 
   public boolean process(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile psiFile) {
     return completeEndTag(project, editor, psiFile);

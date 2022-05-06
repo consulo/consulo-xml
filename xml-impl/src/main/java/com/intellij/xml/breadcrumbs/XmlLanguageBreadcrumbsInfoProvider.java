@@ -22,12 +22,12 @@
  */
 package com.intellij.xml.breadcrumbs;
 
-import com.intellij.lang.Language;
+import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsProvider;
+import consulo.language.Language;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.breadcrumbs.BreadcrumbsProvider;
 import consulo.annotation.access.RequiredReadAction;
 import org.jetbrains.annotations.NonNls;
 

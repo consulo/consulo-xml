@@ -18,12 +18,13 @@ package com.intellij.xml.impl.dtd;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import com.intellij.openapi.util.NotNullLazyValue;
+
 import com.intellij.psi.xml.XmlContentParticle;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.ide.impl.idea.util.Function;
 
 /**
  * @author Dmitry Avdeev

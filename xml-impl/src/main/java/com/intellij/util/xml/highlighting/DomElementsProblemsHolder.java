@@ -16,7 +16,7 @@
 
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.lang.annotation.HighlightSeverity;
+import consulo.language.editor.annotation.HighlightSeverity;
 import com.intellij.util.xml.DomElement;
 import javax.annotation.Nonnull;
 

@@ -18,12 +18,12 @@ package com.intellij.util.xml.reflect;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.extensions.AbstractExtensionPointBean;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.project.Project;
+import consulo.component.extension.AbstractExtensionPointBean;
+import consulo.component.extension.ExtensionPointName;
 import com.intellij.util.xml.DomElement;
-import com.intellij.util.xmlb.annotations.Attribute;
+import consulo.util.xml.serializer.annotation.Attribute;
+import consulo.logging.Logger;
+import consulo.project.Project;
 
 /**
  * @author peter

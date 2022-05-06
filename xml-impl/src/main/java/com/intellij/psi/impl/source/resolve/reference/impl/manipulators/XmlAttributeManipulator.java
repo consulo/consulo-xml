@@ -16,15 +16,15 @@
 
 package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.language.psi.AbstractElementManipulator;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.ast.ASTNode;
 
 /**
  * @author Gregory.Shrago

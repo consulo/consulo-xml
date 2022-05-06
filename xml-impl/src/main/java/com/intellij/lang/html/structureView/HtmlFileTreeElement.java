@@ -23,16 +23,17 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.ide.structureView.StructureViewFactoryEx;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.ide.util.treeView.smartTree.TreeStructureUtil;
+
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.ide.impl.idea.ide.util.PropertiesComponent;
 import com.intellij.psi.filters.XmlTagFilter;
-import com.intellij.psi.scope.processor.FilterElementProcessor;
+import consulo.language.psi.resolve.FilterElementProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
+import consulo.language.editor.structureView.PsiTreeElementBase;
+import consulo.language.editor.structureView.StructureViewFactoryEx;
 
 class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
 

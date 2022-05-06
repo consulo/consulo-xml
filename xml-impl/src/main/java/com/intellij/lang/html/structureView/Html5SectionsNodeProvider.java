@@ -15,22 +15,22 @@
  */
 package com.intellij.lang.html.structureView;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.util.FileStructureNodeProvider;
-import com.intellij.ide.util.treeView.smartTree.ActionPresentation;
-import com.intellij.ide.util.treeView.smartTree.ActionPresentationData;
-import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.openapi.actionSystem.Shortcut;
-import com.intellij.openapi.keymap.KeymapManager;
-import com.intellij.openapi.util.PropertyOwner;
 import com.intellij.psi.filters.XmlTagFilter;
-import com.intellij.psi.scope.processor.FilterElementProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
-import javax.annotation.Nonnull;
+import consulo.application.AllIcons;
+import consulo.fileEditor.structureView.tree.ActionPresentation;
+import consulo.fileEditor.structureView.tree.ActionPresentationData;
+import consulo.fileEditor.structureView.tree.TreeElement;
+import consulo.ide.impl.idea.ide.util.FileStructureNodeProvider;
+import consulo.ide.impl.idea.openapi.util.PropertyOwner;
+import consulo.language.psi.resolve.FilterElementProcessor;
+import consulo.ui.ex.action.Shortcut;
+import consulo.ui.ex.keymap.KeymapManager;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

@@ -16,13 +16,14 @@
 
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
+import consulo.ide.impl.idea.openapi.fileEditor.ex.FileEditorManagerEx;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.virtualFileSystem.VirtualFile;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.*;
+import consulo.project.Project;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -106,8 +107,8 @@ public class DomElementsNavigationManagerImpl extends DomElementsNavigationManag
 				xmlElement = ((XmlAttribute) xmlElement).getValueElement();
 			}
 			final OpenFileDescriptor fileDescriptor = xmlElement != null ?
-					new OpenFileDescriptor(myProject, file, xmlElement.getTextOffset()) :
-					new OpenFileDescriptor(myProject, file);
+					OpenFileDescriptorFactory.getInstance(myProject).builder(file).offset(xmlElement.getTextOffset()).build() :
+					OpenFileDescriptorFactory.getInstance(myProject).builder(file).build();
 
 			FileEditorManagerEx.getInstanceEx(myProject).openTextEditor(fileDescriptor, requestFocus);
 		}

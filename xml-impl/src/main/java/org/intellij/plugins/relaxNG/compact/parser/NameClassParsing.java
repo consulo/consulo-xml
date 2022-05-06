@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.parser;
 
-import com.intellij.lang.PsiBuilder;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
+import consulo.language.parser.PsiBuilder;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 
 import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;

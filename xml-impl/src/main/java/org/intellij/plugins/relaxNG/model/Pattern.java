@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.model;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 
 /*
 * Created by IntelliJ IDEA.

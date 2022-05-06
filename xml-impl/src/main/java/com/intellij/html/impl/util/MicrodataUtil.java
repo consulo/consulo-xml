@@ -15,24 +15,24 @@
  */
 package com.intellij.html.impl.util;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.XmlRecursiveElementVisitor;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.PairFunction;
-import com.intellij.util.text.StringTokenizer;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.application.util.CachedValueProvider;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.idea.util.PairFunction;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.util.LanguageCachedValueUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.text.StringTokenizer;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.Nls;
 
 import javax.annotation.Nullable;
@@ -82,7 +82,7 @@ public class MicrodataUtil
 		{
 			return Collections.emptyMap();
 		}
-		return CachedValuesManager.getCachedValue(file, new CachedValueProvider<Map<String, XmlTag>>()
+		return LanguageCachedValueUtil.getCachedValue(file, new CachedValueProvider<Map<String, XmlTag>>()
 		{
 			@Nullable
 			@Override
@@ -165,7 +165,7 @@ public class MicrodataUtil
 		}
 		String text = element.getText();
 		String urls = StringUtil.unquoteString(text);
-		StringTokenizer tokenizer = new StringTokenizer(urls);
+		StringTokenizer tokenizer = new consulo.util.lang.text.StringTokenizer(urls);
 		List<PsiReference> result = new ArrayList<>();
 		while(tokenizer.hasMoreTokens())
 		{
@@ -242,7 +242,7 @@ public class MicrodataUtil
 				final String code = tag.getSubTagText("code");
 				if(code != null)
 				{
-					myValues.add(StringUtil.stripHtml(code, false));
+					myValues.add(consulo.ide.impl.idea.openapi.util.text.StringUtil.stripHtml(code, false));
 				}
 			}
 		}

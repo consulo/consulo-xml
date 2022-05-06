@@ -1,11 +1,12 @@
 package com.intellij.xml.arrangement;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.codeStyle.arrangement.ArrangementEntry;
-import com.intellij.psi.codeStyle.arrangement.DefaultArrangementEntry;
-import com.intellij.psi.codeStyle.arrangement.NameAwareArrangementEntry;
-import com.intellij.psi.codeStyle.arrangement.TypeAwareArrangementEntry;
-import com.intellij.psi.codeStyle.arrangement.std.ArrangementSettingsToken;
+import consulo.language.codeStyle.arrangement.ArrangementEntry;
+import consulo.language.codeStyle.arrangement.DefaultArrangementEntry;
+import consulo.language.codeStyle.arrangement.TypeAwareArrangementEntry;
+import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.arrangement.NameAwareArrangementEntry;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

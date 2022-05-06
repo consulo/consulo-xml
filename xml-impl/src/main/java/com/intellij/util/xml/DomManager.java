@@ -15,22 +15,33 @@
  */
 package com.intellij.util.xml;
 
+import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
+import com.intellij.util.xml.highlighting.DomHighlightingHelper;
+import consulo.component.util.CompositeModificationTracker;
+import consulo.component.util.ModificationTracker;
 import consulo.disposer.Disposable;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.*;
-import com.intellij.psi.PsiManager;
+import consulo.ide.ServiceManager;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.language.psi.PsiManager;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
+import consulo.project.ProjectComponent;
 import consulo.util.dataholder.Key;
+import consulo.util.dataholder.NotNullLazyKey;
+import consulo.util.lang.function.Condition;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
@@ -57,9 +68,9 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	/**
 	 * @param file     XML file
 	 * @param domClass desired DOM element class
-	 * @return New or cached DOM file element for the given file. All registered {@link com.intellij.util.xml.DomFileDescription}s are
-	 * asked if they are responsible for the file {@link com.intellij.util.xml.DomFileDescription#isMyFile(com.intellij.psi.xml.XmlFile)}.
-	 * If there is a {@link com.intellij.util.xml.DomFileDescription} that is responsible for the file, but its {@link DomFileDescription#getRootElementClass()}
+	 * @return New or cached DOM file element for the given file. All registered {@link DomFileDescription}s are
+	 * asked if they are responsible for the file {@link DomFileDescription#isMyFile(XmlFile)}.
+	 * If there is a {@link DomFileDescription} that is responsible for the file, but its {@link DomFileDescription#getRootElementClass()}
 	 * result is incompatible with domClass parameter, null is returned
 	 */
 	@Nullable
@@ -80,8 +91,8 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	public abstract void addDomEventListener(DomEventListener listener, Disposable parentDisposable);
 
 	/**
-	 * @param type Type. Only {@link Class} and {@link java.lang.reflect.ParameterizedType} are allowed
-	 * @return {@link com.intellij.util.xml.reflect.DomGenericInfo} instance for the desired type
+	 * @param type Type. Only {@link Class} and {@link ParameterizedType} are allowed
+	 * @return {@link DomGenericInfo} instance for the desired type
 	 */
 	public abstract DomGenericInfo getGenericInfo(Type type);
 
@@ -102,15 +113,15 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	/**
 	 * @param aClass   Desired DOM element class
 	 * @param module   One may wish the result to think that it is in a particular module
-	 * @param physical see {@link com.intellij.psi.PsiFile#isPhysical()}
+	 * @param physical see {@link PsiFile#isPhysical()}
 	 * @return DOM element which doesn't have any real file under itself. A mock file is created for it. See
-	 * {@link com.intellij.psi.PsiFileFactory#createFileFromText(String, com.intellij.openapi.fileTypes.FileType, CharSequence, long, boolean, boolean)}
+	 * {@link PsiFileFactory#createFileFromText(String, FileType, CharSequence, long, boolean, boolean)}
 	 */
 	public abstract <T extends DomElement> T createMockElement(Class<T> aClass, final Module module, final boolean physical);
 
 	/**
 	 * @param element DOM element
-	 * @return true if this element was created by {@link #createMockElement(Class, com.intellij.openapi.module.Module, boolean)} method
+	 * @return true if this element was created by {@link #createMockElement(Class, Module, boolean)} method
 	 */
 	public abstract boolean isMockElement(DomElement element);
 
@@ -127,17 +138,17 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	public abstract <T> T createStableValue(final Factory<T> provider, final Condition<T> validator);
 
 	/**
-	 * Registers a new {@link com.intellij.util.xml.DomFileDescription} within the manager. The description parameter describes some DOM
+	 * Registers a new {@link DomFileDescription} within the manager. The description parameter describes some DOM
 	 * parameters and restrictions to the particular XML files, that need DOM support. Should be called on
-	 * {@link com.intellij.openapi.components.ProjectComponent} loading.
+	 * {@link ProjectComponent} loading.
 	 *
 	 * @param description The description in question
-	 * @deprecated Make your file description an extension (see {@link com.intellij.util.xml.DomFileDescription#EP_NAME})
+	 * @deprecated Make your file description an extension (see {@link DomFileDescription#EP_NAME})
 	 */
 	public abstract void registerFileDescription(DomFileDescription description);
 
 	/**
-	 * @return {@link com.intellij.util.xml.ConverterManager} instance
+	 * @return {@link ConverterManager} instance
 	 * @deprecated This will be moved at the application level
 	 */
 	public abstract ConverterManager getConverterManager();
@@ -147,9 +158,9 @@ public abstract class DomManager extends CompositeModificationTracker implements
 
 	/**
 	 * @param element reference element
-	 * @return element that represents the resolve scope for the given reference. {@link com.intellij.util.xml.DomResolveConverter} uses
+	 * @return element that represents the resolve scope for the given reference. {@link DomResolveConverter} uses
 	 * this method to resolve DOM references. This result's subtree will be traversed recursively searching for the reference target. See
-	 * {@link com.intellij.util.xml.Resolve} annotation.
+	 * {@link Resolve} annotation.
 	 */
 	@Nonnull
 	public abstract DomElement getResolvingScope(GenericDomValue element);
@@ -157,13 +168,13 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	/**
 	 * @param element Named DOM element
 	 * @return The scope within which the element's name identity will be checked by
-	 * {@link com.intellij.util.xml.highlighting.DomHighlightingHelper#checkNameIdentity(DomElement, com.intellij.util.xml.highlighting.DomElementAnnotationHolder)}
+	 * {@link DomHighlightingHelper#checkNameIdentity(DomElement, DomElementAnnotationHolder)}
 	 */
 	@Nullable
 	public abstract DomElement getIdentityScope(DomElement element);
 
 	/**
-	 * @return {@link com.intellij.util.xml.TypeChooserManager} instance
+	 * @return {@link TypeChooserManager} instance
 	 */
 	public abstract TypeChooserManager getTypeChooserManager();
 

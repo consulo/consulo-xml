@@ -15,17 +15,18 @@
  */
 package com.intellij.util.xml;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.ide.IdeBundle;
+import com.intellij.util.xml.converters.values.NumberValueConverter;
+import consulo.ide.IdeBundle;
+import consulo.language.editor.CodeInsightBundle;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 
 /**
  * Base DOM class to convert objects of a definite type into {@link String} and back. Most often used with
- * {@link com.intellij.util.xml.Convert} annotation with methods returning {@link com.intellij.util.xml.GenericDomValue}&lt;T&gt;.
+ * {@link Convert} annotation with methods returning {@link GenericDomValue}&lt;T&gt;.
  *
- * @see com.intellij.util.xml.ResolvingConverter
- * @see com.intellij.util.xml.CustomReferenceConverter
+ * @see ResolvingConverter
+ * @see CustomReferenceConverter
  *
  * @param <T> Type to convert from/to.
  *
@@ -49,7 +50,7 @@ public abstract class Converter<T> {
 
 
   /**
-   * @deprecated {@link com.intellij.util.xml.converters.values.NumberValueConverter}
+   * @deprecated {@link NumberValueConverter}
    */
   @Deprecated
   public static final Converter<Integer> INTEGER_CONVERTER = new Converter<Integer>() {

@@ -15,13 +15,15 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import javax.swing.JPanel;
-
+import consulo.ide.impl.intelliLang.inject.config.ui.AbstractInjectionPanel;
+import consulo.ide.impl.intelliLang.inject.config.ui.LanguagePanel;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.language.editor.ui.awt.LanguageTextField;
+import consulo.project.Project;
+import consulo.ui.ex.awt.ComboBox;
 import org.intellij.plugins.intelliLang.inject.config.XmlAttributeInjection;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.ComboBox;
-import com.intellij.ui.EditorTextField;
-import com.intellij.ui.LanguageTextField;
+
+import javax.swing.*;
 
 public class XmlAttributePanel extends AbstractInjectionPanel<XmlAttributeInjection>
 {

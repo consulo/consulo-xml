@@ -18,10 +18,10 @@ package com.intellij.psi.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.document.util.TextRange;
 import org.jetbrains.annotations.NonNls;
 
 /**

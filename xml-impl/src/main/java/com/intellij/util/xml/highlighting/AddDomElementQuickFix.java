@@ -18,12 +18,12 @@ package com.intellij.util.xml.highlighting;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.openapi.project.Project;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.project.Project;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomBundle;
 import com.intellij.util.xml.DomElement;
+import consulo.language.editor.inspection.LocalQuickFix;
 
 /**
  * @author Dmitry Avdeev

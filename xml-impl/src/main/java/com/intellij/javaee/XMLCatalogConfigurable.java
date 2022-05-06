@@ -15,11 +15,11 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.options.BaseConfigurable;
-import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.configurable.BaseConfigurable;
+import consulo.configurable.ConfigurationException;
+import consulo.util.lang.StringUtil;
+import consulo.fileChooser.FileChooserDescriptor;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;

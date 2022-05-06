@@ -15,12 +15,12 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.MultiValuesMap;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.FactoryMap;
+import consulo.logging.Logger;
+import consulo.util.collection.MultiValuesMap;
+import consulo.util.lang.Pair;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.util.collection.FactoryMap;
 import com.intellij.util.xml.*;
 import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.collection.primitive.ints.IntObjectMap;
@@ -305,7 +305,7 @@ public class StaticGenericInfoBuilder {
 
   @Nullable
   private static String getPropertyName(JavaMethod method) {
-    return StringUtil.getPropertyName(method.getMethodName());
+    return consulo.ide.impl.idea.openapi.util.text.StringUtil.getPropertyName(method.getMethodName());
   }
 
   @Nonnull

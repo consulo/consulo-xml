@@ -18,12 +18,13 @@ package com.intellij.codeInsight.highlighting;
 import javax.annotation.Nonnull;
 
 import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
+import consulo.language.editor.HighlightErrorFilter;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author spleaner

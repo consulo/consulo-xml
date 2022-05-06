@@ -1,8 +1,7 @@
 package com.intellij.xml.impl.dom;
 
-import com.intellij.pom.PomTarget;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
+import consulo.language.pom.PomService;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -17,6 +16,7 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.language.pom.PomTarget;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -18,10 +18,10 @@ package com.intellij.xml.index;
 import javax.annotation.Nullable;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.module.content.ProjectFileIndex;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
 
 /**
  * @author Dmitry Avdeev
@@ -35,7 +35,7 @@ public enum ResourceRelevance {
   MAPPED;
 
   public static ResourceRelevance getRelevance(VirtualFile resource,
-                                               @Nullable Module module,
+                                               @Nullable consulo.module.Module module,
                                                ProjectFileIndex fileIndex,
                                                @Nullable GlobalSearchScope additionalScope) {
     boolean inTest = fileIndex.isInTestSourceContent(resource);

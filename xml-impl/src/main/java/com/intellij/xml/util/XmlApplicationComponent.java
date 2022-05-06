@@ -16,16 +16,12 @@
 package com.intellij.xml.util;
 
 import com.intellij.html.impl.RelaxedHtmlFromSchemaNSDescriptor;
-import com.intellij.psi.filters.AndFilter;
-import com.intellij.psi.filters.ClassFilter;
-import com.intellij.psi.filters.ContentFilter;
-import com.intellij.psi.filters.OrFilter;
+import consulo.language.psi.filter.AndFilter;
 import com.intellij.psi.filters.XmlTagFilter;
 import com.intellij.psi.filters.XmlTextFilter;
 import com.intellij.psi.filters.position.NamespaceFilter;
 import com.intellij.psi.filters.position.TargetNamespaceFilter;
-import com.intellij.psi.meta.MetaDataContributor;
-import com.intellij.psi.meta.MetaDataRegistrar;
+import consulo.language.psi.meta.MetaDataRegistrar;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlConditionalSection;
 import com.intellij.psi.xml.XmlDocument;
@@ -38,6 +34,10 @@ import com.intellij.xml.impl.schema.NamedObjectDescriptor;
 import com.intellij.xml.impl.schema.SchemaNSDescriptor;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
+import consulo.language.psi.filter.ClassFilter;
+import consulo.language.psi.filter.ContentFilter;
+import consulo.language.psi.filter.OrFilter;
+import consulo.language.psi.meta.MetaDataContributor;
 
 /**
  * @author Maxim.Mossienko

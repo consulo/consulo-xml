@@ -15,20 +15,25 @@
  */
 package com.intellij.codeInsight.hint.api.impls;
 
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.MutableLookupElement;
-import com.intellij.lang.parameterInfo.*;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.ide.impl.idea.lang.parameterInfo.CreateParameterInfoContext;
+import consulo.ide.impl.idea.lang.parameterInfo.ParameterInfoContext;
+import consulo.ide.impl.idea.lang.parameterInfo.ParameterInfoHandler;
+import consulo.ide.impl.idea.lang.parameterInfo.ParameterInfoUIContext;
+import consulo.ide.impl.idea.lang.parameterInfo.UpdateParameterInfoContext;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
-import com.intellij.util.Function;
+import consulo.ide.impl.idea.util.Function;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.editor.completion.lookup.MutableLookupElement;
+import consulo.language.psi.PsiFile;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

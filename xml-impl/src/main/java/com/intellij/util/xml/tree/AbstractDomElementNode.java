@@ -16,9 +16,10 @@
 
 package com.intellij.util.xml.tree;
 
-import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.util.ReflectionUtil;
+import consulo.project.Project;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.tree.SimpleNode;
+import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import consulo.ui.image.Image;
@@ -38,7 +39,7 @@ abstract public class AbstractDomElementNode extends SimpleNode {
   };
 
   private boolean isExpanded;
-
+  protected final Project myProject;
 
   protected AbstractDomElementNode(DomElement element) {
     this(element, null);
@@ -50,6 +51,7 @@ abstract public class AbstractDomElementNode extends SimpleNode {
 
   protected AbstractDomElementNode(DomElement element, SimpleNode parent) {
     super(element.getManager().getProject(), parent);
+    myProject = element.getManager().getProject();
   }
 
   abstract public DomElement getDomElement();

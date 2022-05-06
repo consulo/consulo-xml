@@ -15,8 +15,8 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import com.intellij.openapi.util.Condition;
-import com.intellij.psi.PsiElement;
+import consulo.util.lang.function.Condition;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlElement;
 

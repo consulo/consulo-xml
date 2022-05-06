@@ -16,13 +16,13 @@
 
 package com.intellij.util.xml.tree.actions;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.ui.treeStructure.SimpleNode;
+import consulo.application.AllIcons;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.application.ApplicationBundle;
+import consulo.application.Result;
+import consulo.language.editor.WriteCommandAction;
+import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.awt.tree.SimpleNode;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;

@@ -16,18 +16,22 @@
 package com.intellij.xml.util;
 
 import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.impl.PsiDelegateReference;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
+import consulo.ide.impl.psi.impl.source.resolve.reference.impl.PsiDelegateReference;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.PsiReference;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.impl.schema.XmlSchemaTagsProcessor;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.util.ProcessingContext;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;

@@ -1,21 +1,22 @@
 package com.intellij.xml.arrangement;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.codeStyle.arrangement.DefaultArrangementEntry;
-import com.intellij.psi.codeStyle.arrangement.std.ArrangementSettingsToken;
+import consulo.language.codeStyle.arrangement.DefaultArrangementEntry;
+import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.Stack;
+import consulo.util.collection.Stack;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.Collection;
 
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
-import static com.intellij.psi.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_TAG;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
+import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_TAG;
 
 /**
  * @author Eugene.Kudelevsky

@@ -15,13 +15,13 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Factory;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.MergedObject;
 import com.intellij.util.xml.StableElement;
-import consulo.util.advandedProxy.ObjectMethods;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.proxy.advanced.ObjectMethods;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.function.Condition;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 
 import java.lang.reflect.InvocationHandler;

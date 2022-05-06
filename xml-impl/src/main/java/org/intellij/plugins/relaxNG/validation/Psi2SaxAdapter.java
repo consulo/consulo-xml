@@ -19,18 +19,19 @@ package org.intellij.plugins.relaxNG.validation;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.Attributes2Impl;
 import org.xml.sax.ext.Locator2Impl;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.document.Document;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;

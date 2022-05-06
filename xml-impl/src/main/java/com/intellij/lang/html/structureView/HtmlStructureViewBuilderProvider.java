@@ -19,12 +19,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.ide.structureView.StructureViewModel;
-import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.fileEditor.structureView.StructureViewModel;
 import com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import com.intellij.openapi.editor.Editor;
+import consulo.codeEditor.Editor;
 import com.intellij.psi.xml.XmlFile;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
 
 public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider
 {

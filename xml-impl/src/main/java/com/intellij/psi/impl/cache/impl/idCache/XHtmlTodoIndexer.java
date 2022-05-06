@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.impl.cache.impl.idCache;
 
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.impl.cache.impl.OccurrenceConsumer;
-import com.intellij.psi.impl.cache.impl.todo.LexerBasedTodoIndexer;
+import consulo.ide.impl.psi.impl.cache.impl.OccurrenceConsumer;
+import consulo.language.lexer.Lexer;
+import consulo.ide.impl.psi.impl.cache.impl.todo.LexerBasedTodoIndexer;
 
 public class XHtmlTodoIndexer extends LexerBasedTodoIndexer {
   @Override

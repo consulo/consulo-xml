@@ -15,23 +15,23 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.codeInsight.daemon.Validator;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.ExternalAnnotator;
-import com.intellij.openapi.util.Trinity;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.ExternalAnnotator;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.util.lang.Trinity;
+import consulo.xml.Validator;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,11 +76,6 @@ public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator
 
   static class MyHost implements Validator.ValidationHost {
     private final List<Trinity<PsiElement, String, ErrorType>> messages = new ArrayList<Trinity<PsiElement, String, ErrorType>>();
-
-    @Override
-    public void addMessage(PsiElement context, String message, int type) {
-      throw new UnsupportedOperationException();
-    }
 
     @Override
     public void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {

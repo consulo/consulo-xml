@@ -1,6 +1,6 @@
 package com.intellij.util.xml.impl;
 
-import com.intellij.openapi.util.Factory;
+import consulo.ide.impl.idea.openapi.util.Factory;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.util.xml.DomElement;

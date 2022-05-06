@@ -18,11 +18,13 @@ package com.intellij.codeInspection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.psi.PsiElement;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 
 public abstract class XmlQuickFixFactory
 {

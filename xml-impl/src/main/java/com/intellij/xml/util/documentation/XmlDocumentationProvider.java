@@ -15,30 +15,36 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.lang.Language;
-import com.intellij.lang.documentation.DocumentationProvider;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.documentation.DocumentationProvider;
 import com.intellij.lang.documentation.DocumentationUtil;
 import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.util.lang.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.template.TemplateLanguageFileViewProvider;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.application.util.function.Processor;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.*;
 import com.intellij.xml.util.XmlUtil;
+import consulo.logging.Logger;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.ref.Ref;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -52,7 +58,7 @@ import java.util.List;
 public class XmlDocumentationProvider implements DocumentationProvider {
   private static final Key<XmlElementDescriptor> DESCRIPTOR_KEY = Key.create("Original element");
 
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.documentation.XmlDocumentationProvider");
+  private static final Logger LOG = Logger.getInstance(XmlDocumentationProvider.class);
 
   @NonNls private static final String NAME_ATTR_NAME = "name";
   @NonNls private static final String BASE_SITEPOINT_URL = "http://reference.sitepoint.com/html/";

@@ -17,17 +17,17 @@ package com.intellij.codeInspection.htmlInspections;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.DaemonCodeAnalyzer;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.language.psi.PsiFile;
 import com.intellij.xml.Html5SchemaProvider;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Eugene.Kudelevsky

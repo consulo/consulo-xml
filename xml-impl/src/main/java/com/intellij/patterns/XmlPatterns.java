@@ -15,6 +15,10 @@
  */
 package com.intellij.patterns;
 
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.pattern.PsiNamePatternCondition;
 import org.jetbrains.annotations.NonNls;
 import com.intellij.psi.xml.XmlAttribute;
 

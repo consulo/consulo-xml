@@ -37,7 +37,7 @@
               <text value="&amp;Namespace:"/>
             </properties>
           </component>
-          <component id="16487" class="com.intellij.ui.EditorTextField" binding="myLocalName" custom-create="true">
+          <component id="16487" class="consulo.language.editor.ui.awt.EditorTextField" binding="myLocalName" custom-create="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -45,7 +45,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="eeee3" class="com.intellij.openapi.ui.ComboBox" binding="myNamespace" custom-create="true">
+          <component id="eeee3" class="consulo.ui.ex.awt.ComboBox" binding="myNamespace" custom-create="true">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

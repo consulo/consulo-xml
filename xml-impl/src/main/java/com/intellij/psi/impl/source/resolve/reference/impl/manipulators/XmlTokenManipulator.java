@@ -15,15 +15,15 @@
  */
 package com.intellij.psi.impl.source.resolve.reference.impl.manipulators;
 
-import com.intellij.lang.ASTFactory;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.AbstractElementManipulator;
-import com.intellij.psi.impl.source.DummyHolderFactory;
-import com.intellij.psi.impl.source.tree.FileElement;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.IncorrectOperationException;
+import consulo.document.util.TextRange;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.ASTFactory;
+import consulo.language.impl.ast.FileElement;
+import consulo.language.impl.ast.LeafElement;
+import consulo.language.impl.psi.DummyHolderFactory;
+import consulo.language.psi.AbstractElementManipulator;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author ven

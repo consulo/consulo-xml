@@ -17,7 +17,7 @@ package com.intellij.psi.impl.source.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiElementVisitor;
+import consulo.language.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlDecl;
 import com.intellij.psi.xml.XmlElementType;

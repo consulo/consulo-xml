@@ -17,13 +17,13 @@ package com.intellij.psi.impl.source.resolve.reference.impl.providers;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.ElementManipulator;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ElementManipulators;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.util.IncorrectOperationException;
+import consulo.document.util.TextRange;
+import consulo.language.psi.ElementManipulator;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Dmitry Avdeev

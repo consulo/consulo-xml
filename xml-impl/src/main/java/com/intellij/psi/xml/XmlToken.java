@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 
 
 /**

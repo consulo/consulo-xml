@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.impl.schema;
 
+import consulo.language.psi.PsiElement;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;

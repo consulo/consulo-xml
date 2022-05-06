@@ -18,17 +18,17 @@ package com.intellij.codeInsight.daemon.impl.quickfix;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
+import consulo.ide.impl.idea.codeInsight.intention.impl.BaseIntentionAction;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
 
 /**
  * @author mike
@@ -57,7 +57,7 @@ abstract class BaseExtResourceAction extends BaseIntentionAction {
     return XmlBundle.message(getQuickFixKeyId());
   }
 
-  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
     int offset = editor.getCaretModel().getOffset();
 
     PsiDocumentManager.getInstance(project).commitAllDocuments();

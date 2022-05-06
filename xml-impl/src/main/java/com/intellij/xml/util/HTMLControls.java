@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.JDOMUtil;
-import com.intellij.openapi.util.io.FileUtilRt;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.CharsetToolkit;
-import com.intellij.util.io.UnsyncByteArrayInputStream;
-import com.intellij.util.xmlb.Converter;
-import com.intellij.util.xmlb.XmlSerializer;
-import com.intellij.util.xmlb.annotations.Attribute;
-import com.intellij.util.xmlb.annotations.Tag;
+import consulo.ide.impl.idea.openapi.util.io.FileUtilRt;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
+import consulo.util.io.CharsetToolkit;
+import consulo.util.io.UnsyncByteArrayInputStream;
+import consulo.util.xml.serializer.Converter;
+import consulo.util.xml.serializer.XmlSerializer;
+import consulo.util.xml.serializer.annotation.Attribute;
+import consulo.util.jdom.JDOMUtil;
+import consulo.util.xml.serializer.annotation.Tag;
 import org.jdom.Document;
 
 import javax.annotation.Nonnull;

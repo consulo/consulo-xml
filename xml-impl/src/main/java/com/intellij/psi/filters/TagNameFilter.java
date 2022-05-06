@@ -15,6 +15,7 @@
  */
 package com.intellij.psi.filters;
 
+import consulo.language.psi.filter.PlainTextFilter;
 import org.jetbrains.annotations.NonNls;
 import com.intellij.psi.xml.XmlTag;
 

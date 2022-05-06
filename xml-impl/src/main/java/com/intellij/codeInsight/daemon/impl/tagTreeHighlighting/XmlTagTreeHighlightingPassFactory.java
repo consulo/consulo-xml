@@ -17,12 +17,12 @@ package com.intellij.codeInsight.daemon.impl.tagTreeHighlighting;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeHighlighting.Pass;
-import com.intellij.codeHighlighting.TextEditorHighlightingPass;
-import com.intellij.codeHighlighting.TextEditorHighlightingPassFactory;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.psi.PsiFile;
+import consulo.codeEditor.Editor;
+import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPass;
+import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPassFactory;
+import consulo.codeEditor.EditorEx;
+import consulo.language.psi.PsiFile;
+import consulo.language.editor.Pass;
 
 /**
  * @author Eugene.Kudelevsky

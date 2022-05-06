@@ -15,11 +15,12 @@
  */
 package com.intellij.psi.filters;
 
+import consulo.language.psi.filter.ElementFilter;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,7 +29,7 @@ import com.intellij.util.ArrayUtil;
  * Time: 13:57:35
  * To change this template use Options | File Templates.
  */
-public class XmlTextFilter implements ElementFilter{
+public class XmlTextFilter implements ElementFilter {
   protected String[] myValue;
   private boolean myCaseInsensitiveFlag = false;
 

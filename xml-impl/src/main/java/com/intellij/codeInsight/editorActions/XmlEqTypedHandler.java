@@ -18,12 +18,13 @@ package com.intellij.codeInsight.editorActions;
 import javax.annotation.Nonnull;
 
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiElement;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.language.psi.PsiFile;
 import com.intellij.psi.xml.XmlAttribute;
+import consulo.language.editor.action.TypedHandlerDelegate;
 
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
   private boolean needToInsertQuotes = false;

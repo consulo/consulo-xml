@@ -16,7 +16,7 @@
 package com.intellij.util.xml;
 
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 
 import java.lang.reflect.Type;
 

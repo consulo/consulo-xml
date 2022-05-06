@@ -16,20 +16,26 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import com.intellij.ide.errorTreeView.NewErrorTreeViewPanel;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindowId;
-import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.ui.content.*;
-import com.intellij.util.ui.ErrorTreeView;
-import com.intellij.util.ui.MessageCategory;
+import consulo.application.Application;
+import consulo.application.ApplicationManager;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.project.ui.view.MessageView;
+import consulo.project.ui.wm.ToolWindowId;
+import consulo.project.ui.wm.ToolWindowManager;
+import consulo.ui.ex.MessageCategory;
+import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.content.Content;
+import consulo.ui.ex.content.ContentFactory;
+import consulo.ui.ex.content.event.ContentManagerAdapter;
+import consulo.ui.ex.content.event.ContentManagerEvent;
+import consulo.ui.ex.errorTreeView.ErrorTreeView;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanel;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanelFactory;
+import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -73,13 +79,13 @@ public class MessageViewHelper {
 
   public synchronized void openMessageView(Runnable rerun) {
     assert myErrorsView == null;
-    myErrorsView = new NewErrorTreeViewPanel(myProject, null, true, true, rerun);
+    myErrorsView = Application.get().getInstance(NewErrorTreeViewPanelFactory.class).createPanel(myProject, null, true, true, rerun);
     openMessageViewImpl();
   }
 
   public synchronized void processError(final SAXParseException ex, final boolean warning) {
     if (myErrors.size() == 0 && myErrorsView == null) {
-      myErrorsView = new NewErrorTreeViewPanel(myProject, null, true, true, null);
+      myErrorsView = Application.get().getInstance(NewErrorTreeViewPanelFactory.class).createPanel(myProject, null, true, true, null);
       myErrorsView.setProcessController(myProcessController);
       openMessageViewImpl();
     }

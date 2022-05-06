@@ -15,10 +15,13 @@
  */
 package com.intellij.featureStatistics;
 
-import java.util.Collections;
-
 import com.intellij.codeInsight.completion.XmlCompletionContributor;
 import com.intellij.xml.XmlBundle;
+import consulo.ide.impl.idea.featureStatistics.FeatureDescriptor;
+import consulo.ide.impl.idea.featureStatistics.GroupDescriptor;
+import consulo.ide.impl.idea.featureStatistics.ProductivityFeaturesProvider;
+
+import java.util.Collections;
 
 /**
  * @author Dmitry Avdeev

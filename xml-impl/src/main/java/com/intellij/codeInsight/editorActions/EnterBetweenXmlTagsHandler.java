@@ -15,25 +15,25 @@
  */
 package com.intellij.codeInsight.editorActions;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
-import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.editor.highlighter.HighlighterIterator;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTokenType;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorEx;
+import consulo.codeEditor.EditorHighlighter;
+import consulo.codeEditor.HighlighterIterator;
+import consulo.codeEditor.action.EditorActionHandler;
+import consulo.dataContext.DataContext;
+import consulo.ide.impl.idea.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.CommonDataKeys;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.util.lang.ref.Ref;
+
+import javax.annotation.Nonnull;
 
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
   public Result preprocessEnter(@Nonnull final PsiFile file, @Nonnull final Editor editor, @Nonnull final Ref<Integer> caretOffset, @Nonnull final Ref<Integer> caretAdvance,
@@ -52,26 +52,26 @@ public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
     CharSequence chars = editor.getDocument().getCharsSequence();
     if (chars.charAt(offset - 1) != '>') return false;
 
-    EditorHighlighter highlighter = ((EditorEx)editor).getHighlighter();
+    EditorHighlighter highlighter = ((EditorEx) editor).getHighlighter();
     HighlighterIterator iterator = highlighter.createIterator(offset - 1);
     if (iterator.getTokenType() != XmlTokenType.XML_TAG_END) return false;
-    
+
     if (isAtTheEndOfEmptyTag(project, editor, file, iterator)) {
       return false;
     }
-    
+
     iterator.retreat();
 
     int retrieveCount = 1;
-    while(!iterator.atEnd()) {
-      final IElementType tokenType = iterator.getTokenType();
+    while (!iterator.atEnd()) {
+      final IElementType tokenType = (IElementType) iterator.getTokenType();
       if (tokenType == XmlTokenType.XML_END_TAG_START) return false;
       if (tokenType == XmlTokenType.XML_START_TAG_START) break;
       ++retrieveCount;
       iterator.retreat();
     }
 
-    for(int i = 0; i < retrieveCount; ++i) iterator.advance();
+    for (int i = 0; i < retrieveCount; ++i) iterator.advance();
     iterator.advance();
     return !iterator.atEnd() && iterator.getTokenType() == XmlTokenType.XML_END_TAG_START;
   }
@@ -90,6 +90,6 @@ public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
 
     final PsiElement parent = element.getParent();
     return parent instanceof XmlTag &&
-           parent.getTextRange().getEndOffset() == iterator.getEnd();
+        parent.getTextRange().getEndOffset() == iterator.getEnd();
   }
 }

@@ -16,6 +16,7 @@
 package com.intellij.psi;
 
 import com.intellij.psi.xml.*;
+import consulo.language.psi.PsiElementVisitor;
 
 public abstract class XmlElementVisitor extends PsiElementVisitor {
   public void visitXmlElement(XmlElement element) {

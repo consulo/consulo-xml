@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 import org.intellij.plugins.relaxNG.compact.psi.impl.*;
 

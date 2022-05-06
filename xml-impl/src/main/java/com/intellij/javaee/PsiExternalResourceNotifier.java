@@ -15,9 +15,9 @@
  */
 package com.intellij.javaee;
 
-import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.impl.PsiManagerEx;
+import consulo.language.editor.DaemonCodeAnalyzer;
+import consulo.language.psi.PsiManager;
+import consulo.language.impl.internal.psi.PsiManagerEx;
 import consulo.disposer.Disposable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

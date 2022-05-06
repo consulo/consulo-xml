@@ -15,13 +15,15 @@
  */
 package com.intellij.ide.actions;
 
-import com.intellij.ide.fileTemplates.FileTemplateManager;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDirectory;
+import consulo.application.dumb.DumbAware;
 import com.intellij.xml.XmlBundle;
+import consulo.fileTemplate.FileTemplateManager;
+import consulo.ide.impl.idea.ide.actions.CreateFileFromTemplateAction;
+import consulo.ide.impl.idea.ide.actions.CreateFileFromTemplateDialog;
+import consulo.language.psi.PsiDirectory;
+import consulo.project.Project;
 
 /**
  * @author Eugene.Kudelevsky

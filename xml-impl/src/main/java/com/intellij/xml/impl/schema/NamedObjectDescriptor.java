@@ -15,13 +15,13 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiWritableMetaData;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiWritableMetaData;
+import consulo.module.content.ProjectRootManager;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Maxim.Mossienko

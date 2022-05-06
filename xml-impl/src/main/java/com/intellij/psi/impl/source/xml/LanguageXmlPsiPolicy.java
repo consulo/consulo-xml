@@ -15,7 +15,7 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.LanguageExtension;
+import consulo.language.LanguageExtension;
 import com.intellij.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
 
 /**

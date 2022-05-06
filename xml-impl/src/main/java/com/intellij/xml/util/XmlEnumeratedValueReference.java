@@ -15,16 +15,17 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReferenceBase;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceBase;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
+import consulo.document.util.TextRange;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.util.lang.StringUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

@@ -19,15 +19,15 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.XmlHighlighterColors;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.Annotator;
 
 /**
  * @author Dmitry Avdeev

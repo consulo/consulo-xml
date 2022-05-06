@@ -49,12 +49,12 @@
 						interface="com.intellij.util.xml.highlighting.DomCustomAnnotationChecker"/>
 
 		<extensionPoint name="dom.uiControlsProvider"
-						interface="com.intellij.util.Consumer"/>
+						interface="consulo.ide.impl.idea.util.Consumer"/>
 
 		<extensionPoint name="dom.moduleContextProvider" interface="com.intellij.util.xml.ModuleContextProvider"/>
 	</extensionPoints>
 
-	<extensions defaultExtensionNs="com.intellij">
+	<extensions defaultExtensionNs="consulo">
 		<fileBasedIndex implementation="com.intellij.util.xml.DomFileIndex"/>
 
 		<filetype.stubBuilder filetype="XML" implementationClass="com.intellij.util.xml.stubs.builder.DomStubBuilder"/>

@@ -21,11 +21,11 @@ import static com.intellij.patterns.XmlPatterns.xmlTag;
 
 import javax.annotation.Nonnull;
 
+import consulo.language.psi.filter.position.PatternFilter;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 import com.intellij.patterns.XmlNamedElementPattern;
-import com.intellij.psi.PsiReferenceContributor;
-import com.intellij.psi.PsiReferenceRegistrar;
-import com.intellij.psi.filters.position.PatternFilter;
+import consulo.language.psi.PsiReferenceContributor;
+import consulo.language.psi.PsiReferenceRegistrar;
 import com.intellij.xml.util.XmlUtil;
 
 /**

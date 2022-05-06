@@ -15,19 +15,19 @@
  */
 package com.intellij.lang.xml;
 
-import com.intellij.patterns.ElementPattern;
-import com.intellij.patterns.PlatformPatterns;
+import consulo.language.pattern.PlatformPatterns;
 import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.refactoring.rename.RenameInputValidator;
-import com.intellij.util.ProcessingContext;
+import consulo.language.editor.refactoring.rename.RenameInputValidator;
+import consulo.language.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.pattern.ElementPattern;
 
-import static com.intellij.patterns.PlatformPatterns.psiElement;
-import static com.intellij.patterns.StandardPatterns.or;
+import static consulo.language.pattern.PlatformPatterns.psiElement;
+import static consulo.language.pattern.StandardPatterns.or;
 
 public class XmlElementRenameValidator implements RenameInputValidator {
   @Override

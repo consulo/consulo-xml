@@ -15,44 +15,38 @@
  */
 package com.intellij.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.document.util.TextRange;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.psi.PsiElement;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 17.10.13
+ * Date: 17.10.13
  */
-public class XmlNamespaceAnnotator implements Annotator
-{
-	@Override
-	public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder)
-	{
-		if(element instanceof XmlTag)
-		{
-			XmlTag tag = (XmlTag) element;
-			String namespace = tag.getNamespace();
+public class XmlNamespaceAnnotator implements Annotator {
+  @Override
+  public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
+    if (element instanceof XmlTag) {
+      XmlTag tag = (XmlTag) element;
+      String namespace = tag.getNamespace();
 
-			TextAttributesKey key = XmlNSColorProvider.EP_NAME.composite().getKeyForNamespace(namespace, tag);
-			if(key != null)
-			{
-				TextRange range = XmlTagUtil.getStartTagRange(tag);
-				if(range != null)
-				{
-					holder.createInfoAnnotation(range, null).setTextAttributes(key);
-				}
-				TextRange endTagRange = XmlTagUtil.getEndTagRange(tag);
-				if(endTagRange != null)
-				{
-					holder.createInfoAnnotation(endTagRange, null).setTextAttributes(key);
-				}
-			}
-		}
-	}
+      TextAttributesKey key = XmlNSColorProvider.EP_NAME.computeSafeIfAny(it -> it.getKeyForNamespace(namespace, tag));
+      if (key != null) {
+        TextRange range = XmlTagUtil.getStartTagRange(tag);
+        if (range != null) {
+          holder.createInfoAnnotation(range, null).setTextAttributes(key);
+        }
+        TextRange endTagRange = XmlTagUtil.getEndTagRange(tag);
+        if (endTagRange != null) {
+          holder.createInfoAnnotation(endTagRange, null).setTextAttributes(key);
+        }
+      }
+    }
+  }
 }

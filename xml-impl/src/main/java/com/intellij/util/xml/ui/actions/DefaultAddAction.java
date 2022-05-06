@@ -21,22 +21,22 @@ import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.psi.SmartPointerManager;
-import com.intellij.psi.SmartPsiElementPointer;
+import consulo.application.Result;
+import consulo.ui.ex.action.AnAction;
+import consulo.application.ApplicationBundle;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.psi.SmartPointerManager;
+import consulo.language.psi.SmartPsiElementPointer;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.StableElement;
 import com.intellij.util.xml.TypeChooser;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.image.Image;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * User: Sergey.Vasiliev

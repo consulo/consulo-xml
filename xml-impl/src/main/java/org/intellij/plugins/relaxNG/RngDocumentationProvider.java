@@ -16,18 +16,18 @@
 
 package org.intellij.plugins.relaxNG;
 
-import com.intellij.lang.documentation.DocumentationProvider;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.psi.PsiManager;
+import consulo.logging.Logger;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.util.XmlStringUtil;
+import consulo.util.lang.xml.XmlStringUtil;
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngXmlAttributeDescriptor;

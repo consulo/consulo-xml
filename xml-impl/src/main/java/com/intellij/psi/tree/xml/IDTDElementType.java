@@ -15,9 +15,9 @@
  */
 package com.intellij.psi.tree.xml;
 
+import consulo.language.ast.IElementType;
 import org.jetbrains.annotations.NonNls;
 import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.psi.tree.IElementType;
 
 /**
  * @author ik

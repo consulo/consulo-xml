@@ -15,7 +15,7 @@
  */
 package com.intellij.codeInsight.template;
 
-import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider;
+import consulo.ide.impl.idea.codeInsight.template.impl.DefaultLiveTemplatesProvider;
 
 /**
  * @author yole

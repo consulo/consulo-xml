@@ -18,14 +18,14 @@ package com.intellij.xml.impl.dtd;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.meta.PsiWritableMetaData;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlAttributeDecl;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
+import consulo.language.psi.meta.PsiWritableMetaData;
+import consulo.language.util.IncorrectOperationException;
 
 /**
  * @author Mike

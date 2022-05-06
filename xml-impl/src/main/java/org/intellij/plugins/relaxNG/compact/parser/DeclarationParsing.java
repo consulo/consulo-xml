@@ -18,9 +18,9 @@ package org.intellij.plugins.relaxNG.compact.parser;
 
 import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;
 
+import consulo.language.ast.IElementType;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.parser.PsiBuilder;
 
 /**
  * Created by IntelliJ IDEA.

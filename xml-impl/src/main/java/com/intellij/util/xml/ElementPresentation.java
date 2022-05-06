@@ -21,7 +21,7 @@ import consulo.ui.image.Image;
 
 /**
  * @author peter
- * @see com.intellij.util.xml.DomElement#getPresentation()
+ * @see DomElement#getPresentation()
  * @see ElementPresentationTemplate
  */
 public abstract class ElementPresentation {

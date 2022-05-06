@@ -16,7 +16,9 @@
 package com.intellij.codeInspection;
 
 import javax.annotation.Nonnull;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.editor.inspection.InspectionSuppressor;
+import consulo.language.editor.inspection.SuppressQuickFix;
 
 public class XmlInspectionSuppressor implements InspectionSuppressor
 {

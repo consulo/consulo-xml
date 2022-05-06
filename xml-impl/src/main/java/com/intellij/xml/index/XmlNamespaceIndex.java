@@ -15,37 +15,29 @@
  */
 package com.intellij.xml.index;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.xml.util.XmlUtil;
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.ID;
+import consulo.index.io.data.DataExternalizer;
+import consulo.index.io.data.IOUtil;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.DumbService;
+import consulo.project.Project;
+import consulo.util.io.Readers;
+import consulo.util.io.StreamUtil;
+import consulo.util.lang.Comparing;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.project.DumbService;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.io.StreamUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.io.DataExternalizer;
-import com.intellij.util.io.IOUtil;
-import com.intellij.util.text.CharArrayUtil;
-import com.intellij.xml.util.XmlUtil;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -89,7 +81,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 		return resources;
 	}
 
-	public static List<IndexedRelevantResource<String, XsdNamespaceBuilder>> getAllResources(@Nullable final Module module,
+	public static List<IndexedRelevantResource<String, XsdNamespaceBuilder>> getAllResources(@Nullable final consulo.module.Module module,
 			@Nonnull Project project,
 			@Nullable NullableFunction<List<IndexedRelevantResource<String, XsdNamespaceBuilder>>, IndexedRelevantResource<String, XsdNamespaceBuilder>> chooser)
 	{
@@ -122,7 +114,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 				}
 				else
 				{
-					builder = XsdNamespaceBuilder.computeNamespace(CharArrayUtil.readerFromCharSequence(inputData.getContentAsText()));
+					builder = XsdNamespaceBuilder.computeNamespace(Readers.readerFromCharSequence(inputData.getContentAsText()));
 				}
 				final HashMap<String, XsdNamespaceBuilder> map = new HashMap<>(2);
 				String namespace = builder.getNamespace();
@@ -184,7 +176,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder>
 			@Nullable final String tagName,
 			@Nullable final String version,
 			@Nullable String schemaLocation,
-			@Nullable Module module,
+			@Nullable consulo.module.Module module,
 			@Nonnull Project project)
 	{
 

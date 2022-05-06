@@ -28,20 +28,21 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlHighlighterFactory;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.ui.components.JBScrollPane;
-import com.intellij.util.ArrayUtil;
+import consulo.application.ApplicationBundle;
+import consulo.codeEditor.EditorHighlighter;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.StringUtil;
+import consulo.language.psi.PsiFile;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.ui.ex.awt.JBScrollPane;
+import consulo.util.collection.ArrayUtil;
+import consulo.application.AllIcons;
+import consulo.colorScheme.EditorColorsScheme;
+import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
 
 public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 

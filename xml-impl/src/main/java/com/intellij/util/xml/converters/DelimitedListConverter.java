@@ -22,20 +22,20 @@
  */
 package com.intellij.util.xml.converters;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceBase;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.ResolvingConverter;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -142,11 +142,11 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
-                                            int start,
-                                            int end,
-                                            final ConvertContext context,
-                                            final GenericDomValue<List<T>> genericDomValue,
-                                            final boolean delimitersOnly) {
+                                                                 int start,
+                                                                 int end,
+                                                                 final ConvertContext context,
+                                                                 final GenericDomValue<List<T>> genericDomValue,
+                                                                 final boolean delimitersOnly) {
 
     return new MyPsiReference(element, new TextRange(start, end), context, genericDomValue, delimitersOnly);
   }
@@ -196,7 +196,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
     @Override
-    public PsiElement handleElementRename(final String newElementName) throws IncorrectOperationException {
+    public PsiElement handleElementRename(final String newElementName) throws consulo.language.util.IncorrectOperationException {
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
       PsiElement element = referenceHandleElementRename(this, newElementName, getSuperElementRenameFunction(ref));
       if (!ref.isNull()) {
@@ -207,7 +207,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
     @Override
-    public PsiElement bindToElement(@Nonnull final PsiElement element) throws IncorrectOperationException {
+    public PsiElement bindToElement(@Nonnull final PsiElement element) throws consulo.language.util.IncorrectOperationException {
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
       PsiElement bindElement =  referenceBindToElement(this, element, getSuperBindToElementFunction(ref), getSuperElementRenameFunction(ref));
       if (!ref.isNull()) {
@@ -228,7 +228,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
           try {
             return MyPsiReference.super.bindToElement(s);
           }
-          catch (IncorrectOperationException e) {
+          catch (consulo.language.util.IncorrectOperationException e) {
             ref.set(e);
           }
           return null;
@@ -236,13 +236,13 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       };
     }
 
-    private Function<String, PsiElement> getSuperElementRenameFunction(final Ref<IncorrectOperationException> ref) {
+    private Function<String, PsiElement> getSuperElementRenameFunction(final Ref<consulo.language.util.IncorrectOperationException> ref) {
       return new Function<String, PsiElement>() {
         public PsiElement fun(final String s) {
           try {
             return MyPsiReference.super.handleElementRename(s);
           }
-          catch (IncorrectOperationException e) {
+          catch (consulo.language.util.IncorrectOperationException e) {
             ref.set(e);
           }
           return null;
@@ -260,14 +260,14 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
   protected PsiElement referenceBindToElement(final PsiReference psiReference, final PsiElement element,
                                               final Function<PsiElement, PsiElement> superBindToElementFunction,
                                               final Function<String, PsiElement> superElementRenameFunction)
-      throws IncorrectOperationException {
+      throws consulo.language.util.IncorrectOperationException {
     return superBindToElementFunction.fun(element);
   }
 
   protected PsiElement referenceHandleElementRename(final PsiReference psiReference,
                                                     final String newName,
                                                     final Function<String, PsiElement> superHandleElementRename)
-      throws IncorrectOperationException {
+      throws consulo.language.util.IncorrectOperationException {
 
     return superHandleElementRename.fun(newName);
   }

@@ -15,22 +15,22 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.pom.Navigatable;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.meta.MetaRegistry;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.ChildRoleBase;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.navigation.Navigatable;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Mike
@@ -70,7 +70,7 @@ public class XmlElementDeclImpl extends XmlElementImpl implements XmlElementDecl
   }
 
   public PsiMetaData getMetaData() {
-    return MetaRegistry.getMeta(this);
+    return MetaDataService.getInstance().getMeta(this);
   }
 
   public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {

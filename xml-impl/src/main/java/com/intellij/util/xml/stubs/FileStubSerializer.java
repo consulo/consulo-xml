@@ -19,12 +19,12 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.stubs.IndexSink;
-import com.intellij.psi.stubs.ObjectStubSerializer;
-import com.intellij.psi.stubs.Stub;
-import com.intellij.psi.stubs.StubInputStream;
-import com.intellij.psi.stubs.StubOutputStream;
-import com.intellij.util.xml.XmlFileHeader;
+import consulo.language.psi.stub.IndexSink;
+import consulo.language.psi.stub.StubOutputStream;
+import consulo.util.xml.fastReader.XmlFileHeader;
+import consulo.language.psi.stub.ObjectStubSerializer;
+import consulo.language.psi.stub.Stub;
+import consulo.language.psi.stub.StubInputStream;
 
 /**
  * @author Dmitry Avdeev

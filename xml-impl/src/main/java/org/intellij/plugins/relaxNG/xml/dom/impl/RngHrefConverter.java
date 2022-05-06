@@ -16,11 +16,11 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.path.FileReferenceSet;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 import org.jetbrains.annotations.NonNls;

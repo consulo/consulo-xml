@@ -16,9 +16,9 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.ide.errorTreeView.NewErrorTreeViewPanel;
-import com.intellij.openapi.project.Project;
+import consulo.project.Project;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanel;
 import consulo.util.dataholder.Key;
 import org.intellij.plugins.relaxNG.validation.MessageViewHelper;
 import org.xml.sax.SAXParseException;

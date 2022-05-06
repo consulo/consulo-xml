@@ -21,12 +21,12 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.intellij.lexer.HtmlHighlightingLexer;
-import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.HighlighterColors;
+import consulo.codeEditor.HighlighterColors;
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.Lexer;
 import com.intellij.openapi.editor.XmlHighlighterColors;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.tree.IElementType;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.language.editor.highlight.SyntaxHighlighterBase;
 import com.intellij.psi.xml.XmlTokenType;
 
 public class HtmlFileHighlighter extends SyntaxHighlighterBase

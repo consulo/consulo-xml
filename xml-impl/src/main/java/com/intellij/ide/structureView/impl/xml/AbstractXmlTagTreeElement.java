@@ -17,13 +17,13 @@ package com.intellij.ide.structureView.impl.xml;
 
 import java.util.Collection;
 
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.language.editor.structureView.PsiTreeElementBase;
 import com.intellij.ide.structureView.xml.XmlStructureViewElementProvider;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ContainerUtil;
 
 public abstract class AbstractXmlTagTreeElement<T extends XmlElement> extends PsiTreeElementBase<T> {
   protected AbstractXmlTagTreeElement(final T psiElement) {

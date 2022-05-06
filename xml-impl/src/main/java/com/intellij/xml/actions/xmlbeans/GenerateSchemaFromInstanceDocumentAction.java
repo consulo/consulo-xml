@@ -22,23 +22,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import consulo.language.editor.PlatformDataKeys;
+import consulo.ui.ex.action.AnActionEvent;
 import org.apache.xmlbeans.impl.inst2xsd.Inst2Xsd;
 import org.jetbrains.annotations.NonNls;
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.ArrayUtil;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnAction;
+import consulo.language.editor.CommonDataKeys;
+import consulo.application.ApplicationManager;
+import consulo.document.FileDocumentManager;
+import consulo.fileEditor.FileEditorManager;
+import consulo.project.Project;
+import consulo.ui.ex.awt.Messages;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlBundle;
 
 /**

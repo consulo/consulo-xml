@@ -17,12 +17,12 @@ package com.intellij.javaee;
 
 import javax.annotation.Nonnull;
 
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.MultiMap;
+import consulo.project.Project;
+import consulo.util.collection.MultiMap;
 
 public abstract class ExternalResourceManagerEx extends ExternalResourceManager
 {

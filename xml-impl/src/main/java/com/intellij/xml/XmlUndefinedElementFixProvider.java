@@ -15,9 +15,9 @@
  */
 package com.intellij.xml;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.openapi.extensions.ExtensionPointName;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.inspection.LocalQuickFix;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import javax.annotation.Nonnull;

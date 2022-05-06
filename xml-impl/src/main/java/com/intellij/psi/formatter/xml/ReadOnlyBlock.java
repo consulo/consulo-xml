@@ -15,10 +15,10 @@
  */
 package com.intellij.psi.formatter.xml;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.formatting.Block;
-import com.intellij.formatting.Spacing;
-import com.intellij.psi.formatter.common.AbstractBlock;
+import consulo.language.ast.ASTNode;
+import consulo.language.codeStyle.Block;
+import consulo.language.codeStyle.Spacing;
+import consulo.language.codeStyle.AbstractBlock;
 import javax.annotation.Nonnull;
 
 import java.util.ArrayList;

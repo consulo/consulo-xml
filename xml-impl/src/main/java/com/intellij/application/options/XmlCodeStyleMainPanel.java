@@ -16,10 +16,11 @@
 package com.intellij.application.options;
 
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
+import consulo.component.extension.Extensions;
+import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
 import com.intellij.xml.arrangement.XmlArrangementPanel;
+import consulo.ide.impl.idea.application.options.TabbedLanguageCodeStylePanel;
+import consulo.language.codeStyle.CodeStyleSettings;
 
 /**
  * @author Rustam Vishnyakov

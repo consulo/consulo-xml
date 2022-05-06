@@ -15,8 +15,8 @@
  */
 package org.intellij.plugins.relaxNG.compact;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.util.NotNullFunction;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import javax.annotation.Nonnull;
 

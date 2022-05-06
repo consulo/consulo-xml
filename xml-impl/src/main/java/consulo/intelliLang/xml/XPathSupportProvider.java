@@ -1,8 +1,8 @@
 package consulo.intelliLang.xml;
 
-import com.intellij.lang.Language;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.psi.PsiFile;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.Language;
+import consulo.language.psi.PsiFile;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 

@@ -15,19 +15,19 @@
  */
 package com.intellij.util.xml.impl;
 
-import com.intellij.ide.presentation.Presentation;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.openapi.util.NullableLazyValue;
-import com.intellij.pom.references.PomService;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.SmartPsiElementPointer;
-import com.intellij.util.ReflectionUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomExtensionImpl;
+import consulo.ide.impl.idea.ide.presentation.Presentation;
+import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.ide.impl.idea.openapi.util.NullableLazyValue;
+import consulo.language.pom.PomService;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.SmartPsiElementPointer;
+import consulo.project.Project;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

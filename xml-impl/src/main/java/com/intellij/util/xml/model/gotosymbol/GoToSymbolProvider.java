@@ -24,18 +24,18 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import consulo.module.ModuleManager;
+import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.navigation.ChooseByNameContributor;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.NavigationItem;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.FakePsiElement;
+import consulo.ide.navigation.ChooseByNameContributor;
+import consulo.navigation.ItemPresentation;
+import consulo.navigation.NavigationItem;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.impl.psi.FakePsiElement;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.GenericDomValue;
@@ -99,8 +99,8 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
 
   @Nonnull
   protected static NavigationItem createNavigationItem(@Nonnull final PsiElement element,
-                                                       @Nonnull @NonNls final String text,
-                                                       @Nullable final Image icon) {
+                                                                          @Nonnull @NonNls final String text,
+                                                                          @Nullable final Image icon) {
     return new BaseNavigationItem(element, text, icon);
   }
 

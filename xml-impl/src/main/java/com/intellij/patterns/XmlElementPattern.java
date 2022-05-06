@@ -18,7 +18,10 @@ package com.intellij.patterns;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlEntityRef;
 import com.intellij.psi.xml.XmlText;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.InitialPatternCondition;
+import consulo.language.pattern.PsiElementPattern;
+import consulo.language.util.ProcessingContext;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

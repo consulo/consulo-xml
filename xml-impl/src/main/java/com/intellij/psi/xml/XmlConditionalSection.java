@@ -16,8 +16,8 @@
 
 package com.intellij.psi.xml;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 
 /**
  * @author maxim.mossienko

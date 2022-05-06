@@ -15,8 +15,8 @@
  */
 package com.intellij.psi.xml;
 
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.meta.PsiMetaOwner;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.meta.PsiMetaOwner;
 
 /**
  * @author Mike

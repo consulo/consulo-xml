@@ -15,17 +15,18 @@
  */
 package com.intellij.psi.impl.source.xml;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
 import com.intellij.psi.xml.XmlContentParticle;
 import com.intellij.psi.xml.XmlElementContentGroup;
 import com.intellij.psi.xml.XmlElementType;
 import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 
 /**

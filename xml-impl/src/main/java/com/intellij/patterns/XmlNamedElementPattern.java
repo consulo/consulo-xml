@@ -15,16 +15,16 @@
  */
 package com.intellij.patterns;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.PairProcessor;
-import com.intellij.util.ProcessingContext;
+import consulo.language.pattern.*;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.BiPredicate;
 
 /**
  * @author peter
@@ -67,8 +67,8 @@ public abstract class XmlNamedElementPattern<T extends XmlElement & PsiNamedElem
       @Override
       public boolean processValues(T t,
                                    ProcessingContext context,
-                                   PairProcessor<String, ProcessingContext> processor) {
-        return processor.process(getNamespace(t), context);
+                                   BiPredicate<String, ProcessingContext> processor) {
+        return processor.test(getNamespace(t), context);
       }
     });
   }
@@ -95,8 +95,8 @@ public abstract class XmlNamedElementPattern<T extends XmlElement & PsiNamedElem
         @Override
         public boolean processValues(XmlAttribute t,
                                      ProcessingContext context,
-                                     PairProcessor<String, ProcessingContext> processor) {
-          return processor.process(t.getValue(), context);
+                                     BiPredicate<String, ProcessingContext> processor) {
+          return processor.test(t.getValue(), context);
         }
       });
     }

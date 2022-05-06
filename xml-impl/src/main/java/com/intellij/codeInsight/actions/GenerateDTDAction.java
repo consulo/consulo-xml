@@ -15,29 +15,30 @@
  */
 package com.intellij.codeInsight.actions;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.Presentation;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlProcessingInstruction;
 import com.intellij.psi.xml.XmlProlog;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.util.XmlUtil;
+import consulo.codeEditor.Editor;
+import consulo.ide.impl.idea.codeInsight.actions.BaseCodeInsightAction;
+import consulo.language.editor.action.CodeInsightActionHandler;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.Presentation;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,8 +46,8 @@ import org.jetbrains.annotations.NonNls;
  * Date: 22.05.2003
  * Time: 13:46:54
  */
-public class GenerateDTDAction extends BaseCodeInsightAction{
-  private static final Logger LOG = Logger.getInstance("#com.intellij.codeInsight.actions.GenerateDTDAction");
+public class GenerateDTDAction extends BaseCodeInsightAction {
+  private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
   @Nonnull
   protected CodeInsightActionHandler getHandler(){
     return new CodeInsightActionHandler(){

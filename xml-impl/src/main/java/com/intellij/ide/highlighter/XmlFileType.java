@@ -15,14 +15,14 @@
  */
 package com.intellij.ide.highlighter;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.fileTypes.FileTypeWithPredefinedCharset;
+import consulo.util.lang.Pair;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
 import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.Charset;

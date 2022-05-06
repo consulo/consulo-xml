@@ -15,21 +15,22 @@
  */
 package com.intellij.util.xml.highlighting;
 
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.LocalQuickFixProvider;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiReference;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.logging.Logger;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiReference;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.ConvertContextFactory;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
+import consulo.language.editor.inspection.ProblemHighlightType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

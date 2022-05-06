@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.openapi.ui.ComboBox;
+import consulo.ui.ex.awt.ComboBox;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;

@@ -17,43 +17,48 @@ package com.intellij.psi.impl.source.xml;
 
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.pom.PomManager;
-import com.intellij.pom.PomModel;
-import com.intellij.pom.event.PomModelEvent;
-import com.intellij.pom.impl.PomTransactionBase;
 import com.intellij.pom.xml.XmlAspect;
 import com.intellij.pom.xml.impl.events.XmlDocumentChangedImpl;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.PsiCachedValueImpl;
-import com.intellij.psi.impl.meta.MetaRegistry;
+import com.intellij.psi.XmlElementVisitor;
+import com.intellij.psi.XmlRecursiveElementVisitor;
 import com.intellij.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
-import com.intellij.psi.impl.source.tree.CompositePsiElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.meta.PsiMetaOwner;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.concurrency.AtomicFieldUpdater;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlNSDescriptorSequence;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.component.ProcessCanceledException;
+import consulo.ide.impl.idea.util.concurrency.AtomicFieldUpdater;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.TreeElement;
+import consulo.language.impl.internal.pom.PomTransactionBase;
+import consulo.language.impl.psi.CompositePsiElement;
+import consulo.language.pom.PomManager;
+import consulo.language.pom.PomModel;
+import consulo.language.pom.event.PomModelEvent;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.meta.MetaDataService;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.util.LanguageCachedValueUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.primitive.objects.ObjectIntMap;
 import consulo.util.collection.primitive.objects.ObjectMaps;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -205,7 +210,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 		CachedValue<XmlNSDescriptor> cachedValue = defaultDescriptorsCache.get(namespace);
 		if(cachedValue == null)
 		{
-			defaultDescriptorsCache.put(namespace, cachedValue = new PsiCachedValueImpl<>(getManager(), () ->
+			defaultDescriptorsCache.put(namespace, cachedValue = CachedValuesManager.getManager(getProject()).createCachedValue(() ->
 			{
 				final XmlNSDescriptor defaultNSDescriptorInner = getDefaultNSDescriptorInner(namespace, strict);
 
@@ -352,7 +357,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 
 	private static XmlNSDescriptor getCachedHtmlNsDescriptor(final XmlFile descriptorFile)
 	{
-		return CachedValuesManager.getCachedValue(descriptorFile, () ->
+		return LanguageCachedValueUtil.getCachedValue(descriptorFile, () ->
 		{
 			final XmlDocument document = descriptorFile.getDocument();
 			if(document == null)
@@ -488,7 +493,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 	@Override
 	public PsiMetaData getMetaData()
 	{
-		return MetaRegistry.getMeta(this);
+		return MetaDataService.getInstance().getMeta(this);
 	}
 
 	@SuppressWarnings({"HardCodedStringLiteral"})
@@ -548,7 +553,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 				}
 			});
 		}
-		catch(IncorrectOperationException ignored)
+		catch(consulo.language.util.IncorrectOperationException ignored)
 		{
 		}
 		return holder[0];
@@ -571,7 +576,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument
 				}
 			});
 		}
-		catch(IncorrectOperationException ignored)
+		catch(consulo.language.util.IncorrectOperationException ignored)
 		{
 		}
 	}

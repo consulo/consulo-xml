@@ -17,13 +17,13 @@ package com.intellij.psi.impl.source.tree.injected;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.CodeDocumentationAwareCommenter;
-import com.intellij.lang.Commenter;
-import com.intellij.lang.LanguageCommenters;
-import com.intellij.openapi.util.ProperTextRange;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.LiteralTextEscaper;
+import consulo.document.util.ProperTextRange;
+import consulo.language.Commenter;
+import consulo.document.util.TextRange;
+import consulo.language.psi.LiteralTextEscaper;
 import com.intellij.psi.impl.source.xml.XmlCommentImpl;
+import consulo.language.CodeDocumentationAwareCommenter;
+import consulo.language.LanguageCommenters;
 
 /**
  * @author spleaner

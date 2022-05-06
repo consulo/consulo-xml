@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.openapi.util.Pair;
+import consulo.util.lang.Pair;
 import org.kohsuke.rngom.digested.*;
 
 import javax.xml.namespace.QName;

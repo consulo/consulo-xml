@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.util;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import javax.annotation.Nonnull;
 

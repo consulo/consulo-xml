@@ -17,15 +17,15 @@ package com.intellij.openapi.options.colors.pages;
 
 import com.intellij.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
-import com.intellij.openapi.application.ApplicationNamesInfo;
+import consulo.application.impl.internal.ApplicationNamesInfo;
 import com.intellij.openapi.editor.XmlHighlighterColors;
-import com.intellij.openapi.editor.colors.EditorColorKey;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.options.OptionsBundle;
-import com.intellij.openapi.options.colors.AttributesDescriptor;
-import com.intellij.openapi.options.colors.ColorDescriptor;
-import com.intellij.openapi.options.colors.ColorSettingsPage;
+import consulo.configurable.OptionsBundle;
+import consulo.colorScheme.setting.AttributesDescriptor;
+import consulo.colorScheme.setting.ColorDescriptor;
+import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
+import consulo.colorScheme.EditorColorKey;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.language.editor.highlight.SyntaxHighlighter;
 
 import javax.annotation.Nonnull;
 import java.util.Map;

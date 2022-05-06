@@ -15,7 +15,7 @@
  */
 package com.intellij.util.xml.stubs;
 
-import com.intellij.psi.stubs.SerializationManager;
+import consulo.language.psi.stub.SerializationManager;
 
 /**
  * @author Dmitry Avdeev

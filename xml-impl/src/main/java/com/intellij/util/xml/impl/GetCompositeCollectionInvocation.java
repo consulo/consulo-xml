@@ -16,7 +16,7 @@
 package com.intellij.util.xml.impl;
 
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 
 import java.util.*;

@@ -2,8 +2,8 @@ package com.intellij.ide.highlighter;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
+import consulo.language.editor.highlight.SingleLazyInstanceSyntaxHighlighterFactory;
+import consulo.language.editor.highlight.SyntaxHighlighter;
 
 /**
  * @author VISTALL

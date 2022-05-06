@@ -17,7 +17,7 @@
 package com.intellij.util.xml.ui;
 
 import consulo.disposer.Disposer;
-import com.intellij.ui.JBColor;
+import consulo.ui.ex.JBColor;
 import com.intellij.util.xml.DomElement;
 
 import javax.swing.*;

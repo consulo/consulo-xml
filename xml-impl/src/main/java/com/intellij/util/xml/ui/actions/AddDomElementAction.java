@@ -25,28 +25,28 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.JComponent;
 
-import com.intellij.ide.TypePresentationService;
-import com.intellij.openapi.actionSystem.ActionButtonComponent;
-import com.intellij.openapi.actionSystem.ActionGroup;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.AnSeparator;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
-import com.intellij.openapi.ui.popup.ListPopup;
-import com.intellij.ui.CommonActionsPanel;
-import com.intellij.util.ReflectionUtil;
+import consulo.dataContext.DataContext;
+import consulo.project.Project;
+import consulo.ui.ex.action.ActionGroup;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.language.editor.CommonDataKeys;
+import consulo.ui.ex.action.DefaultActionGroup;
+import consulo.application.ApplicationBundle;
+import consulo.ui.ex.popup.JBPopupFactory;
+import consulo.ui.ex.awt.CommonActionsPanel;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.ElementPresentationManager;
 import com.intellij.util.xml.TypeChooser;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.ui.DomCollectionControl;
+import consulo.application.util.TypePresentationService;
+import consulo.ui.ex.action.AnSeparator;
+import consulo.ui.ex.internal.ActionButtonComponent;
+import consulo.ui.ex.popup.ListPopup;
 import consulo.ui.image.Image;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 /**
  * User: Sergey.Vasiliev

@@ -15,11 +15,13 @@
  */
 package org.intellij.plugins.intelliLang.inject.config.ui;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.ui.EditorTextField;
-import com.intellij.ui.LanguageTextField;
+import consulo.ide.impl.intelliLang.inject.config.ui.AbstractInjectionPanel;
+import consulo.ide.impl.intelliLang.inject.config.ui.AdvancedPanel;
 import consulo.intelliLang.xml.XPathSupportProvider;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.language.editor.ui.awt.LanguageTextField;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
 import org.intellij.plugins.intelliLang.inject.config.AbstractTagInjection;
 
 import javax.swing.*;

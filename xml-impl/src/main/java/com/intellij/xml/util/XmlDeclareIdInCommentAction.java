@@ -18,19 +18,22 @@ package com.intellij.xml.util;
 import javax.annotation.Nonnull;
 
 import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.Commenter;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageCommenters;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.application.Result;
+import consulo.language.Commenter;
+import consulo.language.Language;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.LanguageCommenters;
 import com.intellij.psi.xml.XmlTag;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nullable;
 
@@ -38,7 +41,7 @@ import javax.annotation.Nullable;
  * @author spleaner
  */
 public class XmlDeclareIdInCommentAction implements LocalQuickFix {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.XmlDeclareIdInCommentAction");
+  private static final Logger LOG = Logger.getInstance(XmlDeclareIdInCommentAction.class);
 
   private final String myId;
 

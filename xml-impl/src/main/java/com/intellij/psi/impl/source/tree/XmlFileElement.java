@@ -15,15 +15,16 @@
  */
 package com.intellij.psi.impl.source.tree;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.tree.ChildRoleBase;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlChildRole;
 import com.intellij.psi.xml.XmlElementType;
+import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.impl.ast.FileElement;
+import consulo.logging.Logger;
 
 public class XmlFileElement extends FileElement implements XmlElementType {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.psi.impl.source.tree.XmlFileElement");
+  private static final Logger LOG = Logger.getInstance(XmlFileElement.class);
 
   public XmlFileElement(CharSequence text) {
     super(XML_FILE, text);
