@@ -15,78 +15,73 @@
  */
 package consulo.xml.javaee;
 
-import javax.annotation.Nonnull;
-
+import consulo.project.Project;
+import consulo.util.collection.MultiMap;
 import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import consulo.project.Project;
-import consulo.util.collection.MultiMap;
 
-public abstract class ExternalResourceManagerEx extends ExternalResourceManager
-{
-	@NonNls
-	public static final String STANDARD_SCHEMAS = "/standardSchemas";
+public abstract class ExternalResourceManagerEx extends ExternalResourceManager {
+  public static final String STANDARD_SCHEMAS = "/standardSchemas/";
 
-	public enum XMLSchemaVersion
-	{
-		XMLSchema_1_0, XMLSchema_1_1
-	}
+  public enum XMLSchemaVersion {
+    XMLSchema_1_0, XMLSchema_1_1
+  }
 
-	public static ExternalResourceManagerEx getInstanceEx()
-	{
-		return (ExternalResourceManagerEx) getInstance();
-	}
+  public static ExternalResourceManagerEx getInstanceEx() {
+    return (ExternalResourceManagerEx) getInstance();
+  }
 
-	public abstract void removeResource(String url, @Nonnull Project project);
+  public abstract void removeResource(String url, @Nonnull Project project);
 
-	public abstract void addResource(@NonNls String url, @NonNls String location, @Nonnull Project project);
+  public abstract void addResource(@NonNls String url, @NonNls String location, @Nonnull Project project);
 
-	public abstract String[] getAvailableUrls();
+  public abstract String[] getAvailableUrls();
 
-	public abstract String[] getAvailableUrls(Project project);
+  public abstract String[] getAvailableUrls(Project project);
 
-	public abstract void clearAllResources();
+  public abstract void clearAllResources();
 
-	public abstract void clearAllResources(Project project);
+  public abstract void clearAllResources(Project project);
 
-	public abstract void addIgnoredResource(@Nonnull String url);
+  public abstract void addIgnoredResource(@Nonnull String url);
 
-	public abstract void removeIgnoredResource(@Nonnull String url);
+  public abstract void removeIgnoredResource(@Nonnull String url);
 
-	public abstract boolean isIgnoredResource(@Nonnull String url);
+  public abstract boolean isIgnoredResource(@Nonnull String url);
 
-	public abstract String[] getIgnoredResources();
+  public abstract String[] getIgnoredResources();
 
-	public abstract void addExternalResourceListener(ExternalResourceListener listener);
+  public abstract void addExternalResourceListener(ExternalResourceListener listener);
 
-	public abstract void removeExternalResourceListener(ExternalResourceListener listener);
+  public abstract void removeExternalResourceListener(ExternalResourceListener listener);
 
-	public abstract boolean isUserResource(VirtualFile file);
+  public abstract boolean isUserResource(VirtualFile file);
 
-	public abstract boolean isStandardResource(VirtualFile file);
+  public abstract boolean isStandardResource(VirtualFile file);
 
-	@Nullable
-	public abstract String getUserResource(Project project, String url, String version);
+  @Nullable
+  public abstract String getUserResource(Project project, String url, String version);
 
-	@Nullable
-	public abstract String getStdResource(@Nonnull String url, @Nullable String version);
+  @Nullable
+  public abstract String getStdResource(@Nonnull String url, @Nullable String version);
 
-	@Nonnull
-	public abstract String getDefaultHtmlDoctype(@Nonnull Project project);
+  @Nonnull
+  public abstract String getDefaultHtmlDoctype(@Nonnull Project project);
 
-	public abstract void setDefaultHtmlDoctype(@Nonnull String defaultHtmlDoctype, @Nonnull Project project);
+  public abstract void setDefaultHtmlDoctype(@Nonnull String defaultHtmlDoctype, @Nonnull Project project);
 
-	public abstract XMLSchemaVersion getXmlSchemaVersion(@Nonnull Project project);
+  public abstract XMLSchemaVersion getXmlSchemaVersion(@Nonnull Project project);
 
-	public abstract void setXmlSchemaVersion(XMLSchemaVersion version, @Nonnull Project project);
+  public abstract void setXmlSchemaVersion(XMLSchemaVersion version, @Nonnull Project project);
 
-	public abstract String getCatalogPropertiesFile();
+  public abstract String getCatalogPropertiesFile();
 
-	public abstract void setCatalogPropertiesFile(@Nullable String filePath);
+  public abstract void setCatalogPropertiesFile(@Nullable String filePath);
 
-	public abstract long getModificationCount(@Nonnull Project project);
+  public abstract long getModificationCount(@Nonnull Project project);
 
-	public abstract MultiMap<String, String> getUrlsByNamespace(Project project);
+  public abstract MultiMap<String, String> getUrlsByNamespace(Project project);
 }

@@ -92,9 +92,9 @@
 
 		<!--runtime dependencies just copy from other projects-->
 		<dependency>
-			<groupId>xerces</groupId>
+			<groupId>consulo.internal</groupId>
 			<artifactId>xercesImpl</artifactId>
-			<version>2.11.0</version>
+			<version>2.11.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>xml-apis</groupId>
