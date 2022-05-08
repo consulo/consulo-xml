@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.config;
 
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.configurable.ConfigurationException;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtil;

@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.ide.impl.idea.util.Function;
 import consulo.util.collection.ContainerUtil;
 

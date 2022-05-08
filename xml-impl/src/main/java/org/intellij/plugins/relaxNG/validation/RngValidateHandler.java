@@ -12,7 +12,7 @@ import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.project.ui.wm.WindowManager;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.actions.validate.ValidateXmlHandler;
 import com.thaiopensource.util.PropertyMapBuilder;

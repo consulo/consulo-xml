@@ -15,21 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.javaee.UriUtil;
-import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.XmlRecursiveElementVisitor;
-import com.intellij.psi.filters.XmlTagFilter;
-import com.intellij.psi.impl.source.html.HtmlDocumentImpl;
-import com.intellij.psi.impl.source.xml.XmlEntityCache;
-import com.intellij.psi.impl.source.xml.XmlEntityRefImpl;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.*;
 import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
 import com.intellij.xml.impl.schema.TypeDescriptor;
@@ -72,6 +57,21 @@ import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.Validator;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManagerEx;
+import consulo.xml.javaee.UriUtil;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
+import consulo.xml.psi.impl.source.xml.XmlEntityCache;
+import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

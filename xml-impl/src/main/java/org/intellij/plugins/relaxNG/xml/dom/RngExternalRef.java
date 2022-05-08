@@ -21,12 +21,12 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.xml.Attribute;
-import com.intellij.util.xml.Convert;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.Required;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.Attribute;
+import consulo.xml.util.xml.Convert;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngHrefConverter;
 

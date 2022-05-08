@@ -16,9 +16,9 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlProlog;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlNSDescriptor;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;

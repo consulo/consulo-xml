@@ -21,15 +21,15 @@ import consulo.util.collection.ContainerUtil;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import javax.annotation.Nonnull;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.include.FileIncludeManager;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.xml.DomManager;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.DomManager;
 
 /*
 * Created by IntelliJ IDEA.

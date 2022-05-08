@@ -24,17 +24,17 @@ import consulo.ui.ex.action.AnAction;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.validation.RngValidateHandler;
-import com.intellij.ide.highlighter.DTDFileType;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.DTDFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.language.editor.CommonDataKeys;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.project.Project;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 /*
 * Created by IntelliJ IDEA.

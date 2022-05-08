@@ -15,9 +15,6 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.impl.source.xml.XmlContentDFA;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
@@ -43,8 +40,8 @@ import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
 import consulo.language.editor.template.TemplateBuilder;
 import consulo.language.editor.template.TemplateBuilderFactory;
 import consulo.language.editor.template.macro.MacroCallNode;
+import consulo.language.impl.ast.Factory;
 import consulo.language.impl.ast.LeafElement;
-import consulo.language.impl.internal.ast.Factory;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
@@ -55,6 +52,9 @@ import consulo.ui.ex.awt.JBList;
 import consulo.ui.ex.popup.JBPopup;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.impl.source.xml.XmlContentDFA;
+import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

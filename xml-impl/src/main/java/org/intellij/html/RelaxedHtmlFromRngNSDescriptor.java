@@ -15,21 +15,20 @@
  */
 package org.intellij.html;
 
-import java.util.Arrays;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.util.collection.ArrayUtil;
-import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 import com.intellij.html.RelaxedHtmlNSDescriptor;
-import consulo.logging.Logger;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlTag;
+import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
 
 /**
  * @author Eugene.Kudelevsky

@@ -1,7 +1,7 @@
 package com.intellij.xml.util;
 
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.template.TemplateLanguageUtil;
 

@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.index;
 
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.util.XmlUtil;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.index.io.DataIndexer;

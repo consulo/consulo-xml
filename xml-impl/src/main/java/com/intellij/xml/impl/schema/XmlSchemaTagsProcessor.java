@@ -20,9 +20,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.psi.PsiReference;
 import consulo.util.collection.ArrayUtil;
 

@@ -17,7 +17,7 @@
 package org.intellij.plugins.relaxNG.inspections;
 
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import com.intellij.util.xml.highlighting.BasicDomElementsInspection;
+import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;

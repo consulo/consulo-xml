@@ -16,7 +16,7 @@
 package com.intellij.xml.actions.xmlbeans;
 
 
-import com.intellij.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManager;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
@@ -25,8 +25,8 @@ import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiManager;
 import consulo.language.template.TemplateLanguageFileViewProvider;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import consulo.ui.ex.awt.DialogWrapper;

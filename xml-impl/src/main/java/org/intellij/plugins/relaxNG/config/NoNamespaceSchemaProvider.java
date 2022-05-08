@@ -23,10 +23,10 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.project.Project;
 import consulo.language.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlSchemaProvider;
 
 /*

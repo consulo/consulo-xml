@@ -15,20 +15,21 @@
  */
 package com.intellij.xml.actions;
 
+import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.intention.IntentionAction;
-import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.lang.xml.XMLLanguage;
-import consulo.project.Project;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.*;
 import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlBundle;
+import consulo.project.Project;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.*;
+
 import javax.annotation.Nonnull;
 
 /**

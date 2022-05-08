@@ -35,7 +35,7 @@
 			<url>https://maven.consulo.io/repository/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
-				<updatePolicy>interval:60</updatePolicy>
+				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
 	</repositories>
@@ -129,14 +129,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.thaiopensource</groupId>
-			<artifactId>jing</artifactId>
-			<version>20091111</version>
-		</dependency>
-		<dependency>
-			<groupId>com.thaiopensource</groupId>
-			<artifactId>trang</artifactId>
-			<version>20091111</version>
+			<groupId>consulo.internal</groupId>
+			<artifactId>jingtrang</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>

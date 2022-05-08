@@ -19,8 +19,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.intellij.html.RelaxedHtmlNSDescriptor;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;

@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.GenericAttributeValue;
 import javax.annotation.Nonnull;
 
 /**

@@ -1,9 +1,9 @@
 package com.intellij.xml;
 
 import javax.annotation.Nullable;
-import com.intellij.ide.highlighter.HtmlFileType;
+import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.language.psi.PsiFile;
-import com.intellij.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlDocument;
 import com.intellij.xml.util.HtmlUtil;
 
 /**

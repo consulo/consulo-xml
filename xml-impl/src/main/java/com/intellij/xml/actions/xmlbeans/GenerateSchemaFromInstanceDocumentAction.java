@@ -26,7 +26,7 @@ import consulo.language.editor.PlatformDataKeys;
 import consulo.ui.ex.action.AnActionEvent;
 import org.apache.xmlbeans.impl.inst2xsd.Inst2Xsd;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManager;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.language.editor.CommonDataKeys;

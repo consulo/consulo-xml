@@ -16,17 +16,17 @@
 
 package org.intellij.plugins.relaxNG;
 
-import com.intellij.javaee.ResourceRegistrar;
-import com.intellij.javaee.StandardResourceProvider;
+import consulo.xml.javaee.ResourceRegistrar;
+import consulo.xml.javaee.StandardResourceProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.filter.AndFilter;
 import consulo.language.psi.filter.ClassFilter;
-import com.intellij.psi.filters.position.NamespaceFilter;
+import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.language.psi.meta.MetaDataRegistrar;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomManager;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomManager;
 import consulo.language.psi.filter.ElementFilter;
 import jakarta.inject.Singleton;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;

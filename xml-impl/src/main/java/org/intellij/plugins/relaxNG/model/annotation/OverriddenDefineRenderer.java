@@ -33,7 +33,7 @@ import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.codeEditor.markup.GutterIconRenderer;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.util.collection.SmartList;
 import consulo.ui.image.Image;
 

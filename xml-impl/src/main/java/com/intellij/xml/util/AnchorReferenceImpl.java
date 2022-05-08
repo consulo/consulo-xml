@@ -15,21 +15,21 @@
  */
 package com.intellij.xml.util;
 
-import consulo.application.util.CachedValue;
-import consulo.application.util.CachedValueProvider;
-import consulo.document.util.TextRange;
-import consulo.language.editor.completion.lookup.LookupElementBuilder;
-import consulo.language.psi.*;
-import consulo.language.editor.completion.lookup.LookupElement;
-import consulo.language.psi.path.FileReference;
-import consulo.application.util.CachedValuesManager;
-import com.intellij.psi.xml.*;
-import consulo.util.collection.ArrayUtil;
-import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlExtension;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.document.util.TextRange;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.*;
+import consulo.language.psi.path.FileReference;
 import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

@@ -15,13 +15,13 @@
  */
 package com.intellij.xml.util;
 
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
-import static com.intellij.patterns.XmlPatterns.xmlTag;
+import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
+import static consulo.xml.patterns.XmlPatterns.xmlAttributeValue;
+import static consulo.xml.patterns.XmlPatterns.xmlTag;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
+import consulo.xml.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
 import com.intellij.html.impl.providers.MicrodataReferenceProvider;
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.ide.impl.psi.impl.source.resolve.reference.ArbitraryPlaceUrlReferenceProvider;
@@ -32,22 +32,22 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceRegistrar;
 import consulo.language.psi.filter.AndFilter;
 import consulo.language.psi.filter.ScopeFilter;
-import com.intellij.psi.filters.XmlTagFilter;
-import com.intellij.psi.filters.XmlTextFilter;
-import com.intellij.psi.filters.position.NamespaceFilter;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.filters.XmlTextFilter;
+import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.language.psi.filter.position.ParentElementFilter;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.DtdReferencesProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.URIReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.XmlBaseReferenceProvider;
-import com.intellij.psi.xml.XmlAttlistDecl;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlElementContentSpec;
-import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.psi.xml.XmlEntityRef;
-import com.intellij.psi.xml.XmlProcessingInstruction;
-import com.intellij.psi.xml.XmlToken;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DtdReferencesProvider;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URIReferenceProvider;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.XmlBaseReferenceProvider;
+import consulo.xml.psi.xml.XmlAttlistDecl;
+import consulo.xml.psi.xml.XmlDoctype;
+import consulo.xml.psi.xml.XmlElementContentSpec;
+import consulo.xml.psi.xml.XmlElementDecl;
+import consulo.xml.psi.xml.XmlEntityRef;
+import consulo.xml.psi.xml.XmlProcessingInstruction;
+import consulo.xml.psi.xml.XmlToken;
 import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.psi.filter.ClassFilter;

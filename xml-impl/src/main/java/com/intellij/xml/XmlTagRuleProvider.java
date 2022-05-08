@@ -18,7 +18,7 @@ package com.intellij.xml;
 import javax.annotation.Nonnull;
 
 import consulo.component.extension.ExtensionPointName;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.inspection.ProblemsHolder;
 
 public abstract class XmlTagRuleProvider {

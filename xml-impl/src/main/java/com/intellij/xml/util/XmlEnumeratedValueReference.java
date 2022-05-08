@@ -15,11 +15,11 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import consulo.document.util.TextRange;

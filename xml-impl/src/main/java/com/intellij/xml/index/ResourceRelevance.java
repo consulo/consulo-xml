@@ -16,8 +16,8 @@
 package com.intellij.xml.index;
 
 import javax.annotation.Nullable;
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.javaee.ExternalResourceManagerEx;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.module.content.ProjectFileIndex;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.scope.GlobalSearchScope;

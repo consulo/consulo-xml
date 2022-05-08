@@ -16,8 +16,8 @@
 package com.intellij.xml;
 
 import consulo.language.psi.meta.PsiMetaData;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 

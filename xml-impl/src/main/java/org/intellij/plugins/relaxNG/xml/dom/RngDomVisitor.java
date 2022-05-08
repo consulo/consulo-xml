@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementVisitor;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomElementVisitor;
 
 /**
  * Created by IntelliJ IDEA.

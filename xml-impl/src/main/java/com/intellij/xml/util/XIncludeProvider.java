@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.language.psi.include.FileIncludeInfo;
 import consulo.language.psi.include.FileIncludeProvider;
 import consulo.language.psi.stub.FileContent;

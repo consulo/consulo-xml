@@ -17,8 +17,8 @@ package com.intellij.xml;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.DefaultXmlSuppressionProvider;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.xml.codeInspection.DefaultXmlSuppressionProvider;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.psi.PsiComment;
 import consulo.ide.impl.idea.codeInsight.daemon.ChangeLocalityDetector;
 import consulo.language.psi.PsiElement;

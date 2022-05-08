@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.names;
 
-import com.intellij.util.xml.Required;
+import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 import javax.annotation.Nonnull;
 

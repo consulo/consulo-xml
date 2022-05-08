@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.language.ast.ASTNode;
 import consulo.application.ApplicationManager;
 import consulo.logging.Logger;
@@ -51,11 +51,11 @@ import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiRecursiveElementVisitor;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * Created by IntelliJ IDEA.

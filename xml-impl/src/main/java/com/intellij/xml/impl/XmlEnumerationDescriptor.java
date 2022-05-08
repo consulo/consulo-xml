@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.util.lang.Comparing;
-import com.intellij.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlElement;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
 import consulo.util.lang.StringUtil;
 

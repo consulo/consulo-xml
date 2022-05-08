@@ -19,8 +19,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.*;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.*;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;

@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author Mike

@@ -22,15 +22,15 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.lexer.XmlLexer;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagValue;
-import com.intellij.psi.xml.XmlTokenType;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.lexer.XmlLexer;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTagValue;
+import consulo.xml.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;

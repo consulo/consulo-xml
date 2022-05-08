@@ -15,23 +15,19 @@
  */
 package com.intellij.xml.impl.schema;
 
-import consulo.language.psi.PsiFile;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
-import consulo.language.psi.meta.PsiMetaData;
-import consulo.application.util.CachedValue;
-import consulo.application.util.CachedValueProvider;
-import consulo.application.util.CachedValuesManager;
-import com.intellij.psi.xml.*;
-import consulo.application.util.ConcurrentFactoryMap;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlUtil;
-import consulo.application.util.FieldCache;
+import consulo.application.util.*;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.meta.PsiMetaData;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Comparing;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;

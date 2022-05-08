@@ -24,7 +24,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncNsDecl;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
 import consulo.language.psi.filter.AndFilter;
 import consulo.language.psi.filter.ClassFilter;
-import com.intellij.psi.filters.XmlTextFilter;
+import consulo.xml.psi.filters.XmlTextFilter;
 import consulo.language.psi.meta.MetaDataContributor;
 import consulo.util.lang.reflect.ReflectionUtil;
 import com.intellij.xml.util.XmlUtil;

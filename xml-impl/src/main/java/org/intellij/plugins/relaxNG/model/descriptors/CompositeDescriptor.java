@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import consulo.util.collection.ContainerUtil;

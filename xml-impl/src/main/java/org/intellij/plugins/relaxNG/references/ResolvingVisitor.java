@@ -16,14 +16,14 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.patterns.XmlAttributeValuePattern;
-import com.intellij.patterns.XmlNamedElementPattern;
+import consulo.xml.patterns.XmlAttributeValuePattern;
+import consulo.xml.patterns.XmlNamedElementPattern;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.resolve.PsiElementProcessor;

@@ -15,12 +15,12 @@
  */
 package com.intellij.xml.impl;
 
-import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.ide.highlighter.XmlLikeFileType;
-import com.intellij.psi.tree.xml.IXmlLeafElementType;
-import com.intellij.psi.xml.XmlTokenType;
+import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlLikeFileType;
+import consulo.xml.psi.tree.xml.IXmlLeafElementType;
+import consulo.xml.psi.xml.XmlTokenType;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.language.BracePair;

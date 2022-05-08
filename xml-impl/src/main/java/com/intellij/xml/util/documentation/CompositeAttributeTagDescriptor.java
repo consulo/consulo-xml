@@ -18,7 +18,7 @@ package com.intellij.xml.util.documentation;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author maxim

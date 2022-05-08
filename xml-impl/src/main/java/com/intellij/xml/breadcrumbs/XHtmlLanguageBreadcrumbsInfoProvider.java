@@ -2,7 +2,7 @@ package com.intellij.xml.breadcrumbs;
 
 import javax.annotation.Nonnull;
 import consulo.language.Language;
-import com.intellij.lang.xhtml.XHTMLLanguage;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
 
 /**
  * @author VISTALL

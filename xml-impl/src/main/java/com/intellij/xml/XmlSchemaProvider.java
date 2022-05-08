@@ -24,7 +24,7 @@ import consulo.project.DumbService;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.language.psi.PsiFile;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.Extensions;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;

@@ -19,9 +19,9 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.Required;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import javax.annotation.Nonnull;
 

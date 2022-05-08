@@ -18,9 +18,9 @@ package com.intellij.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.psi.meta.PsiMetaData;
 
 /**

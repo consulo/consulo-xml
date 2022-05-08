@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import com.intellij.ide.highlighter.DTDFileType;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.DTDFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.fileChooser.FileChooserDescriptorFactory;
 import consulo.language.codeStyle.CodeStyleSettings;

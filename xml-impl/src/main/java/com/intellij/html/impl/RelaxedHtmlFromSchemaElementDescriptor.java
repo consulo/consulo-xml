@@ -17,8 +17,8 @@ package com.intellij.html.impl;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;

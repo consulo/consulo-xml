@@ -1,9 +1,9 @@
 package com.intellij.xml.breadcrumbs;
 
 import consulo.language.Language;
-import com.intellij.lang.html.HTMLLanguage;
+import consulo.xml.lang.html.HTMLLanguage;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
 
 import javax.annotation.Nonnull;

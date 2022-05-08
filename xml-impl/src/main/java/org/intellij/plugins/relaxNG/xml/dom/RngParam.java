@@ -21,8 +21,8 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.Required;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.Required;
 
 /**
  * http://relaxng.org/ns/structure/1.0:paramElemType interface.

@@ -15,30 +15,29 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.lang.documentation.DocumentationUtil;
-import consulo.language.psi.PsiElement;
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import consulo.language.psi.meta.PsiMetaData;
-import consulo.language.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.xml.lang.documentation.DocumentationUtil;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.xml.*;
+import consulo.xml.util.ColorSampleLookupValue;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 /**
  * @author maxim

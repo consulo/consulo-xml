@@ -18,8 +18,8 @@ package com.intellij.xml;
 import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.inspection.LocalQuickFix;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

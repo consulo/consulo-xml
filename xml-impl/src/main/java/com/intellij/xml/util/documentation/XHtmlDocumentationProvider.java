@@ -16,8 +16,8 @@
 package com.intellij.xml.util.documentation;
 
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlText;
 import consulo.language.psi.PsiWhiteSpace;
 
 /**

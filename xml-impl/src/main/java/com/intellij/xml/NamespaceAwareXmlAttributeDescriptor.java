@@ -3,7 +3,7 @@ package com.intellij.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author Eugene.Kudelevsky

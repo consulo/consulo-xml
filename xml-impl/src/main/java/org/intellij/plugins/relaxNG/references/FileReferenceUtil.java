@@ -30,7 +30,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.intellij.patterns.XmlPatterns.*;
+import static consulo.xml.patterns.XmlPatterns.*;
 
 /**
  * Created by IntelliJ IDEA.

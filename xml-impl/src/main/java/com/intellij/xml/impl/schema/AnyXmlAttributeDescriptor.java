@@ -25,7 +25,7 @@
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlElement;
 import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.util.collection.ArrayUtil;
 

@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManager;
 import com.intellij.xml.XmlBundle;
 import consulo.application.util.SystemInfo;
 import consulo.fileChooser.FileChooserDescriptor;

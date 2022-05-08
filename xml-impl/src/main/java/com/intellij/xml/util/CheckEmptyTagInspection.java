@@ -16,26 +16,27 @@
 
 package com.intellij.xml.util;
 
-import com.intellij.codeInspection.*;
-import consulo.language.ast.ASTNode;
+import com.intellij.xml.XmlBundle;
 import consulo.language.Language;
-import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.language.ast.ASTNode;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlBundle;
-import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

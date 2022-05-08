@@ -15,12 +15,12 @@
  */
 package com.intellij.xml;
 
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.impl.source.xml.TagNameReference;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.impl.source.xml.TagNameReference;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.util.CachedValueProvider;
 import consulo.component.extension.ExtensionPointName;

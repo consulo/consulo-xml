@@ -16,18 +16,18 @@
 
 package com.intellij.xml.util;
 
-import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import consulo.language.editor.inspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
+import com.intellij.xml.XmlBundle;
 import consulo.application.progress.ProgressManager;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.*;
-import com.intellij.xml.XmlBundle;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;

@@ -15,22 +15,22 @@
  */
 package com.intellij.html.index;
 
-import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.ide.highlighter.XHtmlFileType;
+import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.index.io.DataIndexer;
 import consulo.index.io.ID;
 import consulo.language.Language;
-import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.lexer.HtmlHighlightingLexer;
-import com.intellij.lexer.XHtmlHighlightingLexer;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.lexer.HtmlHighlightingLexer;
+import consulo.xml.lexer.XHtmlHighlightingLexer;
 import consulo.language.psi.stub.FileBasedIndex;
 import consulo.language.psi.stub.FileContent;
 import consulo.language.psi.stub.ScalarIndexExtension;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.ide.impl.idea.openapi.vfs.ex.temp.TempFileSystem;
 import consulo.language.ast.IElementType;
-import com.intellij.psi.xml.XmlTokenType;
+import consulo.xml.psi.xml.XmlTokenType;
 import consulo.index.io.EnumeratorStringDescriptor;
 import consulo.index.io.KeyDescriptor;
 import com.intellij.xml.util.HtmlUtil;

@@ -15,9 +15,6 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.ExternalDocumentValidator;
@@ -33,6 +30,9 @@ import consulo.language.psi.filter.ClassFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.xml.Validator;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.lang.dtd.DTDLanguage;
+import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,223 +41,185 @@ import java.util.*;
 /**
  * @author Mike
  */
-public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocument>, DumbAware
-{
-	private XmlElement myElement;
-	private XmlFile myDescriptorFile;
+public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocument>, DumbAware {
+  private XmlElement myElement;
+  private XmlFile myDescriptorFile;
 
-	private static final SimpleFieldCache<CachedValue<Map<String, XmlElementDescriptor>>, XmlNSDescriptorImpl> myCachedDeclsCache = new SimpleFieldCache<CachedValue<Map<String,
-				XmlElementDescriptor>>, XmlNSDescriptorImpl>()
-	{
-		@Override
-		protected final CachedValue<Map<String, XmlElementDescriptor>> compute(final XmlNSDescriptorImpl xmlNSDescriptor)
-		{
-			return xmlNSDescriptor.doBuildDeclarationMap();
-		}
+  private static final SimpleFieldCache<CachedValue<Map<String, XmlElementDescriptor>>, XmlNSDescriptorImpl> myCachedDeclsCache = new SimpleFieldCache<CachedValue<Map<String,
+      XmlElementDescriptor>>, XmlNSDescriptorImpl>() {
+    @Override
+    protected final CachedValue<Map<String, XmlElementDescriptor>> compute(final XmlNSDescriptorImpl xmlNSDescriptor) {
+      return xmlNSDescriptor.doBuildDeclarationMap();
+    }
 
-		@Override
-		protected final CachedValue<Map<String, XmlElementDescriptor>> getValue(final XmlNSDescriptorImpl xmlNSDescriptor)
-		{
-			return xmlNSDescriptor.myCachedDecls;
-		}
+    @Override
+    protected final CachedValue<Map<String, XmlElementDescriptor>> getValue(final XmlNSDescriptorImpl xmlNSDescriptor) {
+      return xmlNSDescriptor.myCachedDecls;
+    }
 
-		@Override
-		protected final void putValue(final CachedValue<Map<String, XmlElementDescriptor>> cachedValue, final XmlNSDescriptorImpl xmlNSDescriptor)
-		{
-			xmlNSDescriptor.myCachedDecls = cachedValue;
-		}
-	};
+    @Override
+    protected final void putValue(final CachedValue<Map<String, XmlElementDescriptor>> cachedValue, final XmlNSDescriptorImpl xmlNSDescriptor) {
+      xmlNSDescriptor.myCachedDecls = cachedValue;
+    }
+  };
 
-	private volatile CachedValue<Map<String, XmlElementDescriptor>> myCachedDecls;
-	private static final XmlUtil.DuplicationInfoProvider<XmlElementDecl> XML_ELEMENT_DECL_PROVIDER = new XmlUtil.DuplicationInfoProvider<XmlElementDecl>()
-	{
-		@Override
-		public String getName(@Nonnull final XmlElementDecl psiElement)
-		{
-			return psiElement.getName();
-		}
+  private volatile CachedValue<Map<String, XmlElementDescriptor>> myCachedDecls;
+  private static final XmlUtil.DuplicationInfoProvider<XmlElementDecl> XML_ELEMENT_DECL_PROVIDER = new XmlUtil.DuplicationInfoProvider<XmlElementDecl>() {
+    @Override
+    public String getName(@Nonnull final XmlElementDecl psiElement) {
+      return psiElement.getName();
+    }
 
-		@Override
-		@Nonnull
-		public String getNameKey(@Nonnull final XmlElementDecl psiElement, @Nonnull final String name)
-		{
-			return name;
-		}
+    @Override
+    @Nonnull
+    public String getNameKey(@Nonnull final XmlElementDecl psiElement, @Nonnull final String name) {
+      return name;
+    }
 
-		@Override
-		@Nonnull
-		public PsiElement getNodeForMessage(@Nonnull final XmlElementDecl psiElement)
-		{
-			return psiElement.getNameElement();
-		}
-	};
+    @Override
+    @Nonnull
+    public PsiElement getNodeForMessage(@Nonnull final XmlElementDecl psiElement) {
+      return psiElement.getNameElement();
+    }
+  };
 
-	public XmlNSDescriptorImpl()
-	{
-	}
+  public XmlNSDescriptorImpl() {
+  }
 
-	@Override
-	public XmlFile getDescriptorFile()
-	{
-		return myDescriptorFile;
-	}
+  @Override
+  public XmlFile getDescriptorFile() {
+    return myDescriptorFile;
+  }
 
-	public XmlElementDescriptor[] getElements()
-	{
-		final Collection<XmlElementDescriptor> declarations = buildDeclarationMap().values();
-		return declarations.toArray(new XmlElementDescriptor[declarations.size()]);
-	}
+  public XmlElementDescriptor[] getElements() {
+    final Collection<XmlElementDescriptor> declarations = buildDeclarationMap().values();
+    return declarations.toArray(new XmlElementDescriptor[declarations.size()]);
+  }
 
-	private Map<String, XmlElementDescriptor> buildDeclarationMap()
-	{
-		return myCachedDeclsCache.get(this).getValue();
-	}
+  private Map<String, XmlElementDescriptor> buildDeclarationMap() {
+    return myCachedDeclsCache.get(this).getValue();
+  }
 
-	// Read-only calculation
-	private CachedValue<Map<String, XmlElementDescriptor>> doBuildDeclarationMap()
-	{
-		return CachedValuesManager.getManager(myElement.getProject()).createCachedValue(() ->
-		{
-			final List<XmlElementDecl> result = new ArrayList<>();
-			myElement.processElements(new FilterElementProcessor(new ClassFilter(XmlElementDecl.class), result), getDeclaration());
-			final Map<String, XmlElementDescriptor> ret = new LinkedHashMap<>((int) (result.size() * 1.5));
-			Set<PsiFile> dependencies = new HashSet<>(1);
-			dependencies.add(myDescriptorFile);
+  // Read-only calculation
+  private CachedValue<Map<String, XmlElementDescriptor>> doBuildDeclarationMap() {
+    return CachedValuesManager.getManager(myElement.getProject()).createCachedValue(() ->
+    {
+      final List<XmlElementDecl> result = new ArrayList<>();
+      myElement.processElements(new FilterElementProcessor(new ClassFilter(XmlElementDecl.class), result), getDeclaration());
+      final Map<String, XmlElementDescriptor> ret = new LinkedHashMap<>((int) (result.size() * 1.5));
+      Set<PsiFile> dependencies = new HashSet<>(1);
+      dependencies.add(myDescriptorFile);
 
-			for(final XmlElementDecl xmlElementDecl : result)
-			{
-				final String name = xmlElementDecl.getName();
-				if(name != null)
-				{
-					if(!ret.containsKey(name))
-					{
-						ret.put(name, new XmlElementDescriptorImpl(xmlElementDecl));
-						// if element descriptor was produced from entity reference use proper dependency
-						PsiElement dependingElement = xmlElementDecl.getUserData(XmlElement.DEPENDING_ELEMENT);
-						if(dependingElement != null)
-						{
-							PsiFile dependingElementContainingFile = dependingElement.getContainingFile();
-							if(dependingElementContainingFile != null)
-							{
-								dependencies.add(dependingElementContainingFile);
-							}
-						}
-					}
-				}
-			}
-			return new CachedValueProvider.Result<>(ret, dependencies.toArray());
-		}, false);
-	}
+      for (final XmlElementDecl xmlElementDecl : result) {
+        final String name = xmlElementDecl.getName();
+        if (name != null) {
+          if (!ret.containsKey(name)) {
+            ret.put(name, new XmlElementDescriptorImpl(xmlElementDecl));
+            // if element descriptor was produced from entity reference use proper dependency
+            PsiElement dependingElement = xmlElementDecl.getUserData(XmlElement.DEPENDING_ELEMENT);
+            if (dependingElement != null) {
+              PsiFile dependingElementContainingFile = dependingElement.getContainingFile();
+              if (dependingElementContainingFile != null) {
+                dependencies.add(dependingElementContainingFile);
+              }
+            }
+          }
+        }
+      }
+      return new CachedValueProvider.Result<>(ret, dependencies.toArray());
+    }, false);
+  }
 
-	@Override
-	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
-	{
-		String name = tag.getName();
-		return getElementDescriptor(name);
-	}
+  @Override
+  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    String name = tag.getName();
+    return getElementDescriptor(name);
+  }
 
-	@Override
-	@Nonnull
-	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document)
-	{
-		// Suggest more appropriate variant if DOCTYPE <element_name> exists
-		final XmlProlog prolog = document != null ? document.getProlog() : null;
+  @Override
+  @Nonnull
+  public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
+    // Suggest more appropriate variant if DOCTYPE <element_name> exists
+    final XmlProlog prolog = document != null ? document.getProlog() : null;
 
-		if(prolog != null)
-		{
-			final XmlDoctype doctype = prolog.getDoctype();
+    if (prolog != null) {
+      final XmlDoctype doctype = prolog.getDoctype();
 
-			if(doctype != null)
-			{
-				final XmlElement element = doctype.getNameElement();
+      if (doctype != null) {
+        final XmlElement element = doctype.getNameElement();
 
-				if(element != null)
-				{
-					final XmlElementDescriptor descriptor = getElementDescriptor(element.getText());
+        if (element != null) {
+          final XmlElementDescriptor descriptor = getElementDescriptor(element.getText());
 
-					if(descriptor != null)
-					{
-						return new XmlElementDescriptor[]{descriptor};
-					}
-				}
-			}
-		}
+          if (descriptor != null) {
+            return new XmlElementDescriptor[]{descriptor};
+          }
+        }
+      }
+    }
 
-		return getElements();
-	}
+    return getElements();
+  }
 
-	public final XmlElementDescriptor getElementDescriptor(String name)
-	{
-		return buildDeclarationMap().get(name);
-	}
+  public final XmlElementDescriptor getElementDescriptor(String name) {
+    return buildDeclarationMap().get(name);
+  }
 
-	@Override
-	public PsiElement getDeclaration()
-	{
-		return myElement;
-	}
+  @Override
+  public PsiElement getDeclaration() {
+    return myElement;
+  }
 
-	@Override
-	public String getName(PsiElement context)
-	{
-		return getName();
-	}
+  @Override
+  public String getName(PsiElement context) {
+    return getName();
+  }
 
-	@Override
-	public String getName()
-	{
-		return myDescriptorFile.getName();
-	}
+  @Override
+  public String getName() {
+    return myDescriptorFile.getName();
+  }
 
-	@Override
-	public void init(PsiElement element)
-	{
-		myElement = (XmlElement) element;
-		myDescriptorFile = (XmlFile) element.getContainingFile();
+  @Override
+  public void init(PsiElement element) {
+    myElement = (XmlElement) element;
+    myDescriptorFile = (XmlFile) element.getContainingFile();
 
-		if(myElement instanceof XmlFile)
-		{
-			myElement = ((XmlFile) myElement).getDocument();
-		}
-	}
+    if (myElement instanceof XmlFile) {
+      myElement = ((XmlFile) myElement).getDocument();
+    }
+  }
 
-	@Override
-	public Object[] getDependences()
-	{
-		return new Object[]{
-				myElement,
-				ExternalResourceManager.getInstance()
-		};
-	}
+  @Override
+  public Object[] getDependences() {
+    return new Object[]{
+        myElement,
+        ExternalResourceManager.getInstance()
+    };
+  }
 
-	@Override
-	public void validate(@Nonnull XmlDocument document, @Nonnull ValidationHost host)
-	{
-		if(document.getLanguage() == DTDLanguage.INSTANCE)
-		{
-			final List<XmlElementDecl> decls = new ArrayList<>(3);
+  @Override
+  public void validate(@Nonnull XmlDocument document, @Nonnull ValidationHost host) {
+    if (document.getLanguage() == DTDLanguage.INSTANCE) {
+      final List<XmlElementDecl> decls = new ArrayList<>(3);
 
-			XmlUtil.processXmlElements(document, new PsiElementProcessor()
-			{
-				@Override
-				public boolean execute(@Nonnull final PsiElement element)
-				{
-					if(element instanceof XmlElementDecl)
-					{
-						decls.add((XmlElementDecl) element);
-					}
-					return true;
-				}
-			}, false);
-			XmlUtil.doDuplicationCheckForElements(decls.toArray(new XmlElementDecl[decls.size()]), new HashMap<>(decls.size()), XML_ELEMENT_DECL_PROVIDER, host);
-			return;
-		}
-		ExternalDocumentValidator.doValidation(document, host);
-	}
+      XmlUtil.processXmlElements(document, new PsiElementProcessor() {
+        @Override
+        public boolean execute(@Nonnull final PsiElement element) {
+          if (element instanceof XmlElementDecl) {
+            decls.add((XmlElementDecl) element);
+          }
+          return true;
+        }
+      }, false);
+      XmlUtil.doDuplicationCheckForElements(decls.toArray(new XmlElementDecl[decls.size()]), new HashMap<>(decls.size()), XML_ELEMENT_DECL_PROVIDER, host);
+      return;
+    }
+    ExternalDocumentValidator.doValidation(document, host);
+  }
 
-	@Override
-	public XmlElementDescriptor getElementDescriptor(String localName, String namespace)
-	{
-		return getElementDescriptor(localName);
-	}
+  @Override
+  public XmlElementDescriptor getElementDescriptor(String localName, String namespace) {
+    return getElementDescriptor(localName);
+  }
 }

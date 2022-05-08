@@ -19,11 +19,11 @@ package org.intellij.plugins.relaxNG.xml.dom.impl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
 import consulo.util.collection.ArrayUtil;
-import com.intellij.util.xml.*;
 import consulo.util.lang.ref.Ref;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.*;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
@@ -44,7 +44,7 @@ public class RngReferenceConverter implements CustomReferenceConverter {
   @Override
   @Nonnull
   public PsiReference[] createReferences(GenericDomValue genericDomValue, PsiElement element, ConvertContext context) {
-    final GenericAttributeValue<String> e = (GenericAttributeValue<String>)genericDomValue;
+    final GenericAttributeValue<String> e = (GenericAttributeValue<String>) genericDomValue;
 
     if (genericDomValue.getParent() instanceof RngDefine) {
       final XmlAttributeValue value = e.getXmlAttributeValue();
@@ -53,9 +53,9 @@ public class RngReferenceConverter implements CustomReferenceConverter {
       }
 
       return new PsiReference[]{
-              new PsiReferenceBase<XmlAttributeValue>(value, true) {
-                @Override
-                public PsiElement resolve() {
+          new PsiReferenceBase<XmlAttributeValue>(value, true) {
+            @Override
+            public PsiElement resolve() {
 //                  final XmlTag tag = PsiTreeUtil.getParentOfType(value, XmlTag.class);
 //                  final XmlTag include = getAncestorTag(tag, "include", ProjectLoader.RNG_NAMESPACE);
 //                  final XmlTag grammar = getAncestorTag(tag, "grammar", ProjectLoader.RNG_NAMESPACE);
@@ -63,43 +63,43 @@ public class RngReferenceConverter implements CustomReferenceConverter {
 //                  if (include != null && (grammar == null || PsiTreeUtil.isAncestor(grammar, include, true))) {
 //                    final ResolveResult[] e = new DefinitionReference(getElement(), false).multiResolve(false);
 //                  }
-                  return myElement.getParent().getParent();
-                }
+              return myElement.getParent().getParent();
+            }
 
-                @Override
-                @Nonnull
-                public Object[] getVariants() {
-                  final RngInclude include = e.getParentOfType(RngInclude.class, true);
-                  final RngGrammar scope = e.getParentOfType(RngGrammar.class, true);
-                  if (scope != null && include != null && DomUtil.isAncestor(scope, include, true)) {
-                    final XmlFile file = include.getIncludedFile().getValue();
-                    if (file != null) {
-                      final DomFileElement<DomElement> fileElement = scope.getManager().getFileElement(file, DomElement.class);
-                      if (fileElement == null) {
-                        return EMPTY_ARRAY;
-                      }
-                      
-                      final Ref<Object[]> ref = new Ref<>(ArrayUtil.EMPTY_STRING_ARRAY);
-                      fileElement.acceptChildren(new RngDomVisitor(){
-                        @Override
-                        public void visit(RngGrammar grammar) {
-                          final Map<String, Set<Define>> map = DefinitionResolver.getAllVariants(grammar);
-                          if (map != null) {
-                            ref.set(map.keySet().toArray());
-                          }
-                        }
-                      });
-                      return ref.get();
-                    }
+            @Override
+            @Nonnull
+            public Object[] getVariants() {
+              final RngInclude include = e.getParentOfType(RngInclude.class, true);
+              final RngGrammar scope = e.getParentOfType(RngGrammar.class, true);
+              if (scope != null && include != null && DomUtil.isAncestor(scope, include, true)) {
+                final XmlFile file = include.getIncludedFile().getValue();
+                if (file != null) {
+                  final DomFileElement<DomElement> fileElement = scope.getManager().getFileElement(file, DomElement.class);
+                  if (fileElement == null) {
+                    return EMPTY_ARRAY;
                   }
-                  return ArrayUtil.EMPTY_STRING_ARRAY; // TODO: look for unresolved refs;
+
+                  final Ref<Object[]> ref = new Ref<>(ArrayUtil.EMPTY_STRING_ARRAY);
+                  fileElement.acceptChildren(new RngDomVisitor() {
+                    @Override
+                    public void visit(RngGrammar grammar) {
+                      final Map<String, Set<Define>> map = DefinitionResolver.getAllVariants(grammar);
+                      if (map != null) {
+                        ref.set(map.keySet().toArray());
+                      }
+                    }
+                  });
+                  return ref.get();
                 }
               }
+              return ArrayUtil.EMPTY_STRING_ARRAY; // TODO: look for unresolved refs;
+            }
+          }
       };
     }
 
     return new PsiReference[]{
-            new DefinitionReference(e)
+        new DefinitionReference(e)
     };
   }
 }

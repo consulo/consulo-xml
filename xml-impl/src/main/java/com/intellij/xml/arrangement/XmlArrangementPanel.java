@@ -2,8 +2,8 @@ package com.intellij.xml.arrangement;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.ide.impl.idea.application.options.codeStyle.arrangement.ArrangementSettingsPanel;

@@ -17,9 +17,8 @@ package com.intellij.xml.impl.schema;
 
 import consulo.ide.navigation.GotoTargetRendererProvider;
 import consulo.language.editor.ui.PsiElementListCellRenderer;
-import com.intellij.psi.impl.source.xml.XmlTagImpl;
-import com.intellij.psi.xml.XmlAttribute;
-import consulo.ide.impl.idea.codeInsight.navigation.GotoTargetHandler;
+import consulo.xml.psi.impl.source.xml.XmlTagImpl;
+import consulo.xml.psi.xml.XmlAttribute;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 

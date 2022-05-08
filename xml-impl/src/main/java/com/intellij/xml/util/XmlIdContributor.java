@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
 
 /**

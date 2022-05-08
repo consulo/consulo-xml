@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.component.extension.Extensions;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.file.FileViewProvider;
 
 /**

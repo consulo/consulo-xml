@@ -17,7 +17,7 @@ package com.intellij.xml.impl.schema;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author nik

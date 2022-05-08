@@ -17,7 +17,7 @@ package com.intellij.xml.impl.schema;
 
 import java.util.Stack;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementsGroup;
 
 /**

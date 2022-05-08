@@ -20,18 +20,18 @@ import javax.annotation.Nullable;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlQuickFixFactory;
-import com.intellij.codeInspection.htmlInspections.RemoveAttributeIntentionAction;
+import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.codeInspection.htmlInspections.RemoveAttributeIntentionAction;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.function.Condition;
 import consulo.util.lang.StringUtil;
 import consulo.language.ast.RoleFinder;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlTagRuleProvider;
 
 public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider

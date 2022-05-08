@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlBundle;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Computable;

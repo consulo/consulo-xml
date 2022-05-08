@@ -26,11 +26,11 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.impl.source.xml.XmlTagValueImpl;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagChild;
-import com.intellij.psi.xml.XmlTagValue;
+import consulo.xml.psi.impl.source.xml.XmlTagValueImpl;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTagChild;
+import consulo.xml.psi.xml.XmlTagValue;
 import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;

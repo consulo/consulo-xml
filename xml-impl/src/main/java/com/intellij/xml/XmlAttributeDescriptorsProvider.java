@@ -18,7 +18,7 @@ package com.intellij.xml;
 import javax.annotation.Nullable;
 
 import consulo.component.extension.ExtensionPointName;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author Dmitry Avdeev

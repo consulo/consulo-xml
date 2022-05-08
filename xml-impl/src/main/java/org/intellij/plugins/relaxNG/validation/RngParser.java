@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import com.intellij.javaee.UriUtil;
+import consulo.xml.javaee.UriUtil;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValuesManager;
@@ -27,7 +27,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.application.util.CachedValueProvider;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.util.collection.ContainerUtil;
 import com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl;
 import com.thaiopensource.relaxng.pattern.AnnotationsImpl;

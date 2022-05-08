@@ -16,21 +16,13 @@
 
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInspection.*;
-import com.intellij.lang.xml.XMLLanguage;
-import consulo.language.editor.WriteCommandAction;
-import consulo.document.Document;
-import consulo.document.FileDocumentManager;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
 import consulo.application.Result;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.FileModificationService;
+import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemsHolder;
@@ -39,7 +31,16 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim Mossienko

@@ -19,9 +19,9 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.util.xml.Attribute;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.Namespace;
+import consulo.xml.util.xml.Attribute;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.Namespace;
 import org.intellij.plugins.relaxNG.xml.dom.names.OpenNameClasses;
 import javax.annotation.Nonnull;
 

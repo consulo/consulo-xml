@@ -1,26 +1,26 @@
 package com.intellij.xml.impl.dom;
 
-import consulo.language.pom.PomService;
-import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.EvaluatedXmlName;
-import com.intellij.util.xml.impl.AttributeChildDescriptionImpl;
-import com.intellij.util.xml.reflect.*;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.language.pom.PomService;
 import consulo.language.pom.PomTarget;
+import consulo.language.psi.PsiElement;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomManager;
+import consulo.xml.util.xml.EvaluatedXmlName;
+import consulo.xml.util.xml.impl.AttributeChildDescriptionImpl;
+import consulo.xml.util.xml.reflect.*;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 

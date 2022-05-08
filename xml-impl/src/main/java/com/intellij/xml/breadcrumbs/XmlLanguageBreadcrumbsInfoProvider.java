@@ -24,10 +24,10 @@ package com.intellij.xml.breadcrumbs;
 
 import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsProvider;
 import consulo.language.Language;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
 import org.jetbrains.annotations.NonNls;
 

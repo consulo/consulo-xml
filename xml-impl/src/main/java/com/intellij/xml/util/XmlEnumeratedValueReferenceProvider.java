@@ -15,102 +15,83 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import consulo.ide.impl.psi.impl.source.resolve.reference.impl.PsiDelegateReference;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
-import consulo.language.psi.ElementManipulators;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiLanguageInjectionHost;
-import consulo.language.psi.PsiReference;
-import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.impl.schema.XmlSchemaTagsProcessor;
-import consulo.language.inject.impl.internal.InjectedLanguageUtil;
-import consulo.language.psi.PsiReferenceProvider;
+import consulo.ide.impl.psi.impl.source.resolve.reference.impl.PsiDelegateReference;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.*;
 import consulo.language.util.ProcessingContext;
 import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlText;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 15.08.13
+ * Date: 15.08.13
  */
-public class XmlEnumeratedValueReferenceProvider<T extends PsiElement> extends PsiReferenceProvider
-{
+public class XmlEnumeratedValueReferenceProvider<T extends PsiElement> extends PsiReferenceProvider {
 
-	public final static Key<Boolean> SUPPRESS = Key.create("suppress attribute value references");
+  public final static Key<Boolean> SUPPRESS = Key.create("suppress attribute value references");
 
-	@Nonnull
-	@Override
-	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
-	{
+  @Nonnull
+  @Override
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
 
-		if(XmlSchemaTagsProcessor.PROCESSING_FLAG.get() != null || context.get(SUPPRESS) != null)
-		{
-			return PsiReference.EMPTY_ARRAY;
-		}
-		@SuppressWarnings("unchecked") PsiElement host = getHost((T) element);
-		if(host instanceof PsiLanguageInjectionHost && InjectedLanguageUtil.hasInjections((PsiLanguageInjectionHost) host))
-		{
-			return PsiReference.EMPTY_ARRAY;
-		}
-		String unquotedValue = ElementManipulators.getValueText(element);
-		if(XmlHighlightVisitor.skipValidation(element) || !XmlUtil.isSimpleValue(unquotedValue, element))
-		{
-			return PsiReference.EMPTY_ARRAY;
-		}
-		@SuppressWarnings("unchecked") final Object descriptor = getDescriptor((T) element);
-		if(descriptor instanceof XmlEnumerationDescriptor)
-		{
-			XmlEnumerationDescriptor enumerationDescriptor = (XmlEnumerationDescriptor) descriptor;
+    if (XmlSchemaTagsProcessor.PROCESSING_FLAG.get() != null || context.get(SUPPRESS) != null) {
+      return PsiReference.EMPTY_ARRAY;
+    }
+    @SuppressWarnings("unchecked") PsiElement host = getHost((T) element);
+    if (host instanceof PsiLanguageInjectionHost && InjectedLanguageManager.getInstance(element.getProject()).getInjectedPsiFiles(host) != null) {
+      return PsiReference.EMPTY_ARRAY;
+    }
+    String unquotedValue = ElementManipulators.getValueText(element);
+    if (XmlHighlightVisitor.skipValidation(element) || !XmlUtil.isSimpleValue(unquotedValue, element)) {
+      return PsiReference.EMPTY_ARRAY;
+    }
+    @SuppressWarnings("unchecked") final Object descriptor = getDescriptor((T) element);
+    if (descriptor instanceof XmlEnumerationDescriptor) {
+      XmlEnumerationDescriptor enumerationDescriptor = (XmlEnumerationDescriptor) descriptor;
 
-			if(enumerationDescriptor.isFixed() || enumerationDescriptor.isEnumerated((XmlElement) element))
-			{
-				//noinspection unchecked
-				return enumerationDescriptor.getValueReferences((XmlElement) element, unquotedValue);
-			}
-			else if(unquotedValue.equals(enumerationDescriptor.getDefaultValue()))
-			{  // todo case insensitive
-				return ContainerUtil.map2Array(enumerationDescriptor.getValueReferences((XmlElement) element, unquotedValue), PsiReference.class, reference -> PsiDelegateReference.createSoft
-						(reference, true));
-			}
-		}
-		return PsiReference.EMPTY_ARRAY;
-	}
+      if (enumerationDescriptor.isFixed() || enumerationDescriptor.isEnumerated((XmlElement) element)) {
+        //noinspection unchecked
+        return enumerationDescriptor.getValueReferences((XmlElement) element, unquotedValue);
+      } else if (unquotedValue.equals(enumerationDescriptor.getDefaultValue())) {  // todo case insensitive
+        return ContainerUtil.map2Array(enumerationDescriptor.getValueReferences((XmlElement) element, unquotedValue), PsiReference.class, reference -> PsiDelegateReference.createSoft
+            (reference, true));
+      }
+    }
+    return PsiReference.EMPTY_ARRAY;
+  }
 
-	protected PsiElement getHost(T element)
-	{
-		return element;
-	}
+  protected PsiElement getHost(T element) {
+    return element;
+  }
 
-	protected Object getDescriptor(T element)
-	{
-		PsiElement parent = element.getParent();
-		return parent instanceof XmlAttribute ? ((XmlAttribute) parent).getDescriptor() : null;
-	}
+  protected Object getDescriptor(T element) {
+    PsiElement parent = element.getParent();
+    return parent instanceof XmlAttribute ? ((XmlAttribute) parent).getDescriptor() : null;
+  }
 
-	public static XmlEnumeratedValueReferenceProvider forTags()
-	{
-		return new XmlEnumeratedValueReferenceProvider<XmlTag>()
-		{
+  public static XmlEnumeratedValueReferenceProvider forTags() {
+    return new XmlEnumeratedValueReferenceProvider<XmlTag>() {
 
-			@Override
-			protected Object getDescriptor(XmlTag element)
-			{
-				return element.getDescriptor();
-			}
+      @Override
+      protected Object getDescriptor(XmlTag element) {
+        return element.getDescriptor();
+      }
 
-			@Override
-			protected PsiElement getHost(XmlTag element)
-			{
-				XmlText[] textElements = element.getValue().getTextElements();
-				return ArrayUtil.getFirstElement(textElements);
-			}
-		};
-	}
+      @Override
+      protected PsiElement getHost(XmlTag element) {
+        XmlText[] textElements = element.getValue().getTextElements();
+        return ArrayUtil.getFirstElement(textElements);
+      }
+    };
+  }
 }

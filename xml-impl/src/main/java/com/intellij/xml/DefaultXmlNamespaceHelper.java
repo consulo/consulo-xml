@@ -15,25 +15,25 @@
  */
 package com.intellij.xml;
 
-import consulo.language.util.ModuleUtilCore;
-import consulo.util.lang.StringUtil;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.xml.*;
-import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XmlTagNamesIndex;
 import com.intellij.xml.util.XmlUtil;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.util.ModuleUtilCore;
 import consulo.logging.Logger;
 import consulo.project.Project;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**

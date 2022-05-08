@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.ide.highlighter.DTDFileType;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.DTDFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.index.io.KeyDescriptor;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;

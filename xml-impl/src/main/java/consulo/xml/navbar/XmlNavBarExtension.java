@@ -1,15 +1,15 @@
 package consulo.xml.navbar;
 
 import consulo.application.ui.UISettings;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.application.util.function.Processor;
 import consulo.codeEditor.Editor;
 import consulo.dataContext.DataContext;
 import consulo.language.editor.CommonDataKeys;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.ide.impl.idea.ide.navigationToolbar.AbstractNavBarModelExtension;
 import consulo.language.psi.PsiElement;

@@ -16,7 +16,7 @@
 
 package com.intellij.xml;
 
-import com.intellij.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlElement;
 import consulo.util.collection.ArrayFactory;
 import consulo.language.psi.meta.PsiMetaData;
 

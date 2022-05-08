@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.SubTagList;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.SubTagList;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import javax.annotation.Nonnull;
 

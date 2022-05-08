@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.xml.XmlContentParticle;
+import consulo.xml.psi.xml.XmlContentParticle;
 import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;

@@ -15,9 +15,6 @@
  */
 package com.intellij.xml.impl;
 
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.actions.validate.ErrorReporter;
 import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import com.intellij.xml.util.XmlResourceResolver;
@@ -44,6 +41,9 @@ import consulo.util.lang.ref.SoftReference;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.Validator;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXParseException;
 
@@ -59,7 +59,9 @@ public class ExternalDocumentValidator {
   private static final Logger LOG = Logger.getInstance("#ExternalDocumentValidator");
   private static final Key<SoftReference<ExternalDocumentValidator>> validatorInstanceKey = Key.create("validatorInstance");
 
-  public static final @NonNls String INSPECTION_SHORT_NAME = "CheckXmlFileWithXercesValidator";
+  public static final
+  @NonNls
+  String INSPECTION_SHORT_NAME = "CheckXmlFileWithXercesValidator";
 
   private ValidateXmlActionHandler myHandler;
   private Validator.ValidationHost myHost;
@@ -103,19 +105,19 @@ public class ExternalDocumentValidator {
     if (myFile == file &&
         file != null &&
         myModificationStamp == file.getModificationStamp() &&
-        !ValidateXmlActionHandler.isValidationDependentFilesOutOfDate((XmlFile)file) &&
-        myInfos!=null &&
-        myInfos.get()!=null // we have validated before
-      ) {
-      addAllInfos(host,myInfos.get());
+        !ValidateXmlActionHandler.isValidationDependentFilesOutOfDate((XmlFile) file) &&
+        myInfos != null &&
+        myInfos.get() != null // we have validated before
+    ) {
+      addAllInfos(host, myInfos.get());
       return;
     }
 
-    if (myHandler==null)  myHandler = new ValidateXmlActionHandler(false);
+    if (myHandler == null) myHandler = new ValidateXmlActionHandler(false);
     final Project project = element.getProject();
 
     final Document document = PsiDocumentManager.getInstance(project).getDocument(file);
-    if (document==null) return;
+    if (document == null) return;
     final List<ValidationInfo> results = new LinkedList<ValidationInfo>();
 
     myHost = new Validator.ValidationHost() {
@@ -160,8 +162,7 @@ public class ExternalDocumentValidator {
 
               if (elementText.equals("</")) {
                 currentElement = currentElement.getNextSibling();
-              }
-              else if (elementText.equals(">") || elementText.equals("=")) {
+              } else if (elementText.equals(">") || elementText.equals("=")) {
                 currentElement = currentElement.getPrevSibling();
               }
 
@@ -173,14 +174,14 @@ public class ExternalDocumentValidator {
               if (endIndex < localizedMessage.length() - 1 && localizedMessage.charAt(endIndex + 1) == '/') {
                 endIndex = -1;  // ignore : in http://
               }
-              String messageId = endIndex != -1 ? localizedMessage.substring(0, endIndex ):"";
+              String messageId = endIndex != -1 ? localizedMessage.substring(0, endIndex) : "";
               localizedMessage = localizedMessage.substring(endIndex + 1).trim();
 
               if (localizedMessage.startsWith(CANNOT_FIND_DECLARATION_ERROR_PREFIX) ||
                   localizedMessage.startsWith(ELEMENT_ERROR_PREFIX) ||
                   localizedMessage.startsWith(ROOT_ELEMENT_ERROR_PREFIX) ||
                   localizedMessage.startsWith(CONTENT_OF_ELEMENT_TYPE_ERROR_PREFIX)
-                ) {
+              ) {
                 addProblemToTagName(currentElement, originalElement, localizedMessage, warning);
                 //return;
               } else if (localizedMessage.startsWith(VALUE_ERROR_PREFIX)) {
@@ -195,83 +196,81 @@ public class ExternalDocumentValidator {
                     final int nextQuoteIndex = localizedMessage.indexOf(localizedMessage.charAt(messagePrefixLength), messagePrefixLength + 1);
                     String attrName = nextQuoteIndex == -1 ? null : localizedMessage.substring(messagePrefixLength + 1, nextQuoteIndex);
 
-                    XmlTag parent = PsiTreeUtil.getParentOfType(originalElement,XmlTag.class);
-                    currentElement = parent.getAttribute(attrName,null);
+                    XmlTag parent = PsiTreeUtil.getParentOfType(originalElement, XmlTag.class);
+                    currentElement = parent.getAttribute(attrName, null);
 
                     if (currentElement != null) {
-                      currentElement = ((XmlAttribute)currentElement).getValueElement();
+                      currentElement = ((XmlAttribute) currentElement).getValueElement();
                     }
                   }
 
-                  if (currentElement!=null) {
-                    assertValidElement(currentElement, originalElement,localizedMessage);
-                    myHost.addMessage(currentElement,localizedMessage, problemType);
+                  if (currentElement != null) {
+                    assertValidElement(currentElement, originalElement, localizedMessage);
+                    myHost.addMessage(currentElement, localizedMessage, problemType);
                   } else {
                     addProblemToTagName(originalElement, originalElement, localizedMessage, warning);
                   }
-                }
-                else if (localizedMessage.startsWith(ATTRIBUTE_ERROR_PREFIX)) {
+                } else if (localizedMessage.startsWith(ATTRIBUTE_ERROR_PREFIX)) {
                   final int messagePrefixLength = ATTRIBUTE_ERROR_PREFIX.length();
 
-                  if ( localizedMessage.charAt(messagePrefixLength) == '"' ||
-                       localizedMessage.charAt(messagePrefixLength) == '\''
-                    ) {
+                  if (localizedMessage.charAt(messagePrefixLength) == '"' ||
+                      localizedMessage.charAt(messagePrefixLength) == '\''
+                  ) {
                     // extract the attribute name from message and get it from tag!
                     final int nextQuoteIndex = localizedMessage.indexOf(localizedMessage.charAt(messagePrefixLength), messagePrefixLength + 1);
                     String attrName = nextQuoteIndex == -1 ? null : localizedMessage.substring(messagePrefixLength + 1, nextQuoteIndex);
 
-                    XmlTag parent = PsiTreeUtil.getParentOfType(originalElement,XmlTag.class);
-                    currentElement = parent.getAttribute(attrName,null);
+                    XmlTag parent = PsiTreeUtil.getParentOfType(originalElement, XmlTag.class);
+                    currentElement = parent.getAttribute(attrName, null);
 
-                    if (currentElement!=null) {
+                    if (currentElement != null) {
                       currentElement = SourceTreeToPsiMap.treeElementToPsi(
-                        XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild(
-                          SourceTreeToPsiMap.psiElementToTree(currentElement)
-                        )
+                          XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild(
+                              SourceTreeToPsiMap.psiElementToTree(currentElement)
+                          )
                       );
                     }
                   } else {
                     currentElement = PsiTreeUtil.getParentOfType(currentElement, XmlTag.class, false);
                   }
 
-                  if (currentElement!=null) {
-                    assertValidElement(currentElement, originalElement,localizedMessage);
-                    myHost.addMessage(currentElement,localizedMessage, problemType);
+                  if (currentElement != null) {
+                    assertValidElement(currentElement, originalElement, localizedMessage);
+                    myHost.addMessage(currentElement, localizedMessage, problemType);
                   } else {
                     addProblemToTagName(originalElement, originalElement, localizedMessage, warning);
                   }
                 } else if (localizedMessage.startsWith(STRING_ERROR_PREFIX)) {
                   if (currentElement != null) {
-                    myHost.addMessage(currentElement,localizedMessage, Validator.ValidationHost.ErrorType.WARNING);
+                    myHost.addMessage(currentElement, localizedMessage, Validator.ValidationHost.ErrorType.WARNING);
                   }
-                }
-                else {
-                  currentElement = getNodeForMessage(currentElement != null ? currentElement:originalElement);
-                  assertValidElement(currentElement, originalElement,localizedMessage);
-                  if (currentElement!=null) {
-                    myHost.addMessage(currentElement,localizedMessage, problemType);
+                } else {
+                  currentElement = getNodeForMessage(currentElement != null ? currentElement : originalElement);
+                  assertValidElement(currentElement, originalElement, localizedMessage);
+                  if (currentElement != null) {
+                    myHost.addMessage(currentElement, localizedMessage, problemType);
                   }
                 }
               }
             }
           });
-        }
-        catch (Exception ex) {
-          if (ex instanceof ProcessCanceledException) throw (ProcessCanceledException)ex;
-          if (ex instanceof XmlResourceResolver.IgnoredResourceException) throw (XmlResourceResolver.IgnoredResourceException)ex;
+        } catch (Exception ex) {
+          if (ex instanceof ProcessCanceledException) throw (ProcessCanceledException) ex;
+          if (ex instanceof XmlResourceResolver.IgnoredResourceException)
+            throw (XmlResourceResolver.IgnoredResourceException) ex;
           LOG.error(ex);
         }
       }
 
     });
 
-    myHandler.doValidate((XmlFile)element.getContainingFile());
+    myHandler.doValidate((XmlFile) element.getContainingFile());
 
     myFile = file;
     myModificationStamp = myFile.getModificationStamp();
     myInfos = new WeakReference<List<ValidationInfo>>(results);
 
-    addAllInfos(host,results);
+    addAllInfos(host, results);
   }
 
   private static Validator.ValidationHost.ErrorType getProblemType(ValidateXmlActionHandler.ProblemType warning) {
@@ -280,27 +279,26 @@ public class ExternalDocumentValidator {
 
   private static PsiElement getNodeForMessage(final PsiElement currentElement) {
     PsiElement parentOfType = PsiTreeUtil.getNonStrictParentOfType(
-      currentElement,
-      XmlTag.class,
-      XmlProcessingInstruction.class,
-      XmlElementDecl.class,
-      XmlMarkupDecl.class,
-      XmlEntityRef.class,
-      XmlDoctype.class
+        currentElement,
+        XmlTag.class,
+        XmlProcessingInstruction.class,
+        XmlElementDecl.class,
+        XmlMarkupDecl.class,
+        XmlEntityRef.class,
+        XmlDoctype.class
     );
 
     if (parentOfType == null) {
       if (currentElement instanceof XmlToken) {
         parentOfType = currentElement.getParent();
-      }
-      else {
+      } else {
         parentOfType = currentElement;
       }
     }
     return parentOfType;
   }
 
-  private static void addAllInfos(Validator.ValidationHost host,List<ValidationInfo> highlightInfos) {
+  private static void addAllInfos(Validator.ValidationHost host, List<ValidationInfo> highlightInfos) {
     for (ValidationInfo info : highlightInfos) {
       host.addMessage(info.element, info.message, info.type);
     }
@@ -310,28 +308,28 @@ public class ExternalDocumentValidator {
                                          final PsiElement originalElement,
                                          final String localizedMessage,
                                          final ValidateXmlActionHandler.ProblemType problemType) {
-    currentElement = PsiTreeUtil.getParentOfType(currentElement,XmlTag.class,false);
-    if (currentElement==null) {
-      currentElement = PsiTreeUtil.getParentOfType(originalElement,XmlElementDecl.class,false);
+    currentElement = PsiTreeUtil.getParentOfType(currentElement, XmlTag.class, false);
+    if (currentElement == null) {
+      currentElement = PsiTreeUtil.getParentOfType(originalElement, XmlElementDecl.class, false);
     }
     if (currentElement == null) {
       currentElement = originalElement;
     }
-    assertValidElement(currentElement, originalElement,localizedMessage);
+    assertValidElement(currentElement, originalElement, localizedMessage);
 
-    if (currentElement!=null) {
-      myHost.addMessage(currentElement,localizedMessage, getProblemType(problemType));
+    if (currentElement != null) {
+      myHost.addMessage(currentElement, localizedMessage, getProblemType(problemType));
     }
 
     return currentElement;
   }
 
   private static void assertValidElement(PsiElement currentElement, PsiElement originalElement, String message) {
-    if (currentElement==null) {
+    if (currentElement == null) {
       XmlTag tag = PsiTreeUtil.getParentOfType(originalElement, XmlTag.class);
       LOG.error("The validator message:" + message + " is bound to null node,\n" + "initial element:" + originalElement.getText() + ",\n" +
-                "parent:" + originalElement.getParent() + ",\n" + "tag:" + (tag != null ? tag.getText() : "null") + ",\n" +
-                "offset in tag: " + (originalElement.getTextOffset() - (tag == null ? 0 : tag.getTextOffset())));
+          "parent:" + originalElement.getParent() + ",\n" + "tag:" + (tag != null ? tag.getText() : "null") + ",\n" +
+          "offset in tag: " + (originalElement.getTextOffset() - (tag == null ? 0 : tag.getTextOffset())));
     }
   }
 
@@ -350,7 +348,7 @@ public class ExternalDocumentValidator {
       return;
     }
 
-    for(Language lang: containingFile.getViewProvider().getLanguages()) {
+    for (Language lang : containingFile.getViewProvider().getLanguages()) {
       if ("ANT".equals(lang.getID())) return;
     }
 
@@ -364,19 +362,19 @@ public class ExternalDocumentValidator {
 
     final InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
     final InspectionToolWrapper toolWrapper =
-      profile.getInspectionTool(INSPECTION_SHORT_NAME, containingFile);
+        profile.getInspectionTool(INSPECTION_SHORT_NAME, containingFile);
 
     if (toolWrapper == null) return;
     if (!profile.isToolEnabled(HighlightDisplayKey.find(INSPECTION_SHORT_NAME), containingFile)) return;
 
     SoftReference<ExternalDocumentValidator> validatorReference = project.getUserData(validatorInstanceKey);
-    ExternalDocumentValidator validator = validatorReference != null? validatorReference.get() : null;
+    ExternalDocumentValidator validator = validatorReference != null ? validatorReference.get() : null;
 
-    if(validator == null) {
+    if (validator == null) {
       validator = new ExternalDocumentValidator();
-      project.putUserData(validatorInstanceKey,new SoftReference<ExternalDocumentValidator>(validator));
+      project.putUserData(validatorInstanceKey, new SoftReference<ExternalDocumentValidator>(validator));
     }
 
-    validator.runJaxpValidation(document,host);
+    validator.runJaxpValidation(document, host);
   }
 }

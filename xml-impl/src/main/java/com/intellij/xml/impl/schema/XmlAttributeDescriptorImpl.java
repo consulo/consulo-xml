@@ -16,9 +16,9 @@
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlElementDescriptor;

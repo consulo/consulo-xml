@@ -16,14 +16,14 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import com.intellij.patterns.XmlAttributeValuePattern;
+import consulo.xml.patterns.XmlAttributeValuePattern;
 import consulo.language.psi.PsiReference;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.AttributeValueSelfReference;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.AttributeValueSelfReference;
 import consulo.language.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.document.util.TextRange;
@@ -37,8 +37,8 @@ import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
+import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
+import static consulo.xml.patterns.XmlPatterns.xmlAttributeValue;
 
 public class IdRefProvider extends PsiReferenceProvider {
   public static final HasIdRefTypeCondition HAS_ID_REF_TYPE = new HasIdRefTypeCondition();

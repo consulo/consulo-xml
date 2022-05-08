@@ -15,7 +15,7 @@
  */
 package com.intellij.xml;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 
 public interface XmlElementDescriptorAwareAboutChildren {
   boolean allowElementsFromNamespace(final String namespace, final XmlTag context);

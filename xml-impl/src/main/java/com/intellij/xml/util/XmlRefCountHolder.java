@@ -15,30 +15,26 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import consulo.application.util.CachedValueProvider;
-import consulo.language.Language;
-import consulo.language.psi.PsiComment;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiReference;
-import consulo.util.lang.Pair;
-import consulo.application.util.UserDataCache;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
-import com.intellij.psi.impl.source.xml.PossiblePrefixReference;
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.language.psi.OuterLanguageElement;
-import consulo.application.util.CachedValue;
-import consulo.application.util.CachedValuesManager;
-import consulo.language.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import consulo.ide.impl.idea.util.NullableFunction;
-import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.application.util.UserDataCache;
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.language.Language;
+import consulo.language.psi.*;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Pair;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
+import consulo.xml.psi.impl.source.xml.PossiblePrefixReference;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
+import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

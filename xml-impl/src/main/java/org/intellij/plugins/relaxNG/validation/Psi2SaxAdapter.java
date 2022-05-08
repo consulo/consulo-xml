@@ -31,15 +31,15 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlEntityRef;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.psi.xml.XmlTokenType;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlEntityRef;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlText;
+import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.psi.xml.XmlTokenType;
 import com.intellij.xml.util.XmlUtil;
 
 /**

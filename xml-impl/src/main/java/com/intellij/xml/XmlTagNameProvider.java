@@ -17,7 +17,7 @@ package com.intellij.xml;
 
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.component.extension.ExtensionPointName;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import javax.annotation.Nonnull;
 
 import java.util.List;

@@ -7,7 +7,7 @@
 	</extensions>
 
 	<extensions defaultExtensionNs="consulo">
-		<gotoSymbolContributor implementation="org.intellij.plugins.relaxNG.GotoSymbolContributor"/>
+		<gotoSymbolContributor implementation="org.intellij.plugins.relaxNG.RelaxNGGotoSymbolContributor"/>
 		<hectorComponentProvider implementation="org.intellij.plugins.relaxNG.config.NoNamespaceConfigImpl$HectorProvider"/>
 
 		<fileTypeFactory implementation="org.intellij.plugins.relaxNG.compact.RncFileType$Factory"/>

@@ -16,11 +16,11 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import consulo.language.psi.PsiReference;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.xml.*;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import consulo.language.psi.path.FileReferenceSet;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 import org.jetbrains.annotations.NonNls;
@@ -37,12 +37,12 @@ public class RngHrefConverter extends Converter<XmlFile> implements CustomRefere
   @Override
   public XmlFile fromString(@Nullable @NonNls String s, ConvertContext context) {
     if (s != null) {
-      final GenericAttributeValue<XmlFile> element = (GenericAttributeValue<XmlFile>)context.getInvocationElement();
+      final GenericAttributeValue<XmlFile> element = (GenericAttributeValue<XmlFile>) context.getInvocationElement();
       final PsiReference[] references = createReferences(element, element.getXmlAttributeValue(), context);
       if (references.length > 0) {
         PsiElement result = references[references.length - 1].resolve();
         if (result instanceof XmlFile) {
-          return (XmlFile)result;
+          return (XmlFile) result;
         }
       }
     }

@@ -16,10 +16,10 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;

@@ -21,23 +21,19 @@ import org.jetbrains.annotations.PropertyKey;
 /**
  * @author lesya
  */
-public class XmlBundle extends AbstractBundle
-{
-	public static final String PATH_TO_BUNDLE = "messages.XmlBundle";
-	private static final XmlBundle ourInstance = new XmlBundle();
+public class XmlBundle extends AbstractBundle {
+  public static final String PATH_TO_BUNDLE = "messages.XmlBundle";
+  private static final XmlBundle ourInstance = new XmlBundle();
 
-	private XmlBundle()
-	{
-		super(PATH_TO_BUNDLE);
-	}
+  private XmlBundle() {
+    super(PATH_TO_BUNDLE);
+  }
 
-	public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key)
-	{
-		return ourInstance.getMessage(key);
-	}
+  public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key) {
+    return ourInstance.getMessage(key);
+  }
 
-	public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, Object... params)
-	{
-		return ourInstance.getMessage(key, params);
-	}
+  public static String message(@PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, Object... params) {
+    return ourInstance.getMessage(key, params);
+  }
 }

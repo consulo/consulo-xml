@@ -16,10 +16,10 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementVisitor;
-import com.intellij.util.xml.DomUtil;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomElementVisitor;
+import consulo.xml.util.xml.DomUtil;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Div;
 import org.intellij.plugins.relaxNG.model.Pattern;

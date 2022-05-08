@@ -16,8 +16,8 @@
 package com.intellij.xml.util;
 
 import consulo.component.extension.ExtensionPointName;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlDoctype;
+import consulo.xml.psi.xml.XmlFile;
 
 import javax.annotation.Nullable;
 

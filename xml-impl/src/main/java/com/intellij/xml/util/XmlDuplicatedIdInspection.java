@@ -15,22 +15,18 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.language.psi.ElementManipulators;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiElementVisitor;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiUtilCore;
+import consulo.language.psi.*;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

@@ -21,9 +21,9 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.SubTag;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.SubTag;
 import org.intellij.plugins.relaxNG.model.Pattern;
 
 /**

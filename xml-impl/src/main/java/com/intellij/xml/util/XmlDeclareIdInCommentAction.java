@@ -17,14 +17,14 @@ package com.intellij.xml.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.application.Result;
 import consulo.language.Commenter;
 import consulo.language.Language;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.LanguageCommenters;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;

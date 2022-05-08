@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import com.intellij.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlElement;
 import org.intellij.plugins.relaxNG.model.Div;
 
 /**

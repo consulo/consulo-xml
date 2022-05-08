@@ -22,10 +22,10 @@ import consulo.document.util.TextRange;
 import consulo.language.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 
 /**

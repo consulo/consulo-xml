@@ -18,8 +18,8 @@ package com.intellij.xml.util;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.ExternalDocumentValidator;
 import consulo.language.editor.inspection.scheme.UnfairLocalInspectionTool;

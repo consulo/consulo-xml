@@ -1,9 +1,9 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.xml.actions.validate;
 
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.psi.xml.XmlFile;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.application.ApplicationManager;
 import consulo.language.editor.CommonDataKeys;
 import consulo.language.psi.PsiDocumentManager;

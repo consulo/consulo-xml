@@ -37,13 +37,13 @@ import consulo.language.psi.PsiReferenceBase;
 import consulo.language.psi.ResolveResult;
 import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.language.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import consulo.ide.impl.idea.util.Function;
 import consulo.util.collection.ContainerUtil;
-import com.intellij.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.GenericAttributeValue;
 
 /**
  * Created by IntelliJ IDEA.

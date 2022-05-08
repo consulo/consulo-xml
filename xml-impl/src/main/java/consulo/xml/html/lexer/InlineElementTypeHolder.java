@@ -1,10 +1,10 @@
 package consulo.xml.html.lexer;
 
-import com.intellij.lang.HtmlInlineScriptTokenTypesProvider;
-import com.intellij.lang.LanguageHtmlInlineScriptTokenTypesProvider;
-import com.intellij.lexer.BaseHtmlLexer;
-import com.intellij.lexer.EmbeddedTokenTypesProvider;
-import com.intellij.lexer.HtmlLexer;
+import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
+import consulo.xml.lang.LanguageHtmlInlineScriptTokenTypesProvider;
+import consulo.xml.lexer.BaseHtmlLexer;
+import consulo.xml.lexer.EmbeddedTokenTypesProvider;
+import consulo.xml.lexer.HtmlLexer;
 import consulo.language.ast.IElementType;
 import consulo.application.util.PerApplicationInstance;
 import jakarta.inject.Inject;

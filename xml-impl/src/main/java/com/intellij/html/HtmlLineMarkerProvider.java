@@ -18,7 +18,7 @@ package com.intellij.html;
 import consulo.ide.impl.idea.codeInsight.daemon.LineMarkerProviders;
 import consulo.language.Language;
 import consulo.language.editor.gutter.LineMarkerProvider;
-import com.intellij.lang.xml.XMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.editor.gutter.LineMarkerInfo;

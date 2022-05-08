@@ -21,8 +21,8 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.xml.Namespace;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.Namespace;
 
 /**
  * http://relaxng.org/ns/structure/1.0:grammarElemType interface.

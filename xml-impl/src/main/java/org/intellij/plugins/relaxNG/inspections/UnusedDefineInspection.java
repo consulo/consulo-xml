@@ -38,19 +38,19 @@ import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import com.intellij.ide.highlighter.XmlFileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.logging.Logger;
 import consulo.language.psi.PsiFile;
-import com.intellij.psi.XmlElementVisitor;
+import consulo.xml.psi.XmlElementVisitor;
 import consulo.language.psi.scope.LocalSearchScope;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.search.ReferencesSearch;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomManager;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomManager;
 
 /**
  * Created by IntelliJ IDEA.

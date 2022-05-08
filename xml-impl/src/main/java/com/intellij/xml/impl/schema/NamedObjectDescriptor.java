@@ -20,7 +20,7 @@ import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.module.content.ProjectRootManager;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiElement;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.IncorrectOperationException;
 
 /**

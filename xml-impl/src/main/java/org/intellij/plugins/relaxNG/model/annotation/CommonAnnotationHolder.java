@@ -18,8 +18,8 @@ package org.intellij.plugins.relaxNG.model.annotation;
 
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.PsiElement;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 

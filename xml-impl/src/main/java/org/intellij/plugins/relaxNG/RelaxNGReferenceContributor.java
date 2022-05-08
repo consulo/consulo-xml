@@ -15,15 +15,15 @@
  */
 package org.intellij.plugins.relaxNG;
 
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
-import static com.intellij.patterns.XmlPatterns.xmlTag;
+import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
+import static consulo.xml.patterns.XmlPatterns.xmlAttributeValue;
+import static consulo.xml.patterns.XmlPatterns.xmlTag;
 
 import javax.annotation.Nonnull;
 
 import consulo.language.psi.filter.position.PatternFilter;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
-import com.intellij.patterns.XmlNamedElementPattern;
+import consulo.xml.patterns.XmlNamedElementPattern;
 import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceRegistrar;
 import com.intellij.xml.util.XmlUtil;

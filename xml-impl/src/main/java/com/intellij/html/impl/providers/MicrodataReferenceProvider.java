@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceProvider;
-import com.intellij.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.util.ProcessingContext;
 import consulo.language.psi.PsiReference;
 

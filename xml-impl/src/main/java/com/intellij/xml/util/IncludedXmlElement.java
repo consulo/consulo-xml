@@ -15,20 +15,20 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.impl.internal.psi.PsiAnchor;
 import consulo.language.impl.psi.LightElement;
-import consulo.language.psi.resolve.PsiElementProcessor;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
-import consulo.util.lang.ref.SoftReference;
+import consulo.language.impl.psi.PsiAnchor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiInvalidElementAccessException;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.util.lang.ref.SoftReference;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlText;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -41,7 +41,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
   public IncludedXmlElement(@Nonnull T original, @Nullable PsiElement parent) {
     super(original.getManager(), original.getLanguage());
     //noinspection unchecked
-    T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>)original).getOriginal() : original;
+    T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>) original).getOriginal() : original;
     myOriginal = PsiAnchor.create(realOriginal);
     myRef = new SoftReference<T>(realOriginal);
     myParent = parent;
@@ -62,7 +62,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    IncludedXmlElement element = (IncludedXmlElement)o;
+    IncludedXmlElement element = (IncludedXmlElement) o;
 
     if (!myParent.equals(element.myParent)) return false;
     if (!myOriginal.equals(element.myOriginal)) return false;
@@ -83,7 +83,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
       return element;
     }
 
-    element = (T)myOriginal.retrieve();
+    element = (T) myOriginal.retrieve();
     if (element == null) {
       throw new PsiInvalidElementAccessException(this);
     }
@@ -120,19 +120,19 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
       @Override
       public boolean execute(@Nonnull PsiElement element) {
         if (element instanceof XmlTag) {
-          XmlTag theirParent = ((XmlTag)element).getParentTag();
-          PsiElement parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
-          return processor.execute(new IncludedXmlTag((XmlTag)element, parent));
+          XmlTag theirParent = ((XmlTag) element).getParentTag();
+          PsiElement parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
+          return processor.execute(new IncludedXmlTag((XmlTag) element, parent));
         }
         if (element instanceof XmlAttribute) {
-          XmlTag theirParent = ((XmlAttribute)element).getParent();
-          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
-          return processor.execute(new IncludedXmlAttribute((XmlAttribute)element, parent));
+          XmlTag theirParent = ((XmlAttribute) element).getParent();
+          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
+          return processor.execute(new IncludedXmlAttribute((XmlAttribute) element, parent));
         }
         if (element instanceof XmlText) {
-          XmlTag theirParent = ((XmlText)element).getParentTag();
-          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
-          return processor.execute(new IncludedXmlText((XmlText)element, parent));
+          XmlTag theirParent = ((XmlText) element).getParentTag();
+          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
+          return processor.execute(new IncludedXmlText((XmlText) element, parent));
         }
         return processor.execute(element);
       }

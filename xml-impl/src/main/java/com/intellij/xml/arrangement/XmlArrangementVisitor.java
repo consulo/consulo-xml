@@ -1,11 +1,11 @@
 package com.intellij.xml.arrangement;
 
-import com.intellij.psi.XmlElementVisitor;
+import consulo.xml.psi.XmlElementVisitor;
 import consulo.language.codeStyle.arrangement.DefaultArrangementEntry;
 import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.Stack;
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;

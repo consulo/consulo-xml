@@ -3,7 +3,7 @@ package com.intellij.xml;
 import java.net.URL;
 
 import javax.annotation.Nonnull;
-import com.intellij.javaee.ExternalResourceManagerEx;
+import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.util.io.URLUtil;
 import consulo.component.extension.ExtensionPointName;

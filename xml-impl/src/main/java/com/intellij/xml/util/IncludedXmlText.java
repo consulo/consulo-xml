@@ -18,10 +18,10 @@ package com.intellij.xml.util;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagChild;
-import com.intellij.psi.xml.XmlText;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTagChild;
+import consulo.xml.psi.xml.XmlText;
 import consulo.language.util.IncorrectOperationException;
 
 /**

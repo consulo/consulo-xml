@@ -15,8 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.FileEditorManager;
@@ -31,6 +29,8 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
