@@ -16,15 +16,11 @@
 package consulo.xml.lang.xml;
 
 import com.intellij.xml.util.XmlUtil;
-import consulo.ide.impl.idea.codeInsight.template.impl.TemplateContext;
-import consulo.ide.impl.idea.codeInsight.template.impl.TemplateImpl;
 import consulo.language.editor.surroundWith.SurroundDescriptor;
 import consulo.language.editor.surroundWith.Surrounder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.lang.Pair;
-import consulo.xml.codeInsight.template.HtmlContextType;
-import consulo.xml.codeInsight.template.XmlContextType;
 import consulo.xml.psi.xml.XmlTagChild;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -68,10 +64,5 @@ public class XmlSurroundDescriptor implements SurroundDescriptor {
   @Override
   public boolean isExclusive() {
     return false;
-  }
-
-  protected boolean isEnabled(final TemplateImpl template) {
-    final TemplateContext context = template.getTemplateContext();
-    return context.isEnabled(new XmlContextType()) || context.isEnabled(new HtmlContextType());
   }
 }
