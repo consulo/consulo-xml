@@ -15,15 +15,15 @@
  */
 package consulo.xml.codeInsight.template;
 
-import javax.annotation.Nonnull;
-
+import consulo.language.Language;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.template.context.FileTypeBasedContextType;
+import consulo.language.psi.PsiFile;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.ide.impl.idea.codeInsight.template.FileTypeBasedContextType;
-import consulo.language.Language;
-import consulo.language.editor.CodeInsightBundle;
-import consulo.language.psi.PsiFile;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
