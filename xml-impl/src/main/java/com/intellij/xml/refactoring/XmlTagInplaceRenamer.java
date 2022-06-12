@@ -29,8 +29,6 @@ import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.TextAttributes;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.daemon.impl.quickfix.EmptyExpression;
-import consulo.ide.impl.idea.codeInsight.template.TemplateBuilderImpl;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.highlight.HighlightManager;
 import consulo.language.editor.refactoring.RefactoringBundle;
@@ -158,7 +156,7 @@ public class XmlTagInplaceRenamer {
   }
 
   private static Template buildTemplate(@Nonnull final XmlTag tag, @Nonnull final Pair<ASTNode, ASTNode> pair) {
-    final TemplateBuilderImpl builder = new TemplateBuilderImpl(tag);
+    final TemplateBuilder builder = TemplateBuilderFactory.getInstance().createTemplateBuilder(tag);
 
     final ASTNode selected = pair.first;
     final ASTNode other = pair.second;
