@@ -15,22 +15,21 @@
  */
 package com.intellij.xml.impl.schema;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.intellij.xml.impl.XmlEnumerationDescriptor;
+import com.intellij.xml.util.XmlUtil;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.SmartList;
+import consulo.util.lang.function.PairProcessor;
 import consulo.util.lang.ref.Ref;
-import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.util.PairProcessor;
-import com.intellij.xml.impl.XmlEnumerationDescriptor;
-import com.intellij.xml.util.XmlUtil;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

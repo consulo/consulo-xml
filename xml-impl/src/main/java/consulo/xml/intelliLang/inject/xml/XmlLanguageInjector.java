@@ -17,7 +17,6 @@
 package consulo.xml.intelliLang.inject.xml;
 
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.util.PairProcessor;
 import consulo.ide.impl.idea.util.PatternValuesIndex;
 import consulo.ide.impl.intelliLang.Configuration;
 import consulo.ide.impl.intelliLang.inject.InjectedLanguage;
@@ -37,6 +36,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.Trinity;
+import consulo.util.lang.function.PairProcessor;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
 import consulo.xml.psi.xml.*;
