@@ -16,11 +16,11 @@
 package consulo.xml.copyright.psi;
 
 import com.intellij.xml.util.HtmlUtil;
-import consulo.ide.impl.copyright.impl.CopyrightProfile;
-import consulo.ide.impl.copyright.impl.config.CopyrightFileConfig;
-import consulo.ide.impl.copyright.impl.psi.UpdateCopyrightsProvider;
-import consulo.ide.impl.copyright.impl.psi.UpdatePsiFileCopyright;
-import consulo.ide.impl.copyright.impl.ui.TemplateCommentPanel;
+import consulo.language.copyright.UpdateCopyrightsProvider;
+import consulo.language.copyright.UpdatePsiFileCopyright;
+import consulo.language.copyright.config.CopyrightFileConfig;
+import consulo.language.copyright.config.CopyrightProfile;
+import consulo.language.copyright.ui.TemplateCommentPanel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;

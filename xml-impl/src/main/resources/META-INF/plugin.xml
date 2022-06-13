@@ -584,13 +584,11 @@
 		<projectService serviceImplementation="consulo.xml.javaee.PsiExternalResourceNotifier" lazy="false" />
 
 		<applicationService serviceImplementation="consulo.xml.html.lexer.InlineElementTypeHolder" />
-	</extensions>
 
-	<extensions defaultExtensionNs="com.intellij.copyright">
-		<updater filetype="XML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<updater filetype="HTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<updater filetype="XHTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<updater filetype="DTD" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<copyright.updater filetype="XML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<copyright.updater filetype="HTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<copyright.updater filetype="XHTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
+		<copyright.updater filetype="DTD" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">
