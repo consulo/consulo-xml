@@ -1,14 +1,15 @@
 package org.intellij.plugins.relaxNG.xml;
 
-import java.net.URL;
+import com.intellij.xml.Html5SchemaProvider;
+import consulo.annotation.component.ExtensionImpl;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.xml.Html5SchemaProvider;
+import java.net.URL;
 
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class RngHtml5SchemaProvider extends Html5SchemaProvider {
   @Nonnull
   @Override

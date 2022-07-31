@@ -19,18 +19,18 @@
  */
 package consulo.xml.lang.xml;
 
+import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenSet;
+import consulo.language.editor.completion.WordCompletionElementFilter;
+import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.ide.impl.idea.lang.DefaultWordCompletionFilter;
-import consulo.language.ast.IElementType;
-import consulo.language.version.LanguageVersion;
 
-public class XmlWordCompletionFilter extends DefaultWordCompletionFilter {
+public abstract class XmlWordCompletionFilter implements WordCompletionElementFilter {
   private final static TokenSet ENABLED_TOKENS = TokenSet.create(XmlElementType.XML_CDATA,
                                                                  XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN,
                                                                  XmlTokenType.XML_DATA_CHARACTERS);
   public boolean isWordCompletionEnabledIn(final IElementType element, LanguageVersion languageVersion) {
-    return super.isWordCompletionEnabledIn(element, languageVersion) || ENABLED_TOKENS.contains(element);
+    return WordCompletionElementFilter.super.isWordCompletionEnabledIn(element, languageVersion) || ENABLED_TOKENS.contains(element);
   }
 }

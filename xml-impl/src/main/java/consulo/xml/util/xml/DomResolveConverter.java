@@ -15,19 +15,19 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.application.util.CachedValuesManager;
-import consulo.language.editor.CodeInsightBundle;
-import consulo.application.util.TypePresentationService;
-import consulo.language.psi.PsiElement;
+import consulo.application.presentation.TypePresentationService;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
 import consulo.application.util.ConcurrentFactoryMap;
-import consulo.util.collection.SoftFactoryMap;
-import consulo.xml.util.xml.highlighting.ResolvingElementQuickFix;
+import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.pom.PomService;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.project.Project;
+import consulo.util.collection.SoftFactoryMap;
+import consulo.xml.util.xml.highlighting.ResolvingElementQuickFix;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -108,8 +108,7 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
   }
 
   public String getErrorMessage(final String s, final ConvertContext context) {
-
-    return CodeInsightBundle.message("error.cannot.resolve.0.1", TypePresentationService.getInstance().getTypePresentableName(myClass), s);
+    return CodeInsightBundle.message("error.cannot.resolve.0.1", TypePresentationService.getInstance().getTypeName(myClass), s);
   }
 
   public final String toString(final T t, final ConvertContext context) {

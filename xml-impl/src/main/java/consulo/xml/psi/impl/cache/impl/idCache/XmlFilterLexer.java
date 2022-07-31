@@ -15,13 +15,13 @@
  */
 package consulo.xml.psi.impl.cache.impl.idCache;
 
-import consulo.ide.impl.psi.impl.cache.impl.BaseFilterLexer;
 import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
 import consulo.language.ast.TokenType;
 import consulo.language.lexer.Lexer;
-import consulo.ide.impl.psi.impl.cache.impl.OccurrenceConsumer;
 import consulo.language.psi.search.UsageSearchContext;
-import consulo.language.ast.TokenSet;
+import consulo.language.psi.stub.BaseFilterLexer;
+import consulo.language.psi.stub.OccurrenceConsumer;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 

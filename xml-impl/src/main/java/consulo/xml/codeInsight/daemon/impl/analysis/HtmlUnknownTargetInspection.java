@@ -15,15 +15,15 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nonnull;
-
-import consulo.language.psi.PsiReference;
 import com.intellij.xml.util.AnchorReferenceImpl;
+import consulo.language.psi.PsiReference;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
+public abstract class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
   @Nonnull
   @Override
   public String getShortName() {

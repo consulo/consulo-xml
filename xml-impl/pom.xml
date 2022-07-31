@@ -47,11 +47,11 @@
 				<artifactId>maven-consulo-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
-					<repositoryChannel>nightly</repositoryChannel>
-					<!--<dependencies>-->
-						<!--<dependency>com.intellij.spellchecker</dependency>-->
-						<!--<dependency>com.intellij.regexp</dependency>-->
-					<!--</dependencies>-->
+					<repositoryChannel>valhalla</repositoryChannel>
+					<dependencies>
+						<dependency>com.intellij.spellchecker</dependency>
+						<dependency>com.intellij.regexp</dependency>
+					</dependencies>
 					<packaging>
 						<skip>${dev.mode}</skip>
 						<version>${build.number}</version>

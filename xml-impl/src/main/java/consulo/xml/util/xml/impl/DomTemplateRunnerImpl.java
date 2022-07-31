@@ -16,14 +16,14 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.codeEditor.Editor;
-import consulo.project.Project;
+import consulo.language.editor.template.Template;
+import consulo.language.editor.template.TemplateManager;
+import consulo.language.editor.template.TemplateSettings;
 import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.actions.generate.DomTemplateRunner;
-import consulo.ide.impl.idea.codeInsight.template.impl.TemplateSettings;
-import consulo.language.editor.template.Template;
-import consulo.language.editor.template.TemplateManager;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

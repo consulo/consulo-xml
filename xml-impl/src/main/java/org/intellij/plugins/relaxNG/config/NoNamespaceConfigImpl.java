@@ -15,6 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.config;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.component.persist.PersistentStateComponent;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 @Singleton
 @State(name = "NoNamespaceConfig.Mappings", storages = @Storage(file = StoragePathMacros.WORKSPACE_FILE))
+@ServiceImpl
 class NoNamespaceConfigImpl extends NoNamespaceConfig implements PersistentStateComponent<NoNamespaceConfigImpl.Mappings>, Disposable
 {
 	private final Map<VirtualFilePointer, VirtualFilePointer> myMappings = new HashMap<>();

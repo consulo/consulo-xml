@@ -15,25 +15,27 @@
  */
 package consulo.xml.psi;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.ide.ServiceManager;
 import consulo.language.Language;
 import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
-import org.jetbrains.annotations.NonNls;
-import consulo.ide.ServiceManager;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
-import consulo.language.util.IncorrectOperationException;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class XmlElementFactory
 {
-
 	public static XmlElementFactory getInstance(Project project)
 	{
 		return ServiceManager.getService(project, XmlElementFactory.class);

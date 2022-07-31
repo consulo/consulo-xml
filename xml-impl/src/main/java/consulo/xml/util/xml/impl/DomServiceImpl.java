@@ -17,6 +17,7 @@
 package consulo.xml.util.xml.impl;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ServiceImpl;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
@@ -56,6 +57,7 @@ import java.util.List;
  * @author Gregory.Shrago
  */
 @Singleton
+@ServiceImpl
 public class DomServiceImpl extends DomService {
   private static final Key<CachedValue<XmlFileHeader>> ROOT_TAG_NS_KEY = Key.create("rootTag&ns");
   private static final UserDataCache<CachedValue<XmlFileHeader>,XmlFile,Object> ourRootTagCache = new UserDataCache<CachedValue<XmlFileHeader>, XmlFile, Object>() {

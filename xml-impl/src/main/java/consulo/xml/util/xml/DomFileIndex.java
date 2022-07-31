@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.util.xml.impl.DomApplicationComponent;
 import consulo.index.io.DataIndexer;
@@ -37,6 +38,7 @@ import java.util.*;
 /**
  * @author peter
  */
+@ExtensionImpl
 public class DomFileIndex extends ScalarIndexExtension<String>
 {
 	public static final ID<String, Void> NAME = ID.create("DomFileIndex");

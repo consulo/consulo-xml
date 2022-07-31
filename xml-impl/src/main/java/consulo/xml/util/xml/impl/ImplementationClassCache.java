@@ -15,21 +15,20 @@
  */
 package consulo.xml.util.xml.impl;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import consulo.component.extension.ExtensionPointName;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.util.collection.MultiMap;
 import consulo.xml.util.xml.DomReflectionUtil;
 import consulo.xml.util.xml.Implementation;
-import consulo.disposer.Disposable;
-import consulo.disposer.Disposer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * @author peter
@@ -55,7 +54,7 @@ class ImplementationClassCache {
   });
 
   ImplementationClassCache(ExtensionPointName<DomImplementationClassEP> epName) {
-    for (DomImplementationClassEP ep : epName.getExtensions()) {
+    for (DomImplementationClassEP ep : epName.getExtensionList()) {
       myImplementationClasses.putValue(ep.interfaceName, ep);
     }
   }

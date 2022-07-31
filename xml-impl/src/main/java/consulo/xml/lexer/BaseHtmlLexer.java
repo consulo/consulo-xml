@@ -15,10 +15,6 @@
  */
 package consulo.xml.lexer;
 
-import consulo.xml.lang.HtmlScriptContentProvider;
-import consulo.xml.lang.LanguageHtmlScriptContentProvider;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.psi.xml.XmlTokenType;
 import com.intellij.xml.util.documentation.HtmlDescriptorsTable;
 import consulo.language.Language;
 import consulo.language.ast.IElementType;
@@ -32,6 +28,9 @@ import consulo.language.version.LanguageVersionUtil;
 import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
+import consulo.xml.lang.HtmlScriptContentProvider;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -263,7 +262,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	{
 		if(StringUtil.isEmpty(mimeType))
 		{
-			return ourDefaultLanguage != null ? LanguageHtmlScriptContentProvider.getScriptContentProvider(ourDefaultLanguage) : null;
+			return ourDefaultLanguage != null ? HtmlScriptContentProvider.forLanguage(ourDefaultLanguage) : null;
 		}
 		Collection<Language> instancesByMimeType = Language.findInstancesByMimeType(mimeType.trim());
 		if(instancesByMimeType.isEmpty() && mimeType.contains("template"))
@@ -272,7 +271,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 		}
 		for(Language language : instancesByMimeType)
 		{
-			HtmlScriptContentProvider scriptContentProvider = LanguageHtmlScriptContentProvider.getScriptContentProvider(language);
+			HtmlScriptContentProvider scriptContentProvider = HtmlScriptContentProvider.forLanguage(language);
 			if(scriptContentProvider != null)
 			{
 				return scriptContentProvider;

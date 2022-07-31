@@ -31,8 +31,8 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagChild;
 
-public class DefaultXmlPsiPolicy implements XmlPsiPolicy{
-  private static final Logger LOG = Logger.getInstance("#DefaultXmlPsiPolicy");
+public abstract class DefaultXmlPsiPolicy implements XmlPsiPolicy {
+  private static final Logger LOG = Logger.getInstance(DefaultXmlPsiPolicy.class);
 
   public ASTNode encodeXmlTextContents(String displayText, PsiElement text) {
     final PsiFile containingFile = text.getContainingFile();

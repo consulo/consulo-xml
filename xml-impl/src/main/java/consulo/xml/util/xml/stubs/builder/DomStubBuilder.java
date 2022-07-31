@@ -16,6 +16,7 @@
 package consulo.xml.util.xml.stubs.builder;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.component.extension.Extensions;
 import consulo.ide.impl.idea.util.indexing.FileBasedIndexImpl;
 import consulo.language.psi.PsiFile;
@@ -36,14 +37,23 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.stubs.FileStub;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Dmitry Avdeev
  * Date: 8/2/12
  */
+@ExtensionImpl
 public class DomStubBuilder implements BinaryFileStubBuilder {
 
   public final static Key<FileContent> CONTENT_FOR_DOM_STUBS = Key.create("dom stubs content");
   private final static Logger LOG = Logger.getInstance(DomStubBuilder.class);
+
+  @Nonnull
+  @Override
+  public FileType getFileType() {
+    return XmlFileType.INSTANCE;
+  }
 
   @Override
   public boolean acceptsFile(VirtualFile file) {
@@ -88,8 +98,7 @@ public class DomStubBuilder implements BinaryFileStubBuilder {
   @Override
   public int getStubVersion() {
     int version = 11;
-    DomFileDescription[] descriptions = Extensions.getExtensions(DomFileDescription.EP_NAME);
-    for (DomFileDescription description : descriptions) {
+    for (DomFileDescription description : DomFileDescription.EP_NAME.getExtensionList()) {
       version += description.getStubVersion();
     }
     return version;

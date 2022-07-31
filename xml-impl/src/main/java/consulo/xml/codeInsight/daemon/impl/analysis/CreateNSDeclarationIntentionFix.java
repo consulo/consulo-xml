@@ -27,10 +27,9 @@ import consulo.application.progress.ProgressManager;
 import consulo.codeEditor.Editor;
 import consulo.document.RangeMarker;
 import consulo.fileEditor.FileEditorManager;
-import consulo.ide.impl.idea.codeInsight.daemon.impl.ShowAutoImportPass;
 import consulo.ide.impl.idea.codeInsight.daemon.impl.VisibleHighlightingPassFactory;
-import consulo.ide.impl.psi.impl.cache.impl.id.IdTableBuilding;
 import consulo.ide.impl.ui.impl.PopupChooserBuilder;
+import consulo.language.editor.AutoImportHelper;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.hint.HintManager;
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -42,6 +41,7 @@ import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.stub.IdTableBuilding;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.project.Project;
@@ -218,7 +218,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     if (element == null) return false;
     final Set<String> namespaces = getXmlExtension().guessUnboundNamespaces(element, getFile());
     if (!namespaces.isEmpty()) {
-      final String message = ShowAutoImportPass.getMessage(namespaces.size() > 1, namespaces.iterator().next());
+      final String message = AutoImportHelper.getInstance(element.getProject()).getImportMessage(namespaces.size() > 1, namespaces.iterator().next());
       final String title = getTitle();
       final ImportNSAction action = new ImportNSAction(namespaces, getFile(), element, editor, title);
       if (element instanceof XmlTag) {

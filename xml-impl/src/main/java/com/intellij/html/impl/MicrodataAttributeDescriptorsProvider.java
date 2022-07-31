@@ -15,37 +15,31 @@
  */
 package com.intellij.html.impl;
 
-import static com.intellij.html.impl.util.MicrodataUtil.ITEM_ID;
-import static com.intellij.html.impl.util.MicrodataUtil.ITEM_PROP;
-import static com.intellij.html.impl.util.MicrodataUtil.ITEM_REF;
-import static com.intellij.html.impl.util.MicrodataUtil.ITEM_SCOPE;
-import static com.intellij.html.impl.util.MicrodataUtil.ITEM_TYPE;
-import static com.intellij.html.impl.util.MicrodataUtil.extractProperties;
-import static com.intellij.html.impl.util.MicrodataUtil.findScopeTag;
-import static com.intellij.html.impl.util.MicrodataUtil.hasScopeTag;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.util.collection.ArrayUtil;
-import consulo.util.lang.StringUtil;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;
 import com.intellij.xml.impl.schema.AnyXmlAttributeDescriptor;
 import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.intellij.html.impl.util.MicrodataUtil.*;
 
 /**
  * @author: Fedor.Korotkov
  */
+@ExtensionImpl
 public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider
 {
 	@Override

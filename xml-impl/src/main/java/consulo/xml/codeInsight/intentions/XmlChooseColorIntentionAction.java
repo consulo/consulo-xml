@@ -15,30 +15,29 @@
  */
 package consulo.xml.codeInsight.intentions;
 
-import java.awt.Color;
-
-import javax.annotation.Nonnull;
-import javax.swing.JComponent;
-
+import consulo.application.Result;
 import consulo.codeEditor.Editor;
-import consulo.ide.impl.idea.codeInsight.intention.PsiElementBaseIntentionAction;
 import consulo.ide.impl.idea.ui.ColorChooser;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.FileModificationService;
-import consulo.application.Result;
 import consulo.language.editor.WriteCommandAction;
-import consulo.language.psi.util.PsiTreeUtil;
-import consulo.project.Project;
+import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
 import consulo.ui.ex.JBColor;
 import consulo.ui.ex.awt.util.ColorUtil;
 import consulo.util.lang.Comparing;
-import consulo.language.util.IncorrectOperationException;
 import consulo.util.lang.StringUtil;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Konstantin Bulenkov

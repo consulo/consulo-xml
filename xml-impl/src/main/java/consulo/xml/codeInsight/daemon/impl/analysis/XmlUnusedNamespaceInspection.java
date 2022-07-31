@@ -15,47 +15,41 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.xml.DefaultXmlExtension;
+import com.intellij.xml.XmlBundle;
+import com.intellij.xml.util.XmlRefCountHolder;
+import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.component.extension.Extensions;
+import consulo.document.Document;
 import consulo.document.util.TextRange;
 import consulo.language.editor.FileModificationService;
-import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.language.psi.PsiElementVisitor;
-import consulo.project.Project;
-import consulo.util.collection.ArrayUtil;
-import org.jetbrains.annotations.Nls;
-
-import javax.annotation.Nullable;
-
-import consulo.ide.impl.idea.codeInsight.daemon.ImplicitUsageProvider;
+import consulo.language.editor.ImplicitUsageProvider;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.document.Document;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.*;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Comparing;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiReference;
-import consulo.language.psi.SmartPointerManager;
-import consulo.language.psi.SmartPsiElementPointer;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.DefaultXmlExtension;
-import com.intellij.xml.XmlBundle;
-import com.intellij.xml.util.XmlRefCountHolder;
-import com.intellij.xml.util.XmlUtil;
+import org.jetbrains.annotations.Nls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl
 public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool {
 
   private static final String NAMESPACE_LOCATION_IS_NEVER_USED = "Namespace location is never used";
@@ -79,8 +73,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         String declaredPrefix = getDeclaredPrefix(attribute);
         if (namespace != null && !refCountHolder.isInUse(declaredPrefix)) {
 
-          ImplicitUsageProvider[] implicitUsageProviders = Extensions.getExtensions(ImplicitUsageProvider.EP_NAME);
-          for (ImplicitUsageProvider provider : implicitUsageProviders) {
+          for (ImplicitUsageProvider provider : ImplicitUsageProvider.EP_NAME.getExtensionList()) {
             if (provider.isImplicitUsage(attribute)) return;
           }
 

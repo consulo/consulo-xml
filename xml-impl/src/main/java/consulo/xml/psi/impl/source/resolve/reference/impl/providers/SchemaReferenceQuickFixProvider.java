@@ -15,62 +15,51 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.intention.QuickFixActionRegistrar;
 import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
-import consulo.language.editor.intention.QuickFixActionRegistrar;
-import com.intellij.xml.XmlBundle;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
  */
-public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<TypeOrElementOrAttributeReference>
-{
-	@Override
-	public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar)
-	{
-		if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference)
-		{
-			registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.complex.type.intention.name", SchemaReferencesProvider.COMPLEX_TYPE_TAG_NAME, ref));
-			registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.simple.type.intention.name", SchemaReferencesProvider.SIMPLE_TYPE_TAG_NAME, ref));
-		}
-		else if(ref.getType() != null)
-		{
-			@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String key = null;
-			@NonNls String declarationTagName = null;
+@ExtensionImpl
+public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<TypeOrElementOrAttributeReference> {
+  @Override
+  public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+    if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference) {
+      registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.complex.type.intention.name", SchemaReferencesProvider.COMPLEX_TYPE_TAG_NAME, ref));
+      registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.simple.type.intention.name", SchemaReferencesProvider.SIMPLE_TYPE_TAG_NAME, ref));
+    } else if (ref.getType() != null) {
+      @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String key = null;
+      @NonNls String declarationTagName = null;
 
-			if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.ElementReference)
-			{
-				declarationTagName = SchemaReferencesProvider.ELEMENT_TAG_NAME;
-				key = "xml.schema.create.element.intention.name";
-			}
-			else if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeReference)
-			{
-				declarationTagName = SchemaReferencesProvider.ATTRIBUTE_TAG_NAME;
-				key = "xml.schema.create.attribute.intention.name";
-			}
-			else if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeGroupReference)
-			{
-				declarationTagName = SchemaReferencesProvider.ATTRIBUTE_GROUP_TAG_NAME;
-				key = "xml.schema.create.attribute.group.intention.name";
-			}
-			else if(ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.GroupReference)
-			{
-				declarationTagName = SchemaReferencesProvider.GROUP_TAG_NAME;
-				key = "xml.schema.create.group.intention.name";
-			}
+      if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.ElementReference) {
+        declarationTagName = SchemaReferencesProvider.ELEMENT_TAG_NAME;
+        key = "xml.schema.create.element.intention.name";
+      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeReference) {
+        declarationTagName = SchemaReferencesProvider.ATTRIBUTE_TAG_NAME;
+        key = "xml.schema.create.attribute.intention.name";
+      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeGroupReference) {
+        declarationTagName = SchemaReferencesProvider.ATTRIBUTE_GROUP_TAG_NAME;
+        key = "xml.schema.create.attribute.group.intention.name";
+      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.GroupReference) {
+        declarationTagName = SchemaReferencesProvider.GROUP_TAG_NAME;
+        key = "xml.schema.create.group.intention.name";
+      }
 
-			assert key != null;
-			registrar.register(new CreateXmlElementIntentionAction(key, declarationTagName, ref));
-		}
-	}
+      assert key != null;
+      registrar.register(new CreateXmlElementIntentionAction(key, declarationTagName, ref));
+    }
+  }
 
-	@Nonnull
-	@Override
-	public Class<TypeOrElementOrAttributeReference> getReferenceClass()
-	{
-		return TypeOrElementOrAttributeReference.class;
-	}
+  @Nonnull
+  @Override
+  public Class<TypeOrElementOrAttributeReference> getReferenceClass() {
+    return TypeOrElementOrAttributeReference.class;
+  }
 }

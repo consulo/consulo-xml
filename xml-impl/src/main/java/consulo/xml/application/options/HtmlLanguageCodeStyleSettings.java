@@ -15,19 +15,21 @@
  */
 package consulo.xml.application.options;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.html.HTMLLanguage;
 import consulo.language.codeStyle.CommonCodeStyleSettings;
-import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
-import consulo.ide.impl.idea.application.options.SmartIndentOptionsEditor;
 import consulo.language.codeStyle.setting.IndentOptionsEditor;
 import consulo.language.codeStyle.setting.LanguageCodeStyleSettingsProvider;
+import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
+import consulo.language.codeStyle.ui.setting.SmartIndentOptionsEditor;
+import consulo.xml.lang.html.HTMLLanguage;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Rustam Vishnyakov
  */
+@ExtensionImpl
 public class HtmlLanguageCodeStyleSettings extends LanguageCodeStyleSettingsProvider {
   @Nonnull
   @Override

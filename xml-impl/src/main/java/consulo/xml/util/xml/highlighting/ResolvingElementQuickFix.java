@@ -16,7 +16,7 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import consulo.application.util.TypePresentationService;
+import consulo.application.presentation.TypePresentationService;
 import consulo.codeEditor.Editor;
 import consulo.dataContext.DataManager;
 import consulo.ide.impl.idea.util.Consumer;
@@ -59,7 +59,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
     myParents = parents;
     myChildDescription = childDescription;
 
-    myTypeName = TypePresentationService.getInstance().getTypePresentableName(myClazz);
+    myTypeName = TypePresentationService.getInstance().getTypeNameOrStub(myClazz);
   }
 
   public void setTypeName(final String typeName) {

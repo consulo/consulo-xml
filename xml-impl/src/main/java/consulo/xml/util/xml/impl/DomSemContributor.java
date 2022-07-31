@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.util.RecursionManager;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.psi.PsiElement;
@@ -55,6 +56,7 @@ import static consulo.xml.patterns.XmlPatterns.*;
 /**
  * @author peter
  */
+@ExtensionImpl
 public class DomSemContributor extends SemContributor {
   private final SemService mySemService;
 

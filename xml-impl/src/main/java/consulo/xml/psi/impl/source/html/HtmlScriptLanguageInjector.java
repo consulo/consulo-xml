@@ -15,21 +15,26 @@
  */
 package consulo.xml.psi.impl.source.html;
 
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
 import consulo.document.util.TextRange;
 import consulo.language.Language;
-import consulo.language.inject.MultiHostRegistrar;
-import consulo.language.util.LanguageUtil;
 import consulo.language.inject.MultiHostInjector;
+import consulo.language.inject.MultiHostRegistrar;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.util.LanguageUtil;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
+import javax.annotation.Nonnull;
+import java.util.Collection;
+
 public class HtmlScriptLanguageInjector implements MultiHostInjector {
+  @Nonnull
+  @Override
+  public Class<? extends PsiElement> getElementClass() {
+    return XmlText.class;
+  }
+
   @Override
   public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host) {
     if (!(host instanceof XmlText)) {

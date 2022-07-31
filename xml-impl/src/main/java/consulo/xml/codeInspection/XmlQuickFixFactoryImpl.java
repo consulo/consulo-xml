@@ -15,41 +15,39 @@
  */
 package consulo.xml.codeInspection;
 
+import consulo.annotation.component.ServiceImpl;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
+import consulo.language.psi.PsiElement;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.xml.codeInsight.daemon.impl.analysis.InsertRequiredAttributeFix;
 import consulo.xml.codeInspection.htmlInspections.AddAttributeValueIntentionFix;
-import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Singleton
-public class XmlQuickFixFactoryImpl extends XmlQuickFixFactory
-{
-	@Nonnull
-	@Override
-	public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values)
-	{
-		return new InsertRequiredAttributeFix(tag, attrName, values);
-	}
+@ServiceImpl
+public class XmlQuickFixFactoryImpl extends XmlQuickFixFactory {
+  @Nonnull
+  @Override
+  public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values) {
+    return new InsertRequiredAttributeFix(tag, attrName, values);
+  }
 
-	@Nonnull
-	@Override
-	public LocalQuickFix createNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix, @Nullable XmlToken token)
-	{
-		return new CreateNSDeclarationIntentionFix(element, namespacePrefix, token);
-	}
+  @Nonnull
+  @Override
+  public LocalQuickFix createNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix, @Nullable XmlToken token) {
+    return new CreateNSDeclarationIntentionFix(element, namespacePrefix, token);
+  }
 
-	@Nonnull
-	@Override
-	public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute)
-	{
-		return new AddAttributeValueIntentionFix(attribute);
-	}
+  @Nonnull
+  @Override
+  public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute) {
+    return new AddAttributeValueIntentionFix(attribute);
+  }
 }

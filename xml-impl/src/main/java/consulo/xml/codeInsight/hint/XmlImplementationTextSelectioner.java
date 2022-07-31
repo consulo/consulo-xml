@@ -20,15 +20,19 @@
  */
 package consulo.xml.codeInsight.hint;
 
-import javax.annotation.Nonnull;
-
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.editor.ImplementationTextSelectioner;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlTag;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
   private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
 
@@ -43,5 +47,11 @@ public class XmlImplementationTextSelectioner implements ImplementationTextSelec
       LOG.assertTrue(false);
     }
     return element.getTextRange().getEndOffset();
+  }
+
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
   }
 }

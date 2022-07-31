@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.include.FileIncludeInfo;
 import consulo.language.psi.include.FileIncludeProvider;
 import consulo.language.psi.stub.FileContent;
@@ -24,6 +24,7 @@ import consulo.util.lang.CharArrayUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.function.Consumer;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl
 public class XIncludeProvider extends FileIncludeProvider {
   @Nonnull
   @Override

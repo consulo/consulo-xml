@@ -15,6 +15,8 @@
  */
 package consulo.xml.lang.dtd;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.IFileElementType;
@@ -37,36 +39,52 @@ import javax.annotation.Nonnull;
 /**
  * @author max
  */
-public class DTDParserDefinition extends XMLParserDefinition {
-  public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    return LanguageUtil.canStickTokensTogetherByLexer(left, right, new DtdLexer(false));
-  }
+@ExtensionImpl
+public class DTDParserDefinition extends XMLParserDefinition
+{
+	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right)
+	{
+		return LanguageUtil.canStickTokensTogetherByLexer(left, right, new DtdLexer(false));
+	}
 
-  public PsiFile createFile(FileViewProvider viewProvider) {
-    return new XmlFileImpl(viewProvider, XmlElementType.DTD_FILE);
-  }
+	public PsiFile createFile(FileViewProvider viewProvider)
+	{
+		return new XmlFileImpl(viewProvider, XmlElementType.DTD_FILE);
+	}
 
-  @Nonnull
-  @Override
-  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
-    return new PsiParser() {
-      @Nonnull
-      @Override
-      public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
-        return new DtdParsing(root, XmlEntityDecl.EntityContextType.GENERIC_XML, builder).parse();
-      }
-    };
-  }
+	@Nonnull
+	@Override
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
+	{
+		return new PsiParser()
+		{
+			@Nonnull
+			@Override
+			public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion)
+			{
+				return new DtdParsing(root, XmlEntityDecl.EntityContextType.GENERIC_XML, builder).parse();
+			}
+		};
+	}
 
-  @Nonnull
-  @Override
-  public IFileElementType getFileNodeType() {
-    return XmlElementType.DTD_FILE;
-  }
+	@Nonnull
+	@Override
+	public IFileElementType getFileNodeType()
+	{
+		return XmlElementType.DTD_FILE;
+	}
 
-  @Nonnull
-  @Override
-  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
-    return new DtdLexer(false);
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return DTDLanguage.INSTANCE;
+	}
+
+	@Nonnull
+	@Override
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	{
+		return new DtdLexer(false);
+	}
 }

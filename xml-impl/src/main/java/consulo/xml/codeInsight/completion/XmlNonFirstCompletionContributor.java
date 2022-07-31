@@ -15,6 +15,8 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElementType;
@@ -36,6 +38,7 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
 /**
  * @author yole
  */
+@ExtensionImpl(id = "xmlNonFirst", order = "after xml")
 public class XmlNonFirstCompletionContributor extends CompletionContributor
 {
 	public XmlNonFirstCompletionContributor()
@@ -72,5 +75,12 @@ public class XmlNonFirstCompletionContributor extends CompletionContributor
 				}
 			}
 		});
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return Language.ANY;
 	}
 }

@@ -15,25 +15,26 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.ide.impl.idea.codeInsight.intention.impl.BaseIntentionAction;
+import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
+import consulo.language.editor.intention.BaseIntentionAction;
+import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.XmlFile;
-import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlBundle;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.project.Project;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author mike
  */
-abstract class BaseExtResourceAction extends BaseIntentionAction {
+abstract class BaseExtResourceAction extends BaseIntentionAction
+{
 
   public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     if (!(file instanceof XmlFile)) return false;

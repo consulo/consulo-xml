@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.component.util.CompositeModificationTracker;
 import consulo.component.util.ModificationTracker;
 import consulo.disposer.Disposable;
@@ -24,19 +24,20 @@ import consulo.ide.ServiceManager;
 import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiManager;
 import consulo.module.Module;
 import consulo.project.Project;
-import consulo.language.psi.PsiManager;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.xml.util.xml.reflect.DomGenericInfo;
-import consulo.project.ProjectComponent;
 import consulo.util.dataholder.Key;
 import consulo.util.dataholder.NotNullLazyKey;
 import consulo.util.lang.function.Condition;
 import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
+import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.xml.util.xml.reflect.DomGenericInfo;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -47,6 +48,7 @@ import java.lang.reflect.Type;
 /**
  * @author peter
  */
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomManager extends CompositeModificationTracker implements ModificationTracker
 {
 	public static final Key<Module> MOCK_ELEMENT_MODULE = Key.create("MockElementModule");
@@ -136,16 +138,6 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	public abstract <T extends DomElement> T createStableValue(Factory<T> provider);
 
 	public abstract <T> T createStableValue(final Factory<T> provider, final Condition<T> validator);
-
-	/**
-	 * Registers a new {@link DomFileDescription} within the manager. The description parameter describes some DOM
-	 * parameters and restrictions to the particular XML files, that need DOM support. Should be called on
-	 * {@link ProjectComponent} loading.
-	 *
-	 * @param description The description in question
-	 * @deprecated Make your file description an extension (see {@link DomFileDescription#EP_NAME})
-	 */
-	public abstract void registerFileDescription(DomFileDescription description);
 
 	/**
 	 * @return {@link ConverterManager} instance

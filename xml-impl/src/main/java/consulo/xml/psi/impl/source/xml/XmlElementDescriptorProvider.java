@@ -15,6 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
@@ -23,8 +25,9 @@ import javax.annotation.Nullable;
 /**
  * @author yole
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlElementDescriptorProvider {
-  ExtensionPointName<XmlElementDescriptorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.elementDescriptorProvider");
+  ExtensionPointName<XmlElementDescriptorProvider> EP_NAME = ExtensionPointName.create(XmlElementDescriptorProvider.class);
 
   @Nullable
   XmlElementDescriptor getDescriptor(XmlTag tag);

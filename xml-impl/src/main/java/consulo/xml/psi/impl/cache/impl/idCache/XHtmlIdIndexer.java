@@ -15,11 +15,17 @@
  */
 package consulo.xml.psi.impl.cache.impl.idCache;
 
-import consulo.xml.lexer.XHtmlHighlightingLexer;
-import consulo.ide.impl.psi.impl.cache.impl.OccurrenceConsumer;
-import consulo.ide.impl.psi.impl.cache.impl.id.LexerBasedIdIndexer;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.lexer.Lexer;
+import consulo.language.psi.stub.LexerBasedIdIndexer;
+import consulo.language.psi.stub.OccurrenceConsumer;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.lexer.XHtmlHighlightingLexer;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class XHtmlIdIndexer extends LexerBasedIdIndexer {
   public Lexer createLexer(final OccurrenceConsumer consumer) {
     return createIndexingLexer(consumer);
@@ -27,5 +33,11 @@ public class XHtmlIdIndexer extends LexerBasedIdIndexer {
 
   static XHtmlFilterLexer createIndexingLexer(OccurrenceConsumer consumer) {
     return new XHtmlFilterLexer(new XHtmlHighlightingLexer(), consumer);
+  }
+
+  @Nonnull
+  @Override
+  public FileType getFileType() {
+    return XHtmlFileType.INSTANCE;
   }
 }

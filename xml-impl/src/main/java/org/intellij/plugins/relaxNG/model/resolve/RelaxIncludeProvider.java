@@ -1,5 +1,6 @@
 package org.intellij.plugins.relaxNG.model.resolve;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.language.psi.include.FileIncludeInfo;
 import consulo.language.psi.include.FileIncludeProvider;
@@ -20,10 +21,10 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /*
-* Created by IntelliJ IDEA.
 * User: sweinreuter
 * Date: 09.06.2010
 */
+@ExtensionImpl
 public class RelaxIncludeProvider extends FileIncludeProvider {
   @Nonnull
   @Override

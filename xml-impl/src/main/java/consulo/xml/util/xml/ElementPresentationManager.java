@@ -15,26 +15,25 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.application.presentation.TypePresentationService;
+import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.util.Iconable;
-import consulo.util.lang.Comparing;
-import consulo.language.psi.PsiElement;
+import consulo.ide.ServiceManager;
 import consulo.ide.impl.idea.util.Function;
 import consulo.ide.impl.idea.util.NullableFunction;
-import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.application.util.ConcurrentFactoryMap;
-import consulo.util.collection.ContainerUtil;
-import consulo.application.util.TypePresentationService;
-import consulo.ide.ServiceManager;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
+import consulo.util.lang.reflect.ReflectionUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,14 +52,7 @@ public abstract class ElementPresentationManager
 		return null;
 	});
 
-	private final static Function<Object, String> DEFAULT_NAMER = new Function<Object, String>()
-	{
-		@Nullable
-		public String fun(final Object element)
-		{
-			return getElementName(element);
-		}
-	};
+	private final static Function<Object, String> DEFAULT_NAMER = ElementPresentationManager::getElementName;
 
 	public static ElementPresentationManager getInstance()
 	{
@@ -94,53 +86,12 @@ public abstract class ElementPresentationManager
 	@Nonnull
 	public abstract <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags);
 
-
-	private static final List<Function<Object, String>> ourNameProviders = new ArrayList<>();
-	private static final List<Function<Object, String>> ourDocumentationProviders = new ArrayList<>();
-	private static final List<Function<Object, Image>> ourIconProviders = new ArrayList<>();
-
-	static
+	public static <T> NullableFunction<T, String> NAMER()
 	{
-		ourIconProviders.add(o -> o instanceof Iconable ? ((Iconable) o).getIcon(Iconable.ICON_FLAG_READ_STATUS) : null);
+		return o -> getElementName(o);
 	}
 
-	/**
-	 * @see com.intellij.ide.presentation.Presentation#provider()
-	 * @deprecated
-	 */
-	public static void registerNameProvider(Function<Object, String> function)
-	{
-		ourNameProviders.add(function);
-	}
-
-	/**
-	 * @see Documentation
-	 * @deprecated
-	 */
-	public static void registerDocumentationProvider(Function<Object, String> function)
-	{
-		ourDocumentationProviders.add(function);
-	}
-
-
-	public static final <T> NullableFunction<T, String> NAMER()
-	{
-		return new NullableFunction<T, String>()
-		{
-			public String fun(final T o)
-			{
-				return getElementName(o);
-			}
-		};
-	}
-
-	public static final NullableFunction<Object, String> NAMER = new NullableFunction<Object, String>()
-	{
-		public String fun(final Object o)
-		{
-			return getElementName(o);
-		}
-	};
+	public static final NullableFunction<Object, String> NAMER = o -> getElementName(o);
 
 	public static <T> NullableFunction<T, String> namer()
 	{
@@ -151,14 +102,6 @@ public abstract class ElementPresentationManager
 	@Nullable
 	public static String getElementName(Object element)
 	{
-		for(final Function<Object, String> function : ourNameProviders)
-		{
-			final String s = function.fun(element);
-			if(s != null)
-			{
-				return s;
-			}
-		}
 		Object o = invokeNameValueMethod(element);
 		if(o == null || o instanceof String)
 		{
@@ -177,20 +120,6 @@ public abstract class ElementPresentationManager
 				}
 			}
 			return s;
-		}
-		return null;
-	}
-
-	@Nullable
-	public static String getDocumentationForElement(Object element)
-	{
-		for(final Function<Object, String> function : ourDocumentationProviders)
-		{
-			final String s = function.fun(element);
-			if(s != null)
-			{
-				return s;
-			}
 		}
 		return null;
 	}
@@ -226,13 +155,9 @@ public abstract class ElementPresentationManager
 
 	public static Image getIcon(@Nonnull Object o)
 	{
-		for(final Function<Object, Image> function : ourIconProviders)
+		if(o instanceof Iconable)
 		{
-			final Image icon = function.fun(o);
-			if(icon != null)
-			{
-				return icon;
-			}
+			return ((Iconable) o).getIcon(0);
 		}
 
 		final Image[] icons = getIconsForClass(o.getClass(), o);
@@ -242,37 +167,11 @@ public abstract class ElementPresentationManager
 		}
 		return null;
 	}
-
-	@Nullable
-	public static Image getIconOld(Object o)
-	{
-		for(final Function<Object, Image> function : ourIconProviders)
-		{
-			final Image icon = function.fun(o);
-			if(icon != null)
-			{
-				return icon;
-			}
-		}
-		final Image[] icons = getIconsForClass(o.getClass(), o);
-		if(icons != null && icons.length > 0)
-		{
-			return icons[0];
-		}
-		return null;
-	}
-
-	@Nullable
-	private static <T> T getFirst(@Nullable final T[] array)
-	{
-		return array == null || array.length == 0 ? null : array[0];
-	}
-
 
 	@Nullable
 	public static Image getIconForClass(Class clazz)
 	{
-		return getFirst(getIconsForClass(clazz, null));
+		return ArrayUtil.getFirstElement(getIconsForClass(clazz, null));
 	}
 
 	@Nullable

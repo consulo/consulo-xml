@@ -15,40 +15,38 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.intention.QuickFixActionRegistrar;
+import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
+import consulo.language.psi.PsiElement;
 import consulo.xml.codeInsight.daemon.impl.quickfix.AddXsiSchemaLocationForExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.IgnoreExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction;
-import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
-import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author yole
  */
-public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<URLReference>
-{
-	@Override
-	public void registerFixes(@Nonnull URLReference ref, @Nonnull QuickFixActionRegistrar registrar)
-	{
-		registrar.register(new FetchExtResourceAction());
-		registrar.register(new ManuallySetupExtResourceAction());
-		registrar.register(new IgnoreExtResourceAction());
+@ExtensionImpl
+public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<URLReference> {
+  @Override
+  public void registerFixes(@Nonnull URLReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+    registrar.register(new FetchExtResourceAction());
+    registrar.register(new ManuallySetupExtResourceAction());
+    registrar.register(new IgnoreExtResourceAction());
 
-		final PsiElement parentElement = ref.getElement().getParent();
-		if(parentElement instanceof XmlAttribute && ((XmlAttribute) parentElement).isNamespaceDeclaration())
-		{
-			registrar.register(new AddXsiSchemaLocationForExtResourceAction());
-		}
-	}
+    final PsiElement parentElement = ref.getElement().getParent();
+    if (parentElement instanceof XmlAttribute && ((XmlAttribute) parentElement).isNamespaceDeclaration()) {
+      registrar.register(new AddXsiSchemaLocationForExtResourceAction());
+    }
+  }
 
-	@Nonnull
-	@Override
-	public Class<URLReference> getReferenceClass()
-	{
-		return URLReference.class;
-	}
+  @Nonnull
+  @Override
+  public Class<URLReference> getReferenceClass() {
+    return URLReference.class;
+  }
 }

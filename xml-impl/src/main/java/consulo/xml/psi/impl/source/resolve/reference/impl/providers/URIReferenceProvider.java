@@ -36,105 +36,88 @@ import java.util.StringTokenizer;
 /**
  * @by Maxim.Mossienko
  */
-public class URIReferenceProvider extends PsiReferenceProvider
-{
+public class URIReferenceProvider extends PsiReferenceProvider {
 
-	public static final ElementFilter ELEMENT_FILTER = new ElementFilter()
-	{
-		@Override
-		public boolean isAcceptable(Object element, PsiElement context)
-		{
-			final PsiElement parent = context.getParent();
-			if(parent instanceof XmlAttribute)
-			{
-				final XmlAttribute attribute = ((XmlAttribute) parent);
-				return attribute.isNamespaceDeclaration();
-			}
-			return false;
-		}
+  public static final ElementFilter ELEMENT_FILTER = new ElementFilter() {
+    @Override
+    public boolean isAcceptable(Object element, PsiElement context) {
+      final PsiElement parent = context.getParent();
+      if (parent instanceof XmlAttribute) {
+        final XmlAttribute attribute = ((XmlAttribute) parent);
+        return attribute.isNamespaceDeclaration();
+      }
+      return false;
+    }
 
-		@Override
-		public boolean isClassAcceptable(Class hintClass)
-		{
-			return true;
-		}
-	};
-	@NonNls
-	private static final String NAMESPACE_ATTR_NAME = "namespace";
+    @Override
+    public boolean isClassAcceptable(Class hintClass) {
+      return true;
+    }
+  };
+  @NonNls
+  private static final String NAMESPACE_ATTR_NAME = "namespace";
 
-	@Override
-	@Nonnull
-	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context)
-	{
-		final String text = element.getText();
-		String s = StringUtil.unquoteString(text);
-		final PsiElement parent = element.getParent();
+  @Override
+  @Nonnull
+  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
+    final String text = element.getText();
+    String s = StringUtil.unquoteString(text);
+    final PsiElement parent = element.getParent();
 
-		if(parent instanceof XmlAttribute && XmlUtil.SCHEMA_LOCATION_ATT.equals(((XmlAttribute) parent).getLocalName()) && XmlUtil.XML_SCHEMA_INSTANCE_URI.equals(((XmlAttribute) parent).getNamespace
-				()))
-		{
-			final List<PsiReference> refs = new ArrayList<>(2);
-			final StringTokenizer tokenizer = new StringTokenizer(s);
+    if (parent instanceof XmlAttribute && XmlUtil.SCHEMA_LOCATION_ATT.equals(((XmlAttribute) parent).getLocalName()) && XmlUtil.XML_SCHEMA_INSTANCE_URI.equals(((XmlAttribute) parent).getNamespace
+        ())) {
+      final List<PsiReference> refs = new ArrayList<>(2);
+      final StringTokenizer tokenizer = new StringTokenizer(s);
 
-			while(tokenizer.hasMoreElements())
-			{
-				final String namespace = tokenizer.nextToken();
-				int offset = text.indexOf(namespace);
-				TextRange range = new TextRange(offset, offset + namespace.length());
-				final URLReference urlReference = new URLReference(element, range, true)
-				{
-					@Override
-					public boolean isSchemaLocation()
-					{
-						return true;
-					}
-				};
-				refs.add(urlReference);
-				if(!tokenizer.hasMoreElements())
-				{
-					break;
-				}
-				String url = tokenizer.nextToken();
+      while (tokenizer.hasMoreElements()) {
+        final String namespace = tokenizer.nextToken();
+        int offset = text.indexOf(namespace);
+        TextRange range = new TextRange(offset, offset + namespace.length());
+        final URLReference urlReference = new URLReference(element, range, true) {
+          @Override
+          public boolean isSchemaLocation() {
+            return true;
+          }
+        };
+        refs.add(urlReference);
+        if (!tokenizer.hasMoreElements()) {
+          break;
+        }
+        String url = tokenizer.nextToken();
 
-				offset = text.indexOf(url);
-				refs.add(new DependentNSReference(element, new TextRange(offset, offset + url.length()), urlReference));
-				if(!XmlUtil.isUrlText(url, element.getProject()))
-				{
-					ContainerUtil.addAll(refs, new FileReferenceSet(url, element, offset, this, false).getAllReferences());
-				}
-			}
+        offset = text.indexOf(url);
+        refs.add(new DependentNSReference(element, new TextRange(offset, offset + url.length()), urlReference));
+        if (!XmlUtil.isUrlText(url, element.getProject())) {
+          ContainerUtil.addAll(refs, new FileReferenceSet(url, element, offset, this, false).getAllReferences());
+        }
+      }
 
-			return refs.toArray(new PsiReference[refs.size()]);
-		}
+      return refs.toArray(new PsiReference[refs.size()]);
+    }
 
-		PsiReference reference = getUrlReference(element, s);
-		if(reference != null)
-		{
-			return new PsiReference[]{reference};
-		}
+    PsiReference reference = getUrlReference(element, s);
+    if (reference != null) {
+      return new PsiReference[]{reference};
+    }
 
-		s = s.substring(XmlUtil.getPrefixLength(s));
-		return new FileReferenceSet(s, element, text.indexOf(s), this, true).getAllReferences();
-	}
+    s = s.substring(XmlUtil.getPrefixLength(s));
+    return new FileReferenceSet(s, element, text.indexOf(s), this, true).getAllReferences();
+  }
 
 
-	static PsiReference getUrlReference(PsiElement element, String s)
-	{
-		PsiElement parent = element.getParent();
-		if(XmlUtil.isUrlText(s, element.getProject()) || (parent instanceof XmlAttribute && (((XmlAttribute) parent).isNamespaceDeclaration() || NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent)
-				.getName()))))
-		{
-			if(!s.startsWith(XmlUtil.TAG_DIR_NS_PREFIX))
-			{
-				boolean namespaceSoftRef = parent instanceof XmlAttribute && NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent).getName()) && ((XmlAttribute) parent).getParent().getAttributeValue
-						(XmlUtil.SCHEMA_LOCATION_ATT) != null;
-				if(!namespaceSoftRef && parent instanceof XmlAttribute && ((XmlAttribute) parent).isNamespaceDeclaration())
-				{
-					namespaceSoftRef = parent.getContainingFile().getContext() != null;
-				}
-				return new URLReference(element, null, namespaceSoftRef);
-			}
-		}
-		return null;
-	}
+  static PsiReference getUrlReference(PsiElement element, String s) {
+    PsiElement parent = element.getParent();
+    if (XmlUtil.isUrlText(s, element.getProject()) || (parent instanceof XmlAttribute && (((XmlAttribute) parent).isNamespaceDeclaration() || NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent)
+        .getName())))) {
+      if (!s.startsWith(XmlUtil.TAG_DIR_NS_PREFIX)) {
+        boolean namespaceSoftRef = parent instanceof XmlAttribute && NAMESPACE_ATTR_NAME.equals(((XmlAttribute) parent).getName()) && ((XmlAttribute) parent).getParent().getAttributeValue
+            (XmlUtil.SCHEMA_LOCATION_ATT) != null;
+        if (!namespaceSoftRef && parent instanceof XmlAttribute && ((XmlAttribute) parent).isNamespaceDeclaration()) {
+          namespaceSoftRef = parent.getContainingFile().getContext() != null;
+        }
+        return new URLReference(element, null, namespaceSoftRef);
+      }
+    }
+    return null;
+  }
 }

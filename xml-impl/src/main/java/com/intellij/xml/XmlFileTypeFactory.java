@@ -15,6 +15,7 @@
  */
 package com.intellij.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
@@ -29,6 +30,7 @@ import javax.annotation.Nonnull;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlFileTypeFactory extends FileTypeFactory {
   public void createFileTypes(@Nonnull final FileTypeConsumer consumer) {
     consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
@@ -36,6 +38,5 @@ public class XmlFileTypeFactory extends FileTypeFactory {
     consumer.consume(DTDFileType.INSTANCE, "dtd;ent;mod;elt");
 
     consumer.consume(XmlFileType.INSTANCE, "xml;xsd;tld;xsl;jnlp;wsdl;jhm;ant;xul;xslt;rng;");
-    TypedHandler.registerBaseLanguageQuoteHandler(XMLLanguage.class, TypedHandler.getQuoteHandlerForType(XmlFileType.INSTANCE));
   }
 }

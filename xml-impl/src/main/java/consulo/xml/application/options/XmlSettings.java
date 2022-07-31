@@ -15,6 +15,9 @@
  */
 package consulo.xml.application.options;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
@@ -25,8 +28,9 @@ import jakarta.inject.Singleton;
 /**
  * @author Dmitry Avdeev
  */
-
 @Singleton
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 @State(name = "XmlSettings", storages = @Storage("editor.codeinsight.xml"))
 public class XmlSettings implements PersistentStateComponent<XmlSettings>
 {

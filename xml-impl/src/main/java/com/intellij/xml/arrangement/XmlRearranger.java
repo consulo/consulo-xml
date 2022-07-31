@@ -1,5 +1,26 @@
 package com.intellij.xml.arrangement;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.document.Document;
+import consulo.document.util.TextRange;
+import consulo.language.Language;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.arrangement.*;
+import consulo.language.codeStyle.arrangement.group.ArrangementGroupingRule;
+import consulo.language.codeStyle.arrangement.match.ArrangementEntryMatcher;
+import consulo.language.codeStyle.arrangement.match.StdArrangementEntryMatcher;
+import consulo.language.codeStyle.arrangement.match.StdArrangementMatchRule;
+import consulo.language.codeStyle.arrangement.model.ArrangementAtomMatchCondition;
+import consulo.language.codeStyle.arrangement.model.ArrangementMatchCondition;
+import consulo.language.codeStyle.arrangement.std.*;
+import consulo.language.psi.PsiElement;
+import consulo.util.lang.Pair;
+import consulo.xml.lang.xml.XMLLanguage;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_TAG;
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.General.ORDER;
@@ -7,45 +28,13 @@ import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.Ge
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.Order.BY_NAME;
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.Order.KEEP;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.codeStyle.CodeStyleSettings;
-import consulo.language.codeStyle.arrangement.ArrangementSettingsSerializer;
-import consulo.language.codeStyle.arrangement.ArrangementUtil;
-import consulo.language.codeStyle.arrangement.group.ArrangementGroupingRule;
-import consulo.language.codeStyle.arrangement.match.StdArrangementEntryMatcher;
-import consulo.language.codeStyle.arrangement.model.ArrangementAtomMatchCondition;
-import consulo.language.codeStyle.arrangement.model.ArrangementMatchCondition;
-import consulo.language.codeStyle.arrangement.std.ArrangementStandardSettingsAware;
-import consulo.util.lang.Pair;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.codeStyle.arrangement.ArrangementSettings;
-import consulo.language.codeStyle.arrangement.DefaultArrangementSettingsSerializer;
-import consulo.language.codeStyle.arrangement.Rearranger;
-import consulo.language.codeStyle.arrangement.match.ArrangementEntryMatcher;
-import consulo.language.codeStyle.arrangement.match.StdArrangementMatchRule;
-import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
-import consulo.language.codeStyle.arrangement.std.CompositeArrangementSettingsToken;
-import consulo.language.codeStyle.arrangement.std.StdArrangementSettings;
-import consulo.language.codeStyle.arrangement.std.StdArrangementTokens;
-import consulo.ide.impl.idea.util.containers.ContainerUtilRt;
-import consulo.document.Document;
-
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, ArrangementStandardSettingsAware
 {
-
-	private static final Set<ArrangementSettingsToken> SUPPORTED_TYPES = ContainerUtilRt.newLinkedHashSet(XML_TAG, XML_ATTRIBUTE);
+	private static final Set<ArrangementSettingsToken> SUPPORTED_TYPES = Set.of(XML_TAG, XML_ATTRIBUTE);
 	private static final List<StdArrangementMatchRule> DEFAULT_MATCH_RULES = new ArrayList<StdArrangementMatchRule>();
 
 	private static final StdArrangementSettings DEFAULT_SETTINGS;
@@ -149,9 +138,10 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 	@Override
 	public List<CompositeArrangementSettingsToken> getSupportedMatchingTokens()
 	{
-		return ContainerUtilRt.newArrayList(new CompositeArrangementSettingsToken(TYPE, SUPPORTED_TYPES),
-				new CompositeArrangementSettingsToken(StdArrangementTokens.Regexp.NAME), new CompositeArrangementSettingsToken(StdArrangementTokens
-				.Regexp.XML_NAMESPACE), new CompositeArrangementSettingsToken(ORDER, KEEP, BY_NAME));
+		return List.of(new CompositeArrangementSettingsToken(TYPE, SUPPORTED_TYPES),
+				new CompositeArrangementSettingsToken(StdArrangementTokens.Regexp.NAME),
+				new CompositeArrangementSettingsToken(StdArrangementTokens.Regexp.XML_NAMESPACE),
+				new CompositeArrangementSettingsToken(ORDER, KEEP, BY_NAME));
 	}
 
 	@Nonnull
@@ -159,5 +149,12 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 	public ArrangementEntryMatcher buildMatcher(@Nonnull ArrangementMatchCondition condition) throws IllegalArgumentException
 	{
 		throw new IllegalArgumentException("Can't build a matcher for condition " + condition);
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
 	}
 }

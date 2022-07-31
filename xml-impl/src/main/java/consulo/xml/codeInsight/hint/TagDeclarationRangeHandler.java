@@ -15,31 +15,47 @@
  */
 package consulo.xml.codeInsight.hint;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
 import consulo.language.ast.IElementType;
+import consulo.language.editor.hint.DeclarationRangeHandler;
+import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.ide.impl.idea.codeInsight.hint.DeclarationRangeHandler;
 
-public class TagDeclarationRangeHandler implements DeclarationRangeHandler {
-  @Nonnull
-  public TextRange getDeclarationRange(@Nonnull final PsiElement container) {
-    XmlTag xmlTag = (XmlTag)container;
-    int endOffset = xmlTag.getTextRange().getStartOffset();
+import javax.annotation.Nonnull;
 
-    for (PsiElement child = xmlTag.getFirstChild(); child != null; child = child.getNextSibling()) {
-      endOffset = child.getTextRange().getEndOffset();
-      if (child instanceof XmlToken) {
-        XmlToken token = (XmlToken)child;
-        IElementType tokenType = token.getTokenType();
-        if (tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END || tokenType == XmlTokenType.XML_TAG_END) break;
-      }
-    }
+@ExtensionImpl
+public class TagDeclarationRangeHandler implements DeclarationRangeHandler
+{
+	@Nonnull
+	@Override
+	public Class getElementClass()
+	{
+		return XmlTag.class;
+	}
 
-    return new TextRange(xmlTag.getTextRange().getStartOffset(), endOffset);
-  }
+	@Nonnull
+	public TextRange getDeclarationRange(@Nonnull final PsiElement container)
+	{
+		XmlTag xmlTag = (XmlTag) container;
+		int endOffset = xmlTag.getTextRange().getStartOffset();
+
+		for(PsiElement child = xmlTag.getFirstChild(); child != null; child = child.getNextSibling())
+		{
+			endOffset = child.getTextRange().getEndOffset();
+			if(child instanceof XmlToken)
+			{
+				XmlToken token = (XmlToken) child;
+				IElementType tokenType = token.getTokenType();
+				if(tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END || tokenType == XmlTokenType.XML_TAG_END)
+				{
+					break;
+				}
+			}
+		}
+
+		return new TextRange(xmlTag.getTextRange().getStartOffset(), endOffset);
+	}
 }

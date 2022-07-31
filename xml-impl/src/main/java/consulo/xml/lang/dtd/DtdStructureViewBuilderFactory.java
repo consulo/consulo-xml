@@ -19,18 +19,21 @@
  */
 package consulo.xml.lang.dtd;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.fileEditor.structureView.StructureViewModel;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
+import consulo.language.Language;
+import consulo.language.editor.structureView.PsiStructureViewFactory;
+import consulo.language.psi.PsiFile;
+import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
+import consulo.xml.psi.xml.XmlFile;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import consulo.codeEditor.Editor;
-import consulo.fileEditor.structureView.StructureViewBuilder;
-import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
-import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import consulo.language.editor.structureView.PsiStructureViewFactory;
-import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.fileEditor.structureView.StructureViewModel;
-
+@ExtensionImpl
 public class DtdStructureViewBuilderFactory implements PsiStructureViewFactory
 {
 	@Override
@@ -46,5 +49,12 @@ public class DtdStructureViewBuilderFactory implements PsiStructureViewFactory
 				return new XmlStructureViewTreeModel((XmlFile) psiFile, editor);
 			}
 		};
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return DTDLanguage.INSTANCE;
 	}
 }

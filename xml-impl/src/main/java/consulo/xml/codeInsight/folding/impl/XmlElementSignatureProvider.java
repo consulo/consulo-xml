@@ -15,21 +15,22 @@
  */
 package consulo.xml.codeInsight.folding.impl;
 
-import java.util.StringTokenizer;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.ide.impl.idea.codeInsight.folding.impl.AbstractElementSignatureProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.logging.Logger;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.codeInsight.folding.impl.AbstractElementSignatureProvider;
-import consulo.logging.Logger;
+import java.util.StringTokenizer;
 
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
   private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 

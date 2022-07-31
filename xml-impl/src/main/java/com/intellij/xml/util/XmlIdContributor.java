@@ -15,14 +15,17 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
 
 /**
  * @author yole
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlIdContributor {
-  ExtensionPointName<XmlIdContributor> EP_NAME = ExtensionPointName.create("com.intellij.xml.idContributor");
+  ExtensionPointName<XmlIdContributor> EP_NAME = ExtensionPointName.create(XmlIdContributor.class);
 
   boolean suppressExistingIdValidation(XmlFile file);
 }

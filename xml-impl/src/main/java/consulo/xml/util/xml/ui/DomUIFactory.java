@@ -15,6 +15,8 @@
  */
 package consulo.xml.util.xml.ui;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.ide.ServiceManager;
 import consulo.component.extension.ExtensionPointName;
 import consulo.ide.impl.idea.util.Consumer;
@@ -40,6 +42,7 @@ import java.lang.reflect.Type;
 /**
  * @author peter
  */
+@ServiceAPI(ComponentScope.APPLICATION)
 public abstract class DomUIFactory {
 
   public final static ExtensionPointName<Consumer<DomUIFactory>> EXTENSION_POINT_NAME = ExtensionPointName.create("com.intellij.dom.uiControlsProvider");

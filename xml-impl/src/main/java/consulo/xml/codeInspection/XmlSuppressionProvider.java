@@ -16,44 +16,52 @@
 
 package consulo.xml.codeInspection;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import consulo.component.extension.Extensions;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlSuppressionProvider {
+@ExtensionAPI(ComponentScope.APPLICATION)
+public abstract class XmlSuppressionProvider
+{
+	public static ExtensionPointName<XmlSuppressionProvider> EP_NAME = ExtensionPointName.create(XmlSuppressionProvider.class);
 
-  public static ExtensionPointName<XmlSuppressionProvider> EP_NAME = new ExtensionPointName<XmlSuppressionProvider>("com.intellij.xml.xmlSuppressionProvider");
+	public static boolean isSuppressed(@Nonnull PsiElement element, @Nonnull String inspectionId)
+	{
+		for(XmlSuppressionProvider provider : EP_NAME.getExtensionList())
+		{
+			if(provider.isSuppressedFor(element, inspectionId))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-  public static boolean isSuppressed(@Nonnull PsiElement element, @Nonnull String inspectionId) {
-    for (XmlSuppressionProvider provider : Extensions.getExtensions(EP_NAME)) {
-      if (provider.isSuppressedFor(element, inspectionId)) {
-        return true;
-      }
-    }
-    return false;
-  }
+	public static XmlSuppressionProvider getProvider(@Nonnull PsiFile file)
+	{
+		for(XmlSuppressionProvider provider : EP_NAME.getExtensionList())
+		{
+			if(provider.isProviderAvailable(file))
+			{
+				return provider;
+			}
+		}
+		throw new RuntimeException("No providers found for " + file);
+	}
 
-  public static XmlSuppressionProvider getProvider(@Nonnull PsiFile file) {
-    for (XmlSuppressionProvider provider : Extensions.getExtensions(EP_NAME)) {
-      if (provider.isProviderAvailable(file)) {
-        return provider;
-      }
-    }
-    throw new RuntimeException("No providers found for " + file);
-  }
+	public abstract boolean isProviderAvailable(@Nonnull PsiFile file);
 
-  public abstract boolean isProviderAvailable(@Nonnull PsiFile file);
+	public abstract boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId);
 
-  public abstract boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId);
+	public abstract void suppressForFile(@Nonnull PsiElement element, @Nonnull String inspectionId);
 
-  public abstract void suppressForFile(@Nonnull PsiElement element, @Nonnull String inspectionId);
-
-  public abstract void suppressForTag(@Nonnull PsiElement element, @Nonnull String inspectionId);
+	public abstract void suppressForTag(@Nonnull PsiElement element, @Nonnull String inspectionId);
 
 }

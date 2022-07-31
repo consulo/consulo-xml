@@ -15,16 +15,11 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.application.Result;
 import consulo.language.Commenter;
 import consulo.language.Language;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.LanguageCommenters;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
@@ -34,7 +29,10 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.psi.xml.XmlTag;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -76,7 +74,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
   private static String getUncommentedText(@Nonnull final PsiComment comment) {
     final PsiFile psiFile = comment.getContainingFile();
     final Language language = psiFile.getViewProvider().getBaseLanguage();
-    final Commenter commenter = LanguageCommenters.INSTANCE.forLanguage(language);
+    final Commenter commenter = Commenter.forLanguage(language);
     if (commenter != null) {
       String text = comment.getText();
 
@@ -103,7 +101,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
         if (tag == null) return;
 
         final Language language = psiFile.getViewProvider().getBaseLanguage();
-        final Commenter commenter = LanguageCommenters.INSTANCE.forLanguage(language);
+        final Commenter commenter = Commenter.forLanguage(language);
         if (commenter == null) return;
 
         final PsiFile tempFile = PsiFileFactory.getInstance(project).createFileFromText("dummy", language.getAssociatedFileType(),

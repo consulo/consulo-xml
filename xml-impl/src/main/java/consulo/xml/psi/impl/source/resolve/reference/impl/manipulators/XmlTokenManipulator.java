@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.manipulators;
 
-import consulo.xml.psi.xml.XmlToken;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.ast.ASTFactory;
@@ -24,19 +24,32 @@ import consulo.language.impl.ast.LeafElement;
 import consulo.language.impl.psi.DummyHolderFactory;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
+import consulo.xml.psi.xml.XmlToken;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author ven
  */
-public class XmlTokenManipulator extends AbstractElementManipulator<XmlToken> {
-  public XmlToken handleContentChange(XmlToken xmlToken, TextRange range, String newContent) throws IncorrectOperationException {
-    String oldText = xmlToken.getText();
-    String newText = oldText.substring(0, range.getStartOffset()) + newContent + oldText.substring(range.getEndOffset());
-    IElementType tokenType = xmlToken.getTokenType();
+@ExtensionImpl
+public class XmlTokenManipulator extends AbstractElementManipulator<XmlToken>
+{
+	public XmlToken handleContentChange(XmlToken xmlToken, TextRange range, String newContent) throws IncorrectOperationException
+	{
+		String oldText = xmlToken.getText();
+		String newText = oldText.substring(0, range.getStartOffset()) + newContent + oldText.substring(range.getEndOffset());
+		IElementType tokenType = xmlToken.getTokenType();
 
-    FileElement holder = DummyHolderFactory.createHolder(xmlToken.getManager(), null).getTreeElement();
-    LeafElement leaf = ASTFactory.leaf(tokenType, holder.getCharTable().intern(newText));
-    holder.rawAddChildren(leaf);
-    return (XmlToken)xmlToken.replace(leaf.getPsi());
-  }
+		FileElement holder = DummyHolderFactory.createHolder(xmlToken.getManager(), null).getTreeElement();
+		LeafElement leaf = ASTFactory.leaf(tokenType, holder.getCharTable().intern(newText));
+		holder.rawAddChildren(leaf);
+		return (XmlToken) xmlToken.replace(leaf.getPsi());
+	}
+
+	@Nonnull
+	@Override
+	public Class<XmlToken> getElementClass()
+	{
+		return XmlToken.class;
+	}
 }

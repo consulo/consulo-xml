@@ -15,15 +15,14 @@
  */
 package consulo.xml.psi.impl.source.tree.injected;
 
-import javax.annotation.Nonnull;
-
 import consulo.document.util.ProperTextRange;
-import consulo.language.Commenter;
 import consulo.document.util.TextRange;
+import consulo.language.CodeDocumentationAwareCommenter;
+import consulo.language.Commenter;
 import consulo.language.psi.LiteralTextEscaper;
 import consulo.xml.psi.impl.source.xml.XmlCommentImpl;
-import consulo.language.CodeDocumentationAwareCommenter;
-import consulo.language.LanguageCommenters;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -47,7 +46,7 @@ public class XmlCommentLiteralEscaper extends LiteralTextEscaper<XmlCommentImpl>
   }
 
   public boolean isOneLine() {
-    final Commenter commenter = LanguageCommenters.INSTANCE.forLanguage(myHost.getLanguage());
+    final Commenter commenter = Commenter.forLanguage(myHost.getLanguage());
     if (commenter instanceof CodeDocumentationAwareCommenter) {
       return myHost.getTokenType() == ((CodeDocumentationAwareCommenter) commenter).getLineCommentTokenType();
     }

@@ -15,20 +15,20 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import consulo.xml.psi.filters.XmlTagFilter;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
 import consulo.application.AllIcons;
 import consulo.fileEditor.structureView.tree.ActionPresentation;
 import consulo.fileEditor.structureView.tree.ActionPresentationData;
+import consulo.fileEditor.structureView.tree.FileStructureNodeProvider;
 import consulo.fileEditor.structureView.tree.TreeElement;
-import consulo.ide.impl.idea.ide.util.FileStructureNodeProvider;
 import consulo.ide.impl.idea.openapi.util.PropertyOwner;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.ui.ex.action.Shortcut;
 import consulo.ui.ex.keymap.KeymapManager;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

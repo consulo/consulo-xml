@@ -26,7 +26,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.util.CharTable;
 import consulo.xml.psi.xml.XmlTokenType;
 
-public class EncodeEachSymbolPolicy extends DefaultXmlPsiPolicy {
+public abstract class EncodeEachSymbolPolicy extends DefaultXmlPsiPolicy {
   public ASTNode encodeXmlTextContents(String displayText, PsiElement text) {
     if (!toCode(displayText)) return super.encodeXmlTextContents(displayText, text);
     final FileElement dummyParent = DummyHolderFactory.createHolder(text.getManager(), null, SharedImplUtil.findCharTableByTree(text.getNode())).getTreeElement();

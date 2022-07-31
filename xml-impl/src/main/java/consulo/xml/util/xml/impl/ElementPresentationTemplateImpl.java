@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.ide.TypePresentationServiceImpl;
-import consulo.ide.impl.idea.ide.presentation.Presentation;
+import consulo.application.presentation.TypePresentationService;
 import consulo.ui.image.Image;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.util.xml.*;
@@ -24,45 +23,50 @@ import consulo.xml.util.xml.*;
 /**
  * @author Dmitry Avdeev
  */
-public class ElementPresentationTemplateImpl extends TypePresentationServiceImpl.PresentationTemplateImpl implements ElementPresentationTemplate {
+public class ElementPresentationTemplateImpl implements ElementPresentationTemplate
+{
+	public static final ElementPresentationTemplate INSTANCE = new ElementPresentationTemplateImpl();
 
-  public ElementPresentationTemplateImpl(Presentation presentation) {
-    super(presentation);
-  }
+	@Override
+	public ElementPresentation createPresentation(final DomElement element)
+	{
+		return new ElementPresentation()
+		{
+			@Override
+			public String getElementName()
+			{
+				return TypePresentationService.getInstance().getPresentableName(element);
+			}
 
-  @Override
-  public ElementPresentation createPresentation(final DomElement element) {
-    return new ElementPresentation() {
-      @Override
-      public String getElementName() {
-        String name = ElementPresentationTemplateImpl.this.getName(element);
-        return name == null ? ElementPresentationManager.getElementName(element) : name;
-      }
+			@Override
+			public String getTypeName()
+			{
+				return TypePresentationService.getInstance().getTypeName(element);
+			}
 
-      @Override
-      public String getTypeName() {
-        String typeName = ElementPresentationTemplateImpl.this.getTypeName();
-        return typeName == null ? ElementPresentationManager.getTypeNameForObject(element) : typeName;
-      }
+			@Override
+			public Image getIcon()
+			{
+				return TypePresentationService.getInstance().getIcon(element);
+			}
 
-      @Override
-      public Image getIcon() {
-        return ElementPresentationTemplateImpl.this.getIcon(element, 0);
-      }
-
-      @Override
-      public String getDocumentation() {
-        final Ref<String> result = new Ref<String>();
-        element.acceptChildren(new DomElementVisitor() {
-          @Override
-          public void visitDomElement(DomElement element) {
-            if (element instanceof GenericValue && element.getChildDescription().getAnnotation(Documentation.class) != null) {
-              result.set(((GenericValue) element).getStringValue());
-            }
-          }
-        });
-        return result.isNull() ? super.getDocumentation() : result.get();
-      }
-    };
-  }
+			@Override
+			public String getDocumentation()
+			{
+				final Ref<String> result = new Ref<String>();
+				element.acceptChildren(new DomElementVisitor()
+				{
+					@Override
+					public void visitDomElement(DomElement element)
+					{
+						if(element instanceof GenericValue && element.getChildDescription().getAnnotation(Documentation.class) != null)
+						{
+							result.set(((GenericValue) element).getStringValue());
+						}
+					}
+				});
+				return result.isNull() ? super.getDocumentation() : result.get();
+			}
+		};
+	}
 }

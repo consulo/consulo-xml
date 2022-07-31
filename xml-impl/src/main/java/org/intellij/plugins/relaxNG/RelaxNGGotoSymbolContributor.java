@@ -16,10 +16,11 @@
 
 package org.intellij.plugins.relaxNG;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.util.function.Processor;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.content.scope.SearchScope;
-import consulo.ide.navigation.ChooseByNameContributorEx;
+import consulo.ide.navigation.GotoSymbolContributor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementNavigationItem;
 import consulo.language.psi.PsiFile;
@@ -50,7 +51,8 @@ import java.util.Collections;
  * User: sweinreuter
  * Date: 24.10.2007
  */
-public class RelaxNGGotoSymbolContributor implements ChooseByNameContributorEx {
+@ExtensionImpl
+public class RelaxNGGotoSymbolContributor implements GotoSymbolContributor {
   @Override
   public void processNames(@Nonnull Processor<String> processor, @Nonnull SearchScope scope, @Nullable IdFilter filter) {
     FileBasedIndex.getInstance().processAllKeys(RelaxSymbolIndex.NAME, processor, scope, filter);

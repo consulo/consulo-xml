@@ -1,6 +1,7 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package org.intellij.plugins.relaxNG.validation;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -37,6 +38,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.concurrent.Future;
 
+@ExtensionImpl
 public class RngValidateHandler implements ValidateXmlHandler
 {
 	private static final String CONTENT_NAME = "Validate RELAX NG";

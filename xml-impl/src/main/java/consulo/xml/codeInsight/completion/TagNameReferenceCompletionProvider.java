@@ -42,7 +42,7 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider
 	public static LookupElement[] getTagNameVariants(final @Nonnull XmlTag tag, final String prefix)
 	{
 		List<LookupElement> elements = new ArrayList<>();
-		for(XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensions())
+		for(XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensionList())
 		{
 			tagNameProvider.addTagNameVariants(elements, tag, prefix);
 		}

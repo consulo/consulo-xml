@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.meta.MetaDataRegistrar;
 import consulo.xml.psi.xml.XmlTag;
@@ -27,6 +28,7 @@ import consulo.language.psi.meta.MetaDataContributor;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class DomMetaDataContributor implements MetaDataContributor
 {
 	@Override
@@ -54,6 +56,6 @@ public class DomMetaDataContributor implements MetaDataContributor
 			{
 				return XmlTag.class.isAssignableFrom(hintClass);
 			}
-		}, DomMetaData.class);
+		}, DomMetaData::new);
 	}
 }

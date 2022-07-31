@@ -16,6 +16,8 @@
 
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
@@ -36,6 +38,7 @@ import java.util.List;
 /**
  * @author Gregory.Shrago
  */
+@ServiceAPI(ComponentScope.APPLICATION)
 public abstract class DomService {
   private static DomService ourCachedInstance = null;
 

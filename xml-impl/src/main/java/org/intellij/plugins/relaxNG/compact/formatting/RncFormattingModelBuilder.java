@@ -16,27 +16,30 @@
 
 package org.intellij.plugins.relaxNG.compact.formatting;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.codeStyle.*;
+import consulo.language.psi.PsiElement;
+import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
+
 import javax.annotation.Nonnull;
 
-import consulo.language.codeStyle.FormattingModel;
-import consulo.language.ast.ASTNode;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.codeStyle.CodeStyleSettings;
-import consulo.language.codeStyle.FormattingModelBuilder;
-import consulo.language.codeStyle.FormattingModelProvider;
-import consulo.language.psi.PsiFile;
+@ExtensionImpl
+public class RncFormattingModelBuilder implements FormattingModelBuilder
+{
+	@Nonnull
+	@Override
+	public FormattingModel createModel(@Nonnull FormattingContext context)
+	{
+		PsiElement element = context.getPsiElement();
+		CodeStyleSettings settings = context.getCodeStyleSettings();
+		return FormattingModelProvider.createFormattingModelForPsiFile(element.getContainingFile(), new RncBlock(element.getNode()), settings);
+	}
 
-public class RncFormattingModelBuilder implements FormattingModelBuilder {
-  @Override
-  @Nonnull
-  public FormattingModel createModel(PsiElement element, CodeStyleSettings settings) {
-    return FormattingModelProvider.createFormattingModelForPsiFile(element.getContainingFile(), new RncBlock(element.getNode()), settings);
-  }
-
-  @Override
-  public TextRange getRangeAffectingIndent(PsiFile file, int offset, ASTNode elementAtOffset) {
-    // TODO
-    return null;
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return RngCompactLanguage.INSTANCE;
+	}
 }

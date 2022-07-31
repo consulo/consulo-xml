@@ -15,11 +15,13 @@
  */
 package consulo.xml.codeInsight.template;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.template.DefaultLiveTemplatesProvider;
 
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlDefaultLiveTemplatesProvider implements DefaultLiveTemplatesProvider {
   public String[] getDefaultLiveTemplateFiles() {
     return new String[] { "/liveTemplates/html_xml", "/liveTemplates/zen_html", "/liveTemplates/zen_xsl" };

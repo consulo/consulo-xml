@@ -15,34 +15,36 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.language.pattern.PlatformPatterns;
-import consulo.xml.patterns.XmlPatterns;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttributeDecl;
-import consulo.xml.psi.xml.XmlElementDecl;
-import consulo.language.editor.refactoring.rename.RenameInputValidator;
-import consulo.language.util.ProcessingContext;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.refactoring.rename.RenameInputValidator;
 import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ProcessingContext;
+import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.psi.xml.XmlAttributeDecl;
+import consulo.xml.psi.xml.XmlElementDecl;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.language.pattern.StandardPatterns.or;
 
+@ExtensionImpl
 public class XmlElementRenameValidator implements RenameInputValidator {
   @Override
   public ElementPattern<? extends PsiElement> getPattern() {
     return or(
-      XmlPatterns.xmlTag().withMetaData(
-        or(PlatformPatterns.instanceOf(XmlElementDescriptor.class),
-           PlatformPatterns.instanceOf(XmlAttributeDescriptor.class))
-      ),
-      psiElement(XmlElementDecl.class),
-      psiElement(XmlAttributeDecl.class),
-      XmlPatterns.xmlTag().withDescriptor(
-        or(PlatformPatterns.instanceOf(XmlElementDescriptor.class),
-           PlatformPatterns.instanceOf(XmlAttributeDescriptor.class))
-      )
+        XmlPatterns.xmlTag().withMetaData(
+            or(PlatformPatterns.instanceOf(XmlElementDescriptor.class),
+                PlatformPatterns.instanceOf(XmlAttributeDescriptor.class))
+        ),
+        psiElement(XmlElementDecl.class),
+        psiElement(XmlAttributeDecl.class),
+        XmlPatterns.xmlTag().withDescriptor(
+            or(PlatformPatterns.instanceOf(XmlElementDescriptor.class),
+                PlatformPatterns.instanceOf(XmlAttributeDescriptor.class))
+        )
     );
   }
 

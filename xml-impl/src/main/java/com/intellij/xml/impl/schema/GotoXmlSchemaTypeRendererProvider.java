@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.impl.schema;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.navigation.GotoTargetRendererProvider;
 import consulo.language.editor.ui.PsiElementListCellRenderer;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
@@ -28,6 +29,7 @@ import consulo.language.psi.PsiFile;
  * Date: 7/5/12
  * Time: 8:27 PM
  */
+@ExtensionImpl
 public class GotoXmlSchemaTypeRendererProvider implements GotoTargetRendererProvider {
   @Override
   public PsiElementListCellRenderer getRenderer(PsiElement element) {

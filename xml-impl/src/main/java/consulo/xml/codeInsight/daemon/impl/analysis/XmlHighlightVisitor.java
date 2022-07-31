@@ -21,10 +21,10 @@ import com.intellij.xml.util.AnchorReference;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.UserDataCache;
 import consulo.colorScheme.TextAttributes;
-import consulo.component.extension.Extensions;
 import consulo.component.util.localize.BundleBase;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
@@ -66,6 +66,7 @@ import java.util.StringTokenizer;
 /**
  * @author Mike
  */
+@ExtensionImpl
 public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightVisitor, IdeValidationHost {
   private static final Logger LOG = Logger.getInstance("XmlHighlightVisitor");
   private static final UserDataCache<Boolean, PsiElement, Object> DO_NOT_VALIDATE = new UserDataCache<Boolean, PsiElement, Object>("do not validate") {
@@ -441,7 +442,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         if (highlightInfo != null) {
           PsiFile file = tag.getContainingFile();
           if (file != null) {
-            for (XmlUndefinedElementFixProvider fixProvider : Extensions.getExtensions(XmlUndefinedElementFixProvider.EP_NAME)) {
+            for (XmlUndefinedElementFixProvider fixProvider : XmlUndefinedElementFixProvider.EP_NAME.getExtensionList()) {
               IntentionAction[] fixes = fixProvider.createFixes(attribute);
               if (fixes != null) {
                 for (IntentionAction action : fixes) {
@@ -732,11 +733,6 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
   @Nonnull
   public HighlightVisitor clone() {
     return new XmlHighlightVisitor();
-  }
-
-  @Override
-  public int order() {
-    return 1;
   }
 
   public static String getUnquotedValue(XmlAttributeValue value, XmlTag tag) {

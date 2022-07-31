@@ -1,96 +1,99 @@
-/*
- * Copyright 2000-2009 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.html;
 
-import consulo.ide.impl.idea.codeInsight.daemon.LineMarkerProviders;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
+import consulo.language.editor.gutter.LineMarkerInfo;
 import consulo.language.editor.gutter.LineMarkerProvider;
-import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-import consulo.language.editor.gutter.LineMarkerInfo;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
  * @author Maxim.Mossienko
- *         Date: Oct 14, 2008
- *         Time: 11:38:46 PM
  */
-public class HtmlLineMarkerProvider implements LineMarkerProvider {
-  private final Map<Language, LineMarkerProvider> embeddedLanguagesLineMarkerProviders = new HashMap<Language, LineMarkerProvider>();
+@ExtensionImpl
+public class HtmlLineMarkerProvider implements LineMarkerProvider
+{
+	@RequiredReadAction
+	@Override
+	public LineMarkerInfo<?> getLineMarkerInfo(final @Nonnull PsiElement element)
+	{
+		if(element instanceof PsiWhiteSpace)
+		{
+			return null;
+		}
+		final Language language = element.getLanguage();
 
-  public LineMarkerInfo getLineMarkerInfo(@Nonnull final PsiElement element) {
-    if (element instanceof PsiWhiteSpace) return null;
-    final Language language = element.getLanguage();
+		if(!(language instanceof XMLLanguage))
+		{
+			List<LineMarkerProvider> markerProviders = LineMarkerProvider.forLanguage(language);
+			for(LineMarkerProvider provider : markerProviders)
+			{
+				if(provider instanceof HtmlLineMarkerProvider)
+				{
+					continue;
+				}
+				LineMarkerInfo<?> info = provider.getLineMarkerInfo(element);
+				if(info != null)
+				{
+					return info;
+				}
+			}
+		}
+		return null;
+	}
 
-    if (!(language instanceof XMLLanguage)) {
-      final LineMarkerProvider markerProvider = getLineMarkerProviderFromLanguage(language, embeddedLanguagesLineMarkerProviders);
+	@RequiredReadAction
+	@Override
+	public void collectSlowLineMarkers(final @Nonnull List<PsiElement> elements, final @Nonnull Collection<LineMarkerInfo> result)
+	{
+		Map<LineMarkerProvider, List<PsiElement>> embeddedLineMarkersWorkItems = null;
 
-      if (markerProvider != null) return markerProvider.getLineMarkerInfo(element);
-    }
-    return null;
-  }
+		for(PsiElement element : elements)
+		{
+			if(element instanceof PsiWhiteSpace)
+			{
+				continue;
+			}
+			final Language language = element.getLanguage();
 
-  private static LineMarkerProvider getLineMarkerProviderFromLanguage(final Language language,
-                                                               final Map<Language, LineMarkerProvider> embeddedLanguagesLineMarkerProviders) {
-    final LineMarkerProvider markerProvider;
+			if(!(language instanceof XMLLanguage))
+			{
+				List<LineMarkerProvider> lineMarkerProviders = LineMarkerProvider.forLanguage(language);
+				for(LineMarkerProvider provider : lineMarkerProviders)
+				{
+					if(provider instanceof HtmlLineMarkerProvider)
+					{
+						continue;
+					}
+					if(embeddedLineMarkersWorkItems == null)
+					{
+						embeddedLineMarkersWorkItems = new HashMap<>();
+					}
+					embeddedLineMarkersWorkItems.computeIfAbsent(provider, k -> new ArrayList<>(5)).add(element);
+				}
+			}
+		}
 
-    if (!embeddedLanguagesLineMarkerProviders.containsKey(language)) {
-      embeddedLanguagesLineMarkerProviders.put(language, markerProvider = LineMarkerProviders.INSTANCE.forLanguage(language));
-    } else {
-      markerProvider = embeddedLanguagesLineMarkerProviders.get(language);
-    }
-    return markerProvider;
-  }
+		if(embeddedLineMarkersWorkItems != null)
+		{
+			for(Map.Entry<LineMarkerProvider, List<PsiElement>> entry : embeddedLineMarkersWorkItems.entrySet())
+			{
+				entry.getKey().collectSlowLineMarkers(entry.getValue(), result);
+			}
+		}
+	}
 
-  public void collectSlowLineMarkers(@Nonnull final List<PsiElement> elements, @Nonnull final Collection<LineMarkerInfo> result) {
-    Map<Language, LineMarkerProvider> localEmbeddedLanguagesLineMarkerProviders = null;
-    Map<LineMarkerProvider, List<PsiElement>> embeddedLineMarkersWorkItems = null;
-
-    for(PsiElement element:elements) {
-      if(element instanceof PsiWhiteSpace) continue;
-      final Language language = element.getLanguage();
-
-      if (!(language instanceof XMLLanguage)) {
-        if(localEmbeddedLanguagesLineMarkerProviders == null) {
-          localEmbeddedLanguagesLineMarkerProviders = new HashMap<Language, LineMarkerProvider>();
-        }
-
-        final LineMarkerProvider lineMarkerProvider = getLineMarkerProviderFromLanguage(language, localEmbeddedLanguagesLineMarkerProviders);
-
-        if (lineMarkerProvider != null) {
-          if (embeddedLineMarkersWorkItems == null) embeddedLineMarkersWorkItems = new HashMap<LineMarkerProvider, List<PsiElement>>();
-          List<PsiElement> elementList = embeddedLineMarkersWorkItems.get(lineMarkerProvider);
-
-          if (elementList == null) {
-            elementList = new ArrayList<PsiElement>(5);
-            embeddedLineMarkersWorkItems.put(lineMarkerProvider, elementList);
-          }
-
-          elementList.add(element);
-        }
-      }
-    }
-
-    if (embeddedLineMarkersWorkItems != null) {
-      for(Map.Entry<LineMarkerProvider, List<PsiElement>> entry:embeddedLineMarkersWorkItems.entrySet()) {
-        entry.getKey().collectSlowLineMarkers(entry.getValue(), result);
-      }
-    }
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
+	}
 }

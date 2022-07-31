@@ -15,22 +15,44 @@
  */
 package consulo.xml.spellchecker.tokenizer;
 
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlText;
 import com.intellij.spellchecker.tokenizer.SpellcheckingStrategy;
 import com.intellij.spellchecker.tokenizer.Tokenizer;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlText;
 
 import javax.annotation.Nonnull;
 
-public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy {
+@ExtensionImpl
+public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy
+{
 	@Nonnull
 	@Override
-	public Tokenizer getTokenizer(PsiElement element) {
-		if (element instanceof PsiComment) return myCommentTokenizer;
-		if (element instanceof XmlAttributeValue) return myXmlAttributeTokenizer;
-		if (element instanceof XmlText) return myXmlTextTokenizer;
+	public Tokenizer getTokenizer(PsiElement element)
+	{
+		if(element instanceof PsiComment)
+		{
+			return myCommentTokenizer;
+		}
+		if(element instanceof XmlAttributeValue)
+		{
+			return myXmlAttributeTokenizer;
+		}
+		if(element instanceof XmlText)
+		{
+			return myXmlTextTokenizer;
+		}
 		return SpellcheckingStrategy.EMPTY_TOKENIZER;
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
 	}
 }

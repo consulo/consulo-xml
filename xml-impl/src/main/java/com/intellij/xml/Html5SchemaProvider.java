@@ -1,5 +1,7 @@
 package com.intellij.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.logging.Logger;
@@ -8,14 +10,16 @@ import consulo.xml.javaee.ExternalResourceManagerEx;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
+import java.util.List;
 
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class Html5SchemaProvider {
   private static final Logger LOG = Logger.getInstance("#Html5SchemaProvider");
 
-  public static final ExtensionPointName<Html5SchemaProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.html5SchemaProvider");
+  public static final ExtensionPointName<Html5SchemaProvider> EP_NAME = ExtensionPointName.create(Html5SchemaProvider.class);
 
   private static String HTML5_SCHEMA_LOCATION;
   private static String XHTML5_SCHEMA_LOCATION;
@@ -44,19 +48,19 @@ public abstract class Html5SchemaProvider {
     }
     ourInitialized = true;
 
-    final Html5SchemaProvider[] providers = EP_NAME.getExtensions();
+    final List<Html5SchemaProvider> providers = EP_NAME.getExtensionList();
     final URL htmlSchemaLocationURL;
     final URL xhtmlSchemaLocationURL;
     final URL dtdCharsLocationURL;
 
-    if (providers.length > 1) {
-      LOG.error("More than one HTML5 schema providers found: " + getClassesListString(providers));
+    if (providers.size() > 1) {
+      LOG.error("More than one HTML5 schema providers found: " + providers);
     }
 
-    if (providers.length > 0) {
-      htmlSchemaLocationURL = providers[0].getHtmlSchemaLocation();
-      xhtmlSchemaLocationURL = providers[0].getXhtmlSchemaLocation();
-      dtdCharsLocationURL = providers[0].getCharsLocation();
+    if (providers.size() > 0) {
+      htmlSchemaLocationURL = providers.get(0).getHtmlSchemaLocation();
+      xhtmlSchemaLocationURL = providers.get(0).getXhtmlSchemaLocation();
+      dtdCharsLocationURL = providers.get(0).getCharsLocation();
     } else {
       LOG.info("RelaxNG based schema for HTML5 is not supported. Old XSD schema will be used");
       htmlSchemaLocationURL = Html5SchemaProvider.class.getResource(ExternalResourceManagerEx.STANDARD_SCHEMAS + "html5/xhtml5.xsd");
@@ -84,17 +88,5 @@ public abstract class Html5SchemaProvider {
   public abstract URL getCharsLocation();
 
   static {
-  }
-
-  private static <T> String getClassesListString(T[] a) {
-    final StringBuilder builder = new StringBuilder();
-    for (int i = 0, n = a.length; i < n; i++) {
-      T element = a[i];
-      builder.append(element != null ? element.getClass().getName() : "NULL");
-      if (i < n - 1) {
-        builder.append(", ");
-      }
-    }
-    return builder.toString();
   }
 }

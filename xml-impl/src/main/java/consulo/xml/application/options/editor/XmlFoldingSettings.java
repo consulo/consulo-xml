@@ -16,6 +16,9 @@
 
 package consulo.xml.application.options.editor;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.xml.lang.XmlCodeFoldingSettings;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
@@ -27,6 +30,8 @@ import jakarta.inject.Singleton;
 import javax.annotation.Nonnull;
 
 @Singleton
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 @State(name = "XmlFoldingSettings", storages = @Storage("editor.codeinsight.xml"))
 public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings>
 {

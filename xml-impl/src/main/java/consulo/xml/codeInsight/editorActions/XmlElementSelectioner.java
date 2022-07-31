@@ -15,12 +15,14 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 import consulo.language.psi.PsiElement;
 
-class XmlElementSelectioner extends ExtendWordSelectionHandlerBase {
+@ExtensionImpl
+public class XmlElementSelectioner extends ExtendWordSelectionHandlerBase {
   public boolean canSelect(PsiElement e) {
     return e instanceof XmlAttribute || e instanceof XmlAttributeValue;
   }

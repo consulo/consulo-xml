@@ -15,39 +15,52 @@
  */
 package consulo.xml.lang.xhtml;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
-import consulo.xml.lang.xml.XMLParserDefinition;
-import consulo.xml.lexer.XHtmlLexer;
 import consulo.language.file.FileViewProvider;
-import consulo.xml.psi.impl.source.xml.XmlFileImpl;
-import consulo.xml.psi.xml.XmlElementType;
 import consulo.language.lexer.Lexer;
 import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
+import consulo.xml.lang.xml.XMLParserDefinition;
+import consulo.xml.lexer.XHtmlLexer;
+import consulo.xml.psi.impl.source.xml.XmlFileImpl;
+import consulo.xml.psi.xml.XmlElementType;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author max
  */
-public class XHTMLParserDefinition extends XMLParserDefinition {
+@ExtensionImpl
+public class XHTMLParserDefinition extends XMLParserDefinition
+{
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XHTMLLanguage.INSTANCE;
+	}
 
-  @Override
-  @Nonnull
-  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
-    return new XHtmlLexer();
-  }
+	@Override
+	@Nonnull
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	{
+		return new XHtmlLexer();
+	}
 
-  @Override
-  public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XHTMLLanguage.INSTANCE));
-    return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
-  }
+	@Override
+	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right)
+	{
+		final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XHTMLLanguage.INSTANCE));
+		return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
+	}
 
-  @Override
-  public PsiFile createFile(FileViewProvider viewProvider) {
-    return new XmlFileImpl(viewProvider, XmlElementType.XHTML_FILE);
-  }
+	@Override
+	public PsiFile createFile(FileViewProvider viewProvider)
+	{
+		return new XmlFileImpl(viewProvider, XmlElementType.XHTML_FILE);
+	}
 
 }

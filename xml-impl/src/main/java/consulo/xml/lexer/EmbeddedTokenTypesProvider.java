@@ -15,15 +15,18 @@
  */
 package consulo.xml.lexer;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.language.ast.IElementType;
 import consulo.language.version.LanguageVersion;
 
 import javax.annotation.Nonnull;
 
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenTypesProvider
 {
-	ExtensionPointName<EmbeddedTokenTypesProvider> EXTENSION_POINT_NAME = ExtensionPointName.create("com.intellij.xml.embeddedTokenTypesProvider");
+	ExtensionPointName<EmbeddedTokenTypesProvider> EXTENSION_POINT_NAME = ExtensionPointName.create(EmbeddedTokenTypesProvider.class);
 
 	/**
 	 * @return name of provider, doesn't related to language name.

@@ -15,18 +15,20 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.manipulators;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
+import consulo.language.util.IncorrectOperationException;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlText;
-import consulo.language.util.IncorrectOperationException;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
  */
+@ExtensionImpl
 public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 {
 	@Override
@@ -61,6 +63,13 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 			default:
 				return TextRange.EMPTY_RANGE;
 		}
+	}
+
+	@Nonnull
+	@Override
+	public Class<XmlTag> getElementClass()
+	{
+		return XmlTag.class;
 	}
 
 	private static TextRange getValueRange(final XmlText xmlText)

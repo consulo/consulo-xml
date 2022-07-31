@@ -15,39 +15,50 @@
  */
 package org.intellij.plugins.relaxNG;
 
-import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
-import static consulo.xml.patterns.XmlPatterns.xmlAttributeValue;
-import static consulo.xml.patterns.XmlPatterns.xmlTag;
+import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.psi.PsiReferenceContributor;
+import consulo.language.psi.PsiReferenceRegistrar;
+import consulo.language.psi.filter.position.PatternFilter;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.patterns.XmlNamedElementPattern;
+import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 
 import javax.annotation.Nonnull;
 
-import consulo.language.psi.filter.position.PatternFilter;
-import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
-import consulo.xml.patterns.XmlNamedElementPattern;
-import consulo.language.psi.PsiReferenceContributor;
-import consulo.language.psi.PsiReferenceRegistrar;
-import com.intellij.xml.util.XmlUtil;
+import static consulo.xml.patterns.XmlPatterns.*;
 
 /**
  * @author peter
  */
-public class RelaxNGReferenceContributor extends PsiReferenceContributor {
-  private static final XmlNamedElementPattern RNG_TAG_PATTERN = xmlTag().withNamespace(ApplicationLoader.RNG_NAMESPACE);
+@ExtensionImpl
+public class RelaxNGReferenceContributor extends PsiReferenceContributor
+{
+	private static final XmlNamedElementPattern RNG_TAG_PATTERN = xmlTag().withNamespace(ApplicationLoader.RNG_NAMESPACE);
 
-  private static final XmlNamedElementPattern.XmlAttributePattern NAME_ATTR_PATTERN = xmlAttribute("name");
+	private static final XmlNamedElementPattern.XmlAttributePattern NAME_ATTR_PATTERN = xmlAttribute("name");
 
-  private static final XmlNamedElementPattern.XmlAttributePattern NAME_PATTERN = NAME_ATTR_PATTERN.withParent(
-    RNG_TAG_PATTERN.withLocalName("element", "attribute"));
+	private static final XmlNamedElementPattern.XmlAttributePattern NAME_PATTERN = NAME_ATTR_PATTERN.withParent(
+			RNG_TAG_PATTERN.withLocalName("element", "attribute"));
 
-  @Override
-  public void registerReferenceProviders(@Nonnull PsiReferenceRegistrar registrar) {
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{
-      "name"
-    }, new PatternFilter(xmlAttributeValue().withParent(NAME_PATTERN)), true, new PrefixReferenceProvider());
+	@Override
+	public void registerReferenceProviders(@Nonnull PsiReferenceRegistrar registrar)
+	{
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{
+				"name"
+		}, new PatternFilter(xmlAttributeValue().withParent(NAME_PATTERN)), true, new PrefixReferenceProvider());
 
-//    final XmlAttributeValuePattern id = xmlAttributeValue().withParent(xmlAttribute()).with(IdRefProvider.HAS_ID_REF_TYPE);
-//    final XmlAttributeValuePattern idref = xmlAttributeValue().withParent(xmlAttribute()).with(IdRefProvider.HAS_ID_TYPE);
-//    registry.registerXmlAttributeValueReferenceProvider(null, new PatternFilter(or(id, idref)), false, new IdRefProvider());
+		//    final XmlAttributeValuePattern id = xmlAttributeValue().withParent(xmlAttribute()).with(IdRefProvider.HAS_ID_REF_TYPE);
+		//    final XmlAttributeValuePattern idref = xmlAttributeValue().withParent(xmlAttribute()).with(IdRefProvider.HAS_ID_TYPE);
+		//    registry.registerXmlAttributeValueReferenceProvider(null, new PatternFilter(or(id, idref)), false, new IdRefProvider());
 
-  }
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 }

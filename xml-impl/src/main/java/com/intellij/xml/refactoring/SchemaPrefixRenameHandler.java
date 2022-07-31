@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.refactoring;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.refactoring.rename.inplace.VariableInplaceRenameHandler;
@@ -34,6 +35,7 @@ import java.util.Collection;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl(order = "before xmlTagRenameHandler")
 public class SchemaPrefixRenameHandler extends VariableInplaceRenameHandler {
   
   @Override

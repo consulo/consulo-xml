@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.impl.psi.CompositePsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlElementType;
@@ -26,6 +27,7 @@ import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 
 import java.util.List;
 
+@ExtensionImpl
 public class XmlCDATAContentSelectioner extends ExtendWordSelectionHandlerBase {
   public boolean canSelect(PsiElement e) {
     return e instanceof CompositePsiElement &&

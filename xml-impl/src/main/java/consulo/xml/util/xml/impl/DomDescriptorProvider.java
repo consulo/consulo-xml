@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
 import consulo.xml.psi.impl.source.xml.XmlElementDescriptorProvider;
@@ -29,6 +30,7 @@ import javax.annotation.Nullable;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class DomDescriptorProvider implements XmlElementDescriptorProvider {
 
   @Nullable

@@ -15,6 +15,7 @@
  */
 package consulo.xml.options.colors.pages;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
 import consulo.colorScheme.EditorColorKey;
 import consulo.colorScheme.TextAttributesKey;
@@ -30,6 +31,7 @@ import consulo.xml.ide.highlighter.HtmlFileHighlighter;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
+@ExtensionImpl
 public class HTMLColorsPage implements ColorSettingsPage {
   private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
     new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.code"), XmlHighlighterColors.HTML_CODE),

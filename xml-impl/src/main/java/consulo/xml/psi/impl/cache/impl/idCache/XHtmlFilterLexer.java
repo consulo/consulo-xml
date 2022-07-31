@@ -15,16 +15,16 @@
  */
 package consulo.xml.psi.impl.cache.impl.idCache;
 
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.language.psi.search.UsageSearchContext;
-import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.language.util.CommentUtilCore;
-import consulo.ide.impl.psi.impl.cache.impl.BaseFilterLexer;
-import consulo.ide.impl.psi.impl.cache.impl.OccurrenceConsumer;
 import consulo.language.Language;
+import consulo.language.ast.IElementType;
 import consulo.language.lexer.Lexer;
+import consulo.language.psi.search.UsageSearchContext;
+import consulo.language.psi.stub.BaseFilterLexer;
+import consulo.language.psi.stub.OccurrenceConsumer;
+import consulo.language.util.CommentUtilCore;
 import consulo.language.version.LanguageVersionUtil;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.XmlElementType;
 
 public class XHtmlFilterLexer extends BaseFilterLexer {
 

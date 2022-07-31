@@ -16,18 +16,20 @@
 
 package org.intellij.plugins.relaxNG.config;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
- * Created by IntelliJ IDEA.
  * User: sweinreuter
  * Date: 26.11.2007
  */
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class NoNamespaceConfig
 {
 	@Nullable

@@ -15,34 +15,38 @@
  */
 package org.intellij.plugins.relaxNG.compact;
 
-import static consulo.language.pattern.PlatformPatterns.psiElement;
-import static consulo.language.pattern.StandardPatterns.and;
-import static consulo.language.pattern.StandardPatterns.not;
-
-import consulo.language.pattern.PlatformPatterns;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionProvider;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.editor.completion.lookup.TailType;
+import consulo.language.editor.completion.lookup.TailTypeDecorator;
 import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.pattern.PsiElementPattern;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ProcessingContext;
+import consulo.util.collection.ArrayUtil;
 import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
+
 import javax.annotation.Nonnull;
-import consulo.language.editor.completion.lookup.TailType;
-import consulo.language.editor.completion.CompletionContributor;
-import consulo.language.editor.completion.CompletionParameters;
-import consulo.language.editor.completion.CompletionResultSet;
-import consulo.language.editor.completion.lookup.LookupElementBuilder;
-import consulo.language.editor.completion.lookup.TailTypeDecorator;
-import consulo.language.pattern.PsiElementPattern;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiWhiteSpace;
-import consulo.util.collection.ArrayUtil;
-import consulo.language.editor.completion.CompletionProvider;
+
+import static consulo.language.pattern.PlatformPatterns.psiElement;
+import static consulo.language.pattern.StandardPatterns.and;
+import static consulo.language.pattern.StandardPatterns.not;
 
 /**
  * @author Dennis.Ushakov
  */
+@ExtensionImpl
 public class RncCompletionContributor extends CompletionContributor
 {
 	private static final ElementPattern TOP_LEVEL = not(psiElement().inside(psiElement(RncGrammar.class).inside(true, psiElement(RncGrammar.class))));
@@ -135,5 +139,12 @@ public class RncCompletionContributor extends CompletionContributor
 	{
 		// TODO: recognize all patterns
 		return PsiTreeUtil.getPrevSiblingOfType(context.getParent(), RncDefine.class) != null;
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return RngCompactLanguage.INSTANCE;
 	}
 }

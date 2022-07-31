@@ -15,28 +15,24 @@
  */
 package consulo.xml.codeInsight.completion;
 
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlTokenType;
-import consulo.ide.impl.idea.codeInsight.completion.CompletionConfidence;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
-import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionConfidence;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ThreeState;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlText;
+import consulo.xml.psi.xml.XmlTokenType;
 
 import javax.annotation.Nonnull;
 
+@ExtensionImpl(id = "htmlText")
 public class HtmlTextCompletionConfidence extends CompletionConfidence
 {
-	@Nonnull
-	@Override
-	public ThreeState shouldFocusLookup(@Nonnull CompletionParameters completionParameters)
-	{
-		return ThreeState.UNSURE;
-	}
-
 	@Nonnull
 	@Override
 	public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset)
@@ -59,5 +55,12 @@ public class HtmlTextCompletionConfidence extends CompletionConfidence
 			}
 		}
 		return false;
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
 	}
 }

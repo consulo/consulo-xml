@@ -15,72 +15,91 @@
  */
 package consulo.xml.lang.html;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.file.FileViewProvider;
 import consulo.language.lexer.Lexer;
 import consulo.language.parser.ParserDefinition;
-import consulo.xml.lang.xml.XMLParserDefinition;
-import consulo.xml.lexer.HtmlLexer;
-import consulo.language.file.FileViewProvider;
-import consulo.xml.psi.impl.source.html.HtmlFileImpl;
-import consulo.language.ast.TokenSet;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
-import consulo.language.version.LanguageVersion;
-import consulo.language.version.LanguageVersionUtil;
 import consulo.language.parser.PsiParser;
 import consulo.language.psi.PsiFile;
+import consulo.language.version.LanguageVersion;
+import consulo.language.version.LanguageVersionUtil;
+import consulo.xml.lang.xml.XMLParserDefinition;
+import consulo.xml.lexer.HtmlLexer;
+import consulo.xml.psi.impl.source.html.HtmlFileImpl;
+import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.psi.xml.XmlTokenType;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author max
  */
-public class HTMLParserDefinition implements ParserDefinition {
-  @Override
-  @Nonnull
-  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
-    return new HtmlLexer();
-  }
+@ExtensionImpl
+public class HTMLParserDefinition implements ParserDefinition
+{
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
+	}
 
-  @Override
-  @Nonnull
-  public IFileElementType getFileNodeType() {
-    return XmlElementType.HTML_FILE;
-  }
+	@Override
+	@Nonnull
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	{
+		return new HtmlLexer();
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion) {
-    return XmlTokenType.WHITESPACES;
-  }
+	@Override
+	@Nonnull
+	public IFileElementType getFileNodeType()
+	{
+		return XmlElementType.HTML_FILE;
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getCommentTokens(LanguageVersion languageVersion) {
-    return XmlTokenType.COMMENTS;
-  }
+	@Override
+	@Nonnull
+	public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion)
+	{
+		return XmlTokenType.WHITESPACES;
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
-    return TokenSet.EMPTY;
-  }
+	@Override
+	@Nonnull
+	public TokenSet getCommentTokens(LanguageVersion languageVersion)
+	{
+		return XmlTokenType.COMMENTS;
+	}
 
-  @Override
-  @Nonnull
-  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
-    return new HTMLParser();
-  }
+	@Override
+	@Nonnull
+	public TokenSet getStringLiteralElements(LanguageVersion languageVersion)
+	{
+		return TokenSet.EMPTY;
+	}
 
-  @Override
-  public PsiFile createFile(FileViewProvider viewProvider) {
-    return new HtmlFileImpl(viewProvider);
-  }
+	@Override
+	@Nonnull
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
+	{
+		return new HTMLParser();
+	}
 
-  @Override
-  public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE));
-    return XMLParserDefinition.canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
-  }
+	@Override
+	public PsiFile createFile(FileViewProvider viewProvider)
+	{
+		return new HtmlFileImpl(viewProvider);
+	}
+
+	@Override
+	public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right)
+	{
+		final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE));
+		return XMLParserDefinition.canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
+	}
 }

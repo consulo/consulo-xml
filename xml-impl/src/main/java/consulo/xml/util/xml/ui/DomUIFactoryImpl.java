@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.ui;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.document.event.DocumentAdapter;
@@ -52,6 +53,7 @@ import java.lang.reflect.Type;
  * @author peter
  */
 @Singleton
+@ServiceImpl
 public class DomUIFactoryImpl extends DomUIFactory {
 
   private final ClassMap<Function<DomWrapper<String>, BaseControl>> myCustomControlCreators = new ClassMap<Function<DomWrapper<String>, BaseControl>>();

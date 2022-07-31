@@ -19,7 +19,7 @@ import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.util.XmlUtil;
 import consulo.document.event.DocumentAdapter;
 import consulo.document.event.DocumentEvent;
-import consulo.ide.impl.idea.ui.TextFieldWithAutoCompletion;
+import consulo.language.editor.ui.awt.TextFieldWithAutoCompletion;
 import consulo.project.Project;
 import consulo.ui.ex.awt.UIUtil;
 import consulo.util.collection.Lists;

@@ -61,7 +61,7 @@
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
 		</group>
 
-		<group id="NewXmlDescriptor" class="consulo.ide.impl.idea.ide.actions.NonEmptyActionGroup" text="XML Configuration File" popup="true"
+		<group id="NewXmlDescriptor" class="consulo.ui.ex.action.NonEmptyActionGroup" text="XML Configuration File" popup="true"
 			   icon="consulo.platform.base.PlatformIconGroup@filetypes.xml">
 			<add-to-group group-id="NewGroup" anchor="last"/>
 		</group>
@@ -75,7 +75,7 @@
 
 	<extensionPoints>
 		<extensionPoint name="startTagEndToken"
-						interface="consulo.xml.psi.xml.XmlChildRole$StartTagEndTokenProvider"/>
+						interface="consulo.xml.psi.xml.StartTagEndTokenProvider"/>
 		<extensionPoint name="schemaProvider"
 						interface="com.intellij.xml.XmlSchemaProvider"/>
 
@@ -107,7 +107,6 @@
 
 
 		<extensionPoint name="standardResourceProvider" interface="consulo.xml.javaee.StandardResourceProvider"/>
-		<extensionPoint name="standardResource" beanClass="consulo.xml.javaee.StandardResourceEP"/>
 
 		<extensionPoint name="idContributor"
 						interface="com.intellij.xml.util.XmlIdContributor"/>
@@ -148,107 +147,16 @@
 		<internalFileTemplate name="HTML4 File"/>
 		<internalFileTemplate name="XHTML File"/>
 
-		<fileTypeFactory implementation="com.intellij.xml.XmlFileTypeFactory"/>
-		<bidiRegionsSeparator language="XML" implementationClass="consulo.xml.editor.bidi.XmlBidiRegionsSeparator"/>
 
-		<multiHostInjector forClass="consulo.xml.psi.xml.XmlTag" implementationClass="consulo.xml.intelliLang.inject.xml.XmlLanguageInjector"/>
-		<multiHostInjector forClass="consulo.xml.psi.xml.XmlAttributeValue" implementationClass="consulo.xml.intelliLang.inject.xml.XmlLanguageInjector"/>
-
-		<injectionLanguageSupport implementation="consulo.xml.intelliLang.inject.xml.XmlLanguageInjectionSupport"/>
 		<injectionConfig config="resources/xmlInjections-html.xml"/>
 
-		<filetype.stubBuilder filetype="XML" implementationClass="consulo.xml.util.xml.stubs.builder.DomStubBuilder"/>
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
-		<stubIndex implementation="consulo.xml.util.xml.stubs.index.DomNamespaceKeyIndex"/>
-		<stubIndex implementation="consulo.xml.util.xml.stubs.index.DomElementClassIndex"/>
 
-		<renameHandler id="xmlTagRenameHandler" implementation="com.intellij.xml.refactoring.XmlTagRenameHandler"/>
-		<renameHandler implementation="com.intellij.xml.refactoring.SchemaPrefixRenameHandler" order="before xmlTagRenameHandler"/>
-		<refactoring.inlineHandler language="XML" implementationClass="com.intellij.xml.refactoring.XmlInlineHandler"/>
 
-		<completion.contributor language="any" implementationClass="consulo.xml.codeInsight.completion.XmlCompletionContributor" id="xml"
-								order="first"/>
-		<completion.contributor language="any" implementationClass="consulo.xml.codeInsight.completion.XmlNonFirstCompletionContributor"
-								id="xmlNonFirst" order="after xml"/>
-
-		<completion.contributor language="any" implementationClass="consulo.xml.codeInsight.completion.HtmlCompletionContributor" id="html"/>
-
-		<completion.contributor language="XML" implementationClass="consulo.xml.codeInsight.completion.XmlNoVariantsDelegator"
-								order="before xmlNonFirst"/>
-		<completion.contributor language="DTD" implementationClass="consulo.xml.codeInsight.completion.DtdCompletionContributor" id="dtd"/>
-
-		<completion.confidence language="HTML" implementationClass="consulo.xml.codeInsight.completion.HtmlTextCompletionConfidence" id="htmlText"/>
-		<completion.confidence language="XHTML" implementationClass="consulo.xml.codeInsight.completion.HtmlTextCompletionConfidence" id="xhtmlText"/>
-
-		<lookup.charFilter implementation="consulo.xml.codeInsight.completion.XmlCharFilter" id="xml"/>
-
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlAttributeValue"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlAttributeValueManipulator"/>
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlAttribute"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlAttributeManipulator"/>
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlToken"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlTokenManipulator"/>
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlTag"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlTagManipulator"/>
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlText"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlTextManipulator"/>
-		<lang.elementManipulator forClass="consulo.xml.psi.xml.XmlProcessingInstruction"
-								 implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.manipulators.XmlProcessingInstructionManipulator"/>
-		<codeInsight.lineMarkerProvider language="HTML" implementationClass="com.intellij.html.HtmlLineMarkerProvider"/>
-		<codeInsight.lineMarkerProvider language="XHTML" implementationClass="com.intellij.html.HtmlLineMarkerProvider"/>
 
 		<editorAppearanceConfigurable instance="consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingConfigurable"/>
 
-		<highlightErrorFilter implementation="consulo.xml.codeInsight.highlighting.HtmlClosingTagErrorFilter"/>
 
-		<applicationService serviceInterface="consulo.xml.codeInspection.XmlQuickFixFactory"
-							serviceImplementation="consulo.xml.codeInspection.XmlQuickFixFactoryImpl"/>
-
-		<applicationService serviceInterface="consulo.xml.javaee.ExternalResourceManager"
-							serviceImplementation="consulo.xml.javaee.ExternalResourceManagerExImpl"/>
-
-		<projectService serviceInterface="consulo.xml.javaee.ExternalResourceManagerExImpl"
-						serviceImplementation="consulo.xml.javaee.ProjectResources"/>
-
-		<roots.watchedRootsProvider implementation="consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction"/>
-
-		<fileBasedIndex implementation="com.intellij.xml.index.XmlTagNamesIndex"/>
-		<fileBasedIndex implementation="com.intellij.xml.index.XmlNamespaceIndex"/>
-		<fileBasedIndex implementation="com.intellij.html.index.Html5CustomAttributesIndex"/>
-		<fileBasedIndex implementation="com.intellij.xml.index.SchemaTypeInheritanceIndex"/>
-		<include.provider implementation="com.intellij.xml.util.XIncludeProvider"/>
-		<indexedRootsContributor implementation="consulo.xml.javaee.ExternalResourcesRootsProvider"/>
-
-		<applicationService serviceInterface="consulo.xml.application.options.editor.XmlEditorOptions"
-							serviceImplementation="consulo.xml.application.options.editor.XmlEditorOptions"/>
-
-		<applicationService serviceInterface="consulo.xml.application.options.editor.XmlFoldingSettings"
-							serviceImplementation="consulo.xml.application.options.editor.XmlFoldingSettings"/>
-
-		<applicationService serviceInterface="consulo.xml.application.options.XmlSettings"
-							serviceImplementation="consulo.xml.application.options.XmlSettings"/>
-
-		<projectService serviceInterface="consulo.xml.psi.XmlElementFactory"
-						serviceImplementation="consulo.xml.psi.XmlElementFactoryImpl"/>
-
-		<highlightVisitor implementation="consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor"/>
-
-		<externalAnnotator language="XML" implementationClass="consulo.xml.lang.xml.XMLExternalAnnotator"/>
-		<externalAnnotator language="HTML" implementationClass="consulo.xml.lang.xml.XMLExternalAnnotator"/>
-		<externalAnnotator language="XHTML" implementationClass="consulo.xml.lang.xml.XMLExternalAnnotator"/>
-		<!--<externalAnnotator language="JSP" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/>
-		<externalAnnotator language="JSPX" implementationClass="com.intellij.lang.xml.XMLExternalAnnotator"/> -->
-
-		<lang.parserDefinition language="DTD" implementationClass="consulo.xml.lang.dtd.DTDParserDefinition"/>
-		<lang.parserDefinition language="XML" implementationClass="consulo.xml.lang.xml.XMLParserDefinition"/>
-		<lang.parserDefinition language="HTML" implementationClass="consulo.xml.lang.html.HTMLParserDefinition"/>
-		<lang.parserDefinition language="XHTML" implementationClass="consulo.xml.lang.xhtml.XHTMLParserDefinition"/>
-
-		<lang.formatter language="XML" implementationClass="consulo.xml.lang.xml.XmlFormattingModelBuilder"/>
-		<lang.whiteSpaceFormattingStrategy language="XML"
-										   implementationClass="consulo.xml.lang.xml.XmlWhiteSpaceFormattingStrategy"/>
-		<lang.formatter language="HTML" implementationClass="consulo.xml.lang.html.HtmlFormattingModelBuilder"/>
-		<lang.formatter language="XHTML" implementationClass="consulo.xml.lang.xhtml.XhtmlFormattingModelBuilder"/>
 		<lang.lineWrapStrategy language="XML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
 		<lang.lineWrapStrategy language="HTML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
 		<lang.lineWrapStrategy language="XHTML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
@@ -259,39 +167,17 @@
 		<lang.documentationProvider language="HTML" implementationClass="com.intellij.xml.util.documentation.HtmlDocumentationProvider"/>
 		<lang.documentationProvider language="XHTML" implementationClass="com.intellij.xml.util.documentation.XHtmlDocumentationProvider"/>
 
-		<lang.surroundDescriptor language="XML" implementationClass="consulo.xml.lang.xml.XmlSurroundDescriptor"/>
-		<lang.surroundDescriptor language="HTML" implementationClass="consulo.xml.lang.xml.XmlSurroundDescriptor" id="html-xml"/>
-		<lang.surroundDescriptor language="XHTML" implementationClass="consulo.xml.lang.xml.XmlSurroundDescriptor"/>
+		<lang.surroundDescriptor language="XML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor"/>
+		<lang.surroundDescriptor language="HTML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor" id="html-xml"/>
+		<lang.surroundDescriptor language="XHTML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor"/>
 
-		<lang.unwrapDescriptor language="XML" implementationClass="consulo.xml.lang.xml.XmlUnwrapDescriptor"/>
-		<lang.unwrapDescriptor language="HTML" implementationClass="consulo.xml.lang.xml.XmlUnwrapDescriptor"/>
-		<lang.unwrapDescriptor language="XHTML" implementationClass="consulo.xml.lang.xml.XmlUnwrapDescriptor"/>
-		<!--<lang.unwrapDescriptor language="JSP" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>
-		<lang.unwrapDescriptor language="JSPX" implementationClass="com.intellij.lang.xml.XmlUnwrapDescriptor"/>  -->
 
-		<lang.findUsagesProvider language="DTD" implementationClass="consulo.xml.lang.xml.XmlFindUsagesProvider"/>
-		<lang.findUsagesProvider language="XML" implementationClass="consulo.xml.lang.xml.XmlFindUsagesProvider"/>
-		<lang.findUsagesProvider language="HTML" implementationClass="consulo.xml.lang.xml.XmlFindUsagesProvider"/>
-		<lang.findUsagesProvider language="XHTML" implementationClass="consulo.xml.lang.xml.XmlFindUsagesProvider"/>
+		<lang.findUsagesProvider language="DTD" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
+		<lang.findUsagesProvider language="XML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
+		<lang.findUsagesProvider language="HTML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
+		<lang.findUsagesProvider language="XHTML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
 
-		<lang.commenter language="DTD" implementationClass="consulo.xml.lang.xml.XmlCommenter"/>
-		<lang.commenter language="XML" implementationClass="consulo.xml.lang.xml.XmlCommenter"/>
-		<lang.commenter language="HTML" implementationClass="consulo.xml.lang.xml.XmlCommenter"/>
-		<lang.commenter language="XHTML" implementationClass="consulo.xml.lang.xml.XmlCommenter"/>
 
-		<braceMatcher filetype="XML" implementationClass="com.intellij.xml.impl.XmlBraceMatcher"/>
-		<braceMatcher filetype="DTD" implementationClass="com.intellij.xml.impl.XmlBraceMatcher"/>
-		<braceMatcher filetype="XHTML" implementationClass="com.intellij.xml.impl.XmlBraceMatcher"/>
-		<braceMatcher filetype="HTML" implementationClass="com.intellij.xml.impl.XmlBraceMatcher"/>
-
-		<lang.foldingBuilder language="DTD" implementationClass="consulo.xml.lang.xml.XmlFoldingBuilder"/>
-		<lang.foldingBuilder language="XML" implementationClass="consulo.xml.lang.xml.XmlFoldingBuilder"/>
-		<lang.foldingBuilder language="HTML" implementationClass="consulo.xml.lang.xml.XmlFoldingBuilder"/>
-		<lang.foldingBuilder language="XHTML" implementationClass="consulo.xml.lang.xml.XmlFoldingBuilder"/>
-
-		<codeInsight.parameterInfo language="XML" implementationClass="consulo.xml.codeInsight.hint.api.impls.XmlParameterInfoHandler"/>
-		<codeInsight.parameterInfo language="HTML" implementationClass="consulo.xml.codeInsight.hint.api.impls.XmlParameterInfoHandler"/>
-		<codeInsight.parameterInfo language="XHTML" implementationClass="consulo.xml.codeInsight.hint.api.impls.XmlParameterInfoHandler"/>
 
 		<codeInsight.wordCompletionFilter language="XML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
 		<codeInsight.wordCompletionFilter language="HTML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
@@ -300,35 +186,15 @@
 		<codeInsight.wordCompletionFilter language="JSPX" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/> -->
 
 
-		<lang.psiStructureViewFactory language="DTD" implementationClass="consulo.xml.lang.dtd.DtdStructureViewBuilderFactory"/>
-		<lang.psiStructureViewFactory language="XML" implementationClass="consulo.xml.lang.xml.XmlStructureViewBuilderFactory"/>
-		<lang.psiStructureViewFactory language="HTML" implementationClass="consulo.xml.lang.xml.XmlStructureViewBuilderFactory"/>
-		<lang.psiStructureViewFactory language="XHTML" implementationClass="consulo.xml.lang.xml.XmlStructureViewBuilderFactory"/>
 
-		<lang.ast.lazyFactory implementation="consulo.xml.lang.xml.XmlASTLazyFactory"/>
-		<lang.ast.compositeFactory implementation="consulo.xml.lang.xml.XmlASTCompositeFactory"/>
-		<lang.ast.leafFactory implementation="consulo.xml.lang.xml.XmlASTLeafFactory"/>
-
-		<codeStyleSettingsProvider implementation="consulo.xml.application.options.XmlCodeStyleSettingsProvider"/>
-		<codeStyleSettingsProvider implementation="consulo.xml.application.options.HtmlCodeStyleSettingsProvider"/>
-		<langCodeStyleSettingsProvider implementation="consulo.xml.application.options.HtmlLanguageCodeStyleSettings"/>
 
 		<!-- XML -->
-		<quoteHandler fileType="XML" className="consulo.xml.codeInsight.editorActions.XmlQuoteHandler"/>
+		<quoteHandler fileType="XML" className="consulo.xml.codeInsight.editorActions.XmlBasedQuoteHandler"/>
 		<quoteHandler fileType="HTML" className="consulo.xml.codeInsight.editorActions.HtmlQuoteHandler"/>
 		<quoteHandler fileType="XHTML" className="consulo.xml.codeInsight.editorActions.HtmlQuoteHandler"/>
 
-		<psi.referenceContributor implementation="com.intellij.xml.util.XmlReferenceContributor"/>
 		<!--<pom.declarationSearcher implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.IdDeclarationSearcher"/>-->
-		<anchorReferenceProvider implementation="com.intellij.xml.util.AnchorPathReferenceProvider"/>
 
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.HtmlSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.XmlTagSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.XmlCDATAContentSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.DtdSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.XmlElementSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.XmlTokenSelectioner"/>
-		<extendWordSelectionHandler implementation="consulo.xml.codeInsight.editorActions.XmlLineSelectioner"/>
 
 
 		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlSlashTypedHandler" id="xmlSlash"/>
@@ -336,45 +202,14 @@
 		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlGtTypedHandler" id="xmlGt"/>
 		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlAutoPopupHandler" id="xmlAuto"/>
 
-		<!--
-		<copyPastePreProcessor implementation="com.intellij.codeInsight.editorActions.XmlCopyPastePreProcessor"/>
-		-->
-
-		<syntaxHighlighter key="GUI_DESIGNER_FORM" implementationClass="consulo.xml.ide.highlighter.XmlFileHighlighter"/>
-
-		<enterHandlerDelegate implementation="consulo.xml.codeInsight.editorActions.EnterBetweenXmlTagsHandler" id="xmlEnter"/>
-
-		<declarationRangeHandler key="consulo.xml.psi.xml.XmlTag"
-								 implementationClass="consulo.xml.codeInsight.hint.TagDeclarationRangeHandler"/>
 
 		<liveTemplateContext implementation="consulo.xml.codeInsight.template.HtmlTextContextType"/>
 		<liveTemplateContext implementation="consulo.xml.codeInsight.template.HtmlContextType"/>
 		<liveTemplateContext implementation="consulo.xml.codeInsight.template.XslTextContextType"/>
 		<liveTemplateContext implementation="consulo.xml.codeInsight.template.XmlContextType"/>
 
-		<errorQuickFixProvider implementation="consulo.xml.codeInsight.daemon.impl.analysis.XmlErrorQuickFixProvider"/>
-
-		<elementDescriptionProvider implementation="consulo.xml.refactoring.util.XmlNonCodeSearchElementDescriptionProvider"/>
-
-		<referenceProviderType key="Uri references provider"
-							   implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.providers.URIReferenceProvider"/>
-		<referenceProviderType key="Schema references provider"
-							   implementationClass="consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider"/>
-
-		<renamePsiElementProcessor implementation="consulo.xml.refactoring.rename.RenameXmlAttributeProcessor" id="xmlAttribute"/>
-		<lang.importOptimizer id="XML" language="XML" implementationClass="consulo.xml.refactoring.XmlImportOptimizer"/>
-
-		<readWriteAccessDetector implementation="consulo.xml.codeInsight.highlighting.XmlReadWriteAccessDetector"/>
-
-		<elementDescriptionProvider implementation="consulo.xml.usageView.XmlUsageViewDescriptionProvider"/>
-
-		<langCodeStyleSettingsProvider implementation="consulo.xml.application.options.XmlLanguageCodeStyleSettingsProvider"/>
-
-		<methodNavigationOffsetProvider implementation="consulo.xml.codeInsight.navigation.XmlMethodNavigationOffsetProvider" order="last"/>
 
 		<annotator language="XML" implementationClass="consulo.xml.codeInspection.htmlInspections.XmlWrongClosingTagNameInspection"/>
-
-		<statementUpDownMover implementation="consulo.xml.codeInsight.editorActions.moveUpDown.XmlMover" id="xml" order="before line"/>
 
 		<moveLeftRightHandler language="XML" implementationClass="consulo.xml.codeInsight.editorActions.moveLeftRight.XmlMoveLeftRightHandler"/>
 
@@ -384,17 +219,9 @@
 		<lang.smartEnterProcessor language="HTML" implementationClass="consulo.xml.codeInsight.completion.XmlSmartEnterProcessor"/>
 		<lang.smartEnterProcessor language="XHTML" implementationClass="consulo.xml.codeInsight.completion.XmlSmartEnterProcessor"/>
 
-		<iconDescriptorUpdater implementation="com.intellij.xml.util.XmlIconDescriptorUpdater" id="xml"/>
 
-		<localInspection language="XML" shortName="CheckTagEmptyBody" bundle="messages.XmlBundle" key="xml.inspections.check.tag.empty.body"
-						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="WARNING"
-						 implementationClass="com.intellij.xml.util.CheckTagEmptyBodyInspection"/>
-		<!-- TODO: assign it to XML & DTD -->
-		<localInspection shortName="CheckDtdRefs" bundle="messages.XmlBundle" key="xml.inspections.check.dtd.references" groupName="XML"
-						 enabledByDefault="true" level="ERROR" implementationClass="com.intellij.xml.util.CheckDtdReferencesInspection"/>
-		<localInspection language="XML" shortName="CheckEmptyScriptTag" bundle="messages.XmlBundle" key="html.inspections.check.empty.tag"
-						 groupName="HTML"
-						 enabledByDefault="true" level="WARNING" implementationClass="com.intellij.xml.util.CheckEmptyTagInspection"/>
+
+
 		<localInspection language="XML" shortName="CheckValidXmlInScriptTagBody" bundle="messages.XmlBundle"
 						 key="html.inspections.check.valid.script.tag"
 						 groupName="HTML" enabledByDefault="true" level="ERROR"
@@ -431,10 +258,7 @@
 						 groupName="HTML"
 						 enabledByDefault="true" level="WARNING"
 						 implementationClass="consulo.xml.codeInspection.htmlInspections.HtmlUnknownAttributeInspection"/>
-		<localInspection language="XML" enabledByDefault="true" level="WARNING"
-						 bundle="messages.XmlBundle" key="html.inspections.unknown.boolean.attribute"
-						 groupBundle="messages.XmlBundle" groupKey="html.inspections.group.name"
-						 implementationClass="consulo.xml.codeInspection.htmlInspections.HtmlUnknownBooleanAttributeInspection"/>
+
 		<localInspection language="XML" shortName="XmlUnboundNsPrefix" bundle="messages.XmlBundle" key="xml.inspections.unbound.prefix"
 						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="WARNING"
 						 implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlUnboundNsPrefixInspection"/>
@@ -477,19 +301,6 @@
 								 displayName="HTML"
 								 instance="consulo.xml.application.options.editor.HtmlCodeFoldingConfigurable"/>
 
-		<colorSettingsPage implementation="consulo.xml.options.colors.pages.XMLColorsPage"/>
-		<colorSettingsPage implementation="consulo.xml.options.colors.pages.HTMLColorsPage"/>
-
-		<metaDataContributor implementation="com.intellij.xml.util.XmlApplicationComponent"/>
-
-
-		<multiHostInjector forClass="consulo.language.psi.PsiComment"
-						   implementationClass="consulo.xml.psi.impl.source.html.HtmlConditionalCommentInjector"/>
-		<multiHostInjector forClass="consulo.xml.psi.xml.XmlText"
-						   implementationClass="consulo.xml.psi.impl.source.html.HtmlScriptLanguageInjector"/>
-
-		<gotoRelatedProvider implementation="consulo.xml.navigation.HtmlGotoRelatedProvider"/>
-		<gotoTargetRendererProvider implementation="com.intellij.xml.impl.schema.GotoXmlSchemaTypeRendererProvider"/>
 
 		<intentionAction>
 			<category>XML</category>
@@ -518,33 +329,8 @@
 			<className>consulo.xml.codeInsight.intentions.XmlChooseColorIntentionAction</className>
 		</intentionAction>
 
-		<lang.implementationTextSelectioner language="XML"
-											implementationClass="consulo.xml.codeInsight.hint.XmlImplementationTextSelectioner"/>
+
 		<basicWordSelectionFilter implementation="consulo.xml.codeInsight.editorActions.XmlBasicWordSelectionFilter"/>
-		<defaultLiveTemplatesProvider implementation="consulo.xml.codeInsight.template.XmlDefaultLiveTemplatesProvider"/>
-		<productivityFeaturesProvider implementation="consulo.xml.featureStatistics.XmlProductivityFeatureProvider"/>
-
-		<idIndexer filetype="XML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XmlIdIndexer"/>
-		<idIndexer filetype="DTD" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XmlIdIndexer"/>
-		<idIndexer filetype="HTML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.HtmlIdIndexer"/>
-		<idIndexer filetype="XHTML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XHtmlIdIndexer"/>
-
-		<todoIndexer filetype="XML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XmlTodoIndexer"/>
-		<todoIndexer filetype="DTD" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XmlTodoIndexer"/>
-		<todoIndexer filetype="HTML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.HtmlTodoIndexer"/>
-		<todoIndexer filetype="XHTML" implementationClass="consulo.xml.psi.impl.cache.impl.idCache.XHtmlTodoIndexer"/>
-
-		<elementSignatureProvider implementation="consulo.xml.codeInsight.folding.impl.XmlElementSignatureProvider"/>
-
-		<vcsSelectionProvider implementation="consulo.xml.vcsUtil.XmlVcsSelectionProvider"/>
-
-		<renameInputValidator implementation="consulo.xml.lang.xml.XmlElementRenameValidator"/>
-		<renameInputValidator implementation="consulo.xml.lang.xml.XmlAttributeValueRenameValidator"/>
-
-		<daemon.changeLocalityDetector implementation="com.intellij.xml.XmlChangeLocalityDetector"/>
-		<lang.rearranger language="XML" implementationClass="com.intellij.xml.arrangement.XmlRearranger"/>
-		<definitionsScopedSearch implementation="com.intellij.xml.impl.schema.SchemaDefinitionsSearch"/>
-
 
 		<projectConfigurable instance="consulo.xml.javaee.ExternalResourceConfigurable"
 							 key="display.name.edit.external.resource"
@@ -554,58 +340,25 @@
 			<configurable instance="consulo.xml.javaee.XMLCatalogConfigurable" displayName="XML Catalog" id="xml.catalog"/>
 		</projectConfigurable>
 
-		<lang.inspectionSuppressor language="XML" implementationClass="consulo.xml.codeInspection.XmlInspectionSuppressor"/>
 
-		<lang.syntaxHighlighterFactory language="DTD" implementationClass="consulo.xml.ide.highlighter.DTDSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory language="XML" implementationClass="consulo.xml.ide.highlighter.XmlSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory language="HTML" implementationClass="consulo.xml.ide.highlighter.HtmlSyntaxHighlighterFactory"/>
-		<lang.syntaxHighlighterFactory language="XHTML" implementationClass="consulo.xml.ide.highlighter.XHtmlSyntaxHighlighterFactory"/>
 
 		<annotator language="XML" implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlNsPrefixAnnotator"/>
 		<annotator language="XML" implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlNamespaceAnnotator"/>
 
-		<smartPointerAnchorProvider implementation="consulo.xml.psi.impl.smartPointers.XmlAnchorProvider"/>
 
-		<codeInsight.unresolvedReferenceQuickFixProvider
-				implementation="consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferenceQuickFixProvider"/>
-		<codeInsight.unresolvedReferenceQuickFixProvider
-				implementation="consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReferenceQuickFixProvider"/>
-		<codeInsight.unresolvedReferenceQuickFixProvider
-				implementation="consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReferenceQuickFixProvider"/>
-
-		<navbar implementation="consulo.xml.navbar.XmlNavBarExtension" />
-
-		<textEditorHighlightingPassFactory implementation="consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingPassFactory" />
 
 		<applicationService serviceImplementation="consulo.xml.javaee.DefaultHtmlDoctypeInitialConfigurator" lazy="false" />
 
-		<editorFactoryListener implementation="consulo.xml.codeInsight.editorActions.XmlTagNameSynchronizer" />
 
 		<projectService serviceImplementation="consulo.xml.javaee.PsiExternalResourceNotifier" lazy="false" />
 
-		<applicationService serviceImplementation="consulo.xml.html.lexer.InlineElementTypeHolder" />
-
-		<copyright.updater filetype="XML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<copyright.updater filetype="HTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<copyright.updater filetype="XHTML" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
-		<copyright.updater filetype="DTD" implementationClass="consulo.xml.copyright.psi.UpdateXmlCopyrightsProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">
-		<tagNameProvider implementation="consulo.xml.psi.impl.source.xml.DefaultXmlTagNameProvider"/>
-		<attributeDescriptorsProvider implementation="com.intellij.html.impl.Html5CustomAttributeDescriptorsProvider"/>
-		<attributeDescriptorsProvider implementation="com.intellij.html.impl.MicrodataAttributeDescriptorsProvider"/>
-
 		<structureViewBuilderProvider implementation="consulo.xml.lang.html.structureView.HtmlStructureViewBuilderProvider"/>
 		<relatedToHtmlFilesContributor implementation="consulo.xml.navigation.LinkedToHtmlFilesContributor"/>
-		<xmlSuppressionProvider implementation="consulo.xml.codeInspection.DefaultXmlSuppressionProvider" order="last"/>
-		<standardResourceProvider implementation="consulo.xml.javaee.InternalResourceProvider"/>
 
 		<psiPolicy key="HTML" implementationClass="consulo.xml.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
 		<psiPolicy key="XHTML" implementationClass="consulo.xml.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
-
-		<xmlExtension implementation="com.intellij.xml.HtmlXmlExtension"/>
-
-		<fileNSInfoProvider implementation="com.intellij.xml.util.HtmlFileNSInfoProvider"/>
 	</extensions>
 </consulo-plugin>

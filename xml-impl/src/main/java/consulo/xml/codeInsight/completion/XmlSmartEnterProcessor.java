@@ -18,8 +18,8 @@ package consulo.xml.codeInsight.completion;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.editorActions.smartEnter.SmartEnterProcessor;
 import consulo.language.ast.ASTNode;
+import consulo.language.editor.action.SmartEnterProcessor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 /**
  * @author spleaner
  */
-public class XmlSmartEnterProcessor extends SmartEnterProcessor {
+public abstract class XmlSmartEnterProcessor extends SmartEnterProcessor {
   private static final Logger LOG = Logger.getInstance(XmlSmartEnterProcessor.class);
 
   public boolean process(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile psiFile) {

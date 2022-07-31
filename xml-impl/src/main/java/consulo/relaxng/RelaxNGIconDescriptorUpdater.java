@@ -1,5 +1,6 @@
 package consulo.relaxng;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.icon.IconDescriptor;
 import consulo.language.icon.IconDescriptorUpdater;
 import consulo.language.psi.PsiElement;
@@ -13,6 +14,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 18-Jan-17
  */
+@ExtensionImpl
 public class RelaxNGIconDescriptorUpdater implements IconDescriptorUpdater
 {
 	@RequiredReadAction

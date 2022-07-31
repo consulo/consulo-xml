@@ -15,6 +15,8 @@
  */
 package consulo.xml.lang.xml;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IFileElementType;
 import consulo.language.ast.TokenSet;
@@ -36,68 +38,89 @@ import javax.annotation.Nonnull;
 /**
  * @author max
  */
-public class XMLParserDefinition implements ParserDefinition {
-  @Override
-  @Nonnull
-  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
-    return new XmlLexer();
-  }
+@ExtensionImpl
+public class XMLParserDefinition implements ParserDefinition
+{
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  @Override
-  @Nonnull
-  public IFileElementType getFileNodeType() {
-    return XmlElementType.XML_FILE;
-  }
+	@Override
+	@Nonnull
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	{
+		return new XmlLexer();
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion) {
-    return XmlTokenType.WHITESPACES;
-  }
+	@Override
+	@Nonnull
+	public IFileElementType getFileNodeType()
+	{
+		return XmlElementType.XML_FILE;
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getCommentTokens(LanguageVersion languageVersion) {
-    return XmlTokenType.COMMENTS;
-  }
+	@Override
+	@Nonnull
+	public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion)
+	{
+		return XmlTokenType.WHITESPACES;
+	}
 
-  @Override
-  @Nonnull
-  public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
-    return TokenSet.EMPTY;
-  }
+	@Override
+	@Nonnull
+	public TokenSet getCommentTokens(LanguageVersion languageVersion)
+	{
+		return XmlTokenType.COMMENTS;
+	}
 
-  @Override
-  @Nonnull
-  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
-    return new XmlParser();
-  }
+	@Override
+	@Nonnull
+	public TokenSet getStringLiteralElements(LanguageVersion languageVersion)
+	{
+		return TokenSet.EMPTY;
+	}
 
-  @Override
-  public PsiFile createFile(FileViewProvider viewProvider) {
-    return new XmlFileImpl(viewProvider, XmlElementType.XML_FILE);
-  }
+	@Override
+	@Nonnull
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
+	{
+		return new XmlParser();
+	}
 
-  @Override
-  public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
-    final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE));
-    return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
-  }
+	@Override
+	public PsiFile createFile(FileViewProvider viewProvider)
+	{
+		return new XmlFileImpl(viewProvider, XmlElementType.XML_FILE);
+	}
 
-  public static SpaceRequirements canStickTokensTogetherByLexerInXml(final ASTNode left,
-                                                                                      final ASTNode right,
-                                                                                      final Lexer lexer,
-                                                                                      int state) {
-    if (left.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN ||
-        right.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN) {
-      return SpaceRequirements.MUST_NOT;
-    }
-    if (left.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER && right.getElementType() == XmlTokenType.XML_NAME) {
-      return SpaceRequirements.MUST;
-    }
-    if (left.getElementType() == XmlTokenType.XML_NAME && right.getElementType() == XmlTokenType.XML_NAME) {
-      return SpaceRequirements.MUST;
-    }
-    return SpaceRequirements.MAY;
-  }
+	@Override
+	public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right)
+	{
+		final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE));
+		return canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
+	}
+
+	public static SpaceRequirements canStickTokensTogetherByLexerInXml(final ASTNode left,
+																	   final ASTNode right,
+																	   final Lexer lexer,
+																	   int state)
+	{
+		if(left.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN ||
+				right.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN)
+		{
+			return SpaceRequirements.MUST_NOT;
+		}
+		if(left.getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER && right.getElementType() == XmlTokenType.XML_NAME)
+		{
+			return SpaceRequirements.MUST;
+		}
+		if(left.getElementType() == XmlTokenType.XML_NAME && right.getElementType() == XmlTokenType.XML_NAME)
+		{
+			return SpaceRequirements.MUST;
+		}
+		return SpaceRequirements.MAY;
+	}
 }

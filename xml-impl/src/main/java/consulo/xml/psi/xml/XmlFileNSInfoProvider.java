@@ -16,20 +16,21 @@
 
 package consulo.xml.psi.xml;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
  * Implementations of this interface add default mappings
  * for namespace prefixes to namespaces for any xml file.
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlFileNSInfoProvider {
-
-  ExtensionPointName<XmlFileNSInfoProvider> EP_NAME = new ExtensionPointName<XmlFileNSInfoProvider>("com.intellij.xml.fileNSInfoProvider");
+  ExtensionPointName<XmlFileNSInfoProvider> EP_NAME = ExtensionPointName.create(XmlFileNSInfoProvider.class);
   /**
    * Provides information (if any) for default mappings of namespace prefix to namespace identifiers.
    * @param file for which ns mapping information is requested.

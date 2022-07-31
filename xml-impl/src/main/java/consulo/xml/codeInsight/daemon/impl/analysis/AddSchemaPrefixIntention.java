@@ -15,10 +15,16 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.application.Result;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.InputValidator;
 import consulo.ui.ex.awt.Messages;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
@@ -28,12 +34,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
-import consulo.application.Result;
-import consulo.codeEditor.Editor;
-import consulo.ide.impl.idea.codeInsight.intention.PsiElementBaseIntentionAction;
-import consulo.language.editor.WriteCommandAction;
-import consulo.ui.annotation.RequiredUIAccess;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

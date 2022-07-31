@@ -16,18 +16,18 @@
 
 package consulo.xml.util.xml.tree.actions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import consulo.application.AllIcons;
-import consulo.application.util.TypePresentationService;
+import consulo.application.presentation.TypePresentationService;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.ToggleAction;
+import consulo.ui.image.Image;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
-import consulo.ui.image.Image;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User: Sergey.Vasiliev
@@ -48,7 +48,7 @@ public class DomElementsToggleAction extends ToggleAction {
     }
     this.myIcon = myIcon;
 
-    myText = TypePresentationService.getInstance().getTypePresentableName(myClass);
+    myText = TypePresentationService.getInstance().getTypeNameOrStub(myClass);
 
     if(getHiders() == null) DomUtil.getFile(myTreeView.getRootElement()).putUserData(BaseDomElementNode.TREE_NODES_HIDERS_KEY, new HashMap<Class, Boolean>());
 

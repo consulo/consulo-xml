@@ -19,34 +19,40 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.xml.psi.formatter.xml.XmlBlock;
-import consulo.xml.psi.formatter.xml.XmlPolicy;
-import consulo.document.util.TextRange;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.FormattingContext;
 import consulo.language.codeStyle.FormattingModel;
 import consulo.language.codeStyle.FormattingModelBuilder;
 import consulo.language.impl.ast.TreeElement;
 import consulo.language.impl.ast.TreeUtil;
-import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
+import consulo.xml.psi.formatter.xml.XmlBlock;
+import consulo.xml.psi.formatter.xml.XmlPolicy;
 
 import javax.annotation.Nonnull;
 
-public class XmlFormattingModelBuilder implements FormattingModelBuilder {
-  
-  @Nonnull
-  public FormattingModel createModel(final PsiElement element, final CodeStyleSettings settings) {
-    final ASTNode root = TreeUtil.getFileElement((TreeElement)SourceTreeToPsiMap.psiElementToTree(element));
-    final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(element.getContainingFile());
-    return new XmlFormattingModel(element.getContainingFile(),
-                                                           new XmlBlock(root, null, null, new XmlPolicy(settings, documentModel), null, null, false),
-                                                           documentModel);
-  }
+@ExtensionImpl
+public class XmlFormattingModelBuilder implements FormattingModelBuilder
+{
+	@Nonnull
+	public FormattingModel createModel(FormattingContext context)
+	{
+		PsiElement element = context.getPsiElement();
+		CodeStyleSettings settings = context.getCodeStyleSettings();
 
-  public TextRange getRangeAffectingIndent(PsiFile file, int offset, ASTNode elementAtOffset) {
-    return null;
-  }
+		final ASTNode root = TreeUtil.getFileElement((TreeElement) element.getNode());
+		final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(element.getContainingFile());
+		return new XmlFormattingModel(element.getContainingFile(), new XmlBlock(root, null, null, new XmlPolicy(settings, documentModel), null, null, false), documentModel);
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 }

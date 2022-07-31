@@ -15,6 +15,7 @@
  */
 package org.intellij.html;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.meta.MetaDataRegistrar;
@@ -32,6 +33,7 @@ import com.intellij.xml.util.XmlUtil;
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class RngHtml5MetaDataContributor implements MetaDataContributor {
   @Override
   public void contributeMetaData(MetaDataRegistrar registrar) {
@@ -39,7 +41,7 @@ public class RngHtml5MetaDataContributor implements MetaDataContributor {
       new AndFilter(
         new ClassFilter(RncDocument.class),
         new MyRncNamespaceFilter(XmlUtil.HTML_URI, XmlUtil.XHTML_URI)),
-      RelaxedHtmlFromRngNSDescriptor.class
+      RelaxedHtmlFromRngNSDescriptor::new
     );
   }
 

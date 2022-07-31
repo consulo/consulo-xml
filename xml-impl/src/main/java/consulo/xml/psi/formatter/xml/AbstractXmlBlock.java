@@ -27,7 +27,6 @@ import consulo.language.impl.ast.LeafElement;
 import consulo.language.impl.ast.TreeElement;
 import consulo.language.impl.ast.TreeUtil;
 import consulo.language.impl.psi.SourceTreeToPsiMap;
-import consulo.language.parser.LanguageParserDefinitions;
 import consulo.language.parser.ParserDefinition;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
@@ -35,6 +34,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.template.TemplateLanguageFileViewProvider;
 import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
@@ -366,7 +366,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
         childLanguage == XMLLanguage.INSTANCE) {
       return true;
     }
-    final FormattingModelBuilder childFormatter = LanguageFormatting.INSTANCE.forLanguage(childLanguage);
+    final FormattingModelBuilder childFormatter = ContainerUtil.getFirstItem(FormattingModelBuilder.forLanguage(childLanguage));
     return childFormatter == null ||
            childFormatter instanceof DelegatingFormattingModelBuilder &&
            ((DelegatingFormattingModelBuilder)childFormatter).dontFormatMyModel();
@@ -425,7 +425,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   private static  boolean isComment(final ASTNode node) {
     final PsiElement psiElement = SourceTreeToPsiMap.treeElementToPsi(node);
     if (psiElement instanceof PsiComment) return true;
-    final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(psiElement.getLanguage());
+    final ParserDefinition parserDefinition = ParserDefinition.forLanguage(psiElement.getLanguage());
     if (parserDefinition == null) return false;
     final TokenSet commentTokens = parserDefinition.getCommentTokens(psiElement.getLanguageVersion());
     return commentTokens.contains(node.getElementType());

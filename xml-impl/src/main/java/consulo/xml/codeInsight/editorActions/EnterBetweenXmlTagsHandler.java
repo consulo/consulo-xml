@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -35,6 +36,7 @@ import consulo.util.lang.ref.Ref;
 
 import javax.annotation.Nonnull;
 
+@ExtensionImpl(id = "xmlEnter")
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
   public Result preprocessEnter(@Nonnull final PsiFile file, @Nonnull final Editor editor, @Nonnull final Ref<Integer> caretOffset, @Nonnull final Ref<Integer> caretAdvance,
                                 @Nonnull final DataContext dataContext, final EditorActionHandler originalHandler) {

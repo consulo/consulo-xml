@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2014 JetBrains s.r.o.
+ * Copyright 2000-2009 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.psi.impl.source.xml;
+package consulo.xml.lang.base;
 
-import consulo.language.LanguageExtension;
-import consulo.xml.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
+import consulo.language.Commenter;
 
 /**
- * @author yole
+ * @author max
  */
-public class LanguageXmlPsiPolicy extends LanguageExtension<XmlPsiPolicy>
-{
-	public static final LanguageXmlPsiPolicy INSTANCE = new LanguageXmlPsiPolicy();
+public abstract class XmlBasedCommenter implements Commenter {
 
-	private LanguageXmlPsiPolicy()
-	{
-		super("com.intellij.xml.psiPolicy", new CDATAOnAnyEncodedPolicy());
-	}
+  public String getLineCommentPrefix() {
+    return null;
+  }
+
+  public String getBlockCommentPrefix() {
+    return "<!--";
+  }
+
+  public String getBlockCommentSuffix() {
+    return "-->";
+  }
+
+  public String getCommentedBlockCommentPrefix() {
+    return "&lt;!&ndash;";
+  }
+
+  public String getCommentedBlockCommentSuffix() {
+    return "&ndash;&gt;";
+  }
 }

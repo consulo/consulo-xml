@@ -51,9 +51,9 @@ public abstract class XmlFormattingPolicy {
   }
 
   private Block createBlockFor(final Pair<PsiElement,Language> root) {
-    final FormattingModelBuilder builder = LanguageFormatting.INSTANCE.forContext(root.getSecond(), root.getFirst());
+    final FormattingModelBuilder builder = FormattingModelBuilder.forContext(root.getSecond(), root.getFirst());
     if (builder != null) {
-      final Block result = builder.createModel(root.getFirst(), getSettings()).getRootBlock();
+      final Block result = builder.createModel(FormattingContext.create(root.getFirst(), getSettings())).getRootBlock();
       if (result instanceof XmlBlock) {
         final XmlFormattingPolicy policy = getPolicy((XmlBlock)result);
         policy.setRootModels(myRootToBlockMap);

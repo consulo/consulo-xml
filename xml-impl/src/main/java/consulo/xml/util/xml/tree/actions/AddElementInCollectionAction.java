@@ -16,19 +16,17 @@
 
 package consulo.xml.util.xml.tree.actions;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-
 import consulo.application.ApplicationBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.presentation.TypePresentationService;
 import consulo.language.icon.IconDescriptorUpdaters;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.DefaultActionGroup;
-import consulo.application.ApplicationManager;
+import consulo.ui.ex.awt.tree.SimpleNode;
+import consulo.ui.ex.popup.ListPopup;
+import consulo.ui.image.Image;
+import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
@@ -39,11 +37,12 @@ import consulo.xml.util.xml.tree.DomElementsGroupNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 import consulo.xml.util.xml.ui.actions.AddDomElementAction;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
-import consulo.application.util.TypePresentationService;
-import consulo.ui.ex.awt.tree.SimpleNode;
-import consulo.ui.ex.popup.ListPopup;
-import consulo.ui.image.Image;
-import consulo.util.lang.reflect.ReflectionUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * User: Sergey.Vasiliev
@@ -135,7 +134,7 @@ public class AddElementInCollectionAction extends AddDomElementAction {
       if (selectedNode != null) {
         final Type type = selectedNode.getChildDescription().getType();
 
-        text += " " + TypePresentationService.getInstance().getTypePresentableName(ReflectionUtil.getRawType(type));
+        text += " " + TypePresentationService.getInstance().getTypeName(ReflectionUtil.getRawType(type));
       }
     }
     return text;

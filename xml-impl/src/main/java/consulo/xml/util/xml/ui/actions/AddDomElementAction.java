@@ -17,7 +17,7 @@
 package consulo.xml.util.xml.ui.actions;
 
 import consulo.application.ApplicationBundle;
-import consulo.application.util.TypePresentationService;
+import consulo.application.presentation.TypePresentationService;
 import consulo.dataContext.DataContext;
 import consulo.language.editor.CommonDataKeys;
 import consulo.project.Project;
@@ -129,7 +129,7 @@ public abstract class AddDomElementAction extends AnAction {
 
         final Class<?> rawType = ReflectionUtil.getRawType(type);
 
-        String name = TypePresentationService.getInstance().getTypePresentableName(rawType);
+        String name = TypePresentationService.getInstance().getTypeNameOrStub(rawType);
         Image icon = null;
         if (!showAsPopup() || descriptions.length == 1) {
 //          if (descriptions.length > 1) {

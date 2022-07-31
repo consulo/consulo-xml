@@ -31,43 +31,60 @@ import javax.annotation.Nonnull;
 /**
  * @author Dmitry Avdeev
  */
-public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool {
+public abstract class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool
+{
+	@Nonnull
+	@Override
+	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
+	{
+		return new XmlElementVisitor()
+		{
+			@Override
+			public void visitXmlAttributeValue(final XmlAttributeValue value)
+			{
+				if(value.getTextRange().isEmpty())
+				{
+					return;
+				}
+				final PsiFile file = value.getContainingFile();
+				if(!(file instanceof XmlFile))
+				{
+					return;
+				}
+				PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
+				if(baseFile != file && !(baseFile instanceof XmlFile))
+				{
+					return;
+				}
+				final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
+				if(refHolder == null)
+				{
+					return;
+				}
 
-  @Nonnull
-  @Override
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
-    return new XmlElementVisitor() {
-      @Override
-      public void visitXmlAttributeValue(final XmlAttributeValue value) {
-        if (value.getTextRange().isEmpty()) {
-          return;
-        }
-        final PsiFile file = value.getContainingFile();
-        if (!(file instanceof XmlFile)) {
-          return;
-        }
-        PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
-        if (baseFile != file && !(baseFile instanceof XmlFile)) {
-          return;
-        }
-        final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
-        if (refHolder == null) return;
+				final PsiElement parent = value.getParent();
+				if(!(parent instanceof XmlAttribute))
+				{
+					return;
+				}
 
-        final PsiElement parent = value.getParent();
-        if (!(parent instanceof XmlAttribute)) return;
+				final XmlTag tag = (XmlTag) parent.getParent();
+				if(tag == null)
+				{
+					return;
+				}
 
-        final XmlTag tag = (XmlTag)parent.getParent();
-        if (tag == null) return;
+				checkValue(value, (XmlFile) file, refHolder, tag, holder);
+			}
+		};
+	}
 
-        checkValue(value, (XmlFile)file, refHolder, tag, holder);
-      }
-    };
-  }
-
-  protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
-    if (refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value)) {
-      holder.registerProblem(value, XmlErrorMessages.message("duplicate.id.reference"), ProblemHighlightType.GENERIC_ERROR,
-                             ElementManipulators.getValueTextRange(value));
-    }
-  }
+	protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder)
+	{
+		if(refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value))
+		{
+			holder.registerProblem(value, XmlErrorMessages.message("duplicate.id.reference"), ProblemHighlightType.GENERIC_ERROR,
+					ElementManipulators.getValueTextRange(value));
+		}
+	}
 }

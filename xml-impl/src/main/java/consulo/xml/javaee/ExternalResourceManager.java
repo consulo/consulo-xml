@@ -15,17 +15,19 @@
  */
 package consulo.xml.javaee;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.component.util.SimpleModificationTracker;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import consulo.ide.ServiceManager;
-import consulo.virtualFileSystem.fileType.FileType;
-import consulo.project.Project;
-import consulo.component.util.SimpleModificationTracker;
-import consulo.language.psi.PsiFile;
 
+@ServiceAPI(ComponentScope.APPLICATION)
 public abstract class ExternalResourceManager extends SimpleModificationTracker
 {
 	public static ExternalResourceManager getInstance()

@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
-public class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection
+public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection
 {
 	private static final Key<HtmlUnknownElementInspection> ATTRIBUTE_KEY = Key.create(ATTRIBUTE_SHORT_NAME);
 	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.HtmlUnknownAttributeInspection");

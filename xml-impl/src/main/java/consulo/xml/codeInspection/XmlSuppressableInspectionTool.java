@@ -16,152 +16,125 @@
 
 package consulo.xml.codeInspection;
 
+import consulo.language.editor.inspection.*;
+import consulo.language.editor.rawHighlight.HighlightDisplayKey;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import consulo.language.editor.inspection.BatchSuppressableTool;
-import consulo.language.editor.inspection.InspectionsBundle;
-import consulo.language.editor.inspection.LocalInspectionTool;
-import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.inspection.SuppressQuickFix;
-import consulo.language.editor.rawHighlight.HighlightDisplayKey;
-import org.jetbrains.annotations.NonNls;
-import consulo.project.Project;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool implements BatchSuppressableTool {
+  @NonNls
+  static final String ALL = "ALL";
 
-public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool implements BatchSuppressableTool
-{
-	@NonNls
-	static final String ALL = "ALL";
+  @Nonnull
+  @Override
+  public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element) {
+    return getSuppressFixes(getID());
+  }
 
-	@Nonnull
-	@Override
-	public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element)
-	{
-		return getSuppressFixes(getID());
-	}
+  public static SuppressQuickFix[] getSuppressFixes(final String shortName) {
+    final String id = HighlightDisplayKey.find(shortName).getID();
+    return new SuppressQuickFix[]{
+        new SuppressTagStatic(id),
+        new SuppressForFile(id),
+        new SuppressAllForFile()
+    };
+  }
 
-	public static SuppressQuickFix[] getSuppressFixes(final String shortName)
-	{
-		final String id = HighlightDisplayKey.find(shortName).getID();
-		return new SuppressQuickFix[]{
-				new SuppressTagStatic(id),
-				new SuppressForFile(id),
-				new SuppressAllForFile()
-		};
-	}
+  @Override
+  public boolean isSuppressedFor(@Nonnull final PsiElement element) {
+    return XmlSuppressionProvider.isSuppressed(element, getID());
+  }
 
-	@Override
-	public boolean isSuppressedFor(@Nonnull final PsiElement element)
-	{
-		return XmlSuppressionProvider.isSuppressed(element, getID());
-	}
+  public class SuppressTag extends SuppressTagStatic {
+    public SuppressTag() {
+      super(getID());
+    }
+  }
 
-	public class SuppressTag extends SuppressTagStatic
-	{
-		public SuppressTag()
-		{
-			super(getID());
-		}
-	}
+  public static class SuppressTagStatic implements SuppressQuickFix {
+    private final String id;
 
-	public static class SuppressTagStatic implements SuppressQuickFix
-	{
-		private final String id;
+    public SuppressTagStatic(@Nonnull String id) {
+      this.id = id;
+    }
 
-		public SuppressTagStatic(@Nonnull String id)
-		{
-			this.id = id;
-		}
+    @Nonnull
+    @Override
+    public String getName() {
+      return InspectionsBundle.message("xml.suppressable.for.tag.title");
+    }
 
-		@Nonnull
-		@Override
-		public String getName()
-		{
-			return InspectionsBundle.message("xml.suppressable.for.tag.title");
-		}
+    @Override
+    public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+      return context.isValid();
+    }
 
-		@Override
-		public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context)
-		{
-			return context.isValid();
-		}
+    @Override
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+      PsiElement element = descriptor.getPsiElement();
+      if (PsiTreeUtil.getParentOfType(element, XmlTag.class) == null) {
+        return;
+      }
+      XmlSuppressionProvider.getProvider(element.getContainingFile()).suppressForTag(element, id);
+    }
 
-		@Override
-		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
-		{
-			PsiElement element = descriptor.getPsiElement();
-			if(PsiTreeUtil.getParentOfType(element, XmlTag.class) == null)
-			{
-				return;
-			}
-			XmlSuppressionProvider.getProvider(element.getContainingFile()).suppressForTag(element, id);
-		}
+    @Override
+    @Nonnull
+    public String getFamilyName() {
+      return getName();
+    }
+  }
 
-		@Override
-		@Nonnull
-		public String getFamilyName()
-		{
-			return getName();
-		}
-	}
+  public static class SuppressForFile implements SuppressQuickFix {
+    private final String myInspectionId;
 
-	public static class SuppressForFile implements SuppressQuickFix
-	{
-		private final String myInspectionId;
+    public SuppressForFile(@Nonnull String inspectionId) {
+      myInspectionId = inspectionId;
+    }
 
-		public SuppressForFile(@Nonnull String inspectionId)
-		{
-			myInspectionId = inspectionId;
-		}
+    @Nonnull
+    @Override
+    public String getName() {
+      return InspectionsBundle.message("xml.suppressable.for.file.title");
+    }
 
-		@Nonnull
-		@Override
-		public String getName()
-		{
-			return InspectionsBundle.message("xml.suppressable.for.file.title");
-		}
+    @Override
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+      PsiElement element = descriptor.getPsiElement();
+      if (element == null || !element.isValid() || !(element.getContainingFile() instanceof XmlFile)) {
+        return;
+      }
+      XmlSuppressionProvider.getProvider(element.getContainingFile()).suppressForFile(element, myInspectionId);
+    }
 
-		@Override
-		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
-		{
-			PsiElement element = descriptor.getPsiElement();
-			if(element == null || !element.isValid() || !(element.getContainingFile() instanceof XmlFile))
-			{
-				return;
-			}
-			XmlSuppressionProvider.getProvider(element.getContainingFile()).suppressForFile(element, myInspectionId);
-		}
+    @Override
+    public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+      return context.isValid();
+    }
 
-		@Override
-		public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context)
-		{
-			return context.isValid();
-		}
+    @Override
+    @Nonnull
+    public String getFamilyName() {
+      return getName();
+    }
+  }
 
-		@Override
-		@Nonnull
-		public String getFamilyName()
-		{
-			return getName();
-		}
-	}
+  public static class SuppressAllForFile extends SuppressForFile {
+    public SuppressAllForFile() {
+      super(ALL);
+    }
 
-	public static class SuppressAllForFile extends SuppressForFile
-	{
-		public SuppressAllForFile()
-		{
-			super(ALL);
-		}
-
-		@Nonnull
-		@Override
-		public String getName()
-		{
-			return InspectionsBundle.message("xml.suppressable.all.for.file.title");
-		}
-	}
+    @Nonnull
+    @Override
+    public String getName() {
+      return InspectionsBundle.message("xml.suppressable.all.for.file.title");
+    }
+  }
 }

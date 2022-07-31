@@ -55,19 +55,9 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo">
-		<fileBasedIndex implementation="consulo.xml.util.xml.DomFileIndex"/>
 
-		<filetype.stubBuilder filetype="XML" implementationClass="consulo.xml.util.xml.stubs.builder.DomStubBuilder"/>
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
 
-		<applicationService serviceInterface="consulo.xml.util.xml.impl.DomApplicationComponent"
-							serviceImplementation="consulo.xml.util.xml.impl.DomApplicationComponent"/>
-
-		<applicationService serviceInterface="consulo.xml.util.xml.DomService"
-							serviceImplementation="consulo.xml.util.xml.impl.DomServiceImpl"/>
-
-		<applicationService serviceInterface="consulo.xml.util.xml.ui.DomUIFactory"
-							serviceImplementation="consulo.xml.util.xml.ui.DomUIFactoryImpl"/>
 
 		<applicationService serviceInterface="consulo.xml.util.xml.ElementPresentationManager"
 							serviceImplementation="consulo.xml.util.xml.ElementPresentationManagerImpl"/>
@@ -84,31 +74,21 @@
 		<projectService serviceInterface="consulo.xml.util.xml.DomElementsNavigationManager"
 						serviceImplementation="consulo.xml.util.xml.impl.DomElementsNavigationManagerImpl"/>
 
-		<projectService serviceInterface="consulo.xml.util.xml.DomManager"
-						serviceImplementation="consulo.xml.util.xml.impl.DomManagerImpl"/>
 
 		<projectService serviceInterface="consulo.xml.util.xml.actions.generate.DomTemplateRunner"
 						serviceImplementation="consulo.xml.util.xml.impl.DomTemplateRunnerImpl"/>
 
-		<metaDataContributor implementation="consulo.xml.util.xml.impl.DomMetaDataContributor"/>
-		<semContributor implementation="consulo.xml.util.xml.impl.DomSemContributor"/>
-
 		<annotator language="XML" implementationClass="consulo.xml.util.xml.impl.DefaultDomAnnotator"/>
 		<lang.documentationProvider language="XML" implementationClass="consulo.xml.util.xml.DomDocumentationProvider" id="dom"/>
 
-		<usageTypeProvider implementation="consulo.xml.util.xml.DomUsageTypeProvider"/>
 
 		<psi.referenceContributor language="XML" implementation="consulo.xml.util.xml.impl.DomReferenceContributor"/>
 
-		<xml.elementDescriptorProvider implementation="consulo.xml.util.xml.impl.DomDescriptorProvider"/>
-
-		<completion.contributor language="XML" implementationClass="consulo.xml.util.xml.impl.DomCompletionContributor" id="dom" order="first, before xml"/>
 
 		<nameSuggestionProvider implementation="consulo.xml.util.xml.DomNameSuggestionProvider" id="dom" order="first, before java"/>
 
 		<pom.declarationSearcher implementation="consulo.xml.util.xml.impl.DomDeclarationSearcher"/>
 		<elementDescriptionProvider implementation="consulo.xml.util.xml.impl.DefaultDomTargetDescriptionProvider" id="domDefault" order="last, before pomDefault"/>
-		<iconDescriptorUpdater implementation="consulo.xml.util.xml.DomIconDescriptorUpdater"/>
 
 		<patterns.patternClass className="consulo.xml.patterns.DomPatterns" alias="dom"/>
 	</extensions>

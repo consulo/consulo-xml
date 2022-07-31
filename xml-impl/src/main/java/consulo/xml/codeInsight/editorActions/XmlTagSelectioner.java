@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
 import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
@@ -24,6 +25,7 @@ import consulo.xml.psi.xml.*;
 
 import java.util.List;
 
+@ExtensionImpl
 public class XmlTagSelectioner extends ExtendWordSelectionHandlerBase {
   public boolean canSelect(PsiElement e) {
     return e instanceof XmlTag;

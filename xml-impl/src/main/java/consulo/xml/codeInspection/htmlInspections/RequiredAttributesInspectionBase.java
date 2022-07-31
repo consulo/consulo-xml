@@ -15,81 +15,69 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.language.editor.intention.IntentionAction;
-import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
+import com.intellij.xml.XmlBundle;
 import consulo.language.editor.inspection.InspectionsBundle;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.logging.Logger;
+import consulo.util.dataholder.Key;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.language.editor.inspection.scheme.UnfairLocalInspectionTool;
-import consulo.logging.Logger;
-import com.intellij.xml.XmlBundle;
-import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
-public class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements XmlEntitiesInspection, UnfairLocalInspectionTool
-{
-	@NonNls
-	public static final Key<InspectionProfileEntry> SHORT_NAME_KEY = Key.create(REQUIRED_ATTRIBUTES_SHORT_NAME);
-	protected static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.RequiredAttributesInspection");
-	public String myAdditionalRequiredHtmlAttributes = "";
+public abstract class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements XmlEntitiesInspection, UnfairLocalInspectionTool {
+  @NonNls
+  public static final Key<InspectionProfileEntry> SHORT_NAME_KEY = Key.create(REQUIRED_ATTRIBUTES_SHORT_NAME);
+  protected static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.RequiredAttributesInspection");
+  public String myAdditionalRequiredHtmlAttributes = "";
 
-	private static String appendName(String toAppend, String text)
-	{
-		if(!toAppend.isEmpty())
-		{
-			toAppend += "," + text;
-		}
-		else
-		{
-			toAppend = text;
-		}
-		return toAppend;
-	}
+  private static String appendName(String toAppend, String text) {
+    if (!toAppend.isEmpty()) {
+      toAppend += "," + text;
+    } else {
+      toAppend = text;
+    }
+    return toAppend;
+  }
 
-	@Override
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return XmlInspectionGroupNames.HTML_INSPECTIONS;
-	}
+  @Override
+  @Nonnull
+  public String getGroupDisplayName() {
+    return XmlInspectionGroupNames.HTML_INSPECTIONS;
+  }
 
-	@Override
-	@Nonnull
-	public String getDisplayName()
-	{
-		return InspectionsBundle.message("inspection.required.attributes.display.name");
-	}
+  @Override
+  @Nonnull
+  public String getDisplayName() {
+    return InspectionsBundle.message("inspection.required.attributes.display.name");
+  }
 
-	@Override
-	@Nonnull
-	@NonNls
-	public String getShortName()
-	{
-		return REQUIRED_ATTRIBUTES_SHORT_NAME;
-	}
+  @Override
+  @Nonnull
+  @NonNls
+  public String getShortName() {
+    return REQUIRED_ATTRIBUTES_SHORT_NAME;
+  }
 
-	@Override
-	public String getAdditionalEntries()
-	{
-		return myAdditionalRequiredHtmlAttributes;
-	}
+  @Override
+  public String getAdditionalEntries() {
+    return myAdditionalRequiredHtmlAttributes;
+  }
 
-	@Override
-	public void addEntry(String text)
-	{
-		myAdditionalRequiredHtmlAttributes = appendName(getAdditionalEntries(), text);
-	}
+  @Override
+  public void addEntry(String text) {
+    myAdditionalRequiredHtmlAttributes = appendName(getAdditionalEntries(), text);
+  }
 
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+  @Override
+  public boolean isEnabledByDefault() {
+    return true;
+  }
 
-	public static IntentionAction getIntentionAction(String name)
-	{
-		return new AddHtmlTagOrAttributeToCustomsIntention(SHORT_NAME_KEY, name, XmlBundle.message("add.optional.html.attribute", name));
-	}
+  public static IntentionAction getIntentionAction(String name) {
+    return new AddHtmlTagOrAttributeToCustomsIntention(SHORT_NAME_KEY, name, XmlBundle.message("add.optional.html.attribute", name));
+  }
 }

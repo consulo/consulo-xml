@@ -681,7 +681,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 
 			public Image getIcon()
 			{
-				return ElementPresentationManager.getIconOld(getProxy());
+				return ElementPresentationManager.getIcon(getProxy());
 			}
 		};
 	}

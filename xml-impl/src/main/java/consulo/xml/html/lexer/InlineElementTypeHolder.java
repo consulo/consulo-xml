@@ -1,12 +1,14 @@
 package consulo.xml.html.lexer;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.application.util.PerApplicationInstance;
+import consulo.language.ast.IElementType;
 import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
-import consulo.xml.lang.LanguageHtmlInlineScriptTokenTypesProvider;
 import consulo.xml.lexer.BaseHtmlLexer;
 import consulo.xml.lexer.EmbeddedTokenTypesProvider;
 import consulo.xml.lexer.HtmlLexer;
-import consulo.language.ast.IElementType;
-import consulo.application.util.PerApplicationInstance;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -19,6 +21,8 @@ import java.util.List;
  * @since 2020-08-07
  */
 @Singleton
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 public class InlineElementTypeHolder
 {
 	private static PerApplicationInstance<InlineElementTypeHolder> ourInstance = PerApplicationInstance.of(InlineElementTypeHolder.class);
@@ -33,7 +37,7 @@ public class InlineElementTypeHolder
 	private final IElementType myInlineScriptElementType;
 
 	@Inject
-	private InlineElementTypeHolder()
+	InlineElementTypeHolder()
 	{
 		List<EmbeddedTokenTypesProvider> extensions = EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME.getExtensionList();
 		IElementType inlineStyleElementType = null;
@@ -47,7 +51,7 @@ public class InlineElementTypeHolder
 		}
 		myInlineStyleElementType = inlineStyleElementType;
 		// At the moment only JS.
-		HtmlInlineScriptTokenTypesProvider provider = LanguageHtmlInlineScriptTokenTypesProvider.getInlineScriptProvider(BaseHtmlLexer.ourDefaultLanguage);
+		HtmlInlineScriptTokenTypesProvider provider = BaseHtmlLexer.ourDefaultLanguage == null ? null : HtmlInlineScriptTokenTypesProvider.forLanguage(BaseHtmlLexer.ourDefaultLanguage);
 		myInlineScriptElementType = provider != null ? provider.getElementType() : null;
 	}
 

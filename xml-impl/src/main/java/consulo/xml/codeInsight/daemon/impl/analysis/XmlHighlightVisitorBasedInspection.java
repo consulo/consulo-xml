@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author yole
@@ -51,7 +52,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
                         @Nonnull ProblemsHolder problemsHolder,
                         @Nonnull final GlobalInspectionContext globalContext,
                         @Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor) {
-    HighlightInfoHolder myHolder = new HighlightInfoHolder(file) {
+    HighlightInfoHolder myHolder = new HighlightInfoHolder(file, List.of()) {
       @Override
       public boolean add(@Nullable HighlightInfo info) {
         if (info != null) {

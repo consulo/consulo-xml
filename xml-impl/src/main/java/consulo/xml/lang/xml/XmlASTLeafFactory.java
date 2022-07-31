@@ -15,6 +15,7 @@
  */
 package consulo.xml.lang.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.ast.ASTLeafFactory;
 import consulo.language.impl.ast.LeafElement;
@@ -32,6 +33,7 @@ import static consulo.xml.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
  * @author VISTALL
  * @since 2:41/02.04.13
  */
+@ExtensionImpl
 public class XmlASTLeafFactory implements ASTLeafFactory {
 
 //  static {
@@ -52,7 +54,7 @@ public class XmlASTLeafFactory implements ASTLeafFactory {
   }
 
   @Override
-  public boolean apply(@Nullable IElementType input) {
+  public boolean test(@Nullable IElementType input) {
     return input instanceof IXmlLeafElementType;
   }
 }

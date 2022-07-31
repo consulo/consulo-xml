@@ -19,7 +19,7 @@ package consulo.xml.codeInspection.htmlInspections;
 import javax.annotation.Nullable;
 import javax.swing.JComponent;
 
-public class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspectionBase
+public abstract class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspectionBase
 {
 	@Nullable
 	@Override

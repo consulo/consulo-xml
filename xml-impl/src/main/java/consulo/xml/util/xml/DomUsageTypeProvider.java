@@ -16,18 +16,20 @@
 
 package consulo.xml.util.xml;
 
-import javax.annotation.Nullable;
-
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.usage.UsageTypeProvider;
 import consulo.language.psi.PsiFile;
 import consulo.usage.UsageType;
+import consulo.usage.UsageTypeProvider;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.XmlFile;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Gregory.Shrago
  */
+@ExtensionImpl
 public class DomUsageTypeProvider implements UsageTypeProvider {
   @Nullable
   public UsageType getUsageType(PsiElement element) {

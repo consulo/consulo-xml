@@ -15,25 +15,27 @@
  */
 package consulo.xml.refactoring.rename;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.ide.impl.idea.util.containers.Queue;
 import consulo.language.editor.refactoring.event.RefactoringElementListener;
 import consulo.language.editor.refactoring.rename.RenamePsiElementProcessor;
-import consulo.language.psi.scope.LocalSearchScope;
-import consulo.logging.Logger;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiReference;
+import consulo.language.psi.scope.LocalSearchScope;
 import consulo.language.psi.search.ReferencesSearch;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.usage.UsageInfo;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
-import consulo.usage.UsageInfo;
-import consulo.language.util.IncorrectOperationException;
-import consulo.ide.impl.idea.util.containers.Queue;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+@ExtensionImpl(id = "xmlAttribute")
 public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
   private static final Logger LOG = Logger.getInstance(RenameXmlAttributeProcessor.class);
 

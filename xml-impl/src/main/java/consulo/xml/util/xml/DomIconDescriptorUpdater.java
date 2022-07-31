@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.icon.IconDescriptor;
@@ -28,6 +29,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 1:16/19.07.13
  */
+@ExtensionImpl
 public class DomIconDescriptorUpdater implements IconDescriptorUpdater
 {
 	@RequiredReadAction

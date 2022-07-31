@@ -1,24 +1,24 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.xml.actions;
 
+import com.intellij.xml.Html5SchemaProvider;
+import com.intellij.xml.util.XmlUtil;
 import consulo.codeEditor.Editor;
-import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.actions.BaseCodeInsightAction;
 import consulo.document.Document;
+import consulo.document.util.TextRange;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.action.CodeInsightActionHandler;
+import consulo.language.editor.impl.action.BaseCodeInsightAction;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
-import consulo.language.ast.IElementType;
+import consulo.project.Project;
+import consulo.util.collection.primitive.ints.IntMaps;
+import consulo.util.collection.primitive.ints.IntObjectMap;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlEntityDecl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.Html5SchemaProvider;
-import com.intellij.xml.util.XmlUtil;
-import consulo.language.editor.action.CodeInsightActionHandler;
-import consulo.language.psi.PsiElement;
-import consulo.project.Project;
-import consulo.util.collection.primitive.ints.IntMaps;
-import consulo.util.collection.primitive.ints.IntObjectMap;
 
 import javax.annotation.Nonnull;
 

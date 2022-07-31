@@ -15,39 +15,6 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import consulo.application.util.function.Processors;
-import consulo.codeEditor.Editor;
-import consulo.document.Document;
-import consulo.document.RangeMarker;
-import consulo.language.editor.completion.lookup.InsertHandler;
-import consulo.language.editor.completion.lookup.InsertionContext;
-import consulo.xml.codeInsight.completion.XmlTagInsertHandler;
-import consulo.language.editor.completion.lookup.LookupElement;
-import consulo.language.editor.completion.lookup.LookupElementBuilder;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.scope.GlobalSearchScope;
-import consulo.util.lang.StringUtil;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
-import consulo.language.psi.meta.PsiPresentableMetaData;
-import consulo.language.psi.scope.EverythingGlobalScope;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
-import consulo.application.util.function.Processor;
-import consulo.language.psi.stub.FileBasedIndex;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
@@ -55,14 +22,37 @@ import com.intellij.xml.XmlTagNameProvider;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.util.function.Processor;
+import consulo.application.util.function.Processors;
+import consulo.codeEditor.Editor;
+import consulo.document.Document;
+import consulo.document.RangeMarker;
 import consulo.language.editor.AutoPopupController;
-import consulo.language.editor.completion.lookup.PrioritizedLookupElement;
+import consulo.language.editor.completion.lookup.*;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.meta.PsiPresentableMetaData;
+import consulo.language.psi.scope.EverythingGlobalScope;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.FileBasedIndex;
 import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.codeInsight.completion.XmlTagInsertHandler;
+import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.psi.xml.XmlTokenType;
 
+import javax.annotation.Nonnull;
+import java.util.*;
+
+@ExtensionImpl
 public class DefaultXmlTagNameProvider implements XmlTagNameProvider
 {
-
 	private static final Logger LOG = Logger.getInstance(DefaultXmlTagNameProvider.class);
 
 	@Override

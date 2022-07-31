@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.lang.xml;
+package consulo.xml.lang.base;
 
 import consulo.language.LangBundle;
 import consulo.language.cacheBuilder.WordsScanner;
@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 /**
  * @author ven
  */
-public class XmlFindUsagesProvider implements FindUsagesProvider
+public abstract class XmlBasedFindUsagesProvider implements FindUsagesProvider
 {
 	@Override
 	public boolean canFindUsagesFor(@Nonnull PsiElement element)

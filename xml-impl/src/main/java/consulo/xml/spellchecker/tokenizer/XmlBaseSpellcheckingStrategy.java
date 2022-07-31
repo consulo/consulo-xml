@@ -28,7 +28,7 @@ import consulo.xml.psi.xml.XmlText;
 
 import javax.annotation.Nonnull;
 
-public class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy {
+public abstract class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy {
   protected final Tokenizer<XmlAttributeValue> myXmlAttributeTokenizer = new XmlAttributeValueTokenizer();
   protected final Tokenizer<XmlText> myXmlTextTokenizer = new XmlTextTokenizer();
 

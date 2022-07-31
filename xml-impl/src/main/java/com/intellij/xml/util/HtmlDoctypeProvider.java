@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlFile;
@@ -24,9 +26,9 @@ import javax.annotation.Nullable;
 /**
  * @author traff
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface HtmlDoctypeProvider {
-  ExtensionPointName<HtmlDoctypeProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.util.htmlDoctypeProvider");
-
+  ExtensionPointName<HtmlDoctypeProvider> EP_NAME = ExtensionPointName.create(HtmlDoctypeProvider.class);
 
   @Nullable
   XmlDoctype getDoctype(XmlFile file);

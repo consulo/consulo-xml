@@ -15,6 +15,7 @@
  */
 package consulo.xml.lang.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.ast.ASTCompositeFactory;
 import consulo.language.impl.ast.CompositeElement;
@@ -34,6 +35,7 @@ import static consulo.xml.psi.xml.XmlElementType.*;
  * @author VISTALL
  * @since 2:41/02.04.13
  */
+@ExtensionImpl
 public class XmlASTCompositeFactory implements ASTCompositeFactory {
   @Nonnull
   @Override
@@ -95,7 +97,7 @@ public class XmlASTCompositeFactory implements ASTCompositeFactory {
   }
 
   @Override
-  public boolean apply(@Nullable IElementType input) {
+  public boolean test(@Nullable IElementType input) {
     return input == XML_TAG ||
         input == XML_CONDITIONAL_SECTION ||
         input == HTML_TAG ||

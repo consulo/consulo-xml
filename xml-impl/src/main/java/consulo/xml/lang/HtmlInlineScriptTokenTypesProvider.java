@@ -15,11 +15,32 @@
  */
 package consulo.xml.lang;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.application.Application;
+import consulo.component.extension.ExtensionPointCacheKey;
+import consulo.language.Language;
 import consulo.language.ast.IElementType;
+import consulo.language.extension.ByLanguageValue;
+import consulo.language.extension.LanguageExtension;
+import consulo.language.extension.LanguageOneToOne;
 import consulo.virtualFileSystem.fileType.FileType;
 
-public interface HtmlInlineScriptTokenTypesProvider {
-  IElementType getElementType();
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-  FileType getFileType();
+@ExtensionAPI(ComponentScope.APPLICATION)
+public interface HtmlInlineScriptTokenTypesProvider extends LanguageExtension
+{
+	ExtensionPointCacheKey<HtmlInlineScriptTokenTypesProvider, ByLanguageValue<HtmlInlineScriptTokenTypesProvider>> KEY = ExtensionPointCacheKey.create("HtmlInlineScriptTokenTypesProvider", LanguageOneToOne.build());
+
+	@Nullable
+	static HtmlInlineScriptTokenTypesProvider forLanguage(@Nonnull Language language)
+	{
+		return Application.get().getExtensionPoint(HtmlInlineScriptTokenTypesProvider.class).getOrBuildCache(KEY).get(language);
+	}
+
+	IElementType getElementType();
+
+	FileType getFileType();
 }

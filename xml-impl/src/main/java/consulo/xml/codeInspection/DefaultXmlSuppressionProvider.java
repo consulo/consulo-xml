@@ -16,6 +16,7 @@
 
 package consulo.xml.codeInspection;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.Document;
 import consulo.document.util.TextRange;
 import consulo.language.codeStyle.CodeStyleManager;
@@ -37,6 +38,7 @@ import javax.annotation.Nullable;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl(order = "last")
 public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
 
   public static final String SUPPRESS_MARK = "suppress";

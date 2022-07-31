@@ -16,6 +16,7 @@
 package consulo.xml.psi;
 
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.annotation.component.ServiceImpl;
 import consulo.language.Language;
 import consulo.language.file.LanguageFileType;
 import consulo.language.impl.ast.ASTFactory;
@@ -45,6 +46,7 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  */
 @Singleton
+@ServiceImpl
 public class XmlElementFactoryImpl extends XmlElementFactory
 {
 	private final Project myProject;

@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.highlighting;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -26,6 +27,7 @@ import consulo.language.editor.highlight.ReadWriteAccessDetector;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlReadWriteAccessDetector extends ReadWriteAccessDetector {
   public boolean isReadWriteAccessible(final PsiElement element) {
     return element instanceof XmlAttributeValue ||

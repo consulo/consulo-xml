@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.navigation;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlFile;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 /**
  * @author yole
  */
+@ExtensionImpl(order = "last")
 public class XmlMethodNavigationOffsetProvider implements MethodNavigationOffsetProvider {
   @Override
   public int[] getMethodNavigationOffsets(final PsiFile file, final int caretOffset) {

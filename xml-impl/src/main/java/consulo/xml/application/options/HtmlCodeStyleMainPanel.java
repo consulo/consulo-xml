@@ -15,14 +15,15 @@
  */
 package consulo.xml.application.options;
 
-import consulo.xml.lang.html.HTMLLanguage;
 import consulo.language.codeStyle.CodeStyleSettings;
-import consulo.ide.impl.idea.application.options.TabbedLanguageCodeStylePanel;
+import consulo.language.codeStyle.ui.setting.TabbedLanguageCodeStylePanel;
+import consulo.xml.lang.html.HTMLLanguage;
 
 /**
  * @author Rustam Vishnyakov
  */
-public class HtmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
+public class HtmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel
+{
   protected HtmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
     super(HTMLLanguage.INSTANCE, currentSettings, settings);
   }

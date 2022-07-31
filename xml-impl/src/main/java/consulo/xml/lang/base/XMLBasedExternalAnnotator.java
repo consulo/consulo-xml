@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.lang.xml;
+package consulo.xml.lang.base;
 
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author ven
  */
-public class XMLExternalAnnotator extends ExternalAnnotator<XMLExternalAnnotator.MyHost, XMLExternalAnnotator.MyHost> {
+public abstract class XMLBasedExternalAnnotator extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
   @Nullable
   @Override
   public MyHost collectInformation(@Nonnull PsiFile file) {

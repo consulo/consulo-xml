@@ -15,6 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.model.resolve;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.colorScheme.TextAttributesKey;
@@ -60,6 +61,7 @@ import java.util.*;
 * User: sweinreuter
 * Date: 09.06.2010
 */
+@ExtensionImpl
 public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
   @NonNls
   public static final ID<String, Void> NAME = ID.create("RelaxSymbolIndex");

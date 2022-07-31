@@ -17,6 +17,7 @@
 package com.intellij.xml.util;
 
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
@@ -37,6 +38,7 @@ import java.util.Map;
 /**
  * @author Maxim Mossienko
  */
+@ExtensionImpl
 public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool {
   public boolean isEnabledByDefault() {
     return true;
@@ -79,7 +81,7 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
       private Boolean computeHtml5Doctype(XmlFile file) {
         XmlDoctype doctype = null;
         //Search for doctypes from providers
-        for (HtmlDoctypeProvider provider : HtmlDoctypeProvider.EP_NAME.getExtensions()) {
+        for (HtmlDoctypeProvider provider : HtmlDoctypeProvider.EP_NAME.getExtensionList()) {
           doctype = provider.getDoctype(file);
           if (doctype != null) {
             break;

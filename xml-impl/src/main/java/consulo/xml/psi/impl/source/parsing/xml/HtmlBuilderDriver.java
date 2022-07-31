@@ -19,14 +19,13 @@
  */
 package consulo.xml.psi.impl.source.parsing.xml;
 
+import consulo.language.parser.ParserDefinition;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiBuilderFactory;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.html.HtmlParsing;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
-import consulo.language.parser.LanguageParserDefinitions;
-import consulo.language.parser.ParserDefinition;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.html.HtmlParsing;
 
 public class HtmlBuilderDriver extends XmlBuilderDriver {
   public HtmlBuilderDriver(final CharSequence text) {
@@ -35,7 +34,7 @@ public class HtmlBuilderDriver extends XmlBuilderDriver {
 
   @Override
   protected PsiBuilder createBuilderAndParse() {
-    final ParserDefinition htmlParserDef = LanguageParserDefinitions.INSTANCE.forLanguage(HTMLLanguage.INSTANCE);
+    final ParserDefinition htmlParserDef = ParserDefinition.forLanguage(HTMLLanguage.INSTANCE);
     assert htmlParserDef != null;
 
     LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE);

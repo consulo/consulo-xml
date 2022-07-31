@@ -15,49 +15,45 @@
  */
 package consulo.xml.application.options;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.language.codeStyle.setting.LanguageCodeStyleSettingsProvider;
-import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
-import consulo.ide.impl.idea.application.options.SmartIndentOptionsEditor;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.codeStyle.CommonCodeStyleSettings;
 import consulo.language.codeStyle.setting.IndentOptionsEditor;
+import consulo.language.codeStyle.setting.LanguageCodeStyleSettingsProvider;
+import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
+import consulo.language.codeStyle.ui.setting.SmartIndentOptionsEditor;
+import consulo.xml.lang.xml.XMLLanguage;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Rustam Vishnyakov
  */
-public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider
-{
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+@ExtensionImpl
+public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 
-	@Override
-	public String getCodeSample(@Nonnull SettingsType settingsType)
-	{
-		if(settingsType == SettingsType.INDENT_SETTINGS)
-		{
-			return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
-		}
-		return "";
-	}
+  @Override
+  public String getCodeSample(@Nonnull SettingsType settingsType) {
+    if (settingsType == SettingsType.INDENT_SETTINGS) {
+      return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
+    }
+    return "";
+  }
 
-	@Override
-	public CommonCodeStyleSettings getDefaultCommonSettings()
-	{
-		CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(XMLLanguage.INSTANCE);
-		defaultSettings.initIndentOptions();
-		return defaultSettings;
-	}
+  @Override
+  public CommonCodeStyleSettings getDefaultCommonSettings() {
+    CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(XMLLanguage.INSTANCE);
+    defaultSettings.initIndentOptions();
+    return defaultSettings;
+  }
 
-	@Override
-	public IndentOptionsEditor getIndentOptionsEditor()
-	{
-		return new SmartIndentOptionsEditor();
-	}
+  @Override
+  public IndentOptionsEditor getIndentOptionsEditor() {
+    return new SmartIndentOptionsEditor();
+  }
 }

@@ -17,10 +17,12 @@ package consulo.xml.javaee;
 
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl
 public class InternalResourceProvider implements StandardResourceProvider{
 
   public void registerResources(ResourceRegistrar registrar) {

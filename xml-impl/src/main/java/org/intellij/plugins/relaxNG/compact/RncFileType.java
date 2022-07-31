@@ -16,63 +16,61 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import consulo.virtualFileSystem.fileType.FileTypeConsumer;
-import consulo.language.file.LanguageFileType;
 import consulo.application.AllIcons;
+import consulo.language.file.LanguageFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.virtualFileSystem.fileType.FileTypeFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 01.08.2007
-*/
-public class RncFileType extends LanguageFileType  {
-  public static final String RNC_EXT = "rnc";
+ * User: sweinreuter
+ * Date: 01.08.2007
+ */
+public class RncFileType extends LanguageFileType
+{
+	public static final String RNC_EXT = "rnc";
 
-  private static final FileType INSTANCE = new RncFileType();
+	public static final FileType INSTANCE = new RncFileType();
 
-  private RncFileType() {
-    super(RngCompactLanguage.INSTANCE);
-  }
+	private RncFileType()
+	{
+		super(RngCompactLanguage.INSTANCE);
+	}
 
-  @Override
-  @Nonnull
-  public String getId() {
-    return "RNG Compact";
-  }
+	@Override
+	@Nonnull
+	public String getId()
+	{
+		return "RNG Compact";
+	}
 
-  @Override
-  @Nonnull
-  public LocalizeValue getDescription() {
-    return LocalizeValue.localizeTODO("RELAX NG Compact Syntax");
-  }
+	@Override
+	@Nonnull
+	public LocalizeValue getDescription()
+	{
+		return LocalizeValue.localizeTODO("RELAX NG Compact Syntax");
+	}
 
-  @Override
-  @Nonnull
-  public String getDefaultExtension() {
-    return "rnc";
-  }
+	@Override
+	@Nonnull
+	public String getDefaultExtension()
+	{
+		return "rnc";
+	}
 
-  @Override
-  @Nullable
-  public Image getIcon() {
-    return AllIcons.FileTypes.Text;
-  }
+	@Override
+	@Nullable
+	public Image getIcon()
+	{
+		return AllIcons.FileTypes.Text;
+	}
 
-  public static FileType getInstance() {
-    return INSTANCE;
-  }
+	public static FileType getInstance()
+	{
+		return INSTANCE;
+	}
 
-  public static class Factory extends FileTypeFactory {
-    @Override
-    public void createFileTypes(@Nonnull FileTypeConsumer fileTypeConsumer) {
-      fileTypeConsumer.consume(INSTANCE, RNC_EXT);
-    }
-  }
 }

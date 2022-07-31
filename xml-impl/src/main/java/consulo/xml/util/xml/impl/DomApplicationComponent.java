@@ -15,18 +15,20 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.component.extension.Extensions;
-import consulo.ide.ServiceManager;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.application.util.ConcurrentFactoryMap;
+import consulo.disposer.Disposable;
+import consulo.ide.ServiceManager;
+import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.ide.impl.idea.util.ReflectionAssignabilityCache;
+import consulo.util.collection.FactoryMap;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementVisitor;
 import consulo.xml.util.xml.DomFileDescription;
 import consulo.xml.util.xml.TypeChooserManager;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
-import consulo.disposer.Disposable;
-import consulo.ide.impl.idea.util.NotNullFunction;
-import consulo.ide.impl.idea.util.ReflectionAssignabilityCache;
-import consulo.util.collection.FactoryMap;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -43,6 +45,8 @@ import static consulo.util.collection.ContainerUtil.newArrayList;
  * @author peter
  */
 @Singleton
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 public class DomApplicationComponent
 {
 	private final Map<String, Set<DomFileDescription>> myRootTagName2FileDescription = FactoryMap.create(k -> new HashSet<DomFileDescription>());
@@ -78,7 +82,7 @@ public class DomApplicationComponent
 
 	public DomApplicationComponent()
 	{
-		for(final DomFileDescription description : Extensions.getExtensions(DomFileDescription.EP_NAME))
+		for(final DomFileDescription description : DomFileDescription.EP_NAME.getExtensionList())
 		{
 			registerFileDescription(description);
 		}

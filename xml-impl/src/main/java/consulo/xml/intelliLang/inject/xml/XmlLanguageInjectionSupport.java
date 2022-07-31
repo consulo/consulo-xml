@@ -16,12 +16,12 @@
 
 package consulo.xml.intelliLang.inject.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.AllIcons;
 import consulo.configurable.Configurable;
 import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.ide.impl.idea.util.Consumer;
 import consulo.ide.impl.intelliLang.Configuration;
-import consulo.ide.impl.intelliLang.inject.EditInjectionSettingsAction;
 import consulo.ide.impl.intelliLang.inject.InjectLanguageAction;
 import consulo.ide.impl.intelliLang.inject.InjectorUtils;
 import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
@@ -62,6 +62,7 @@ import java.util.Collections;
 /**
  * @author Gregory.Shrago
  */
+@ExtensionImpl
 public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSupport {
 
   @NonNls
@@ -171,7 +172,7 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
     builder.addOkAction();
     builder.addCancelAction();
     builder.setCenterPanel(panel.getComponent());
-    builder.setTitle(EditInjectionSettingsAction.EDIT_INJECTION_TITLE);
+    builder.setTitle("Language Injection Settings");
     builder.setOkOperation(new Runnable() {
       public void run() {
         panel.apply();

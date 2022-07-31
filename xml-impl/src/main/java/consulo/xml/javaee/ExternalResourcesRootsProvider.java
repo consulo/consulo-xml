@@ -15,13 +15,14 @@
  */
 package consulo.xml.javaee;
 
-import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.language.psi.stub.IndexableSetContributor;
 import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.stub.IndexableSetContributor;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -31,55 +32,46 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
-public class ExternalResourcesRootsProvider extends IndexableSetContributor
-{
-	private final NotNullLazyValue<Set<String>> myStandardResources = new NotNullLazyValue<Set<String>>()
-	{
-		@Nonnull
-		@Override
-		protected Set<String> compute()
-		{
-			ExternalResourceManagerExImpl manager = (ExternalResourceManagerExImpl) ExternalResourceManager.getInstance();
-			Set<ExternalResourceManagerExImpl.Resource> dirs = new HashSet<>();
-			Set<String> set = new HashSet<>();
-			for(Map<String, ExternalResourceManagerExImpl.Resource> map : manager.getStandardResources())
-			{
-				for(ExternalResourceManagerExImpl.Resource resource : map.values())
-				{
-					ExternalResourceManagerExImpl.Resource dir = new ExternalResourceManagerExImpl.Resource(resource.directoryName(), resource);
+@ExtensionImpl
+public class ExternalResourcesRootsProvider extends IndexableSetContributor {
+  private final NotNullLazyValue<Set<String>> myStandardResources = new NotNullLazyValue<Set<String>>() {
+    @Nonnull
+    @Override
+    protected Set<String> compute() {
+      ExternalResourceManagerExImpl manager = (ExternalResourceManagerExImpl) ExternalResourceManager.getInstance();
+      Set<ExternalResourceManagerExImpl.Resource> dirs = new HashSet<>();
+      Set<String> set = new HashSet<>();
+      for (Map<String, ExternalResourceManagerExImpl.Resource> map : manager.getStandardResources()) {
+        for (ExternalResourceManagerExImpl.Resource resource : map.values()) {
+          ExternalResourceManagerExImpl.Resource dir = new ExternalResourceManagerExImpl.Resource(resource.directoryName(), resource);
 
-					if(dirs.add(dir))
-					{
-						String url = resource.getResourceUrl();
-						if(url != null)
-						{
-							set.add(url.substring(0, url.lastIndexOf('/') + 1));
-						}
-					}
-				}
-			}
-			return set;
-		}
-	};
+          if (dirs.add(dir)) {
+            String url = resource.getResourceUrl();
+            if (url != null) {
+              set.add(url.substring(0, url.lastIndexOf('/') + 1));
+            }
+          }
+        }
+      }
+      return set;
+    }
+  };
 
-	@Nonnull
-	@Override
-	public Set<VirtualFile> getAdditionalRootsToIndex()
-	{
-		Set<VirtualFile> roots = new HashSet<>();
-		for(String url : myStandardResources.getValue())
-		{
-			VirtualFile file = VfsUtilCore.findRelativeFile(url, null);
-			if(file != null)
-			{
-				roots.add(file);
-			}
-		}
+  @Nonnull
+  @Override
+  public Set<VirtualFile> getAdditionalRootsToIndex() {
+    Set<VirtualFile> roots = new HashSet<>();
+    for (String url : myStandardResources.getValue()) {
+      VirtualFile file = VfsUtilCore.findRelativeFile(url, null);
+      if (file != null) {
+        roots.add(file);
+      }
+    }
 
-		String path = FetchExtResourceAction.getExternalResourcesPath();
-		VirtualFile extResources = LocalFileSystem.getInstance().findFileByPath(path);
-		ContainerUtil.addIfNotNull(roots, extResources);
+    String path = FetchExtResourceAction.getExternalResourcesPath();
+    VirtualFile extResources = LocalFileSystem.getInstance().findFileByPath(path);
+    ContainerUtil.addIfNotNull(roots, extResources);
 
-		return roots;
-	}
+    return roots;
+  }
 }

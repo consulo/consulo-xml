@@ -15,14 +15,16 @@
  */
 package com.intellij.xml;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.ide.impl.idea.codeInsight.daemon.ChangeLocalityDetector;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
 import consulo.xml.codeInspection.DefaultXmlSuppressionProvider;
 import consulo.xml.lang.xml.XMLLanguage;
-import consulo.language.psi.PsiComment;
-import consulo.ide.impl.idea.codeInsight.daemon.ChangeLocalityDetector;
-import consulo.language.psi.PsiElement;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class XmlChangeLocalityDetector implements ChangeLocalityDetector {
   @Override
   public PsiElement getChangeHighlightingDirtyScopeFor(@Nonnull PsiElement changedElement) {

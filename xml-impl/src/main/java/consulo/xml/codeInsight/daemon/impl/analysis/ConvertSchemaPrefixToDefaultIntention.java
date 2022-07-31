@@ -18,27 +18,27 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.WriteCommandAction;
-import consulo.project.Project;
+import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
-import consulo.ide.impl.idea.codeInsight.intention.PsiElementBaseIntentionAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 
 /**
  * @author Konstantin Bulenkov
  */
-public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntentionAction {
+public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntentionAction
+{
   public static final String NAME = "Set Namespace Prefix to Empty";
 
   public ConvertSchemaPrefixToDefaultIntention() {

@@ -25,25 +25,27 @@
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.document.util.TextRange;
 import consulo.document.util.UnfairTextRange;
-import consulo.ide.impl.idea.codeInsight.editorActions.wordSelection.AbstractWordSelectioner;
 import consulo.language.Language;
+import consulo.language.editor.action.AbstractWordSelectioner;
 import consulo.language.editor.action.BraceMatchingUtil;
 import consulo.language.editor.highlight.HighlighterFactory;
 import consulo.language.file.FileViewProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.psi.xml.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@ExtensionImpl
 public class HtmlSelectioner extends AbstractWordSelectioner {
 
   public boolean canSelect(PsiElement e) {
@@ -66,7 +68,7 @@ public class HtmlSelectioner extends AbstractWordSelectioner {
       result = super.select(e, editorText, cursorOffset, editor);
     }
     else {
-      result = ContainerUtil.newArrayList();
+      result = new ArrayList<>();
     }
 
     final PsiElement parent = e.getParent();

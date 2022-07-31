@@ -25,7 +25,6 @@ import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Processor;
-import consulo.component.extension.Extensions;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.Language;
@@ -799,11 +798,9 @@ public class XmlUtil {
       return null;
     }
 
-    @Nonnull final XmlFileNSInfoProvider[] nsProviders = Extensions.getExtensions(XmlFileNSInfoProvider.EP_NAME);
     if (file != null) {
-
       NextProvider:
-      for (XmlFileNSInfoProvider nsProvider : nsProviders) {
+      for (XmlFileNSInfoProvider nsProvider : XmlFileNSInfoProvider.EP_NAME.getExtensionList()) {
         final String[][] pairs = nsProvider.getDefaultNamespaces(file);
         if (pairs != null && pairs.length > 0) {
 
@@ -824,7 +821,7 @@ public class XmlUtil {
       boolean overrideNamespaceFromDocType = false;
 
       if (file != null) {
-        for (XmlFileNSInfoProvider provider : nsProviders) {
+        for (XmlFileNSInfoProvider provider : XmlFileNSInfoProvider.EP_NAME.getExtensionList()) {
           try {
             if (provider.overrideNamespaceFromDocType(file)) {
               overrideNamespaceFromDocType = true;

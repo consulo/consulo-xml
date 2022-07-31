@@ -15,31 +15,32 @@
  */
 package consulo.xml.codeInspection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.ide.ServiceManager;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 
-public abstract class XmlQuickFixFactory
-{
-	@Nonnull
-	public static XmlQuickFixFactory getInstance()
-	{
-		return ServiceManager.getService(XmlQuickFixFactory.class);
-	}
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-	@Nonnull
-	public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values);
+@ServiceAPI(ComponentScope.APPLICATION)
+public abstract class XmlQuickFixFactory {
+  @Nonnull
+  public static XmlQuickFixFactory getInstance() {
+    return ServiceManager.getService(XmlQuickFixFactory.class);
+  }
 
-	@Nonnull
-	public abstract LocalQuickFix createNSDeclarationIntentionFix(@Nonnull final PsiElement element, @Nonnull String namespacePrefix, @Nullable final XmlToken token);
+  @Nonnull
+  public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values);
 
-	@Nonnull
-	public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute);
+  @Nonnull
+  public abstract LocalQuickFix createNSDeclarationIntentionFix(@Nonnull final PsiElement element, @Nonnull String namespacePrefix, @Nullable final XmlToken token);
+
+  @Nonnull
+  public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute);
 }

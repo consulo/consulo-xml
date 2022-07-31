@@ -17,7 +17,7 @@ package consulo.xml.javaee;
 
 import consulo.disposer.Disposable;
 import consulo.language.editor.DaemonCodeAnalyzer;
-import consulo.language.psi.PsiManager;
+import consulo.language.psi.AnyPsiChangeListener;
 import consulo.project.Project;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -46,7 +46,7 @@ public class PsiExternalResourceNotifier implements Disposable {
     public void externalResourceChanged() {
 
       //((PsiManagerEx) myPsiManager).beforeChange(true);
-      myProject.getMessageBus().syncPublisher(PsiManager.ANY_PSI_CHANGE_TOPIC).beforePsiChanged(true);
+      myProject.getMessageBus().syncPublisher(AnyPsiChangeListener.class).beforePsiChanged(true);
       myDaemonCodeAnalyzer.restart();
     }
   }

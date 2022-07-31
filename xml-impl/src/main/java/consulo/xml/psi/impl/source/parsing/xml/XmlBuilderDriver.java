@@ -23,7 +23,6 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.LighterASTNode;
 import consulo.language.ast.TokenType;
-import consulo.language.parser.LanguageParserDefinitions;
 import consulo.language.parser.ParserDefinition;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiBuilderFactory;
@@ -140,7 +139,7 @@ public class XmlBuilderDriver {
   }
 
   protected PsiBuilder createBuilderAndParse() {
-    final ParserDefinition xmlParserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(XMLLanguage.INSTANCE);
+    final ParserDefinition xmlParserDefinition = ParserDefinition.forLanguage(XMLLanguage.INSTANCE);
     assert xmlParserDefinition != null;
 
     LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(XMLLanguage.INSTANCE);

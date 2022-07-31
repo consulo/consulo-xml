@@ -15,7 +15,10 @@
  */
 package consulo.xml.refactoring;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlUnusedNamespaceInspection;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlFile;
@@ -43,6 +46,7 @@ import java.util.Map;
  * @author Dmitry Avdeev
  *         Date: 11/7/11
  */
+@ExtensionImpl(id = "xml")
 public class XmlImportOptimizer implements ImportOptimizer {
   
   private final XmlUnusedNamespaceInspection myInspection = new XmlUnusedNamespaceInspection();
@@ -103,5 +107,11 @@ public class XmlImportOptimizer implements ImportOptimizer {
         }
       }
     };
+  }
+
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
   }
 }

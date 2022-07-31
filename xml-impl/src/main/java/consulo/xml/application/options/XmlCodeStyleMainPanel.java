@@ -15,17 +15,17 @@
  */
 package consulo.xml.application.options;
 
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.component.extension.Extensions;
-import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
 import com.intellij.xml.arrangement.XmlArrangementPanel;
-import consulo.ide.impl.idea.application.options.TabbedLanguageCodeStylePanel;
 import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
+import consulo.language.codeStyle.ui.setting.TabbedLanguageCodeStylePanel;
+import consulo.xml.lang.xml.XMLLanguage;
 
 /**
  * @author Rustam Vishnyakov
  */
-public class XmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
+public class XmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel
+{
   protected XmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
     super(XMLLanguage.INSTANCE, currentSettings, settings);
   }
@@ -36,7 +36,7 @@ public class XmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
     addTab(new CodeStyleXmlPanel(settings));
     addTab(new XmlArrangementPanel(settings));
 
-    for (CodeStyleSettingsProvider provider : Extensions.getExtensions(CodeStyleSettingsProvider.EXTENSION_POINT_NAME)) {
+    for (CodeStyleSettingsProvider provider : CodeStyleSettingsProvider.EXTENSION_POINT_NAME.getExtensionList()) {
       if (provider.getLanguage() == XMLLanguage.INSTANCE && !provider.hasSettingsPage()) {
         createTab(provider);
       }

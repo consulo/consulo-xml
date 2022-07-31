@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 import consulo.codeEditor.Editor;
@@ -28,6 +29,7 @@ import java.util.List;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlLineSelectioner extends ExtendWordSelectionHandlerBase {
   public boolean canSelect(final PsiElement e) {
     return e instanceof XmlToken && ((XmlToken)e).getTokenType() == XmlTokenType.XML_DATA_CHARACTERS;

@@ -16,12 +16,32 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.swing.JComponent;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.xml.lang.xml.XMLLanguage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.*;
 
+@ExtensionImpl
 public class HtmlUnknownBooleanAttributeInspection extends HtmlUnknownBooleanAttributeInspectionBase
 {
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.WARNING;
+	}
+
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
+
 	@Nullable
 	@Override
 	public JComponent createOptionsPanel()

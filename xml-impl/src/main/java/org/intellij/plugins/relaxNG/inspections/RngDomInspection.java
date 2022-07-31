@@ -16,6 +16,7 @@
 
 package org.intellij.plugins.relaxNG.inspections;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
@@ -28,6 +29,7 @@ import javax.annotation.Nonnull;
  * User: sweinreuter
  * Date: 03.10.2007
  */
+@ExtensionImpl
 public class RngDomInspection extends BasicDomElementsInspection<RngDomElement> {
   public RngDomInspection() {
     super(RngDomElement.class);

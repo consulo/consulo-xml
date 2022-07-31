@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
-public class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection
+public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection
 {
 	private static final Key<HtmlUnknownElementInspection> BOOLEAN_ATTRIBUTE_KEY = Key.create(BOOLEAN_ATTRIBUTE_SHORT_NAME);
 	private static final Logger LOG = Logger.getInstance(HtmlUnknownBooleanAttributeInspectionBase.class);

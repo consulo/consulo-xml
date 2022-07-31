@@ -15,6 +15,9 @@
  */
 package consulo.xml.application.options.editor;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.application.ApplicationManager;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
@@ -31,6 +34,8 @@ import javax.annotation.Nullable;
  */
 @Singleton
 @State(name = "XmlEditorOptions", storages = @Storage("editor.xml"))
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptions>
 {
 	private boolean myAutomaticallyInsertClosingTag = true;

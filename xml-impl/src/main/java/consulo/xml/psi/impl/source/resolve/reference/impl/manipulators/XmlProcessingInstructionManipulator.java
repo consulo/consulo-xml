@@ -15,20 +15,32 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.manipulators;
 
-import consulo.xml.psi.xml.XmlProcessingInstruction;
-import consulo.xml.psi.xml.XmlTokenType;
-import consulo.language.util.IncorrectOperationException;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
+import consulo.language.util.IncorrectOperationException;
+import consulo.xml.psi.xml.XmlProcessingInstruction;
+import consulo.xml.psi.xml.XmlTokenType;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: anna
  * Date: 2/20/13
  */
-public class XmlProcessingInstructionManipulator extends AbstractElementManipulator<XmlProcessingInstruction> {
+@ExtensionImpl
+public class XmlProcessingInstructionManipulator extends AbstractElementManipulator<XmlProcessingInstruction>
+{
+	@Override
+	public XmlProcessingInstruction handleContentChange(XmlProcessingInstruction element, TextRange range, String newContent) throws IncorrectOperationException
+	{
+		return XmlAttributeValueManipulator.handleContentChange(element, range, newContent, XmlTokenType.XML_TAG_CHARACTERS);
+	}
 
-  @Override
-  public XmlProcessingInstruction handleContentChange(XmlProcessingInstruction element, TextRange range, String newContent) throws IncorrectOperationException {
-    return XmlAttributeValueManipulator.handleContentChange(element, range, newContent, XmlTokenType.XML_TAG_CHARACTERS);
-  }
+	@Nonnull
+	@Override
+	public Class<XmlProcessingInstruction> getElementClass()
+	{
+		return XmlProcessingInstruction.class;
+	}
 }

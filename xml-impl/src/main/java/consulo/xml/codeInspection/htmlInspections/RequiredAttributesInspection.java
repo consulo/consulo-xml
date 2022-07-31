@@ -15,8 +15,9 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.ide.impl.idea.ui.FieldPanel;
 import consulo.language.editor.inspection.InspectionsBundle;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.ui.ex.awt.FieldPanel;
 import consulo.ui.ex.awt.event.DocumentAdapter;
 
 import javax.annotation.Nullable;
@@ -30,38 +31,31 @@ import java.awt.*;
  * User: anna
  * Date: 18-Nov-2005
  */
-public class RequiredAttributesInspection extends RequiredAttributesInspectionBase
+public abstract class RequiredAttributesInspection extends RequiredAttributesInspectionBase implements UnfairLocalInspectionTool
 {
-	@Override
-	@Nullable
-	public JComponent createOptionsPanel()
-	{
-		JPanel panel = new JPanel(new BorderLayout());
-		FieldPanel additionalAttributesPanel = new FieldPanel(InspectionsBundle.message("inspection.javadoc.html.not.required.label.text"), InspectionsBundle.message("inspection.javadoc.html.not" +
-				".required.dialog.title"), null, null);
+  @Override
+  @Nullable
+  public JComponent createOptionsPanel() {
+    JPanel panel = new JPanel(new BorderLayout());
+    FieldPanel additionalAttributesPanel = new FieldPanel(InspectionsBundle.message("inspection.javadoc.html.not.required.label.text"), InspectionsBundle.message("inspection.javadoc.html.not" +
+        ".required.dialog.title"), null, null);
 
-		panel.add(additionalAttributesPanel, BorderLayout.NORTH);
-		additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter()
-		{
-			@Override
-			protected void textChanged(DocumentEvent e)
-			{
-				final Document document = e.getDocument();
-				try
-				{
-					final String text = document.getText(0, document.getLength());
-					if(text != null)
-					{
-						myAdditionalRequiredHtmlAttributes = text.trim();
-					}
-				}
-				catch(BadLocationException e1)
-				{
-					LOG.error(e1);
-				}
-			}
-		});
-		additionalAttributesPanel.setText(myAdditionalRequiredHtmlAttributes);
-		return panel;
-	}
+    panel.add(additionalAttributesPanel, BorderLayout.NORTH);
+    additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
+      @Override
+      protected void textChanged(DocumentEvent e) {
+        final Document document = e.getDocument();
+        try {
+          final String text = document.getText(0, document.getLength());
+          if (text != null) {
+            myAdditionalRequiredHtmlAttributes = text.trim();
+          }
+        } catch (BadLocationException e1) {
+          LOG.error(e1);
+        }
+      }
+    });
+    additionalAttributesPanel.setText(myAdditionalRequiredHtmlAttributes);
+    return panel;
+  }
 }

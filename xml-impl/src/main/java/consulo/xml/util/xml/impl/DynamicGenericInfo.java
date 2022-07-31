@@ -19,7 +19,6 @@ import consulo.application.util.RecursionGuard;
 import consulo.application.util.RecursionManager;
 import consulo.application.util.function.Computable;
 import consulo.application.util.function.Processor;
-import consulo.component.extension.Extensions;
 import consulo.ide.impl.idea.util.Function;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
@@ -154,7 +153,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     DomExtensionsRegistrarImpl registrar = null;
     final DomElement domElement = myInvocationHandler.getProxy();
     final Project project = myInvocationHandler.getManager().getProject();
-    for (final DomExtenderEP extenderEP : Extensions.getExtensions(DomExtenderEP.EP_NAME)) {
+    for (final DomExtenderEP extenderEP : DomExtenderEP.EP_NAME.getExtensionList()) {
       registrar = extenderEP.extend(project, domElement, registrar);
     }
 

@@ -15,19 +15,20 @@
  */
 package consulo.xml.options.colors.pages;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import consulo.xml.ide.highlighter.XmlFileHighlighter;
-import consulo.xml.editor.XmlHighlighterColors;
-import consulo.configurable.OptionsBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.colorScheme.TextAttributesKey;
 import consulo.colorScheme.setting.AttributesDescriptor;
 import consulo.colorScheme.setting.ColorDescriptor;
+import consulo.configurable.OptionsBundle;
 import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
-import consulo.colorScheme.TextAttributesKey;
 import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.xml.editor.XmlHighlighterColors;
+import consulo.xml.ide.highlighter.XmlFileHighlighter;
 
+import javax.annotation.Nonnull;
+import java.util.Map;
+
+@ExtensionImpl
 public class XMLColorsPage implements ColorSettingsPage {
   private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
     new AttributesDescriptor(OptionsBundle.message("options.xml.attribute.descriptor.prologue"), XmlHighlighterColors.XML_PROLOGUE),

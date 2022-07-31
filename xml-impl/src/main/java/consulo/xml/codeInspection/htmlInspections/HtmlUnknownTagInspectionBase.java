@@ -44,7 +44,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
+public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection
 {
 	public static final Key<HtmlUnknownElementInspection> TAG_KEY = Key.create(TAG_SHORT_NAME);
 	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.HtmlUnknownTagInspection");

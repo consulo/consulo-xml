@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.lang.xml;
+package consulo.xml.lang.base;
 
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.editor.surroundWith.SurroundDescriptor;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author ven
  */
-public class XmlSurroundDescriptor implements SurroundDescriptor {
+public abstract class XmlBasedSurroundDescriptor implements SurroundDescriptor {
   @Nonnull
   public PsiElement[] getElementsToSurround(PsiFile file, int startOffset, int endOffset) {
     final Pair<XmlTagChild, XmlTagChild> childrenInRange = XmlUtil.findTagChildrenInRange(file, startOffset, endOffset);

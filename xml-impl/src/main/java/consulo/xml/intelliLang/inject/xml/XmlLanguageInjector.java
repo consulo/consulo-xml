@@ -55,7 +55,7 @@ import java.util.regex.Pattern;
  * <p/>
  * It also tries to deal with the "glued token" problem by removing or adding whitespace to the prefix/suffix.
  */
-public final class XmlLanguageInjector implements MultiHostInjector {
+public abstract class XmlLanguageInjector implements MultiHostInjector {
 
   private final Configuration myConfiguration;
   private volatile Trinity<Long, Pattern, Collection<String>> myXmlIndex;

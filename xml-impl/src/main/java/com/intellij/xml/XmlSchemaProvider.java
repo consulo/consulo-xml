@@ -16,20 +16,20 @@
 
 package com.intellij.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import consulo.language.psi.PsiDirectory;
-import consulo.module.Module;
 import consulo.ide.impl.idea.openapi.module.ModuleUtil;
+import consulo.language.psi.PsiDirectory;
+import consulo.language.psi.PsiFile;
+import consulo.module.Module;
 import consulo.project.DumbService;
 import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.function.Condition;
-import consulo.language.psi.PsiFile;
 import consulo.xml.psi.xml.XmlFile;
-import consulo.component.extension.Extensions;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -37,14 +37,15 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlSchemaProvider {
-  public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = new ExtensionPointName<XmlSchemaProvider>("com.intellij.xml.schemaProvider");
+  public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = ExtensionPointName.create(XmlSchemaProvider.class);
 
   @Nullable
   public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nullable Module module, @Nonnull PsiFile file) {
     if (file.getProject().isDefault()) return null;
     final boolean dumb = DumbService.getInstance(file.getProject()).isDumb();
-    for (XmlSchemaProvider provider: Extensions.getExtensions(EP_NAME)) {
+    for (XmlSchemaProvider provider: EP_NAME.getExtensionList()) {
       if (dumb && !DumbService.isDumbAware(provider)) {
         continue;
       }
@@ -73,7 +74,7 @@ public abstract class XmlSchemaProvider {
   @Deprecated
   @Nullable
   public static XmlSchemaProvider getAvailableProvider(@Nonnull final XmlFile file) {
-    for (XmlSchemaProvider provider: Extensions.getExtensions(EP_NAME)) {
+    for (XmlSchemaProvider provider: EP_NAME.getExtensionList()) {
       if (provider.isAvailable(file)) {
         return provider;
       }
@@ -82,11 +83,7 @@ public abstract class XmlSchemaProvider {
   }
 
   public static List<XmlSchemaProvider> getAvailableProviders(@Nonnull final XmlFile file) {
-    return ContainerUtil.findAll(Extensions.getExtensions(EP_NAME), new Condition<XmlSchemaProvider>() {
-      public boolean value(XmlSchemaProvider xmlSchemaProvider) {
-        return xmlSchemaProvider.isAvailable(file);
-      }
-    });
+    return ContainerUtil.findAll(EP_NAME.getExtensionList(), it -> it.isAvailable(file));
   }
 
   @Nullable

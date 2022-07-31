@@ -22,7 +22,7 @@ import consulo.language.impl.ast.FileElement;
 import consulo.language.impl.ast.TreeElement;
 import consulo.language.impl.psi.DummyHolder;
 import consulo.language.impl.psi.DummyHolderFactory;
-import consulo.language.parser.LanguageParserDefinitions;
+import consulo.language.parser.ParserDefinition;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiBuilderFactory;
 import consulo.language.psi.PsiFile;
@@ -61,7 +61,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
         type,
         contextType,
         PsiBuilderFactory.getInstance().createBuilder(
-            LanguageParserDefinitions.INSTANCE.forLanguage(DTDLanguage.INSTANCE),
+            ParserDefinition.forLanguage(DTDLanguage.INSTANCE),
             new DtdLexer(false) {
               final int myInitialState = getLexerInitialState(type, contextType);
 

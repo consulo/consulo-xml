@@ -15,34 +15,32 @@
  */
 package consulo.xml.codeInsight.completion;
 
-import static consulo.language.pattern.PlatformPatterns.psiElement;
-
-import java.nio.charset.Charset;
-
-import javax.annotation.Nonnull;
-
-import consulo.language.editor.completion.CompletionContributor;
-import consulo.language.editor.completion.CompletionParameters;
-import consulo.language.editor.completion.CompletionResultSet;
-import consulo.language.editor.completion.CompletionType;
+import com.intellij.xml.util.HtmlUtil;
+import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.completion.*;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ProcessingContext;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.io.CharsetToolkit;
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
-import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.util.collection.ArrayUtil;
-import com.intellij.xml.util.HtmlUtil;
-import com.intellij.xml.util.XmlUtil;
-import consulo.language.editor.completion.CompletionProvider;
+import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
+import java.nio.charset.Charset;
+
+import static consulo.language.pattern.PlatformPatterns.psiElement;
+
+@ExtensionImpl(id = "html")
 public class HtmlCompletionContributor extends CompletionContributor
 {
 	public HtmlCompletionContributor()
@@ -211,5 +209,12 @@ public class HtmlCompletionContributor extends CompletionContributor
 		}
 
 		return ArrayUtil.EMPTY_STRING_ARRAY;
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return Language.ANY;
 	}
 }

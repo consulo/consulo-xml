@@ -15,40 +15,53 @@
  */
 package org.intellij.plugins.relaxNG;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
-import consulo.language.util.IncorrectOperationException;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.psi.PsiManager;
+import consulo.language.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 
+import javax.annotation.Nonnull;
+
 /**
-* @author peter
-*/
-public class RncFileReferenceManipulator extends AbstractElementManipulator<RncFileReference> {
-  @Override
-  public RncFileReference handleContentChange(@Nonnull RncFileReference element, @Nonnull TextRange range, String newContent) throws
-                                                                                                            IncorrectOperationException {
-    final ASTNode node = element.getNode();
-    assert node != null;
+ * @author peter
+ */
+@ExtensionImpl
+public class RncFileReferenceManipulator extends AbstractElementManipulator<RncFileReference>
+{
+	@Override
+	public RncFileReference handleContentChange(@Nonnull RncFileReference element, @Nonnull TextRange range, String newContent) throws
+			IncorrectOperationException
+	{
+		final ASTNode node = element.getNode();
+		assert node != null;
 
-    final ASTNode literal = node.findChildByType(RncTokenTypes.LITERAL);
-    if (literal != null) {
-      assert range.equals(element.getReferenceRange());
-      final PsiManager manager = element.getManager();
-      final ASTNode newChild = RenameUtil.createLiteralNode(manager, newContent);
-      literal.getTreeParent().replaceChild(literal, newChild);
-    }
-    return element;
-  }
+		final ASTNode literal = node.findChildByType(RncTokenTypes.LITERAL);
+		if(literal != null)
+		{
+			assert range.equals(element.getReferenceRange());
+			final PsiManager manager = element.getManager();
+			final ASTNode newChild = RenameUtil.createLiteralNode(manager, newContent);
+			literal.getTreeParent().replaceChild(literal, newChild);
+		}
+		return element;
+	}
 
-  @Nonnull
-  @Override
-  public TextRange getRangeInElement(@Nonnull RncFileReference element) {
-    return element.getReferenceRange();
-  }
+	@Nonnull
+	@Override
+	public TextRange getRangeInElement(@Nonnull RncFileReference element)
+	{
+		return element.getReferenceRange();
+	}
+
+	@Nonnull
+	@Override
+	public Class<RncFileReference> getElementClass()
+	{
+		return RncFileReference.class;
+	}
 }

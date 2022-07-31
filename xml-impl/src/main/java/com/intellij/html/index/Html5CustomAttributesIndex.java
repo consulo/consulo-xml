@@ -15,30 +15,31 @@
  */
 package com.intellij.html.index;
 
+import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.index.io.DataIndexer;
+import consulo.index.io.EnumeratorStringDescriptor;
+import consulo.index.io.ID;
+import consulo.index.io.KeyDescriptor;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.file.LanguageFileType;
+import consulo.language.lexer.Lexer;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ScalarIndexExtension;
+import consulo.project.Project;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.TempFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.index.io.DataIndexer;
-import consulo.index.io.ID;
-import consulo.language.Language;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.lexer.XHtmlHighlightingLexer;
-import consulo.language.psi.stub.FileBasedIndex;
-import consulo.language.psi.stub.FileContent;
-import consulo.language.psi.stub.ScalarIndexExtension;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.ide.impl.idea.openapi.vfs.ex.temp.TempFileSystem;
-import consulo.language.ast.IElementType;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.index.io.EnumeratorStringDescriptor;
-import consulo.index.io.KeyDescriptor;
-import com.intellij.xml.util.HtmlUtil;
-import consulo.language.file.LanguageFileType;
-import consulo.language.lexer.Lexer;
-import consulo.project.Project;
-import consulo.virtualFileSystem.LocalFileSystem;
-import consulo.virtualFileSystem.fileType.FileType;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -48,6 +49,7 @@ import java.util.Map;
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
   public static final ID<String, Void> INDEX_ID = ID.create("html5.custom.attributes.index");
 

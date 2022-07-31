@@ -26,7 +26,6 @@ import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.*;
-import consulo.component.extension.Extensions;
 import consulo.component.util.ModificationTracker;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.psi.tree.ChildRoleBase;
@@ -414,7 +413,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     }
     Module module = ModuleUtilCore.findModuleForPsiElement(file);
     if (module != null) {
-      for (ImplicitNamespaceDescriptorProvider provider : Extensions.getExtensions(ImplicitNamespaceDescriptorProvider.EP_NAME)) {
+      for (ImplicitNamespaceDescriptorProvider provider : ImplicitNamespaceDescriptorProvider.EP_NAME.getExtensionList()) {
         XmlNSDescriptor nsDescriptor = provider.getNamespaceDescriptor(module, ns, file);
         if (nsDescriptor != null) {
           return nsDescriptor;
@@ -467,7 +466,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
   @Nullable
   protected XmlElementDescriptor computeElementDescriptor() {
-    for (XmlElementDescriptorProvider provider : Extensions.getExtensions(XmlElementDescriptorProvider.EP_NAME)) {
+    for (XmlElementDescriptorProvider provider : XmlElementDescriptorProvider.EP_NAME.getExtensionList()) {
       XmlElementDescriptor elementDescriptor = provider.getDescriptor(this);
       if (elementDescriptor != null) {
         return elementDescriptor;

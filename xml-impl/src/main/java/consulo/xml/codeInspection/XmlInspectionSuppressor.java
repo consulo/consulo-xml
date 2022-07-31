@@ -15,11 +15,16 @@
  */
 package consulo.xml.codeInspection;
 
-import javax.annotation.Nonnull;
-import consulo.language.psi.PsiElement;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.editor.inspection.InspectionSuppressor;
 import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.psi.PsiElement;
+import consulo.xml.lang.xml.XMLLanguage;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class XmlInspectionSuppressor implements InspectionSuppressor
 {
 	@Override
@@ -32,5 +37,12 @@ public class XmlInspectionSuppressor implements InspectionSuppressor
 	public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, String toolShortName)
 	{
 		return XmlSuppressableInspectionTool.getSuppressFixes(toolShortName);
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
 	}
 }

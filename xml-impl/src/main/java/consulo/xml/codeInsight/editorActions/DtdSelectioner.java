@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlAttlistDecl;
 import consulo.xml.psi.xml.XmlElementDecl;
 import consulo.xml.psi.xml.XmlToken;
@@ -28,6 +29,7 @@ import consulo.language.psi.PsiElement;
 import java.util.List;
 import java.util.ArrayList;
 
+@ExtensionImpl
 public class DtdSelectioner implements ExtendWordSelectionHandler {
   public boolean canSelect(PsiElement e) {
     return e instanceof XmlAttlistDecl || e instanceof XmlElementDecl;

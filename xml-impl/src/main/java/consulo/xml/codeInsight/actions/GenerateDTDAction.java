@@ -15,15 +15,10 @@
  */
 package consulo.xml.codeInsight.actions;
 
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlProcessingInstruction;
-import consulo.xml.psi.xml.XmlProlog;
 import com.intellij.xml.util.XmlUtil;
 import consulo.codeEditor.Editor;
-import consulo.ide.impl.idea.codeInsight.actions.BaseCodeInsightAction;
 import consulo.language.editor.action.CodeInsightActionHandler;
+import consulo.language.editor.impl.action.BaseCodeInsightAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
@@ -35,6 +30,11 @@ import consulo.project.Project;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlProcessingInstruction;
+import consulo.xml.psi.xml.XmlProlog;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -46,7 +46,8 @@ import javax.annotation.Nullable;
  * Date: 22.05.2003
  * Time: 13:46:54
  */
-public class GenerateDTDAction extends BaseCodeInsightAction {
+public class GenerateDTDAction extends BaseCodeInsightAction
+{
   private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
   @Nonnull
   protected CodeInsightActionHandler getHandler(){

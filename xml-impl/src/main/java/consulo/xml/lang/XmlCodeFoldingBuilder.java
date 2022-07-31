@@ -27,7 +27,6 @@ import consulo.language.ast.ASTNode;
 import consulo.language.ast.TokenSet;
 import consulo.language.editor.folding.FoldingBuilder;
 import consulo.language.editor.folding.FoldingDescriptor;
-import consulo.language.editor.folding.LanguageFolding;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.logging.Logger;
@@ -42,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.lang.xml.XmlFoldingBuilder");
+  private static final Logger LOG = Logger.getInstance(XmlCodeFoldingBuilder.class);
   private static final TokenSet XML_ATTRIBUTE_SET = TokenSet.create(XmlElementType.XML_ATTRIBUTE);
   private static final int MIN_TEXT_RANGE_LENGTH = 3;
   private static final String STYLE_ATTRIBUTE = "style";
@@ -109,7 +108,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
       else {
         final Language language = child.getLanguage();
         if (!(language instanceof XMLLanguage) && language != Language.ANY) {
-          final FoldingBuilder foldingBuilder = LanguageFolding.INSTANCE.forLanguage(language);
+          final FoldingBuilder foldingBuilder = FoldingBuilder.forLanguageComposite(language);
 
           if (foldingBuilder != null) {
             final FoldingDescriptor[] foldingDescriptors = foldingBuilder.buildFoldRegions(child.getNode(), document);

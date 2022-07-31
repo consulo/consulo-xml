@@ -15,6 +15,7 @@
  */
 package consulo.xml.usageView;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.ElementDescriptionLocation;
 import consulo.language.psi.ElementDescriptionProvider;
 import consulo.language.psi.PsiElement;
@@ -28,6 +29,7 @@ import javax.annotation.Nonnull;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlUsageViewDescriptionProvider implements ElementDescriptionProvider {
   public String getElementDescription(@Nonnull final PsiElement element, @Nonnull final ElementDescriptionLocation location) {
     if (location instanceof UsageViewShortNameLocation) {

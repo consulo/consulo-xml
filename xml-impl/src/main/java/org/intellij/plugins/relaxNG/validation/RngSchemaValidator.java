@@ -16,52 +16,45 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.ApplicationManager;
 import consulo.document.Document;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.ExternalAnnotator;
+import consulo.language.psi.*;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
 import consulo.util.lang.Comparing;
+import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.psi.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
+import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.language.ast.ASTNode;
-import consulo.application.ApplicationManager;
-import consulo.logging.Logger;
-import consulo.util.lang.Pair;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiErrorElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiRecursiveElementVisitor;
-import consulo.language.psi.resolve.PsiElementProcessor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
  * User: sweinreuter
  * Date: 18.07.2007
  */
+@ExtensionImpl
 public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyValidationMessageConsumer, RngSchemaValidator.MyValidationMessageConsumer>
 {
 	private static final Logger LOG = Logger.getInstance(RngSchemaValidator.class);
@@ -267,6 +260,13 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 			LOG.warn("Failed to build file from uri <" + systemId + ">", e);
 			return VirtualFileManager.getInstance().findFileByUrl(VfsUtilCore.fixURLforIDEA(systemId));
 		}
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return RngCompactLanguage.INSTANCE;
 	}
 
 	public interface ValidationMessageConsumer

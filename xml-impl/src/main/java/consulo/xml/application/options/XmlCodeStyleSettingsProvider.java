@@ -15,20 +15,22 @@
  */
 package consulo.xml.application.options;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationBundle;
 import consulo.configurable.Configurable;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.CustomCodeStyleSettings;
-import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
-import consulo.ide.impl.idea.application.options.CodeStyleAbstractConfigurable;
-import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
 import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
+import consulo.language.codeStyle.ui.setting.CodeStyleAbstractConfigurable;
+import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
+import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author yole
  */
+@ExtensionImpl
 public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
 
   public static final String CONFIGURABLE_DISPLAY_NAME = ApplicationBundle.message("title.xml");

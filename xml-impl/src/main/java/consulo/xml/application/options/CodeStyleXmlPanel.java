@@ -15,27 +15,23 @@
  */
 package consulo.xml.application.options;
 
-import java.awt.Dimension;
-
-import javax.annotation.Nonnull;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import consulo.codeEditor.EditorHighlighter;
+import consulo.colorScheme.EditorColorsScheme;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
+import consulo.language.psi.PsiFile;
+import consulo.ui.ex.awt.JBScrollPane;
+import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
-import consulo.codeEditor.EditorHighlighter;
-import consulo.language.psi.PsiFile;
-import consulo.virtualFileSystem.fileType.FileType;
-import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
-import consulo.ui.ex.awt.JBScrollPane;
-import consulo.colorScheme.EditorColorsScheme;
-import consulo.ide.impl.idea.application.options.CodeStyleAbstractPanel;
 
-public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import java.awt.*;
+
+public class CodeStyleXmlPanel extends CodeStyleAbstractPanel
+{
   private JTextField myKeepBlankLines;
   private JComboBox myWrapAttributes;
   private JCheckBox myAlignAttributes;

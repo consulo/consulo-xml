@@ -15,20 +15,21 @@
  */
 package consulo.xml.javaee;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.xml.XmlNSDescriptor;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
+import consulo.language.psi.PsiFile;
+import consulo.module.Module;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import consulo.module.Module;
-import consulo.language.psi.PsiFile;
-import com.intellij.xml.XmlNSDescriptor;
-
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface ImplicitNamespaceDescriptorProvider {
   @NonNls
-  ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.implicitNamespaceDescriptorProvider");
+  ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create(ImplicitNamespaceDescriptorProvider.class);
 
   @Nullable
   XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, @Nonnull final String ns, @Nullable PsiFile file);

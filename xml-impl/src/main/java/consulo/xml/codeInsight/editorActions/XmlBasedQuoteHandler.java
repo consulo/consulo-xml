@@ -23,7 +23,7 @@ import consulo.language.editor.action.QuoteHandler;
 /**
  * @author peter
 */
-public class XmlQuoteHandler implements QuoteHandler {
+public class XmlBasedQuoteHandler implements QuoteHandler {
   public boolean isClosingQuote(HighlighterIterator iterator, int offset) {
     return iterator.getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER;
   }

@@ -15,14 +15,27 @@
  */
 package consulo.xml.editor.bidi;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.TokenSet;
+import consulo.language.editor.bidi.TokenSetBidiRegionsSeparator;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.ide.impl.idea.openapi.editor.bidi.TokenSetBidiRegionsSeparator;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class XmlBidiRegionsSeparator extends TokenSetBidiRegionsSeparator
 {
 	public XmlBidiRegionsSeparator()
 	{
 		super(TokenSet.create(XmlTokenType.XML_DATA_CHARACTERS, XmlTokenType.XML_REAL_WHITE_SPACE));
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
 	}
 }

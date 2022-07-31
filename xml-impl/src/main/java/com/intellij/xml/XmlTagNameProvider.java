@@ -15,20 +15,22 @@
  */
 package com.intellij.xml;
 
-import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
+import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.xml.psi.xml.XmlTag;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
  * Provides custom tag names.
- *
- * @see HtmlCustomTagNameProvider
  */
-public interface XmlTagNameProvider {
-  ExtensionPointName<XmlTagNameProvider> EP_NAME = new ExtensionPointName<XmlTagNameProvider>("com.intellij.xml.tagNameProvider");
+@ExtensionAPI(ComponentScope.APPLICATION)
+public interface XmlTagNameProvider
+{
+	ExtensionPointName<XmlTagNameProvider> EP_NAME = ExtensionPointName.create(XmlTagNameProvider.class);
 
-  void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
+	void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
 }

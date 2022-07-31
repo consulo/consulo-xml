@@ -22,35 +22,36 @@
  */
 package com.intellij.xml.refactoring;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.Language;
-import consulo.dataContext.DataContext;
-import consulo.language.editor.PlatformDataKeys;
+import com.intellij.xml.XmlElementDescriptor;
+import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
+import consulo.dataContext.DataContext;
+import consulo.externalService.statistic.FeatureUsageTracker;
+import consulo.ide.impl.idea.ide.TitledHandler;
+import consulo.language.Language;
+import consulo.language.editor.LangDataKeys;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.language.editor.refactoring.action.BaseRefactoringAction;
 import consulo.language.editor.refactoring.rename.PsiElementRenameHandler;
-import consulo.project.Project;
+import consulo.language.editor.refactoring.rename.RenameHandler;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiUtilCore;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.editor.refactoring.action.BaseRefactoringAction;
-import consulo.language.editor.refactoring.rename.RenameHandler;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import consulo.application.statistic.FeatureUsageTracker;
-import consulo.ide.impl.idea.ide.TitledHandler;
-import consulo.language.editor.LangDataKeys;
-import consulo.logging.Logger;
-import consulo.util.lang.StringUtil;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+@ExtensionImpl(id = "xmlTagRenameHandler")
 public class XmlTagRenameHandler implements RenameHandler, TitledHandler
 {
 	private static final Logger LOG = Logger.getInstance(XmlTagRenameHandler.class);
-
 
 	public boolean isAvailableOnDataContext(final DataContext dataContext)
 	{

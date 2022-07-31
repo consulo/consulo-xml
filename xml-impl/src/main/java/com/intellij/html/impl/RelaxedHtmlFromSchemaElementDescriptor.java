@@ -15,11 +15,6 @@
  */
 package com.intellij.html.impl;
 
-import javax.annotation.Nullable;
-
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;
 import com.intellij.xml.XmlElementDescriptor;
@@ -29,6 +24,11 @@ import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.component.extension.Extensions;
+import consulo.util.collection.ArrayUtil;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Maxim.Mossienko
@@ -117,7 +117,7 @@ public class RelaxedHtmlFromSchemaElementDescriptor extends XmlElementDescriptor
 		{
 			return null;
 		}
-		for(XmlAttributeDescriptorsProvider provider : Extensions.getExtensions(XmlAttributeDescriptorsProvider.EP_NAME))
+		for(XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList())
 		{
 			final XmlAttributeDescriptor descriptor = provider.getAttributeDescriptor(attributeName, context);
 			if(descriptor != null)

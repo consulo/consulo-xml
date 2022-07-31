@@ -15,24 +15,27 @@
  */
 package consulo.xml.psi.impl.source.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.util.lang.Pair;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiLanguageInjectionHost;
-import consulo.language.ast.TokenSet;
-import consulo.xml.psi.xml.XmlComment;
-import consulo.xml.psi.xml.XmlTokenType;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
 import consulo.language.inject.MultiHostInjector;
 import consulo.language.inject.MultiHostRegistrar;
+import consulo.language.psi.PsiComment;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.util.lang.Pair;
+import consulo.xml.psi.xml.XmlComment;
+import consulo.xml.psi.xml.XmlTokenType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
  */
+@ExtensionImpl
 public class HtmlConditionalCommentInjector implements MultiHostInjector {
 
   /**
@@ -72,6 +75,12 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
     }
     final ASTNode endOfEnd = comment.findChildByType(TokenSet.create(XmlTokenType.XML_CONDITIONAL_COMMENT_END));
     return endOfEnd == null ? null : new Pair<ASTNode, ASTNode>(conditionalStart, conditionalEnd);
+  }
+
+  @Nonnull
+  @Override
+  public Class<? extends PsiElement> getElementClass() {
+    return PsiComment.class;
   }
 
   @Override

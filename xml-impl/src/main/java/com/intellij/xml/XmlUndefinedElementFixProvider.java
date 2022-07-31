@@ -15,6 +15,8 @@
  */
 package com.intellij.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -26,8 +28,9 @@ import javax.annotation.Nullable;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlUndefinedElementFixProvider {
-  public static final ExtensionPointName<XmlUndefinedElementFixProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.undefinedElementFixProvider");
+  public static final ExtensionPointName<XmlUndefinedElementFixProvider> EP_NAME = ExtensionPointName.create(XmlUndefinedElementFixProvider.class);
 
   /**
    *

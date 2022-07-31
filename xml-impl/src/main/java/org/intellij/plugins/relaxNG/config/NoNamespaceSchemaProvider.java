@@ -16,24 +16,26 @@
 
 package org.intellij.plugins.relaxNG.config;
 
+import com.intellij.xml.XmlSchemaProvider;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
 import consulo.module.Module;
+import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.psi.xml.XmlFile;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.project.Project;
-import consulo.language.psi.PsiManager;
-import consulo.xml.psi.xml.XmlFile;
-import com.intellij.xml.XmlSchemaProvider;
 
 /*
 * Created by IntelliJ IDEA.
 * User: sweinreuter
 * Date: 22.11.2007
 */
+@ExtensionImpl
 public class NoNamespaceSchemaProvider extends XmlSchemaProvider {
   @Override
   @Nullable

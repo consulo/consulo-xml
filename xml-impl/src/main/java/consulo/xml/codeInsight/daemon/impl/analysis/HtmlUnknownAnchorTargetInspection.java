@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Eugene.Kudelevsky
  */
-public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
+public abstract class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
   @Nonnull
   @Override
   public String getShortName() {

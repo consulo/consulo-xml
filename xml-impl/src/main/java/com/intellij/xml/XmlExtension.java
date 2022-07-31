@@ -15,16 +15,11 @@
  */
 package com.intellij.xml;
 
-import consulo.xml.psi.impl.source.xml.SchemaPrefix;
-import consulo.xml.psi.impl.source.xml.TagNameReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.application.util.CachedValueProvider;
 import consulo.component.extension.ExtensionPointName;
-import consulo.component.extension.Extensions;
 import consulo.content.scope.SearchScope;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.rawHighlight.HighlightInfoType;
@@ -33,6 +28,12 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.language.psi.scope.LocalSearchScope;
 import consulo.language.psi.util.LanguageCachedValueUtil;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.impl.source.xml.TagNameReference;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,9 +42,10 @@ import java.util.List;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlExtension
 {
-	public static final ExtensionPointName<XmlExtension> EP_NAME = new ExtensionPointName<>("com.intellij.xml.xmlExtension");
+	public static final ExtensionPointName<XmlExtension> EP_NAME = ExtensionPointName.create(XmlExtension.class);
 
 	public static XmlExtension getExtension(@Nonnull final PsiFile file)
 	{
@@ -52,7 +54,7 @@ public abstract class XmlExtension
 
 	private static XmlExtension calcExtension(PsiFile file)
 	{
-		for(XmlExtension extension : Extensions.getExtensions(EP_NAME))
+		for(XmlExtension extension : EP_NAME.getExtensionList())
 		{
 			if(extension.isAvailable(file))
 			{

@@ -15,8 +15,10 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.ide.impl.psi.formatter.WhiteSpaceFormattingStrategyAdapter;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
+import consulo.language.codeStyle.WhiteSpaceFormattingStrategyAdapter;
 import consulo.language.impl.ast.*;
 import consulo.language.impl.psi.CodeEditUtil;
 import consulo.language.util.CharTable;
@@ -30,62 +32,92 @@ import javax.annotation.Nonnull;
  * @author Denis Zhdanov
  * @since 12/6/11 4:51 PM
  */
-public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrategyAdapter {
+@ExtensionImpl
+public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrategyAdapter
+{
+	private static void addWhitespaceToTagBody(final ASTNode treePrev, final LeafElement whiteSpaceElement)
+	{
+		final CharTable charTable = SharedImplUtil.findCharTableByTree(treePrev);
+		final ASTNode treeParent = treePrev.getTreeParent();
 
-  private static void addWhitespaceToTagBody(final ASTNode treePrev, final LeafElement whiteSpaceElement) {
-    final CharTable charTable = SharedImplUtil.findCharTableByTree(treePrev);
-    final ASTNode treeParent = treePrev.getTreeParent();
+		final boolean before;
+		final XmlText xmlText;
+		if(treePrev.getElementType() == XmlElementType.XML_TEXT)
+		{
+			xmlText = (XmlText) treePrev.getPsi();
+			before = true;
+		}
+		else if(treePrev.getTreePrev().getElementType() == XmlElementType.XML_TEXT)
+		{
+			xmlText = (XmlText) treePrev.getTreePrev().getPsi();
+			before = false;
+		}
+		else
+		{
+			xmlText = (XmlText) Factory.createCompositeElement(XmlElementType.XML_TEXT, charTable, treeParent.getPsi().getManager());
+			CodeEditUtil.setNodeGenerated(xmlText.getNode(), true);
+			treeParent.addChild(xmlText.getNode(), treePrev);
+			before = true;
+		}
+		final ASTNode node = xmlText.getNode();
+		assert node != null;
+		final TreeElement anchorInText = (TreeElement) (before ? node.getFirstChildNode() : node.getLastChildNode());
+		if(anchorInText == null)
+		{
+			node.addChild(whiteSpaceElement);
+		}
+		else if(anchorInText.getElementType() != XmlTokenType.XML_WHITE_SPACE)
+		{
+			node.addChild(whiteSpaceElement, before ? anchorInText : null);
+		}
+		else
+		{
+			final String text = before ? whiteSpaceElement.getText() + anchorInText.getText() : anchorInText.getText() +
+					whiteSpaceElement.getText();
+			node.replaceChild(anchorInText, ASTFactory.whitespace(text));
+		}
+	}
 
-    final boolean before;
-    final XmlText xmlText;
-    if(treePrev.getElementType() == XmlElementType.XML_TEXT) {
-      xmlText = (XmlText)treePrev.getPsi();
-      before = true;
-    }
-    else if(treePrev.getTreePrev().getElementType() == XmlElementType.XML_TEXT){
-      xmlText = (XmlText)treePrev.getTreePrev().getPsi();
-      before = false;
-    }
-    else{
-      xmlText = (XmlText)Factory.createCompositeElement(XmlElementType.XML_TEXT, charTable, treeParent.getPsi().getManager());
-      CodeEditUtil.setNodeGenerated(xmlText.getNode(), true);
-      treeParent.addChild(xmlText.getNode(), treePrev);
-      before = true;
-    }
-    final ASTNode node = xmlText.getNode();
-    assert node != null;
-    final TreeElement anchorInText = (TreeElement) (before ? node.getFirstChildNode() : node.getLastChildNode());
-    if (anchorInText == null) node.addChild(whiteSpaceElement);
-    else if (anchorInText.getElementType() != XmlTokenType.XML_WHITE_SPACE) node.addChild(whiteSpaceElement, before ? anchorInText : null);
-    else {
-      final String text = before ? whiteSpaceElement.getText() + anchorInText.getText() : anchorInText.getText() +
-                                                                                          whiteSpaceElement.getText();
-      node.replaceChild(anchorInText, ASTFactory.whitespace(text));
-    }
-  }
+	protected boolean isInsideTagBody(@Nonnull ASTNode place)
+	{
+		final ASTNode treeParent = place.getTreeParent();
+		if(treeParent.getElementType() != XmlElementType.XML_TAG
+				&& treeParent.getElementType() != XmlElementType.HTML_TAG)
+		{
+			return false;
+		}
+		while(place != null)
+		{
+			if(place.getElementType() == XmlTokenType.XML_TAG_END)
+			{
+				return true;
+			}
+			place = place.getTreePrev();
+		}
+		return false;
+	}
 
-  protected boolean isInsideTagBody(@Nonnull ASTNode place) {
-    final ASTNode treeParent = place.getTreeParent();
-    if(treeParent.getElementType() != XmlElementType.XML_TAG
-       && treeParent.getElementType() != XmlElementType.HTML_TAG) return false;
-    while(place != null){
-      if(place.getElementType() == XmlTokenType.XML_TAG_END) return true;
-      place = place.getTreePrev();
-    }
-    return false;
-  }
+	public boolean addWhitespace(@Nonnull final ASTNode treePrev, @Nonnull final LeafElement whiteSpaceElement)
+	{
+		if(isInsideTagBody(treePrev))
+		{
+			addWhitespaceToTagBody(treePrev, whiteSpaceElement);
+			return true;
+		}
 
-  public boolean addWhitespace(@Nonnull final ASTNode treePrev, @Nonnull final LeafElement whiteSpaceElement) {
-    if (isInsideTagBody(treePrev)) {
-      addWhitespaceToTagBody(treePrev, whiteSpaceElement);
-      return true;
-    }
+		return false;
+	}
 
-    return false;
-  }
+	public boolean containsWhitespacesOnly(@Nonnull final ASTNode node)
+	{
+		return (node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) &&
+				node.getText().trim().length() == 0;
+	}
 
-  public boolean containsWhitespacesOnly(@Nonnull final ASTNode node) {
-    return (node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) &&
-           node.getText().trim().length() == 0;
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 }

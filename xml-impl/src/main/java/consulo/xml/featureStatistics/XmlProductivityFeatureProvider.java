@@ -15,17 +15,19 @@
  */
 package consulo.xml.featureStatistics;
 
-import consulo.xml.codeInsight.completion.XmlCompletionContributor;
 import com.intellij.xml.XmlBundle;
-import consulo.ide.impl.idea.featureStatistics.FeatureDescriptor;
-import consulo.ide.impl.idea.featureStatistics.GroupDescriptor;
-import consulo.ide.impl.idea.featureStatistics.ProductivityFeaturesProvider;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.externalService.statistic.FeatureDescriptor;
+import consulo.externalService.statistic.GroupDescriptor;
+import consulo.externalService.statistic.ProductivityFeaturesProvider;
+import consulo.xml.codeInsight.completion.XmlCompletionContributor;
 
 import java.util.Collections;
 
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl
 public class XmlProductivityFeatureProvider extends ProductivityFeaturesProvider {
   public FeatureDescriptor[] getFeatureDescriptors() {
     return new FeatureDescriptor[] { new FeatureDescriptor(XmlCompletionContributor.TAG_NAME_COMPLETION_FEATURE,

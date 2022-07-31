@@ -15,10 +15,8 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.ide.presentation.Presentation;
 import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
-import consulo.ide.impl.idea.openapi.util.NullableLazyValue;
 import consulo.language.pom.PomService;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.SmartPsiElementPointer;
@@ -45,14 +43,6 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
   private final Type myType;
   private Map<Class, Annotation> myCustomAnnotations;
   @Nullable private Map myUserMap;
-  private final NullableLazyValue<ElementPresentationTemplate> myPresentationTemplate = new NullableLazyValue<ElementPresentationTemplate>() {
-    @Override
-    protected ElementPresentationTemplate compute() {
-      Class clazz = ReflectionUtil.getRawType(getType());
-      Presentation presentation = DomApplicationComponent.getInstance().getInvocationCache(clazz).getClassAnnotation(Presentation.class);
-      return presentation == null ? null : new ElementPresentationTemplateImpl(presentation);
-    }
-  };
 
   protected AbstractDomChildDescriptionImpl(final Type type) {
     myType = type;
@@ -162,7 +152,7 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
   @Override
   @Nullable
   public ElementPresentationTemplate getPresentationTemplate() {
-    return myPresentationTemplate.getValue();
+    return ElementPresentationTemplateImpl.INSTANCE;
   }
 
   @Nullable

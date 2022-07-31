@@ -15,9 +15,11 @@
  */
 package consulo.xml.javaee;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
-import consulo.component.persist.StoragePathMacros;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -28,8 +30,10 @@ import java.util.Map;
  * @author Dmitry Avdeev
  */
 @Singleton
-@State(name = "ProjectResources", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/misc.xml"))
-public class ProjectResources extends ExternalResourceManagerExImpl
+@State(name = "ProjectResources", storages = @Storage("misc.xml"))
+@ServiceAPI(ComponentScope.PROJECT)
+@ServiceImpl
+public class ProjectExternalResourceManagerImpl extends ExternalResourceManagerExImpl
 {
 	@Nonnull
 	@Override

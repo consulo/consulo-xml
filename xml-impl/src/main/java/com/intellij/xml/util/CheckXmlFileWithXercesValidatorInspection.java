@@ -16,15 +16,15 @@
 
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.ExternalDocumentValidator;
-import consulo.language.editor.inspection.scheme.UnfairLocalInspectionTool;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Maxim Mossienko

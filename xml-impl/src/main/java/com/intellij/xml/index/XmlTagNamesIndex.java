@@ -16,6 +16,7 @@
 package com.intellij.xml.index;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.index.io.DataIndexer;
 import consulo.index.io.ID;
 import consulo.index.io.data.DataExternalizer;
@@ -36,57 +37,48 @@ import java.util.Map;
 /**
  * @author Dmitry Avdeev
  */
-public class XmlTagNamesIndex extends XmlIndex<Void>
-{
-	public static Collection<VirtualFile> getFilesByTagName(String tagName, final Project project)
-	{
-		return FileBasedIndex.getInstance().getContainingFiles(NAME, tagName, createFilter(project));
-	}
+@ExtensionImpl
+public class XmlTagNamesIndex extends XmlIndex<Void> {
+  public static Collection<VirtualFile> getFilesByTagName(String tagName, final Project project) {
+    return FileBasedIndex.getInstance().getContainingFiles(NAME, tagName, createFilter(project));
+  }
 
-	public static Collection<String> getAllTagNames(Project project)
-	{
-		return FileBasedIndex.getInstance().getAllKeys(NAME, project);
-	}
+  public static Collection<String> getAllTagNames(Project project) {
+    return FileBasedIndex.getInstance().getAllKeys(NAME, project);
+  }
 
-	static final ID<String, Void> NAME = ID.create("XmlTagNames");
+  static final ID<String, Void> NAME = ID.create("XmlTagNames");
 
-	@Override
-	@Nonnull
-	public ID<String, Void> getName()
-	{
-		return NAME;
-	}
+  @Override
+  @Nonnull
+  public ID<String, Void> getName() {
+    return NAME;
+  }
 
-	@Override
-	@Nonnull
-	public DataIndexer<String, Void, FileContent> getIndexer()
-	{
-		return new DataIndexer<String, Void, FileContent>()
-		{
-			@Override
-			@Nonnull
-			public Map<String, Void> map(@Nonnull final FileContent inputData)
-			{
-				CharSequence text = inputData.getContentAsText();
-				if(StringUtil.indexOf(text, XmlUtil.XML_SCHEMA_URI) == -1)
-				{
-					return Collections.emptyMap();
-				}
-				Collection<String> tags = XsdTagNameBuilder.computeTagNames(Readers.readerFromCharSequence(text));
-				Map<String, Void> map = new HashMap<String, Void>(tags.size());
-				for(String tag : tags)
-				{
-					map.put(tag, null);
-				}
-				return map;
-			}
-		};
-	}
+  @Override
+  @Nonnull
+  public DataIndexer<String, Void, FileContent> getIndexer() {
+    return new DataIndexer<String, Void, FileContent>() {
+      @Override
+      @Nonnull
+      public Map<String, Void> map(@Nonnull final FileContent inputData) {
+        CharSequence text = inputData.getContentAsText();
+        if (StringUtil.indexOf(text, XmlUtil.XML_SCHEMA_URI) == -1) {
+          return Collections.emptyMap();
+        }
+        Collection<String> tags = XsdTagNameBuilder.computeTagNames(Readers.readerFromCharSequence(text));
+        Map<String, Void> map = new HashMap<String, Void>(tags.size());
+        for (String tag : tags) {
+          map.put(tag, null);
+        }
+        return map;
+      }
+    };
+  }
 
-	@Nonnull
-	@Override
-	public DataExternalizer<Void> getValueExternalizer()
-	{
-		return ScalarIndexExtension.VOID_DATA_EXTERNALIZER;
-	}
+  @Nonnull
+  @Override
+  public DataExternalizer<Void> getValueExternalizer() {
+    return ScalarIndexExtension.VOID_DATA_EXTERNALIZER;
+  }
 }

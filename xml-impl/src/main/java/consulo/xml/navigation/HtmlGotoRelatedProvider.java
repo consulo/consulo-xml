@@ -15,6 +15,7 @@
  */
 package consulo.xml.navigation;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.language.psi.PsiElement;
@@ -28,12 +29,11 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Eugene.Kudelevsky
  * Date: 3/29/11
  * Time: 4:21 PM
- * To change this template use File | Settings | File Templates.
  */
+@ExtensionImpl
 public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
   @Nonnull
   @Override

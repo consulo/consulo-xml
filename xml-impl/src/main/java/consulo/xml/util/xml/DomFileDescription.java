@@ -15,6 +15,8 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 import consulo.application.util.CachedValue;
@@ -43,9 +45,10 @@ import java.util.*;
  * @author peter
  * @see MergingFileDescription
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public class DomFileDescription<T>
 {
-	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.fileDescription");
+	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create(DomFileDescription.class);
 
 	private final Map<Class<? extends ScopeProvider>, ScopeProvider> myScopeProviders = ConcurrentInstanceMap.create();
 	protected final Class<T> myRootElementClass;

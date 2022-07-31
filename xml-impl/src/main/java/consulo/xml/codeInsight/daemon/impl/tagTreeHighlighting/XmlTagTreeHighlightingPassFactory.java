@@ -15,44 +15,40 @@
  */
 package consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorEx;
 import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPass;
 import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPassFactory;
-import consulo.codeEditor.EditorEx;
-import consulo.language.psi.PsiFile;
 import consulo.language.editor.Pass;
+import consulo.language.psi.PsiFile;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory
-{
-	@Override
-	public void register(@Nonnull Registrar registrar)
-	{
-		registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
-	}
+@ExtensionImpl
+public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory {
+  @Override
+  public void register(@Nonnull Registrar registrar) {
+    registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
+  }
 
-	@Override
-	public TextEditorHighlightingPass createHighlightingPass(@Nonnull final PsiFile file, @Nonnull final Editor editor)
-	{
-		if(editor.isOneLineMode())
-		{
-			return null;
-		}
+  @Override
+  public TextEditorHighlightingPass createHighlightingPass(@Nonnull final PsiFile file, @Nonnull final Editor editor) {
+    if (editor.isOneLineMode()) {
+      return null;
+    }
 
-		if(!XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file))
-		{
-			return null;
-		}
-		if(!(editor instanceof EditorEx))
-		{
-			return null;
-		}
+    if (!XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)) {
+      return null;
+    }
+    if (!(editor instanceof EditorEx)) {
+      return null;
+    }
 
-		return new XmlTagTreeHighlightingPass(file, (EditorEx) editor);
-	}
+    return new XmlTagTreeHighlightingPass(file, (EditorEx) editor);
+  }
 }
 

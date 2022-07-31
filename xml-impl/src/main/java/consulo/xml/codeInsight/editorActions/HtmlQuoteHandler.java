@@ -26,7 +26,7 @@ public class HtmlQuoteHandler implements QuoteHandler {
   private QuoteHandler myBaseQuoteHandler;
 
   public HtmlQuoteHandler() {
-    this(new XmlQuoteHandler());
+    this(new XmlBasedQuoteHandler());
   }
 
   public HtmlQuoteHandler(QuoteHandler _baseHandler) {

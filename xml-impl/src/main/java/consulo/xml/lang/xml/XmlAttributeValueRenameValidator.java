@@ -15,14 +15,16 @@
  */
 package consulo.xml.lang.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.refactoring.rename.RenameInputValidator;
 import consulo.language.pattern.ElementPattern;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.util.ProcessingContext;
+import consulo.xml.psi.xml.XmlAttributeValue;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 
+@ExtensionImpl
 public class XmlAttributeValueRenameValidator implements RenameInputValidator {
   @Override
   public ElementPattern<? extends PsiElement> getPattern() {

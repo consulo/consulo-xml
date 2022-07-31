@@ -15,40 +15,38 @@
  */
 package consulo.xml.psi.impl.smartPointers;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.intellij.xml.util.XmlTagUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.SmartPointerAnchorProvider;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.util.XmlTagUtil;
-import consulo.language.psi.SmartPointerAnchorProvider;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dennis.Ushakov
  */
-public class XmlAnchorProvider implements SmartPointerAnchorProvider
-{
-	@Nullable
-	@Override
-	public PsiElement getAnchor(@Nonnull PsiElement element)
-	{
-		if(element instanceof XmlTag)
-		{
-			return XmlTagUtil.getStartTagNameElement((XmlTag) element);
-		}
-		return null;
-	}
+@ExtensionImpl
+public class XmlAnchorProvider implements SmartPointerAnchorProvider {
+  @Nullable
+  @Override
+  public PsiElement getAnchor(@Nonnull PsiElement element) {
+    if (element instanceof XmlTag) {
+      return XmlTagUtil.getStartTagNameElement((XmlTag) element);
+    }
+    return null;
+  }
 
-	@Nullable
-	@Override
-	public PsiElement restoreElement(@Nonnull PsiElement anchor)
-	{
-		if(anchor instanceof XmlToken)
-		{
-			XmlToken token = (XmlToken) anchor;
-			return token.getTokenType() == XmlTokenType.XML_NAME ? token.getParent() : null;
-		}
-		return null;
-	}
+  @Nullable
+  @Override
+  public PsiElement restoreElement(@Nonnull PsiElement anchor) {
+    if (anchor instanceof XmlToken) {
+      XmlToken token = (XmlToken) anchor;
+      return token.getTokenType() == XmlTokenType.XML_NAME ? token.getParent() : null;
+    }
+    return null;
+  }
 }

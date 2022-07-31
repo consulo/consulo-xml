@@ -15,13 +15,14 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.xml.psi.impl.source.tree.HtmlFileElement;
-import consulo.xml.psi.impl.source.tree.XmlFileElement;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.ILazyParseableElementType;
 import consulo.language.impl.ast.ASTLazyFactory;
 import consulo.language.impl.ast.LazyParseableElement;
 import consulo.language.impl.psi.template.TemplateDataElementType;
+import consulo.xml.psi.impl.source.tree.HtmlFileElement;
+import consulo.xml.psi.impl.source.tree.XmlFileElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,31 +33,27 @@ import static consulo.xml.psi.xml.XmlElementType.*;
  * @author VISTALL
  * @since 2:39/02.04.13
  */
-public class XmlASTLazyFactory implements ASTLazyFactory
-{
+@ExtensionImpl
+public class XmlASTLazyFactory implements ASTLazyFactory {
   @Nonnull
   @Override
   public LazyParseableElement createLazy(ILazyParseableElementType type, CharSequence text) {
     if (type == XML_FILE) {
       return new XmlFileElement(type, text);
-    }
-    else if (type == DTD_FILE) {
+    } else if (type == DTD_FILE) {
       return new XmlFileElement(type, text);
-    }
-    else if (type == XHTML_FILE) {
+    } else if (type == XHTML_FILE) {
       return new XmlFileElement(type, text);
-    }
-    else if (type == HTML_FILE) {
+    } else if (type == HTML_FILE) {
       return new HtmlFileElement(text);
-    }
-    else if (type instanceof TemplateDataElementType) {
+    } else if (type instanceof TemplateDataElementType) {
       return new XmlFileElement(type, text);
     }
     return null;
   }
 
   @Override
-  public boolean apply(@Nullable IElementType input) {
+  public boolean test(@Nullable IElementType input) {
     return input == XML_FILE || input == DTD_FILE || input == XHTML_FILE || input == HTML_FILE || input instanceof TemplateDataElementType;
   }
 }

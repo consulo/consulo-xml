@@ -15,17 +15,15 @@
  */
 package consulo.xml.codeInsight.completion;
 
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import consulo.application.statistic.FeatureUsageTracker;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.document.RangeMarker;
+import consulo.externalService.statistic.FeatureUsageTracker;
 import consulo.language.editor.completion.lookup.InsertionContext;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.language.psi.PsiDocumentManager;
@@ -35,6 +33,8 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.lang.StringUtil;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -45,7 +45,6 @@ import java.util.Set;
  */
 public class ExtendedTagInsertHandler extends XmlTagInsertHandler
 {
-
 	private static final Logger LOG = Logger.getInstance(ExtendedTagInsertHandler.class);
 
 	protected final String myElementName;

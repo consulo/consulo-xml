@@ -19,33 +19,38 @@
  */
 package consulo.xml.lang.html;
 
-import consulo.language.codeStyle.CodeStyleSettings;
-import consulo.language.codeStyle.FormattingModelBuilder;
-import consulo.language.ast.ASTNode;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
+import consulo.language.Language;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.FormattingContext;
+import consulo.language.codeStyle.FormattingModel;
+import consulo.language.codeStyle.FormattingModelBuilder;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.psi.PsiFile;
+import consulo.xml.lang.xml.XmlFormattingModel;
 import consulo.xml.psi.formatter.xml.HtmlPolicy;
 import consulo.xml.psi.formatter.xml.XmlBlock;
-import consulo.language.impl.psi.SourceTreeToPsiMap;
-import consulo.xml.lang.xml.XmlFormattingModel;
-import consulo.language.codeStyle.FormattingModel;
 
 import javax.annotation.Nonnull;
 
-public class HtmlFormattingModelBuilder implements FormattingModelBuilder {
-  @Nonnull
-    public FormattingModel createModel(final PsiElement element, final CodeStyleSettings settings) {
-    final PsiFile psiFile = element.getContainingFile();
-    final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(psiFile);
-    return new XmlFormattingModel(psiFile,
-                                                           new XmlBlock(SourceTreeToPsiMap.psiElementToTree(psiFile),
-                                                                        null, null, new HtmlPolicy(settings, documentModel), null, null, false),
-                                                           documentModel);
-  }
+@ExtensionImpl
+public class HtmlFormattingModelBuilder implements FormattingModelBuilder
+{
+	@Nonnull
+	@Override
+	public FormattingModel createModel(@Nonnull FormattingContext context)
+	{
+		PsiFile psiFile = context.getContainingFile();
+		CodeStyleSettings settings = context.getCodeStyleSettings();
+		final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(psiFile);
+		return new XmlFormattingModel(psiFile, new XmlBlock(SourceTreeToPsiMap.psiElementToTree(psiFile), null, null, new HtmlPolicy(settings, documentModel), null, null, false), documentModel);
+	}
 
-  public TextRange getRangeAffectingIndent(PsiFile file, int offset, ASTNode elementAtOffset) {
-    return null;
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
+	}
 }

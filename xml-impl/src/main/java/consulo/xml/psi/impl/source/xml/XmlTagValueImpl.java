@@ -15,15 +15,17 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.document.util.TextRange;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.util.lang.StringUtil;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
@@ -161,7 +163,15 @@ public class XmlTagValueImpl implements XmlTagValue
 				{
 					if(defaultPolicy && text instanceof XmlTextImpl)
 					{
-						((XmlTextImpl) text).doSetValue(value, new DefaultXmlPsiPolicy());
+						((XmlTextImpl) text).doSetValue(value, new DefaultXmlPsiPolicy()
+						{
+							@Nonnull
+							@Override
+							public Language getLanguage()
+							{
+								return XMLLanguage.INSTANCE;
+							}
+						});
 					}
 					else
 					{

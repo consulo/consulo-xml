@@ -15,20 +15,22 @@
  */
 package consulo.xml.codeInsight.highlighting;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.HighlightErrorFilter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.psi.xml.XmlTokenType;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
+@ExtensionImpl
 public class HtmlClosingTagErrorFilter extends HighlightErrorFilter {
 
   public boolean shouldHighlightErrorElement(@Nonnull final PsiErrorElement element) {

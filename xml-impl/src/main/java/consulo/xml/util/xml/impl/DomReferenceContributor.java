@@ -15,18 +15,33 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceRegistrar;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.patterns.XmlPatterns;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
-public class DomReferenceContributor extends PsiReferenceContributor{
-  public void registerReferenceProviders(final PsiReferenceRegistrar registrar) {
-    GenericValueReferenceProvider provider = new GenericValueReferenceProvider();
+@ExtensionImpl
+public class DomReferenceContributor extends PsiReferenceContributor
+{
+	public void registerReferenceProviders(final PsiReferenceRegistrar registrar)
+	{
+		GenericValueReferenceProvider provider = new GenericValueReferenceProvider();
 
-    registrar.registerReferenceProvider(XmlPatterns.xmlTag(), provider);
-    registrar.registerReferenceProvider(XmlPatterns.xmlAttributeValue(), provider);
-  }
+		registrar.registerReferenceProvider(XmlPatterns.xmlTag(), provider);
+		registrar.registerReferenceProvider(XmlPatterns.xmlAttributeValue(), provider);
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 }

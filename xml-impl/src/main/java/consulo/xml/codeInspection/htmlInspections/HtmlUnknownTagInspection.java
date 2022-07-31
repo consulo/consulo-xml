@@ -17,8 +17,8 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import consulo.application.AllIcons;
-import consulo.ide.impl.idea.ui.FieldPanel;
 import consulo.ide.impl.idea.util.Function;
+import consulo.ui.ex.awt.FieldPanel;
 import consulo.ui.ex.awt.Messages;
 import consulo.ui.ex.awt.event.DocumentAdapter;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
@@ -37,7 +37,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase {
+public abstract class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase {
 
   public HtmlUnknownTagInspection() {
     super();

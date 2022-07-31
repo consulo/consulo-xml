@@ -15,10 +15,30 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.application.Application;
+import consulo.component.extension.ExtensionPointCacheKey;
+import consulo.language.Language;
 import consulo.language.ast.ASTNode;
+import consulo.language.extension.ByLanguageValue;
+import consulo.language.extension.LanguageExtension;
+import consulo.language.extension.LanguageOneToOne;
 import consulo.language.psi.PsiElement;
+import consulo.xml.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
 
-public interface XmlPsiPolicy
+import javax.annotation.Nonnull;
+
+@ExtensionAPI(ComponentScope.APPLICATION)
+public interface XmlPsiPolicy extends LanguageExtension
 {
+	ExtensionPointCacheKey<XmlPsiPolicy, ByLanguageValue<XmlPsiPolicy>> KEY = ExtensionPointCacheKey.create("XmlPsiPolicy", LanguageOneToOne.build(new CDATAOnAnyEncodedPolicy()));
+
+	@Nonnull
+	static XmlPsiPolicy forLanguage(@Nonnull Language language)
+	{
+		return Application.get().getExtensionPoint(XmlPsiPolicy.class).getOrBuildCache(KEY).requiredGet(language);
+	}
+
 	ASTNode encodeXmlTextContents(String displayText, PsiElement text);
 }

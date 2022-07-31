@@ -16,26 +16,25 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import com.intellij.xml.util.HtmlUtil;
+import com.intellij.xml.util.XmlTagUtil;
 import consulo.language.ast.ASTNode;
-import consulo.language.editor.annotation.Annotator;
-import consulo.language.parser.LanguageParserDefinitions;
-import consulo.language.parser.ParserDefinition;
+import consulo.language.ast.IElementType;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.parser.ParserDefinition;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.language.ast.IElementType;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.util.HtmlUtil;
-import com.intellij.xml.util.XmlTagUtil;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.util.PsiTreeUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -89,7 +88,7 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
                                       @Nonnull final XmlToken end) {
     PsiElement context = tag.getContainingFile().getContext();
     if (context != null) {
-      ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(context.getLanguage());
+      ParserDefinition parserDefinition = ParserDefinition.forLanguage(context.getLanguage());
       if (parserDefinition != null) {
         ASTNode contextNode = context.getNode();
         if (contextNode != null && contextNode.getChildren(parserDefinition.getStringLiteralElements(context.getLanguageVersion())) != null) {
