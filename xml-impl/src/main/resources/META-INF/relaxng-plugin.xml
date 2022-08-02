@@ -3,8 +3,6 @@
 	</extensions>
 
 	<extensions defaultExtensionNs="consulo">
-		<hectorComponentProvider implementation="org.intellij.plugins.relaxNG.config.NoNamespaceConfigImpl$HectorProvider"/>
-
 		<annotator language="RELAX-NG" implementationClass="org.intellij.plugins.relaxNG.compact.ReferenceAnnotator"/>
 		<annotator language="RELAX-NG" implementationClass="org.intellij.plugins.relaxNG.model.annotation.ModelAnnotator"/>
 
