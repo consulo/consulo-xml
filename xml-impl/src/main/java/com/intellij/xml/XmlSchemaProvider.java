@@ -19,9 +19,9 @@ package com.intellij.xml;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiFile;
+import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.project.DumbService;
 import consulo.util.collection.ContainerUtil;
@@ -62,9 +62,9 @@ public abstract class XmlSchemaProvider {
   }
 
   @Nullable
-  public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nonnull PsiFile baseFile) {
+  public static XmlFile findSchema(@Nonnull String namespace, @Nonnull PsiFile baseFile) {
     final PsiDirectory directory = baseFile.getParent();
-    final Module module = ModuleUtil.findModuleForPsiElement(directory == null ? baseFile : directory);
+    final Module module = ModuleUtilCore.findModuleForPsiElement(directory == null ? baseFile : directory);
     return findSchema(namespace, module, baseFile);
   }
 

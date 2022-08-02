@@ -15,18 +15,20 @@
  */
 package consulo.xml.util.xml.actions.generate;
 
-import consulo.project.Project;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.codeEditor.Editor;
-import consulo.xml.util.xml.DomElement;
 import consulo.ide.ServiceManager;
+import consulo.project.Project;
+import consulo.xml.util.xml.DomElement;
 
 import javax.annotation.Nonnull;
-
 import java.util.Map;
 
 /**
  * User: Sergey.Vasiliev
  */
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomTemplateRunner {
 
   public static DomTemplateRunner getInstance(Project project) {
@@ -36,5 +38,4 @@ public abstract class DomTemplateRunner {
   public abstract <T extends DomElement> void  runTemplate(final T t, final String mappingId, final Editor editor);
 
   public abstract <T extends DomElement> void  runTemplate(final T t, final String mappingId, final Editor editor,@Nonnull Map<String, String> predefinedVars);
-
 }

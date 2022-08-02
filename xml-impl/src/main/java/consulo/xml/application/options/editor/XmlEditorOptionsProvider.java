@@ -15,6 +15,7 @@
  */
 package consulo.xml.application.options.editor;
 
+import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.Configurable;
 import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
@@ -25,11 +26,12 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
  */
-public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable
+public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable, ApplicationConfigurable
 {
 	@RequiredUIAccess
 	@Nonnull
@@ -57,5 +59,26 @@ public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties imp
 		propertyBuilder.add(automaticallyInsertRequiredSubTags, options::isAutomaticallyInsertRequiredSubTags, options::setAutomaticallyInsertRequiredSubTags);
 
 		return layout;
+	}
+
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "editor.preferences.smartKeys.xml";
+	}
+
+	@Nullable
+	@Override
+	public String getParentId()
+	{
+		return "editor.preferences.smartKeys";
+	}
+
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return "XML/HTML";
 	}
 }

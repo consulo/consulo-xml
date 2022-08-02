@@ -15,67 +15,125 @@
  */
 package consulo.xml.javaee;
 
-import consulo.configurable.BaseConfigurable;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.configurable.Configurable;
 import consulo.configurable.ConfigurationException;
-import consulo.util.lang.StringUtil;
+import consulo.configurable.ProjectConfigurable;
+import consulo.disposer.Disposable;
 import consulo.fileChooser.FileChooserDescriptor;
-import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.localize.LocalizeValue;
+import consulo.project.Project;
+import consulo.ui.Component;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.FileChooserTextBoxBuilder;
+import consulo.ui.layout.VerticalLayout;
+import consulo.ui.util.LabeledBuilder;
+import consulo.util.lang.StringUtil;
+import jakarta.inject.Inject;
 import org.jetbrains.annotations.Nls;
 
-import javax.swing.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 7/20/12
+ * Date: 7/20/12
  */
-public class XMLCatalogConfigurable extends BaseConfigurable {
+@ExtensionImpl
+public class XMLCatalogConfigurable implements ProjectConfigurable, Configurable.HoldPreferredFocusedComponent
+{
+	private final Project myProject;
 
-  private TextFieldWithBrowseButton myPropertyFile;
-  private JPanel myPanel;
+	private VerticalLayout myLayout;
+	private FileChooserTextBoxBuilder.Controller myCatalogFileBox;
 
-  public XMLCatalogConfigurable() {
-    myPropertyFile.addBrowseFolderListener("XML Catalog Properties File", null, null,
-                                           new FileChooserDescriptor(true, false, false, false, false, false));
-  }
+	@Inject
+	public XMLCatalogConfigurable(@Nonnull Project project)
+	{
+		myProject = project;
+	}
 
-  @Nls
-  @Override
-  public String getDisplayName() {
-    return "XML Catalog";
-  }
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "xml.catalog";
+	}
 
-  @Override
-  public String getHelpTopic() {
-    return "XML.Catalog.Dialog";
-  }
+	@Nullable
+	@Override
+	public String getParentId()
+	{
+		return "preferences.externalResources";
+	}
 
-  @Override
-  public JComponent createComponent() {
-    return myPanel;
-  }
+	@Nonnull
+	@Nls
+	@Override
+	public String getDisplayName()
+	{
+		return "XML Catalog";
+	}
 
-  @Override
-  public JComponent getPreferredFocusedComponent() {
-    return myPropertyFile.getTextField();
-  }
+	@Override
+	public String getHelpTopic()
+	{
+		return "XML.Catalog.Dialog";
+	}
 
-  @Override
-  public void apply() throws ConfigurationException {
-    ExternalResourceManagerEx.getInstanceEx().setCatalogPropertiesFile(myPropertyFile.getText());
-  }
+	@RequiredUIAccess
+	@Nullable
+	@Override
+	public Component createUIComponent(@Nonnull Disposable parentDisposable)
+	{
+		if(myLayout == null)
+		{
+			FileChooserTextBoxBuilder builder = FileChooserTextBoxBuilder.create(myProject);
+			builder.fileChooserDescriptor(new FileChooserDescriptor(true, false, false, false, false, false));
+			builder.dialogTitle(LocalizeValue.localizeTODO("XML Catalog Properties File"));
 
-  @Override
-  public void reset() {
-    myPropertyFile.setText(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile());
-  }
+			myCatalogFileBox = builder.build();
 
-  @Override
-  public boolean isModified() {
-    return !StringUtil.notNullize(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile()).equals(myPropertyFile.getText());
-  }
+			myLayout = VerticalLayout.create();
+			myLayout.add(LabeledBuilder.filled(LocalizeValue.localizeTODO("Catalog property file:"), myCatalogFileBox.getComponent()));
+		}
+		return myLayout;
+	}
 
-  @Override
-  public void disposeUIResources() {
+	@RequiredUIAccess
+	@Nullable
+	@Override
+	public Component getPreferredFocusedUIComponent()
+	{
+		return myCatalogFileBox.getComponent();
+	}
 
-  }
+	@RequiredUIAccess
+	@Override
+	public void disposeUIResources()
+	{
+		myCatalogFileBox = null;
+		myLayout = null;
+	}
+
+	@RequiredUIAccess
+	@Override
+	public void apply() throws ConfigurationException
+	{
+		ExternalResourceManagerEx.getInstanceEx().setCatalogPropertiesFile(myCatalogFileBox.getValue());
+	}
+
+	@RequiredUIAccess
+	@Override
+	public void reset()
+	{
+		myCatalogFileBox.setValue(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile());
+	}
+
+	@RequiredUIAccess
+	@Override
+	public boolean isModified()
+	{
+		return !StringUtil.notNullize(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile()).equals(myCatalogFileBox.getValue());
+	}
 }

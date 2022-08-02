@@ -15,29 +15,32 @@
  */
 package com.intellij.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.xml.psi.xml.XmlTag;
+
 import javax.annotation.Nonnull;
 
-import consulo.component.extension.ExtensionPointName;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.language.editor.inspection.ProblemsHolder;
+@ExtensionAPI(ComponentScope.APPLICATION)
+public abstract class XmlTagRuleProvider
+{
+	public static final ExtensionPointName<XmlTagRuleProvider> EP_NAME = ExtensionPointName.create(XmlTagRuleProvider.class);
 
-public abstract class XmlTagRuleProvider {
+	public abstract Rule[] getTagRule(@Nonnull XmlTag tag);
 
-  public static final ExtensionPointName<XmlTagRuleProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.tagRuleProvider");
+	public static class Rule
+	{
+		public static final Rule[] EMPTY_ARRAY = new Rule[0];
 
-  public abstract Rule[] getTagRule(@Nonnull XmlTag tag);
+		public void annotate(@Nonnull XmlTag tag, ProblemsHolder holder)
+		{
+		}
 
-  public static class Rule {
-
-    public static final Rule[] EMPTY_ARRAY = new Rule[0];
-
-    public void annotate(@Nonnull XmlTag tag, ProblemsHolder holder) {
-
-    }
-
-    public boolean needAtLeastOneAttribute(@Nonnull XmlTag tag) {
-      return false;
-    }
-  }
-
+		public boolean needAtLeastOneAttribute(@Nonnull XmlTag tag)
+		{
+			return false;
+		}
+	}
 }

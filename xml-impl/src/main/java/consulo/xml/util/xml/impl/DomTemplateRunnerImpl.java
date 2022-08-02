@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.template.Template;
 import consulo.language.editor.template.TemplateManager;
@@ -36,6 +37,7 @@ import java.util.Map;
  * User: Sergey.Vasiliev
  */
 @Singleton
+@ServiceImpl
 public class DomTemplateRunnerImpl extends DomTemplateRunner
 {
 	private final Project myProject;

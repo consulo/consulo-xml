@@ -15,18 +15,16 @@
  */
 package consulo.xml.psi.formatter;
 
-import consulo.language.ast.TokenType;
-import consulo.xml.psi.xml.XmlElementType;
 import consulo.codeEditor.LineWrapPositionStrategy;
-import consulo.ide.impl.idea.openapi.editor.PsiAwareDefaultLineWrapPositionStrategy;
+import consulo.language.ast.TokenType;
+import consulo.language.editor.PsiAwareDefaultLineWrapPositionStrategy;
+import consulo.xml.psi.xml.XmlElementType;
 
 /**
- * {@link LineWrapPositionStrategy} for markup languages like XML, HTML etc.
- * 
  * @author Denis Zhdanov
  * @since 5/11/11 7:42 PM
  */
-public class MarkupLineWrapPositionStrategy extends PsiAwareDefaultLineWrapPositionStrategy {
+public abstract class MarkupLineWrapPositionStrategy extends PsiAwareDefaultLineWrapPositionStrategy {
 
   public MarkupLineWrapPositionStrategy() {
     super(true, XmlElementType.XML_TEXT, TokenType.WHITE_SPACE);

@@ -16,23 +16,23 @@
 package consulo.xml.codeInsight.editorActions;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorEx;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.codeEditor.action.EditorActionHandler;
 import consulo.dataContext.DataContext;
-import consulo.ide.impl.idea.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.CommonDataKeys;
+import consulo.language.editor.action.EnterHandlerDelegateAdapter;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.util.lang.ref.Ref;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTokenType;
 
 import javax.annotation.Nonnull;
 

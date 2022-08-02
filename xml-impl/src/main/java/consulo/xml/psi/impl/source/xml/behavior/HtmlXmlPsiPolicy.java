@@ -1,18 +1,17 @@
-package consulo.xml.codeInsight.completion;
+package consulo.xml.psi.impl.source.xml.behavior;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.codeInsight.completion.base.XmlBasedSmartEnterProcessor;
 import consulo.xml.lang.xml.XMLLanguage;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 31-Jul-22
+ * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor
+public class HtmlXmlPsiPolicy extends EncodeEachSymbolPolicy
 {
 	@Nonnull
 	@Override

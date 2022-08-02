@@ -1,6 +1,0 @@
-<consulo-plugin>
-	<extensions defaultExtensionNs="com.intellij.spellchecker">
-		<support language="HTML" implementationClass="consulo.xml.spellchecker.tokenizer.HtmlSpellcheckingStrategy"/>
-		<support language="XML" implementationClass="consulo.xml.spellchecker.xml.XmlSpellcheckingStrategy"/>
-	</extensions>
-</consulo-plugin>

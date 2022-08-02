@@ -75,25 +75,14 @@
 						serviceImplementation="consulo.xml.util.xml.impl.DomElementsNavigationManagerImpl"/>
 
 
-		<projectService serviceInterface="consulo.xml.util.xml.actions.generate.DomTemplateRunner"
-						serviceImplementation="consulo.xml.util.xml.impl.DomTemplateRunnerImpl"/>
-
 		<annotator language="XML" implementationClass="consulo.xml.util.xml.impl.DefaultDomAnnotator"/>
 		<lang.documentationProvider language="XML" implementationClass="consulo.xml.util.xml.DomDocumentationProvider" id="dom"/>
 
 
-		<psi.referenceContributor language="XML" implementation="consulo.xml.util.xml.impl.DomReferenceContributor"/>
 
-
-		<nameSuggestionProvider implementation="consulo.xml.util.xml.DomNameSuggestionProvider" id="dom" order="first, before java"/>
-
-		<pom.declarationSearcher implementation="consulo.xml.util.xml.impl.DomDeclarationSearcher"/>
 		<elementDescriptionProvider implementation="consulo.xml.util.xml.impl.DefaultDomTargetDescriptionProvider" id="domDefault" order="last, before pomDefault"/>
 
 		<patterns.patternClass className="consulo.xml.patterns.DomPatterns" alias="dom"/>
 	</extensions>
 
-	<extensions defaultExtensionNs="com.intellij.xml">
-		<structureViewBuilderProvider implementation="consulo.xml.util.xml.structure.DomStructureViewBuilderProvider" order="last"/>
-	</extensions>
 </consulo-plugin>

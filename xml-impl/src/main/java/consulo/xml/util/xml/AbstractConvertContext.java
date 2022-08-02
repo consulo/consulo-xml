@@ -15,20 +15,20 @@
  */
 package consulo.xml.util.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.psi.PsiManager;
-import consulo.module.content.ProjectRootManager;
 import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.openapi.module.ModuleUtil;
-import consulo.module.Module;
-import consulo.module.content.ProjectFileIndex;
-import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -53,7 +53,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     final DomFileElement<DomElement> fileElement = DomUtil.getFileElement(getInvocationElement());
     if (fileElement == null) {
       final XmlElement xmlElement = getInvocationElement().getXmlElement();
-      return xmlElement == null ? null : ModuleUtil.findModuleForPsiElement(xmlElement);
+      return xmlElement == null ? null : ModuleUtilCore.findModuleForPsiElement(xmlElement);
     }
     return fileElement.getRootElement().getModule();
   }

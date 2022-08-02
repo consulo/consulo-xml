@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
 import consulo.ide.impl.idea.openapi.editor.EditorModificationUtil;
@@ -34,6 +35,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
 
+@ExtensionImpl(id = "xmlSlash")
 public class XmlSlashTypedHandler extends TypedHandlerDelegate {
   public Result beforeCharTyped(final char c, final Project project, final Editor editor, final PsiFile editedFile, final FileType fileType) {
     if ((editedFile.getLanguage() instanceof XMLLanguage || editedFile.getViewProvider().getBaseLanguage() instanceof XMLLanguage) && c == '/') {

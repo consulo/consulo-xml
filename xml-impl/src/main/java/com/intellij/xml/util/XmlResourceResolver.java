@@ -28,6 +28,7 @@ import consulo.application.ApplicationManager;
 import consulo.language.psi.PsiElement;
 import consulo.logging.Logger;
 import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
@@ -271,7 +272,7 @@ public class XmlResourceResolver implements XMLEntityResolver
 		{
 			try
 			{
-				vFile = VirtualFileManager.getInstance().findFileByUrl(VfsUtilCore.convertFromUrl(new URL(baseSystemId)));
+				vFile = VirtualFileManager.getInstance().findFileByUrl(VirtualFileUtil.convertFromUrl(new URL(baseSystemId)));
 			}
 			catch(MalformedURLException ignore)
 			{
@@ -343,7 +344,7 @@ public class XmlResourceResolver implements XMLEntityResolver
 			VirtualFile virtualFile = psiFile.getVirtualFile();
 			if(virtualFile != null)
 			{
-				final String url = VfsUtilCore.fixIDEAUrl(virtualFile.getUrl());
+				final String url = VirtualFileUtil.fixIDEAUrl(virtualFile.getUrl());
 				source.setBaseSystemId(url);
 				source.setSystemId(url);
 			}

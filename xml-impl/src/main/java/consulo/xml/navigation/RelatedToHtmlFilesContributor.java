@@ -15,21 +15,24 @@
  */
 package consulo.xml.navigation;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.language.psi.PsiFile;
+import consulo.xml.psi.xml.XmlFile;
 
 import javax.annotation.Nonnull;
-
 import java.util.Set;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public abstract class RelatedToHtmlFilesContributor {
-  public static final ExtensionPointName<RelatedToHtmlFilesContributor> EP_NAME =
-    ExtensionPointName.create("com.intellij.xml.relatedToHtmlFilesContributor");
+@ExtensionAPI(ComponentScope.APPLICATION)
+public abstract class RelatedToHtmlFilesContributor
+{
+	public static final ExtensionPointName<RelatedToHtmlFilesContributor> EP_NAME = ExtensionPointName.create(RelatedToHtmlFilesContributor.class);
 
-  public abstract void fillRelatedFiles(@Nonnull XmlFile xmlFile, @Nonnull Set<PsiFile> resultSet);
-  public abstract String getGroupName();
+	public abstract void fillRelatedFiles(@Nonnull XmlFile xmlFile, @Nonnull Set<PsiFile> resultSet);
+
+	public abstract String getGroupName();
 }

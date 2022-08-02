@@ -15,44 +15,77 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.HighlighterIterator;
+import consulo.language.editor.action.FileQuoteHandler;
 import consulo.language.editor.action.QuoteHandler;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.HtmlFileType;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
-*/
-public class HtmlQuoteHandler implements QuoteHandler {
-  private QuoteHandler myBaseQuoteHandler;
+ */
+@ExtensionImpl
+public class HtmlQuoteHandler implements FileQuoteHandler
+{
+	private QuoteHandler myBaseQuoteHandler;
 
-  public HtmlQuoteHandler() {
-    this(new XmlBasedQuoteHandler());
-  }
+	public HtmlQuoteHandler()
+	{
+		this(new XmlBasedQuoteHandler());
+	}
 
-  public HtmlQuoteHandler(QuoteHandler _baseHandler) {
-    myBaseQuoteHandler = _baseHandler;
-  }
+	public HtmlQuoteHandler(QuoteHandler _baseHandler)
+	{
+		myBaseQuoteHandler = _baseHandler;
+	}
 
-  public boolean isClosingQuote(HighlighterIterator iterator, int offset) {
-    if (myBaseQuoteHandler.isClosingQuote(iterator, offset)) return true;
-    return false;
-  }
+	public boolean isClosingQuote(HighlighterIterator iterator, int offset)
+	{
+		if(myBaseQuoteHandler.isClosingQuote(iterator, offset))
+		{
+			return true;
+		}
+		return false;
+	}
 
-  public boolean isOpeningQuote(HighlighterIterator iterator, int offset) {
-    if (myBaseQuoteHandler.isOpeningQuote(iterator, offset)) return true;
+	public boolean isOpeningQuote(HighlighterIterator iterator, int offset)
+	{
+		if(myBaseQuoteHandler.isOpeningQuote(iterator, offset))
+		{
+			return true;
+		}
 
-    return false;
-  }
+		return false;
+	}
 
-  public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset) {
-    if (myBaseQuoteHandler.hasNonClosedLiteral(editor,iterator, offset)) return true;
+	public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset)
+	{
+		if(myBaseQuoteHandler.hasNonClosedLiteral(editor, iterator, offset))
+		{
+			return true;
+		}
 
-    return false;
-  }
+		return false;
+	}
 
-  public boolean isInsideLiteral(HighlighterIterator iterator) {
-    if (myBaseQuoteHandler.isInsideLiteral(iterator)) return true;
+	public boolean isInsideLiteral(HighlighterIterator iterator)
+	{
+		if(myBaseQuoteHandler.isInsideLiteral(iterator))
+		{
+			return true;
+		}
 
-    return false;
-  }
+		return false;
+	}
+
+	@Nonnull
+	@Override
+	public FileType getFileType()
+	{
+		return HtmlFileType.INSTANCE;
+	}
 }

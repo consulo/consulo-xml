@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.refactoring.rename.NameSuggestionProvider;
 import consulo.language.editor.refactoring.rename.SuggestedNameInfo;
 import consulo.language.psi.PsiElement;
@@ -28,6 +29,7 @@ import java.util.Set;
 /**
  * @author Gregory.Shrago
  */
+@ExtensionImpl(id = "dom", order = "first, before java")
 public class DomNameSuggestionProvider implements NameSuggestionProvider {
   public SuggestedNameInfo getSuggestedNames(final PsiElement element, final PsiElement nameSuggestionContext, final Set<String> result) {
     if (element instanceof PsiMetaOwner) {

@@ -15,17 +15,19 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
+import consulo.language.editor.action.TypedHandlerDelegate;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.language.psi.PsiFile;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlAttribute;
-import consulo.language.editor.action.TypedHandlerDelegate;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl(id = "xmlEq", order = "after xmlSlash")
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
   private boolean needToInsertQuotes = false;
 

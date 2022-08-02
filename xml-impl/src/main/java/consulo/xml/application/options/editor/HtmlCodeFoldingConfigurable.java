@@ -20,7 +20,8 @@
  */
 package consulo.xml.application.options.editor;
 
-import consulo.configurable.Configurable;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
 import consulo.platform.base.localize.ApplicationLocalize;
@@ -30,8 +31,10 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements Configurable
+@ExtensionImpl
+public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable
 {
 	@RequiredUIAccess
 	@Nonnull
@@ -47,5 +50,26 @@ public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties 
 		propertyBuilder.add(collapseHtmlStyles, settings::isCollapseHtmlStyleAttribute, settings::setCollapseHtmlStyleAttribute);
 
 		return layout;
+	}
+
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "editor.preferences.folding.html";
+	}
+
+	@Nullable
+	@Override
+	public String getParentId()
+	{
+		return "editor.preferences.folding";
+	}
+
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return "HTML";
 	}
 }

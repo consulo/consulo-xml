@@ -15,6 +15,8 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.component.extension.ExtensionPointName;
@@ -25,9 +27,10 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  *         Date: 17.10.13
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlNSColorProvider
 {
-	ExtensionPointName<XmlNSColorProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.nsColorProvider");
+	ExtensionPointName<XmlNSColorProvider> EP_NAME = ExtensionPointName.create(XmlNSColorProvider.class);
 
 	@Nullable
 	TextAttributesKey getKeyForNamespace(String namespace, XmlElement context);

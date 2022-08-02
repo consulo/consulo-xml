@@ -15,6 +15,8 @@
  */
 package consulo.xml.ide.structureView.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
 import consulo.fileEditor.structureView.StructureViewBuilder;
@@ -22,8 +24,9 @@ import consulo.fileEditor.structureView.StructureViewBuilder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlStructureViewBuilderProvider {
-  ExtensionPointName<XmlStructureViewBuilderProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.structureViewBuilderProvider");
+  ExtensionPointName<XmlStructureViewBuilderProvider> EP_NAME = ExtensionPointName.create(XmlStructureViewBuilderProvider.class);
 
   @Nullable
   StructureViewBuilder createStructureViewBuilder(@Nonnull XmlFile file);

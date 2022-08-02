@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.language.Language;
 import consulo.language.editor.AutoPopupController;
@@ -32,6 +33,7 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTag;
 
+@ExtensionImpl(id = "xmlAuto", order = "after xmlGt")
 public class XmlAutoPopupHandler extends TypedHandlerDelegate {
   public Result checkAutoPopup(final char charTyped, final Project project, final Editor editor, final PsiFile file) {
     final boolean isXmlLikeFile = file.getLanguage() instanceof XMLLanguage || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;

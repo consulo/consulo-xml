@@ -19,10 +19,10 @@ import consulo.document.RangeMarker;
 import consulo.document.event.DocumentEvent;
 import consulo.document.event.DocumentListener;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.lookup.impl.LookupImpl;
 import consulo.ide.impl.idea.openapi.editor.impl.DesktopEditorImpl;
 import consulo.ide.impl.idea.pom.core.impl.PomModelImpl;
 import consulo.language.Language;
+import consulo.language.editor.completion.lookup.LookupEx;
 import consulo.language.editor.completion.lookup.LookupManager;
 import consulo.language.impl.ast.TreeUtil;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
@@ -342,7 +342,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
 					}
 				};
 				ApplicationManager.getApplication().runWriteAction(() -> {
-					final LookupImpl lookup = (LookupImpl) LookupManager.getActiveLookup(myEditor);
+					final LookupEx lookup = LookupManager.getActiveLookup(myEditor);
 					if(lookup != null)
 					{
 						lookup.performGuardedChange(apply);

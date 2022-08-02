@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.template;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.template.context.FileTypeBasedContextType;
@@ -28,6 +29,7 @@ import javax.annotation.Nonnull;
 /**
  * @author yole
  */
+@ExtensionImpl
 public class HtmlContextType extends FileTypeBasedContextType {
   public HtmlContextType() {
     super("HTML", CodeInsightBundle.message("dialog.edit.template.checkbox.html"), HtmlFileType.INSTANCE);

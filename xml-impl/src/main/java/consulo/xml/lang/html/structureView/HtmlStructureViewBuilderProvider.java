@@ -15,17 +15,19 @@
  */
 package consulo.xml.lang.html.structureView;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.fileEditor.structureView.StructureViewModel;
+import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
+import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
+import consulo.xml.psi.xml.XmlFile;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.fileEditor.structureView.StructureViewBuilder;
-import consulo.fileEditor.structureView.StructureViewModel;
-import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import consulo.codeEditor.Editor;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
-
+@ExtensionImpl
 public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider
 {
 	@Override

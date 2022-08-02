@@ -18,17 +18,15 @@ package consulo.xml.codeInsight.template;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.template.DefaultLiveTemplatesProvider;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author yole
  */
 @ExtensionImpl
 public class XmlDefaultLiveTemplatesProvider implements DefaultLiveTemplatesProvider {
+  @Nonnull
   public String[] getDefaultLiveTemplateFiles() {
-    return new String[] { "/liveTemplates/html_xml", "/liveTemplates/zen_html", "/liveTemplates/zen_xsl" };
-  }
-
-  @Override
-  public String[] getHiddenLiveTemplateFiles() {
-    return null;
+    return new String[] { "/liveTemplates/html_xml"};
   }
 }

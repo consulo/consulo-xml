@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.structure;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
@@ -31,6 +32,7 @@ import javax.annotation.Nonnull;
  * @author Dmitry Avdeev
  *         Date: 6/7/12
  */
+@ExtensionImpl(order = "last")
 public final class DomStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {
 
   @Override

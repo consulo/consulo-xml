@@ -16,13 +16,18 @@
 package consulo.xml.javaee;
 
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.configurable.BaseConfigurable;
 import consulo.configurable.Configurable;
+import consulo.configurable.ProjectConfigurable;
+import consulo.configurable.StandardConfigurableIds;
+import consulo.disposer.Disposable;
 import consulo.ide.impl.idea.ui.AddEditRemovePanel;
 import consulo.project.Project;
 import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.table.JBTable;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
@@ -32,7 +37,9 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.VirtualFileSystem;
 import consulo.virtualFileSystem.archive.ArchiveFileSystem;
+import jakarta.inject.Inject;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -44,342 +51,432 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExternalResourceConfigurable extends BaseConfigurable
-  implements Configurable.NoScroll {
-  private JPanel myPanel;
-  private List<NameLocationPair> myPairs;
-  private List<String> myIgnoredUrls;
-  private String myDefaultHtmlDoctype;
-  private AddEditRemovePanel<NameLocationPair> myExtPanel;
-  private AddEditRemovePanel<String> myIgnorePanel;
-  private HtmlLanguageLevelForm myHtmlLanguageLevelForm;
-  @Nullable private final Project myProject;
-  private final List<NameLocationPair> myNewPairs;
+@ExtensionImpl
+public class ExternalResourceConfigurable extends BaseConfigurable implements ProjectConfigurable, Configurable.NoScroll
+{
+	private JPanel myPanel;
+	private List<NameLocationPair> myPairs;
+	private List<String> myIgnoredUrls;
+	private String myDefaultHtmlDoctype;
+	private AddEditRemovePanel<NameLocationPair> myExtPanel;
+	private AddEditRemovePanel<String> myIgnorePanel;
+	private HtmlLanguageLevelForm myHtmlLanguageLevelForm;
+	@Nullable
+	private final Project myProject;
+	private final List<NameLocationPair> myNewPairs;
 
-  @SuppressWarnings("UnusedDeclaration")
-  public ExternalResourceConfigurable(@Nullable Project project) {
-    this(project, Collections.<NameLocationPair>emptyList());
-  }
+	@Inject
+	public ExternalResourceConfigurable(@Nullable Project project)
+	{
+		this(project, List.of());
+	}
 
-  public ExternalResourceConfigurable(@Nullable Project project, List<NameLocationPair> newResources) {
-    myProject = project;
-    myNewPairs = newResources;
-  }
+	public ExternalResourceConfigurable(@Nullable Project project, List<NameLocationPair> newResources)
+	{
+		myProject = project;
+		myNewPairs = newResources;
+	}
 
-  public String getDisplayName() {
-    return XmlBundle.message("display.name.edit.external.resource");
-  }
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "preferences.externalResources";
+	}
 
-  public JComponent createComponent() {
-    myPanel = new JPanel(new GridBagLayout()) {
-      public Dimension getPreferredSize() {
-        return new Dimension(-1, 400);
-      }
-    };
+	@Nullable
+	@Override
+	public String getParentId()
+	{
+		return StandardConfigurableIds.EDITOR_GROUP;
+	}
 
-    myExtPanel = new AddEditRemovePanel<NameLocationPair>(new ExtUrlsTableModel(), myPairs, XmlBundle.message("label.edit.external.resource.configure.external.resources")) {
-      protected NameLocationPair addItem() {
-        return addExtLocation();
-      }
+	public String getDisplayName()
+	{
+		return XmlBundle.message("display.name.edit.external.resource");
+	}
 
-      protected boolean removeItem(NameLocationPair o) {
-        setModified(true);
-        return true;
-      }
+	public JComponent createComponent(@Nonnull Disposable uiDisposable)
+	{
+		myPanel = new JPanel(new GridBagLayout())
+		{
+			public Dimension getPreferredSize()
+			{
+				return new Dimension(-1, 400);
+			}
+		};
 
-      protected NameLocationPair editItem(NameLocationPair o) {
-        return editExtLocation(o);
-      }
-    };
+		myExtPanel = new AddEditRemovePanel<>(new ExtUrlsTableModel(), myPairs, XmlBundle.message("label.edit.external.resource.configure.external.resources"))
+		{
+			protected NameLocationPair addItem()
+			{
+				return addExtLocation();
+			}
 
-    myExtPanel.setRenderer(1, new PathRenderer());
+			protected boolean removeItem(NameLocationPair o)
+			{
+				setModified(true);
+				return true;
+			}
 
-    JTable table = myExtPanel.getTable();
-    if (myProject != null) {
-      TableColumn column = table.getColumn(table.getColumnName(2));
-      column.setMaxWidth(50);
-      column.setCellEditor(JBTable.createBooleanEditor());
-    }
+			protected NameLocationPair editItem(NameLocationPair o)
+			{
+				return editExtLocation(o);
+			}
+		};
 
-    table.getModel().addTableModelListener(new TableModelListener() {
-      public void tableChanged(TableModelEvent e) {
-        setModified(true);
-      }
-    });
-    myIgnorePanel = new AddEditRemovePanel<String>(new IgnoredUrlsModel(), myIgnoredUrls, XmlBundle.message("label.edit.external.resource.configure.ignored.resources")) {
-      protected String addItem() {
-        return addIgnoreLocation();
-      }
+		myExtPanel.setRenderer(1, new PathRenderer());
 
-      protected boolean removeItem(String o) {
-        setModified(true);
-        return true;
-      }
+		JTable table = myExtPanel.getTable();
+		if(myProject != null)
+		{
+			TableColumn column = table.getColumn(table.getColumnName(2));
+			column.setMaxWidth(50);
+			column.setCellEditor(JBTable.createBooleanEditor());
+		}
 
-      protected String editItem(String o) {
-        return editIgnoreLocation(o);
-      }
-    };
-    if (myProject != null) {
-      myHtmlLanguageLevelForm = new HtmlLanguageLevelForm(myProject);
-      myHtmlLanguageLevelForm.addListener(new HtmlLanguageLevelForm.MyListener() {
-        @Override
-        public void doctypeChanged() {
-          if (!myHtmlLanguageLevelForm.getDoctype().equals(myDefaultHtmlDoctype)) {
-            setModified(true);
-          }
-        }
-      });
-    }
+		table.getModel().addTableModelListener(new TableModelListener()
+		{
+			public void tableChanged(TableModelEvent e)
+			{
+				setModified(true);
+			}
+		});
+		myIgnorePanel = new AddEditRemovePanel<>(new IgnoredUrlsModel(), myIgnoredUrls, XmlBundle.message("label.edit.external.resource.configure.ignored.resources"))
+		{
+			protected String addItem()
+			{
+				return addIgnoreLocation();
+			}
 
-    myPanel.add(myExtPanel,
-                new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-    myPanel.add(myIgnorePanel,
-                new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-    if (myProject != null) {
-      myPanel.add(myHtmlLanguageLevelForm.getContentPanel(),
-                  new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0),
-                                         0, 0));
-    }
+			protected boolean removeItem(String o)
+			{
+				setModified(true);
+				return true;
+			}
 
-    myExtPanel.setData(myPairs);
-    myIgnorePanel.setData(myIgnoredUrls);
+			protected String editItem(String o)
+			{
+				return editIgnoreLocation(o);
+			}
+		};
+		if(myProject != null)
+		{
+			myHtmlLanguageLevelForm = new HtmlLanguageLevelForm();
+			myHtmlLanguageLevelForm.addListener(() ->
+			{
+				if(!myHtmlLanguageLevelForm.getDoctype().equals(myDefaultHtmlDoctype))
+				{
+					setModified(true);
+				}
+			});
+		}
 
-    myExtPanel.getEmptyText().setText(XmlBundle.message("no.external.resources"));
-    myIgnorePanel.getEmptyText().setText(XmlBundle.message("no.ignored.resources"));
+		myPanel.add(myExtPanel,
+				new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		myPanel.add(myIgnorePanel,
+				new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+		if(myProject != null)
+		{
+			myPanel.add(TargetAWT.to(myHtmlLanguageLevelForm.getContentPanel()),
+					new GridBagConstraints(0, 2, 1, 1, 1, 0, GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+		}
 
-    return myPanel;
-  }
+		myExtPanel.setData(myPairs);
+		myIgnorePanel.setData(myIgnoredUrls);
 
-  public void apply() {
-    ApplicationManager.getApplication().runWriteAction(new Runnable() {
-      public void run() {
-        ExternalResourceManagerEx manager = ExternalResourceManagerEx.getInstanceEx();
+		myExtPanel.getEmptyText().setText(XmlBundle.message("no.external.resources"));
+		myIgnorePanel.getEmptyText().setText(XmlBundle.message("no.ignored.resources"));
 
-        if (myProject == null) {
-          manager.clearAllResources();
-        }
-        else {
-          manager.clearAllResources(myProject);
-        }
-        for (NameLocationPair pair : myPairs) {
-          String s = FileUtil.toSystemIndependentName(StringUtil.notNullize(pair.myLocation));
-          if (myProject == null || pair.myShared) {
-            manager.addResource(pair.myName, s);
-          }
-          else {
-            manager.addResource(pair.myName, s, myProject);
-          }
-        }
+		return myPanel;
+	}
 
-        for (Object myIgnoredUrl : myIgnoredUrls) {
-          String url = (String)myIgnoredUrl;
-          manager.addIgnoredResource(url);
-        }
-        if (myProject != null) {
-          manager.setDefaultHtmlDoctype(myHtmlLanguageLevelForm.getDoctype(), myProject);
-        }
-      }
-    });
+	public void apply()
+	{
+		ApplicationManager.getApplication().runWriteAction(new Runnable()
+		{
+			public void run()
+			{
+				ExternalResourceManagerEx manager = ExternalResourceManagerEx.getInstanceEx();
 
-    setModified(false);
-  }
+				if(myProject == null)
+				{
+					manager.clearAllResources();
+				}
+				else
+				{
+					manager.clearAllResources(myProject);
+				}
+				for(NameLocationPair pair : myPairs)
+				{
+					String s = FileUtil.toSystemIndependentName(StringUtil.notNullize(pair.myLocation));
+					if(myProject == null || pair.myShared)
+					{
+						manager.addResource(pair.myName, s);
+					}
+					else
+					{
+						manager.addResource(pair.myName, s, myProject);
+					}
+				}
 
-  public void reset() {
+				for(Object myIgnoredUrl : myIgnoredUrls)
+				{
+					String url = (String) myIgnoredUrl;
+					manager.addIgnoredResource(url);
+				}
+				if(myProject != null)
+				{
+					manager.setDefaultHtmlDoctype(myHtmlLanguageLevelForm.getDoctype(), myProject);
+				}
+			}
+		});
 
-    myPairs = new ArrayList<NameLocationPair>(myNewPairs);
-    ExternalResourceManagerEx manager = ExternalResourceManagerEx.getInstanceEx();
+		setModified(false);
+	}
 
-    String[] urls = manager.getAvailableUrls();
-    for (String url : urls) {
-      String loc = myProject == null ? manager.getResourceLocation(url, (String)null) : manager.getResourceLocation(url, myProject);
-      myPairs.add(new NameLocationPair(url, FileUtil.toSystemDependentName(loc), true));
-    }
-    if (myProject != null) {
-      urls = manager.getAvailableUrls(myProject);
-      for (String url : urls) {
-        String loc = manager.getResourceLocation(url, myProject);
-        myPairs.add(new NameLocationPair(url, FileUtil.toSystemDependentName(loc), false));
-      }
-    }
+	public void reset()
+	{
 
-    Collections.sort(myPairs);
+		myPairs = new ArrayList<>(myNewPairs);
+		ExternalResourceManagerEx manager = ExternalResourceManagerEx.getInstanceEx();
 
-    myIgnoredUrls = new ArrayList<String>();
-    final String[] ignoredResources = manager.getIgnoredResources();
-    ContainerUtil.addAll(myIgnoredUrls, ignoredResources);
+		String[] urls = manager.getAvailableUrls();
+		for(String url : urls)
+		{
+			String loc = myProject == null ? manager.getResourceLocation(url, (String) null) : manager.getResourceLocation(url, myProject);
+			myPairs.add(new NameLocationPair(url, FileUtil.toSystemDependentName(loc), true));
+		}
+		if(myProject != null)
+		{
+			urls = manager.getAvailableUrls(myProject);
+			for(String url : urls)
+			{
+				String loc = manager.getResourceLocation(url, myProject);
+				myPairs.add(new NameLocationPair(url, FileUtil.toSystemDependentName(loc), false));
+			}
+		}
 
-    Collections.sort(myIgnoredUrls);
+		Collections.sort(myPairs);
 
-    if (myExtPanel != null) {
-      myExtPanel.setData(myPairs);
-      myIgnorePanel.setData(myIgnoredUrls);
-      if (!myNewPairs.isEmpty()) {
-        ListSelectionModel selectionModel = myExtPanel.getTable().getSelectionModel();
-        selectionModel.clearSelection();
-        for (NameLocationPair newPair : myNewPairs) {
-          int index = myPairs.indexOf(newPair);
-          selectionModel.addSelectionInterval(index, index);
-        }
-      }
-     }
+		myIgnoredUrls = new ArrayList<>();
+		final String[] ignoredResources = manager.getIgnoredResources();
+		ContainerUtil.addAll(myIgnoredUrls, ignoredResources);
 
-    if (myProject != null) {
-      myDefaultHtmlDoctype = manager.getDefaultHtmlDoctype(myProject);
-      myHtmlLanguageLevelForm.resetFromDoctype(myDefaultHtmlDoctype);
-    }
+		Collections.sort(myIgnoredUrls);
 
-    setModified(!myNewPairs.isEmpty());
-  }
+		if(myExtPanel != null)
+		{
+			myExtPanel.setData(myPairs);
+			myIgnorePanel.setData(myIgnoredUrls);
+			if(!myNewPairs.isEmpty())
+			{
+				ListSelectionModel selectionModel = myExtPanel.getTable().getSelectionModel();
+				selectionModel.clearSelection();
+				for(NameLocationPair newPair : myNewPairs)
+				{
+					int index = myPairs.indexOf(newPair);
+					selectionModel.addSelectionInterval(index, index);
+				}
+			}
+		}
 
-  public void disposeUIResources() {
-    myPanel = null;
-    myExtPanel = null;
-    myIgnorePanel = null;
-    myHtmlLanguageLevelForm = null;
-  }
+		if(myProject != null)
+		{
+			myDefaultHtmlDoctype = manager.getDefaultHtmlDoctype(myProject);
+			myHtmlLanguageLevelForm.resetFromDoctype(myDefaultHtmlDoctype);
+		}
 
-  public String getHelpTopic() {
-    return "preferences.externalResources";
-  }
+		setModified(!myNewPairs.isEmpty());
+	}
 
-  @Nullable
-  private NameLocationPair addExtLocation() {
-    MapExternalResourceDialog dialog = new MapExternalResourceDialog(null, myProject, null, null);
-    dialog.show();
-    if (!dialog.isOK()) return null;
-    setModified(true);
-    return new NameLocationPair(dialog.getUri(), dialog.getResourceLocation(), false);
-  }
+	public void disposeUIResources()
+	{
+		myPanel = null;
+		myExtPanel = null;
+		myIgnorePanel = null;
+		myHtmlLanguageLevelForm = null;
+	}
 
-  @Nullable
-  private NameLocationPair editExtLocation(Object o) {
-    NameLocationPair pair = (NameLocationPair)o;
-    MapExternalResourceDialog dialog = new MapExternalResourceDialog(pair.getName(), myProject, null, pair.getLocation());
-    dialog.show();
-    if (!dialog.isOK()) {
-      return null;
-    }
-    setModified(true);
-    return new NameLocationPair(dialog.getUri(), dialog.getResourceLocation(), pair.myShared);
-  }
+	public String getHelpTopic()
+	{
+		return "preferences.externalResources";
+	}
 
-  @Nullable
-  private String addIgnoreLocation() {
-    EditLocationDialog dialog = new EditLocationDialog(null, false);
-    dialog.show();
-    if (!dialog.isOK()) return null;
-    setModified(true);
-    return dialog.getPair().myName;
-  }
+	@Nullable
+	private NameLocationPair addExtLocation()
+	{
+		MapExternalResourceDialog dialog = new MapExternalResourceDialog(null, myProject, null, null);
+		dialog.show();
+		if(!dialog.isOK())
+		{
+			return null;
+		}
+		setModified(true);
+		return new NameLocationPair(dialog.getUri(), dialog.getResourceLocation(), false);
+	}
 
-  @Nullable
-  private String editIgnoreLocation(Object o) {
-    EditLocationDialog dialog = new EditLocationDialog(null, false);
-    dialog.init(new NameLocationPair(o.toString(), null, false));
-    dialog.show();
-    if (!dialog.isOK()) return null;
-    setModified(true);
-    return dialog.getPair().myName;
-  }
+	@Nullable
+	private NameLocationPair editExtLocation(Object o)
+	{
+		NameLocationPair pair = (NameLocationPair) o;
+		MapExternalResourceDialog dialog = new MapExternalResourceDialog(pair.getName(), myProject, null, pair.getLocation());
+		dialog.show();
+		if(!dialog.isOK())
+		{
+			return null;
+		}
+		setModified(true);
+		return new NameLocationPair(dialog.getUri(), dialog.getResourceLocation(), pair.myShared);
+	}
 
-  private static class PathRenderer extends DefaultTableCellRenderer {
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-      final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-      if (value != null) {
-        String loc = value.toString().replace('\\', '/');
-        final int jarDelimIndex = loc.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);
-        VirtualFile path = null;
+	@Nullable
+	private String addIgnoreLocation()
+	{
+		EditLocationDialog dialog = new EditLocationDialog(null, false);
+		dialog.show();
+		if(!dialog.isOK())
+		{
+			return null;
+		}
+		setModified(true);
+		return dialog.getPair().myName;
+	}
 
-        if (jarDelimIndex != -1) {
-          final String protocol = VirtualFileManager.extractProtocol(loc);
-          final VirtualFileSystem fileSystem = VirtualFileManager.getInstance().getFileSystem(protocol);
+	@Nullable
+	private String editIgnoreLocation(Object o)
+	{
+		EditLocationDialog dialog = new EditLocationDialog(null, false);
+		dialog.init(new NameLocationPair(o.toString(), null, false));
+		dialog.show();
+		if(!dialog.isOK())
+		{
+			return null;
+		}
+		setModified(true);
+		return dialog.getPair().myName;
+	}
 
-          if(fileSystem instanceof ArchiveFileSystem) {
-            path = fileSystem.findFileByPath(loc);
-          }
-        } else {
-          path = LocalFileSystem.getInstance().findFileByPath(loc);
-        }
+	private static class PathRenderer extends DefaultTableCellRenderer
+	{
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		{
+			final Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			if(value != null)
+			{
+				String loc = value.toString().replace('\\', '/');
+				final int jarDelimIndex = loc.indexOf(ArchiveFileSystem.ARCHIVE_SEPARATOR);
+				VirtualFile path = null;
 
-        setForeground(path != null ? isSelected ? UIUtil.getTableSelectionForeground() : Color.black : new Color(210, 0, 0));
-      }
-      return rendererComponent;
-    }
-  }
+				if(jarDelimIndex != -1)
+				{
+					final String protocol = VirtualFileManager.extractProtocol(loc);
+					final VirtualFileSystem fileSystem = VirtualFileManager.getInstance().getFileSystem(protocol);
 
-  private static class IgnoredUrlsModel extends AddEditRemovePanel.TableModel<String> {
-    private final String[] myNames = {XmlBundle.message("column.name.edit.external.resource.uri")};
+					if(fileSystem instanceof ArchiveFileSystem)
+					{
+						path = fileSystem.findFileByPath(loc);
+					}
+				}
+				else
+				{
+					path = LocalFileSystem.getInstance().findFileByPath(loc);
+				}
 
-    public int getColumnCount() {
-      return myNames.length;
-    }
+				setForeground(path != null ? isSelected ? UIUtil.getTableSelectionForeground() : Color.black : new Color(210, 0, 0));
+			}
+			return rendererComponent;
+		}
+	}
 
-    public Object getField(String o, int columnIndex) {
-      return o;
-    }
+	private static class IgnoredUrlsModel extends AddEditRemovePanel.TableModel<String>
+	{
+		private final String[] myNames = {XmlBundle.message("column.name.edit.external.resource.uri")};
 
-    public Class getColumnClass(int columnIndex) {
-      return String.class;
-    }
+		public int getColumnCount()
+		{
+			return myNames.length;
+		}
 
-    public boolean isEditable(int column) {
-      return false;
-    }
+		public Object getField(String o, int columnIndex)
+		{
+			return o;
+		}
 
-    public void setValue(Object aValue, String data, int columnIndex) {
+		public Class getColumnClass(int columnIndex)
+		{
+			return String.class;
+		}
 
-    }
+		public boolean isEditable(int column)
+		{
+			return false;
+		}
 
-    public String getColumnName(int column) {
-      return myNames[column];
-    }
-  }
+		public void setValue(Object aValue, String data, int columnIndex)
+		{
 
-  private class ExtUrlsTableModel extends AddEditRemovePanel.TableModel<NameLocationPair> {
-    final String[] myNames;
+		}
 
-    {
-      List<String> names = new ArrayList<String>();
-      names.add(XmlBundle.message("column.name.edit.external.resource.uri"));
-      names.add(XmlBundle.message("column.name.edit.external.resource.location"));
-      if (myProject != null) {
-        names.add("Project");
-      }
-      myNames = ArrayUtil.toStringArray(names);
-    }
+		public String getColumnName(int column)
+		{
+			return myNames[column];
+		}
+	}
 
-    public int getColumnCount() {
-      return myNames.length;
-    }
+	private class ExtUrlsTableModel extends AddEditRemovePanel.TableModel<NameLocationPair>
+	{
+		final String[] myNames;
 
-    public Object getField(NameLocationPair pair, int columnIndex) {
-      switch (columnIndex) {
-        case 0:
-          return pair.myName;
-        case 1:
-          return pair.myLocation;
-        case 2:
-          return !pair.myShared;
-      }
+		{
+			List<String> names = new ArrayList<>();
+			names.add(XmlBundle.message("column.name.edit.external.resource.uri"));
+			names.add(XmlBundle.message("column.name.edit.external.resource.location"));
+			if(myProject != null)
+			{
+				names.add("Project");
+			}
+			myNames = ArrayUtil.toStringArray(names);
+		}
 
-      return "";
-    }
+		public int getColumnCount()
+		{
+			return myNames.length;
+		}
 
-    public Class getColumnClass(int columnIndex) {
-      return columnIndex == 2 ? Boolean.class : String.class;
-    }
+		public Object getField(NameLocationPair pair, int columnIndex)
+		{
+			switch(columnIndex)
+			{
+				case 0:
+					return pair.myName;
+				case 1:
+					return pair.myLocation;
+				case 2:
+					return !pair.myShared;
+			}
 
-    public boolean isEditable(int column) {
-      return column == 2;
-    }
+			return "";
+		}
 
-    public void setValue(Object aValue, NameLocationPair data, int columnIndex) {
-      data.myShared = !((Boolean)aValue).booleanValue();
-    }
+		public Class getColumnClass(int columnIndex)
+		{
+			return columnIndex == 2 ? Boolean.class : String.class;
+		}
 
-    public String getColumnName(int column) {
-      return myNames[column];
-    }
-  }
+		public boolean isEditable(int column)
+		{
+			return column == 2;
+		}
+
+		public void setValue(Object aValue, NameLocationPair data, int columnIndex)
+		{
+			data.myShared = !((Boolean) aValue).booleanValue();
+		}
+
+		public String getColumnName(int column)
+		{
+			return myNames[column];
+		}
+	}
 }

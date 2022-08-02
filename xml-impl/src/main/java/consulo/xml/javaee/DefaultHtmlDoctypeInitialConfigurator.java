@@ -1,5 +1,8 @@
 package consulo.xml.javaee;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.ide.impl.idea.ide.util.PropertiesComponent;
 import com.intellij.xml.Html5SchemaProvider;
 import consulo.project.ProjectManager;
@@ -10,6 +13,8 @@ import jakarta.inject.Singleton;
  * @author Eugene.Kudelevsky
  */
 @Singleton
+@ServiceAPI(value = ComponentScope.APPLICATION, lazy = false)
+@ServiceImpl
 public class DefaultHtmlDoctypeInitialConfigurator
 {
 	@Inject

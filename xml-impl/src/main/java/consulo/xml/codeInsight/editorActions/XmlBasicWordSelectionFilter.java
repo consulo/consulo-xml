@@ -15,17 +15,20 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
-import consulo.util.lang.function.Condition;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.action.WordSelectionerFilter;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlToken;
 
 /**
  * @author yole
  */
-public class XmlBasicWordSelectionFilter implements Condition<PsiElement> {
-  public boolean value(final PsiElement e) {
-    return !(e instanceof XmlToken) &&
-           !(e instanceof XmlElement);
-  }
+@ExtensionImpl
+public class XmlBasicWordSelectionFilter implements WordSelectionerFilter
+{
+	public boolean canSelect(final PsiElement e)
+	{
+		return !(e instanceof XmlToken) && !(e instanceof XmlElement);
+	}
 }

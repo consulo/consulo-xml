@@ -6,6 +6,7 @@ import com.intellij.xml.XmlElementDescriptorWithCDataContent;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorEx;
 import consulo.codeEditor.HighlighterIterator;
@@ -37,6 +38,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
+@ExtensionImpl(id = "xmlGt", order = "after xmlEq")
 public class XmlGtTypedHandler extends TypedHandlerDelegate
 {
 	private static final Logger LOG = Logger.getInstance(TypedHandler.class);

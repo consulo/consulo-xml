@@ -15,6 +15,7 @@
  */
 package consulo.xml.navigation;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
@@ -34,6 +35,7 @@ import java.util.Set;
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class LinkedToHtmlFilesContributor extends RelatedToHtmlFilesContributor {
   @Override
   public void fillRelatedFiles(@Nonnull final XmlFile xmlFile, @Nonnull final Set<PsiFile> resultSet) {

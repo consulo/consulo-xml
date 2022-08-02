@@ -16,31 +16,23 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import com.intellij.xml.util.XmlUtil;
+import consulo.document.Document;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.*;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.Attributes2Impl;
 import org.xml.sax.ext.Locator2Impl;
-import consulo.document.Document;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlEntityRef;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.util.XmlUtil;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -158,7 +150,7 @@ class Psi2SaxAdapter extends XmlElementVisitor implements PsiElementProcessor<Ps
     }
 
     final Locator2Impl locator = new Locator2Impl();
-    locator.setSystemId(VfsUtilCore.fixIDEAUrl(virtualFile.getUrl()));
+    locator.setSystemId(VirtualFileUtil.fixIDEAUrl(virtualFile.getUrl()));
 
     final int offset = text.getTextRange().getEndOffset();
     final int lineNumber = document.getLineNumber(offset);

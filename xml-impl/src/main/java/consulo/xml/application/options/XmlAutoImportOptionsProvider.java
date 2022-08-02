@@ -15,7 +15,8 @@
  */
 package consulo.xml.application.options;
 
-import consulo.configurable.Configurable;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
 import consulo.platform.base.localize.ApplicationLocalize;
@@ -25,11 +26,13 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements Configurable
+@ExtensionImpl
+public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements ApplicationConfigurable
 {
 	@RequiredUIAccess
 	@Nonnull
@@ -45,5 +48,26 @@ public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties
 		propertyBuilder.add(showAddImports, settings::isShowXmlImportsHints, settings::setShowXmlImportHints);
 
 		return layout;
+	}
+
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "editor.preferences.import.xml";
+	}
+
+	@Nullable
+	@Override
+	public String getParentId()
+	{
+		return "editor.preferences.import";
+	}
+
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return "XML";
 	}
 }

@@ -317,7 +317,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
   }
 
   private static boolean needAlLeastOneAttribute(XmlTag tag) {
-    for (XmlTagRuleProvider ruleProvider : XmlTagRuleProvider.EP_NAME.getExtensions()) {
+    for (XmlTagRuleProvider ruleProvider : XmlTagRuleProvider.EP_NAME.getExtensionList()) {
       for (XmlTagRuleProvider.Rule rule : ruleProvider.getTagRule(tag)) {
         if (rule.needAtLeastOneAttribute(tag)) {
           return true;

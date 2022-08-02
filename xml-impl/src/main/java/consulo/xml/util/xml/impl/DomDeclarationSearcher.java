@@ -15,16 +15,18 @@
  */
 package consulo.xml.util.xml.impl;
 
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.util.xml.AbstractDomDeclarationSearcher;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomTarget;
 import consulo.xml.util.xml.NameValue;
 
+import javax.annotation.Nullable;
+
 /**
  * @author peter
  */
+@ExtensionImpl
 public class DomDeclarationSearcher extends AbstractDomDeclarationSearcher {
 
   @Nullable

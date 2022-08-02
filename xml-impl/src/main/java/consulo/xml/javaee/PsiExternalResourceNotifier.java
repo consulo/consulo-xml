@@ -15,6 +15,9 @@
  */
 package consulo.xml.javaee;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.disposer.Disposable;
 import consulo.language.editor.DaemonCodeAnalyzer;
 import consulo.language.psi.AnyPsiChangeListener;
@@ -26,33 +29,40 @@ import jakarta.inject.Singleton;
  * @author yole
  */
 @Singleton
-public class PsiExternalResourceNotifier implements Disposable {
-  private final Project myProject;
-  private final ExternalResourceManagerEx myExternalResourceManager;
-  private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
-  private final ExternalResourceListener myExternalResourceListener;
+@ServiceAPI(value = ComponentScope.PROJECT, lazy = false)
+@ServiceImpl
+public class PsiExternalResourceNotifier implements Disposable
+{
+	private final Project myProject;
+	private final ExternalResourceManagerEx myExternalResourceManager;
+	private final DaemonCodeAnalyzer myDaemonCodeAnalyzer;
+	private final ExternalResourceListener myExternalResourceListener;
 
-  @Inject
-  public PsiExternalResourceNotifier(Project project, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer) {
-    myProject = project;
-    myExternalResourceManager = (ExternalResourceManagerEx) externalResourceManager;
-    myDaemonCodeAnalyzer = daemonCodeAnalyzer;
+	@Inject
+	public PsiExternalResourceNotifier(Project project, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
+	{
+		myProject = project;
+		myExternalResourceManager = (ExternalResourceManagerEx) externalResourceManager;
+		myDaemonCodeAnalyzer = daemonCodeAnalyzer;
 
-    myExternalResourceListener = new MyExternalResourceListener();
-    myExternalResourceManager.addExternalResourceListener(myExternalResourceListener);
-  }
+		myExternalResourceListener = new MyExternalResourceListener();
+		myExternalResourceManager.addExternalResourceListener(myExternalResourceListener);
+	}
 
-  private class MyExternalResourceListener implements ExternalResourceListener {
-    public void externalResourceChanged() {
+	private class MyExternalResourceListener implements ExternalResourceListener
+	{
+		public void externalResourceChanged()
+		{
 
-      //((PsiManagerEx) myPsiManager).beforeChange(true);
-      myProject.getMessageBus().syncPublisher(AnyPsiChangeListener.class).beforePsiChanged(true);
-      myDaemonCodeAnalyzer.restart();
-    }
-  }
+			//((PsiManagerEx) myPsiManager).beforeChange(true);
+			myProject.getMessageBus().syncPublisher(AnyPsiChangeListener.class).beforePsiChanged(true);
+			myDaemonCodeAnalyzer.restart();
+		}
+	}
 
-  @Override
-  public void dispose() {
-    myExternalResourceManager.removeExternalResourceListener(myExternalResourceListener);
-  }
+	@Override
+	public void dispose()
+	{
+		myExternalResourceManager.removeExternalResourceListener(myExternalResourceListener);
+	}
 }

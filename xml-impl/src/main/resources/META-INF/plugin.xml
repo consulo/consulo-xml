@@ -8,7 +8,7 @@
 		<tag>markup.language</tag>
 	</tags>
 
-	<depends optional="true" config-file="com.intellij.spellchecker.xml">com.intellij.spellchecker</depends>
+	<depends optional="true">com.intellij.spellchecker</depends>
 
 	<import path="/META-INF/XmlDom.xml" />
 	<import path="/META-INF/relaxng-plugin.xml" />
@@ -73,93 +73,14 @@
 		</action>
 	</actions>
 
-	<extensionPoints>
-		<extensionPoint name="startTagEndToken"
-						interface="consulo.xml.psi.xml.StartTagEndTokenProvider"/>
-		<extensionPoint name="schemaProvider"
-						interface="com.intellij.xml.XmlSchemaProvider"/>
-
-		<extensionPoint name="undefinedElementFixProvider" interface="com.intellij.xml.XmlUndefinedElementFixProvider"/>
-		<extensionPoint name="xmlExtension"
-						interface="com.intellij.xml.XmlExtension"/>
-		<extensionPoint name="tagNameProvider"
-						interface="com.intellij.xml.XmlTagNameProvider"/>
-		<extensionPoint name="fileNSInfoProvider"
-						interface="consulo.xml.psi.xml.XmlFileNSInfoProvider"/>
-		<extensionPoint name="attributeDescriptorsProvider"
-						interface="com.intellij.xml.XmlAttributeDescriptorsProvider"/>
-		<extensionPoint name="elementDescriptorProvider"
-						interface="consulo.xml.psi.impl.source.xml.XmlElementDescriptorProvider"/>
-		<extensionPoint name="util.htmlDoctypeProvider"
-						interface="com.intellij.xml.util.HtmlDoctypeProvider"/>
-
-		<extensionPoint name="xmlSuppressionProvider"
-						interface="consulo.xml.codeInspection.XmlSuppressionProvider"/>
-
-		<extensionPoint name="nsColorProvider"
-						interface="consulo.xml.codeInsight.daemon.impl.analysis.XmlNSColorProvider"/>
-
-		<extensionPoint name="structureViewElementProvider"
-						interface="consulo.xml.ide.structureView.xml.XmlStructureViewElementProvider"/>
-
-		<extensionPoint name="structureViewBuilderProvider"
-						interface="consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider"/>
-
-
-		<extensionPoint name="standardResourceProvider" interface="consulo.xml.javaee.StandardResourceProvider"/>
-
-		<extensionPoint name="idContributor"
-						interface="com.intellij.xml.util.XmlIdContributor"/>
-
-		<extensionPoint name="implicitNamespaceDescriptorProvider"
-						interface="consulo.xml.javaee.ImplicitNamespaceDescriptorProvider"/>
-
-		<extensionPoint name="relatedToHtmlFilesContributor" interface="consulo.xml.navigation.RelatedToHtmlFilesContributor"/>
-
-		<extensionPoint name="tagRuleProvider" interface="com.intellij.xml.XmlTagRuleProvider"/>
-		<extensionPoint name="embeddedTokenTypesProvider" interface="consulo.xml.lexer.EmbeddedTokenTypesProvider"/>
-		<extensionPoint name="html5SchemaProvider" interface="com.intellij.xml.Html5SchemaProvider"/>
-
-		<extensionPoint name="html.scriptContentProvider"
-						beanClass="consulo.language.LanguageExtensionPoint">
-			<with attribute="implementationClass" implements="consulo.xml.lang.HtmlScriptContentProvider"/>
-		</extensionPoint>
-
-		<extensionPoint name="html.inlineScriptTokenTypesProvider"
-						beanClass="consulo.language.LanguageExtensionPoint">
-			<with attribute="implementationClass" implements="consulo.xml.lang.HtmlInlineScriptTokenTypesProvider"/>
-		</extensionPoint>
-
-		<extensionPoint name="namespaceHelper" interface="com.intellij.xml.XmlNamespaceHelper"/>
-
-		<extensionPoint name="psiPolicy"
-						beanClass="consulo.component.extension.KeyedLazyInstanceEP">
-			<with attribute="implementationClass" implements="consulo.xml.psi.impl.source.xml.XmlPsiPolicy"/>
-		</extensionPoint>
-
-		<extensionPoint name="validateHandler" interface="com.intellij.xml.actions.validate.ValidateXmlHandler"/>
-
-		<extensionPoint name="xpathSupportProvider" interface="consulo.xml.XPathSupportProvider"/>
-	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo">
-		<internalFileTemplate name="HTML File"/>
-		<internalFileTemplate name="HTML4 File"/>
-		<internalFileTemplate name="XHTML File"/>
-
-
-		<injectionConfig config="resources/xmlInjections-html.xml"/>
 
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
 
 
 
 		<editorAppearanceConfigurable instance="consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingConfigurable"/>
-
-
-		<lang.lineWrapStrategy language="XML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
-		<lang.lineWrapStrategy language="HTML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
-		<lang.lineWrapStrategy language="XHTML" implementationClass="consulo.xml.psi.formatter.MarkupLineWrapPositionStrategy"/>
 
 		<lang.documentationProvider language="XML" implementationClass="com.intellij.xml.util.documentation.XmlDocumentationProvider"
 									order="last"/>
@@ -182,44 +103,10 @@
 		<codeInsight.wordCompletionFilter language="XML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
 		<codeInsight.wordCompletionFilter language="HTML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
 		<codeInsight.wordCompletionFilter language="XHTML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
-		<!--<codeInsight.wordCompletionFilter language="JSP" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/>
-		<codeInsight.wordCompletionFilter language="JSPX" implementationClass="com.intellij.lang.xml.XmlWordCompletionFilter"/> -->
 
 
-
-
-		<!-- XML -->
-		<quoteHandler fileType="XML" className="consulo.xml.codeInsight.editorActions.XmlBasedQuoteHandler"/>
-		<quoteHandler fileType="HTML" className="consulo.xml.codeInsight.editorActions.HtmlQuoteHandler"/>
-		<quoteHandler fileType="XHTML" className="consulo.xml.codeInsight.editorActions.HtmlQuoteHandler"/>
-
-		<!--<pom.declarationSearcher implementation="com.intellij.psi.impl.source.resolve.reference.impl.providers.IdDeclarationSearcher"/>-->
-
-
-
-		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlSlashTypedHandler" id="xmlSlash"/>
-		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlEqTypedHandler" id="xmlEq"/>
-		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlGtTypedHandler" id="xmlGt"/>
-		<typedHandler implementation="consulo.xml.codeInsight.editorActions.XmlAutoPopupHandler" id="xmlAuto"/>
-
-
-		<liveTemplateContext implementation="consulo.xml.codeInsight.template.HtmlTextContextType"/>
-		<liveTemplateContext implementation="consulo.xml.codeInsight.template.HtmlContextType"/>
-		<liveTemplateContext implementation="consulo.xml.codeInsight.template.XslTextContextType"/>
-		<liveTemplateContext implementation="consulo.xml.codeInsight.template.XmlContextType"/>
-
-
-		<annotator language="XML" implementationClass="consulo.xml.codeInspection.htmlInspections.XmlWrongClosingTagNameInspection"/>
-
-		<moveLeftRightHandler language="XML" implementationClass="consulo.xml.codeInsight.editorActions.moveLeftRight.XmlMoveLeftRightHandler"/>
 
 		<patterns.patternClass className="consulo.xml.patterns.XmlPatterns" alias="xml"/>
-
-		<lang.smartEnterProcessor language="XML" implementationClass="consulo.xml.codeInsight.completion.XmlSmartEnterProcessor"/>
-		<lang.smartEnterProcessor language="HTML" implementationClass="consulo.xml.codeInsight.completion.XmlSmartEnterProcessor"/>
-		<lang.smartEnterProcessor language="XHTML" implementationClass="consulo.xml.codeInsight.completion.XmlSmartEnterProcessor"/>
-
-
 
 
 		<localInspection language="XML" shortName="CheckValidXmlInScriptTagBody" bundle="messages.XmlBundle"
@@ -278,30 +165,6 @@
 						 implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.HtmlUnknownAnchorTargetInspection"/>
 
 
-		<globalInspection shortName="XmlHighlighting" displayName="XML highlighting" groupName="General" enabledByDefault="true" level="ERROR"
-						  implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitorBasedInspection"/>
-
-		<applicationConfigurable id="editor.preferences.smartKeys.xml"
-								 parentId="editor.preferences.smartKeys"
-								 displayName="XML/HTML"
-								 instance="consulo.xml.application.options.editor.XmlEditorOptionsProvider"/>
-
-		<applicationConfigurable id="editor.preferences.import.xml"
-								 parentId="editor.preferences.import"
-								 displayName="XML"
-								 instance="consulo.xml.application.options.XmlAutoImportOptionsProvider"/>
-
-		<applicationConfigurable id="editor.preferences.folding.xml"
-								 parentId="editor.preferences.folding"
-								 displayName="XML"
-								 instance="consulo.xml.application.options.editor.XmlCodeFoldingConfigurable"/>
-
-		<applicationConfigurable id="editor.preferences.folding.html"
-								 parentId="editor.preferences.folding"
-								 displayName="HTML"
-								 instance="consulo.xml.application.options.editor.HtmlCodeFoldingConfigurable"/>
-
-
 		<intentionAction>
 			<category>XML</category>
 			<className>com.intellij.xml.actions.XmlSplitTagAction</className>
@@ -328,37 +191,5 @@
 			<category>XML</category>
 			<className>consulo.xml.codeInsight.intentions.XmlChooseColorIntentionAction</className>
 		</intentionAction>
-
-
-		<basicWordSelectionFilter implementation="consulo.xml.codeInsight.editorActions.XmlBasicWordSelectionFilter"/>
-
-		<projectConfigurable instance="consulo.xml.javaee.ExternalResourceConfigurable"
-							 key="display.name.edit.external.resource"
-							 bundle="messages.XmlBundle"
-							 parentId="editor"
-							 id="preferences.externalResources">
-			<configurable instance="consulo.xml.javaee.XMLCatalogConfigurable" displayName="XML Catalog" id="xml.catalog"/>
-		</projectConfigurable>
-
-
-
-		<annotator language="XML" implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlNsPrefixAnnotator"/>
-		<annotator language="XML" implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlNamespaceAnnotator"/>
-
-
-
-		<applicationService serviceImplementation="consulo.xml.javaee.DefaultHtmlDoctypeInitialConfigurator" lazy="false" />
-
-
-		<projectService serviceImplementation="consulo.xml.javaee.PsiExternalResourceNotifier" lazy="false" />
-
-	</extensions>
-
-	<extensions defaultExtensionNs="com.intellij.xml">
-		<structureViewBuilderProvider implementation="consulo.xml.lang.html.structureView.HtmlStructureViewBuilderProvider"/>
-		<relatedToHtmlFilesContributor implementation="consulo.xml.navigation.LinkedToHtmlFilesContributor"/>
-
-		<psiPolicy key="HTML" implementationClass="consulo.xml.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
-		<psiPolicy key="XHTML" implementationClass="consulo.xml.psi.impl.source.xml.behavior.EncodeEachSymbolPolicy"/>
 	</extensions>
 </consulo-plugin>

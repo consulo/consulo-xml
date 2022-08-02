@@ -25,7 +25,6 @@ import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Processor;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
@@ -55,6 +54,7 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.Validator;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.javaee.ExternalResourceManager;
@@ -263,7 +263,7 @@ public class XmlUtil {
 
   static {
     final URL xhtml4SchemaLocationUrl = XmlUtil.class.getResource(ExternalResourceManagerEx.STANDARD_SCHEMAS + "xhtml1-transitional.xsd");
-    XHTML4_SCHEMA_LOCATION = VfsUtilCore.urlToPath(VfsUtilCore.toIdeaUrl(FileUtil.unquote(xhtml4SchemaLocationUrl.toExternalForm()), false));
+    XHTML4_SCHEMA_LOCATION = VirtualFileUtil.urlToPath(VirtualFileUtil.toIdeaUrl(FileUtil.unquote(xhtml4SchemaLocationUrl.toExternalForm()), false));
   }
 
   public static String getSchemaLocation(XmlTag tag, final String namespace) {

@@ -15,22 +15,24 @@
  */
 package consulo.xml.codeInsight.template;
 
-import javax.annotation.Nonnull;
-
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.template.context.TemplateContextType;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.xml.XmlComment;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.language.editor.CodeInsightBundle;
-import consulo.language.editor.template.context.TemplateContextType;
-import consulo.language.psi.PsiErrorElement;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class HtmlTextContextType extends TemplateContextType {
   public HtmlTextContextType() {
     super("HTML_TEXT", CodeInsightBundle.message("dialog.edit.template.checkbox.html.text"), HtmlContextType.class);

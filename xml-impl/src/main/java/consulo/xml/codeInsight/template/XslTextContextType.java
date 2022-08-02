@@ -12,19 +12,21 @@
  */
 package consulo.xml.codeInsight.template;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.impl.idea.openapi.util.io.FileUtilRt;
-import consulo.language.psi.PsiElement;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.xml.ide.highlighter.XmlFileType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Eugene.Kudelevsky
  */
+@ExtensionImpl
 public class XslTextContextType extends TemplateContextType {
   public XslTextContextType() {
     super("XSL_TEXT", CodeInsightBundle.message("dialog.edit.template.checkbox.xsl.text"), XmlContextType.class);

@@ -19,7 +19,6 @@ import consulo.application.util.RecursionGuard;
 import consulo.application.util.RecursionManager;
 import consulo.application.util.function.Computable;
 import consulo.application.util.function.Processor;
-import consulo.ide.impl.idea.util.Function;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
@@ -124,12 +123,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     }
 
     final List<DomExtensionImpl> customs = registrar.getCustoms();
-    myCustomChildren = customs.isEmpty() ? null : ContainerUtil.map(customs, new Function<DomExtensionImpl, CustomDomChildrenDescriptionImpl>() {
-      @Override
-      public CustomDomChildrenDescriptionImpl fun(DomExtensionImpl extension) {
-        return new CustomDomChildrenDescriptionImpl(extension);
-      }
-    });
+    myCustomChildren = customs.isEmpty() ? null : ContainerUtil.map(customs, extension -> new CustomDomChildrenDescriptionImpl(extension));
   }
 
   private static <T extends DomChildDescriptionImpl> ChildrenDescriptionsHolder<T> internChildrenHolder(XmlFile file, ChildrenDescriptionsHolder<T> holder) {

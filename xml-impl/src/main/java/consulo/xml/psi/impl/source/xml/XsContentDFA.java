@@ -15,25 +15,19 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-
+import com.intellij.xml.XmlElementDescriptor;
+import com.intellij.xml.actions.validate.ErrorReporter;
+import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
+import consulo.application.ApplicationManager;
 import consulo.application.util.function.Computable;
 import consulo.ide.impl.idea.openapi.util.NullableComputable;
 import consulo.language.psi.PsiFile;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import org.apache.xerces.impl.Constants;
-import org.apache.xerces.impl.xs.SchemaGrammar;
-import org.apache.xerces.impl.xs.SubstitutionGroupHandler;
-import org.apache.xerces.impl.xs.XSComplexTypeDecl;
-import org.apache.xerces.impl.xs.XSElementDecl;
-import org.apache.xerces.impl.xs.XSElementDeclHelper;
-import org.apache.xerces.impl.xs.XSGrammarBucket;
+import org.apache.xerces.impl.xs.*;
 import org.apache.xerces.impl.xs.models.CMBuilder;
 import org.apache.xerces.impl.xs.models.CMNodeFactory;
 import org.apache.xerces.impl.xs.models.XSCMValidator;
@@ -45,18 +39,16 @@ import org.apache.xerces.xni.grammars.XSGrammar;
 import org.apache.xerces.xs.XSElementDeclaration;
 import org.apache.xerces.xs.XSModel;
 import org.apache.xerces.xs.XSTypeDefinition;
-
-import javax.annotation.Nullable;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import consulo.application.ApplicationManager;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.util.Function;
-import consulo.util.collection.ContainerUtil;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.actions.validate.ErrorReporter;
-import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -264,14 +256,7 @@ class XsContentDFA extends XmlContentDFA
 		}
 		Grammar[] grammars = grammarPool.retrieveInitialGrammarSet(XMLGrammarDescription.XML_SCHEMA);
 
-		return grammars.length == 0 ? null : ((XSGrammar) grammars[0]).toXSModel(ContainerUtil.map(grammars, new Function<Grammar, XSGrammar>()
-		{
-			@Override
-			public XSGrammar fun(Grammar grammar)
-			{
-				return (XSGrammar) grammar;
-			}
-		}, new XSGrammar[0]));
+		return grammars.length == 0 ? null : ((XSGrammar) grammars[0]).toXSModel(ContainerUtil.map(grammars, grammar -> (XSGrammar) grammar, new XSGrammar[0]));
 	}
 
 }
