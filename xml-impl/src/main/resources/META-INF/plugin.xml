@@ -79,9 +79,6 @@
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
 
 
-
-		<editorAppearanceConfigurable instance="consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingConfigurable"/>
-
 		<lang.documentationProvider language="XML" implementationClass="com.intellij.xml.util.documentation.XmlDocumentationProvider"
 									order="last"/>
 		<lang.documentationProvider language="DTD" implementationClass="com.intellij.xml.util.documentation.XmlDocumentationProvider"/>
