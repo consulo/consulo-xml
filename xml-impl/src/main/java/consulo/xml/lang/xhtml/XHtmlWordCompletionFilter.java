@@ -1,4 +1,4 @@
-package consulo.xml.lang.xml;
+package consulo.xml.lang.xhtml;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
  * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XmlWordCompletionFilter extends XmlBasedWordCompletionFilter
+public class XHtmlWordCompletionFilter extends XmlBasedWordCompletionFilter
 {
 	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
-		return XMLLanguage.INSTANCE;
+		return XHTMLLanguage.INSTANCE;
 	}
 }

@@ -1,8 +1,8 @@
-package consulo.xml.lang.xml;
+package consulo.xml.lang.html;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.base.XmlBasedWordCompletionFilter;
+import consulo.xml.lang.base.XmlBasedSurroundDescriptor;
 
 import javax.annotation.Nonnull;
 
@@ -10,13 +10,13 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 02-Aug-22
  */
-@ExtensionImpl
-public class XmlWordCompletionFilter extends XmlBasedWordCompletionFilter
+@ExtensionImpl(id = "html-xml")
+public class HtmlSurroundDescriptor extends XmlBasedSurroundDescriptor
 {
 	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
-		return XMLLanguage.INSTANCE;
+		return HTMLLanguage.INSTANCE;
 	}
 }

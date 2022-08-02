@@ -155,7 +155,6 @@ open module com.intellij.xml
 	exports org.intellij.plugins.relaxNG.compact.psi;
 	exports org.intellij.plugins.relaxNG.compact.psi.impl;
 	exports org.intellij.plugins.relaxNG.compact.psi.util;
-	exports org.intellij.plugins.relaxNG.config;
 	exports org.intellij.plugins.relaxNG.convert;
 	exports org.intellij.plugins.relaxNG.inspections;
 	exports org.intellij.plugins.relaxNG.model;

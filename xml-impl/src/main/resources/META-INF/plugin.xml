@@ -78,31 +78,6 @@
 
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
 
-
-		<lang.documentationProvider language="XML" implementationClass="com.intellij.xml.util.documentation.XmlDocumentationProvider"
-									order="last"/>
-		<lang.documentationProvider language="DTD" implementationClass="com.intellij.xml.util.documentation.XmlDocumentationProvider"/>
-		<lang.documentationProvider language="HTML" implementationClass="com.intellij.xml.util.documentation.HtmlDocumentationProvider"/>
-		<lang.documentationProvider language="XHTML" implementationClass="com.intellij.xml.util.documentation.XHtmlDocumentationProvider"/>
-
-		<lang.surroundDescriptor language="XML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor"/>
-		<lang.surroundDescriptor language="HTML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor" id="html-xml"/>
-		<lang.surroundDescriptor language="XHTML" implementationClass="consulo.xml.lang.base.XmlBasedSurroundDescriptor"/>
-
-
-		<lang.findUsagesProvider language="DTD" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
-		<lang.findUsagesProvider language="XML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
-		<lang.findUsagesProvider language="HTML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
-		<lang.findUsagesProvider language="XHTML" implementationClass="consulo.xml.lang.base.XmlBasedFindUsagesProvider"/>
-
-
-
-		<codeInsight.wordCompletionFilter language="XML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
-		<codeInsight.wordCompletionFilter language="HTML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
-		<codeInsight.wordCompletionFilter language="XHTML" implementationClass="consulo.xml.lang.xml.XmlWordCompletionFilter"/>
-
-
-
 		<patterns.patternClass className="consulo.xml.patterns.XmlPatterns" alias="xml"/>
 
 

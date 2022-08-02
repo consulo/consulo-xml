@@ -2,7 +2,7 @@ package consulo.xml.lang.xml;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.base.XmlBasedWordCompletionFilter;
+import consulo.xml.lang.base.XmlBasedSurroundDescriptor;
 
 import javax.annotation.Nonnull;
 
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XmlWordCompletionFilter extends XmlBasedWordCompletionFilter
+public class XmlSurroundDescriptor extends XmlBasedSurroundDescriptor
 {
 	@Nonnull
 	@Override

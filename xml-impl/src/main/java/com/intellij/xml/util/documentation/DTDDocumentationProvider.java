@@ -1,8 +1,8 @@
-package consulo.xml.lang.xml;
+package com.intellij.xml.util.documentation;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.base.XmlBasedWordCompletionFilter;
+import consulo.xml.lang.dtd.DTDLanguage;
 
 import javax.annotation.Nonnull;
 
@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
  * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XmlWordCompletionFilter extends XmlBasedWordCompletionFilter
+public class DTDDocumentationProvider extends XmlDocumentationProvider
 {
 	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
-		return XMLLanguage.INSTANCE;
+		return DTDLanguage.INSTANCE;
 	}
 }
