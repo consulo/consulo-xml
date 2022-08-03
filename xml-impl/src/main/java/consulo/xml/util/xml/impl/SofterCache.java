@@ -15,43 +15,48 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.application.util.SofterReference;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 
 /**
  * @author peter
  */
-public class SofterCache<T,V> {
-  private final NotNullFunction<T,V> myValueProvider;
-  private SofterReference<ConcurrentMap<T, V>> myCache;
+public class SofterCache<T, V>
+{
+	private final Function<T, V> myValueProvider;
+	private SofterReference<ConcurrentMap<T, V>> myCache;
 
-  public SofterCache(NotNullFunction<T, V> valueProvider) {
-    myValueProvider = valueProvider;
-  }
+	public SofterCache(Function<T, V> valueProvider)
+	{
+		myValueProvider = valueProvider;
+	}
 
-  public static <T, V> SofterCache<T, V> create(NotNullFunction<T, V> valueProvider) {
-    return new SofterCache<T, V>(valueProvider);
-  }
+	public static <T, V> SofterCache<T, V> create(Function<T, V> valueProvider)
+	{
+		return new SofterCache<>(valueProvider);
+	}
 
-  public void clearCache() {
-    myCache = null;
-  }
+	public void clearCache()
+	{
+		myCache = null;
+	}
 
-  public V getCachedValue(T key) {
-    SofterReference<ConcurrentMap<T, V>> ref = myCache;
-    ConcurrentMap<T, V> map = ref == null ? null : ref.get();
-    if (map == null) {
-      myCache = new SofterReference<ConcurrentMap<T, V>>(map = new ConcurrentHashMap<T, V>());
-    }
-    V value = map.get(key);
-    if (value == null) {
-      map.put(key, value = myValueProvider.fun(key));
-    }
-    return value;
-  }
-
-
+	public V getCachedValue(T key)
+	{
+		SofterReference<ConcurrentMap<T, V>> ref = myCache;
+		ConcurrentMap<T, V> map = ref == null ? null : ref.get();
+		if(map == null)
+		{
+			myCache = new SofterReference<ConcurrentMap<T, V>>(map = new ConcurrentHashMap<T, V>());
+		}
+		V value = map.get(key);
+		if(value == null)
+		{
+			map.put(key, value = myValueProvider.apply(key));
+		}
+		return value;
+	}
 }

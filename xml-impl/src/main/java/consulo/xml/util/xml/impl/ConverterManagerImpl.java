@@ -3,6 +3,7 @@ package consulo.xml.util.xml.impl;
 import consulo.application.Application;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.language.psi.path.PathReference;
+import consulo.xml.dom.ConverterImplementationProvider;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.converters.PathReferenceConverter;
 import jakarta.inject.Inject;
@@ -19,14 +20,14 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Singleton
 public class ConverterManagerImpl implements ConverterManager {
-  private final ImplementationClassCache myImplementationClassCache = new ImplementationClassCache(DomImplementationClassEP.CONVERTER_EP_NAME);
+  private final ImplementationClassCache<ConverterImplementationProvider> myImplementationClassCache = new ImplementationClassCache<>(ConverterImplementationProvider.class);
 
   private final ConcurrentMap<Class, Object> myConverterInstances = ConcurrentFactoryMap.createMap(key -> {
-    Class<?> implementation = myImplementationClassCache.get(key);
-    return Application.get().getUnbindedInstance(implementation == null ? key : implementation);
+    ConverterImplementationProvider implementation = myImplementationClassCache.get(key);
+    return Application.get().getUnbindedInstance(implementation == null ? key : implementation.getImplementationClass());
   });
 
-  private final Map<Class, Converter> mySimpleConverters = new HashMap<Class, Converter>();
+  private final Map<Class, Converter> mySimpleConverters = new HashMap<>();
 
   @Inject
   public ConverterManagerImpl() {

@@ -55,7 +55,7 @@ public class DomFileDescription<T>
 	protected final String myRootTagName;
 	private final String[] myAllPossibleRootTagNamespaces;
 	private volatile boolean myInitialized;
-	private final Map<Class<? extends DomElement>, Class<? extends DomElement>> myImplementations = new HashMap<>();
+
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	private final List<DomReferenceInjector> myInjectors = new SmartList<>();
 	private final Map<String, NotNullFunction<XmlTag, List<String>>> myNamespacePolicies = ContainerUtil.newConcurrentMap();
@@ -71,19 +71,6 @@ public class DomFileDescription<T>
 	public String[] getAllPossibleRootTagNamespaces()
 	{
 		return myAllPossibleRootTagNamespaces;
-	}
-
-	/**
-	 * Register an implementation class to provide additional functionality for DOM elements.
-	 *
-	 * @param domElementClass     interface class.
-	 * @param implementationClass abstract implementation class.
-	 * @see #initializeFileDescription()
-	 * @deprecated use dom.implementation extension point instead
-	 */
-	public final <T extends DomElement> void registerImplementation(Class<T> domElementClass, Class<? extends T> implementationClass)
-	{
-		myImplementations.put(domElementClass, implementationClass);
 	}
 
 	/**
@@ -202,16 +189,6 @@ public class DomFileDescription<T>
 	public DomElementsAnnotator createAnnotator()
 	{
 		return null;
-	}
-
-	public final Map<Class<? extends DomElement>, Class<? extends DomElement>> getImplementations()
-	{
-		if(!myInitialized)
-		{
-			initializeFileDescription();
-			myInitialized = true;
-		}
-		return myImplementations;
 	}
 
 	@Nonnull

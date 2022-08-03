@@ -18,28 +18,25 @@ package consulo.xml.util.xml.impl;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
 import consulo.application.util.ConcurrentFactoryMap;
-import consulo.disposer.Disposable;
 import consulo.ide.ServiceManager;
 import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.ide.impl.idea.util.ReflectionAssignabilityCache;
 import consulo.util.collection.FactoryMap;
+import consulo.xml.dom.DomElementImplementationProvider;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementVisitor;
 import consulo.xml.util.xml.DomFileDescription;
 import consulo.xml.util.xml.TypeChooserManager;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static consulo.util.collection.ContainerUtil.newArrayList;
+import java.util.*;
 
 /**
  * @author peter
@@ -51,7 +48,7 @@ public class DomApplicationComponent
 {
 	private final Map<String, Set<DomFileDescription>> myRootTagName2FileDescription = FactoryMap.create(k -> new HashSet<DomFileDescription>());
 	private final Set<DomFileDescription> myAcceptingOtherRootTagNamesDescriptions = new HashSet<DomFileDescription>();
-	private final ImplementationClassCache myCachedImplementationClasses = new ImplementationClassCache(DomImplementationClassEP.EP_NAME);
+	private final ImplementationClassCache<DomElementImplementationProvider> myCachedImplementationClasses = new ImplementationClassCache<>(DomElementImplementationProvider.class);
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	final ReflectionAssignabilityCache assignabilityCache = new ReflectionAssignabilityCache();
 	private final Map<Class, DomElementsAnnotator> myClass2Annotator = ConcurrentFactoryMap.createMap(key ->
@@ -80,12 +77,10 @@ public class DomApplicationComponent
 	});
 	private final Map<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions = ConcurrentFactoryMap.createMap(key -> new VisitorDescription(key));
 
-	public DomApplicationComponent()
+	@Inject
+	public DomApplicationComponent(Application application)
 	{
-		for(final DomFileDescription description : DomFileDescription.EP_NAME.getExtensionList())
-		{
-			registerFileDescription(description);
-		}
+		application.getExtensionPoint(DomFileDescription.class).forEachExtensionSafe(this::registerFileDescription);
 	}
 
 	public static DomApplicationComponent getInstance()
@@ -122,19 +117,12 @@ public class DomApplicationComponent
 			myAcceptingOtherRootTagNamesDescriptions.add(description);
 		}
 
-		//noinspection unchecked
-		final Map<Class<? extends DomElement>, Class<? extends DomElement>> implementations = description.getImplementations();
-		for(final Map.Entry<Class<? extends DomElement>, Class<? extends DomElement>> entry : implementations.entrySet())
-		{
-			registerImplementation(entry.getKey(), entry.getValue(), null);
-		}
-
 		myTypeChooserManager.copyFrom(description.getTypeChooserManager());
 	}
 
 	public synchronized List<DomFileDescription> getAllFileDescriptions()
 	{
-		final List<DomFileDescription> result = newArrayList();
+		final List<DomFileDescription> result = new ArrayList<>();
 		for(Set<DomFileDescription> descriptions : myRootTagName2FileDescription.values())
 		{
 			result.addAll(descriptions);
@@ -176,13 +164,8 @@ public class DomApplicationComponent
 	final Class<? extends DomElement> getImplementation(final Class concreteInterface)
 	{
 		//noinspection unchecked
-		return myCachedImplementationClasses.get(concreteInterface);
-	}
-
-	public final void registerImplementation(Class<? extends DomElement> domElementClass, Class<? extends DomElement> implementationClass,
-											 @Nullable final Disposable parentDisposable)
-	{
-		myCachedImplementationClasses.registerImplementation(domElementClass, implementationClass, parentDisposable);
+		DomElementImplementationProvider provider = myCachedImplementationClasses.get(concreteInterface);
+		return provider == null ? null : provider.getImplementationClass();
 	}
 
 	public TypeChooserManager getTypeChooserManager()
