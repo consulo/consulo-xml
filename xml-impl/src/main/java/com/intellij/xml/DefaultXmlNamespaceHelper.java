@@ -18,6 +18,7 @@ package com.intellij.xml;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XmlTagNamesIndex;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
 import consulo.language.psi.PsiElement;
@@ -39,6 +40,7 @@ import java.util.*;
 /**
  * @author yole
  */
+@ExtensionImpl(order = "last")
 public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
   private static final Logger LOG = Logger.getInstance(DefaultXmlNamespaceHelper.class);
 

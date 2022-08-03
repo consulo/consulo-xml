@@ -15,18 +15,22 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.javaee.MapExternalResourceDialog;
-import consulo.xml.javaee.ExternalResourceManager;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
-import consulo.application.ApplicationManager;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.MapExternalResourceDialog;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author mike
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.manually.setup.external.resource", fileExtensions = "xml", categories = "XML")
 public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
 
   protected String getQuickFixKeyId() {

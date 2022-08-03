@@ -15,9 +15,11 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
@@ -44,6 +46,8 @@ import java.util.Set;
 /**
  * @author Konstantin Bulenkov
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.insert.namespace.prefix", fileExtensions = "xml", categories = "XML")
 public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 {
 	public static final String NAME = "Insert Namespace Prefix";

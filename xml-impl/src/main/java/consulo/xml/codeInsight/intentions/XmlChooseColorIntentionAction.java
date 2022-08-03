@@ -15,12 +15,14 @@
  */
 package consulo.xml.codeInsight.intentions;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.ide.impl.idea.ui.ColorChooser;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
@@ -42,6 +44,8 @@ import java.awt.*;
 /**
  * @author Konstantin Bulenkov
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.choose.color", fileExtensions = "xml", categories = "XML")
 public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
 {
 	public XmlChooseColorIntentionAction()

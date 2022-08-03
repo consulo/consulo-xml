@@ -15,6 +15,8 @@
  */
 package com.intellij.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.codeEditor.Editor;
 import consulo.component.extension.ExtensionPointName;
 import consulo.document.Document;
@@ -32,11 +34,10 @@ import java.util.Set;
 /**
  * @author yole
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlNamespaceHelper
 {
 	private static final ExtensionPointName<XmlNamespaceHelper> EP_NAME = ExtensionPointName.create(XmlNamespaceHelper.class);
-
-	public static final XmlNamespaceHelper DEFAULT_EXTENSION = new DefaultXmlNamespaceHelper();
 
 	public static XmlNamespaceHelper getHelper(PsiFile file)
 	{
@@ -47,7 +48,7 @@ public abstract class XmlNamespaceHelper
 				return extension;
 			}
 		}
-		return DEFAULT_EXTENSION;
+		throw new UnsupportedOperationException("DefaultXmlNamespaceHelper not registered");
 	}
 
 	protected abstract boolean isAvailable(PsiFile file);

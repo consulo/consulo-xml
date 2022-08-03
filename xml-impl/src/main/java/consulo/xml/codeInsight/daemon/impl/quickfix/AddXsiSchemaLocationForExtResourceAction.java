@@ -15,6 +15,8 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.document.util.TextRange;
@@ -43,6 +45,8 @@ import java.util.List;
 /**
  * @author maxim.mossienko
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.add.xsi.schema.location.for.external.resource", fileExtensions = "xml", categories = "XML")
 public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAction {
   @NonNls private static final String XMLNS_XSI_ATTR_NAME = "xmlns:xsi";
   @NonNls private static final String XSI_SCHEMA_LOCATION_ATTR_NAME = "xsi:schemaLocation";

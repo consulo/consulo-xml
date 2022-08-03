@@ -16,52 +16,70 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.editor.inspection.ProblemHighlightType;
-import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlToken;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
  */
-public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
+@ExtensionImpl
+public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool
+{
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  @Override
-  @Nls
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("html.inspection.extra.closing.tag");
-  }
+	@Override
+	@Nls
+	@Nonnull
+	public String getDisplayName()
+	{
+		return XmlBundle.message("html.inspection.extra.closing.tag");
+	}
 
-  @Override
-  @NonNls
-  @Nonnull
-  public String getShortName() {
-    return "HtmlExtraClosingTag";
-  }
+	@Override
+	@NonNls
+	@Nonnull
+	public String getShortName()
+	{
+		return "HtmlExtraClosingTag";
+	}
 
-  @Override
-  @Nonnull
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.ERROR;
-  }
+	@Override
+	@Nonnull
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
 
-  @Override
-  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
-    final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
+	@Override
+	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
+	{
+		final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
-    if (endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName())) {
-      holder.registerProblem(endTagName, XmlErrorMessages.message("extra.closing.tag.for.empty.element"),
-                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING, new RemoveExtraClosingTagIntentionAction());
-    }
-  }
+		if(endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName()))
+		{
+			holder.registerProblem(endTagName, XmlErrorMessages.message("extra.closing.tag.for.empty.element"),
+					ProblemHighlightType.GENERIC_ERROR_OR_WARNING, new RemoveExtraClosingTagIntentionAction());
+		}
+	}
 }

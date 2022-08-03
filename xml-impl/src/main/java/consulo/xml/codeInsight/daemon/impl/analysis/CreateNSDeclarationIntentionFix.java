@@ -36,6 +36,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.intention.HintAction;
 import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.impl.psi.PsiAnchor;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
@@ -72,6 +73,7 @@ import java.util.Set;
 /**
  * @author Maxim.Mossienko
  */
+@IntentionMetaData(ignoreId = "xml.create.ns.declaration", fileExtensions = "xml", categories = "XML")
 public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFix {
 
   private static final Logger LOG = Logger.getInstance(CreateNSDeclarationIntentionFix.class);

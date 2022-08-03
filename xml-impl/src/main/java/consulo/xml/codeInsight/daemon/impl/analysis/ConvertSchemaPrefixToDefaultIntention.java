@@ -15,9 +15,11 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
@@ -37,6 +39,8 @@ import java.util.ArrayList;
 /**
  * @author Konstantin Bulenkov
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.convert.scheme.prefix.to.default", fileExtensions = "xml", categories = "XML")
 public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntentionAction
 {
   public static final String NAME = "Set Namespace Prefix to Empty";

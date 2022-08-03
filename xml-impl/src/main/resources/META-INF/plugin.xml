@@ -81,14 +81,6 @@
 		<patterns.patternClass className="consulo.xml.patterns.XmlPatterns" alias="xml"/>
 
 
-		<localInspection language="XML" shortName="CheckValidXmlInScriptTagBody" bundle="messages.XmlBundle"
-						 key="html.inspections.check.valid.script.tag"
-						 groupName="HTML" enabledByDefault="true" level="ERROR"
-						 implementationClass="com.intellij.xml.util.CheckValidXmlInScriptBodyInspection"/>
-		<localInspection language="XML" shortName="CheckXmlFileWithXercesValidator" bundle="messages.XmlBundle"
-						 key="xml.inspections.check.file.with.xerces"
-						 groupName="XML" enabledByDefault="true" level="ERROR"
-						 implementationClass="com.intellij.xml.util.CheckXmlFileWithXercesValidatorInspection" unfair="true"/>
 
 		<localInspection language="XML" bundle="messages.XmlBundle" key="xml.inspections.duplicate.id"
 						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="ERROR" runForWholeFile="true" unfair="true"
@@ -101,29 +93,19 @@
 						 key="inspection.required.attributes.display.name"
 						 groupName="HTML" enabledByDefault="true" level="WARNING"
 						 implementationClass="consulo.xml.codeInspection.htmlInspections.RequiredAttributesInspection" unfair="true"/>
-		<localInspection language="XML" shortName="HtmlExtraClosingTag" bundle="messages.XmlBundle" key="html.inspection.extra.closing.tag"
-						 groupName="HTML"
-						 enabledByDefault="true" level="ERROR"
-						 implementationClass="consulo.xml.codeInspection.htmlInspections.HtmlExtraClosingTagInspection"/>
+
 		<localInspection language="XML" shortName="XmlWrongRootElement" bundle="messages.XmlBundle" key="xml.inspection.wrong.root.element"
 						 groupName="XML"
 						 enabledByDefault="true" level="ERROR"
 						 implementationClass="consulo.xml.codeInspection.htmlInspections.XmlWrongRootElementInspection"/>
-		<localInspection language="XML" shortName="HtmlUnknownTag" bundle="messages.XmlBundle" key="html.inspections.unknown.tag"
-						 groupName="HTML"
-						 enabledByDefault="true" level="WARNING"
-						 implementationClass="consulo.xml.codeInspection.htmlInspections.HtmlUnknownTagInspection"/>
+
 		<localInspection language="XML" shortName="HtmlUnknownAttribute" bundle="messages.XmlBundle" key="html.inspections.unknown.attribute"
 						 groupName="HTML"
 						 enabledByDefault="true" level="WARNING"
 						 implementationClass="consulo.xml.codeInspection.htmlInspections.HtmlUnknownAttributeInspection"/>
 
-		<localInspection language="XML" shortName="XmlUnboundNsPrefix" bundle="messages.XmlBundle" key="xml.inspections.unbound.prefix"
-						 groupKey="xml.inspections.group.name" enabledByDefault="true" level="WARNING"
-						 implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlUnboundNsPrefixInspection"/>
-		<localInspection language="XML" shortName="XmlUnusedNamespaceDeclaration" displayName="Unused XML schema declaration"
-						 groupKey="xml.inspections.group.name" bundle="messages.XmlBundle" enabledByDefault="true" level="WARNING"
-						 implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlUnusedNamespaceInspection"/>
+
+
 		<localInspection language="XML" implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.XmlPathReferenceInspection"
 						 displayName="File path resolving in XML"
 						 groupName="XML" enabledByDefault="true" level="ERROR"/>
@@ -135,33 +117,5 @@
 						 groupName="HTML"
 						 enabledByDefault="true" level="WARNING"
 						 implementationClass="consulo.xml.codeInsight.daemon.impl.analysis.HtmlUnknownAnchorTargetInspection"/>
-
-
-		<intentionAction>
-			<category>XML</category>
-			<className>com.intellij.xml.actions.XmlSplitTagAction</className>
-		</intentionAction>
-		<intentionAction>
-			<category>XML</category>
-			<className>consulo.xml.codeInsight.daemon.impl.analysis.AddSchemaPrefixIntention</className>
-		</intentionAction>
-
-		<intentionAction>
-			<category>XML</category>
-			<className>consulo.xml.codeInsight.daemon.impl.quickfix.AddXsiSchemaLocationForExtResourceAction</className>
-		</intentionAction>
-		<intentionAction>
-			<category>XML</category>
-			<className>consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction</className>
-		</intentionAction>
-
-		<intentionAction>
-			<category>XML</category>
-			<className>consulo.xml.codeInsight.daemon.impl.analysis.ConvertSchemaPrefixToDefaultIntention</className>
-		</intentionAction>
-		<intentionAction>
-			<category>XML</category>
-			<className>consulo.xml.codeInsight.intentions.XmlChooseColorIntentionAction</className>
-		</intentionAction>
 	</extensions>
 </consulo-plugin>

@@ -16,14 +16,19 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.AllIcons;
 import consulo.ide.impl.idea.util.Function;
+import consulo.language.Language;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.ui.ex.awt.FieldPanel;
 import consulo.ui.ex.awt.Messages;
 import consulo.ui.ex.awt.event.DocumentAdapter;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
+import consulo.xml.lang.xml.XMLLanguage;
+import jakarta.inject.Inject;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -37,85 +42,127 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public abstract class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase {
+@ExtensionImpl
+public  class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
+{
+	@Inject
+	public HtmlUnknownTagInspection()
+	{
+		super();
+	}
 
-  public HtmlUnknownTagInspection() {
-    super();
-  }
+	public HtmlUnknownTagInspection(@NonNls @Nonnull final String defaultValues)
+	{
+		super(defaultValues);
+	}
 
-  public HtmlUnknownTagInspection(@NonNls @Nonnull final String defaultValues) {
-    super(defaultValues);
-  }
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  @Override
-  @Nullable
-  public JComponent createOptionsPanel() {
-    return createOptionsPanel(this);
-  }
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.WARNING;
+	}
 
-  @Nonnull
-  protected static JComponent createOptionsPanel(@Nonnull final HtmlUnknownElementInspection inspection) {
-    final JPanel result = new JPanel(new BorderLayout());
+	@Override
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-    final JPanel internalPanel = new JPanel(new BorderLayout());
-    result.add(internalPanel, BorderLayout.NORTH);
+	@Override
+	@Nullable
+	public JComponent createOptionsPanel()
+	{
+		return createOptionsPanel(this);
+	}
 
-    final Ref<FieldPanel> panelRef = new Ref<FieldPanel>();
-    final FieldPanel additionalAttributesPanel = new FieldPanel(null, null, new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent event) {
-        Messages.showTextAreaDialog(panelRef.get().getTextField(), consulo.ide.impl.idea.openapi.util.text.StringUtil.wordsToBeginFromUpperCase(inspection.getPanelTitle()), inspection.getClass().getSimpleName(),
-            new Function<String, List<String>>() {
-              @Override
-              public List<String> fun(String s) {
-                return reparseProperties(s);
-              }
-            }, new Function<List<String>, String>() {
-              @Override
-              public String fun(List<String> strings) {
-                return StringUtil.join(strings, ",");
-              }
-            }
-        );
-      }
-    }, null);
-    ((JButton) additionalAttributesPanel.getComponent(1)).setIcon(TargetAWT.to(AllIcons.Actions.ShowViewer));
-    panelRef.set(additionalAttributesPanel);
-    additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-      @Override
-      protected void textChanged(DocumentEvent e) {
-        final Document document = e.getDocument();
-        try {
-          final String text = document.getText(0, document.getLength());
-          if (text != null) {
-            inspection.updateAdditionalEntries(text.trim());
-          }
-        } catch (BadLocationException e1) {
-          inspection.getLogger().error(e1);
-        }
-      }
-    });
+	@Nonnull
+	protected static JComponent createOptionsPanel(@Nonnull final HtmlUnknownElementInspection inspection)
+	{
+		final JPanel result = new JPanel(new BorderLayout());
 
-    final JCheckBox checkBox = new JCheckBox(inspection.getCheckboxTitle());
-    checkBox.setSelected(inspection.isCustomValuesEnabled());
-    checkBox.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        final boolean b = checkBox.isSelected();
-        if (b != inspection.isCustomValuesEnabled()) {
-          inspection.enableCustomValues(b);
-          additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
-        }
-      }
-    });
+		final JPanel internalPanel = new JPanel(new BorderLayout());
+		result.add(internalPanel, BorderLayout.NORTH);
 
-    internalPanel.add(checkBox, BorderLayout.NORTH);
-    internalPanel.add(additionalAttributesPanel, BorderLayout.CENTER);
+		final Ref<FieldPanel> panelRef = new Ref<FieldPanel>();
+		final FieldPanel additionalAttributesPanel = new FieldPanel(null, null, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				Messages.showTextAreaDialog(panelRef.get().getTextField(), consulo.ide.impl.idea.openapi.util.text.StringUtil.wordsToBeginFromUpperCase(inspection.getPanelTitle()), inspection
+								.getClass().getSimpleName(),
+						new Function<String, List<String>>()
+						{
+							@Override
+							public List<String> fun(String s)
+							{
+								return reparseProperties(s);
+							}
+						}, new Function<List<String>, String>()
+						{
+							@Override
+							public String fun(List<String> strings)
+							{
+								return StringUtil.join(strings, ",");
+							}
+						}
+				);
+			}
+		}, null);
+		((JButton) additionalAttributesPanel.getComponent(1)).setIcon(TargetAWT.to(AllIcons.Actions.ShowViewer));
+		panelRef.set(additionalAttributesPanel);
+		additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter()
+		{
+			@Override
+			protected void textChanged(DocumentEvent e)
+			{
+				final Document document = e.getDocument();
+				try
+				{
+					final String text = document.getText(0, document.getLength());
+					if(text != null)
+					{
+						inspection.updateAdditionalEntries(text.trim());
+					}
+				}
+				catch(BadLocationException e1)
+				{
+					inspection.getLogger().error(e1);
+				}
+			}
+		});
 
-    additionalAttributesPanel.setPreferredSize(new Dimension(150, additionalAttributesPanel.getPreferredSize().height));
-    additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
-    additionalAttributesPanel.setText(inspection.getAdditionalEntries());
+		final JCheckBox checkBox = new JCheckBox(inspection.getCheckboxTitle());
+		checkBox.setSelected(inspection.isCustomValuesEnabled());
+		checkBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				final boolean b = checkBox.isSelected();
+				if(b != inspection.isCustomValuesEnabled())
+				{
+					inspection.enableCustomValues(b);
+					additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
+				}
+			}
+		});
 
-    return result;
-  }
+		internalPanel.add(checkBox, BorderLayout.NORTH);
+		internalPanel.add(additionalAttributesPanel, BorderLayout.CENTER);
+
+		additionalAttributesPanel.setPreferredSize(new Dimension(150, additionalAttributesPanel.getPreferredSize().height));
+		additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
+		additionalAttributesPanel.setText(inspection.getAdditionalEntries());
+
+		return result;
+	}
 }

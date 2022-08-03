@@ -79,9 +79,6 @@
 		<lang.documentationProvider language="XML" implementationClass="consulo.xml.util.xml.DomDocumentationProvider" id="dom"/>
 
 
-
-		<elementDescriptionProvider implementation="consulo.xml.util.xml.impl.DefaultDomTargetDescriptionProvider" id="domDefault" order="last, before pomDefault"/>
-
 		<patterns.patternClass className="consulo.xml.patterns.DomPatterns" alias="dom"/>
 	</extensions>
 

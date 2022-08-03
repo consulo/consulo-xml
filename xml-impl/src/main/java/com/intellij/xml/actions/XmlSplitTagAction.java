@@ -16,10 +16,12 @@
 package com.intellij.xml.actions;
 
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
@@ -35,6 +37,8 @@ import javax.annotation.Nonnull;
 /**
  * @author spleaner
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.split.current.tag", fileExtensions = "html", categories = "XML")
 public class XmlSplitTagAction implements IntentionAction {
 
   @Override

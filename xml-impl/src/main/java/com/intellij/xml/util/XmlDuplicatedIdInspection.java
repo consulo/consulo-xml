@@ -17,6 +17,7 @@ package com.intellij.xml.util;
 
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.psi.*;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
@@ -31,8 +32,14 @@ import javax.annotation.Nonnull;
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool
+public abstract class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
 {
+	@Override
+	public boolean runForWholeFile()
+	{
+		return true;
+	}
+
 	@Nonnull
 	@Override
 	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly)

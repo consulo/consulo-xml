@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.highlight.HighlightUsagesDescriptionLocation;
 import consulo.language.pom.PomDescriptionProvider;
 import consulo.language.pom.PomTarget;
@@ -33,6 +34,7 @@ import javax.annotation.Nonnull;
 /**
  * @author peter
  */
+@ExtensionImpl(id = "domDefault", order = "last, before pomDefault")
 public class DefaultDomTargetDescriptionProvider extends PomDescriptionProvider {
   public String getElementDescription(@Nonnull PomTarget element, @Nonnull ElementDescriptionLocation location) {
     if (!(element instanceof DomTarget)) return null;
