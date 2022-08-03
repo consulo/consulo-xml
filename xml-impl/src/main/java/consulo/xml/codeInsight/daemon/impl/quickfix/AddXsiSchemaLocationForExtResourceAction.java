@@ -112,7 +112,6 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     if (value == null) return false;
     XmlAttribute attribute = PsiTreeUtil.getParentOfType(value, XmlAttribute.class);
     if (attribute != null && attribute.isNamespaceDeclaration()) {
-      setText(XmlBundle.message(getQuickFixKeyId()));
       return true;
     }
     return false;
