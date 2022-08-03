@@ -16,9 +16,11 @@
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
@@ -36,7 +38,8 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  * Date: 9/3/12
  */
-public abstract class XmlPathReferenceInspection extends XmlSuppressableInspectionTool
+@ExtensionImpl
+public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool
 {
 	@Nonnull
 	@Override
@@ -99,6 +102,33 @@ public abstract class XmlPathReferenceInspection extends XmlSuppressableInspecti
 	public Language getLanguage()
 	{
 		return XMLLanguage.INSTANCE;
+	}
+
+	@Nonnull
+	@Override
+	public String getGroupDisplayName()
+	{
+		return "XML";
+	}
+
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return "File path resolving in XML";
+	}
+
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
+
+	@Override
+	public boolean isEnabledByDefault()
+	{
+		return true;
 	}
 
 	protected boolean needToCheckRef(PsiReference reference)

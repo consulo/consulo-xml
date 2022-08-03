@@ -17,7 +17,7 @@ import java.util.List;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class Html5SchemaProvider {
-  private static final Logger LOG = Logger.getInstance("#Html5SchemaProvider");
+  private static final Logger LOG = Logger.getInstance(Html5SchemaProvider.class);
 
   public static final ExtensionPointName<Html5SchemaProvider> EP_NAME = ExtensionPointName.create(Html5SchemaProvider.class);
 

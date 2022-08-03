@@ -15,27 +15,49 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import consulo.language.psi.PsiReference;
+import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.AnchorReferenceImpl;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
-public abstract class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
-  @Nonnull
-  @Override
-  public String getShortName() {
-    return "HtmlUnknownAnchorTarget";
-  }
+@ExtensionImpl
+public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection
+{
+	@Nonnull
+	@Override
+	public String getShortName()
+	{
+		return "HtmlUnknownAnchorTarget";
+	}
 
-  @Override
-  protected boolean isForHtml() {
-    return true;
-  }
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return XmlBundle.message("html.inspections.unknown.anchor");
+	}
 
-  @Override
-  protected boolean needToCheckRef(PsiReference reference) {
-    return reference instanceof AnchorReferenceImpl;
-  }
+	@Nonnull
+	@Override
+	public String getGroupDisplayName()
+	{
+		return "XML";
+	}
+
+	@Override
+	protected boolean isForHtml()
+	{
+		return true;
+	}
+
+	@Override
+	protected boolean needToCheckRef(PsiReference reference)
+	{
+		return reference instanceof AnchorReferenceImpl;
+	}
 }

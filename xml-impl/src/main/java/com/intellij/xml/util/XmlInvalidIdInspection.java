@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.util;
 
+import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
@@ -27,11 +29,21 @@ import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements UnfairLocalInspectionTool
+@ExtensionImpl
+public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements UnfairLocalInspectionTool
 {
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.invalid.id");
+	}
+
 	protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder)
 	{
 

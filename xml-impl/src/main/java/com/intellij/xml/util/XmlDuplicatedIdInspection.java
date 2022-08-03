@@ -15,12 +15,17 @@
  */
 package com.intellij.xml.util;
 
+import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.*;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -28,14 +33,50 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
+@ExtensionImpl
+public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
 {
 	@Override
 	public boolean runForWholeFile()
+	{
+		return true;
+	}
+
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
+
+	@Nonnull
+	@Override
+	public String getGroupDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.group.name");
+	}
+
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.duplicate.id");
+	}
+
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
+
+	@Override
+	public boolean isEnabledByDefault()
 	{
 		return true;
 	}
