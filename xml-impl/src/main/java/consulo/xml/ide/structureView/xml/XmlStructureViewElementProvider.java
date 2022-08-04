@@ -15,18 +15,21 @@
  */
 package consulo.xml.ide.structureView.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.xml.psi.xml.XmlTag;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlStructureViewElementProvider {
-  ExtensionPointName<XmlStructureViewElementProvider> EP_NAME = ExtensionPointName.create("com.intellij.xml.structureViewElementProvider");
+  ExtensionPointName<XmlStructureViewElementProvider> EP_NAME = ExtensionPointName.create(XmlStructureViewElementProvider.class);
 
   @Nullable
   StructureViewTreeElement createCustomXmlTagTreeElement(@Nonnull XmlTag tag);

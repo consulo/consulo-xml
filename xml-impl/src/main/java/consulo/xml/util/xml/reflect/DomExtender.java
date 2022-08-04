@@ -16,21 +16,28 @@
 
 package consulo.xml.util.xml.reflect;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.util.xml.DomElement;
+
 import javax.annotation.Nonnull;
 
 /**
  * Register DOM extenders via dom.extender extension point. Specify 2 attributes:
- *   domClass - the DOM element class for which this extender will be called. Should be equal to T.
- *   extenderClass - this class qualified name.
+ * domClass - the DOM element class for which this extender will be called. Should be equal to T.
+ * extenderClass - this class qualified name.
  *
  * @author peter
  */
-public abstract class DomExtender<T extends DomElement> {
+@ExtensionAPI(ComponentScope.APPLICATION)
+public abstract class DomExtender<T extends DomElement>
+{
+	@Nonnull
+	public abstract Class<T> getElementClass();
 
-  /**
-   * @param t DOM element where new children may be added to
-   * @param registrar a place to register your own DOM children descriptions
-   */
-  public abstract void registerExtensions(@Nonnull T t, @Nonnull final DomExtensionsRegistrar registrar);
+	/**
+	 * @param t         DOM element where new children may be added to
+	 * @param registrar a place to register your own DOM children descriptions
+	 */
+	public abstract void registerExtensions(@Nonnull T t, @Nonnull final DomExtensionsRegistrar registrar);
 }

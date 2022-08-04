@@ -30,7 +30,6 @@ import consulo.project.Project;
  */
 public class DomExtenderEP extends AbstractExtensionPointBean {
   private static final Logger LOG = Logger.getInstance("#DomExtenderEP");
-  public static final ExtensionPointName<DomExtenderEP> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.extender");
 
   @Attribute("domClass")
   public String domClassName;

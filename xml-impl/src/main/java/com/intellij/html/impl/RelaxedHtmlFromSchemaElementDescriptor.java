@@ -23,7 +23,6 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import consulo.component.extension.Extensions;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
@@ -35,7 +34,6 @@ import javax.annotation.Nullable;
  */
 public class RelaxedHtmlFromSchemaElementDescriptor extends XmlElementDescriptorImpl
 {
-
 	RelaxedHtmlFromSchemaElementDescriptor(XmlTag tag)
 	{
 		super(tag);
@@ -85,7 +83,7 @@ public class RelaxedHtmlFromSchemaElementDescriptor extends XmlElementDescriptor
 		{
 			return descriptors;
 		}
-		for(XmlAttributeDescriptorsProvider provider : Extensions.getExtensions(XmlAttributeDescriptorsProvider.EP_NAME))
+		for(XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList())
 		{
 			descriptors = ArrayUtil.mergeArrays(descriptors, provider.getAttributeDescriptors(context), XmlAttributeDescriptor.ARRAY_FACTORY);
 		}

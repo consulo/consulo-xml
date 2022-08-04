@@ -17,23 +17,21 @@ package consulo.xml.util.xml.ui;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
+import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
 import consulo.ide.ServiceManager;
-import consulo.component.extension.ExtensionPointName;
-import consulo.ide.impl.idea.util.Consumer;
+import consulo.ide.impl.idea.util.Function;
+import consulo.project.Project;
 import consulo.ui.ex.awt.ColumnInfo;
+import consulo.ui.ex.awt.UserActivityWatcher;
+import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.Required;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
-import consulo.ide.impl.idea.util.Function;
-import consulo.project.Project;
-import consulo.ui.ex.awt.UserActivityWatcher;
-import consulo.util.lang.reflect.ReflectionUtil;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.table.TableCellEditor;
 import java.lang.reflect.Method;
@@ -44,9 +42,6 @@ import java.lang.reflect.Type;
  */
 @ServiceAPI(ComponentScope.APPLICATION)
 public abstract class DomUIFactory {
-
-  public final static ExtensionPointName<Consumer<DomUIFactory>> EXTENSION_POINT_NAME = ExtensionPointName.create("com.intellij.dom.uiControlsProvider");
-
   public static Method GET_VALUE_METHOD = ReflectionUtil.getMethod(GenericDomValue.class, "getValue");
   public static Method SET_VALUE_METHOD = findMethod(GenericDomValue.class, "setValue");
   public static Method GET_STRING_METHOD = ReflectionUtil.getMethod(GenericDomValue.class, "getStringValue");

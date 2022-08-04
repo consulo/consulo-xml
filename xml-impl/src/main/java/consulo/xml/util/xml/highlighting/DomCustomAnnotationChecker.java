@@ -15,6 +15,8 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.util.xml.DomElement;
 import consulo.component.extension.ExtensionPointName;
 
@@ -29,8 +31,9 @@ import java.util.List;
  *
  * @author peter
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class DomCustomAnnotationChecker<T extends Annotation> {
-  public static final ExtensionPointName<DomCustomAnnotationChecker> EP_NAME = ExtensionPointName.create("com.intellij.xml.dom.customAnnotationChecker");
+  public static final ExtensionPointName<DomCustomAnnotationChecker> EP_NAME = ExtensionPointName.create(DomCustomAnnotationChecker.class);
   
   @Nonnull
   public abstract Class<T> getAnnotationClass();

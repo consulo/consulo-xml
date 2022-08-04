@@ -143,26 +143,26 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
   }
 
   @Nullable
+  @SuppressWarnings("unchecked")
   private DomExtensionsRegistrarImpl runDomExtenders() {
-    DomExtensionsRegistrarImpl registrar = null;
+    DomExtensionsRegistrarImpl registrar = new DomExtensionsRegistrarImpl();
     final DomElement domElement = myInvocationHandler.getProxy();
     final Project project = myInvocationHandler.getManager().getProject();
-    for (final DomExtenderEP extenderEP : DomExtenderEP.EP_NAME.getExtensionList()) {
-      registrar = extenderEP.extend(project, domElement, registrar);
+    for (final DomExtender extender : project.getApplication().getExtensionList(DomExtender.class)) {
+      extender.registerExtensions(domElement, registrar);
     }
 
     final AbstractDomChildDescriptionImpl description = myInvocationHandler.getChildDescription();
     if (description != null) {
       final List<DomExtender> extenders = description.getUserData(DomExtensionImpl.DOM_EXTENDER_KEY);
       if (extenders != null) {
-        if (registrar == null) registrar = new DomExtensionsRegistrarImpl();
         for (final DomExtender extender : extenders) {
           //noinspection unchecked
           extender.registerExtensions(domElement, registrar);
         }
       }
     }
-    return registrar;
+    return registrar.isEmpty() ? null : registrar;
   }
 
   public XmlElement getNameElement(DomElement element) {

@@ -16,6 +16,7 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.document.event.DocumentAdapter;
@@ -25,7 +26,6 @@ import consulo.fileEditor.highlight.HighlightingPass;
 import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPassManager;
 import consulo.ide.impl.idea.codeInsight.daemon.impl.DefaultHighlightInfoProcessor;
 import consulo.ide.impl.idea.openapi.editor.impl.EditorComponentImpl;
-import consulo.ide.impl.idea.util.Consumer;
 import consulo.ide.impl.idea.util.Function;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
@@ -34,11 +34,13 @@ import consulo.ui.ex.awt.table.BooleanTableCellEditor;
 import consulo.ui.ex.event.UserActivityListener;
 import consulo.util.collection.ClassMap;
 import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.xml.dom.DomUIControlsProvider;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManagerImpl;
 import consulo.xml.util.xml.highlighting.DomElementsErrorPanel;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -59,21 +61,15 @@ public class DomUIFactoryImpl extends DomUIFactory {
   private final ClassMap<Function<DomWrapper<String>, BaseControl>> myCustomControlCreators = new ClassMap<Function<DomWrapper<String>, BaseControl>>();
   private final ClassMap<Function<DomElement, TableCellEditor>> myCustomCellEditorCreators = new ClassMap<Function<DomElement, TableCellEditor>>();
 
-  public DomUIFactoryImpl() {
-    final Function<DomElement, TableCellEditor> booleanCreator = new Function<DomElement, TableCellEditor>() {
-      public TableCellEditor fun(final DomElement domElement) {
-        return new BooleanTableCellEditor();
-      }
-    };
+  @Inject
+  public DomUIFactoryImpl(Application application) {
+    final Function<DomElement, TableCellEditor> booleanCreator = domElement -> new BooleanTableCellEditor();
     registerCustomCellEditor(Boolean.class, booleanCreator);
     registerCustomCellEditor(boolean.class, booleanCreator);
-    registerCustomCellEditor(String.class, new Function<DomElement, TableCellEditor>() {
-      public TableCellEditor fun(final DomElement domElement) {
-        return new DefaultCellEditor(removeBorder(new JTextField()));
-      }
-    });
-    for (Consumer<DomUIFactory> extension : EXTENSION_POINT_NAME.getExtensionList()) {
-      extension.consume(this);
+    registerCustomCellEditor(String.class, domElement -> new DefaultCellEditor(removeBorder(new JTextField())));
+
+    for (DomUIControlsProvider extension : application.getExtensionPoint(DomUIControlsProvider.class)) {
+      extension.register(this);
     }
   }
 

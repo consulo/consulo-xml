@@ -43,7 +43,7 @@ public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
   private AnnotationHolder myHolder;
 
   @Override
-  public synchronized void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
+  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
     myHolder = holder;
     try {
       psiElement.accept(this);
