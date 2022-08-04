@@ -16,6 +16,8 @@
 
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.ide.ServiceManager;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -29,6 +31,7 @@ import javax.annotation.Nonnull;
 import java.util.EventListener;
 import java.util.List;
 
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomElementAnnotationsManager {
 
   public static DomElementAnnotationsManager getInstance(Project project) {

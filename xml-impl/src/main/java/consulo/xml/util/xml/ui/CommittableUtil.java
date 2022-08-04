@@ -15,6 +15,9 @@
  */
 package consulo.xml.util.xml.ui;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -24,6 +27,8 @@ import javax.annotation.Nullable;
  * @author peter
  */
 @Singleton
+@ServiceAPI(ComponentScope.PROJECT)
+@ServiceImpl
 public class CommittableUtil {
 
   public void commit(@Nonnull Committable committable) {

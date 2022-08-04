@@ -10,9 +10,6 @@
 
 	<depends optional="true">com.intellij.spellchecker</depends>
 
-	<import path="/META-INF/XmlDom.xml" />
-	<import path="/META-INF/relaxng-plugin.xml" />
-
 	<actions>
 
 		<group id="ToolsXmlGroup" popup="true" class="com.intellij.xml.actions.XmlActionsGroup">
@@ -71,10 +68,43 @@
 				description="Generate a new XML tag according to schema information">
 			<add-to-group group-id="GenerateGroup" anchor="first"/>
 		</action>
+
+		<action id="DomElementsTreeView.GotoDomElementDeclarationAction"
+				class="consulo.xml.util.xml.tree.actions.GotoDomElementDeclarationAction"
+				text="Goto Element"
+				use-shortcut-of="EditSource"/>
+
+		<action id="DomElementsTreeView.AddElement" class="consulo.xml.util.xml.tree.actions.AddElementInCollectionAction"
+				text="Insert element">
+			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
+		</action>
+		<action id="DomElementsTreeView.DeleteElement" class="consulo.xml.util.xml.tree.actions.DeleteDomElement"
+				text="Delete element" use-shortcut-of="$Delete"/>
+
+		<group id="DomElementsTreeView.AddElementGroup" class="consulo.xml.util.xml.tree.actions.AddDomElementActionGroup"/>
+
+		<group id="DomElementsTreeView.TreePopup">
+			<reference ref="DomElementsTreeView.GotoDomElementDeclarationAction"/>
+
+			<separator/>
+			<reference ref="DomElementsTreeView.AddElementGroup"/>
+			<reference ref="DomElementsTreeView.DeleteElement"/>
+		</group>
+
+		<group id="DomCollectionControl">
+			<action id="DomCollectionControl.Add" class="consulo.xml.util.xml.ui.DomCollectionControl$AddAction" text="Add">
+				<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
+			</action>
+			<action id="DomCollectionControl.Edit" class="consulo.xml.util.xml.ui.DomCollectionControl$EditAction" text="Edit" use-shortcut-of="EditSource"/>
+			<action id="DomCollectionControl.Remove" class="consulo.xml.util.xml.ui.DomCollectionControl$RemoveAction" text="Remove" use-shortcut-of="$Delete"/>
+		</group>
 	</actions>
 
 
 	<extensions defaultExtensionNs="consulo">
+		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
+
+		<patterns.patternClass className="consulo.xml.patterns.DomPatterns" alias="dom"/>
 
 		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
 

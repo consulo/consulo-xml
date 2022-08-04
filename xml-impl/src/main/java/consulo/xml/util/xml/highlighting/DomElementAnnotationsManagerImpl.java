@@ -16,6 +16,7 @@
 
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.component.util.ModificationTracker;
 import consulo.language.editor.inspection.scheme.*;
 import consulo.language.editor.rawHighlight.HighlightDisplayKey;
@@ -50,6 +51,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Singleton
+@ServiceImpl
 public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManager
 {
 	public static final Object LOCK = new Object();

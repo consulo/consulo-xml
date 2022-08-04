@@ -16,6 +16,9 @@
 
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -23,6 +26,7 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  * @see DomManager#getConverterManager()
  */
+@ServiceAPI(ComponentScope.APPLICATION)
 public interface ConverterManager {
 
   void addConverter(Class clazz, Converter converter);

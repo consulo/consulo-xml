@@ -8,6 +8,6 @@ import consulo.annotation.component.ExtensionAPI;
  * @since 03-Aug-22
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
-public interface DomElementImplementationProvider extends ImplementationProvider
+public interface DomElementImplementationProvider<Base, Impl extends Base> extends ImplementationProvider<Base, Impl>
 {
 }

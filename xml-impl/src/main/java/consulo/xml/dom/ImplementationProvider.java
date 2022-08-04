@@ -6,11 +6,11 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 03-Aug-22
  */
-public interface ImplementationProvider<Result>
+public interface ImplementationProvider<Base, Impl extends Base>
 {
 	@Nonnull
-	Class<?> getInterfaceClass();
+	Class<Base> getInterfaceClass();
 
 	@Nonnull
-	Class<Result> getImplementationClass();
+	Class<Impl> getImplementationClass();
 }

@@ -15,52 +15,77 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.language.pom.PomTarget;
-import consulo.language.impl.psi.DelegatePsiTarget;
-import consulo.language.psi.PsiElement;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
 import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.extension.LanguageExtension;
+import consulo.language.impl.psi.DelegatePsiTarget;
+import consulo.language.pom.PomTarget;
 import consulo.language.pom.PomTargetPsiElement;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
+import consulo.xml.lang.xml.XMLLanguage;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
  * @author Dmitry Avdeev
  */
-public class DomDocumentationProvider implements DocumentationProvider {
+@ExtensionImpl(id = "dom")
+public class DomDocumentationProvider implements DocumentationProvider, LanguageExtension
+{
+	public String getQuickNavigateInfo(final PsiElement element, PsiElement originalElement)
+	{
+		return null;
+	}
 
-  public String getQuickNavigateInfo(final PsiElement element, PsiElement originalElement) {
-    return null;
-  }
+	public List<String> getUrlFor(final PsiElement element, final PsiElement originalElement)
+	{
+		return null;
+	}
 
-  public List<String> getUrlFor(final PsiElement element, final PsiElement originalElement) {
-    return null;
-  }
+	public String generateDoc(PsiElement element, final PsiElement originalElement)
+	{
+		if(element instanceof PomTargetPsiElement)
+		{
+			PomTarget target = ((PomTargetPsiElement) element).getTarget();
+			if(target instanceof DelegatePsiTarget)
+			{
+				element = ((DelegatePsiTarget) target).getNavigationElement();
+			}
+		}
+		final DomElement domElement = DomUtil.getDomElement(element);
+		if(domElement == null)
+		{
+			return null;
+		}
+		ElementPresentationTemplate template = domElement.getChildDescription().getPresentationTemplate();
+		if(template != null)
+		{
+			String documentation = template.createPresentation(domElement).getDocumentation();
+			if(documentation != null)
+			{
+				return documentation;
+			}
+		}
+		return null;
+	}
 
-  public String generateDoc(PsiElement element, final PsiElement originalElement) {
-    if (element instanceof PomTargetPsiElement) {
-      PomTarget target = ((PomTargetPsiElement)element).getTarget();
-      if (target instanceof DelegatePsiTarget) {
-        element = ((DelegatePsiTarget)target).getNavigationElement();
-      }
-    }
-    final DomElement domElement = DomUtil.getDomElement(element);
-    if (domElement == null) {
-      return null;
-    }
-    ElementPresentationTemplate template = domElement.getChildDescription().getPresentationTemplate();
-    if (template != null) {
-      String documentation = template.createPresentation(domElement).getDocumentation();
-      if (documentation != null) return documentation;
-    }
-    return null;
-  }
+	public PsiElement getDocumentationElementForLookupItem(final PsiManager psiManager, final Object object, final PsiElement element)
+	{
+		return null;
+	}
 
-  public PsiElement getDocumentationElementForLookupItem(final PsiManager psiManager, final Object object, final PsiElement element) {
-    return null;
-  }
+	public PsiElement getDocumentationElementForLink(final PsiManager psiManager, final String link, final PsiElement context)
+	{
+		return null;
+	}
 
-  public PsiElement getDocumentationElementForLink(final PsiManager psiManager, final String link, final PsiElement context) {
-    return null;
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 }

@@ -16,6 +16,7 @@
 
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.ide.impl.idea.openapi.fileEditor.ex.FileEditorManagerEx;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
@@ -36,6 +37,7 @@ import java.util.Set;
  * User: Sergey.Vasiliev
  */
 @Singleton
+@ServiceImpl
 public class DomElementsNavigationManagerImpl extends DomElementsNavigationManager {
   private final Map<String, DomElementNavigationProvider> myProviders = new HashMap<String, DomElementNavigationProvider>();
   private final Project myProject;

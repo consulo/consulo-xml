@@ -15,6 +15,8 @@
  */
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.application.presentation.TypePresentationService;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.util.Iconable;
@@ -39,6 +41,7 @@ import java.util.Map;
 /**
  * @author peter
  */
+@ServiceAPI(ComponentScope.APPLICATION)
 public abstract class ElementPresentationManager
 {
 	private static final Map<Class, Method> ourNameValueMethods = ConcurrentFactoryMap.createMap(key -> {

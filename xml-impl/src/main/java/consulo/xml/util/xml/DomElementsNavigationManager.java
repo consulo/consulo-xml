@@ -16,6 +16,8 @@
 
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
 import consulo.ide.ServiceManager;
 import consulo.project.Project;
 
@@ -24,6 +26,7 @@ import java.util.Set;
 /**
  * User: Sergey.Vasiliev
  */
+@ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomElementsNavigationManager {
   public static String DEFAULT_PROVIDER_NAME = "DEFAULT_PROVIDER_NAME";
 
@@ -36,6 +39,4 @@ public abstract class DomElementsNavigationManager {
   public abstract DomElementNavigationProvider getDomElementsNavigateProvider(String providerName);
 
   public abstract void registerDomElementsNavigateProvider(DomElementNavigationProvider provider);
-
-
 }

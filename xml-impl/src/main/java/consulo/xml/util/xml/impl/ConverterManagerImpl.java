@@ -1,5 +1,6 @@
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.application.Application;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.language.psi.path.PathReference;
@@ -19,6 +20,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author peter
  */
 @Singleton
+@ServiceImpl
 public class ConverterManagerImpl implements ConverterManager {
   private final ImplementationClassCache<ConverterImplementationProvider> myImplementationClassCache = new ImplementationClassCache<>(ConverterImplementationProvider.class);
 

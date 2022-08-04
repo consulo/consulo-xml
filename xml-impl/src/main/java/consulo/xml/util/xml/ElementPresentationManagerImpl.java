@@ -16,6 +16,7 @@
 
 package consulo.xml.util.xml;
 
+import consulo.annotation.component.ServiceImpl;
 import consulo.ide.impl.idea.util.Function;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
@@ -30,6 +31,7 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 @Singleton
+@ServiceImpl
 public class ElementPresentationManagerImpl extends ElementPresentationManager {
 
   @Nonnull
