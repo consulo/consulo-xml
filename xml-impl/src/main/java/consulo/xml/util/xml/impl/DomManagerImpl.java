@@ -19,8 +19,6 @@ import consulo.annotation.component.ServiceImpl;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.openapi.util.Factory;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.language.pom.PomManager;
 import consulo.language.pom.PomModel;
 import consulo.language.pom.PomModelAspect;
@@ -52,6 +50,7 @@ import consulo.virtualFileSystem.event.VirtualFileEvent;
 import consulo.virtualFileSystem.event.VirtualFileListener;
 import consulo.virtualFileSystem.event.VirtualFileMoveEvent;
 import consulo.virtualFileSystem.event.VirtualFilePropertyEvent;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.virtualFileSystem.util.VirtualFileVisitor;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
 import consulo.xml.ide.highlighter.DomSupportEnabled;
@@ -74,6 +73,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -212,7 +212,7 @@ public final class DomManagerImpl extends DomManager
 		}
 
 		final List<DomEvent> events = new ArrayList<>();
-		VfsUtilCore.visitChildrenRecursively(file, new VirtualFileVisitor()
+		VirtualFileUtil.visitChildrenRecursively(file, new VirtualFileVisitor()
 		{
 			@Override
 			public boolean visitFile(@Nonnull VirtualFile file)
@@ -543,15 +543,15 @@ public final class DomManagerImpl extends DomManager
 	}
 
 	@Override
-	public final <T extends DomElement> T createStableValue(final Factory<T> provider)
+	public final <T extends DomElement> T createStableValue(final Supplier<T> provider)
 	{
 		return createStableValue(provider, t -> t.isValid());
 	}
 
 	@Override
-	public final <T> T createStableValue(final Factory<T> provider, final Condition<T> validator)
+	public final <T> T createStableValue(final Supplier<T> provider, final Condition<T> validator)
 	{
-		final T initial = provider.create();
+		final T initial = provider.get();
 		assert initial != null;
 		final StableInvocationHandler handler = new StableInvocationHandler<>(initial, provider, validator);
 

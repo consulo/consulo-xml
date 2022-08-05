@@ -15,9 +15,7 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.ui.image.Image;
-import consulo.util.lang.function.Condition;
 import consulo.util.lang.Pair;
 
 import javax.swing.*;
@@ -25,17 +23,18 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author peter
  */
 public class ComboTableCellEditor extends DefaultCellEditor {
   private final boolean myNullable;
-  private final Factory<List<Pair<String, Image>>> myDataFactory;
+  private final Supplier<List<Pair<String, Image>>> myDataFactory;
   private Map<String, consulo.ui.image.Image> myData;
   private static final Pair<String,Icon> EMPTY = Pair.create(" ", null);
 
-  public ComboTableCellEditor(Factory<List<Pair<String, Image>>> dataFactory, final boolean nullable) {
+  public ComboTableCellEditor(Supplier<List<Pair<String, Image>>> dataFactory, final boolean nullable) {
     super(new JComboBox());
     myDataFactory = dataFactory;
     myNullable = nullable;
@@ -43,11 +42,7 @@ public class ComboTableCellEditor extends DefaultCellEditor {
     JComboBox comboBox = (JComboBox)editorComponent;
     comboBox.setBorder(null);
     comboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
-    ComboControl.initComboBox(comboBox, new Condition<String>() {
-      public boolean value(final String object) {
-        return myData != null && myData.containsKey(object) || myNullable && EMPTY.first == object;
-      }
-    });
+    ComboControl.initComboBox(comboBox, object -> myData != null && myData.containsKey(object) || myNullable && EMPTY.first == object);
   }
 
   public ComboTableCellEditor(Class<? extends Enum> anEnum, final boolean nullable) {
@@ -60,7 +55,7 @@ public class ComboTableCellEditor extends DefaultCellEditor {
   }
 
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    final List<Pair<String, consulo.ui.image.Image>> list = myDataFactory.create();
+    final List<Pair<String, consulo.ui.image.Image>> list = myDataFactory.get();
     myData = new HashMap<>();
 
     final JComboBox comboBox = (JComboBox)editorComponent;

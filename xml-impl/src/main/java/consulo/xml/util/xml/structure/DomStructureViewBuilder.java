@@ -2,12 +2,6 @@
 
 package consulo.xml.util.xml.structure;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomService;
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.TextEditor;
@@ -15,14 +9,20 @@ import consulo.fileEditor.structureView.StructureView;
 import consulo.fileEditor.structureView.StructureViewModel;
 import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
 import consulo.ide.impl.idea.ide.structureView.newStructureView.StructureViewComponent;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.project.ui.view.tree.AbstractTreeNode;
 import consulo.util.concurrent.Promise;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomManager;
+import consulo.xml.util.xml.DomService;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Function;
 
 public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 {
@@ -62,7 +62,7 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 						{
 							for(DomElement curElement = domElement; curElement != null; curElement = curElement.getParent())
 							{
-								if(myDescriptor.fun(curElement) == DomService.StructureViewMode.SHOW)
+								if(myDescriptor.apply(curElement) == DomService.StructureViewMode.SHOW)
 								{
 									return super.expandPathToElement(curElement.getXmlElement());
 								}

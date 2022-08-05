@@ -23,7 +23,6 @@ import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
 import consulo.application.util.UserDataCache;
 import consulo.fileEditor.structureView.StructureViewBuilder;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileEx;
@@ -52,6 +51,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago

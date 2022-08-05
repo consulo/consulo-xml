@@ -16,22 +16,17 @@
 
 package consulo.xml.util.xml.structure;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.xml.ide.structureView.impl.xml.XmlFileTreeElement;
-import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.codeEditor.Editor;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.ide.impl.idea.util.Function;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomElementsNavigationManager;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomService;
 import consulo.disposer.Disposable;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.xml.ide.structureView.impl.xml.XmlFileTreeElement;
+import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago

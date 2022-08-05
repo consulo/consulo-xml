@@ -15,62 +15,66 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
+import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.ast.ASTNode;
 import consulo.language.ast.TokenSet;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.psi.xml.XmlContentParticle;
 import consulo.xml.psi.xml.XmlElementContentGroup;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlToken;
-import consulo.ide.impl.idea.util.Function;
-import consulo.util.collection.ContainerUtil;
-import com.intellij.xml.XmlElementDescriptor;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
-import consulo.language.ast.ASTNode;
-import consulo.language.psi.PsiElement;
 
-import javax.annotation.Nonnull;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlElementContentGroupImpl  extends XmlElementImpl implements XmlElementContentGroup,
-                                                                           XmlElementType {
+public class XmlElementContentGroupImpl extends XmlElementImpl implements XmlElementContentGroup,
+		XmlElementType
+{
 
-  private NotNullLazyValue<XmlContentParticle[]> myParticles = new NotNullLazyValue<XmlContentParticle[]>() {
-    @Nonnull
-    @Override
-    protected XmlContentParticle[] compute() {
-      return ContainerUtil.map(getChildren(TokenSet.create(XML_ELEMENT_CONTENT_GROUP, XML_NAME)), new Function<ASTNode, XmlContentParticle>() {
-        @Override
-        public XmlContentParticle fun(ASTNode astNode) {
-          PsiElement element = astNode.getPsi();
-          assert element != null;
-          return element instanceof XmlToken ? new XmlContentParticleImpl((XmlToken)element) : (XmlContentParticle)element;
-        }
-      }, new XmlContentParticle[0]);
-    }
-  };
+	private Supplier<XmlContentParticle[]> myParticles = LazyValue.notNull(() -> {
+		return ContainerUtil.map(getChildren(TokenSet.create(XML_ELEMENT_CONTENT_GROUP, XML_NAME)), new Function<ASTNode, XmlContentParticle>()
+		{
+			@Override
+			public XmlContentParticle apply(ASTNode astNode)
+			{
+				PsiElement element = astNode.getPsi();
+				assert element != null;
+				return element instanceof XmlToken ? new XmlContentParticleImpl((XmlToken) element) : (XmlContentParticle) element;
+			}
+		}, new XmlContentParticle[0]);
+	});
 
-  public XmlElementContentGroupImpl() {
-    super(XML_ELEMENT_CONTENT_GROUP);
-  }
+	public XmlElementContentGroupImpl()
+	{
+		super(XML_ELEMENT_CONTENT_GROUP);
+	}
 
-  @Override
-  public Type getType() {
-    return findElementByTokenType(XML_BAR) == null ? Type.SEQUENCE : Type.CHOICE;
-  }
+	@Override
+	public Type getType()
+	{
+		return findElementByTokenType(XML_BAR) == null ? Type.SEQUENCE : Type.CHOICE;
+	}
 
-  @Override
-  public Quantifier getQuantifier() {
-    return XmlContentParticleImpl.getQuantifierImpl(this);
-  }
+	@Override
+	public Quantifier getQuantifier()
+	{
+		return XmlContentParticleImpl.getQuantifierImpl(this);
+	}
 
-  @Override
-  public XmlContentParticle[] getSubParticles() {
-    return myParticles.getValue();
-  }
+	@Override
+	public XmlContentParticle[] getSubParticles()
+	{
+		return myParticles.get();
+	}
 
-  @Override
-  public XmlElementDescriptor getElementDescriptor() {
-    return null;
-  }
+	@Override
+	public XmlElementDescriptor getElementDescriptor()
+	{
+		return null;
+	}
 }

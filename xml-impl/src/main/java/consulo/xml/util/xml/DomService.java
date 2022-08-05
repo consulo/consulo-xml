@@ -19,21 +19,20 @@ package consulo.xml.util.xml;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.fileEditor.structureView.StructureViewBuilder;
+import consulo.ide.ServiceManager;
+import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.xml.psi.xml.XmlFile;
-import consulo.ide.impl.idea.util.Function;
-import consulo.ide.ServiceManager;
-import consulo.util.lang.function.Condition;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago

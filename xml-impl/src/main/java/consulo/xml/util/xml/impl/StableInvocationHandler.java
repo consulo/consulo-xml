@@ -15,20 +15,20 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.MergedObject;
-import consulo.xml.util.xml.StableElement;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.proxy.advanced.ObjectMethods;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.function.Condition;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
+import consulo.xml.util.xml.MergedObject;
+import consulo.xml.util.xml.StableElement;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -37,10 +37,10 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
   private T myOldValue;
   private T myCachedValue;
   private final Set<Class> myClasses;
-  private final Factory<T> myProvider;
+  private final Supplier<T> myProvider;
   private final Condition<T> myValidator;
 
-  public StableInvocationHandler(final T initial, final Factory<T> provider, Condition<T> validator) {
+  public StableInvocationHandler(final T initial, final Supplier<T> provider, Condition<T> validator) {
     myProvider = provider;
     myCachedValue = initial;
     myOldValue = initial;
@@ -72,7 +72,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
       if (myCachedValue != null) {
         myOldValue = myCachedValue;
       }
-      myCachedValue = myProvider.create();
+      myCachedValue = myProvider.get();
       if (isNotValid(myCachedValue)) {
         if (ObjectMethods.EQUALS_METHOD.equals(method)) {
 
@@ -117,7 +117,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
   }
 
   public final void revalidate() {
-    final T t = myProvider.create();
+    final T t = myProvider.get();
     if (!isNotValid(t) && !t.equals(myCachedValue)) {
       myCachedValue = t;
     }
@@ -131,7 +131,7 @@ class StableInvocationHandler<T> implements InvocationHandler, StableElement {
 
   public final T getWrappedElement() {
     if (isNotValid(myCachedValue)) {
-      myCachedValue = myProvider.create();
+      myCachedValue = myProvider.get();
     }
     return myCachedValue;
   }

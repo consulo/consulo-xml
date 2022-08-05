@@ -18,7 +18,6 @@ package consulo.xml.util.xml.structure;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.TreeElement;
-import consulo.ide.impl.idea.util.Function;
 import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
 import consulo.xml.util.xml.*;
@@ -26,6 +25,7 @@ import consulo.xml.util.xml.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago
@@ -62,7 +62,7 @@ public class DomStructureTreeElement implements StructureViewTreeElement, ItemPr
     final DomElementVisitor elementVisitor = new DomElementVisitor() {
       public void visitDomElement(final DomElement element) {
         if (element instanceof GenericDomValue) return;
-        final DomService.StructureViewMode viewMode = myDescriptor.fun(element);
+        final DomService.StructureViewMode viewMode = myDescriptor.apply(element);
         switch (viewMode) {
           case SHOW:
             result.add(createChildElement(element));

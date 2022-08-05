@@ -17,7 +17,7 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.annotation.component.ServiceImpl;
-import consulo.ide.impl.idea.openapi.fileEditor.ex.FileEditorManagerEx;
+import consulo.fileEditor.FileEditorManager;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
@@ -98,7 +98,7 @@ public class DomElementsNavigationManagerImpl extends DomElementsNavigationManag
           OpenFileDescriptorFactory.getInstance(myProject).builder(file).offset(xmlElement.getTextOffset()).build() :
           OpenFileDescriptorFactory.getInstance(myProject).builder(file).build();
 
-      FileEditorManagerEx.getInstanceEx(myProject).openTextEditor(fileDescriptor, requestFocus);
+      FileEditorManager.getInstance(myProject).openTextEditor(fileDescriptor, requestFocus);
     }
 
     public boolean canNavigate(DomElement domElement) {

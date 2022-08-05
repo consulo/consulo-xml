@@ -29,19 +29,18 @@ import consulo.component.macro.ReplacePathToMacroMap;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
-import consulo.ide.impl.idea.openapi.util.AtomicNotNullLazyValue;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
-import consulo.ide.impl.idea.openapi.util.io.FileUtil;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.Lists;
 import consulo.util.collection.MultiMap;
+import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
+import consulo.util.lang.lazy.LazyValue;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.psi.xml.XmlFile;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
@@ -52,6 +51,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx implements PersistentStateComponent<Element>
 {
@@ -75,21 +75,13 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	private final Set<String> myIgnoredResources = new TreeSet<>();
 	private final Set<String> myStandardIgnoredResources = new TreeSet<>();
 
-	private final NotNullLazyValue<Map<String, Map<String, Resource>>> myStandardResources = new AtomicNotNullLazyValue<Map<String, Map<String, Resource>>>()
-	{
-		@Nonnull
-		@Override
-		protected Map<String, Map<String, Resource>> compute()
-		{
-			return computeStdResources();
-		}
-	};
+	private final Supplier<Map<String, Map<String, Resource>>> myStandardResources = LazyValue.atomicNotNull(() -> computeStdResources());
 
 	private final CachedValueProvider<MultiMap<String, String>> myUrlByNamespaceProvider = () ->
 	{
 		MultiMap<String, String> result = new MultiMap<>();
 
-		Collection<Map<String, Resource>> values = myStandardResources.getValue().values();
+		Collection<Map<String, Resource>> values = myStandardResources.get().values();
 		for(Map<String, Resource> map : values)
 		{
 			for(Map.Entry<String, Resource> entry : map.entrySet())
@@ -97,7 +89,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 				String url = entry.getValue().getResourceUrl();
 				if(url != null)
 				{
-					VirtualFile file = VfsUtilCore.findRelativeFile(url, null);
+					VirtualFile file = VirtualFileUtil.findRelativeFile(url, null);
 					if(file != null)
 					{
 						String namespace = XmlNamespaceIndex.computeNamespace(file);
@@ -222,7 +214,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	@Nullable
 	public String getStdResource(@Nonnull String url, @Nullable String version)
 	{
-		Map<String, Resource> map = getMap(myStandardResources.getValue(), version, false);
+		Map<String, Resource> map = getMap(myStandardResources.get(), version, false);
 		if(map != null)
 		{
 			Resource resource = map.get(url);
@@ -299,7 +291,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 
 		if(includeStandard)
 		{
-			addResourcesFromMap(result, version, myStandardResources.getValue());
+			addResourcesFromMap(result, version, myStandardResources.get());
 		}
 
 		return ArrayUtil.toStringArray(result);
@@ -469,7 +461,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 		}
 
 		// ensure ignored resources are loaded
-		myStandardResources.getValue();
+		myStandardResources.get();
 		return myStandardIgnoredResources.contains(url) || isImplicitNamespaceDescriptor(url);
 	}
 
@@ -489,7 +481,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	public String[] getIgnoredResources()
 	{
 		// ensure ignored resources are loaded
-		myStandardResources.getValue();
+		myStandardResources.get();
 
 		if(myIgnoredResources.isEmpty())
 		{
@@ -641,7 +633,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 
 	Collection<Map<String, Resource>> getStandardResources()
 	{
-		return myStandardResources.getValue().values();
+		return myStandardResources.get().values();
 	}
 
 	private static ExternalResourceManagerExImpl getProjectResources(Project project)

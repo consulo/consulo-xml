@@ -19,7 +19,6 @@ package consulo.xml.util.xml.highlighting;
 import consulo.application.presentation.TypePresentationService;
 import consulo.codeEditor.Editor;
 import consulo.dataContext.DataManager;
-import consulo.ide.impl.idea.util.Consumer;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -40,6 +39,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
@@ -99,7 +99,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
 
   private void applyFix() {
     chooseParent(myParents, new Consumer<DomElement>() {
-      public void consume(final DomElement parent) {
+      public void accept(final DomElement parent) {
         new WriteCommandAction.Simple(parent.getManager().getProject(), DomUtil.getFile(parent)) {
           protected void run() throws Throwable {
             doFix(parent, myChildDescription, myNewName);
@@ -122,12 +122,12 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
       case 0:
         return;
       case 1:
-        onChoose.consume(files.iterator().next());
+        onChoose.accept(files.iterator().next());
         return;
       default:
         JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<DomElement>(DomBundle.message("choose.file"), files) {
           public PopupStep onChosen(final DomElement selectedValue, final boolean finalChoice) {
-            onChoose.consume(selectedValue);
+            onChoose.accept(selectedValue);
             return super.onChosen(selectedValue, finalChoice);
           }
 

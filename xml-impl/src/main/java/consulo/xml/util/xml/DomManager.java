@@ -21,7 +21,6 @@ import consulo.component.util.CompositeModificationTracker;
 import consulo.component.util.ModificationTracker;
 import consulo.disposer.Disposable;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.psi.PsiManager;
@@ -44,6 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -135,9 +135,9 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * @param provider provides values to be wrapped
 	 * @return stable DOM element
 	 */
-	public abstract <T extends DomElement> T createStableValue(Factory<T> provider);
+	public abstract <T extends DomElement> T createStableValue(Supplier<T> provider);
 
-	public abstract <T> T createStableValue(final Factory<T> provider, final Condition<T> validator);
+	public abstract <T> T createStableValue(final Supplier<T> provider, final Condition<T> validator);
 
 	/**
 	 * @return {@link ConverterManager} instance

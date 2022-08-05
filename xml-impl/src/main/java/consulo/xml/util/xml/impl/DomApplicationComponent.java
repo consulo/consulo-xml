@@ -37,6 +37,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -57,24 +58,8 @@ public class DomApplicationComponent
 		return desc == null ? null : desc.createAnnotator();
 	});
 
-	private final SofterCache<Type, StaticGenericInfo> myGenericInfos = SofterCache.create(new NotNullFunction<Type, StaticGenericInfo>()
-	{
-		@Nonnull
-		@Override
-		public StaticGenericInfo fun(Type type)
-		{
-			return new StaticGenericInfo(type);
-		}
-	});
-	private final SofterCache<Class, InvocationCache> myInvocationCaches = SofterCache.create(new NotNullFunction<Class, InvocationCache>()
-	{
-		@Nonnull
-		@Override
-		public InvocationCache fun(Class key)
-		{
-			return new InvocationCache(key);
-		}
-	});
+	private final SofterCache<Type, StaticGenericInfo> myGenericInfos = SofterCache.create(type -> new StaticGenericInfo(type));
+	private final SofterCache<Class, InvocationCache> myInvocationCaches = SofterCache.create(key -> new InvocationCache(key));
 	private final Map<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions = ConcurrentFactoryMap.createMap(key -> new VisitorDescription(key));
 
 	@Inject
