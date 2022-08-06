@@ -19,7 +19,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
-import consulo.ide.impl.idea.openapi.editor.EditorModificationUtil;
+import consulo.codeEditor.util.EditorModificationUtil;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.action.TypedHandlerDelegate;

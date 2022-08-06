@@ -18,7 +18,7 @@ package com.intellij.xml.util;
 import com.intellij.html.impl.providers.MicrodataReferenceProvider;
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.psi.impl.source.resolve.reference.ArbitraryPlaceUrlReferenceProvider;
+import consulo.ide.impl.psi.impl.source.resolve.reference.CommentsReferenceContributor;
 import consulo.language.Language;
 import consulo.language.impl.psi.path.WebReference;
 import consulo.language.pattern.PlatformPatterns;
@@ -43,72 +43,79 @@ import static consulo.xml.patterns.XmlPatterns.*;
  * @author peter
  */
 @ExtensionImpl
-public class XmlReferenceContributor extends PsiReferenceContributor {
-  @Override
-  public void registerReferenceProviders(@Nonnull final PsiReferenceRegistrar registrar) {
+public class XmlReferenceContributor extends PsiReferenceContributor
+{
+	@Override
+	public void registerReferenceProviders(@Nonnull final PsiReferenceRegistrar registrar)
+	{
 
-    final IdReferenceProvider idReferenceProvider = new IdReferenceProvider();
+		final IdReferenceProvider idReferenceProvider = new IdReferenceProvider();
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, idReferenceProvider.getIdForAttributeNames(), idReferenceProvider.getIdForFilter(), true, idReferenceProvider,
-        PsiReferenceRegistrar.DEFAULT_PRIORITY);
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, idReferenceProvider.getIdForAttributeNames(), idReferenceProvider.getIdForFilter(), true, idReferenceProvider,
+				PsiReferenceRegistrar.DEFAULT_PRIORITY);
 
-    final DtdReferencesProvider dtdReferencesProvider = new DtdReferencesProvider();
-    //registerReferenceProvider(null, XmlEntityDecl.class,dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlEntityRef.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlDoctype.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementDecl.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlAttlistDecl.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementContentSpec.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlToken.class), dtdReferencesProvider);
-    registrar.registerReferenceProvider(xmlAttributeValue(), new ArbitraryPlaceUrlReferenceProvider(), PsiReferenceRegistrar.LOWER_PRIORITY);
+		final DtdReferencesProvider dtdReferencesProvider = new DtdReferencesProvider();
+		//registerReferenceProvider(null, XmlEntityDecl.class,dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlEntityRef.class), dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlDoctype.class), dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementDecl.class), dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlAttlistDecl.class), dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementContentSpec.class), dtdReferencesProvider);
+		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlToken.class), dtdReferencesProvider);
 
+		PsiReferenceProviderByType commentsReference = PsiReferenceProviderByType.forType(CommentsReferenceContributor.COMMENTS_REFERENCE_PROVIDER_TYPE);
 
-    URIReferenceProvider uriProvider = new URIReferenceProvider();
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, null, dtdReferencesProvider.getSystemReferenceFilter(), uriProvider);
+		registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"href"}, new ScopeFilter(new ParentElementFilter(new AndFilter(new AndFilter(XmlTagFilter.INSTANCE, new
-        XmlTextFilter("include")), new NamespaceFilter(XmlUtil.XINCLUDE_URI)), 2)), true, new XmlBaseReferenceProvider(true));
+		URIReferenceProvider uriProvider = new URIReferenceProvider();
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, null, dtdReferencesProvider.getSystemReferenceFilter(), uriProvider);
 
-    registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("base").withNamespace(XmlUtil.XML_NAMESPACE_URI), new XmlBaseReferenceProvider(false));
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"href"}, new ScopeFilter(new ParentElementFilter(new AndFilter(new AndFilter(XmlTagFilter.INSTANCE, new
+				XmlTextFilter("include")), new NamespaceFilter(XmlUtil.XINCLUDE_URI)), 2)), true, new XmlBaseReferenceProvider(true));
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{MicrodataUtil.ITEM_TYPE}, null, new MicrodataReferenceProvider());
+		registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("base").withNamespace(XmlUtil.XML_NAMESPACE_URI), new XmlBaseReferenceProvider(false));
 
-    final SchemaReferencesProvider schemaReferencesProvider = new SchemaReferencesProvider();
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{MicrodataUtil.ITEM_TYPE}, null, new MicrodataReferenceProvider());
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, schemaReferencesProvider.getCandidateAttributeNamesForSchemaReferences(), new ScopeFilter(new ParentElementFilter(new
-        NamespaceFilter(XmlUtil.SCHEMA_URIS), 2)), schemaReferencesProvider);
+		final SchemaReferencesProvider schemaReferencesProvider = new SchemaReferencesProvider();
 
-    registrar.registerReferenceProvider(xmlAttributeValue(xmlAttribute().withNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI)).
-        withLocalName("type"), schemaReferencesProvider);
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, schemaReferencesProvider.getCandidateAttributeNamesForSchemaReferences(), new ScopeFilter(new ParentElementFilter(new
+				NamespaceFilter(XmlUtil.SCHEMA_URIS), 2)), schemaReferencesProvider);
 
-    registrar.registerReferenceProvider(xmlAttributeValue(xmlAttribute().withNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI)).
-        withLocalName("noNamespaceSchemaLocation", "schemaLocation"), uriProvider);
+		registrar.registerReferenceProvider(xmlAttributeValue(xmlAttribute().withNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI)).
+				withLocalName("type"), schemaReferencesProvider);
 
-    registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("schemaLocation", "namespace").
-        withSuperParent(2, xmlTag().withNamespace(XmlUtil.SCHEMA_URIS).withLocalName("import", "include", "redefine")), uriProvider);
+		registrar.registerReferenceProvider(xmlAttributeValue(xmlAttribute().withNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI)).
+				withLocalName("noNamespaceSchemaLocation", "schemaLocation"), uriProvider);
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, null, URIReferenceProvider.ELEMENT_FILTER, true, uriProvider);
+		registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("schemaLocation", "namespace").
+				withSuperParent(2, xmlTag().withNamespace(XmlUtil.SCHEMA_URIS).withLocalName("import", "include", "redefine")), uriProvider);
 
-    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"encoding"}, new ScopeFilter(new ParentElementFilter(new ClassFilter(XmlProcessingInstruction.class))), true, new
-        XmlEncodingReferenceProvider());
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, null, URIReferenceProvider.ELEMENT_FILTER, true, uriProvider);
 
-    registrar.registerReferenceProvider(xmlAttributeValue(), new XmlPrefixReferenceProvider());
-    registrar.registerReferenceProvider(xmlAttributeValue(), new XmlEnumeratedValueReferenceProvider(), PsiReferenceRegistrar.LOWER_PRIORITY);
-    registrar.registerReferenceProvider(xmlTag(), XmlEnumeratedValueReferenceProvider.forTags(), PsiReferenceRegistrar.LOWER_PRIORITY);
+		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"encoding"}, new ScopeFilter(new ParentElementFilter(new ClassFilter(XmlProcessingInstruction.class))), true, new
+				XmlEncodingReferenceProvider());
 
-    registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("source").withSuperParent(2, xmlTag().withLocalName("documentation").withNamespace(XmlUtil.SCHEMA_URIS)), new
-        PsiReferenceProvider() {
-          @Nonnull
-          @Override
-          public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
-            return new PsiReference[]{new WebReference(element)};
-          }
-        });
-  }
+		registrar.registerReferenceProvider(xmlAttributeValue(), new XmlPrefixReferenceProvider());
+		registrar.registerReferenceProvider(xmlAttributeValue(), new XmlEnumeratedValueReferenceProvider(), PsiReferenceRegistrar.LOWER_PRIORITY);
+		registrar.registerReferenceProvider(xmlTag(), XmlEnumeratedValueReferenceProvider.forTags(), PsiReferenceRegistrar.LOWER_PRIORITY);
 
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return Language.ANY;
-  }
+		registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("source").withSuperParent(2, xmlTag().withLocalName("documentation").withNamespace(XmlUtil.SCHEMA_URIS)), new
+				PsiReferenceProvider()
+				{
+					@Nonnull
+					@Override
+					public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
+					{
+						return new PsiReference[]{new WebReference(element)};
+					}
+				});
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return Language.ANY;
+	}
 }

@@ -15,16 +15,11 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import java.io.IOException;
+import consulo.language.psi.stub.*;
+import consulo.util.xml.fastReader.XmlFileHeader;
 
 import javax.annotation.Nonnull;
-
-import consulo.language.psi.stub.IndexSink;
-import consulo.language.psi.stub.StubOutputStream;
-import consulo.util.xml.fastReader.XmlFileHeader;
-import consulo.language.psi.stub.ObjectStubSerializer;
-import consulo.language.psi.stub.Stub;
-import consulo.language.psi.stub.StubInputStream;
+import java.io.IOException;
 
 /**
  * @author Dmitry Avdeev
@@ -32,14 +27,11 @@ import consulo.language.psi.stub.StubInputStream;
  */
 public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 {
-
-	public static FileStubSerializer INSTANCE = new FileStubSerializer();
-
 	@Nonnull
 	@Override
 	public String getExternalId()
 	{
-		return "FileStubSerializer";
+		return "xml.FileStubSerializer";
 	}
 
 	@Override

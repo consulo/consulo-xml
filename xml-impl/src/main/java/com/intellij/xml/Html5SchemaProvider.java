@@ -6,6 +6,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.logging.Logger;
 import consulo.util.io.URLUtil;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 
 import javax.annotation.Nonnull;
@@ -68,13 +69,13 @@ public abstract class Html5SchemaProvider {
       dtdCharsLocationURL = htmlSchemaLocationURL;
     }
 
-    HTML5_SCHEMA_LOCATION = VfsUtilCore.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(htmlSchemaLocationURL.toExternalForm())));
+    HTML5_SCHEMA_LOCATION = VirtualFileUtil.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(htmlSchemaLocationURL.toExternalForm())));
     LOG.info("HTML5_SCHEMA_LOCATION = " + getHtml5SchemaLocation());
 
-    XHTML5_SCHEMA_LOCATION = VfsUtilCore.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(xhtmlSchemaLocationURL.toExternalForm())));
+    XHTML5_SCHEMA_LOCATION = VirtualFileUtil.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(xhtmlSchemaLocationURL.toExternalForm())));
     LOG.info("XHTML5_SCHEMA_LOCATION = " + getXhtml5SchemaLocation());
 
-    CHARS_DTD_LOCATION = VfsUtilCore.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(dtdCharsLocationURL.toExternalForm())));
+    CHARS_DTD_LOCATION = VirtualFileUtil.urlToPath(VfsUtilCore.fixURLforIDEA(URLUtil.unescapePercentSequences(dtdCharsLocationURL.toExternalForm())));
     LOG.info("CHARS_DTD_LOCATION = " + getCharsDtdLocation());
   }
 

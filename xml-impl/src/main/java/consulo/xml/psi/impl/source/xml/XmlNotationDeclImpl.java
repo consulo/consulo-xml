@@ -15,8 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.ChildRoleBase;
 import consulo.logging.Logger;
 import consulo.xml.psi.xml.*;
 

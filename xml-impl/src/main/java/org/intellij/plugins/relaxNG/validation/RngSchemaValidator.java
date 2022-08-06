@@ -19,7 +19,6 @@ package org.intellij.plugins.relaxNG.validation;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.document.Document;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.annotation.AnnotationHolder;
@@ -33,6 +32,7 @@ import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.fileType.FileType;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.psi.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
@@ -253,12 +253,12 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 	{
 		try
 		{
-			return VfsUtilCore.findRelativeFile(systemId, null);
+			return VirtualFileUtil.findRelativeFile(systemId, null);
 		}
 		catch(Exception e)
 		{
 			LOG.warn("Failed to build file from uri <" + systemId + ">", e);
-			return VirtualFileManager.getInstance().findFileByUrl(VfsUtilCore.fixURLforIDEA(systemId));
+			return VirtualFileManager.getInstance().findFileByUrl(VirtualFileUtil.fixURLforIDEA(systemId));
 		}
 	}
 

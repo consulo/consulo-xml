@@ -17,7 +17,6 @@ package com.intellij.xml.util;
 
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.impl.schema.XmlSchemaTagsProcessor;
-import consulo.ide.impl.psi.impl.source.resolve.reference.impl.PsiDelegateReference;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.*;
 import consulo.language.util.ProcessingContext;

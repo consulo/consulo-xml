@@ -16,7 +16,6 @@
 package consulo.xml.psi.impl.source.xml;
 
 import com.intellij.xml.util.XmlUtil;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.psi.PsiElement;
@@ -66,7 +65,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     } else if (i == XML_ENUMERATED_TYPE) {
       return XmlChildRole.XML_ENUMERATED_TYPE;
     } else {
-      return ChildRoleBase.NONE;
+      return 0;
     }
   }
 

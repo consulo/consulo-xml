@@ -20,12 +20,8 @@
 package consulo.xml.lang.xhtml;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
 import consulo.language.Language;
-import consulo.language.codeStyle.CodeStyleSettings;
-import consulo.language.codeStyle.FormattingContext;
-import consulo.language.codeStyle.FormattingModel;
-import consulo.language.codeStyle.FormattingModelBuilder;
+import consulo.language.codeStyle.*;
 import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.language.psi.PsiFile;
 import consulo.xml.lang.xml.XmlFormattingModel;
@@ -43,7 +39,7 @@ public class XHtmlFormattingModelBuilder implements FormattingModelBuilder
 	{
 		final PsiFile psiFile = context.getContainingFile();
 		CodeStyleSettings settings = context.getCodeStyleSettings();
-		final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(psiFile);
+		final FormattingDocumentModel documentModel = FormattingDocumentModel.create(psiFile);
 		return new XmlFormattingModel(psiFile, new XmlBlock(SourceTreeToPsiMap.psiElementToTree(psiFile), null, null, new HtmlPolicy(settings, documentModel), null, null, false), documentModel);
 	}
 

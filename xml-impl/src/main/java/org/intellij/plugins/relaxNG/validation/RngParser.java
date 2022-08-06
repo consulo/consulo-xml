@@ -16,19 +16,6 @@
 
 package org.intellij.plugins.relaxNG.validation;
 
-import consulo.xml.javaee.UriUtil;
-import consulo.application.progress.ProgressManager;
-import consulo.application.util.CachedValue;
-import consulo.application.util.CachedValuesManager;
-import consulo.ide.impl.idea.openapi.util.AtomicNotNullLazyValue;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.resolve.PsiElementProcessor;
-import consulo.application.util.CachedValueProvider;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.util.collection.ContainerUtil;
 import com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl;
 import com.thaiopensource.relaxng.pattern.AnnotationsImpl;
 import com.thaiopensource.relaxng.pattern.CommentListImpl;
@@ -42,8 +29,21 @@ import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.rng.impl.SchemaReaderImpl;
+import consulo.application.progress.ProgressManager;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.ide.impl.idea.openapi.util.AtomicNotNullLazyValue;
+import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.UriUtil;
+import consulo.xml.psi.xml.XmlFile;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.kohsuke.rngom.ast.builder.BuildException;
@@ -225,7 +225,7 @@ public class RngParser
 		final VirtualFile file = UriUtil.findRelativeFile(s, descriptorFile);
 		if(file != null)
 		{
-			s = VfsUtilCore.fixIDEAUrl(file.getUrl());
+			s = VirtualFileUtil.fixIDEAUrl(file.getUrl());
 		}
 		return s;
 	}
@@ -273,7 +273,7 @@ public class RngParser
 		final VirtualFile file = descriptorFile.getVirtualFile();
 		if(file != null)
 		{
-			inputSource.setSystemId(VfsUtilCore.fixIDEAUrl(file.getUrl()));
+			inputSource.setSystemId(VirtualFileUtil.fixIDEAUrl(file.getUrl()));
 		}
 		return inputSource;
 	}

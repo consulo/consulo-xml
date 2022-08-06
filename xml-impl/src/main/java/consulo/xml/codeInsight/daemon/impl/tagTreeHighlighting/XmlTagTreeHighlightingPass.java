@@ -29,7 +29,6 @@ import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.colorScheme.TextAttributes;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPass;
 import consulo.ide.impl.idea.codeInsight.daemon.impl.UpdateHighlightersUtil;
 import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsProvider;
 import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsUtilEx;
@@ -38,6 +37,7 @@ import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.impl.highlight.TextEditorHighlightingPass;
 import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.editor.rawHighlight.HighlightInfoType;
 import consulo.language.file.FileViewProvider;
@@ -64,7 +64,8 @@ import java.util.List;
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
+public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass
+{
   private static final Key<List<RangeHighlighter>> TAG_TREE_HIGHLIGHTERS_IN_EDITOR_KEY = Key.create("TAG_TREE_HIGHLIGHTERS_IN_EDITOR_KEY");
 
   private static final TextAttributesKey TAG_TREE_HIGHLIGHTING_KEY = TextAttributesKey.createTextAttributesKey("TAG_TREE_HIGHLIGHTING_KEY");

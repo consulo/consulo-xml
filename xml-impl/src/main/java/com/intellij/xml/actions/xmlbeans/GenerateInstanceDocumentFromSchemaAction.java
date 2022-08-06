@@ -15,15 +15,12 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlBundle;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Computable;
 import consulo.document.FileDocumentManager;
 import consulo.fileEditor.FileEditorManager;
 import consulo.ide.impl.idea.openapi.util.io.FileUtil;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.language.editor.CommonDataKeys;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.PsiFile;
@@ -37,6 +34,9 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.ExceptionUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.psi.xml.XmlFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
@@ -82,7 +82,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
     @NonNls List<String> parameters = new LinkedList<String>();
 
     final String url = dialog.getUrl().getText();
-    final VirtualFile relativeFile = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
+    final VirtualFile relativeFile = VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
     final PsiFile file = PsiManager.getInstance(project).findFile(relativeFile);
     if (! (file instanceof XmlFile)) {
       Messages.showErrorDialog(project, "This is not XmlFile" + file == null ? "" : " (" + file.getFileType().getName() + ")", XmlBundle.message("error"));

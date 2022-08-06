@@ -15,24 +15,24 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
 import consulo.language.ast.ASTNode;
-import consulo.logging.Logger;
+import consulo.language.ast.ChildRoleBase;
 import consulo.language.psi.PsiElementVisitor;
+import consulo.logging.Logger;
 import consulo.xml.psi.XmlElementVisitor;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlProlog;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Mike
  */
 public class XmlPrologImpl extends XmlElementImpl implements XmlProlog, XmlElementType
 {
-	private static final Logger LOG = Logger.getInstance("#XmlPrologImpl");
+	private static final Logger LOG = Logger.getInstance(XmlPrologImpl.class);
 
 	public XmlPrologImpl()
 	{

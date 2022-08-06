@@ -43,7 +43,6 @@ import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.UriUtil;
 import consulo.project.Project;
 import consulo.application.util.function.Computable;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.http.HttpFileSystem;

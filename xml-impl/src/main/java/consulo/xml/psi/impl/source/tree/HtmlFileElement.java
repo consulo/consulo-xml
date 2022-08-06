@@ -15,12 +15,11 @@
  */
 package consulo.xml.psi.impl.source.tree;
 
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
 import consulo.language.impl.ast.FileElement;
 import consulo.logging.Logger;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlElementType;
 
 public class HtmlFileElement extends FileElement implements XmlElementType  {
   private static final Logger LOG = Logger.getInstance(HtmlFileElement.class);
@@ -35,7 +34,7 @@ public class HtmlFileElement extends FileElement implements XmlElementType  {
       return XmlChildRole.HTML_DOCUMENT;
     }
     else {
-      return ChildRoleBase.NONE;
+      return 0;
     }
   }
 }

@@ -15,14 +15,13 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import consulo.index.io.StringRef;
-import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.language.psi.stub.Stub;
+import consulo.util.xml.fastReader.XmlFileHeader;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -60,6 +59,6 @@ public class FileStub extends ElementStub
 	@Override
 	public ObjectStubSerializer getStubType()
 	{
-		return FileStubSerializer.INSTANCE;
+		return DomElementTypeHolder.FileStubSerializer;
 	}
 }

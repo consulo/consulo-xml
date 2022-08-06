@@ -16,7 +16,7 @@
 package consulo.xml.codeInsight.folding.impl;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.codeInsight.folding.impl.AbstractElementSignatureProvider;
+import consulo.language.editor.folding.AbstractElementSignatureProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
@@ -31,7 +31,8 @@ import java.util.StringTokenizer;
  * @author yole
  */
 @ExtensionImpl
-public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
+public class XmlElementSignatureProvider extends AbstractElementSignatureProvider
+{
   private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 
   public String getSignature(@Nonnull PsiElement element) {

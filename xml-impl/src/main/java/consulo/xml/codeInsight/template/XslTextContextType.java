@@ -13,11 +13,11 @@
 package consulo.xml.codeInsight.template;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.openapi.util.io.FileUtilRt;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.template.context.TemplateContextType;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.util.io.FileUtil;
 import consulo.xml.ide.highlighter.XmlFileType;
 
 import javax.annotation.Nonnull;
@@ -43,6 +43,6 @@ public class XslTextContextType extends TemplateContextType {
 
   public static boolean isXslOrXsltFile(@Nullable PsiFile file) {
     return file != null && file.getFileType() == XmlFileType.INSTANCE
-        && (FileUtilRt.extensionEquals(file.getName(), "xsl") || FileUtilRt.extensionEquals(file.getName(), "xslt"));
+        && (FileUtil.extensionEquals(file.getName(), "xsl") || FileUtil.extensionEquals(file.getName(), "xslt"));
   }
 }

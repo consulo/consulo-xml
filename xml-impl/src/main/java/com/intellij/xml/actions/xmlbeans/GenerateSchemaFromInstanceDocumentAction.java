@@ -15,31 +15,31 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
+import com.intellij.xml.XmlBundle;
+import consulo.application.ApplicationManager;
+import consulo.document.FileDocumentManager;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.editor.CommonDataKeys;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.project.Project;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.awt.Messages;
+import consulo.util.collection.ArrayUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.ExternalResourceManager;
+import org.apache.xmlbeans.impl.inst2xsd.Inst2Xsd;
+import org.jetbrains.annotations.NonNls;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import consulo.language.editor.PlatformDataKeys;
-import consulo.ui.ex.action.AnActionEvent;
-import org.apache.xmlbeans.impl.inst2xsd.Inst2Xsd;
-import org.jetbrains.annotations.NonNls;
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.ui.ex.action.ActionPlaces;
-import consulo.ui.ex.action.AnAction;
-import consulo.language.editor.CommonDataKeys;
-import consulo.application.ApplicationManager;
-import consulo.document.FileDocumentManager;
-import consulo.fileEditor.FileEditorManager;
-import consulo.project.Project;
-import consulo.ui.ex.awt.Messages;
-import consulo.virtualFileSystem.LocalFileSystem;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.util.collection.ArrayUtil;
-import com.intellij.xml.XmlBundle;
 
 /**
  * @author Konstantin Bulenkov
@@ -85,7 +85,7 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
     FileDocumentManager.getInstance().saveAllDocuments();
 
     final String url = dialog.getUrl().getText();
-    final VirtualFile relativeFile = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
+    final VirtualFile relativeFile = VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
     VirtualFile relativeFileDir;
     if (relativeFile == null) {
       Messages.showErrorDialog(project, XmlBundle.message("file.doesnt.exist", url), XmlBundle.message("error"));

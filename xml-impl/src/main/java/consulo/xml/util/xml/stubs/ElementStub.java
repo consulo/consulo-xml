@@ -15,15 +15,14 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.index.io.StringRef;
 import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
-import consulo.index.io.StringRef;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -62,7 +61,7 @@ public class ElementStub extends DomStub
 	@Override
 	public ObjectStubSerializer getStubType()
 	{
-		return ElementStubSerializer.INSTANCE;
+		return DomElementTypeHolder.ElementStubSerializer;
 	}
 
 	@Override

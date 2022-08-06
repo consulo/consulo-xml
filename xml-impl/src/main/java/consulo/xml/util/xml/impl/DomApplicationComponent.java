@@ -21,9 +21,8 @@ import consulo.annotation.component.ServiceImpl;
 import consulo.application.Application;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.util.NotNullFunction;
-import consulo.ide.impl.idea.util.ReflectionAssignabilityCache;
 import consulo.util.collection.FactoryMap;
+import consulo.util.lang.ReflectionAssignabilityCache;
 import consulo.xml.dom.DomElementImplementationProvider;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementVisitor;
@@ -33,11 +32,9 @@ import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * @author peter

@@ -19,20 +19,20 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.xml.psi.xml.XmlElementType;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenType;
 import consulo.language.codeStyle.Block;
 import consulo.language.codeStyle.FormatterUtil;
+import consulo.language.codeStyle.FormattingDocumentModel;
 import consulo.language.codeStyle.PsiBasedFormattingModel;
 import consulo.language.impl.ast.TreeUtil;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.logging.Logger;
 import consulo.project.Project;
+import consulo.xml.psi.xml.XmlElementType;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class XmlFormattingModel extends PsiBasedFormattingModel {
 
   public XmlFormattingModel(final PsiFile file,
                             final Block rootBlock,
-                            final FormattingDocumentModelImpl documentModel) {
+                            final FormattingDocumentModel documentModel) {
     super(file, rootBlock, documentModel);
     myProject = file.getProject();
   }

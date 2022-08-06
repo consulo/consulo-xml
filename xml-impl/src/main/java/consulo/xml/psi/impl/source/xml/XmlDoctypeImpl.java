@@ -16,8 +16,8 @@
 package consulo.xml.psi.impl.source.xml;
 
 import consulo.document.util.TextRange;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.ChildRoleBase;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.ast.TreeElement;
 import consulo.language.inject.InjectedLanguageManager;
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
  */
 public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 {
-	private static final Logger LOG = Logger.getInstance("#XmlDoctypeImpl");
+	private static final Logger LOG = Logger.getInstance(XmlDoctypeImpl.class);
 
 	public XmlDoctypeImpl()
 	{

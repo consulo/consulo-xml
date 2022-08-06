@@ -15,18 +15,16 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.ide.impl.psi.tree.ChildRoleBase;
+import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.language.psi.filter.ClassFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.logging.Logger;
-import consulo.language.psi.filter.ClassFilter;
-import consulo.language.ast.ASTNode;
 import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class XmlAttlistDeclImpl extends XmlElementImpl implements XmlAttlistDecl
       return XmlChildRole.XML_NAME;
     }
     else {
-      return ChildRoleBase.NONE;
+      return 0;
     }
   }
 

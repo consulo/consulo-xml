@@ -16,8 +16,8 @@
 package consulo.xml.psi.impl.source.xml;
 
 import com.intellij.xml.util.XmlUtil;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.ChildRoleBase;
 import consulo.language.ast.IElementType;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;

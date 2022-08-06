@@ -15,26 +15,26 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
-
-import consulo.ide.impl.psi.tree.ChildRoleBase;
-import consulo.language.psi.PsiReference;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.ChildRoleBase;
 import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.logging.Logger;
+import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlElementContentGroup;
 import consulo.xml.psi.xml.XmlElementContentSpec;
 import consulo.xml.psi.xml.XmlElementType;
-import consulo.language.ast.ASTNode;
-import consulo.language.psi.PsiElementVisitor;
-import consulo.logging.Logger;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Mike
  */
 public class XmlElementContentSpecImpl extends XmlElementImpl implements XmlElementContentSpec, XmlElementType {
-  private static final Logger LOG = Logger.getInstance("#XmlElementContentSpecImpl");
+  private static final Logger LOG = Logger.getInstance(XmlElementContentSpecImpl.class);
 
   public XmlElementContentSpecImpl() {
     super(XML_ELEMENT_CONTENT_SPEC);

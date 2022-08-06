@@ -16,24 +16,23 @@
 package com.intellij.xml.actions.xmlbeans;
 
 
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
-import consulo.language.psi.PsiFile;
-import consulo.project.Project;
-import consulo.ui.ex.JBColor;
-import consulo.util.collection.ArrayUtil;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiManager;
-import consulo.language.template.TemplateLanguageFileViewProvider;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.template.TemplateLanguageFileViewProvider;
+import consulo.project.Project;
+import consulo.ui.ex.JBColor;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.util.collection.ArrayUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
-
 import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -204,7 +203,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
   @Nullable
   private PsiFile findFile(String uri) {
     final VirtualFile file =
-      uri != null ? VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), null) : null;
+      uri != null ? VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), null) : null;
     return file != null ? PsiManager.getInstance(myProject).findFile(file) : null;
   }
 

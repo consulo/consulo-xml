@@ -15,19 +15,13 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import consulo.language.psi.stub.SerializationManager;
-
 /**
  * @author Dmitry Avdeev
  *         Date: 8/2/12
  */
-public class DomElementTypeHolder
+public interface DomElementTypeHolder
 {
-
-	static
-	{
-		SerializationManager.getInstance().registerSerializer(ElementStubSerializer.INSTANCE);
-		SerializationManager.getInstance().registerSerializer(AttributeStubSerializer.INSTANCE);
-		SerializationManager.getInstance().registerSerializer(FileStubSerializer.INSTANCE);
-	}
+	ElementStubSerializer ElementStubSerializer = new ElementStubSerializer();
+	AttributeStubSerializer AttributeStub = new AttributeStubSerializer();
+	FileStubSerializer FileStubSerializer = new FileStubSerializer();
 }

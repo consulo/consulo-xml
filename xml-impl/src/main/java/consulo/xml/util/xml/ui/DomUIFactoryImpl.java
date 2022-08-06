@@ -23,10 +23,9 @@ import consulo.document.event.DocumentAdapter;
 import consulo.document.event.DocumentEvent;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
 import consulo.fileEditor.highlight.HighlightingPass;
-import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPassManager;
-import consulo.ide.impl.idea.codeInsight.daemon.impl.DefaultHighlightInfoProcessor;
 import consulo.ide.impl.idea.openapi.editor.impl.EditorComponentImpl;
 import consulo.ide.impl.idea.util.Function;
+import consulo.language.editor.impl.highlight.TextEditorHighlightingPassManager;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
 import consulo.ui.ex.awt.UserActivityWatcher;
@@ -156,7 +155,7 @@ public class DomUIFactoryImpl extends DomUIFactory {
 
         editor.commit();
 
-        return TextEditorHighlightingPassManager.getInstance(project).instantiateMainPasses(psiFile, document, new DefaultHighlightInfoProcessor()).toArray(HighlightingPass.EMPTY_ARRAY);
+        return TextEditorHighlightingPassManager.getInstance(project).instantiateMainPasses(psiFile, document).toArray(HighlightingPass.EMPTY_ARRAY);
       }
 
       @Nonnull

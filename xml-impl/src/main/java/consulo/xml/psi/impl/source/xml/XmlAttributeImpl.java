@@ -20,7 +20,6 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.psi.CodeEditUtil;
@@ -69,7 +68,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
     } else if (i == XmlElementType.XML_ATTRIBUTE_VALUE) {
       return XmlChildRole.XML_ATTRIBUTE_VALUE;
     } else {
-      return ChildRoleBase.NONE;
+      return 0;
     }
   }
 

@@ -15,13 +15,13 @@
  */
 package consulo.xml.psi.impl.source.tree;
 
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.ide.impl.psi.tree.ChildRoleBase;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.ChildRoleBase;
 import consulo.language.ast.IElementType;
 import consulo.language.impl.ast.FileElement;
 import consulo.logging.Logger;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlElementType;
 
 public class XmlFileElement extends FileElement implements XmlElementType {
   private static final Logger LOG = Logger.getInstance(XmlFileElement.class);

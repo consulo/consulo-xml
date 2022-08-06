@@ -18,9 +18,9 @@ package consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorEx;
-import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPass;
-import consulo.ide.impl.idea.codeHighlighting.TextEditorHighlightingPassFactory;
 import consulo.language.editor.Pass;
+import consulo.language.editor.impl.highlight.TextEditorHighlightingPass;
+import consulo.language.editor.impl.highlight.TextEditorHighlightingPassFactory;
 import consulo.language.psi.PsiFile;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,8 @@ import javax.annotation.Nonnull;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory {
+public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory
+{
   @Override
   public void register(@Nonnull Registrar registrar) {
     registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);

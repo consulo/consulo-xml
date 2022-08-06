@@ -99,15 +99,4 @@
 			<action id="DomCollectionControl.Remove" class="consulo.xml.util.xml.ui.DomCollectionControl$RemoveAction" text="Remove" use-shortcut-of="$Delete"/>
 		</group>
 	</actions>
-
-
-	<extensions defaultExtensionNs="consulo">
-		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
-
-		<patterns.patternClass className="consulo.xml.patterns.DomPatterns" alias="dom"/>
-
-		<stubElementTypeHolder class="consulo.xml.util.xml.stubs.DomElementTypeHolder"/>
-
-		<patterns.patternClass className="consulo.xml.patterns.XmlPatterns" alias="xml"/>
-	</extensions>
 </consulo-plugin>

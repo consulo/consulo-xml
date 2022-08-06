@@ -15,11 +15,11 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import java.util.Collections;
-import java.util.List;
-
 import consulo.index.io.StringRef;
 import consulo.language.psi.stub.ObjectStubSerializer;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
@@ -55,7 +55,7 @@ public class AttributeStub extends DomStub
 	@Override
 	public ObjectStubSerializer getStubType()
 	{
-		return AttributeStubSerializer.INSTANCE;
+		return DomElementTypeHolder.AttributeStub;
 	}
 
 	@Override

@@ -1,17 +1,17 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.xml.actions.validate;
 
-import consulo.xml.javaee.UriUtil;
-import consulo.ide.impl.idea.util.ArrayUtilRt;
+import com.intellij.xml.util.XmlResourceResolver;
 import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
 import consulo.logging.Logger;
 import consulo.project.Project;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiManager;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
-import com.intellij.xml.util.XmlResourceResolver;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.xml.javaee.UriUtil;
 import consulo.xml.psi.xml.*;
 import org.apache.xerces.impl.Constants;
 import org.apache.xerces.impl.XMLEntityManager;
@@ -438,9 +438,9 @@ public class ValidateXmlActionHandler implements ValidateXmlHandler
 		XmlTag rootTag = file.getRootTag();
 		if(rootTag == null)
 		{
-			return ArrayUtilRt.EMPTY_STRING_ARRAY;
+			return ArrayUtil.EMPTY_STRING_ARRAY;
 		}
-		return ContainerUtil.mapNotNull(rootTag.getAttributes(), attribute -> attribute.getValue(), ArrayUtilRt.EMPTY_STRING_ARRAY);
+		return ContainerUtil.mapNotNull(rootTag.getAttributes(), attribute -> attribute.getValue(), ArrayUtil.EMPTY_STRING_ARRAY);
 	}
 
 	private static long calculateTimeStamp(final VirtualFile[] files, Project myProject)

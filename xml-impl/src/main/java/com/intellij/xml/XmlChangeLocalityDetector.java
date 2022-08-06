@@ -16,7 +16,7 @@
 package com.intellij.xml;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.codeInsight.daemon.ChangeLocalityDetector;
+import consulo.language.editor.ChangeLocalityDetector;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
 import consulo.xml.codeInspection.DefaultXmlSuppressionProvider;
@@ -25,15 +25,18 @@ import consulo.xml.lang.xml.XMLLanguage;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class XmlChangeLocalityDetector implements ChangeLocalityDetector {
-  @Override
-  public PsiElement getChangeHighlightingDirtyScopeFor(@Nonnull PsiElement changedElement) {
-    // rehighlight everything when inspection suppress comment changed
-    if (changedElement.getLanguage() instanceof XMLLanguage
-        && changedElement instanceof PsiComment
-        && changedElement.getText().contains(DefaultXmlSuppressionProvider.SUPPRESS_MARK)) {
-      return changedElement.getContainingFile();
-    }
-    return null;
-  }
+public class XmlChangeLocalityDetector implements ChangeLocalityDetector
+{
+	@Override
+	public PsiElement getChangeHighlightingDirtyScopeFor(@Nonnull PsiElement changedElement)
+	{
+		// rehighlight everything when inspection suppress comment changed
+		if(changedElement.getLanguage() instanceof XMLLanguage
+				&& changedElement instanceof PsiComment
+				&& changedElement.getText().contains(DefaultXmlSuppressionProvider.SUPPRESS_MARK))
+		{
+			return changedElement.getContainingFile();
+		}
+		return null;
+	}
 }

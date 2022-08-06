@@ -15,17 +15,16 @@
  */
 package consulo.xml.util.xml.stubs;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
-import consulo.util.lang.StringUtil;
 import consulo.language.psi.stub.IndexSink;
 import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.language.psi.stub.StubInputStream;
 import consulo.language.psi.stub.StubOutputStream;
+import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.stubs.index.DomElementClassIndex;
 import consulo.xml.util.xml.stubs.index.DomNamespaceKeyIndex;
+
+import javax.annotation.Nonnull;
+import java.io.IOException;
 
 /**
  * @author Dmitry Avdeev
@@ -33,9 +32,6 @@ import consulo.xml.util.xml.stubs.index.DomNamespaceKeyIndex;
  */
 public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, ElementStub>
 {
-
-	final static ObjectStubSerializer INSTANCE = new ElementStubSerializer();
-
 	@Override
 	public void serialize(@Nonnull ElementStub stub, @Nonnull StubOutputStream dataStream) throws IOException
 	{
@@ -74,7 +70,7 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 	@Override
 	public String getExternalId()
 	{
-		return "ElementStubSerializer";
+		return "xml.ElementStubSerializer";
 	}
 
 	@Override

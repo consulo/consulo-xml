@@ -16,13 +16,13 @@
 package consulo.xml.codeInsight.navigation;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.psi.PsiFile;
+import consulo.language.editor.moveUpDown.MethodNavigationOffsetProvider;
+import consulo.language.editor.moveUpDown.MethodUpDownUtil;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.codeInsight.navigation.MethodNavigationOffsetProvider;
-import consulo.ide.impl.idea.codeInsight.navigation.MethodUpDownUtil;
-import consulo.language.psi.util.PsiTreeUtil;
 
 import java.util.ArrayList;
 
