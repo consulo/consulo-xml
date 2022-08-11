@@ -17,12 +17,7 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInspection.GlobalInspectionUtil;
-import consulo.ide.impl.idea.codeInspection.GlobalSimpleInspectionTool;
-import consulo.ide.impl.language.editor.rawHighlight.HighlightInfoImpl;
-import consulo.language.editor.inspection.GlobalInspectionContext;
-import consulo.language.editor.inspection.ProblemDescriptionsProcessor;
-import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.*;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
@@ -64,7 +59,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
 			{
 				if(info != null)
 				{
-					GlobalInspectionUtil.createProblem(file, (HighlightInfoImpl) info, new TextRange(info.getStartOffset(), info.getEndOffset()), null, manager, problemDescriptionsProcessor,
+					GlobalInspectionUtil.createProblem(file, info, new TextRange(info.getStartOffset(), info.getEndOffset()), null, manager, problemDescriptionsProcessor,
 							globalContext);
 				}
 				return true;
