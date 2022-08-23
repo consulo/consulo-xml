@@ -24,8 +24,6 @@ import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
 import consulo.document.Document;
 import consulo.document.RangeMarker;
-import consulo.ide.impl.idea.codeInsight.template.macro.CompleteMacro;
-import consulo.ide.impl.idea.codeInsight.template.macro.CompleteSmartMacro;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.completion.lookup.*;
@@ -35,6 +33,8 @@ import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager
 import consulo.language.editor.template.Template;
 import consulo.language.editor.template.TemplateManager;
 import consulo.language.editor.template.event.TemplateEditingAdapter;
+import consulo.language.editor.template.macro.CompleteMacro;
+import consulo.language.editor.template.macro.CompleteSmartMacro;
 import consulo.language.editor.template.macro.MacroCallNode;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
