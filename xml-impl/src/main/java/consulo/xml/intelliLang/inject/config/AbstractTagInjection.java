@@ -15,18 +15,18 @@
  */
 package consulo.xml.intelliLang.inject.config;
 
+import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
+import consulo.ide.impl.intelliLang.util.StringMatcher;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
+import consulo.util.xml.serializer.JDOMExternalizer;
+import consulo.xml.XPathSupportProvider;
+import consulo.xml.intelliLang.inject.xml.XmlLanguageInjectionSupport;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.openapi.util.JDOMExternalizer;
-import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
-import consulo.ide.impl.intelliLang.util.StringMatcher;
-import consulo.xml.XPathSupportProvider;
-import consulo.language.psi.PsiElement;
-import consulo.logging.Logger;
-import consulo.util.lang.StringUtil;
-import consulo.xml.intelliLang.inject.xml.XmlLanguageInjectionSupport;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jdom.Element;

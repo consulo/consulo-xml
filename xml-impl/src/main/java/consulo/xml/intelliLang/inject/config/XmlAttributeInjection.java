@@ -15,15 +15,15 @@
  */
 package consulo.xml.intelliLang.inject.config;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.ide.impl.idea.openapi.util.JDOMExternalizer;
 import consulo.ide.impl.intelliLang.inject.InjectorUtils;
 import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
 import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
 import consulo.ide.impl.intelliLang.util.StringMatcher;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.StringUtil;
+import consulo.util.xml.serializer.JDOMExternalizer;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 
