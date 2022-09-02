@@ -15,19 +15,20 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.ide.impl.idea.openapi.util.NullableLazyValue;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiReference;
-import consulo.util.collection.ArrayUtil;
-import consulo.language.util.IncorrectOperationException;
-import consulo.util.lang.StringUtil;
-import consulo.language.psi.meta.PsiMetaOwner;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
+import consulo.application.util.NullableLazyValue;
+import consulo.document.util.TextRange;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

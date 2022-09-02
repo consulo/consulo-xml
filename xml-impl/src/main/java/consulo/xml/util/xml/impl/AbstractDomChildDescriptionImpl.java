@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.openapi.util.Factory;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.application.util.NotNullLazyValue;
 import consulo.language.pom.PomService;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.SmartPsiElementPointer;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -105,9 +105,9 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
     final DomManager domManager = parent.getManager();
     for (int i = 0; i < list.size(); i++) {
       final int i1 = i;
-      result.add(domManager.createStableValue(new Factory<DomElement>() {
+      result.add(domManager.createStableValue(new Supplier<DomElement>() {
         @Nullable
-        public DomElement create() {
+        public DomElement get() {
           if (!parent.isValid()) return null;
 
           final List<? extends DomElement> domElements = getValues(parent);

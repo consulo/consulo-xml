@@ -16,12 +16,12 @@
 package consulo.xml.javaee;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
+import consulo.application.util.NotNullLazyValue;
 import consulo.language.psi.stub.IndexableSetContributor;
 import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 
 import javax.annotation.Nonnull;
@@ -62,7 +62,7 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor {
   public Set<VirtualFile> getAdditionalRootsToIndex() {
     Set<VirtualFile> roots = new HashSet<>();
     for (String url : myStandardResources.getValue()) {
-      VirtualFile file = VfsUtilCore.findRelativeFile(url, null);
+      VirtualFile file = VirtualFileUtil.findRelativeFile(url, null);
       if (file != null) {
         roots.add(file);
       }

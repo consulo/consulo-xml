@@ -15,16 +15,15 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import consulo.xml.psi.xml.XmlContentParticle;
-import consulo.util.collection.ContainerUtil;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.application.util.NotNullLazyValue;
 import consulo.ide.impl.idea.util.Function;
+import consulo.util.collection.ContainerUtil;
+import consulo.xml.psi.xml.XmlContentParticle;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

@@ -1,6 +1,6 @@
 package com.intellij.xml.actions.validate;
 
-import consulo.ide.impl.idea.openapi.util.NotNullLazyValue;
+import consulo.application.util.NotNullLazyValue;
 import org.apache.xerces.impl.XMLEntityManager;
 
 import java.lang.reflect.InvocationTargetException;
