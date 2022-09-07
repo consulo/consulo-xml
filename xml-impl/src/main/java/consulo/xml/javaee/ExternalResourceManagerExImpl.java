@@ -27,6 +27,7 @@ import consulo.application.util.SystemInfo;
 import consulo.component.macro.ExpandMacroToPathMap;
 import consulo.component.macro.ReplacePathToMacroMap;
 import consulo.component.persist.PersistentStateComponent;
+import consulo.component.util.SimpleModificationTracker;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.language.psi.PsiFile;
@@ -53,17 +54,13 @@ import java.net.URL;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx implements PersistentStateComponent<Element>
+public abstract class ExternalResourceManagerExImpl extends SimpleModificationTracker implements ExternalResourceManagerEx, PersistentStateComponent<Element>
 {
 	private static final Logger LOG = Logger.getInstance(ExternalResourceManagerExImpl.class);
 
-	@NonNls
 	public static final String J2EE_1_3 = "http://java.sun.com/dtd/";
-	@NonNls
 	public static final String J2EE_1_2 = "http://java.sun.com/j2ee/dtds/";
-	@NonNls
 	public static final String J2EE_NS = "http://java.sun.com/xml/ns/j2ee/";
-	@NonNls
 	public static final String JAVAEE_NS = "http://java.sun.com/xml/ns/javaee/";
 
 	private static final String CATALOG_PROPERTIES_ELEMENT = "CATALOG_PROPERTIES";
@@ -309,7 +306,7 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	@TestOnly
 	public static void addTestResource(final String url, final String location, Disposable parentDisposable)
 	{
-		final ExternalResourceManagerExImpl instance = (ExternalResourceManagerExImpl) getInstance();
+		final ExternalResourceManagerExImpl instance = (ExternalResourceManagerExImpl) ApplicationExternalResourceManager.getInstance();
 		ApplicationManager.getApplication().runWriteAction(() -> instance.addResource(url, location));
 		Disposer.register(parentDisposable, new Disposable()
 		{
@@ -727,16 +724,11 @@ public class ExternalResourceManagerExImpl extends ExternalResourceManagerEx imp
 	@TestOnly
 	public static void registerResourceTemporarily(final String url, final String location, Disposable disposable)
 	{
-		ApplicationManager.getApplication().runWriteAction(() -> getInstance().addResource(url, location));
+		ExternalResourceManagerExImpl manager = (ExternalResourceManagerExImpl) ApplicationExternalResourceManager.getInstance();
 
-		Disposer.register(disposable, new Disposable()
-		{
-			@Override
-			public void dispose()
-			{
-				ApplicationManager.getApplication().runWriteAction(() -> getInstance().removeResource(url));
-			}
-		});
+		ApplicationManager.getApplication().runWriteAction(() -> manager.addResource(url, location));
+
+		Disposer.register(disposable, () -> ApplicationManager.getApplication().runWriteAction(() -> manager.removeResource(url)));
 	}
 
 	static class Resource

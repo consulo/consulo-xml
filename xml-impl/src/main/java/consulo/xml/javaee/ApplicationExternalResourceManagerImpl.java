@@ -16,6 +16,6 @@ import jakarta.inject.Singleton;
 		@Storage(file = StoragePathMacros.APP_CONFIG + "/other.xml", deprecated = true)
 })
 @ServiceImpl
-public class ApplicationExternalResourceManagerImpl extends ExternalResourceManagerExImpl
+public class ApplicationExternalResourceManagerImpl extends ExternalResourceManagerExImpl implements ApplicationExternalResourceManager
 {
 }

@@ -23,6 +23,7 @@ import consulo.language.PairedBraceMatcher;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenType;
 import consulo.language.editor.action.BraceMatchingUtil;
+import consulo.language.editor.highlight.VirtualFileBraceMatcher;
 import consulo.language.editor.highlight.XmlAwareBraceMatcher;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.BidirectionalMap;
@@ -43,7 +44,7 @@ import java.util.List;
  *         Date: Apr 15, 2008
  *         Time: 4:27:25 PM
  */
-public abstract class XmlBaseBraceMatcher implements XmlAwareBraceMatcher {
+public abstract class XmlBaseBraceMatcher implements XmlAwareBraceMatcher, VirtualFileBraceMatcher {
   private static final int XML_TAG_TOKEN_GROUP = 1;
   private static final int XML_VALUE_DELIMITER_GROUP = 2;
 

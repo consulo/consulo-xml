@@ -23,15 +23,16 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class ExternalResourceManagerEx extends ExternalResourceManager {
+public interface ExternalResourceManagerEx extends ExternalResourceManager {
   public static final String STANDARD_SCHEMAS = "/standardSchemas/";
 
   public enum XMLSchemaVersion {
     XMLSchema_1_0, XMLSchema_1_1
   }
 
+  @Deprecated
   public static ExternalResourceManagerEx getInstanceEx() {
-    return (ExternalResourceManagerEx) getInstance();
+    return (ExternalResourceManagerEx) ApplicationExternalResourceManager.getInstance();
   }
 
   public abstract void removeResource(String url, @Nonnull Project project);

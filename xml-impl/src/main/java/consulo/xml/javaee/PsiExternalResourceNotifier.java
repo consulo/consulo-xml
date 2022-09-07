@@ -39,7 +39,7 @@ public class PsiExternalResourceNotifier implements Disposable
 	private final ExternalResourceListener myExternalResourceListener;
 
 	@Inject
-	public PsiExternalResourceNotifier(Project project, ExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
+	public PsiExternalResourceNotifier(Project project, ApplicationExternalResourceManager externalResourceManager, final DaemonCodeAnalyzer daemonCodeAnalyzer)
 	{
 		myProject = project;
 		myExternalResourceManager = (ExternalResourceManagerEx) externalResourceManager;

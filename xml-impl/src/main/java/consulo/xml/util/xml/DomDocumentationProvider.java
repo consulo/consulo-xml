@@ -17,13 +17,11 @@ package consulo.xml.util.xml;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.language.editor.documentation.DocumentationProvider;
-import consulo.language.extension.LanguageExtension;
+import consulo.language.editor.documentation.LanguageDocumentationProvider;
 import consulo.language.impl.psi.DelegatePsiTarget;
 import consulo.language.pom.PomTarget;
 import consulo.language.pom.PomTargetPsiElement;
 import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiManager;
 import consulo.xml.lang.xml.XMLLanguage;
 
 import javax.annotation.Nonnull;
@@ -33,7 +31,7 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl(id = "dom")
-public class DomDocumentationProvider implements DocumentationProvider, LanguageExtension
+public class DomDocumentationProvider implements LanguageDocumentationProvider
 {
 	public String getQuickNavigateInfo(final PsiElement element, PsiElement originalElement)
 	{
@@ -69,16 +67,6 @@ public class DomDocumentationProvider implements DocumentationProvider, Language
 				return documentation;
 			}
 		}
-		return null;
-	}
-
-	public PsiElement getDocumentationElementForLookupItem(final PsiManager psiManager, final Object object, final PsiElement element)
-	{
-		return null;
-	}
-
-	public PsiElement getDocumentationElementForLink(final PsiManager psiManager, final String link, final PsiElement context)
-	{
 		return null;
 	}
 
