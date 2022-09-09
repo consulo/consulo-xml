@@ -21,7 +21,6 @@ import consulo.fileEditor.structureView.tree.ActionPresentation;
 import consulo.fileEditor.structureView.tree.ActionPresentationData;
 import consulo.fileEditor.structureView.tree.FileStructureNodeProvider;
 import consulo.fileEditor.structureView.tree.TreeElement;
-import consulo.ide.impl.idea.openapi.util.PropertyOwner;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.ui.ex.action.Shortcut;
 import consulo.ui.ex.keymap.KeymapManager;
@@ -36,7 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html5SectionTreeElement>, PropertyOwner {
+public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html5SectionTreeElement> {
 
   public static final String ACTION_ID = "HTML5_OUTLINE_MODE";
   public static final String HTML5_OUTLINE_PROVIDER_PROPERTY = "html5.sections.node.provider";
@@ -60,7 +59,7 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
   }
 
   @Nonnull
-  public String getPropertyName() {
+  public String getSerializePropertyName() {
     return HTML5_OUTLINE_PROVIDER_PROPERTY;
   }
 
