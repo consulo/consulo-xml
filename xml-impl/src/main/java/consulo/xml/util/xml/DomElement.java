@@ -15,17 +15,16 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.language.editor.WriteCommandAction;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
+import consulo.util.dataholder.UserDataHolder;
+import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-import consulo.language.editor.WriteCommandAction;
-import consulo.util.dataholder.UserDataHolder;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -127,7 +126,7 @@ public interface DomElement extends AnnotatedElement, UserDataHolder
   <T extends DomElement> T createMockCopy(final boolean physical);
 
   /**
-   * @return stable element (see {@link DomManager#createStableValue(Factory)}}),
+   * @return stable element (see {@link DomManager#createStableValue(java.util.function.Supplier)}}),
    * that holds the complete 'XPath' to this element in XML. If this element is in collection, and something
    * is inserted before it, the stable copy behaviour may be unexpected. So use this method only when you
    * are sure that nothing serious will happen during the lifetime of the stable copy. The most usual use

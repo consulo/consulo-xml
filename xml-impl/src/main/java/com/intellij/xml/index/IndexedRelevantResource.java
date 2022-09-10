@@ -15,24 +15,23 @@
  */
 package com.intellij.xml.index;
 
+import consulo.ide.impl.idea.util.NullableFunction;
+import consulo.index.io.ID;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.stub.AdditionalIndexedRootsScope;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.module.Module;
+import consulo.module.content.ProjectFileIndex;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.ide.impl.idea.util.NullableFunction;
-import consulo.module.Module;
-import consulo.module.content.ProjectFileIndex;
-import consulo.module.content.ProjectRootManager;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.scope.GlobalSearchScope;
-import consulo.language.psi.stub.AdditionalIndexedRootsScope;
-import consulo.language.psi.stub.FileBasedIndex;
-import consulo.index.io.ID;
-import consulo.project.Project;
 
 /**
  * @author Dmitry Avdeev
@@ -73,7 +72,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
           all.add(resources.get(0));
         }
         else {
-          IndexedRelevantResource<K, V> resource = chooser.fun(resources);
+          IndexedRelevantResource<K, V> resource = chooser.apply(resources);
           if (resource != null) {
             all.add(resource);
           }

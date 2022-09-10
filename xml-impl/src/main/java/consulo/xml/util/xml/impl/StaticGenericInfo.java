@@ -2,7 +2,6 @@ package consulo.xml.util.xml.impl;
 
 import consulo.application.util.function.Processor;
 import consulo.ide.impl.idea.util.ConstantFunction;
-import consulo.ide.impl.idea.util.Function;
 import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.ide.impl.idea.util.ObjectUtils;
 import consulo.util.collection.ContainerUtil;
@@ -19,6 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -79,7 +79,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
 
       final NotNullFunction<String, CollectionChildDescriptionImpl> mapper = new NotNullFunction<String, CollectionChildDescriptionImpl>() {
         @Nonnull
-        public CollectionChildDescriptionImpl fun(final String xmlName) {
+        public CollectionChildDescriptionImpl apply(final String xmlName) {
           return ObjectUtils.assertNotNull(myCollections.findDescription(xmlName));
         }
       };
@@ -170,11 +170,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
       return s -> (Type)s[1];
     }
 
-    return new Function<Object[], Type>() {
-      public Type fun(final Object[] s) {
-        return method.getGenericReturnType();
-      }
-    };
+    return s -> method.getGenericReturnType();
   }
 
 

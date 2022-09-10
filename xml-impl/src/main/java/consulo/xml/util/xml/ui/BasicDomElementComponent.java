@@ -16,24 +16,22 @@
 
 package consulo.xml.util.xml.ui;
 
+import consulo.application.ApplicationManager;
 import consulo.logging.Logger;
 import consulo.module.Module;
-import consulo.ide.impl.idea.openapi.util.Factory;
+import consulo.project.Project;
 import consulo.util.lang.StringUtil;
-import consulo.application.ApplicationManager;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.project.Project;
 
 import javax.annotation.Nonnull;
-
 import javax.swing.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -79,11 +77,7 @@ public abstract class BasicDomElementComponent<T extends DomElement> extends Abs
       if (boundComponent != null) {
         if (description instanceof DomFixedChildDescription && DomUtil.isGenericValueType(description.getType())) {
           if ((description.getValues(domElement)).size() == 1) {
-            final GenericDomValue element = domElement.getManager().createStableValue(new Factory<GenericDomValue>() {
-              public GenericDomValue create() {
-                return domElement.isValid() ? (GenericDomValue)description.getValues(domElement).get(0) : null;
-              }
-            });
+            final GenericDomValue element = domElement.getManager().createStableValue(() -> domElement.isValid() ? (GenericDomValue)description.getValues(domElement).get(0) : null);
             doBind(DomUIFactory.createControl(element, commitOnEveryChange(element)), boundComponent);
           }
           else {

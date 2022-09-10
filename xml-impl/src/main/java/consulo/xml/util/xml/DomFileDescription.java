@@ -106,7 +106,7 @@ public class DomFileDescription<T>
 		final NotNullFunction<XmlTag, List<String>> function = myNamespacePolicies.get(namespaceKey);
 		if(function instanceof ConstantFunction)
 		{
-			return function.fun(null);
+			return function.apply(null);
 		}
 
 		if(function != null)
@@ -117,7 +117,7 @@ public class DomFileDescription<T>
 				final XmlTag tag = document.getRootTag();
 				if(tag != null)
 				{
-					return function.fun(tag);
+					return function.apply(tag);
 				}
 			}
 		}

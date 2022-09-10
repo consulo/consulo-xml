@@ -15,21 +15,20 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
-import consulo.ide.impl.idea.util.Function;
-import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.ide.IdeBundle;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.navigation.LocationPresentation;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.StringUtil;
+import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationPresentation {
   static final int MAX_TEXT_LENGTH = 50;
@@ -43,11 +42,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     final XmlTag tag = getElement();
     if (tag == null || !tag.isValid()) return Collections.emptyList();
 
-    return ContainerUtil.map2List(tag.getSubTags(), new Function<XmlTag, StructureViewTreeElement>() {
-      public StructureViewTreeElement fun(final XmlTag subTag) {
-        return new HtmlTagTreeElement(subTag);
-      }
-    });
+    return ContainerUtil.map2List(tag.getSubTags(), (Function<XmlTag, StructureViewTreeElement>) subTag -> new HtmlTagTreeElement(subTag));
   }
 
   public String getPresentableText() {

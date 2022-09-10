@@ -15,37 +15,30 @@
  */
 package org.intellij.plugins.relaxNG.compact;
 
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementTypeAsPsiFactory;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
-import javax.annotation.Nonnull;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
+import javax.annotation.Nonnull;
+import java.util.function.Function;
 
 /**
  * @author nik
  */
-class RncElementTypeEx<C extends RncElement> extends RncElementType implements NotNullFunction<ASTNode, C> {
-  private final Constructor<? extends C> myConstructor;
+class RncElementTypeEx<C extends RncElement> extends RncElementType implements IElementTypeAsPsiFactory
+{
+	private final Function<ASTNode, ? extends C> myFactory;
 
-  RncElementTypeEx(String name, Class<? extends C> clazz) {
-    super(name);
-    assert !clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers());
-    try {
-      myConstructor = clazz.getConstructor(ASTNode.class);
-    } catch (NoSuchMethodException e) {
-      throw new Error(e);
-    }
-  }
+	RncElementTypeEx(String name, Function<ASTNode, ? extends C> factory)
+	{
+		super(name);
+		myFactory = factory;
+	}
 
-  @Override
-  @Nonnull
-  public final C fun(ASTNode node) {
-    try {
-      return myConstructor.newInstance(node);
-    } catch (Exception e) {
-      throw new Error(e);
-    }
-  }
+	@Override
+	@Nonnull
+	public final C createElement(@Nonnull ASTNode node)
+	{
+		return myFactory.apply(node);
+	}
 }

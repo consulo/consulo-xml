@@ -28,7 +28,6 @@ import consulo.document.Document;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.codeInsight.CodeInsightUtilBase;
 import consulo.ide.impl.idea.codeInsight.lookup.impl.LookupCellRenderer;
-import consulo.ide.impl.idea.util.Function;
 import consulo.ide.impl.ui.impl.PopupChooserBuilder;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.WriteCommandAction;
@@ -127,12 +126,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         JBPopup popup = new PopupChooserBuilder<>(list)
             .setTitle("Choose Tag Name")
             .setItemChoosenCallback(runnable)
-            .setFilteringEnabled(new Function<Object, String>() {
-              @Override
-              public String fun(Object o) {
-                return ((XmlElementDescriptor) o).getName();
-              }
-            })
+            .setFilteringEnabled(o -> ((XmlElementDescriptor) o).getName())
             .createPopup();
 
         editor.showPopupInBestPositionFor(popup);

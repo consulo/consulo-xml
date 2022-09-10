@@ -1,7 +1,6 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.ide.impl.idea.openapi.module.ModuleUtil;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.logging.Logger;
 import consulo.module.Module;
@@ -24,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -238,9 +238,9 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
   }
 
   public final <T extends DomElement> T createStableCopy() {
-    return myManager.createStableValue(new Factory<T>() {
+    return myManager.createStableValue(new Supplier<T>() {
       @Nullable
-      public T create() {
+      public T get() {
         return (T)myManager.getFileElement(myFile);
       }
     });

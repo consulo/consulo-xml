@@ -37,7 +37,7 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
   private final JavaMethod myGetter;
   public static final NotNullFunction<DomInvocationHandler,List<XmlTag>> CUSTOM_TAGS_GETTER = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
     @Nonnull
-    public List<XmlTag> fun(final DomInvocationHandler handler) {
+    public List<XmlTag> apply(final DomInvocationHandler handler) {
       return DomImplUtil.getCustomSubTags(handler, handler.getXmlTag().getSubTags(), handler.getFile());
     }
   };

@@ -21,7 +21,6 @@ import consulo.application.presentation.TypePresentationService;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.util.Iconable;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.util.Function;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
@@ -37,6 +36,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author peter

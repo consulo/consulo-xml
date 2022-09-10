@@ -18,7 +18,6 @@ package consulo.xml.codeInsight.hint.api.impls;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.language.editor.completion.lookup.MutableLookupElement;
@@ -34,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.Function;
 
 /**
  * @author Maxim.Mossienko
@@ -150,7 +150,7 @@ public abstract class XmlBasedParameterInfoHandler implements ParameterInfoHandl
       new Function<String, Boolean>() {
         final XmlTag parameterOwner  = (XmlTag)context.getParameterOwner();
 
-        public Boolean fun(String s) {
+        public Boolean apply(String s) {
           return parameterOwner != null ? parameterOwner.getAttributeValue(s) != null:false;
         }
       });
@@ -173,7 +173,7 @@ public abstract class XmlBasedParameterInfoHandler implements ParameterInfoHandl
       StringBuffer text3 = new StringBuffer(" ");
 
       for (XmlAttributeDescriptor attribute : attributes) {
-        if (Boolean.TRUE.equals(attributePresentFun.fun(attribute.getName()))) {
+        if (Boolean.TRUE.equals(attributePresentFun.apply(attribute.getName()))) {
           if (!(text1.toString().equals(" "))) {
             text1.append(", ");
           }

@@ -1,24 +1,23 @@
 package consulo.xml.util.xml.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.util.lang.Comparing;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.util.lang.StringUtil;
+import consulo.util.lang.xml.XmlStringUtil;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementVisitor;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.AttributeStub;
-import consulo.util.lang.xml.XmlStringUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -91,11 +90,7 @@ public class AttributeChildInvocationHandler extends DomInvocationHandler<Attrib
 
   public <T extends DomElement> T createStableCopy() {
     final DomElement parentCopy = getParent().createStableCopy();
-    return getManager().createStableValue(new Factory<T>() {
-      public T create() {
-        return parentCopy.isValid() ? (T) getChildDescription().getValues(parentCopy).get(0) : null;
-      }
-    });
+    return getManager().createStableValue(() -> parentCopy.isValid() ? (T) getChildDescription().getValues(parentCopy).get(0) : null);
   }
 
   public final void undefineInternal() {

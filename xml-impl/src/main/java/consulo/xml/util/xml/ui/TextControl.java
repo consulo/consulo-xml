@@ -15,17 +15,16 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.document.Document;
 import consulo.codeEditor.EditorEx;
+import consulo.document.Document;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.language.editor.ui.awt.ReferenceEditorWithBrowseButton;
 import consulo.language.plain.PlainTextFileType;
 import consulo.language.plain.PlainTextLanguage;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFileFactory;
 import consulo.project.Project;
-import consulo.language.editor.ui.awt.EditorTextField;
-import consulo.language.editor.ui.awt.ReferenceEditorWithBrowseButton;
 import consulo.ui.ex.UIBundle;
-import consulo.ide.impl.idea.util.Function;
 import consulo.ui.ex.awt.DialogBuilder;
 
 import javax.annotation.Nonnull;
@@ -33,6 +32,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -71,14 +71,14 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 		final Function<String, Document> factory = new Function<String, Document>()
 		{
 			@Override
-			public Document fun(final String s)
+			public Document apply(final String s)
 			{
 				return PsiDocumentManager.getInstance(project).getDocument(PsiFileFactory.getInstance(project).createFileFromText("a.txt",
 						PlainTextLanguage.INSTANCE, "", true, false));
 			}
 		};
 		final TextPanel boundedComponent1 = boundedComponent;
-		final EditorTextField editorTextField = new EditorTextField(factory.fun(""), project, PlainTextFileType.INSTANCE)
+		final EditorTextField editorTextField = new EditorTextField(factory.apply(""), project, PlainTextFileType.INSTANCE)
 		{
 			@Override
 			protected EditorEx createEditor()

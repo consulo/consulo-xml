@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import consulo.document.util.TextRange;
 import consulo.fileEditor.FileEditorManager;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.ast.ASTNode;
 import consulo.language.codeStyle.CodeStyleManager;
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -44,6 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
@@ -93,7 +93,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
   }
 
   @Override
-  public ResolveResult fun(Define rncDefine) {
+  public ResolveResult apply(Define rncDefine) {
     final PsiElement element = rncDefine.getPsiElement();
     return element != null ? new PsiElementResolveResult(element) : new ResolveResult() {
       @Override

@@ -16,36 +16,28 @@
 
 package org.intellij.plugins.relaxNG.inspections;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.document.Document;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.codeStyle.CodeStyleManager;
-import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.util.collection.ContainerUtil;
-import consulo.virtualFileSystem.VirtualFile;
-import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
-import org.intellij.plugins.relaxNG.compact.psi.RncElement;
-import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
-import org.intellij.plugins.relaxNG.compact.psi.RncFile;
-import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.psi.*;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.virtualFileSystem.ReadonlyStatusHandler;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.document.Document;
-import consulo.project.Project;
-import consulo.virtualFileSystem.ReadonlyStatusHandler;
-import consulo.language.psi.PsiComment;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiWhiteSpace;
-import consulo.language.psi.util.PsiTreeUtil;
-import consulo.util.collection.ArrayUtil;
+import org.intellij.plugins.relaxNG.compact.psi.*;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
@@ -175,7 +167,7 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
       @NonNls String text = leaf.getText();
       if (text.matches("\n*#\\s*suppress\\s.+")) {
         final TextRange textRange = leaf.getTextRange();
-        doc.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), replace.fun(text));
+        doc.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), replace.apply(text));
         return;
       }
       leaf = leaf.getPrevSibling();

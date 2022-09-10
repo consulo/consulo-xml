@@ -1,6 +1,5 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.util.Function;
 import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
@@ -19,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -27,7 +27,7 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
   private final Collection<JavaMethod> myGetterMethods;
   private final NotNullFunction<DomInvocationHandler, List<XmlTag>> myTagsGetter = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
     @Nonnull
-    public List<XmlTag> fun(final DomInvocationHandler handler) {
+    public List<XmlTag> apply(final DomInvocationHandler handler) {
       XmlTag tag = handler.getXmlTag();
       if (tag == null) {
         return Collections.emptyList();
@@ -94,7 +94,7 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     if (getterMethod == null) {
       final Collection<DomElement> collection = ModelMergerUtil.getFilteredImplementations(element);
       return ContainerUtil.concat(collection, new Function<DomElement, Collection<? extends DomElement>>() {
-        public Collection<? extends DomElement> fun(final DomElement domElement) {
+        public Collection<? extends DomElement> apply(final DomElement domElement) {
           final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(domElement);
           assert handler != null : domElement;
           return handler.getCollectionChildren(CollectionChildDescriptionImpl.this, myTagsGetter);

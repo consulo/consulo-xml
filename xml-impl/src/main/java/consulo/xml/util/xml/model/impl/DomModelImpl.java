@@ -65,7 +65,7 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
     if (myMergedModel == null) {
       final DomManager domManager = DomManager.getDomManager(myProject);
       return domManager.createModelMerger().mergeModels(myClass, ContainerUtil.mapNotNull(myConfigFiles, new NullableFunction<XmlFile, T>() {
-        public T fun(XmlFile xmlFile) {
+        public T apply(XmlFile xmlFile) {
           DomFileElement<T> fileElement = domManager.getFileElement(xmlFile, myClass);
           return fileElement == null ? null : fileElement.getRootElement();
         }
@@ -83,7 +83,7 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
   public List<DomFileElement<T>> getRoots() {
     if (myMergedModel == null) {
       return ContainerUtil.mapNotNull(myConfigFiles, new NullableFunction<XmlFile, DomFileElement<T>>() {
-        public DomFileElement<T> fun(XmlFile xmlFile) {
+        public DomFileElement<T> apply(XmlFile xmlFile) {
           return DomManager.getDomManager(xmlFile.getProject()).getFileElement(xmlFile, myClass);
         }
       });

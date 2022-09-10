@@ -25,7 +25,6 @@ import consulo.application.util.CachedValueProvider;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
@@ -36,14 +35,14 @@ import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
 /*
 * Created by IntelliJ IDEA.
 * User: sweinreuter
 * Date: 24.08.2007
 */
-public class DefinitionResolver extends CommonElement.Visitor implements
-        CachedValueProvider<Map<String, Set<Define>>>, Factory<Set<Define>> {
+public class DefinitionResolver extends CommonElement.Visitor implements CachedValueProvider<Map<String, Set<Define>>>, Supplier<Set<Define>> {
 
   private static final Key<CachedValue<Map<String, Set<Define>>>> KEY = Key.create("CACHED_DEFINES");
 
@@ -106,9 +105,8 @@ public class DefinitionResolver extends CommonElement.Visitor implements
   public void visitRef(Ref ref) {
   }
 
-
   @Override
-  public Set<Define> create() {
+  public Set<Define> get() {
     return new HashSet<>();
   }
 

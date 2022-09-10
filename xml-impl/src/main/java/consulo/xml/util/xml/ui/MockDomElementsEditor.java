@@ -20,7 +20,6 @@ import consulo.application.Result;
 import consulo.language.editor.WriteCommandAction;
 import consulo.module.Module;
 import consulo.disposer.Disposer;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
@@ -34,6 +33,7 @@ import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -50,8 +50,8 @@ public class MockDomElementsEditor {
 
   protected final <T extends DomElement> T addEditedElement(final Class<T> aClass, final EditedElementDescription<T> description) {
     final DomManager domManager = DomManager.getDomManager(myModule.getProject());
-    final T t = domManager.createStableValue(new Factory<T>() {
-      public T create() {
+    final T t = domManager.createStableValue(new Supplier<T>() {
+      public T get() {
         T t = description.find();
         if (t == null) {
           return createMockElement(aClass);
@@ -68,16 +68,12 @@ public class MockDomElementsEditor {
   }
 
   protected final DomFileEditor initFileEditor(final BasicDomElementComponent component, final VirtualFile virtualFile, final String name) {
-    initFileEditor(component.getProject(), virtualFile, name, new Factory<BasicDomElementComponent>() {
-      public BasicDomElementComponent create() {
-        return component;
-      }
-    });
+    initFileEditor(component.getProject(), virtualFile, name, () -> component);
     Disposer.register(myFileEditor, component);
     return myFileEditor;
   }
 
-  protected final DomFileEditor initFileEditor(final Project project, final VirtualFile virtualFile, final String name, final Factory<? extends BasicDomElementComponent> component) {
+  protected final DomFileEditor initFileEditor(final Project project, final VirtualFile virtualFile, final String name, final Supplier<? extends BasicDomElementComponent> component) {
     myFileEditor = new DomFileEditor<BasicDomElementComponent>(project, virtualFile, name, component) {
       public JComponent getPreferredFocusedComponent() {
         return null;

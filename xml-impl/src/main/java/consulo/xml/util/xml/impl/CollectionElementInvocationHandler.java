@@ -1,18 +1,18 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.openapi.util.Factory;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author peter
@@ -75,9 +75,9 @@ public class CollectionElementInvocationHandler extends DomInvocationHandler<Abs
     assert parent != null;
     final DomElement parentCopy = parent.createStableCopy();
     final int index = description.getValues(parent).indexOf(getProxy());
-    return getManager().createStableValue(new Factory<DomElement>() {
+    return getManager().createStableValue(new Supplier<DomElement>() {
       @Nullable
-      public DomElement create() {
+      public DomElement get() {
         if (parentCopy.isValid()) {
           final List<? extends DomElement> list = description.getValues(parentCopy);
           if (list.size() > index) {

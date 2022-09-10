@@ -23,24 +23,24 @@
 package consulo.xml.util.xml.converters;
 
 import consulo.document.util.TextRange;
+import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
-import consulo.util.collection.ArrayUtil;
-import consulo.ide.impl.idea.util.Function;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceBase;
 import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.ResolvingConverter;
-import consulo.language.psi.EmptyResolveMessageProvider;
-import consulo.language.psi.PsiReference;
-import consulo.language.psi.PsiReferenceBase;
-import consulo.util.lang.StringUtil;
-import consulo.util.lang.ref.Ref;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
+import java.util.function.Function;
 
 public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<T>> implements CustomReferenceConverter<List<T>> {
 
@@ -224,7 +224,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
     private Function<PsiElement, PsiElement> getSuperBindToElementFunction(final Ref<IncorrectOperationException> ref) {
       return new Function<PsiElement, PsiElement>() {
-        public PsiElement fun(final PsiElement s) {
+        public PsiElement apply(final PsiElement s) {
           try {
             return MyPsiReference.super.bindToElement(s);
           }
@@ -238,7 +238,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
     private Function<String, PsiElement> getSuperElementRenameFunction(final Ref<consulo.language.util.IncorrectOperationException> ref) {
       return new Function<String, PsiElement>() {
-        public PsiElement fun(final String s) {
+        public PsiElement apply(final String s) {
           try {
             return MyPsiReference.super.handleElementRename(s);
           }
@@ -261,7 +261,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
                                               final Function<PsiElement, PsiElement> superBindToElementFunction,
                                               final Function<String, PsiElement> superElementRenameFunction)
       throws consulo.language.util.IncorrectOperationException {
-    return superBindToElementFunction.fun(element);
+    return superBindToElementFunction.apply(element);
   }
 
   protected PsiElement referenceHandleElementRename(final PsiReference psiReference,
@@ -269,7 +269,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
                                                     final Function<String, PsiElement> superHandleElementRename)
       throws consulo.language.util.IncorrectOperationException {
 
-    return superHandleElementRename.fun(newName);
+    return superHandleElementRename.apply(newName);
   }
 
 }

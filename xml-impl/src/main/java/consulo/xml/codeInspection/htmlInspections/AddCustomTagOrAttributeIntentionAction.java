@@ -16,11 +16,10 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.ide.impl.idea.util.Consumer;
+import com.intellij.xml.XmlBundle;
+import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.scheme.InspectionProfile;
-import consulo.language.editor.inspection.LocalQuickFix;
-import com.intellij.xml.XmlBundle;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
@@ -60,11 +59,6 @@ public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
     final PsiElement element = descriptor.getPsiElement();
 
     InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-    profile.modifyToolSettings(myInspectionKey, element, new Consumer<HtmlUnknownTagInspection>() {
-      @Override
-      public void consume(HtmlUnknownTagInspection tool) {
-        tool.addEntry(myName);
-      }
-    });
+    profile.modifyToolSettings(myInspectionKey, element, tool -> tool.addEntry(myName));
   }
 }

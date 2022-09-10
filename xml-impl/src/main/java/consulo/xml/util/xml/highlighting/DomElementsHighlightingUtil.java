@@ -16,22 +16,22 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import javax.annotation.Nullable;
-
-import consulo.ide.impl.idea.util.Function;
+import consulo.codeEditor.CodeInsightColors;
+import consulo.document.util.TextRange;
+import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemHighlightType;
-import consulo.language.editor.annotation.Annotation;
-import consulo.codeEditor.CodeInsightColors;
-import consulo.util.lang.Pair;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.util.lang.xml.XmlStringUtil;
+import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
+import consulo.util.lang.xml.XmlStringUtil;
+
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * User: Sergey.Vasiliev
@@ -44,7 +44,7 @@ public class DomElementsHighlightingUtil {
   public static ProblemDescriptor createProblemDescriptors(final InspectionManager manager, final DomElementProblemDescriptor problemDescriptor) {
     final ProblemHighlightType type = getProblemHighlightType(problemDescriptor);
     return createProblemDescriptors(problemDescriptor, new Function<Pair<TextRange, PsiElement>, ProblemDescriptor>() {
-      public ProblemDescriptor fun(final Pair<TextRange, PsiElement> s) {
+      public ProblemDescriptor apply(final Pair<TextRange, PsiElement> s) {
         return manager
           .createProblemDescriptor(s.second, s.first, problemDescriptor.getDescriptionTemplate(), type, true, problemDescriptor.getFixes());
       }
@@ -69,7 +69,7 @@ public class DomElementsHighlightingUtil {
   public static Annotation createAnnotation(final DomElementProblemDescriptor problemDescriptor) {
 
     return createProblemDescriptors(problemDescriptor, new Function<Pair<TextRange, PsiElement>, Annotation>() {
-      public Annotation fun(final Pair<TextRange, PsiElement> s) {
+      public Annotation apply(final Pair<TextRange, PsiElement> s) {
         String text = problemDescriptor.getDescriptionTemplate();
         if (StringUtil.isEmpty(text)) text = null;
         final HighlightSeverity severity = problemDescriptor.getHighlightSeverity();
@@ -103,7 +103,7 @@ public class DomElementsHighlightingUtil {
                                                       final Function<Pair<TextRange, PsiElement>, T> creator) {
 
     final Pair<TextRange, PsiElement> range = ((DomElementProblemDescriptorImpl)problemDescriptor).getProblemRange();
-    return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.fun(range);
+    return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.apply(range);
   }
 
 }

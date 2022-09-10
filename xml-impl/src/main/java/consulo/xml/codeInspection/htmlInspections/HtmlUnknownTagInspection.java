@@ -18,7 +18,6 @@ package consulo.xml.codeInspection.htmlInspections;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.AllIcons;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.Language;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.ui.ex.awt.FieldPanel;
@@ -40,7 +39,6 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 @ExtensionImpl
 public  class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
@@ -99,21 +97,7 @@ public  class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
 			{
 				Messages.showTextAreaDialog(panelRef.get().getTextField(), consulo.ide.impl.idea.openapi.util.text.StringUtil.wordsToBeginFromUpperCase(inspection.getPanelTitle()), inspection
 								.getClass().getSimpleName(),
-						new Function<String, List<String>>()
-						{
-							@Override
-							public List<String> fun(String s)
-							{
-								return reparseProperties(s);
-							}
-						}, new Function<List<String>, String>()
-						{
-							@Override
-							public String fun(List<String> strings)
-							{
-								return StringUtil.join(strings, ",");
-							}
-						}
+						s -> reparseProperties(s), strings -> StringUtil.join(strings, ",")
 				);
 			}
 		}, null);

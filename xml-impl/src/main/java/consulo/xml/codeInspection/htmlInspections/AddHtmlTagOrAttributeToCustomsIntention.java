@@ -16,19 +16,19 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.ide.impl.idea.util.Consumer;
-import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
-import consulo.codeEditor.Editor;
-import consulo.project.Project;
-import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
-import consulo.language.psi.PsiFile;
 import com.intellij.xml.XmlBundle;
+import consulo.codeEditor.Editor;
 import consulo.language.editor.inspection.scheme.InspectionProfile;
+import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
+import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.editor.intention.IntentionAction;
-import consulo.util.dataholder.Key;
+import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 
 /**
  * @author Maxim.Mossienko
@@ -66,7 +66,7 @@ public class AddHtmlTagOrAttributeToCustomsIntention implements IntentionAction 
     InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
     profile.modifyToolSettings(myInspectionKey, file, new Consumer<InspectionProfileEntry>() {
       @Override
-      public void consume(InspectionProfileEntry entry) {
+      public void accept(InspectionProfileEntry entry) {
         XmlEntitiesInspection xmlEntitiesInspection = (XmlEntitiesInspection) entry;
         xmlEntitiesInspection.addEntry(myName);
       }

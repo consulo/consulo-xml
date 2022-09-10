@@ -98,13 +98,6 @@ public class RncParserDefinition implements ParserDefinition
 	@SuppressWarnings({"unchecked"})
 	public PsiElement createElement(ASTNode node)
 	{
-		final IElementType type = node.getElementType();
-
-		if(type instanceof NotNullFunction)
-		{
-			return ((NotNullFunction<ASTNode, PsiElement>) type).fun(node);
-		}
-
 		return new MyRncElement(node);
 	}
 

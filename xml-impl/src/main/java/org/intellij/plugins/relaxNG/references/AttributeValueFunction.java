@@ -16,15 +16,15 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.ide.impl.idea.util.Function;
 import consulo.util.collection.ContainerUtil;
+import consulo.xml.psi.xml.XmlAttributeValue;
 
 import java.util.Set;
+import java.util.function.Function;
 
 class AttributeValueFunction implements Function<XmlAttributeValue, String> {
   @Override
-  public String fun(XmlAttributeValue value) {
+  public String apply(XmlAttributeValue value) {
     return value.getValue();
   }
 

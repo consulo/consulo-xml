@@ -16,34 +16,29 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.psi.EmptyResolveMessageProvider;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiElementResolveResult;
+import consulo.language.editor.completion.lookup.LookupValueFactory;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.psi.*;
+import consulo.language.psi.meta.PsiMetaOwner;
+import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.GenericAttributeValue;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
-import consulo.language.editor.completion.lookup.LookupValueFactory;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.LocalQuickFixProvider;
-import consulo.language.psi.PsiReferenceBase;
-import consulo.language.psi.ResolveResult;
-import consulo.language.psi.meta.PsiMetaOwner;
-import consulo.language.psi.meta.PsiPresentableMetaData;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.util.collection.ArrayUtil;
-import consulo.ide.impl.idea.util.Function;
-import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,7 +47,8 @@ import consulo.xml.util.xml.GenericAttributeValue;
  */
 public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue>
         implements LocalQuickFixProvider,
-    EmptyResolveMessageProvider, Function<Define, ResolveResult> {
+    EmptyResolveMessageProvider, Function<Define, ResolveResult>
+{
 
   private final boolean myIsParentRef;
   private final GenericAttributeValue<String> myValue;
@@ -95,7 +91,7 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  public ResolveResult fun(Define define) {
+  public ResolveResult apply(Define define) {
     final XmlElement xmlElement = (XmlElement)define.getPsiElement();
     assert xmlElement != null;
     return new PsiElementResolveResult(xmlElement);

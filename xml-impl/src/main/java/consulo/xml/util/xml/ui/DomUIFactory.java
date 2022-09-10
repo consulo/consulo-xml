@@ -19,7 +19,6 @@ import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.util.Function;
 import consulo.project.Project;
 import consulo.ui.ex.awt.ColumnInfo;
 import consulo.ui.ex.awt.UserActivityWatcher;
@@ -36,6 +35,7 @@ import javax.annotation.Nullable;
 import javax.swing.table.TableCellEditor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.function.Function;
 
 /**
  * @author peter

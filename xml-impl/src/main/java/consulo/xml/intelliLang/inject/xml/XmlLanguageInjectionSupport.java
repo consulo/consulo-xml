@@ -19,8 +19,6 @@ package consulo.xml.intelliLang.inject.xml;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.AllIcons;
 import consulo.configurable.Configurable;
-import consulo.ide.impl.idea.openapi.util.Factory;
-import consulo.ide.impl.idea.util.Consumer;
 import consulo.ide.impl.intelliLang.Configuration;
 import consulo.ide.impl.intelliLang.inject.InjectLanguageAction;
 import consulo.ide.impl.intelliLang.inject.InjectorUtils;
@@ -58,6 +56,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Gregory.Shrago
@@ -348,25 +348,25 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
           @Override
           public void actionPerformed(final AnActionEvent e) {
             final BaseInjection newInjection = showInjectionUI(project, new XmlTagInjection());
-            if (newInjection != null) consumer.consume(newInjection);
+            if (newInjection != null) consumer.accept(newInjection);
           }
         },
         new AnAction("XML Attribute Injection", null, AllIcons.Nodes.Annotationtype) {
           @Override
           public void actionPerformed(final AnActionEvent e) {
             final BaseInjection injection = showInjectionUI(project, new XmlAttributeInjection());
-            if (injection != null) consumer.consume(injection);
+            if (injection != null) consumer.accept(injection);
           }
         }
     };
   }
 
   @Override
-  public AnAction createEditAction(final Project project, final Factory<BaseInjection> producer) {
+  public AnAction createEditAction(final Project project, final Supplier<BaseInjection> producer) {
     return new AnAction() {
       @Override
       public void actionPerformed(final AnActionEvent e) {
-        final BaseInjection originalInjection = producer.create();
+        final BaseInjection originalInjection = producer.get();
         final BaseInjection injection = createFrom(originalInjection);
         if (injection != null) {
           final BaseInjection newInjection = showInjectionUI(project, injection);

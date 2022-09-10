@@ -16,23 +16,23 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.ide.impl.idea.openapi.util.Factory;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.rawHighlight.SeverityRegistrar;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.function.Condition;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomElementVisitor;
+import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.util.xml.DomUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder {
   private final Map<DomElement, Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> myCachedErrors =
@@ -43,7 +43,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
 
   private final Function<DomElement, List<DomElementProblemDescriptor>> myDomProblemsGetter =
       new Function<DomElement, List<DomElementProblemDescriptor>>() {
-        public List<DomElementProblemDescriptor> fun(final DomElement s) {
+        public List<DomElementProblemDescriptor> apply(final DomElement s) {
           final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> map = myCachedErrors.get(s);
           return map != null ? ContainerUtil.concat(map.values()) : Collections.<DomElementProblemDescriptor>emptyList();
         }
@@ -51,16 +51,8 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
 
   private final DomFileElement myElement;
 
-  private static final Factory<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> CONCURRENT_HASH_MAP_FACTORY = new Factory<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>>() {
-    public Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> create() {
-      return new ConcurrentHashMap<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>();
-    }
-  };
-  private static final Factory<List<DomElementProblemDescriptor>> SMART_LIST_FACTORY = new Factory<List<DomElementProblemDescriptor>>() {
-    public List<DomElementProblemDescriptor> create() {
-      return new SmartList<DomElementProblemDescriptor>();
-    }
-  };
+  private static final Supplier<Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>> CONCURRENT_HASH_MAP_FACTORY = () -> new ConcurrentHashMap<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>>();
+  private static final Supplier<List<DomElementProblemDescriptor>> SMART_LIST_FACTORY = () -> new SmartList<DomElementProblemDescriptor>();
   private final Set<Class<? extends DomElementsInspection>> myPassedInspections = new HashSet<Class<? extends DomElementsInspection>>();
 
   public DomElementsProblemsHolderImpl(final DomFileElement element) {
@@ -100,7 +92,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
   @Nonnull
   public synchronized List<DomElementProblemDescriptor> getProblems(DomElement domElement) {
     if (domElement == null || !domElement.isValid()) return Collections.emptyList();
-    return myDomProblemsGetter.fun(domElement);
+    return myDomProblemsGetter.apply(domElement);
   }
 
   public List<DomElementProblemDescriptor> getProblems(final DomElement domElement, boolean includeXmlProblems) {

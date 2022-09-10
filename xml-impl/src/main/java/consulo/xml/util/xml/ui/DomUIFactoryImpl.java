@@ -24,7 +24,6 @@ import consulo.document.event.DocumentEvent;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
 import consulo.fileEditor.highlight.HighlightingPass;
 import consulo.ide.impl.idea.openapi.editor.impl.EditorComponentImpl;
-import consulo.ide.impl.idea.util.Function;
 import consulo.language.editor.impl.highlight.TextEditorHighlightingPassManager;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
@@ -49,6 +48,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.lang.reflect.Type;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -79,7 +79,7 @@ public class DomUIFactoryImpl extends DomUIFactory {
 
     final Function<DomElement, TableCellEditor> function = myCustomCellEditorCreators.get(type);
     assert function != null : "Type not supported: " + type;
-    return function.fun(element);
+    return function.apply(element);
   }
 
   public final UserActivityWatcher createEditorAwareUserActivityWatcher() {
@@ -133,7 +133,7 @@ public class DomUIFactoryImpl extends DomUIFactory {
   @Nullable
   public BaseControl createCustomControl(final Type type, DomWrapper<String> wrapper, final boolean commitOnEveryChange) {
     final Function<DomWrapper<String>, BaseControl> factory = myCustomControlCreators.get(ReflectionUtil.getRawType(type));
-    return factory == null ? null : factory.fun(wrapper);
+    return factory == null ? null : factory.apply(wrapper);
   }
 
   public CaptionComponent addErrorPanel(CaptionComponent captionComponent, DomElement... elements) {

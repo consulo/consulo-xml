@@ -1,23 +1,23 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.openapi.util.NullableFactory;
+import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomNameStrategy;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.stubs.ElementStub;
-import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -97,11 +97,7 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
 
   public DomElement createPathStableCopy() {
     final DomFileElement stableCopy = myParent.createStableCopy();
-    return getManager().createStableValue(new NullableFactory<DomElement>() {
-      public DomElement create() {
-        return stableCopy.isValid() ? stableCopy.getRootElement() : null;
-      }
-    });
+    return getManager().createStableValue(() -> stableCopy.isValid() ? stableCopy.getRootElement() : null);
   }
 
   protected XmlTag setEmptyXmlTag() {

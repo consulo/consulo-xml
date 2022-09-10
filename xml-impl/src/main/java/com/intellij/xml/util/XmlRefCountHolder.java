@@ -21,7 +21,6 @@ import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
 import consulo.application.util.UserDataCache;
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.Language;
 import consulo.language.psi.*;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -104,12 +103,7 @@ public class XmlRefCountHolder {
     }
     else if (!soft) {
       // mark as duplicate
-      List<XmlAttributeValue> notSoft = ContainerUtil.mapNotNull(list, new NullableFunction<Pair<XmlAttributeValue, Boolean>, XmlAttributeValue>() {
-        @Override
-        public XmlAttributeValue fun(Pair<XmlAttributeValue, Boolean> pair) {
-          return pair.second ? null : pair.first;
-        }
-      });
+      List<XmlAttributeValue> notSoft = ContainerUtil.mapNotNull(list, pair -> pair.second ? null : pair.first);
       if (!notSoft.isEmpty()) {
         myPossiblyDuplicateIds.addAll(notSoft);
         myPossiblyDuplicateIds.add(attributeValue);

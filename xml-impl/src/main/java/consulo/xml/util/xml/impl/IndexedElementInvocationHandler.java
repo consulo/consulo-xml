@@ -1,18 +1,17 @@
 package consulo.xml.util.xml.impl;
 
+import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
-import consulo.ide.impl.idea.openapi.util.Factory;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.stubs.ElementStub;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 
@@ -129,11 +128,7 @@ public class IndexedElementInvocationHandler extends DomInvocationHandler<FixedC
   public final DomElement createPathStableCopy() {
     final DomFixedChildDescription description = getChildDescription();
     final DomElement parentCopy = getParent().createStableCopy();
-    return getManager().createStableValue(new Factory<DomElement>() {
-      public DomElement create() {
-        return parentCopy.isValid() ? description.getValues(parentCopy).get(myIndex) : null;
-      }
-    });
+    return getManager().createStableValue(() -> parentCopy.isValid() ? description.getValues(parentCopy).get(myIndex) : null);
   }
 
 }

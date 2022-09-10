@@ -18,7 +18,6 @@ package com.intellij.xml.impl.dtd;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import consulo.application.util.NotNullLazyValue;
-import consulo.ide.impl.idea.util.Function;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlContentParticle;
 
@@ -36,12 +35,7 @@ public class XmlElementsGroupImpl implements XmlElementsGroup {
     @Nonnull
     @Override
     protected List<XmlElementsGroup> compute() {
-      return ContainerUtil.map(myParticle.getSubParticles(), new Function<XmlContentParticle, XmlElementsGroup>() {
-        @Override
-        public XmlElementsGroup fun(XmlContentParticle xmlContentParticle) {
-          return new  XmlElementsGroupImpl(xmlContentParticle, XmlElementsGroupImpl.this);
-        }
-      });
+      return ContainerUtil.map(myParticle.getSubParticles(), xmlContentParticle -> new  XmlElementsGroupImpl(xmlContentParticle, XmlElementsGroupImpl.this));
     }
   };
 
