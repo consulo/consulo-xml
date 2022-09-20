@@ -3,8 +3,8 @@ package consulo.xml.util.xml.impl;
 import consulo.application.util.function.Processor;
 import consulo.ide.impl.idea.util.ConstantFunction;
 import consulo.ide.impl.idea.util.NotNullFunction;
-import consulo.ide.impl.idea.util.ObjectUtils;
 import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.ObjectUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.psi.xml.XmlElement;
@@ -80,7 +80,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
       final NotNullFunction<String, CollectionChildDescriptionImpl> mapper = new NotNullFunction<String, CollectionChildDescriptionImpl>() {
         @Nonnull
         public CollectionChildDescriptionImpl apply(final String xmlName) {
-          return ObjectUtils.assertNotNull(myCollections.findDescription(xmlName));
+          return ObjectUtil.assertNotNull(myCollections.findDescription(xmlName));
         }
       };
       final Map<JavaMethodSignature, String[]> getters = builder.getCompositeCollectionGetters();
