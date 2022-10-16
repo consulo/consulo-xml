@@ -16,7 +16,6 @@
 package consulo.xml.refactoring.rename;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.util.containers.Queue;
 import consulo.language.editor.refactoring.event.RefactoringElementListener;
 import consulo.language.editor.refactoring.rename.RenamePsiElementProcessor;
 import consulo.language.psi.PsiElement;
@@ -28,6 +27,7 @@ import consulo.language.psi.search.ReferencesSearch;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.usage.UsageInfo;
+import consulo.util.collection.Queue;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;

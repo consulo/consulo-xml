@@ -16,14 +16,16 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import consulo.ide.impl.idea.codeInsight.daemon.impl.SeverityRegistrarImpl;
-import consulo.ide.impl.idea.codeInsight.daemon.impl.TrafficLightRenderer;
-import consulo.language.editor.rawHighlight.SeverityRegistrar;
 import consulo.application.AllIcons;
-import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.application.ApplicationManager;
+import consulo.disposer.Disposer;
+import consulo.ide.impl.idea.codeInsight.daemon.impl.TrafficLightRenderer;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.rawHighlight.SeverityRegistrar;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
+import consulo.ui.ex.awt.util.Alarm;
+import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomChangeAdapter;
 import consulo.xml.util.xml.DomElement;
@@ -31,10 +33,6 @@ import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.ui.CommittablePanel;
 import consulo.xml.util.xml.ui.Highlightable;
-import consulo.disposer.Disposer;
-import consulo.ui.ex.awt.util.Alarm;
-import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.function.Condition;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -45,7 +43,6 @@ import java.awt.*;
  */
 public class DomElementsErrorPanel extends JPanel implements CommittablePanel, Highlightable
 {
-
 	private static final int ALARM_PERIOD = 241;
 
 	private final Project myProject;
@@ -185,12 +182,12 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 	{
 		public DomElementsTrafficLightRenderer(@Nonnull XmlFile xmlFile)
 		{
-			super(xmlFile.getProject(), PsiDocumentManager.getInstance(xmlFile.getProject()).getDocument(xmlFile), xmlFile);
+			super(xmlFile.getProject(), PsiDocumentManager.getInstance(xmlFile.getProject()).getDocument(xmlFile));
 		}
 
 		@Nonnull
 		@Override
-		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@Nonnull SeverityRegistrarImpl severityRegistrar)
+		protected DaemonCodeAnalyzerStatus getDaemonCodeAnalyzerStatus(@Nonnull SeverityRegistrar severityRegistrar)
 		{
 			final DaemonCodeAnalyzerStatus status = super.getDaemonCodeAnalyzerStatus(severityRegistrar);
 			if(isInspectionCompleted())
@@ -201,7 +198,7 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 		}
 
 		@Override
-		protected void fillDaemonCodeAnalyzerErrorsStatus(@Nonnull DaemonCodeAnalyzerStatus status, @Nonnull SeverityRegistrarImpl severityRegistrar)
+		protected void fillDaemonCodeAnalyzerErrorsStatus(@Nonnull DaemonCodeAnalyzerStatus status, @Nonnull SeverityRegistrar severityRegistrar)
 		{
 			for(int i = 0; i < status.errorCount.length; i++)
 			{
@@ -222,30 +219,9 @@ public class DomElementsErrorPanel extends JPanel implements CommittablePanel, H
 			}
 		}
 
-		protected boolean isInspectionCompleted()
+		private boolean isInspectionCompleted()
 		{
-			return ContainerUtil.and(myDomElements, new Condition<DomElement>()
-			{
-				@Override
-				public boolean value(final DomElement element)
-				{
-					return myAnnotationsManager.getHighlightStatus(element) == DomHighlightStatus.INSPECTIONS_FINISHED;
-				}
-			});
+			return ContainerUtil.and(myDomElements, element -> myAnnotationsManager.getHighlightStatus(element) == DomHighlightStatus.INSPECTIONS_FINISHED);
 		}
-
-		protected boolean isErrorAnalyzingFinished()
-		{
-			return ContainerUtil.and(myDomElements, new Condition<DomElement>()
-			{
-				@Override
-				public boolean value(final DomElement element)
-				{
-					return myAnnotationsManager.getHighlightStatus(element).compareTo(DomHighlightStatus.ANNOTATORS_FINISHED) >= 0;
-				}
-			});
-		}
-
 	}
-
 }
