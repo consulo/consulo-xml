@@ -43,11 +43,11 @@ public class BooleanControl extends BaseModifiableControl<JCheckBox, Boolean> {
     return checkBox;
   }
 
-  protected Boolean getValue() {
+  public Boolean getValue() {
     return myUndefined ? null : getComponent().isSelected();
   }
 
-  protected void setValue(final Boolean value) {
+  public void setValue(final Boolean value) {
     myUndefined = value == null;
     getComponent().setSelected(value != null && value);
   }

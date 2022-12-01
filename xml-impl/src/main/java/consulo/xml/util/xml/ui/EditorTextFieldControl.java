@@ -118,12 +118,12 @@ public abstract class EditorTextFieldControl<T extends JComponent> extends BaseM
 	protected abstract T createMainComponent(T boundedComponent, Project project);
 
 	@Nonnull
-	protected String getValue()
+	public String getValue()
 	{
 		return getEditorTextField(getComponent()).getText();
 	}
 
-	protected void setValue(final String value)
+	public void setValue(final String value)
 	{
 		CommandProcessor.getInstance().runUndoTransparentAction(new Runnable()
 		{

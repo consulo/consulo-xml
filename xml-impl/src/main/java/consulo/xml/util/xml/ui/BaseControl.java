@@ -230,7 +230,7 @@ public abstract class BaseControl<Bound extends JComponent, T> extends DomUICont
   }
 
   @Nullable
-  protected abstract T getValue();
+  public abstract T getValue();
 
-  protected abstract void setValue(T value);
+  public abstract void setValue(T value);
 }

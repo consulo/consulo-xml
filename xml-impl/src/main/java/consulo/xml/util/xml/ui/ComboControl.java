@@ -243,12 +243,12 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
   }
 
   @Nullable
-  protected final String getValue() {
+  public final String getValue() {
     final Pair<String, Image> pair = (Pair<String, Image>) getComponent().getSelectedItem();
     return pair == null || pair == EMPTY ? null : pair.first;
   }
 
-  protected final void setValue(final String value) {
+  public final void setValue(final String value) {
     final JComboBox component = getComponent();
     if (!isValidValue(value)) {
       component.setEditable(true);
