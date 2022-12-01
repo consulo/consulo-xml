@@ -81,7 +81,6 @@ public abstract class BaseControl<Bound extends JComponent, T> extends DomUICont
     return ERROR_FOREGROUND;
   }
 
-
   private void initialize(final Bound boundComponent) {
     myBoundComponent = createMainComponent(boundComponent);
     final JComponent highlightedComponent = getHighlightedComponent(myBoundComponent);
@@ -210,7 +209,7 @@ public abstract class BaseControl<Bound extends JComponent, T> extends DomUICont
     myDomWrapper.setValue("".equals(value) ? null : value);
   }
 
-  protected final Project getProject() {
+  public final Project getProject() {
     return myDomWrapper.getProject();
   }
 
@@ -218,14 +217,10 @@ public abstract class BaseControl<Bound extends JComponent, T> extends DomUICont
     try {
       return myDomWrapper.getValue();
     }
-    catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    }
-    catch (InvocationTargetException e) {
+    catch (IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException(e);
     }
   }
-
 
   public boolean canNavigate(DomElement element) {
     return false;
@@ -236,6 +231,6 @@ public abstract class BaseControl<Bound extends JComponent, T> extends DomUICont
 
   @Nullable
   protected abstract T getValue();
-  protected abstract void setValue(T value);
 
+  protected abstract void setValue(T value);
 }
