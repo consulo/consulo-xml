@@ -110,12 +110,6 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
     return getXmlnsDeclaration(element) != null;
   }
 
-  @Nonnull
-  @Override
-  public String getFamilyName() {
-    return NAME;
-  }
-
   @Nullable
   private static XmlAttribute getXmlnsDeclaration(PsiElement element) {
     final PsiElement parent = element.getParent();

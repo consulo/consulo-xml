@@ -57,13 +57,6 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction
 		setText(NAME);
 	}
 
-	@Nonnull
-	@Override
-	public String getFamilyName()
-	{
-		return NAME;
-	}
-
 	@Override
 	public boolean startInWriteAction()
 	{

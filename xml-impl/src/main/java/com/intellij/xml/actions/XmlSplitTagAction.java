@@ -48,12 +48,6 @@ public class XmlSplitTagAction implements IntentionAction {
   }
 
   @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlBundle.message("xml.split.tag.intention.action");
-  }
-
-  @Override
   public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
     if (file instanceof XmlFile) {
       if (editor != null) {

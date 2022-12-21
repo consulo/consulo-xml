@@ -16,33 +16,29 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.document.Document;
+import com.intellij.xml.util.XmlTagUtil;
 import consulo.codeEditor.Editor;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.project.Project;
+import consulo.document.Document;
 import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiErrorElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.ast.IElementType;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.intention.SyntheticIntentionAction;
+import consulo.language.psi.*;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.util.XmlTagUtil;
-import consulo.language.editor.FileModificationService;
-import consulo.language.editor.intention.IntentionAction;
-import consulo.language.util.IncorrectOperationException;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author spleaner
  */
-public class RenameTagBeginOrEndIntentionAction implements IntentionAction
+public class RenameTagBeginOrEndIntentionAction implements SyntheticIntentionAction
 {
 	private final boolean myStart;
 	private final String myTargetName;
@@ -53,13 +49,6 @@ public class RenameTagBeginOrEndIntentionAction implements IntentionAction
 		myTargetName = targetName;
 		mySourceName = sourceName;
 		myStart = start;
-	}
-
-	@Override
-	@Nonnull
-	public String getFamilyName()
-	{
-		return getName();
 	}
 
 	@Override

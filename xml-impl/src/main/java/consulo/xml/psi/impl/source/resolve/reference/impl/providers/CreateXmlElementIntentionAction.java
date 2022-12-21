@@ -15,6 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
+import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlBundle;
@@ -37,7 +38,7 @@ import org.jetbrains.annotations.PropertyKey;
 
 import javax.annotation.Nonnull;
 
-class CreateXmlElementIntentionAction implements IntentionAction {
+class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
   private final String myMessageKey;
   protected final TypeOrElementOrAttributeReference myRef;
   private boolean myIsAvailableEvaluated;
@@ -58,12 +59,6 @@ class CreateXmlElementIntentionAction implements IntentionAction {
   @Nonnull
   public String getText() {
     return XmlBundle.message(myMessageKey, XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
-  }
-
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlBundle.message("xml.create.xml.declaration.intention.type");
   }
 
   @Override

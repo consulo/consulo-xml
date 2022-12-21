@@ -317,7 +317,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
                 }
               },
               requestor.getText(),
-              requestor.getFamilyName()
+              requestor.getText()
           );
         }
       };

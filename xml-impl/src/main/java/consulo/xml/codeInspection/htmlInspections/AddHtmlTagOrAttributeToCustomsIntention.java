@@ -22,6 +22,7 @@ import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProfileEntry;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
@@ -33,7 +34,7 @@ import java.util.function.Consumer;
 /**
  * @author Maxim.Mossienko
  */
-public class AddHtmlTagOrAttributeToCustomsIntention implements IntentionAction {
+public class AddHtmlTagOrAttributeToCustomsIntention implements SyntheticIntentionAction {
   private final String myName;
   private final String myText;
   private final Key<InspectionProfileEntry> myInspectionKey;
@@ -48,12 +49,6 @@ public class AddHtmlTagOrAttributeToCustomsIntention implements IntentionAction 
   @Nonnull
   public String getText() {
     return myText;
-  }
-
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlBundle.message("fix.html.family");
   }
 
   @Override
