@@ -15,15 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.IconDescriptor;
-import consulo.ide.IconDescriptorUpdater;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.AllIcons;
+import consulo.language.icon.IconDescriptor;
+import consulo.language.icon.IconDescriptorUpdater;
+import consulo.language.psi.PsiElement;
 import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 
@@ -31,35 +32,28 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 22:47/19.07.13
  */
-public class XmlIconDescriptorUpdater implements IconDescriptorUpdater
-{
-	private static final String XSD_FILE_EXTENSION = "xsd";
-	private static final String WSDL_FILE_EXTENSION = "wsdl";
+@ExtensionImpl(id = "xml")
+public class XmlIconDescriptorUpdater implements IconDescriptorUpdater {
+  private static final String XSD_FILE_EXTENSION = "xsd";
+  private static final String WSDL_FILE_EXTENSION = "wsdl";
 
-	@RequiredReadAction
-	@Override
-	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags)
-	{
-		if(element instanceof XmlFile)
-		{
-			final VirtualFile vf = ((XmlFile) element).getVirtualFile();
-			if(vf != null)
-			{
-				final String extension = vf.getExtension();
+  @RequiredReadAction
+  @Override
+  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
+    if (element instanceof XmlFile) {
+      final VirtualFile vf = ((XmlFile) element).getVirtualFile();
+      if (vf != null) {
+        final String extension = vf.getExtension();
 
-				if(XSD_FILE_EXTENSION.equals(extension))
-				{
-					iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
-				}
-				if(WSDL_FILE_EXTENSION.equals(extension))
-				{
-					iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
-				}
-			}
-		}
-		else if(element instanceof XmlTag)
-		{
-			iconDescriptor.setMainIcon(PlatformIconGroup.nodesTag());
-		}
-	}
+        if (XSD_FILE_EXTENSION.equals(extension)) {
+          iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
+        }
+        if (WSDL_FILE_EXTENSION.equals(extension)) {
+          iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
+        }
+      }
+    } else if (element instanceof XmlTag) {
+      iconDescriptor.setMainIcon(PlatformIconGroup.nodesTag());
+    }
+  }
 }

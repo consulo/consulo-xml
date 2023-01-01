@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTag;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

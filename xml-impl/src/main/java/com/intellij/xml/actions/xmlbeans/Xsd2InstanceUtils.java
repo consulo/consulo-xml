@@ -15,17 +15,17 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.XmlRecursiveElementVisitor;
-import com.intellij.psi.impl.source.tree.LeafPsiElement;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.language.impl.psi.LeafPsiElement;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;

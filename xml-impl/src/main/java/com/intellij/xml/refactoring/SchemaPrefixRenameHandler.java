@@ -15,16 +15,18 @@
  */
 package com.intellij.xml.refactoring;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.xml.PossiblePrefixReference;
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.refactoring.rename.inplace.VariableInplaceRenameHandler;
-import com.intellij.refactoring.rename.inplace.VariableInplaceRenamer;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.refactoring.rename.inplace.VariableInplaceRenameHandler;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
+import consulo.xml.psi.impl.source.xml.PossiblePrefixReference;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.language.editor.refactoring.rename.inplace.VariableInplaceRenamer;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -33,6 +35,7 @@ import java.util.Collection;
 /**
  * @author Dmitry Avdeev
  */
+@ExtensionImpl(order = "before xmlTagRenameHandler")
 public class SchemaPrefixRenameHandler extends VariableInplaceRenameHandler {
   
   @Override

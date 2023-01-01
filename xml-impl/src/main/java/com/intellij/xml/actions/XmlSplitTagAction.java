@@ -15,36 +15,35 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.lang.xhtml.XHTMLLanguage;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.IntentionMetaData;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.*;
+
 import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
+@ExtensionImpl
+@IntentionMetaData(ignoreId = "xml.split.current.tag", fileExtensions = "html", categories = "XML")
 public class XmlSplitTagAction implements IntentionAction {
 
   @Override
   @Nonnull
   public String getText() {
-    return XmlBundle.message("xml.split.tag.intention.action");
-  }
-
-  @Override
-  @Nonnull
-  public String getFamilyName() {
     return XmlBundle.message("xml.split.tag.intention.action");
   }
 

@@ -16,44 +16,65 @@
 
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.codeInspection.ex.UnfairLocalInspectionTool;
 import com.intellij.xml.XmlBundle;
+import com.intellij.xml.impl.ExternalDocumentValidator;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.xml.XMLLanguage;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Maxim Mossienko
- * @see com.intellij.xml.impl.ExternalDocumentValidator
+ * @see ExternalDocumentValidator
  */
-public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
-  public static final @NonNls String SHORT_NAME = "CheckXmlFileWithXercesValidator";
+@ExtensionImpl
+public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
+{
+	public static final
+	@NonNls
+	String SHORT_NAME = "CheckXmlFileWithXercesValidator";
 
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-  @Nonnull
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.ERROR;
-  }
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return XmlInspectionGroupNames.XML_INSPECTIONS;
-  }
+	@Nonnull
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
 
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("xml.inspections.check.file.with.xerces");
-  }
+	@Nonnull
+	public String getGroupDisplayName()
+	{
+		return XmlInspectionGroupNames.XML_INSPECTIONS;
+	}
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return SHORT_NAME;
-  }
+	@Nonnull
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.check.file.with.xerces");
+	}
+
+	@Nonnull
+	@NonNls
+	public String getShortName()
+	{
+		return SHORT_NAME;
+	}
 }

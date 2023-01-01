@@ -15,44 +15,73 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlText;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author maxim
  */
-public class XHtmlDocumentationProvider extends HtmlDocumentationProvider {
+@ExtensionImpl
+public class XHtmlDocumentationProvider extends HtmlDocumentationProvider
+{
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return XHTMLLanguage.INSTANCE;
+	}
 
-  protected String generateDocForHtml(PsiElement element, boolean ommitHtmlSpecifics, XmlTag context, PsiElement originalElement) {
-    return super.generateDocForHtml(element, true, context, originalElement);
-  }
+	protected String generateDocForHtml(PsiElement element, boolean ommitHtmlSpecifics, XmlTag context, PsiElement originalElement)
+	{
+		return super.generateDocForHtml(element, true, context, originalElement);
+	}
 
-  protected XmlTag findTagContext(PsiElement context) {
-    XmlTag tagBeforeWhiteSpace = findTagBeforeWhiteSpace(context);
-    if (tagBeforeWhiteSpace != null) return tagBeforeWhiteSpace;
-    return super.findTagContext(context);
-  }
+	protected XmlTag findTagContext(PsiElement context)
+	{
+		XmlTag tagBeforeWhiteSpace = findTagBeforeWhiteSpace(context);
+		if(tagBeforeWhiteSpace != null)
+		{
+			return tagBeforeWhiteSpace;
+		}
+		return super.findTagContext(context);
+	}
 
-  private static XmlTag findTagBeforeWhiteSpace(PsiElement context) {
-    if (context instanceof PsiWhiteSpace) {
-      PsiElement parent = context.getParent();
-      if (parent instanceof XmlText) {
-        PsiElement prevSibling = parent.getPrevSibling();
-        if (prevSibling instanceof XmlTag) return (XmlTag)prevSibling;
-      }
-      else if (parent instanceof XmlTag) {
-        return (XmlTag)parent;
-      }
-    }
+	private static XmlTag findTagBeforeWhiteSpace(PsiElement context)
+	{
+		if(context instanceof PsiWhiteSpace)
+		{
+			PsiElement parent = context.getParent();
+			if(parent instanceof XmlText)
+			{
+				PsiElement prevSibling = parent.getPrevSibling();
+				if(prevSibling instanceof XmlTag)
+				{
+					return (XmlTag) prevSibling;
+				}
+			}
+			else if(parent instanceof XmlTag)
+			{
+				return (XmlTag) parent;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  protected boolean isAttributeContext(PsiElement context) {
-    if (findTagBeforeWhiteSpace(context) != null) return false;
+	protected boolean isAttributeContext(PsiElement context)
+	{
+		if(findTagBeforeWhiteSpace(context) != null)
+		{
+			return false;
+		}
 
-    return super.isAttributeContext(context);
-  }
+		return super.isAttributeContext(context);
+	}
 }

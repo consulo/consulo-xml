@@ -18,11 +18,11 @@ package com.intellij.html.impl.providers;
 import javax.annotation.Nonnull;
 
 import com.intellij.html.impl.util.MicrodataUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.util.ProcessingContext;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.language.util.ProcessingContext;
+import consulo.language.psi.PsiReference;
 
 /**
  * @author: Fedor.Korotkov

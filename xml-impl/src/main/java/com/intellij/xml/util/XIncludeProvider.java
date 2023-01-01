@@ -15,80 +15,71 @@
  */
 package com.intellij.xml.util;
 
-import java.util.ArrayList;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.psi.include.FileIncludeInfo;
+import consulo.language.psi.include.FileIncludeProvider;
+import consulo.language.psi.stub.FileContent;
+import consulo.util.io.Readers;
+import consulo.util.lang.CharArrayUtil;
+import consulo.util.xml.fastReader.NanoXmlUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XmlFileType;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.impl.include.FileIncludeInfo;
-import com.intellij.psi.impl.include.FileIncludeProvider;
-import com.intellij.util.Consumer;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.text.CharArrayUtil;
-import com.intellij.util.xml.NanoXmlUtil;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XIncludeProvider extends FileIncludeProvider
-{
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "XInclude";
-	}
+@ExtensionImpl
+public class XIncludeProvider extends FileIncludeProvider {
+  @Nonnull
+  @Override
+  public String getId() {
+    return "XInclude";
+  }
 
-	@Override
-	public boolean acceptFile(VirtualFile file)
-	{
-		return file.getFileType() == XmlFileType.INSTANCE;
-	}
+  @Override
+  public boolean acceptFile(VirtualFile file) {
+    return file.getFileType() == XmlFileType.INSTANCE;
+  }
 
-	@Override
-	public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink)
-	{
-		fileTypeSink.consume(XmlFileType.INSTANCE);
-	}
+  @Override
+  public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
+    fileTypeSink.accept(XmlFileType.INSTANCE);
+  }
 
-	@Nonnull
-	@Override
-	public FileIncludeInfo[] getIncludeInfos(FileContent content)
-	{
-		CharSequence contentAsText = content.getContentAsText();
-		if(CharArrayUtil.indexOf(contentAsText, XmlUtil.XINCLUDE_URI, 0) == -1)
-		{
-			return FileIncludeInfo.EMPTY;
-		}
-		final ArrayList<FileIncludeInfo> infos = new ArrayList<FileIncludeInfo>();
-		NanoXmlUtil.parse(CharArrayUtil.readerFromCharSequence(contentAsText), new NanoXmlUtil.IXMLBuilderAdapter()
-		{
+  @Nonnull
+  @Override
+  public FileIncludeInfo[] getIncludeInfos(FileContent content) {
+    CharSequence contentAsText = content.getContentAsText();
+    if (CharArrayUtil.indexOf(contentAsText, XmlUtil.XINCLUDE_URI, 0) == -1) {
+      return FileIncludeInfo.EMPTY;
+    }
+    final ArrayList<FileIncludeInfo> infos = new ArrayList<FileIncludeInfo>();
+    NanoXmlUtil.parse(Readers.readerFromCharSequence(contentAsText), new NanoXmlUtil.IXMLBuilderAdapter() {
 
-			boolean isXInclude;
+      boolean isXInclude;
 
-			@Override
-			public void startElement(String name, String nsPrefix, String nsURI, String systemID, int lineNr) throws Exception
-			{
-				isXInclude = XmlUtil.XINCLUDE_URI.equals(nsURI) && "include".equals(name);
-			}
+      @Override
+      public void startElement(String name, String nsPrefix, String nsURI, String systemID, int lineNr) throws Exception {
+        isXInclude = XmlUtil.XINCLUDE_URI.equals(nsURI) && "include".equals(name);
+      }
 
-			@Override
-			public void addAttribute(String key, String nsPrefix, String nsURI, String value, String type) throws Exception
-			{
-				if(isXInclude && "href".equals(key))
-				{
-					infos.add(new FileIncludeInfo(value));
-				}
-			}
+      @Override
+      public void addAttribute(String key, String nsPrefix, String nsURI, String value, String type) throws Exception {
+        if (isXInclude && "href".equals(key)) {
+          infos.add(new FileIncludeInfo(value));
+        }
+      }
 
-			@Override
-			public void endElement(String name, String nsPrefix, String nsURI) throws Exception
-			{
-				isXInclude = false;
-			}
-		});
-		return infos.toArray(new FileIncludeInfo[infos.size()]);
-	}
+      @Override
+      public void endElement(String name, String nsPrefix, String nsURI) throws Exception {
+        isXInclude = false;
+      }
+    });
+    return infos.toArray(new FileIncludeInfo[infos.size()]);
+  }
 }

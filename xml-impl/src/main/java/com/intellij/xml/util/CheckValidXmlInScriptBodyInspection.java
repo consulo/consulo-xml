@@ -22,195 +22,244 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlInspectionGroupNames;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.lexer.Lexer;
-import com.intellij.lexer.XmlLexer;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.impl.source.tree.TreeUtil;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagValue;
-import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.impl.ast.TreeUtil;
+import consulo.language.lexer.Lexer;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.lexer.XmlLexer;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTagValue;
+import consulo.xml.psi.xml.XmlTokenType;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Maxim Mossienko
  */
-public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspectionTool {
-  @NonNls
-  private static final String SCRIPT_TAG_NAME = "script";
-  private Lexer myXmlLexer;
-  @NonNls
-  private static final String AMP_ENTITY_REFERENCE = "&amp;";
-  @NonNls
-  private static final String LT_ENTITY_REFERENCE = "&lt;";
+@ExtensionImpl
+public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspectionTool
+{
+	@NonNls
+	private static final String SCRIPT_TAG_NAME = "script";
+	private Lexer myXmlLexer;
+	@NonNls
+	private static final String AMP_ENTITY_REFERENCE = "&amp;";
+	@NonNls
+	private static final String LT_ENTITY_REFERENCE = "&lt;";
 
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-  @Nonnull
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
-    return new XmlElementVisitor() {
-      @Override public void visitXmlTag(final XmlTag tag) {
-        if (SCRIPT_TAG_NAME.equals(tag.getName()) ||
-            (tag instanceof HtmlTag && SCRIPT_TAG_NAME.equalsIgnoreCase(tag.getName()))
-           ) {
-          final PsiFile psiFile = tag.getContainingFile();
-          final FileType fileType = psiFile.getFileType();
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-          if (fileType == XHtmlFileType.INSTANCE) {
-            synchronized(CheckValidXmlInScriptBodyInspection.class) {
-              if (myXmlLexer == null) myXmlLexer = new XmlLexer();
-              final XmlTagValue tagValue = tag.getValue();
-              final String tagBodyText = tagValue.getText();
+	@Nonnull
+	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly)
+	{
+		return new XmlElementVisitor()
+		{
+			@Override
+			public void visitXmlTag(final XmlTag tag)
+			{
+				if(SCRIPT_TAG_NAME.equals(tag.getName()) ||
+						(tag instanceof HtmlTag && SCRIPT_TAG_NAME.equalsIgnoreCase(tag.getName()))
+				)
+				{
+					final PsiFile psiFile = tag.getContainingFile();
+					final FileType fileType = psiFile.getFileType();
 
-              if (tagBodyText.length() > 0) {
-                myXmlLexer.start(tagBodyText);
+					if(fileType == XHtmlFileType.INSTANCE)
+					{
+						synchronized(CheckValidXmlInScriptBodyInspection.class)
+						{
+							if(myXmlLexer == null)
+							{
+								myXmlLexer = new XmlLexer();
+							}
+							final XmlTagValue tagValue = tag.getValue();
+							final String tagBodyText = tagValue.getText();
 
-                while(myXmlLexer.getTokenType() != null) {
-                  IElementType tokenType = myXmlLexer.getTokenType();
+							if(tagBodyText.length() > 0)
+							{
+								myXmlLexer.start(tagBodyText);
 
-                  if (tokenType == XmlTokenType.XML_CDATA_START) {
-                    while(tokenType != null && tokenType != XmlTokenType.XML_CDATA_END) {
-                      myXmlLexer.advance();
-                      tokenType = myXmlLexer.getTokenType();
-                    }
-                    if (tokenType == null) break;
-                  }
-                  if (( tokenType == XmlTokenType.XML_BAD_CHARACTER &&
-                        "&".equals(TreeUtil.getTokenText(myXmlLexer))
-                      ) ||
-                      tokenType == XmlTokenType.XML_START_TAG_START
-                    ) {
-                    final int valueStart = tagValue.getTextRange().getStartOffset();
-                    final int offset = valueStart + myXmlLexer.getTokenStart();
-                    final PsiElement psiElement = psiFile.findElementAt(offset);
-                    final TextRange elementRange = psiElement.getTextRange();
+								while(myXmlLexer.getTokenType() != null)
+								{
+									IElementType tokenType = myXmlLexer.getTokenType();
 
-                    final int offsetInElement = offset - elementRange.getStartOffset();
-                    holder.registerProblem(
-                      psiElement,
-                      XmlBundle.message("unescaped.xml.character"),
-                      ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                      new InsertQuotedCharacterQuickFix(
-                        psiFile,
-                        psiElement,
-                        offsetInElement
-                      )
-                    );
+									if(tokenType == XmlTokenType.XML_CDATA_START)
+									{
+										while(tokenType != null && tokenType != XmlTokenType.XML_CDATA_END)
+										{
+											myXmlLexer.advance();
+											tokenType = myXmlLexer.getTokenType();
+										}
+										if(tokenType == null)
+										{
+											break;
+										}
+									}
+									if((tokenType == XmlTokenType.XML_BAD_CHARACTER &&
+											"&".equals(TreeUtil.getTokenText(myXmlLexer))
+									) ||
+											tokenType == XmlTokenType.XML_START_TAG_START
+									)
+									{
+										final int valueStart = tagValue.getTextRange().getStartOffset();
+										final int offset = valueStart + myXmlLexer.getTokenStart();
+										final PsiElement psiElement = psiFile.findElementAt(offset);
+										final TextRange elementRange = psiElement.getTextRange();
 
-                    int endOfElementInScriptTag = elementRange.getEndOffset() - valueStart;
-                    while(myXmlLexer.getTokenEnd() < endOfElementInScriptTag) {
-                      myXmlLexer.advance();
-                      if (myXmlLexer.getTokenType() == null) break;
-                    }
-                  }
-                  myXmlLexer.advance();
-                }
-              }
-            }
-          }
-        }
-      }
-    };
-  }
+										final int offsetInElement = offset - elementRange.getStartOffset();
+										holder.registerProblem(
+												psiElement,
+												XmlBundle.message("unescaped.xml.character"),
+												ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+												new InsertQuotedCharacterQuickFix(
+														psiFile,
+														psiElement,
+														offsetInElement
+												)
+										);
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return XmlInspectionGroupNames.HTML_INSPECTIONS;
-  }
+										int endOfElementInScriptTag = elementRange.getEndOffset() - valueStart;
+										while(myXmlLexer.getTokenEnd() < endOfElementInScriptTag)
+										{
+											myXmlLexer.advance();
+											if(myXmlLexer.getTokenType() == null)
+											{
+												break;
+											}
+										}
+									}
+									myXmlLexer.advance();
+								}
+							}
+						}
+					}
+				}
+			}
+		};
+	}
 
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("html.inspections.check.valid.script.tag");
-  }
+	@Nonnull
+	public String getGroupDisplayName()
+	{
+		return XmlInspectionGroupNames.HTML_INSPECTIONS;
+	}
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "CheckValidXmlInScriptTagBody";
-  }
+	@Nonnull
+	public String getDisplayName()
+	{
+		return XmlBundle.message("html.inspections.check.valid.script.tag");
+	}
 
-  private static class InsertQuotedCharacterQuickFix implements LocalQuickFix {
-    private final PsiFile psiFile;
-    private final PsiElement psiElement;
-    private final int startInElement;
+	@Nonnull
+	@NonNls
+	public String getShortName()
+	{
+		return "CheckValidXmlInScriptTagBody";
+	}
 
-    public InsertQuotedCharacterQuickFix(PsiFile psiFile, PsiElement psiElement, int startInElement) {
-      this.psiFile = psiFile;
-      this.psiElement = psiElement;
-      this.startInElement = startInElement;
-    }
+	private static class InsertQuotedCharacterQuickFix implements LocalQuickFix
+	{
+		private final PsiFile psiFile;
+		private final PsiElement psiElement;
+		private final int startInElement;
 
-    @Nonnull
-    public String getName() {
-      final String character = getXmlCharacter();
+		public InsertQuotedCharacterQuickFix(PsiFile psiFile, PsiElement psiElement, int startInElement)
+		{
+			this.psiFile = psiFile;
+			this.psiElement = psiElement;
+			this.startInElement = startInElement;
+		}
 
-      return XmlBundle.message(
-        "unescaped.xml.character.fix.message",
-        character.equals("&") ?
-          XmlBundle.message("unescaped.xml.character.fix.message.parameter"):
-          character
-      );
-    }
+		@Nonnull
+		public String getName()
+		{
+			final String character = getXmlCharacter();
 
-    @Nonnull
-    public String getFamilyName() {
-      return getName();
-    }
+			return XmlBundle.message(
+					"unescaped.xml.character.fix.message",
+					character.equals("&") ?
+							XmlBundle.message("unescaped.xml.character.fix.message.parameter") :
+							character
+			);
+		}
 
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor) {
-      if (!FileModificationService.getInstance().prepareFileForWrite(psiFile)) return;
-      final TextRange range = psiElement.getTextRange();
-      OpenFileDescriptor descriptor = new OpenFileDescriptor(
-        project,
-        psiFile.getVirtualFile(),
-        range.getStartOffset() + startInElement
-      );
+		@Nonnull
+		public String getFamilyName()
+		{
+			return getName();
+		}
 
-      final Editor editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true);
-      if (editor == null) return;
+		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor)
+		{
+			if(!FileModificationService.getInstance().prepareFileForWrite(psiFile))
+			{
+				return;
+			}
+			final TextRange range = psiElement.getTextRange();
+			OpenFileDescriptor descriptor = OpenFileDescriptorFactory.getInstance(project).builder(psiFile.getVirtualFile()).offset(range.getStartOffset() + startInElement).build();
 
-      final String xmlCharacter = getXmlCharacter();
-      String replacement = xmlCharacter.equals("&") ? AMP_ENTITY_REFERENCE : LT_ENTITY_REFERENCE;
-      replacement = psiElement.getText().replace(xmlCharacter,replacement);
+			final Editor editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true);
+			if(editor == null)
+			{
+				return;
+			}
 
-      editor.getDocument().replaceString(
-        range.getStartOffset(),
-        range.getEndOffset(),
-        replacement
-      );
-    }
+			final String xmlCharacter = getXmlCharacter();
+			String replacement = xmlCharacter.equals("&") ? AMP_ENTITY_REFERENCE : LT_ENTITY_REFERENCE;
+			replacement = psiElement.getText().replace(xmlCharacter, replacement);
 
-    private String getXmlCharacter() {
-      return psiElement.getText().substring(startInElement, startInElement + 1);
-    }
-  }
+			editor.getDocument().replaceString(
+					range.getStartOffset(),
+					range.getEndOffset(),
+					replacement
+			);
+		}
 
-  @Nonnull
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.ERROR;
-  }
+		private String getXmlCharacter()
+		{
+			return psiElement.getText().substring(startInElement, startInElement + 1);
+		}
+	}
+
+	@Nonnull
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
 }

@@ -15,47 +15,34 @@
  */
 package com.intellij.xml.util;
 
-import static com.intellij.patterns.XmlPatterns.xmlAttribute;
-import static com.intellij.patterns.XmlPatterns.xmlAttributeValue;
-import static com.intellij.patterns.XmlPatterns.xmlTag;
+import com.intellij.html.impl.providers.MicrodataReferenceProvider;
+import com.intellij.html.impl.util.MicrodataUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.ide.impl.psi.impl.source.resolve.reference.CommentsReferenceContributor;
+import consulo.language.Language;
+import consulo.language.impl.psi.path.WebReference;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.psi.*;
+import consulo.language.psi.filter.AndFilter;
+import consulo.language.psi.filter.ClassFilter;
+import consulo.language.psi.filter.ScopeFilter;
+import consulo.language.psi.filter.position.ParentElementFilter;
+import consulo.language.util.ProcessingContext;
+import consulo.xml.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.filters.XmlTextFilter;
+import consulo.xml.psi.filters.position.NamespaceFilter;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.*;
+import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
-import com.intellij.html.impl.providers.MicrodataReferenceProvider;
-import com.intellij.html.impl.util.MicrodataUtil;
-import com.intellij.openapi.paths.WebReference;
-import com.intellij.patterns.PlatformPatterns;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceContributor;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.PsiReferenceRegistrar;
-import com.intellij.psi.filters.AndFilter;
-import com.intellij.psi.filters.ClassFilter;
-import com.intellij.psi.filters.ScopeFilter;
-import com.intellij.psi.filters.XmlTagFilter;
-import com.intellij.psi.filters.XmlTextFilter;
-import com.intellij.psi.filters.position.NamespaceFilter;
-import com.intellij.psi.filters.position.ParentElementFilter;
-import com.intellij.psi.impl.source.resolve.reference.ArbitraryPlaceUrlReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.DtdReferencesProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.URIReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.XmlBaseReferenceProvider;
-import com.intellij.psi.xml.XmlAttlistDecl;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlElementContentSpec;
-import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.psi.xml.XmlEntityRef;
-import com.intellij.psi.xml.XmlProcessingInstruction;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.ProcessingContext;
+import static consulo.xml.patterns.XmlPatterns.*;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class XmlReferenceContributor extends PsiReferenceContributor
 {
 	@Override
@@ -75,8 +62,10 @@ public class XmlReferenceContributor extends PsiReferenceContributor
 		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlAttlistDecl.class), dtdReferencesProvider);
 		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementContentSpec.class), dtdReferencesProvider);
 		registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlToken.class), dtdReferencesProvider);
-		registrar.registerReferenceProvider(xmlAttributeValue(), new ArbitraryPlaceUrlReferenceProvider(), PsiReferenceRegistrar.LOWER_PRIORITY);
 
+		PsiReferenceProviderByType commentsReference = PsiReferenceProviderByType.forType(CommentsReferenceContributor.COMMENTS_REFERENCE_PROVIDER_TYPE);
+
+		registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
 
 		URIReferenceProvider uriProvider = new URIReferenceProvider();
 		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, null, dtdReferencesProvider.getSystemReferenceFilter(), uriProvider);
@@ -113,13 +102,20 @@ public class XmlReferenceContributor extends PsiReferenceContributor
 
 		registrar.registerReferenceProvider(xmlAttributeValue().withLocalName("source").withSuperParent(2, xmlTag().withLocalName("documentation").withNamespace(XmlUtil.SCHEMA_URIS)), new
 				PsiReferenceProvider()
-		{
-			@Nonnull
-			@Override
-			public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
-			{
-				return new PsiReference[]{new WebReference(element)};
-			}
-		});
+				{
+					@Nonnull
+					@Override
+					public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context)
+					{
+						return new PsiReference[]{new WebReference(element)};
+					}
+				});
+	}
+
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return Language.ANY;
 	}
 }

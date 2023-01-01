@@ -15,59 +15,124 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
+import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.*;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiUtilCore;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool {
+@ExtensionImpl
+public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
+{
+	@Override
+	public boolean runForWholeFile()
+	{
+		return true;
+	}
 
-  @Nonnull
-  @Override
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
-    return new XmlElementVisitor() {
-      @Override
-      public void visitXmlAttributeValue(final XmlAttributeValue value) {
-        if (value.getTextRange().isEmpty()) {
-          return;
-        }
-        final PsiFile file = value.getContainingFile();
-        if (!(file instanceof XmlFile)) {
-          return;
-        }
-        PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
-        if (baseFile != file && !(baseFile instanceof XmlFile)) {
-          return;
-        }
-        final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
-        if (refHolder == null) return;
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-        final PsiElement parent = value.getParent();
-        if (!(parent instanceof XmlAttribute)) return;
+	@Nonnull
+	@Override
+	public String getGroupDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.group.name");
+	}
 
-        final XmlTag tag = (XmlTag)parent.getParent();
-        if (tag == null) return;
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.duplicate.id");
+	}
 
-        checkValue(value, (XmlFile)file, refHolder, tag, holder);
-      }
-    };
-  }
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.ERROR;
+	}
 
-  protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
-    if (refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value)) {
-      holder.registerProblem(value, XmlErrorMessages.message("duplicate.id.reference"), ProblemHighlightType.GENERIC_ERROR,
-                             ElementManipulators.getValueTextRange(value));
-    }
-  }
+	@Override
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
+	{
+		return new XmlElementVisitor()
+		{
+			@Override
+			public void visitXmlAttributeValue(final XmlAttributeValue value)
+			{
+				if(value.getTextRange().isEmpty())
+				{
+					return;
+				}
+				final PsiFile file = value.getContainingFile();
+				if(!(file instanceof XmlFile))
+				{
+					return;
+				}
+				PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
+				if(baseFile != file && !(baseFile instanceof XmlFile))
+				{
+					return;
+				}
+				final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
+				if(refHolder == null)
+				{
+					return;
+				}
+
+				final PsiElement parent = value.getParent();
+				if(!(parent instanceof XmlAttribute))
+				{
+					return;
+				}
+
+				final XmlTag tag = (XmlTag) parent.getParent();
+				if(tag == null)
+				{
+					return;
+				}
+
+				checkValue(value, (XmlFile) file, refHolder, tag, holder);
+			}
+		};
+	}
+
+	protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder)
+	{
+		if(refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value))
+		{
+			holder.registerProblem(value, XmlErrorMessages.message("duplicate.id.reference"), ProblemHighlightType.GENERIC_ERROR,
+					ElementManipulators.getValueTextRange(value));
+		}
+	}
 }

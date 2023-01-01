@@ -16,25 +16,33 @@
 
 package com.intellij.xml.util;
 
-import com.intellij.codeInspection.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.Language;
-import com.intellij.lang.html.HTMLLanguage;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.ReadonlyStatusHandler;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.virtualFileSystem.ReadonlyStatusHandler;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,91 +50,134 @@ import java.util.Set;
 /**
  * @author Maxim Mossienko
  */
-public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.xml.util.CheckEmptyTagInspection");
-  @NonNls private static final String SCRIPT_TAG_NAME = "script";
-  private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new HashSet<String>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
+@ExtensionImpl
+public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool
+{
+	private static final Logger LOG = Logger.getInstance(CheckEmptyTagInspection.class);
+	@NonNls
+	private static final String SCRIPT_TAG_NAME = "script";
+	private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new HashSet<String>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
 
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-  @Nonnull
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
-    return new XmlElementVisitor() {
-      @Override public void visitXmlTag(final XmlTag tag) {
-        if (!isTagWithEmptyEndNotAllowed(tag)) {
-          return;
-        }
-        final ASTNode child = XmlChildRole.EMPTY_TAG_END_FINDER.findChild(tag.getNode());
+	@Nonnull
+	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly)
+	{
+		return new XmlElementVisitor()
+		{
+			@Override
+			public void visitXmlTag(final XmlTag tag)
+			{
+				if(!isTagWithEmptyEndNotAllowed(tag))
+				{
+					return;
+				}
+				final ASTNode child = XmlChildRole.EMPTY_TAG_END_FINDER.findChild(tag.getNode());
 
-        if (child == null) {
-          return;
-        }
+				if(child == null)
+				{
+					return;
+				}
 
-        final LocalQuickFix fix = new MyLocalQuickFix();
+				final LocalQuickFix fix = new MyLocalQuickFix();
 
-        holder.registerProblem(tag,
-                               XmlBundle.message("html.inspections.check.empty.script.message"),
-                               tag.getContainingFile().getContext() != null ?
-                               ProblemHighlightType.INFORMATION:
-                               ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                               fix);
-      }
-    };
-  }
+				holder.registerProblem(tag,
+						XmlBundle.message("html.inspections.check.empty.script.message"),
+						tag.getContainingFile().getContext() != null ?
+								ProblemHighlightType.INFORMATION :
+								ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+						fix);
+			}
+		};
+	}
 
-  static boolean isTagWithEmptyEndNotAllowed(final XmlTag tag) {
-    String tagName = tag.getName();
-    if (tag instanceof HtmlTag) tagName = tagName.toLowerCase();
+	static boolean isTagWithEmptyEndNotAllowed(final XmlTag tag)
+	{
+		String tagName = tag.getName();
+		if(tag instanceof HtmlTag)
+		{
+			tagName = tagName.toLowerCase();
+		}
 
-    Language language = tag.getLanguage();
-    return ourTagsWithEmptyEndsNotAllowed.contains(tagName) && language != XMLLanguage.INSTANCE ||
-           language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
-  }
+		Language language = tag.getLanguage();
+		return ourTagsWithEmptyEndsNotAllowed.contains(tagName) && language != XMLLanguage.INSTANCE ||
+				language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
+	}
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return XmlInspectionGroupNames.HTML_INSPECTIONS;
-  }
+	@Nonnull
+	public String getGroupDisplayName()
+	{
+		return XmlInspectionGroupNames.HTML_INSPECTIONS;
+	}
 
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("html.inspections.check.empty.tag");
-  }
+	@Nonnull
+	public String getDisplayName()
+	{
+		return XmlBundle.message("html.inspections.check.empty.tag");
+	}
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "CheckEmptyScriptTag";
-  }
+	@Nonnull
+	@NonNls
+	public String getShortName()
+	{
+		return "CheckEmptyScriptTag";
+	}
 
-  private static class MyLocalQuickFix implements LocalQuickFix {
-    @Nonnull
-    public String getName() {
-      return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
-    }
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.WARNING;
+	}
 
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-      final XmlTag tag = (XmlTag)descriptor.getPsiElement();
-      if (tag == null) return;
-      final PsiFile psiFile = tag.getContainingFile();
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-      if (psiFile == null) return;
-      ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(psiFile.getVirtualFile());
+	private static class MyLocalQuickFix implements LocalQuickFix
+	{
+		@Nonnull
+		public String getName()
+		{
+			return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
+		}
 
-      try {
-        XmlUtil.expandTag(tag);
-      }
-      catch (IncorrectOperationException e) {
-        LOG.error(e);
-      }
-    }
+		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
+		{
+			final XmlTag tag = (XmlTag) descriptor.getPsiElement();
+			if(tag == null)
+			{
+				return;
+			}
+			final PsiFile psiFile = tag.getContainingFile();
 
-    //to appear in "Apply Fix" statement when multiple Quick Fixes exist
-    @Nonnull
-    public String getFamilyName() {
-      return getName();
-    }
-  }
+			if(psiFile == null)
+			{
+				return;
+			}
+			ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(psiFile.getVirtualFile());
+
+			try
+			{
+				XmlUtil.expandTag(tag);
+			}
+			catch(IncorrectOperationException e)
+			{
+				LOG.error(e);
+			}
+		}
+
+		//to appear in "Apply Fix" statement when multiple Quick Fixes exist
+		@Nonnull
+		public String getFamilyName()
+		{
+			return getName();
+		}
+	}
 }

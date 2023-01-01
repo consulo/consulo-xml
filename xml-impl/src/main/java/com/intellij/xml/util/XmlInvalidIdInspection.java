@@ -15,54 +15,75 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.XmlErrorMessages;
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.MultiplePsiFilesPerDocumentFileViewProvider;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
  */
-public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection {
+@ExtensionImpl
+public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements UnfairLocalInspectionTool
+{
+	@Nonnull
+	@Override
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.invalid.id");
+	}
 
-  protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
+	protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder)
+	{
 
-    String idRef = XmlHighlightVisitor.getUnquotedValue(value, tag);
+		String idRef = XmlHighlightVisitor.getUnquotedValue(value, tag);
 
-    if (tag instanceof HtmlTag) {
-      idRef = idRef.toLowerCase();
-    }
+		if(tag instanceof HtmlTag)
+		{
+			idRef = idRef.toLowerCase();
+		}
 
-    if (XmlUtil.isSimpleValue(idRef, value) && refHolder.isIdReferenceValue(value)) {
-      boolean hasIdDeclaration = refHolder.hasIdDeclaration(idRef);
-      if (!hasIdDeclaration && tag instanceof HtmlTag) {
-        hasIdDeclaration = refHolder.hasIdDeclaration(value.getValue());
-      }
+		if(XmlUtil.isSimpleValue(idRef, value) && refHolder.isIdReferenceValue(value))
+		{
+			boolean hasIdDeclaration = refHolder.hasIdDeclaration(idRef);
+			if(!hasIdDeclaration && tag instanceof HtmlTag)
+			{
+				hasIdDeclaration = refHolder.hasIdDeclaration(value.getValue());
+			}
 
-      if (!hasIdDeclaration) {
-        for(XmlIdContributor contributor: Extensions.getExtensions(XmlIdContributor.EP_NAME)) {
-          if (contributor.suppressExistingIdValidation(file)) {
-            return;
-          }
-        }
+			if(!hasIdDeclaration)
+			{
+				for(XmlIdContributor contributor : XmlIdContributor.EP_NAME.getExtensionList())
+				{
+					if(contributor.suppressExistingIdValidation(file))
+					{
+						return;
+					}
+				}
 
-        final FileViewProvider viewProvider = tag.getContainingFile().getViewProvider();
-        if (viewProvider instanceof MultiplePsiFilesPerDocumentFileViewProvider) {
-          holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
-                                 new XmlDeclareIdInCommentAction(idRef));
+				final FileViewProvider viewProvider = tag.getContainingFile().getViewProvider();
+				if(viewProvider instanceof MultiplePsiFilesPerDocumentFileViewProvider)
+				{
+					holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
+							new XmlDeclareIdInCommentAction(idRef));
 
-        }
-        else {
-          holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
-        }
-      }
-    }
-  }
+				}
+				else
+				{
+					holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+				}
+			}
+		}
+	}
 }

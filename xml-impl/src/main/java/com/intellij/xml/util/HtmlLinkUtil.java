@@ -1,16 +1,16 @@
 package com.intellij.xml.util;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.html.HtmlTag;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import com.intellij.util.Processor;
+import consulo.application.util.function.Processor;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class HtmlLinkUtil {
@@ -71,12 +71,14 @@ public class HtmlLinkUtil {
       }
     };
 
+    InjectedLanguageManager injectedLanguageManager = InjectedLanguageManager.getInstance(element.getProject());
+
     final XmlText[] texts = PsiTreeUtil.getChildrenOfType(element, XmlText.class);
     if (texts != null && texts.length > 0) {
       for (final XmlText text : texts) {
         for (PsiElement _element : text.getChildren()) {
           if (_element instanceof PsiLanguageInjectionHost) {
-            InjectedLanguageUtil.enumerate(_element, injectedPsiVisitor);
+            injectedLanguageManager.enumerate(_element, injectedPsiVisitor);
           }
         }
       }
@@ -86,7 +88,7 @@ public class HtmlLinkUtil {
     if (comments != null && comments.length > 0) {
       for (final XmlComment comment : comments) {
         if (comment instanceof PsiLanguageInjectionHost) {
-          InjectedLanguageUtil.enumerate(comment, injectedPsiVisitor);
+          injectedLanguageManager.enumerate(comment, injectedPsiVisitor);
         }
       }
     }

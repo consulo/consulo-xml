@@ -15,22 +15,30 @@
  */
 package com.intellij.xml.actions.validate;
 
-import com.intellij.ide.errorTreeView.NewErrorTreeViewPanel;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindowId;
-import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.psi.PsiFile;
-import com.intellij.ui.content.*;
-import com.intellij.util.ui.MessageCategory;
 import com.intellij.xml.XmlBundle;
+import consulo.application.Application;
+import consulo.application.ApplicationManager;
 import consulo.disposer.Disposer;
+import consulo.language.psi.PsiFile;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.project.ui.view.MessageView;
+import consulo.project.ui.wm.ToolWindowId;
+import consulo.project.ui.wm.ToolWindowManager;
+import consulo.relaxng.ContentManagerUtilHack;
+import consulo.ui.ex.MessageCategory;
+import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.content.Content;
+import consulo.ui.ex.content.ContentFactory;
+import consulo.ui.ex.content.ContentManager;
+import consulo.ui.ex.content.event.ContentManagerAdapter;
+import consulo.ui.ex.content.event.ContentManagerEvent;
+import consulo.ui.ex.content.event.ContentManagerListener;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanel;
+import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanelFactory;
+import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
-import hack.ContentManagerUtilHack;
+import consulo.virtualFileSystem.VirtualFile;
 import org.xml.sax.SAXParseException;
 
 import javax.annotation.Nonnull;
@@ -38,7 +46,7 @@ import java.util.concurrent.Future;
 
 public class StdErrorReporter extends ErrorReporter
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.actions.validate.StdErrorReporter");
+	private static final Logger LOG = Logger.getInstance(StdErrorReporter.class);
 	private static final Key<NewErrorTreeViewPanel> KEY = Key.create("ValidateXmlAction.KEY");
 
 	private final NewErrorTreeViewPanel myErrorsView;
@@ -50,7 +58,7 @@ public class StdErrorReporter extends ErrorReporter
 		super(handler);
 		myProject = psiFile.getProject();
 		myContentName = XmlBundle.message("xml.validate.tab.content.title", psiFile.getName());
-		myErrorsView = new NewErrorTreeViewPanel(myProject, null, true, true, rerunAction);
+		myErrorsView = Application.get().getInstance(NewErrorTreeViewPanelFactory.class).createPanel(myProject, null, true, true, rerunAction);
 		//myErrorsView.getEmptyText().setText("No errors found");
 	}
 

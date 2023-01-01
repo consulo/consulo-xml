@@ -19,14 +19,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>consulo</groupId>
-		<artifactId>arch.ide-provided</artifactId>
-		<version>2-SNAPSHOT</version>
+		<artifactId>arch.ide-api-provided</artifactId>
+		<version>3-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>consulo.plugin</groupId>
 	<artifactId>com.intellij.xml</artifactId>
-	<version>2-SNAPSHOT</version>
+	<version>3-SNAPSHOT</version>
 	<packaging>consulo-plugin</packaging>
 
 	<repositories>
@@ -35,7 +35,7 @@
 			<url>https://maven.consulo.io/repository/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
-				<updatePolicy>interval:60</updatePolicy>
+				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
 	</repositories>
@@ -45,10 +45,9 @@
 			<plugin>
 				<groupId>consulo.maven</groupId>
 				<artifactId>maven-consulo-plugin</artifactId>
-				<version>2-SNAPSHOT</version>
 				<extensions>true</extensions>
 				<configuration>
-					<repositoryChannel>nightly</repositoryChannel>
+					<repositoryChannel>valhalla</repositoryChannel>
 					<dependencies>
 						<dependency>com.intellij.spellchecker</dependency>
 						<dependency>com.intellij.regexp</dependency>
@@ -72,68 +71,38 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.psi.api</artifactId>
+			<groupId>consulo</groupId>
+			<artifactId>consulo-language-impl</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.psi.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.dom.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.dom.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.analysis.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.analysis.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.structure.view.impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>consulo.relaxng</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.intelliLang</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml-xml.spellchecker</artifactId>
-			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>consulo</groupId>
-			<artifactId>consulo-lang-impl-testing</artifactId>
+			<artifactId>consulo-ide-impl</artifactId>
 			<version>${project.version}</version>
-			<scope>test</scope>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>consulo</groupId>
+			<artifactId>consulo-util-xml-fast-reader</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.spellchecker</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--runtime dependencies just copy from other projects-->
 		<dependency>
-			<groupId>xerces</groupId>
+			<groupId>consulo.internal</groupId>
 			<artifactId>xercesImpl</artifactId>
-			<version>2.11.0</version>
+			<version>2.11.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>xml-apis</groupId>
@@ -160,17 +129,17 @@
 		<dependency>
 			<groupId>consulo.internal</groupId>
 			<artifactId>rngom</artifactId>
-			<version>20051226</version>
+			<version>20220804</version>
 		</dependency>
 		<dependency>
-			<groupId>com.thaiopensource</groupId>
-			<artifactId>jing</artifactId>
-			<version>20091111</version>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.thaiopensource</groupId>
-			<artifactId>trang</artifactId>
-			<version>20091111</version>
+			<groupId>consulo.internal</groupId>
+			<artifactId>jingtrang</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>

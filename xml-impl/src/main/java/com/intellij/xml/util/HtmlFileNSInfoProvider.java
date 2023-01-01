@@ -15,17 +15,19 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlFileNSInfoProvider;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.ide.highlighter.HtmlFileType;
-import com.intellij.ide.highlighter.XHtmlFileType;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlFileNSInfoProvider;
 
 /**
  * @author yole
  */
+@ExtensionImpl
 public class HtmlFileNSInfoProvider implements XmlFileNSInfoProvider
 {
 	@Nullable

@@ -16,114 +16,160 @@
 
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInspection.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.Result;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Maxim Mossienko
  */
-public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+@ExtensionImpl
+public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool
+{
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-  @Nonnull
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
-    return new XmlElementVisitor() {
-      @Override public void visitXmlTag(final XmlTag tag) {
-        if (!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag)) {
-          final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+	@Nonnull
+	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly)
+	{
+		return new XmlElementVisitor()
+		{
+			@Override
+			public void visitXmlTag(final XmlTag tag)
+			{
+				if(!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag))
+				{
+					final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
 
-          if (child != null) {
-            final ASTNode node = child.getTreeNext();
+					if(child != null)
+					{
+						final ASTNode node = child.getTreeNext();
 
-            if (node != null &&
-                node.getElementType() == XmlTokenType.XML_END_TAG_START) {
-              final LocalQuickFix localQuickFix = new ReplaceEmptyTagBodyByEmptyEndFix();
-              holder.registerProblem(
-                tag,
-                XmlBundle.message("xml.inspections.tag.empty.body"),
-                isCollapsableTag(tag) ? localQuickFix : null
-              );
-            }
-          }
-        }
-      }
-    };
-  }
+						if(node != null &&
+								node.getElementType() == XmlTokenType.XML_END_TAG_START)
+						{
+							final LocalQuickFix localQuickFix = new ReplaceEmptyTagBodyByEmptyEndFix();
+							holder.registerProblem(
+									tag,
+									XmlBundle.message("xml.inspections.tag.empty.body"),
+									isCollapsableTag(tag) ? localQuickFix : null
+							);
+						}
+					}
+				}
+			}
+		};
+	}
 
-  @SuppressWarnings({"HardCodedStringLiteral"})
-  private static boolean isCollapsableTag(final XmlTag tag) {
-    final String name = tag.getName().toLowerCase();
-    return tag.getLanguage() == XMLLanguage.INSTANCE ||
-           "link".equals(name) || "br".equals(name) || "meta".equals(name) || "img".equals(name) || "input".equals(name) || "hr".equals(name);
-  }
+	@SuppressWarnings({"HardCodedStringLiteral"})
+	private static boolean isCollapsableTag(final XmlTag tag)
+	{
+		final String name = tag.getName().toLowerCase();
+		return tag.getLanguage() == XMLLanguage.INSTANCE ||
+				"link".equals(name) || "br".equals(name) || "meta".equals(name) || "img".equals(name) || "input".equals(name) || "hr".equals(name);
+	}
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return XmlInspectionGroupNames.XML_INSPECTIONS;
-  }
+	@Nonnull
+	public String getGroupDisplayName()
+	{
+		return XmlInspectionGroupNames.XML_INSPECTIONS;
+	}
 
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("xml.inspections.check.tag.empty.body");
-  }
+	@Nonnull
+	public String getDisplayName()
+	{
+		return XmlBundle.message("xml.inspections.check.tag.empty.body");
+	}
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "CheckTagEmptyBody";
-  }
+	@Nullable
+	@Override
+	public Language getLanguage()
+	{
+		return XMLLanguage.INSTANCE;
+	}
 
-  private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
-    @Nonnull
-    public String getName() {
-      return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
-    }
+	@Nonnull
+	@NonNls
+	public String getShortName()
+	{
+		return "CheckTagEmptyBody";
+	}
 
-    @Nonnull
-    public String getFamilyName() {
-      return getName();
-    }
+	@Nonnull
+	@Override
+	public HighlightDisplayLevel getDefaultLevel()
+	{
+		return HighlightDisplayLevel.WARNING;
+	}
 
-    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-      final PsiElement tag = descriptor.getPsiElement();
-      if (!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile())) {
-        return;
-      }
+	private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix
+	{
+		@Nonnull
+		public String getName()
+		{
+			return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
+		}
 
-      PsiDocumentManager.getInstance(project).commitAllDocuments();
+		@Nonnull
+		public String getFamilyName()
+		{
+			return getName();
+		}
 
-      final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
-      if (child == null) return;
-      final int offset = child.getTextRange().getStartOffset();
-      VirtualFile file = tag.getContainingFile().getVirtualFile();
-      final Document document = FileDocumentManager.getInstance().getDocument(file);
+		public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
+		{
+			final PsiElement tag = descriptor.getPsiElement();
+			if(!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile()))
+			{
+				return;
+			}
 
-      new WriteCommandAction(project) {
-        protected void run(final Result result) throws Throwable {
-          document.replaceString(offset, tag.getTextRange().getEndOffset(),"/>");
-        }
-      }.execute();
-    }
-  }
+			PsiDocumentManager.getInstance(project).commitAllDocuments();
+
+			final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+			if(child == null)
+			{
+				return;
+			}
+			final int offset = child.getTextRange().getStartOffset();
+			VirtualFile file = tag.getContainingFile().getVirtualFile();
+			final Document document = FileDocumentManager.getInstance().getDocument(file);
+
+			new WriteCommandAction(project)
+			{
+				protected void run(final Result result) throws Throwable
+				{
+					document.replaceString(offset, tag.getTextRange().getEndOffset(), "/>");
+				}
+			}.execute();
+		}
+	}
 }

@@ -15,26 +15,25 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import com.intellij.lang.Language;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.UserDataCache;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
-import com.intellij.psi.impl.source.xml.PossiblePrefixReference;
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.impl.source.xml.SchemaPrefixReference;
-import com.intellij.psi.templateLanguages.OuterLanguageElement;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import com.intellij.util.NullableFunction;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.application.util.UserDataCache;
+import consulo.language.Language;
+import consulo.language.psi.*;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.Pair;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
+import consulo.xml.psi.impl.source.xml.PossiblePrefixReference;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
+import consulo.xml.psi.xml.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -104,12 +103,7 @@ public class XmlRefCountHolder {
     }
     else if (!soft) {
       // mark as duplicate
-      List<XmlAttributeValue> notSoft = ContainerUtil.mapNotNull(list, new NullableFunction<Pair<XmlAttributeValue, Boolean>, XmlAttributeValue>() {
-        @Override
-        public XmlAttributeValue fun(Pair<XmlAttributeValue, Boolean> pair) {
-          return pair.second ? null : pair.first;
-        }
-      });
+      List<XmlAttributeValue> notSoft = ContainerUtil.mapNotNull(list, pair -> pair.second ? null : pair.first);
       if (!notSoft.isEmpty()) {
         myPossiblyDuplicateIds.addAll(notSoft);
         myPossiblyDuplicateIds.add(attributeValue);

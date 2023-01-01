@@ -15,327 +15,427 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.lang.documentation.DocumentationProvider;
-import com.intellij.lang.documentation.DocumentationUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.impl.source.xml.SchemaPrefix;
-import com.intellij.psi.meta.PsiMetaData;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.util.ColorSampleLookupValue;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.documentation.DocumentationProvider;
+import consulo.language.editor.documentation.LanguageDocumentationProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.language.psi.meta.PsiMetaData;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.xml.lang.documentation.DocumentationUtil;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.psi.impl.source.xml.SchemaPrefix;
+import consulo.xml.psi.xml.*;
+import consulo.xml.util.ColorSampleLookupValue;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 /**
  * @author maxim
  */
-public class HtmlDocumentationProvider implements DocumentationProvider {
-  private static DocumentationProvider ourStyleProvider;
-  private static DocumentationProvider ourScriptProvider;
+@ExtensionImpl
+public class HtmlDocumentationProvider implements LanguageDocumentationProvider
+{
+	private static DocumentationProvider ourStyleProvider;
+	private static DocumentationProvider ourScriptProvider;
 
-  @NonNls public static final String ELEMENT_ELEMENT_NAME = "element";
-  @NonNls public static final String NBSP = ":&nbsp;";
-  @NonNls public static final String BR = "<br>";
+	public static final String ELEMENT_ELEMENT_NAME = "element";
+	public static final String NBSP = ":&nbsp;";
+	public static final String BR = "<br>";
 
-  public static void registerStyleDocumentationProvider(DocumentationProvider documentationProvider) {
-    ourStyleProvider = documentationProvider;
-  }
+	public static void registerStyleDocumentationProvider(DocumentationProvider documentationProvider)
+	{
+		ourStyleProvider = documentationProvider;
+	}
 
-  @Nullable
-  public String getQuickNavigateInfo(PsiElement element, PsiElement originalElement) {
-    if (element instanceof SchemaPrefix) {
-      return ((SchemaPrefix)element).getQuickNavigateInfo();
-    }
-    return null;
-  }
+	@Nonnull
+	@Override
+	public Language getLanguage()
+	{
+		return HTMLLanguage.INSTANCE;
+	}
 
-  public List<String> getUrlFor(PsiElement element, PsiElement originalElement) {
-    String result = getUrlForHtml(element, PsiTreeUtil.getParentOfType(originalElement,XmlTag.class,false));
+	@Nullable
+	public String getQuickNavigateInfo(PsiElement element, PsiElement originalElement)
+	{
+		if(element instanceof SchemaPrefix)
+		{
+			return ((SchemaPrefix) element).getQuickNavigateInfo();
+		}
+		return null;
+	}
 
-    if (result == null && ourStyleProvider !=null) {
-      return ourStyleProvider.getUrlFor(element, originalElement);
-    }
+	public List<String> getUrlFor(PsiElement element, PsiElement originalElement)
+	{
+		String result = getUrlForHtml(element, PsiTreeUtil.getParentOfType(originalElement, XmlTag.class, false));
 
-    return result != null ? Collections.singletonList(result) : null;
-  }
+		if(result == null && ourStyleProvider != null)
+		{
+			return ourStyleProvider.getUrlFor(element, originalElement);
+		}
 
-  public static String getUrlForHtml(PsiElement element, XmlTag context) {
-    final EntityDescriptor descriptor = findDocumentationDescriptor(element, context);
+		return result != null ? Collections.singletonList(result) : null;
+	}
 
-    if (descriptor!=null) {
-      return descriptor.getHelpRef();
-    } else {
-      return null;
-    }
-  }
+	public static String getUrlForHtml(PsiElement element, XmlTag context)
+	{
+		final EntityDescriptor descriptor = findDocumentationDescriptor(element, context);
 
-  private static EntityDescriptor findDocumentationDescriptor(PsiElement element, XmlTag context) {
-    boolean isTag = true;
-    PsiElement nameElement = null;
-    String key = null;
+		if(descriptor != null)
+		{
+			return descriptor.getHelpRef();
+		}
+		else
+		{
+			return null;
+		}
+	}
 
-    if (element instanceof XmlElementDecl) {
-      nameElement = ((XmlElementDecl)element).getNameElement();
-    } else if (element instanceof XmlAttributeDecl) {
-      nameElement = ((XmlAttributeDecl)element).getNameElement();
-      isTag = false;
-    } else if (element instanceof XmlTag) {
-      final XmlTag xmlTag = ((XmlTag)element);
-      final PsiMetaData metaData = xmlTag.getMetaData();
-      key = (metaData!=null)?metaData.getName():null;
-      isTag = xmlTag.getLocalName().equals(ELEMENT_ELEMENT_NAME);
-    } else if (element.getParent() instanceof XmlAttributeValue) {
-      isTag = false;
-      key = ((XmlAttribute)element.getParent().getParent()).getName();
-    } else if (element instanceof XmlAttributeValue) {
-      isTag = false;
-      final XmlAttribute xmlAttribute = (XmlAttribute)element.getParent();
-      key = xmlAttribute.getName();
-    } else if (element instanceof XmlAttribute) {
-      final XmlAttribute xmlAttribute = (XmlAttribute)element;
-      isTag = false;
-      key = xmlAttribute.getName();
-    } else if (element instanceof XmlElement) {
-      nameElement = element;
-      isTag = !(element.getParent() instanceof XmlAttribute);
-    } else {
-      nameElement = element;
-      if (context == null) {
-        isTag = false;
-      }
-      else {
-        String text = element.getText();
-        isTag = text != null && text.startsWith(context.getName());
-      }
-    }
+	private static EntityDescriptor findDocumentationDescriptor(PsiElement element, XmlTag context)
+	{
+		boolean isTag = true;
+		PsiElement nameElement = null;
+		String key = null;
 
-    if (nameElement!=null) {
-      key = nameElement.getText();
-    }
+		if(element instanceof XmlElementDecl)
+		{
+			nameElement = ((XmlElementDecl) element).getNameElement();
+		}
+		else if(element instanceof XmlAttributeDecl)
+		{
+			nameElement = ((XmlAttributeDecl) element).getNameElement();
+			isTag = false;
+		}
+		else if(element instanceof XmlTag)
+		{
+			final XmlTag xmlTag = ((XmlTag) element);
+			final PsiMetaData metaData = xmlTag.getMetaData();
+			key = (metaData != null) ? metaData.getName() : null;
+			isTag = xmlTag.getLocalName().equals(ELEMENT_ELEMENT_NAME);
+		}
+		else if(element.getParent() instanceof XmlAttributeValue)
+		{
+			isTag = false;
+			key = ((XmlAttribute) element.getParent().getParent()).getName();
+		}
+		else if(element instanceof XmlAttributeValue)
+		{
+			isTag = false;
+			final XmlAttribute xmlAttribute = (XmlAttribute) element.getParent();
+			key = xmlAttribute.getName();
+		}
+		else if(element instanceof XmlAttribute)
+		{
+			final XmlAttribute xmlAttribute = (XmlAttribute) element;
+			isTag = false;
+			key = xmlAttribute.getName();
+		}
+		else if(element instanceof XmlElement)
+		{
+			nameElement = element;
+			isTag = !(element.getParent() instanceof XmlAttribute);
+		}
+		else
+		{
+			nameElement = element;
+			if(context == null)
+			{
+				isTag = false;
+			}
+			else
+			{
+				String text = element.getText();
+				isTag = text != null && text.startsWith(context.getName());
+			}
+		}
 
-    key = (key != null)?key.toLowerCase():"";
+		if(nameElement != null)
+		{
+			key = nameElement.getText();
+		}
 
-    int dotIndex = key.indexOf('.');
-    if (dotIndex > 0) {
-      key = key.substring(0, dotIndex);
-    }
+		key = (key != null) ? key.toLowerCase() : "";
 
-    if (isTag) {
-      return HtmlDescriptorsTable.getTagDescriptor(key);
-    } else {
-      return getDescriptor(key, context);
-    }
-  }
+		int dotIndex = key.indexOf('.');
+		if(dotIndex > 0)
+		{
+			key = key.substring(0, dotIndex);
+		}
 
-  private static HtmlAttributeDescriptor getDescriptor(String name, XmlTag context) {
+		if(isTag)
+		{
+			return HtmlDescriptorsTable.getTagDescriptor(key);
+		}
+		else
+		{
+			return getDescriptor(key, context);
+		}
+	}
 
-    HtmlAttributeDescriptor attributeDescriptor = HtmlDescriptorsTable.getAttributeDescriptor(name);
-    if (attributeDescriptor instanceof CompositeAttributeTagDescriptor) {
-      return ((CompositeAttributeTagDescriptor)attributeDescriptor).findHtmlAttributeInContext(context);
-    }
+	private static HtmlAttributeDescriptor getDescriptor(String name, XmlTag context)
+	{
 
-    return attributeDescriptor;
-  }
+		HtmlAttributeDescriptor attributeDescriptor = HtmlDescriptorsTable.getAttributeDescriptor(name);
+		if(attributeDescriptor instanceof CompositeAttributeTagDescriptor)
+		{
+			return ((CompositeAttributeTagDescriptor) attributeDescriptor).findHtmlAttributeInContext(context);
+		}
 
-  public String generateDoc(PsiElement element, PsiElement originalElement) {
-    final XmlTag tag = PsiTreeUtil.getParentOfType(originalElement, XmlTag.class, false);
-    String result = generateDocForHtml(element, false, tag, originalElement);
+		return attributeDescriptor;
+	}
 
-    if (result == null && ourStyleProvider !=null) {
-      result = ourStyleProvider.generateDoc(element, originalElement);
-    }
+	public String generateDoc(PsiElement element, PsiElement originalElement)
+	{
+		final XmlTag tag = PsiTreeUtil.getParentOfType(originalElement, XmlTag.class, false);
+		String result = generateDocForHtml(element, false, tag, originalElement);
 
-    if (result == null && ourScriptProvider !=null) {
-      result = ourScriptProvider.generateDoc(element, originalElement);
-    }
+		if(result == null && ourStyleProvider != null)
+		{
+			result = ourStyleProvider.generateDoc(element, originalElement);
+		}
 
-    if (result == null && element instanceof XmlAttributeValue) {
-      result = generateDocForHtml(element.getParent(), false, tag, originalElement);
-    }
+		if(result == null && ourScriptProvider != null)
+		{
+			result = ourScriptProvider.generateDoc(element, originalElement);
+		}
 
-    return result;
-  }
+		if(result == null && element instanceof XmlAttributeValue)
+		{
+			result = generateDocForHtml(element.getParent(), false, tag, originalElement);
+		}
 
-  public String generateDocForHtml(PsiElement element) {
-    return generateDocForHtml(element,true, null, null);
-  }
+		return result;
+	}
 
-  protected String generateDocForHtml(PsiElement element, boolean ommitHtmlSpecifics, XmlTag context, PsiElement originalElement) {
-    final EntityDescriptor descriptor = findDocumentationDescriptor(element,context);
+	public String generateDocForHtml(PsiElement element)
+	{
+		return generateDocForHtml(element, true, null, null);
+	}
 
-    if (descriptor!=null) {
-      return generateJavaDoc(descriptor, ommitHtmlSpecifics, originalElement);
-    }
-    if (element instanceof XmlEntityDecl) {
-      final XmlEntityDecl entityDecl = (XmlEntityDecl)element;
+	protected String generateDocForHtml(PsiElement element, boolean ommitHtmlSpecifics, XmlTag context, PsiElement originalElement)
+	{
+		final EntityDescriptor descriptor = findDocumentationDescriptor(element, context);
 
-      return new XmlDocumentationProvider().findDocRightAfterElement(element, entityDecl.getName());
-    }
-    return null;
-  }
+		if(descriptor != null)
+		{
+			return generateJavaDoc(descriptor, ommitHtmlSpecifics, originalElement);
+		}
+		if(element instanceof XmlEntityDecl)
+		{
+			final XmlEntityDecl entityDecl = (XmlEntityDecl) element;
 
-  private static String generateJavaDoc(EntityDescriptor descriptor, boolean ommitHtmlSpecifics, PsiElement element) {
-    StringBuilder buf = new StringBuilder();
-    final boolean istag = descriptor instanceof HtmlTagDescriptor;
+			return new XmlDocumentationProvider().findDocRightAfterElement(element, entityDecl.getName());
+		}
+		return null;
+	}
 
-    if (istag) {
-      DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.tag.name.message"),descriptor.getName(),buf);
-    } else {
-      DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.attribute.name.message"),descriptor.getName(),buf);
-    }
+	private static String generateJavaDoc(EntityDescriptor descriptor, boolean ommitHtmlSpecifics, PsiElement element)
+	{
+		StringBuilder buf = new StringBuilder();
+		final boolean istag = descriptor instanceof HtmlTagDescriptor;
 
-    buf.append(XmlBundle.message("xml.javadoc.description.message")).append(NBSP).append(descriptor.getDescription()).append(BR);
+		if(istag)
+		{
+			DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.tag.name.message"), descriptor.getName(), buf);
+		}
+		else
+		{
+			DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.attribute.name.message"), descriptor.getName(), buf);
+		}
 
-    if (istag) {
-      final HtmlTagDescriptor tagDescriptor = (HtmlTagDescriptor)descriptor;
+		buf.append(XmlBundle.message("xml.javadoc.description.message")).append(NBSP).append(descriptor.getDescription()).append(BR);
 
-      if (!ommitHtmlSpecifics) {
-        boolean hasStartTag = tagDescriptor.isHasStartTag();
-        if (!hasStartTag) {
-          buf.append(XmlBundle.message("xml.javadoc.start.tag.could.be.omitted.message")).append(BR);
-        }
-        if (!tagDescriptor.isEmpty() && !tagDescriptor.isHasEndTag()) {
-          buf.append(XmlBundle.message("xml.javadoc.end.tag.could.be.omitted.message")).append(BR);
-        }
-      }
+		if(istag)
+		{
+			final HtmlTagDescriptor tagDescriptor = (HtmlTagDescriptor) descriptor;
 
-      if (tagDescriptor.isEmpty()) {
-        buf.append(XmlBundle.message("xml.javadoc.is.empty.message")).append(BR);
-      }
-    } else {
-      final HtmlAttributeDescriptor attributeDescriptor = (HtmlAttributeDescriptor)descriptor;
+			if(!ommitHtmlSpecifics)
+			{
+				boolean hasStartTag = tagDescriptor.isHasStartTag();
+				if(!hasStartTag)
+				{
+					buf.append(XmlBundle.message("xml.javadoc.start.tag.could.be.omitted.message")).append(BR);
+				}
+				if(!tagDescriptor.isEmpty() && !tagDescriptor.isHasEndTag())
+				{
+					buf.append(XmlBundle.message("xml.javadoc.end.tag.could.be.omitted.message")).append(BR);
+				}
+			}
 
-      buf.append(XmlBundle.message("xml.javadoc.attr.type.message", attributeDescriptor.getType())).append(BR);
-      if (!attributeDescriptor.isHasDefaultValue())
-        buf.append(XmlBundle.message("xml.javadoc.attr.default.required.message")).append(BR);
-    }
+			if(tagDescriptor.isEmpty())
+			{
+				buf.append(XmlBundle.message("xml.javadoc.is.empty.message")).append(BR);
+			}
+		}
+		else
+		{
+			final HtmlAttributeDescriptor attributeDescriptor = (HtmlAttributeDescriptor) descriptor;
 
-    char dtdId = descriptor.getDtd();
-    boolean deprecated = dtdId == HtmlTagDescriptor.LOOSE_DTD;
-    if (deprecated) {
-      buf.append(XmlBundle.message("xml.javadoc.deprecated.message", deprecated)).append(BR);
-    }
+			buf.append(XmlBundle.message("xml.javadoc.attr.type.message", attributeDescriptor.getType())).append(BR);
+			if(!attributeDescriptor.isHasDefaultValue())
+			{
+				buf.append(XmlBundle.message("xml.javadoc.attr.default.required.message")).append(BR);
+			}
+		}
 
-    if (dtdId == HtmlTagDescriptor.LOOSE_DTD) {
-      buf.append(XmlBundle.message("xml.javadoc.defined.in.loose.dtd.message"));
-    }
-    else if (dtdId == HtmlTagDescriptor.FRAME_DTD) {
-      buf.append(XmlBundle.message("xml.javadoc.defined.in.frameset.dtd.message"));
-    }
-    else {
-      buf.append(XmlBundle.message("xml.javadoc.defined.in.any.dtd.message"));
-    }
+		char dtdId = descriptor.getDtd();
+		boolean deprecated = dtdId == HtmlTagDescriptor.LOOSE_DTD;
+		if(deprecated)
+		{
+			buf.append(XmlBundle.message("xml.javadoc.deprecated.message", deprecated)).append(BR);
+		}
 
-    if (!istag) {
-      addColorPreviewAndCodeToLookup(element, buf);
-    }
+		if(dtdId == HtmlTagDescriptor.LOOSE_DTD)
+		{
+			buf.append(XmlBundle.message("xml.javadoc.defined.in.loose.dtd.message"));
+		}
+		else if(dtdId == HtmlTagDescriptor.FRAME_DTD)
+		{
+			buf.append(XmlBundle.message("xml.javadoc.defined.in.frameset.dtd.message"));
+		}
+		else
+		{
+			buf.append(XmlBundle.message("xml.javadoc.defined.in.any.dtd.message"));
+		}
 
-    if (element != null) {
-      buf.append(XmlDocumentationProvider.generateHtmlAdditionalDocTemplate(element));
-    }
+		if(!istag)
+		{
+			addColorPreviewAndCodeToLookup(element, buf);
+		}
 
-    return buf.toString();
-  }
+		if(element != null)
+		{
+			buf.append(XmlDocumentationProvider.generateHtmlAdditionalDocTemplate(element));
+		}
 
-  public PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
-    PsiElement result = createNavigationElementHTML(psiManager, object.toString(),element);
+		return buf.toString();
+	}
 
-    if (result== null && ourStyleProvider !=null) {
-      result = ourStyleProvider.getDocumentationElementForLookupItem(psiManager, object, element);
-    }
-    if (result== null && ourScriptProvider !=null) {
-      result = ourScriptProvider.getDocumentationElementForLookupItem(psiManager, object, element);
-    }
-    if (result == null && object instanceof String && element != null) {
-      result = XmlDocumentationProvider.findDeclWithName((String)object, element);
-    }
-    return result;
-  }
+	public PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element)
+	{
+		PsiElement result = createNavigationElementHTML(psiManager, object.toString(), element);
 
-  public PsiElement getDocumentationElementForLink(PsiManager psiManager, String link, PsiElement context) {
-    PsiElement result = createNavigationElementHTML(psiManager, link, context);
+		if(result == null && ourStyleProvider != null)
+		{
+			result = ourStyleProvider.getDocumentationElementForLookupItem(psiManager, object, element);
+		}
+		if(result == null && ourScriptProvider != null)
+		{
+			result = ourScriptProvider.getDocumentationElementForLookupItem(psiManager, object, element);
+		}
+		if(result == null && object instanceof String && element != null)
+		{
+			result = XmlDocumentationProvider.findDeclWithName((String) object, element);
+		}
+		return result;
+	}
 
-    if (result== null && ourStyleProvider !=null) {
-      result = ourStyleProvider.getDocumentationElementForLink(psiManager, link,context);
-    }
-    if (result== null && ourScriptProvider !=null) {
-      result = ourScriptProvider.getDocumentationElementForLink(psiManager, link,context);
-    }
-    return result;
-  }
+	public PsiElement getDocumentationElementForLink(PsiManager psiManager, String link, PsiElement context)
+	{
+		PsiElement result = createNavigationElementHTML(psiManager, link, context);
 
-  public PsiElement createNavigationElementHTML(PsiManager psiManager, String text, PsiElement context) {
-    String key = text.toLowerCase();
-    final HtmlTagDescriptor descriptor = HtmlDescriptorsTable.getTagDescriptor(key);
+		if(result == null && ourStyleProvider != null)
+		{
+			result = ourStyleProvider.getDocumentationElementForLink(psiManager, link, context);
+		}
+		if(result == null && ourScriptProvider != null)
+		{
+			result = ourScriptProvider.getDocumentationElementForLink(psiManager, link, context);
+		}
+		return result;
+	}
 
-    if (descriptor != null && !isAttributeContext(context) ) {
-      try {
-        final XmlTag tagFromText = XmlElementFactory.getInstance(psiManager.getProject()).createTagFromText("<"+ key + " xmlns=\"" + XmlUtil.XHTML_URI + "\"/>");
-        final XmlElementDescriptor tagDescriptor = tagFromText.getDescriptor();
-        return tagDescriptor != null ? tagDescriptor.getDeclaration() : null;
-      }
-      catch(IncorrectOperationException ignore) {
-      }
-    }
-    else {
-      XmlTag tagContext = findTagContext(context);
-      HtmlAttributeDescriptor myAttributeDescriptor = getDescriptor(key,tagContext);
+	public PsiElement createNavigationElementHTML(PsiManager psiManager, String text, PsiElement context)
+	{
+		String key = text.toLowerCase();
+		final HtmlTagDescriptor descriptor = HtmlDescriptorsTable.getTagDescriptor(key);
 
-      if (myAttributeDescriptor != null && tagContext != null) {
-        XmlElementDescriptor tagDescriptor = tagContext.getDescriptor();
-        XmlAttributeDescriptor attributeDescriptor = tagDescriptor != null ? tagDescriptor.getAttributeDescriptor(text, tagContext): null;
+		if(descriptor != null && !isAttributeContext(context))
+		{
+			try
+			{
+				final XmlTag tagFromText = XmlElementFactory.getInstance(psiManager.getProject()).createTagFromText("<" + key + " xmlns=\"" + XmlUtil.XHTML_URI + "\"/>");
+				final XmlElementDescriptor tagDescriptor = tagFromText.getDescriptor();
+				return tagDescriptor != null ? tagDescriptor.getDeclaration() : null;
+			}
+			catch(IncorrectOperationException ignore)
+			{
+			}
+		}
+		else
+		{
+			XmlTag tagContext = findTagContext(context);
+			HtmlAttributeDescriptor myAttributeDescriptor = getDescriptor(key, tagContext);
 
-        return (attributeDescriptor != null)?attributeDescriptor.getDeclaration():null;
-      }
-    }
-    return null;
-  }
+			if(myAttributeDescriptor != null && tagContext != null)
+			{
+				XmlElementDescriptor tagDescriptor = tagContext.getDescriptor();
+				XmlAttributeDescriptor attributeDescriptor = tagDescriptor != null ? tagDescriptor.getAttributeDescriptor(text, tagContext) : null;
 
-  protected boolean isAttributeContext(PsiElement context) {
-    if(context instanceof XmlAttribute) return true;
+				return (attributeDescriptor != null) ? attributeDescriptor.getDeclaration() : null;
+			}
+		}
+		return null;
+	}
 
-    if (context instanceof PsiWhiteSpace) {
-      PsiElement prevSibling = context.getPrevSibling();
-      if (prevSibling instanceof XmlAttribute)
-        return true;
-    }
+	protected boolean isAttributeContext(PsiElement context)
+	{
+		if(context instanceof XmlAttribute)
+		{
+			return true;
+		}
 
-    return false;
-  }
+		if(context instanceof PsiWhiteSpace)
+		{
+			PsiElement prevSibling = context.getPrevSibling();
+			if(prevSibling instanceof XmlAttribute)
+			{
+				return true;
+			}
+		}
 
-  protected XmlTag findTagContext(PsiElement context) {
-    if (context instanceof PsiWhiteSpace) {
-      PsiElement prevSibling = context.getPrevSibling();
-      if (prevSibling instanceof XmlTag)
-        return (XmlTag)prevSibling;
-    }
+		return false;
+	}
 
-    return PsiTreeUtil.getParentOfType(context,XmlTag.class,false);
-  }
+	protected XmlTag findTagContext(PsiElement context)
+	{
+		if(context instanceof PsiWhiteSpace)
+		{
+			PsiElement prevSibling = context.getPrevSibling();
+			if(prevSibling instanceof XmlTag)
+			{
+				return (XmlTag) prevSibling;
+			}
+		}
 
-  public static void addColorPreviewAndCodeToLookup(final PsiElement currentElement, final StringBuilder buf) {
-    final Color colorFromElement = UserColorLookup.getColorFromElement(currentElement);
+		return PsiTreeUtil.getParentOfType(context, XmlTag.class, false);
+	}
 
-    if (colorFromElement != null) {
-      ColorSampleLookupValue.addColorPreviewAndCodeToLookup(colorFromElement, buf);
-    }
-  }
+	public static void addColorPreviewAndCodeToLookup(final PsiElement currentElement, final StringBuilder buf)
+	{
+		final Color colorFromElement = UserColorLookup.getColorFromElement(currentElement);
 
-  public static void registerScriptDocumentationProvider(final DocumentationProvider provider) {
-    ourScriptProvider = provider;
-  }
+		if(colorFromElement != null)
+		{
+			ColorSampleLookupValue.addColorPreviewAndCodeToLookup(colorFromElement, buf);
+		}
+	}
+
+	public static void registerScriptDocumentationProvider(final DocumentationProvider provider)
+	{
+		ourScriptProvider = provider;
+	}
 }

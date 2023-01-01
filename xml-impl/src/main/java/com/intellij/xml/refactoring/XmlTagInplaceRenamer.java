@@ -22,29 +22,29 @@
  */
 package com.intellij.xml.refactoring;
 
-import com.intellij.codeInsight.daemon.impl.quickfix.EmptyExpression;
-import com.intellij.codeInsight.highlighting.HighlightManager;
-import com.intellij.codeInsight.template.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.colors.EditorColors;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.markup.RangeHighlighter;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.xml.XmlChildRole;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.refactoring.RefactoringBundle;
-import com.intellij.refactoring.util.CommonRefactoringUtil;
-import com.intellij.util.PairProcessor;
-import com.intellij.util.containers.Stack;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorColors;
+import consulo.codeEditor.markup.RangeHighlighter;
+import consulo.colorScheme.EditorColorsManager;
+import consulo.colorScheme.TextAttributes;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.highlight.HighlightManager;
+import consulo.language.editor.refactoring.RefactoringBundle;
+import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
+import consulo.language.editor.template.*;
+import consulo.language.editor.template.event.TemplateEditingAdapter;
+import consulo.project.Project;
+import consulo.undoRedo.CommandProcessor;
+import consulo.util.collection.Stack;
+import consulo.util.lang.Pair;
+import consulo.util.lang.function.PairProcessor;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,7 +156,7 @@ public class XmlTagInplaceRenamer {
   }
 
   private static Template buildTemplate(@Nonnull final XmlTag tag, @Nonnull final Pair<ASTNode, ASTNode> pair) {
-    final TemplateBuilderImpl builder = new TemplateBuilderImpl(tag);
+    final TemplateBuilder builder = TemplateBuilderFactory.getInstance().createTemplateBuilder(tag);
 
     final ASTNode selected = pair.first;
     final ASTNode other = pair.second;

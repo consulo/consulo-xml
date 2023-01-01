@@ -1,12 +1,12 @@
 package com.intellij.xml.arrangement;
 
-import javax.annotation.Nonnull;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.ui.setting.arrangement.ArrangementSettingsPanel;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.lang.xml.XMLLanguage;
 
-import com.intellij.application.options.codeStyle.arrangement.ArrangementSettingsPanel;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky

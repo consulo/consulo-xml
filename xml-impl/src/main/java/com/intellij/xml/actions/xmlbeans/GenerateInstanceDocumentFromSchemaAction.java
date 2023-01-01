@@ -15,24 +15,28 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.XmlBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.util.function.Computable;
+import consulo.document.FileDocumentManager;
+import consulo.fileEditor.FileEditorManager;
+import consulo.ide.impl.idea.openapi.util.io.FileUtil;
+import consulo.language.editor.CommonDataKeys;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.project.Project;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.awt.Messages;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.ExceptionUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.psi.xml.XmlFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nullable;
@@ -78,7 +82,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
     @NonNls List<String> parameters = new LinkedList<String>();
 
     final String url = dialog.getUrl().getText();
-    final VirtualFile relativeFile = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
+    final VirtualFile relativeFile = VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
     final PsiFile file = PsiManager.getInstance(project).findFile(relativeFile);
     if (! (file instanceof XmlFile)) {
       Messages.showErrorDialog(project, "This is not XmlFile" + file == null ? "" : " (" + file.getFileType().getName() + ")", XmlBundle.message("error"));
@@ -143,7 +147,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
     try {
       xml = Xsd2InstanceUtils.generate(ArrayUtil.toStringArray(parameters));
     } catch (IllegalArgumentException e) {
-      Messages.showErrorDialog(project, StringUtil.getMessage(e), XmlBundle.message("error"));
+      Messages.showErrorDialog(project, ExceptionUtil.getMessage(e), XmlBundle.message("error"));
       return;
     }
 
@@ -173,7 +177,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
       FileEditorManager.getInstance(project).openFile(virtualFile, true);
     }
     catch (IOException e) {
-      Messages.showErrorDialog(project, "Could not save generated XML document: " + StringUtil.getMessage(e), XmlBundle.message("error"));
+      Messages.showErrorDialog(project, "Could not save generated XML document: " + ExceptionUtil.getMessage(e), XmlBundle.message("error"));
     }
   }
 

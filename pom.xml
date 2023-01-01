@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>consulo</groupId>
 		<artifactId>arch.managment</artifactId>
-		<version>2-SNAPSHOT</version>
+		<version>3-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
@@ -38,20 +38,10 @@
 
 	<groupId>consulo.plugin</groupId>
 	<artifactId>com.intellij.xml.parent</artifactId>
-	<version>2-SNAPSHOT</version>
+	<version>3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>relaxng</module>
-		<module>xml-analysis-api</module>
-		<module>xml-analysis-impl</module>
-		<module>xml-psi-api</module>
-		<module>xml-psi-impl</module>
-		<module>xml-dom-api</module>
-		<module>xml-dom-impl</module>
-		<module>xml-structure-view-impl</module>
 		<module>xml-impl</module>
-		<module>xml-spellchecker</module>
-		<module>xml-intellilang</module>
 	</modules>
 </project>

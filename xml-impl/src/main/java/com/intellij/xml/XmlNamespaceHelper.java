@@ -15,81 +15,94 @@
  */
 package com.intellij.xml;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.codeEditor.Editor;
+import consulo.component.extension.ExtensionPointName;
+import consulo.document.Document;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Set;
 
 /**
  * @author yole
  */
-public abstract class XmlNamespaceHelper {
-  private static final ExtensionPointName<XmlNamespaceHelper> EP_NAME = new ExtensionPointName<XmlNamespaceHelper>("com.intellij.xml.namespaceHelper");
+@ExtensionAPI(ComponentScope.APPLICATION)
+public abstract class XmlNamespaceHelper
+{
+	private static final ExtensionPointName<XmlNamespaceHelper> EP_NAME = ExtensionPointName.create(XmlNamespaceHelper.class);
 
-  public static final XmlNamespaceHelper DEFAULT_EXTENSION = new DefaultXmlNamespaceHelper();
+	public static XmlNamespaceHelper getHelper(PsiFile file)
+	{
+		for(XmlNamespaceHelper extension : EP_NAME.getExtensionList())
+		{
+			if(extension.isAvailable(file))
+			{
+				return extension;
+			}
+		}
+		throw new UnsupportedOperationException("DefaultXmlNamespaceHelper not registered");
+	}
 
-  public static XmlNamespaceHelper getHelper(PsiFile file) {
-    for (XmlNamespaceHelper extension : Extensions.getExtensions(EP_NAME)) {
-      if (extension.isAvailable(file)) {
-        return extension;
-      }
-    }
-    return DEFAULT_EXTENSION;
-  }
+	protected abstract boolean isAvailable(PsiFile file);
 
-  protected abstract boolean isAvailable(PsiFile file);
+	public interface Runner<P, T extends Throwable>
+	{
+		void run(P param) throws T;
+	}
 
-  public interface Runner<P, T extends Throwable> {
-    void run(P param) throws T;
-  }
+	@Nullable
+	public String getNamespacePrefix(PsiElement element)
+	{
+		final PsiElement tag = element instanceof XmlTag ? element : element.getParent();
+		if(tag instanceof XmlTag)
+		{
+			return ((XmlTag) tag).getNamespacePrefix();
+		}
+		else
+		{
+			return null;
+		}
+	}
 
-  @Nullable
-  public String getNamespacePrefix(PsiElement element) {
-    final PsiElement tag = element instanceof XmlTag ? element : element.getParent();
-    if (tag instanceof XmlTag) {
-      return ((XmlTag)tag).getNamespacePrefix();
-    } else {
-      return null;
-    }
-  }
+	public abstract void insertNamespaceDeclaration(@Nonnull final XmlFile file,
+													@Nullable final Editor editor,
+													@NonNls @Nonnull final Set<String> possibleNamespaces,
+													@NonNls @Nullable final String nsPrefix,
+													@Nullable Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException;
 
-  public abstract void insertNamespaceDeclaration(@Nonnull final XmlFile file,
-                                                  @Nullable final Editor editor,
-                                                  @NonNls @Nonnull final Set<String> possibleNamespaces,
-                                                  @NonNls @Nullable final String nsPrefix,
-                                                  @Nullable Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException;
+	public boolean qualifyWithPrefix(final String namespacePrefix, final PsiElement element, final Document document) throws
+			IncorrectOperationException
+	{
+		final PsiElement tag = element instanceof XmlTag ? element : element.getParent();
+		if(tag instanceof XmlTag)
+		{
+			final String prefix = ((XmlTag) tag).getNamespacePrefix();
+			if(!prefix.equals(namespacePrefix))
+			{
+				final String name = namespacePrefix + ":" + ((XmlTag) tag).getLocalName();
+				((XmlTag) tag).setName(name);
+			}
+			return true;
+		}
+		return false;
+	}
 
-  public boolean qualifyWithPrefix(final String namespacePrefix, final PsiElement element, final Document document) throws
-                                                                                                                    IncorrectOperationException {
-    final PsiElement tag = element instanceof XmlTag ? element : element.getParent();
-    if (tag instanceof XmlTag) {
-      final String prefix = ((XmlTag)tag).getNamespacePrefix();
-      if (!prefix.equals(namespacePrefix)) {
-        final String name = namespacePrefix + ":" + ((XmlTag)tag).getLocalName();
-        ((XmlTag)tag).setName(name);
-      }
-      return true;
-    }
-    return false;
-  }
+	@Nonnull
+	public abstract Set<String> guessUnboundNamespaces(@Nonnull PsiElement element, final XmlFile file);
 
-  @Nonnull
-  public abstract Set<String> guessUnboundNamespaces(@Nonnull PsiElement element, final XmlFile file);
+	@Nonnull
+	public abstract Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context);
 
-  @Nonnull
-  public abstract Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context);
-
-  public String getNamespaceAlias(@Nonnull final XmlFile file) {
-    return XmlBundle.message("namespace.alias");
-  }
+	public String getNamespaceAlias(@Nonnull final XmlFile file)
+	{
+		return XmlBundle.message("namespace.alias");
+	}
 }

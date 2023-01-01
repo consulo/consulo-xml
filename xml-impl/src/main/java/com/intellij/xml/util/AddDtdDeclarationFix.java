@@ -15,33 +15,26 @@
  */
 package com.intellij.xml.util;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.xml.XmlBundle;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.template.Template;
+import consulo.language.editor.template.TemplateManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.navigation.OpenFileDescriptor;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
-import com.intellij.codeInsight.template.Template;
-import com.intellij.codeInsight.template.TemplateManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttlistDecl;
-import com.intellij.psi.xml.XmlConditionalSection;
-import com.intellij.psi.xml.XmlDoctype;
-import com.intellij.psi.xml.XmlElementDecl;
-import com.intellij.psi.xml.XmlEntityDecl;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlMarkupDecl;
-import com.intellij.psi.xml.XmlProlog;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.XmlBundle;
+
+import javax.annotation.Nonnull;
 
 public class AddDtdDeclarationFix implements LocalQuickFix
 {
@@ -125,7 +118,7 @@ public class AddDtdDeclarationFix implements LocalQuickFix
 			anchorOffset = element.getTextRange().getStartOffset();
 		}
 
-		OpenFileDescriptor openDescriptor = new OpenFileDescriptor(project, containingFile.getVirtualFile(), anchorOffset);
+		OpenFileDescriptor openDescriptor = OpenFileDescriptorFactory.getInstance(project).builder(containingFile.getVirtualFile()).offset(anchorOffset).build();
 		final Editor editor = FileEditorManager.getInstance(project).openTextEditor(openDescriptor, true);
 		final TemplateManager templateManager = TemplateManager.getInstance(project);
 		final Template t = templateManager.createTemplate("", "");

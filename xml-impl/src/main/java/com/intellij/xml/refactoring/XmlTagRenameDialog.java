@@ -37,32 +37,32 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import javax.annotation.Nullable;
-import com.intellij.codeInsight.completion.TagNameReferenceCompletionProvider;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupManager;
-import com.intellij.lang.findUsages.DescriptiveNameUtil;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileTypes.PlainTextFileType;
-import com.intellij.openapi.help.HelpManager;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.source.xml.TagNameReference;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.refactoring.RefactoringBundle;
-import com.intellij.refactoring.ui.NameSuggestionsField;
-import com.intellij.refactoring.ui.RefactoringDialog;
-import com.intellij.usageView.UsageViewUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
+import consulo.application.ApplicationManager;
+import consulo.language.editor.completion.lookup.LookupManager;
+import consulo.language.editor.refactoring.ui.NameSuggestionsField;
+import consulo.language.editor.refactoring.ui.RefactoringDialog;
+import consulo.language.findUsage.DescriptiveNameUtil;
+import consulo.language.psi.PsiReference;
+import consulo.ui.ex.awt.DialogWrapper;
+import consulo.undoRedo.CommandProcessor;
+import consulo.logging.Logger;
+import consulo.codeEditor.Editor;
+import consulo.language.plain.PlainTextFileType;
+import consulo.application.HelpManager;
+import consulo.language.psi.PsiElement;
+import consulo.xml.psi.impl.source.xml.TagNameReference;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.language.editor.refactoring.RefactoringBundle;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlBundle;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.usage.UsageViewUtil;
+import consulo.util.lang.StringUtil;
 
 public class XmlTagRenameDialog extends RefactoringDialog
 {
-	private static final Logger LOG = Logger.getInstance("#com.intellij.xml.refactoring.XmlTagRenameDialog");
+	private static final Logger LOG = Logger.getInstance(XmlTagRenameDialog.class);
 	private static final String REFACTORING_NAME = RefactoringBundle.message("rename.title");
 
 	private final PsiElement myElement;
