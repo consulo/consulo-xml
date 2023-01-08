@@ -16,7 +16,9 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.application.util.SofterReference;
+import consulo.util.lang.ObjectUtil;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
@@ -27,7 +29,7 @@ import java.util.function.Function;
 public class SofterCache<T, V>
 {
 	private final Function<T, V> myValueProvider;
-	private SofterReference<ConcurrentMap<T, V>> myCache;
+	private SofterReference<ConcurrentMap<T, Object>> myCache;
 
 	public SofterCache(Function<T, V> valueProvider)
 	{
@@ -44,19 +46,29 @@ public class SofterCache<T, V>
 		myCache = null;
 	}
 
+	@Nullable
+	@SuppressWarnings("unchecked")
 	public V getCachedValue(T key)
 	{
-		SofterReference<ConcurrentMap<T, V>> ref = myCache;
-		ConcurrentMap<T, V> map = ref == null ? null : ref.get();
+		SofterReference<ConcurrentMap<T, Object>> ref = myCache;
+		ConcurrentMap<T, Object> map = ref == null ? null : ref.get();
 		if(map == null)
 		{
-			myCache = new SofterReference<ConcurrentMap<T, V>>(map = new ConcurrentHashMap<T, V>());
+			myCache = new SofterReference<>(map = new ConcurrentHashMap<>());
 		}
-		V value = map.get(key);
-		if(value == null)
+
+		Object value = map.get(key);
+		if(value == ObjectUtil.NULL)
 		{
-			map.put(key, value = myValueProvider.apply(key));
+			return null;
 		}
-		return value;
+		else if(value != null)
+		{
+			return (V) value;
+		}
+
+		V fetchValue = myValueProvider.apply(key);
+		map.put(key, fetchValue == null ? ObjectUtil.NULL : fetchValue);
+		return fetchValue;
 	}
 }

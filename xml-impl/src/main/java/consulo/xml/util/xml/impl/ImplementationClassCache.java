@@ -107,6 +107,10 @@ class ImplementationClassCache<T extends ImplementationProvider>
 	public T get(Class key)
 	{
 		T impl = myCache.getCachedValue(key);
+		if(impl == null)
+		{
+			return null;
+		}
 		return impl.getImplementationClass() == key ? null : impl;
 	}
 }
