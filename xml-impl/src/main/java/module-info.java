@@ -79,7 +79,6 @@ open module com.intellij.xml
 	exports consulo.xml.ide.highlighter;
 	exports consulo.xml.ide.structureView.impl.xml;
 	exports consulo.xml.ide.structureView.xml;
-	exports consulo.xml.ide.util.treeView;
 	exports consulo.xml.impl.dom;
 	exports consulo.xml.intelliLang.inject.config;
 	exports consulo.xml.intelliLang.inject.config.ui;
