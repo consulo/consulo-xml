@@ -6,10 +6,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
 import consulo.application.ApplicationManager;
-import consulo.codeEditor.Caret;
-import consulo.codeEditor.CaretAction;
-import consulo.codeEditor.Editor;
-import consulo.codeEditor.EditorFactory;
+import consulo.codeEditor.*;
 import consulo.codeEditor.event.EditorFactoryEvent;
 import consulo.codeEditor.event.EditorFactoryListener;
 import consulo.disposer.Disposable;
@@ -19,7 +16,6 @@ import consulo.document.RangeMarker;
 import consulo.document.event.DocumentEvent;
 import consulo.document.event.DocumentListener;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.openapi.editor.impl.DesktopEditorImpl;
 import consulo.ide.impl.idea.pom.core.impl.PomModelImpl;
 import consulo.language.Language;
 import consulo.language.editor.completion.lookup.LookupEx;
@@ -74,7 +70,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
   public void editorCreated(@Nonnull EditorFactoryEvent event) {
     Editor editor = event.getEditor();
     Project project = editor.getProject();
-    if (project == null || !(editor instanceof DesktopEditorImpl)) {
+    if (project == null || !(editor instanceof RealEditor)) {
       return;
     }
 
@@ -82,7 +78,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
     VirtualFile file = FileDocumentManager.getInstance().getFile(document);
     Language language = findXmlLikeLanguage(project, file);
     if (language != null) {
-      new TagNameSynchronizer((DesktopEditorImpl)editor, project, language).listenForDocumentChanges();
+      new TagNameSynchronizer((RealEditor)editor, project, language).listenForDocumentChanges();
     }
   }
 
@@ -132,10 +128,10 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
     private static final TagNameSynchronizer[] EMPTY = new TagNameSynchronizer[0];
     private final PsiDocumentManager myDocumentManager;
     private final Language myLanguage;
-    private final DesktopEditorImpl myEditor;
+    private final RealEditor myEditor;
     private boolean myApplying;
 
-    private TagNameSynchronizer(DesktopEditorImpl editor, Project project, Language language) {
+    private TagNameSynchronizer(RealEditor editor, Project project, Language language) {
       myEditor = editor;
       myLanguage = language;
       myDocumentManager = PsiDocumentManager.getInstance(project);

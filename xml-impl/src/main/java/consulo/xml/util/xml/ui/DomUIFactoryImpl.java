@@ -18,12 +18,12 @@ package consulo.xml.util.xml.ui;
 import consulo.annotation.component.ServiceImpl;
 import consulo.application.Application;
 import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorHolder;
 import consulo.document.Document;
 import consulo.document.event.DocumentAdapter;
 import consulo.document.event.DocumentEvent;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
 import consulo.fileEditor.highlight.HighlightingPass;
-import consulo.ide.impl.idea.openapi.editor.impl.EditorComponentImpl;
 import consulo.language.editor.impl.highlight.TextEditorHighlightingPassManager;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
@@ -57,8 +57,10 @@ import java.util.function.Function;
 @ServiceImpl
 public class DomUIFactoryImpl extends DomUIFactory {
 
-  private final ClassMap<Function<DomWrapper<String>, BaseControl>> myCustomControlCreators = new ClassMap<Function<DomWrapper<String>, BaseControl>>();
-  private final ClassMap<Function<DomElement, TableCellEditor>> myCustomCellEditorCreators = new ClassMap<Function<DomElement, TableCellEditor>>();
+  private final ClassMap<Function<DomWrapper<String>, BaseControl>> myCustomControlCreators =
+    new ClassMap<Function<DomWrapper<String>, BaseControl>>();
+  private final ClassMap<Function<DomElement, TableCellEditor>> myCustomCellEditorCreators =
+    new ClassMap<Function<DomElement, TableCellEditor>>();
 
   @Inject
   public DomUIFactoryImpl(Application application) {
@@ -92,16 +94,16 @@ public class DomUIFactoryImpl extends DomUIFactory {
 
       protected void processComponent(final Component component) {
         super.processComponent(component);
-        if (component instanceof EditorComponentImpl) {
-          Editor editor = ((EditorComponentImpl) component).getEditor();
+        if (component instanceof EditorHolder) {
+          Editor editor = ((EditorHolder)component).getEditor();
           editor.getDocument().addDocumentListener(myListener);
         }
       }
 
       protected void unprocessComponent(final Component component) {
         super.unprocessComponent(component);
-        if (component instanceof EditorComponentImpl) {
-          Editor editor = ((EditorComponentImpl) component).getEditor();
+        if (component instanceof EditorHolder) {
+          Editor editor = ((EditorHolder)component).getEditor();
           editor.getDocument().removeDocumentListener(myListener);
         }
       }
@@ -141,7 +143,9 @@ public class DomUIFactoryImpl extends DomUIFactory {
     return captionComponent;
   }
 
-  public BackgroundEditorHighlighter createDomHighlighter(final Project project, final PerspectiveFileEditor editor, final DomElement element) {
+  public BackgroundEditorHighlighter createDomHighlighter(final Project project,
+                                                          final PerspectiveFileEditor editor,
+                                                          final DomElement element) {
     return new BackgroundEditorHighlighter() {
       @Nonnull
       public HighlightingPass[] createPassesForEditor() {
@@ -155,7 +159,9 @@ public class DomUIFactoryImpl extends DomUIFactory {
 
         editor.commit();
 
-        return TextEditorHighlightingPassManager.getInstance(project).instantiateMainPasses(psiFile, document).toArray(HighlightingPass.EMPTY_ARRAY);
+        return TextEditorHighlightingPassManager.getInstance(project)
+                                                .instantiateMainPasses(psiFile, document)
+                                                .toArray(HighlightingPass.EMPTY_ARRAY);
       }
 
       @Nonnull
