@@ -53,7 +53,7 @@ import java.util.List;
 /**
  * @author maxim
  */
-@ExtensionImpl(order = "last")
+@ExtensionImpl(id = "xml")
 public class XmlDocumentationProvider implements LanguageDocumentationProvider
 {
 	private static final Key<XmlElementDescriptor> DESCRIPTOR_KEY = Key.create("Original element");

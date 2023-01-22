@@ -46,7 +46,7 @@ import java.util.Set;
  * User: sweinreuter
  * Date: 19.11.2007
  */
-@ExtensionImpl(order = "first")
+@ExtensionImpl(id = "rng")
 public class RngDocumentationProvider implements LanguageDocumentationProvider
 {
 	private static final Logger LOG = Logger.getInstance(RngDocumentationProvider.class);
