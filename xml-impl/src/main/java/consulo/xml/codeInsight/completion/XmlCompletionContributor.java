@@ -69,7 +69,7 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
 /**
  * @author Dmitry Avdeev
  */
-@ExtensionImpl(id = "xml", order = "first")
+@ExtensionImpl(id = "xml")
 public class XmlCompletionContributor extends CompletionContributor {
   public static final Key<Boolean> WORD_COMPLETION_COMPATIBLE = Key.create("WORD_COMPLETION_COMPATIBLE");
   public static final EntityRefInsertHandler ENTITY_INSERT_HANDLER = new EntityRefInsertHandler();

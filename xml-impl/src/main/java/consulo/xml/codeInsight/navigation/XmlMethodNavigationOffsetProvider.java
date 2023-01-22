@@ -29,7 +29,7 @@ import java.util.ArrayList;
 /**
  * @author yole
  */
-@ExtensionImpl(order = "last")
+@ExtensionImpl(id = "xml")
 public class XmlMethodNavigationOffsetProvider implements MethodNavigationOffsetProvider {
   @Override
   public int[] getMethodNavigationOffsets(final PsiFile file, final int caretOffset) {
