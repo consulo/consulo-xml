@@ -17,29 +17,28 @@ package consulo.xml.util.xml;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
-import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 import consulo.application.util.CachedValue;
 import consulo.component.extension.ExtensionPointName;
+import consulo.component.util.Iconable;
+import consulo.ide.impl.idea.util.ConstantFunction;
+import consulo.ide.impl.idea.util.containers.ConcurrentInstanceMap;
+import consulo.project.Project;
+import consulo.ui.image.Image;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.util.NotNullFunction;
-import consulo.util.collection.SmartList;
-import consulo.ide.impl.idea.util.containers.ConcurrentInstanceMap;
-import consulo.util.collection.ContainerUtil;
+import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
-import consulo.component.util.Iconable;
-import consulo.ide.impl.idea.util.ConstantFunction;
-import consulo.project.Project;
-import consulo.ui.image.Image;
-import consulo.util.xml.fastReader.XmlFileHeader;
-import org.jetbrains.annotations.NonNls;
+import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -54,14 +53,12 @@ public class DomFileDescription<T>
 	protected final Class<T> myRootElementClass;
 	protected final String myRootTagName;
 	private final String[] myAllPossibleRootTagNamespaces;
-	private volatile boolean myInitialized;
 
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
 	private final List<DomReferenceInjector> myInjectors = new SmartList<>();
-	private final Map<String, NotNullFunction<XmlTag, List<String>>> myNamespacePolicies = ContainerUtil.newConcurrentMap();
+	private final Map<String, Function<XmlTag, List<String>>> myNamespacePolicies = ContainerUtil.newConcurrentMap();
 
-	public DomFileDescription(final Class<T> rootElementClass, @NonNls final String rootTagName,
-			@NonNls final String... allPossibleRootTagNamespaces)
+	public DomFileDescription(final Class<T> rootElementClass, final String rootTagName, final String... allPossibleRootTagNamespaces)
 	{
 		myRootElementClass = rootElementClass;
 		myRootTagName = rootTagName;
@@ -81,7 +78,7 @@ public class DomFileDescription<T>
 	 * @deprecated use {@link #registerNamespacePolicy(String, String...)} or override {@link #getAllowedNamespaces(String,
 	 * XmlFile)} instead
 	 */
-	protected final void registerNamespacePolicy(@Nonnull String namespaceKey, NotNullFunction<XmlTag, List<String>> policy)
+	protected final void registerNamespacePolicy(@Nonnull String namespaceKey, Function<XmlTag, List<String>> policy)
 	{
 		myNamespacePolicies.put(namespaceKey, policy);
 	}
@@ -103,7 +100,7 @@ public class DomFileDescription<T>
 	@Nonnull
 	public List<String> getAllowedNamespaces(@Nonnull String namespaceKey, @Nonnull XmlFile file)
 	{
-		final NotNullFunction<XmlTag, List<String>> function = myNamespacePolicies.get(namespaceKey);
+		final Function<XmlTag, List<String>> function = myNamespacePolicies.get(namespaceKey);
 		if(function instanceof ConstantFunction)
 		{
 			return function.apply(null);
