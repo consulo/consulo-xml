@@ -15,18 +15,17 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.application.util.function.Computable;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.util.collection.ArrayUtil;
-import consulo.ide.impl.idea.util.containers.SortedList;
+import consulo.util.collection.Lists;
 import consulo.util.collection.Stack;
+import consulo.xml.psi.xml.XmlTag;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 
@@ -86,11 +85,7 @@ class Html5SectionsProcessor {
   private static final String[] HEADER_ELEMENTS = {"h1", "h2", "h3", "h4", "h5", "h6"};
   private static final String HGROUP_ELEMENT = "hgroup";
 
-  private final Collection<SectionHolder> myRootSectionHolders = new SortedList<SectionHolder>(new Comparator<SectionHolder>() {
-    public int compare(final SectionHolder first, final SectionHolder second) {
-      return first.getTag().getTextRange().getStartOffset() - second.getTag().getTextRange().getStartOffset();
-    }
-  });
+  private final Collection<SectionHolder> myRootSectionHolders = Lists.newSortedList(((first, second) -> first.getTag().getTextRange().getStartOffset() - second.getTag().getTextRange().getStartOffset()));
 
   private SectionHolder myCurrentOutlinee = null;
   private Section myCurrentSection = null;
