@@ -16,35 +16,41 @@
 
 package consulo.xml.util.xml.model.gotosymbol;
 
+import consulo.application.util.function.Processor;
+import consulo.content.scope.SearchScope;
+import consulo.ide.navigation.GotoSymbolContributor;
+import consulo.language.impl.psi.FakePsiElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.search.FindSymbolParameters;
+import consulo.language.psi.stub.IdFilter;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
+import consulo.navigation.ItemPresentation;
+import consulo.navigation.NavigationItem;
+import consulo.project.Project;
+import consulo.project.content.scope.ProjectAwareSearchScope;
+import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.ElementPresentationManager;
+import consulo.xml.util.xml.GenericDomValue;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.module.ModuleManager;
-import consulo.util.collection.ArrayUtil;
-import org.jetbrains.annotations.NonNls;
-import consulo.ide.navigation.ChooseByNameContributor;
-import consulo.navigation.ItemPresentation;
-import consulo.navigation.NavigationItem;
-import consulo.module.Module;
-import consulo.project.Project;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.language.impl.psi.FakePsiElement;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.ElementPresentationManager;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.ui.image.Image;
-
 /**
  * Base class for "Go To Symbol" contributors.
+ * <p>
+ * TODO need rewrite it to better handling {@link #processNames(Processor, SearchScope, IdFilter)} and {@link #processElementsWithName(String, Processor, FindSymbolParameters)}
  */
-public abstract class GoToSymbolProvider implements ChooseByNameContributor {
+public abstract class GoToSymbolProvider implements GotoSymbolContributor {
 
   protected abstract void addNames(@Nonnull Module module, Set<String> result);
 
@@ -55,6 +61,38 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
   protected static void addNewNames(@Nonnull final List<? extends DomElement> elements, final Set<String> existingNames) {
     for (DomElement name : elements) {
       existingNames.add(name.getGenericInfo().getElementName(name));
+    }
+  }
+
+  @Override
+  public void processNames(@Nonnull Processor<String> processor, @Nonnull SearchScope searchScope, @Nullable IdFilter idFilter) {
+    if (!(searchScope instanceof ProjectAwareSearchScope)) {
+      return;
+    }
+
+    Project project = ((ProjectAwareSearchScope)searchScope).getProject();
+
+    String[] names = getNames(project, false);
+    for (String name : names) {
+      if (!processor.process(name)) {
+        return;
+      }
+    }
+  }
+
+  @Override
+  public void processElementsWithName(@Nonnull String name,
+                                      @Nonnull Processor<NavigationItem> processor,
+                                      @Nonnull FindSymbolParameters params) {
+    NavigationItem[] itemsByName = getItemsByName(name,
+                                                  params.getCompletePattern(),
+                                                  params.getProject(),
+                                                  params.isSearchInLibraries());
+
+    for (NavigationItem navigationItem : itemsByName) {
+      if (!processor.process(navigationItem)) {
+        return;
+      }
     }
   }
 
@@ -99,8 +137,8 @@ public abstract class GoToSymbolProvider implements ChooseByNameContributor {
 
   @Nonnull
   protected static NavigationItem createNavigationItem(@Nonnull final PsiElement element,
-                                                                          @Nonnull @NonNls final String text,
-                                                                          @Nullable final Image icon) {
+                                                       @Nonnull @NonNls final String text,
+                                                       @Nullable final Image icon) {
     return new BaseNavigationItem(element, text, icon);
   }
 
