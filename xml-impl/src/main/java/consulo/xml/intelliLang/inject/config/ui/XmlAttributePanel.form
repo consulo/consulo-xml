@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <nested-form id="260fa" form-file="org/intellij/plugins/intelliLang/inject/config/ui/TagPanel.form" binding="myTagPanel" custom-create="true">
+      <nested-form id="260fa" form-file="consulo/xml/intelliLang/inject/config/ui/TagPanel.form" binding="myTagPanel" custom-create="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -68,12 +68,12 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <nested-form id="8cfe8" form-file="org/intellij/plugins/intelliLang/inject/config/ui/LanguagePanel.form" binding="myLanguagePanel" custom-create="true">
+      <nested-form id="8cfe8" form-file="consulo/ide/impl/intelliLang/inject/config/ui/LanguagePanel.form" binding="myLanguagePanel" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </nested-form>
-      <nested-form id="b6e0b" form-file="org/intellij/plugins/intelliLang/inject/config/ui/AdvancedXmlPanel.form" binding="myAdvancedPanel" custom-create="true">
+      <nested-form id="b6e0b" form-file="consulo/xml/intelliLang/inject/config/ui/AdvancedXmlPanel.form" binding="myAdvancedPanel" custom-create="true">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
