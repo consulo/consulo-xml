@@ -41,11 +41,4 @@ public class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspecti
 	{
 		return HighlightDisplayLevel.WARNING;
 	}
-
-	@Nullable
-	@Override
-	public JComponent createOptionsPanel()
-	{
-		return HtmlUnknownTagInspection.createOptionsPanel(this);
-	}
 }

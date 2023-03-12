@@ -17,136 +17,29 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.AllIcons;
 import consulo.language.Language;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.ui.ex.awt.FieldPanel;
-import consulo.ui.ex.awt.Messages;
-import consulo.ui.ex.awt.event.DocumentAdapter;
-import consulo.ui.ex.awtUnsafe.TargetAWT;
-import consulo.util.lang.StringUtil;
-import consulo.util.lang.ref.Ref;
 import consulo.xml.lang.xml.XMLLanguage;
-import jakarta.inject.Inject;
-import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 @ExtensionImpl
-public  class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase
-{
-	@Inject
-	public HtmlUnknownTagInspection()
-	{
-		super();
-	}
+public class HtmlUnknownTagInspection extends HtmlUnknownTagInspectionBase {
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 
-	public HtmlUnknownTagInspection(@NonNls @Nonnull final String defaultValues)
-	{
-		super(defaultValues);
-	}
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.WARNING;
+  }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
-
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.WARNING;
-	}
-
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
-
-	@Override
-	@Nullable
-	public JComponent createOptionsPanel()
-	{
-		return createOptionsPanel(this);
-	}
-
-	@Nonnull
-	protected static JComponent createOptionsPanel(@Nonnull final HtmlUnknownElementInspection inspection)
-	{
-		final JPanel result = new JPanel(new BorderLayout());
-
-		final JPanel internalPanel = new JPanel(new BorderLayout());
-		result.add(internalPanel, BorderLayout.NORTH);
-
-		final Ref<FieldPanel> panelRef = new Ref<FieldPanel>();
-		final FieldPanel additionalAttributesPanel = new FieldPanel(null, null, new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent event)
-			{
-				Messages.showTextAreaDialog(panelRef.get().getTextField(), consulo.ide.impl.idea.openapi.util.text.StringUtil.wordsToBeginFromUpperCase(inspection.getPanelTitle()), inspection
-								.getClass().getSimpleName(),
-						s -> reparseProperties(s), strings -> StringUtil.join(strings, ",")
-				);
-			}
-		}, null);
-		((JButton) additionalAttributesPanel.getComponent(1)).setIcon(TargetAWT.to(AllIcons.Actions.ShowViewer));
-		panelRef.set(additionalAttributesPanel);
-		additionalAttributesPanel.getTextField().getDocument().addDocumentListener(new DocumentAdapter()
-		{
-			@Override
-			protected void textChanged(DocumentEvent e)
-			{
-				final Document document = e.getDocument();
-				try
-				{
-					final String text = document.getText(0, document.getLength());
-					if(text != null)
-					{
-						inspection.updateAdditionalEntries(text.trim());
-					}
-				}
-				catch(BadLocationException e1)
-				{
-					inspection.getLogger().error(e1);
-				}
-			}
-		});
-
-		final JCheckBox checkBox = new JCheckBox(inspection.getCheckboxTitle());
-		checkBox.setSelected(inspection.isCustomValuesEnabled());
-		checkBox.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				final boolean b = checkBox.isSelected();
-				if(b != inspection.isCustomValuesEnabled())
-				{
-					inspection.enableCustomValues(b);
-					additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
-				}
-			}
-		});
-
-		internalPanel.add(checkBox, BorderLayout.NORTH);
-		internalPanel.add(additionalAttributesPanel, BorderLayout.CENTER);
-
-		additionalAttributesPanel.setPreferredSize(new Dimension(150, additionalAttributesPanel.getPreferredSize().height));
-		additionalAttributesPanel.setEnabled(inspection.isCustomValuesEnabled());
-		additionalAttributesPanel.setText(inspection.getAdditionalEntries());
-
-		return result;
-	}
+  @Override
+  public boolean isEnabledByDefault() {
+    return true;
+  }
 }

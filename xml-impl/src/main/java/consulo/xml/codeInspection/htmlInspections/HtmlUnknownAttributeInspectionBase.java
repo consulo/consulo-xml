@@ -15,108 +15,80 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.logging.Logger;
-import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.util.dataholder.Key;
+import consulo.localize.LocalizeValue;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
-public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection
-{
-	private static final Key<HtmlUnknownElementInspection> ATTRIBUTE_KEY = Key.create(ATTRIBUTE_SHORT_NAME);
-	private static final Logger LOG = Logger.getInstance("#com.intellij.codeInspection.htmlInspections.HtmlUnknownAttributeInspection");
+public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
+  @Override
+  @Nls
+  @Nonnull
+  public String getDisplayName() {
+    return XmlBundle.message("html.inspections.unknown.attribute");
+  }
 
-	public HtmlUnknownAttributeInspectionBase()
-	{
-		this("");
-	}
+  @Override
+  @NonNls
+  @Nonnull
+  public String getShortName() {
+    return XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME;
+  }
 
-	public HtmlUnknownAttributeInspectionBase(String defaultValues)
-	{
-		super(defaultValues);
-	}
+  @Override
+  protected LocalizeValue getCheckboxTitle() {
+    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.attribute.checkbox.title"));
+  }
 
-	@Override
-	@Nls
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspections.unknown.attribute");
-	}
+  @Override
+  protected void checkAttribute(@Nonnull final XmlAttribute attribute,
+                                @Nonnull final ProblemsHolder holder,
+                                final boolean isOnTheFly,
+                                Object state) {
+    final XmlTag tag = attribute.getParent();
 
-	@Override
-	@NonNls
-	@Nonnull
-	public String getShortName()
-	{
-		return ATTRIBUTE_SHORT_NAME;
-	}
+    if (tag instanceof HtmlTag) {
+      XmlElementDescriptor elementDescriptor = tag.getDescriptor();
+      if (elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor) {
+        return;
+      }
 
-	@Override
-	protected String getCheckboxTitle()
-	{
-		return XmlBundle.message("html.inspections.unknown.tag.attribute.checkbox.title");
-	}
+      BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState)state;
 
-	@Nonnull
-	@Override
-	protected String getPanelTitle()
-	{
-		return XmlBundle.message("html.inspections.unknown.tag.attribute.title");
-	}
+      XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
 
-	@Override
-	@Nonnull
-	protected Logger getLogger()
-	{
-		return LOG;
-	}
+      if (attributeDescriptor == null && !attribute.isNamespaceDeclaration()) {
+        final String name = attribute.getName();
+        if (!XmlUtil.attributeFromTemplateFramework(name, tag) && (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name))) {
+          boolean maySwitchToHtml5 = HtmlUtil.isCustomHtml5Attribute(name) && !HtmlUtil.hasNonHtml5Doctype(tag);
+          LocalQuickFix[] quickfixes = new LocalQuickFix[maySwitchToHtml5 ? 3 : 2];
+          quickfixes[0] = new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME,
+                                                                  name,
+                                                                  XmlBundle.message("add.custom.html.attribute", name));
+          quickfixes[1] = new RemoveAttributeIntentionAction(name);
+          if (maySwitchToHtml5) {
+            quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();
+          }
 
-	@Override
-	protected void checkAttribute(@Nonnull final XmlAttribute attribute, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
-	{
-		final XmlTag tag = attribute.getParent();
-
-		if(tag instanceof HtmlTag)
-		{
-			XmlElementDescriptor elementDescriptor = tag.getDescriptor();
-			if(elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor)
-			{
-				return;
-			}
-
-			XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
-
-			if(attributeDescriptor == null && !attribute.isNamespaceDeclaration())
-			{
-				final String name = attribute.getName();
-				if(!XmlUtil.attributeFromTemplateFramework(name, tag) && (!isCustomValuesEnabled() || !isCustomValue(name)))
-				{
-					boolean maySwitchToHtml5 = HtmlUtil.isCustomHtml5Attribute(name) && !HtmlUtil.hasNonHtml5Doctype(tag);
-					LocalQuickFix[] quickfixes = new LocalQuickFix[maySwitchToHtml5 ? 3 : 2];
-					quickfixes[0] = new AddCustomHtmlElementIntentionAction(ATTRIBUTE_KEY, name, XmlBundle.message("add.custom.html.attribute", name));
-					quickfixes[1] = new RemoveAttributeIntentionAction(name);
-					if(maySwitchToHtml5)
-					{
-						quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();
-					}
-
-					registerProblemOnAttributeName(attribute, XmlErrorMessages.message("attribute.is.not.allowed.here", attribute.getName()), holder, quickfixes);
-				}
-			}
-		}
-	}
+          registerProblemOnAttributeName(attribute,
+                                         XmlErrorMessages.message("attribute.is.not.allowed.here", attribute.getName()),
+                                         holder,
+                                         quickfixes);
+        }
+      }
+    }
+  }
 }

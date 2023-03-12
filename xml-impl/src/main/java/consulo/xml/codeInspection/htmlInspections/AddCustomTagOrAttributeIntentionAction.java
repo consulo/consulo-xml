@@ -17,13 +17,13 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import com.intellij.xml.XmlBundle;
+import consulo.language.editor.inspection.LocalInspectionTool;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
-import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
 
@@ -34,10 +34,10 @@ public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
   private final String myName;
   private final String myText;
   @Nonnull
-  private final Key<HtmlUnknownTagInspection> myInspectionKey;
+  private final String myInspectionShortName;
 
-  public AddCustomTagOrAttributeIntentionAction(@Nonnull Key<HtmlUnknownTagInspection> inspectionKey, String name, String text) {
-    myInspectionKey = inspectionKey;
+  public AddCustomTagOrAttributeIntentionAction(@Nonnull String inspectionShortName, String name, String text) {
+    myInspectionShortName = inspectionShortName;
     myName = name;
     myText = text;
   }
@@ -59,6 +59,6 @@ public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
     final PsiElement element = descriptor.getPsiElement();
 
     InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-    profile.modifyToolSettings(myInspectionKey, element, tool -> tool.addEntry(myName));
+    profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(myInspectionShortName, element, (tool, state) -> state.addEntry(myName));
   }
 }

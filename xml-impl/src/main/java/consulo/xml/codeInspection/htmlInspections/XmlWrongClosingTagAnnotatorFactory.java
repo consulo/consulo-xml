@@ -14,19 +14,16 @@ import javax.annotation.Nullable;
  * @since 31-Jul-22
  */
 @ExtensionImpl
-public class XmlWrongClosingTagAnnotatorFactory implements AnnotatorFactory
-{
-	@Nullable
-	@Override
-	public Annotator createAnnotator()
-	{
-		return new XmlWrongClosingTagNameInspection();
-	}
+public class XmlWrongClosingTagAnnotatorFactory implements AnnotatorFactory {
+  @Nullable
+  @Override
+  public Annotator createAnnotator() {
+    return new XmlWrongClosingTagNameInspection();
+  }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 }

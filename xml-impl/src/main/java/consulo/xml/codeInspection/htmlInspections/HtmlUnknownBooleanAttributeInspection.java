@@ -23,29 +23,18 @@ import consulo.xml.lang.xml.XMLLanguage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
 
 @ExtensionImpl
-public class HtmlUnknownBooleanAttributeInspection extends HtmlUnknownBooleanAttributeInspectionBase
-{
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.WARNING;
-	}
+public class HtmlUnknownBooleanAttributeInspection extends HtmlUnknownBooleanAttributeInspectionBase {
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.WARNING;
+  }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
-
-	@Nullable
-	@Override
-	public JComponent createOptionsPanel()
-	{
-		return HtmlUnknownTagInspection.createOptionsPanel(this);
-	}
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 }

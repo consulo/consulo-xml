@@ -17,31 +17,32 @@
 package consulo.xml.util.xml.highlighting;
 
 import consulo.annotation.component.ServiceImpl;
-import consulo.component.util.ModificationTracker;
-import consulo.language.editor.inspection.scheme.*;
-import consulo.language.editor.rawHighlight.HighlightDisplayKey;
-import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.annotation.HighlightSeverity;
-import consulo.language.psi.PsiModificationTracker;
-import consulo.logging.Logger;
-import consulo.project.Project;
-import consulo.module.content.ProjectRootManager;
-import consulo.language.editor.inspection.scheme.event.ProfileChangeAdapter;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
+import consulo.component.util.ModificationTracker;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.InspectionTool;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.scheme.*;
+import consulo.language.editor.inspection.scheme.event.ProfileChangeAdapter;
+import consulo.language.editor.rawHighlight.HighlightDisplayKey;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.logging.Logger;
+import consulo.module.content.ProjectRootManager;
+import consulo.project.Project;
+import consulo.proxy.EventDispatcher;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
+import consulo.util.dataholder.Key;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.proxy.EventDispatcher;
-import consulo.util.collection.SmartList;
-import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.impl.DomApplicationComponent;
-import consulo.disposer.Disposable;
-import consulo.disposer.Disposer;
-import consulo.util.dataholder.Key;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -342,13 +343,13 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
 	}
 
 	@Nullable
-	private static DomElementsInspection getSuitableInspection(InspectionProfileEntry entry, Class rootType)
+	private static DomElementsInspection getSuitableInspection(InspectionTool tool, Class rootType)
 	{
-		if(entry instanceof DomElementsInspection)
+		if(tool instanceof DomElementsInspection)
 		{
-			if(((DomElementsInspection) entry).getDomClasses().contains(rootType))
+			if(((DomElementsInspection) tool).getDomClasses().contains(rootType))
 			{
-				return (DomElementsInspection) entry;
+				return (DomElementsInspection) tool;
 			}
 		}
 		return null;

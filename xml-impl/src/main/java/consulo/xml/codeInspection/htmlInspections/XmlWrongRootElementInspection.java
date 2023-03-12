@@ -89,7 +89,7 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool
 	}
 
 	@Override
-	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
+	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly, Object state)
 	{
 		if(!(tag.getParent() instanceof XmlTag))
 		{

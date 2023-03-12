@@ -39,47 +39,40 @@ import javax.annotation.Nullable;
  * @author spleaner
  */
 @ExtensionImpl
-public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool
-{
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 
-	@Override
-	@Nls
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspection.extra.closing.tag");
-	}
+  @Override
+  @Nls
+  @Nonnull
+  public String getDisplayName() {
+    return XmlBundle.message("html.inspection.extra.closing.tag");
+  }
 
-	@Override
-	@NonNls
-	@Nonnull
-	public String getShortName()
-	{
-		return "HtmlExtraClosingTag";
-	}
+  @Override
+  @NonNls
+  @Nonnull
+  public String getShortName() {
+    return "HtmlExtraClosingTag";
+  }
 
-	@Override
-	@Nonnull
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+  @Override
+  @Nonnull
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.ERROR;
+  }
 
-	@Override
-	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
-	{
-		final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
+  @Override
+  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly, Object state) {
+    final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
-		if(endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName()))
-		{
-			holder.registerProblem(endTagName, XmlErrorMessages.message("extra.closing.tag.for.empty.element"),
-					ProblemHighlightType.GENERIC_ERROR_OR_WARNING, new RemoveExtraClosingTagIntentionAction());
-		}
-	}
+    if (endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName())) {
+      holder.registerProblem(endTagName, XmlErrorMessages.message("extra.closing.tag.for.empty.element"),
+                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING, new RemoveExtraClosingTagIntentionAction());
+    }
+  }
 }

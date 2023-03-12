@@ -40,6 +40,7 @@ import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
+import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -426,31 +427,23 @@ public class HtmlUtil {
   }
 
   public static boolean isCustomBooleanAttribute(@Nonnull String attributeName, @Nonnull PsiElement context) {
-    final String entitiesString = getEntitiesString(context, XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME);
-    if (entitiesString != null) {
-      StringTokenizer tokenizer = new StringTokenizer(entitiesString, ",");
-      while (tokenizer.hasMoreElements()) {
-        if (tokenizer.nextToken().equalsIgnoreCase(attributeName)) {
-          return true;
-        }
+    final Set<String> entitiesString = getEntitiesString(context, XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME);
+    for (String token : entitiesString) {
+      if (attributeName.equalsIgnoreCase(token)) {
+        return true;
       }
     }
     return false;
   }
 
   public static XmlAttributeDescriptor[] getCustomAttributeDescriptors(XmlElement context) {
-    String entitiesString = getEntitiesString(context, XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME);
-    if (entitiesString == null) {
-      return XmlAttributeDescriptor.EMPTY;
-    }
+    Set<String> entitiesString = getEntitiesString(context, XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME);
 
-    StringTokenizer tokenizer = new StringTokenizer(entitiesString, ",");
-    XmlAttributeDescriptor[] descriptors = new XmlAttributeDescriptor[tokenizer.countTokens()];
+    XmlAttributeDescriptor[] descriptors = new XmlAttributeDescriptor[entitiesString.size()];
     int index = 0;
 
-    while (tokenizer.hasMoreElements()) {
-      final String customName = tokenizer.nextToken();
-      if (customName.length() == 0) {
+    for (String customName : entitiesString) {
+      if (customName.isBlank()) {
         continue;
       }
 
@@ -471,18 +464,13 @@ public class HtmlUtil {
   }
 
   public static XmlElementDescriptor[] getCustomTagDescriptors(@Nullable PsiElement context) {
-    String entitiesString = getEntitiesString(context, XmlEntitiesInspection.TAG_SHORT_NAME);
-    if (entitiesString == null) {
-      return XmlElementDescriptor.EMPTY_ARRAY;
-    }
+    Set<String> entitiesString = getEntitiesString(context, XmlEntitiesInspection.TAG_SHORT_NAME);
 
-    StringTokenizer tokenizer = new StringTokenizer(entitiesString, ",");
-    XmlElementDescriptor[] descriptors = new XmlElementDescriptor[tokenizer.countTokens()];
+    XmlElementDescriptor[] descriptors = new XmlElementDescriptor[entitiesString.size()];
     int index = 0;
 
-    while (tokenizer.hasMoreElements()) {
-      final String tagName = tokenizer.nextToken();
-      if (tagName.length() == 0) {
+    for (String tagName : entitiesString) {
+      if (tagName.isBlank()) {
         continue;
       }
 
@@ -492,19 +480,19 @@ public class HtmlUtil {
     return descriptors;
   }
 
-  @Nullable
-  public static String getEntitiesString(@Nullable PsiElement context, @Nonnull String inspectionName) {
+  @Nonnull
+  public static Set<String> getEntitiesString(@Nullable PsiElement context, @Nonnull String inspectionName) {
     if (context == null) {
-      return null;
+      return Set.of();
     }
     PsiFile containingFile = context.getContainingFile().getOriginalFile();
 
     final InspectionProfile profile = InspectionProjectProfileManager.getInstance(context.getProject()).getInspectionProfile();
-    XmlEntitiesInspection inspection = (XmlEntitiesInspection) profile.getUnwrappedTool(inspectionName, containingFile);
-    if (inspection != null) {
-      return inspection.getAdditionalEntries();
+    BaseXmlEntitiesInspectionState state = profile.getToolState(inspectionName, containingFile);
+    if (state != null) {
+      return Set.of(state.getEntities());
     }
-    return null;
+    return Set.of();
   }
 
   public static XmlAttributeDescriptor[] appendHtmlSpecificAttributeCompletions(final XmlTag declarationTag, XmlAttributeDescriptor[] descriptors, final XmlAttribute context) {

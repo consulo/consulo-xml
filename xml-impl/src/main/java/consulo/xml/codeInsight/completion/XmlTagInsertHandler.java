@@ -49,6 +49,7 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.codeInsight.editorActions.XmlTagNameSynchronizer;
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
+import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -208,15 +209,10 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
 
     if (tag instanceof HtmlTag) {
       final InspectionProfile profile = InspectionProjectProfileManager.getInstance(tag.getProject()).getInspectionProfile();
-      XmlEntitiesInspection inspection = (XmlEntitiesInspection) profile.getUnwrappedTool(XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME, tag);
+      BaseXmlEntitiesInspectionState state = profile.getToolState(XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME, tag);
 
-      if (inspection != null) {
-        StringTokenizer tokenizer = new StringTokenizer(inspection.getAdditionalEntries());
-        notRequiredAttributes = new HashSet<String>();
-
-        while (tokenizer.hasMoreElements()) {
-          notRequiredAttributes.add(tokenizer.nextToken());
-        }
+      if (state != null) {
+        Collections.addAll(notRequiredAttributes, state.getEntities());
       }
     }
 

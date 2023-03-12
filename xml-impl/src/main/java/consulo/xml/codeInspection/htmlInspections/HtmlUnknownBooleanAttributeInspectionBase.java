@@ -15,14 +15,6 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.xml.codeInspection.XmlQuickFixFactory;
-import consulo.logging.Logger;
-import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
@@ -30,113 +22,88 @@ import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlAttributeDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
-import consulo.util.dataholder.Key;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.localize.LocalizeValue;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
-public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection
-{
-	private static final Key<HtmlUnknownElementInspection> BOOLEAN_ATTRIBUTE_KEY = Key.create(BOOLEAN_ATTRIBUTE_SHORT_NAME);
-	private static final Logger LOG = Logger.getInstance(HtmlUnknownBooleanAttributeInspectionBase.class);
+public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection {
+  @Override
+  @Nls
+  @Nonnull
+  public String getDisplayName() {
+    return XmlBundle.message("html.inspections.unknown.boolean.attribute");
+  }
 
-	public HtmlUnknownBooleanAttributeInspectionBase()
-	{
-		this("");
-	}
+  @Override
+  @NonNls
+  @Nonnull
+  public String getShortName() {
+    return XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME;
+  }
 
-	public HtmlUnknownBooleanAttributeInspectionBase(String defaultValues)
-	{
-		super(defaultValues);
-	}
+  @Override
+  protected LocalizeValue getCheckboxTitle() {
+    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.boolean.attribute.checkbox.title"));
+  }
 
-	@Override
-	@Nls
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspections.unknown.boolean.attribute");
-	}
+  @Override
+  protected void checkAttribute(@Nonnull final XmlAttribute attribute,
+                                @Nonnull final ProblemsHolder holder,
+                                final boolean isOnTheFly,
+                                Object state) {
+    if (attribute.getValueElement() == null) {
+      final XmlTag tag = attribute.getParent();
 
-	@Override
-	@NonNls
-	@Nonnull
-	public String getShortName()
-	{
-		return BOOLEAN_ATTRIBUTE_SHORT_NAME;
-	}
+      if (tag instanceof HtmlTag) {
+        XmlElementDescriptor elementDescriptor = tag.getDescriptor();
+        if (elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor) {
+          return;
+        }
 
-	@Override
-	protected String getCheckboxTitle()
-	{
-		return XmlBundle.message("html.inspections.unknown.tag.boolean.attribute.checkbox.title");
-	}
+        BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState)state;
 
-	@Nonnull
-	@Override
-	protected String getPanelTitle()
-	{
-		return XmlBundle.message("html.inspections.unknown.tag.boolean.attribute.title");
-	}
-
-	@Override
-	@Nonnull
-	protected Logger getLogger()
-	{
-		return LOG;
-	}
-
-	@Override
-	protected void checkAttribute(@Nonnull final XmlAttribute attribute, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
-	{
-		if(attribute.getValueElement() == null)
-		{
-			final XmlTag tag = attribute.getParent();
-
-			if(tag instanceof HtmlTag)
-			{
-				XmlElementDescriptor elementDescriptor = tag.getDescriptor();
-				if(elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor)
-				{
-					return;
-				}
-
-				XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
-				if(attributeDescriptor != null && !(attributeDescriptor instanceof AnyXmlAttributeDescriptor))
-				{
-					String name = attribute.getName();
-					if(!HtmlUtil.isBooleanAttribute(attributeDescriptor, null) && (!isCustomValuesEnabled() || !isCustomValue(name)))
-					{
-						final boolean html5 = HtmlUtil.isHtml5Context(tag);
-						LocalQuickFix[] quickFixes = !html5 ? new LocalQuickFix[]{
-								new AddCustomHtmlElementIntentionAction(BOOLEAN_ATTRIBUTE_KEY, name, XmlBundle.message("add.custom.html.boolean.attribute", name)),
-								XmlQuickFixFactory.getInstance().addAttributeValueFix(attribute),
-								new RemoveAttributeIntentionAction(name),
-						} : new LocalQuickFix[]{
-								XmlQuickFixFactory.getInstance().addAttributeValueFix(attribute)
-						};
+        XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
+        if (attributeDescriptor != null && !(attributeDescriptor instanceof AnyXmlAttributeDescriptor)) {
+          String name = attribute.getName();
+          if (!HtmlUtil.isBooleanAttribute(attributeDescriptor, null) && (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name))) {
+            final boolean html5 = HtmlUtil.isHtml5Context(tag);
+            LocalQuickFix[] quickFixes = !html5 ? new LocalQuickFix[]{
+              new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME,
+                                                      name,
+                                                      XmlBundle.message("add.custom.html.boolean.attribute", name)),
+              XmlQuickFixFactory.getInstance().addAttributeValueFix(attribute),
+              new RemoveAttributeIntentionAction(name),
+            } : new LocalQuickFix[]{
+              XmlQuickFixFactory.getInstance().addAttributeValueFix(attribute)
+            };
 
 
-						String error = null;
-						if(html5)
-						{
-							if(attributeDescriptor instanceof XmlEnumerationDescriptor && ((XmlEnumerationDescriptor) attributeDescriptor).getValueDeclaration(attribute, "") == null)
-							{
-								error = XmlErrorMessages.message("wrong.value", "attribute");
-							}
-						}
-						else
-						{
-							error = XmlErrorMessages.message("attribute.is.not.boolean", attribute.getName());
-						}
-						if(error != null)
-						{
-							registerProblemOnAttributeName(attribute, error, holder, quickFixes);
-						}
-					}
-				}
-			}
-		}
-	}
+            String error = null;
+            if (html5) {
+              if (attributeDescriptor instanceof XmlEnumerationDescriptor && ((XmlEnumerationDescriptor)attributeDescriptor).getValueDeclaration(
+                attribute,
+                "") == null) {
+                error = XmlErrorMessages.message("wrong.value", "attribute");
+              }
+            }
+            else {
+              error = XmlErrorMessages.message("attribute.is.not.boolean", attribute.getName());
+            }
+            if (error != null) {
+              registerProblemOnAttributeName(attribute, error, holder, quickFixes);
+            }
+          }
+        }
+      }
+    }
+  }
 }

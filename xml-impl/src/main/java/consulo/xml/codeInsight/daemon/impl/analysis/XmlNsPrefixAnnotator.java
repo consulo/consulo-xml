@@ -15,41 +15,39 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import consulo.xml.editor.XmlHighlighterColors;
 import consulo.document.util.TextRange;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.PsiElement;
+import consulo.util.collection.ContainerUtil;
+import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.util.collection.ContainerUtil;
-import consulo.language.editor.annotation.AnnotationHolder;
-import consulo.language.editor.annotation.Annotator;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 25.10.13
+ * Date: 25.10.13
  */
-public class XmlNsPrefixAnnotator implements Annotator
-{
-	@Override
-	public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder)
-	{
-		if(element instanceof XmlTag || element instanceof XmlAttribute)
-		{
-			List<SchemaPrefixReference> references = ContainerUtil.findAll(element.getReferences(), SchemaPrefixReference.class);
-			for(SchemaPrefixReference reference : references)
-			{
-				TextRange rangeInElement = reference.getRangeInElement();
-				if(!rangeInElement.isEmpty())
-				{
-					TextRange range = rangeInElement.shiftRight(element.getTextRange().getStartOffset());
-					holder.createInfoAnnotation(range, null).setTextAttributes(XmlHighlighterColors.XML_NS_PREFIX);
-				}
-			}
-		}
-	}
+public class XmlNsPrefixAnnotator implements Annotator {
+  @Override
+  public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
+    if (element instanceof XmlTag || element instanceof XmlAttribute) {
+      List<SchemaPrefixReference> references = ContainerUtil.findAll(element.getReferences(), SchemaPrefixReference.class);
+      for (SchemaPrefixReference reference : references) {
+        TextRange rangeInElement = reference.getRangeInElement();
+        if (!rangeInElement.isEmpty()) {
+          TextRange range = rangeInElement.shiftRight(element.getTextRange().getStartOffset());
+          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(range)
+                .textAttributes(XmlHighlighterColors.XML_NS_PREFIX)
+                .create();
+        }
+      }
+    }
+  }
 }

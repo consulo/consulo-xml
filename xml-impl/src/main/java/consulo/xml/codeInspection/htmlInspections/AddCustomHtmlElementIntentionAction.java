@@ -23,7 +23,6 @@ import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
-import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
 
@@ -32,9 +31,9 @@ public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
 	private final String myName;
 	private final String myText;
 	@Nonnull
-	private final Key<HtmlUnknownElementInspection> myInspectionKey;
+	private String myInspectionKey;
 
-	public AddCustomHtmlElementIntentionAction(@Nonnull Key<HtmlUnknownElementInspection> inspectionKey, String name, String text)
+	public AddCustomHtmlElementIntentionAction(@Nonnull String inspectionKey, String name, String text)
 	{
 		myInspectionKey = inspectionKey;
 		myName = name;
@@ -61,6 +60,6 @@ public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
 		final PsiElement element = descriptor.getPsiElement();
 
 		InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-		profile.modifyToolSettings(myInspectionKey, element, tool -> tool.addEntry(myName));
+		profile.<HtmlUnknownElementInspection, BaseXmlEntitiesInspectionState>modifyToolSettings(myInspectionKey, element, (tool, state) -> state.addEntry(myName));
 	}
 }
