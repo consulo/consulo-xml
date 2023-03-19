@@ -84,7 +84,7 @@ public abstract class BaseXmlEntitiesInspectionState<E> implements InspectionToo
   @Override
   public UnnamedConfigurable createConfigurable() {
     ConfigurableBuilder<ConfigurableBuilderState> newBuilder = ConfigurableBuilder.newBuilder();
-    newBuilder.component(Label.create(myLabelText));
+    newBuilder.component(() -> Label.create(myLabelText));
     newBuilder.textBoxWithExpandAction(null, myLabelText.get(), PARSER, JOINER, () -> JOINER.apply(Arrays.asList(getEntities())), s -> {
       List<String> values = PARSER.apply(s);
       setEntities(ArrayUtil.toStringArray(values));
