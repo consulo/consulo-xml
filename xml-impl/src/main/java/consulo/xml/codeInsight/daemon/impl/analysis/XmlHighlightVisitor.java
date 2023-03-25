@@ -21,7 +21,6 @@ import com.intellij.xml.util.AnchorReference;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
-import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.UserDataCache;
 import consulo.colorScheme.TextAttributes;
@@ -50,9 +49,9 @@ import consulo.xml.IdeValidationHost;
 import consulo.xml.Validator;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
 import consulo.xml.codeInspection.htmlInspections.RequiredAttributesInspectionBase;
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
-import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
@@ -66,11 +65,9 @@ import java.util.Set;
 /**
  * @author Mike
  */
-@ExtensionImpl
 public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightVisitor, IdeValidationHost {
   private static final Logger LOG = Logger.getInstance("XmlHighlightVisitor");
-  private static final UserDataCache<Boolean, PsiElement, Object> DO_NOT_VALIDATE =
-    new UserDataCache<Boolean, PsiElement, Object>("do not validate") {
+  private static final UserDataCache<Boolean, PsiElement, Object> DO_NOT_VALIDATE = new UserDataCache<>("do not validate") {
       @Override
       protected Boolean compute(PsiElement parent, Object p) {
         OuterLanguageElement element = PsiTreeUtil.getChildOfType(parent, OuterLanguageElement.class);
@@ -759,20 +756,6 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
   }
 
   @Override
-  public boolean suitableForFile(@Nonnull final PsiFile file) {
-    if (file instanceof XmlFile) {
-      return true;
-    }
-
-    for (PsiFile psiFile : file.getViewProvider().getAllFiles()) {
-      if (psiFile instanceof XmlFile) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  @Override
   public void visit(@Nonnull final PsiElement element) {
     element.accept(this);
   }
@@ -790,12 +773,6 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
       myHolder = null;
     }
     return true;
-  }
-
-  @Override
-  @Nonnull
-  public HighlightVisitor clone() {
-    return new XmlHighlightVisitor();
   }
 
   public static String getUnquotedValue(XmlAttributeValue value, XmlTag tag) {
