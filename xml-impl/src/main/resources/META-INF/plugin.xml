@@ -8,8 +8,6 @@
 		<tag>markup.language</tag>
 	</tags>
 
-	<depends optional="true">com.intellij.spellchecker</depends>
-
 	<actions>
 
 		<group id="ToolsXmlGroup" popup="true" class="com.intellij.xml.actions.XmlActionsGroup">

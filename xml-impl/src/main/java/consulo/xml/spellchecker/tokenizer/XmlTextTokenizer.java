@@ -15,13 +15,13 @@
  */
 package consulo.xml.spellchecker.tokenizer;
 
-import com.intellij.spellchecker.inspections.PlainTextSplitter;
-import com.intellij.spellchecker.tokenizer.TokenConsumer;
-import com.intellij.spellchecker.tokenizer.Tokenizer;
 import consulo.language.ast.IElementType;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.spellcheker.tokenizer.TokenConsumer;
+import consulo.language.spellcheker.tokenizer.Tokenizer;
+import consulo.language.spellcheker.tokenizer.splitter.PlainTextTokenSplitter;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -41,7 +41,7 @@ public class XmlTextTokenizer extends Tokenizer<XmlText> {
     for (PsiElement child : children) {
       IElementType elementType = child.getNode().getElementType();
       if (elementType == XmlTokenType.XML_DATA_CHARACTERS) {
-        consumer.consumeToken(child, PlainTextSplitter.getInstance());
+        consumer.consumeToken(child, PlainTextTokenSplitter.getInstance());
       } else if (elementType == XmlElementType.XML_CDATA) {
         processChildren(child, consumer);
       }

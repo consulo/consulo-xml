@@ -15,13 +15,13 @@
  */
 package consulo.xml.spellchecker.tokenizer;
 
-import com.intellij.spellchecker.inspections.TextSplitter;
-import com.intellij.spellchecker.tokenizer.SpellcheckingStrategy;
-import com.intellij.spellchecker.tokenizer.TokenConsumer;
-import com.intellij.spellchecker.tokenizer.Tokenizer;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.spellcheker.SpellcheckingStrategy;
+import consulo.language.spellcheker.tokenizer.TokenConsumer;
+import consulo.language.spellcheker.tokenizer.Tokenizer;
+import consulo.language.spellcheker.tokenizer.splitter.TextTokenSplitter;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlText;
@@ -56,7 +56,7 @@ public abstract class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy
         return;
       }
 
-      consumer.consumeToken(element, TextSplitter.getInstance());
+      consumer.consumeToken(element, TextTokenSplitter.getInstance());
     }
 
     private static boolean isHexString(final String s) {

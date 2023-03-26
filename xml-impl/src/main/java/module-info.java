@@ -16,8 +16,6 @@ open module com.intellij.xml
 	requires consulo.ide.impl;
 	requires consulo.language.impl;
 
-	// we need since spellchecker plugin optional
-	requires static com.intellij.spellchecker;
 	requires xml.resolver;
 
 	requires rngom;
