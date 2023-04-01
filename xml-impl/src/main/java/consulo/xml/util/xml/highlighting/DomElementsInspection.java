@@ -34,6 +34,7 @@ import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -50,8 +51,9 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
 
   @SafeVarargs
   public DomElementsInspection(Class<? extends T> domClass, @Nonnull Class<? extends T>... additionalClasses) {
-    myDomClasses = Set.of(additionalClasses);
-    myDomClasses.add(domClass);
+    Set<Class<? extends T>> domClasses = new HashSet<>(Set.of(additionalClasses));
+    domClasses.add(domClass);
+    myDomClasses = Set.copyOf(domClasses);
   }
 
   /**
