@@ -18,16 +18,15 @@ package consulo.xml.util.xml.highlighting;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
-import consulo.ide.ServiceManager;
-import consulo.language.editor.inspection.scheme.InspectionManager;
-import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.disposer.Disposable;
+import consulo.ide.ServiceManager;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.project.Project;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
-import consulo.project.Project;
 
 import javax.annotation.Nonnull;
-
 import java.util.EventListener;
 import java.util.List;
 
@@ -44,7 +43,8 @@ public abstract class DomElementAnnotationsManager {
   @Nonnull
   public abstract DomElementsProblemsHolder getCachedProblemHolder(DomElement element);
 
-  public abstract List<ProblemDescriptor> createProblemDescriptors(final InspectionManager manager, DomElementProblemDescriptor problemDescriptor);
+  public abstract List<ProblemDescriptor> createProblemDescriptors(final InspectionManager manager,
+                                                                   DomElementProblemDescriptor problemDescriptor);
 
   public abstract boolean isHighlightingFinished(final DomElement[] domElements);
 
@@ -57,15 +57,16 @@ public abstract class DomElementAnnotationsManager {
    * with appropriate parameters if needed, saves the collected problems to {@link DomElementsProblemsHolder}, which
    * can then be obtained from {@link #getProblemHolder(DomElement)} method, and returns them.
    *
-   * @param element file element being checked
+   * @param element    file element being checked
    * @param inspection inspection to run on the given file element
    * @param onTheFly
    * @return collected DOM problem descriptors
    */
   @Nonnull
-  public abstract <T extends DomElement> List<DomElementProblemDescriptor> checkFileElement(@Nonnull DomFileElement<T> element,
-                                                                                            @Nonnull DomElementsInspection<T> inspection,
-                                                                                            boolean onTheFly);
+  public abstract <T extends DomElement, State> List<DomElementProblemDescriptor> checkFileElement(@Nonnull DomFileElement<T> element,
+                                                                                                   @Nonnull DomElementsInspection<T, State> inspection,
+                                                                                                   boolean onTheFly,
+                                                                                                   State state);
 
   public abstract void dropAnnotationsCache();
 
@@ -74,6 +75,7 @@ public abstract class DomElementAnnotationsManager {
     /**
      * Called each time when an annotator or inspection has finished error-highlighting of a particular
      * {@link DomFileElement}
+     *
      * @param element file element whose highlighting has been finished
      */
     void highlightingFinished(@Nonnull DomFileElement element);

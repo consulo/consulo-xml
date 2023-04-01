@@ -16,10 +16,12 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import consulo.application.ApplicationManager;
+import consulo.language.editor.inspection.LocalInspectionToolSession;
 import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
@@ -32,9 +34,8 @@ import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -42,30 +43,32 @@ import java.util.function.Consumer;
  * @author Dmitry Avdeev
  * @see BasicDomElementsInspection
  */
-public abstract class DomElementsInspection<T extends DomElement> extends XmlSuppressableInspectionTool {
+public abstract class DomElementsInspection<T extends DomElement, State> extends XmlSuppressableInspectionTool {
   private static final Logger LOG = Logger.getInstance(DomElementsInspection.class);
 
   private final Set<Class<? extends T>> myDomClasses;
 
+  @SafeVarargs
   public DomElementsInspection(Class<? extends T> domClass, @Nonnull Class<? extends T>... additionalClasses) {
-    myDomClasses = new HashSet<Class<? extends T>>(Arrays.asList(additionalClasses));
+    myDomClasses = Set.of(additionalClasses);
     myDomClasses.add(domClass);
   }
 
   /**
-   * This method is called internally in {@link DomElementAnnotationsManager#checkFileElement(DomFileElement, DomElementsInspection, boolean)}
+   * This method is called internally in {@link DomElementAnnotationsManager#checkFileElement(DomFileElement, DomElementsInspection, boolean, State)}
    * it should add some problems to the annotation holder. The default implementation performs recursive tree traversal, and calls
-   * {@link #checkDomElement(DomElement, DomElementAnnotationHolder, DomHighlightingHelper)} for each element.
+   * {@link #checkDomElement(DomElement, DomElementAnnotationHolder, DomHighlightingHelper, Object)} for each element.
+   *
    * @param domFileElement file element to check
-   * @param holder the place to store problems
+   * @param holder         the place to store problems
    */
-  public void checkFileElement(DomFileElement<T> domFileElement, final DomElementAnnotationHolder holder) {
+  public void checkFileElement(DomFileElement<T> domFileElement, final DomElementAnnotationHolder holder, State state) {
     final DomHighlightingHelper helper =
       DomElementAnnotationsManager.getInstance(domFileElement.getManager().getProject()).getHighlightingHelper();
-    final Consumer<DomElement> consumer = new Consumer<DomElement>() {
+    final Consumer<DomElement> consumer = new Consumer<>() {
       public void accept(final DomElement element) {
         checkChildren(element, this);
-        checkDomElement(element, holder, helper);
+        checkDomElement(element, holder, helper, state);
       }
     };
     consumer.accept(domFileElement.getRootElement());
@@ -104,19 +107,47 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
     return myDomClasses;
   }
 
+  @Nonnull
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder,
+                                        final boolean isOnTheFly,
+                                        @Nonnull LocalInspectionToolSession session,
+                                        @Nonnull Object state) {
+    return new PsiElementVisitor() {
+      @Override
+      @SuppressWarnings("unchecked")
+      public void visitFile(PsiFile file) {
+        State inspectionState = (State)state;
+        addDescriptors(checkFile(file, holder.getManager(), isOnTheFly, inspectionState));
+      }
+
+      private void addDescriptors(final ProblemDescriptor[] descriptors) {
+        if (descriptors != null) {
+          for (ProblemDescriptor descriptor : descriptors) {
+            holder.registerProblem(Objects.requireNonNull(descriptor));
+          }
+        }
+      }
+    };
+  }
+
+  @Override
+  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Not intended to be overridden or called by implementors.
-   * Override {@link #checkFileElement(DomFileElement, DomElementAnnotationHolder)} (which is preferred) or
-   * {@link #checkDomElement(DomElement, DomElementAnnotationHolder, DomHighlightingHelper)} instead.
+   * Override {@link #checkFileElement(DomFileElement, DomElementAnnotationHolder, Object)} (which is preferred) or
+   * {@link #checkDomElement(DomElement, DomElementAnnotationHolder, DomHighlightingHelper, Object)} instead.
    */
   @Nullable
-  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
-    if (file instanceof XmlFile && (file.isPhysical() || ApplicationManager.getApplication().isUnitTestMode())) {
-      for (Class<? extends T> domClass: myDomClasses) {
+  @SuppressWarnings("unchecked")
+  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly, State state) {
+    if (file instanceof XmlFile && file.isPhysical()) {
+      for (Class<? extends T> domClass : myDomClasses) {
         final DomFileElement<? extends T> fileElement = DomManager.getDomManager(file.getProject()).getFileElement((XmlFile)file, domClass);
         if (fileElement != null) {
-          //noinspection unchecked
-          return checkDomFile((DomFileElement<T>)fileElement, manager, isOnTheFly);
+          return checkDomFile((DomFileElement<T>)fileElement, manager, isOnTheFly, state);
         }
       }
     }
@@ -138,10 +169,11 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
   @Nullable
   protected ProblemDescriptor[] checkDomFile(@Nonnull final DomFileElement<T> domFileElement,
                                              @Nonnull final InspectionManager manager,
-                                             @SuppressWarnings("UnusedParameters") final boolean isOnTheFly) {
+                                             final boolean isOnTheFly,
+                                             @Nonnull State state) {
     final DomElementAnnotationsManager annotationsManager = DomElementAnnotationsManager.getInstance(manager.getProject());
 
-    final List<DomElementProblemDescriptor> list = annotationsManager.checkFileElement(domFileElement, this, isOnTheFly);
+    final List<DomElementProblemDescriptor> list = annotationsManager.checkFileElement(domFileElement, this, isOnTheFly, state);
     if (list.isEmpty()) return ProblemDescriptor.EMPTY_ARRAY;
 
     List<ProblemDescriptor> problems =
@@ -153,11 +185,12 @@ public abstract class DomElementsInspection<T extends DomElement> extends XmlSup
    * Check particular DOM element for problems. The inspection implementor should focus on this method.
    * The default implementation throws {@link UnsupportedOperationException}.
    * See {@link BasicDomElementsInspection}
+   *
    * @param element element to check
-   * @param holder a place to add problems to
-   * @param helper helper object
+   * @param holder  a place to add problems to
+   * @param helper  helper object
    */
-  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
+  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper, State state) {
     throw new UnsupportedOperationException("checkDomElement() is not implemented in " + getClass().getName());
   }
 }

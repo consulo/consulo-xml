@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
  * Date: 03.10.2007
  */
 @ExtensionImpl
-public class RngDomInspection extends BasicDomElementsInspection<RngDomElement> {
+public class RngDomInspection extends BasicDomElementsInspection<RngDomElement, Object> {
   public RngDomInspection() {
     super(RngDomElement.class);
   }

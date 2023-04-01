@@ -29,8 +29,9 @@ import consulo.xml.util.xml.GenericDomValue;
 /**
  * Provides basic inspection functionality (resolving, required values, duplicate names, custom annotations).
  */
-public abstract class BasicDomElementsInspection<T extends DomElement> extends DomElementsInspection<T> {
+public abstract class BasicDomElementsInspection<T extends DomElement, State> extends DomElementsInspection<T, State> {
 
+  @SafeVarargs
   public BasicDomElementsInspection(@Nonnull Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
     super(domClass, additionalClasses);
   }
@@ -49,7 +50,7 @@ public abstract class BasicDomElementsInspection<T extends DomElement> extends D
   /**
    * The default implementations checks for resolve problems (if {@link #shouldCheckResolveProblems(GenericDomValue)}
    * returns true), then runs annotators (see {@link DomFileDescription#createAnnotator()}),
-   * checks for {@link Required} and {@link com.intellij.util.xml.ExtendClass} annotation
+   * checks for {@link Required} and {@link ExtendClass} annotation
    * problems, checks for name identity (see {@link NameValue} annotation) and custom annotation
    * checkers (see {@link DomCustomAnnotationChecker}).
    *

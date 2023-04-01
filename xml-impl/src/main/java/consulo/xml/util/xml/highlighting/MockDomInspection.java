@@ -15,16 +15,16 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
-
+import consulo.xml.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import consulo.xml.util.xml.DomElement;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
-public class MockDomInspection<T extends DomElement> extends BasicDomElementsInspection<T>{
+public class MockDomInspection<T extends DomElement, State> extends BasicDomElementsInspection<T, State> {
 
   public MockDomInspection(final Class<T> domClass) {
     super(domClass);
