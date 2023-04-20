@@ -59,13 +59,10 @@ class ImplementationClassCache<T extends ImplementationProvider>
 	ImplementationClassCache(Class<T> implementationClassProvider)
 	{
 		myImplementationClassProvider = implementationClassProvider;
-		myExtensionCacheKey = ExtensionPointCacheKey.create(implementationClassProvider.getName(), list ->
+		myExtensionCacheKey = ExtensionPointCacheKey.create(implementationClassProvider.getName(), walker ->
 		{
 			MultiMap<Class, T> map = MultiMap.create();
-			for(T implProvider : list)
-			{
-				map.putValue(implProvider.getInterfaceClass(), implProvider);
-			}
+			walker.walk(implProvider -> map.putValue(implProvider.getInterfaceClass(), implProvider));
 			return map;
 		});
 	}
