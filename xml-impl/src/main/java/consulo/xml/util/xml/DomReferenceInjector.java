@@ -15,16 +15,35 @@
  */
 package consulo.xml.util.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.project.Project;
 
-public interface DomReferenceInjector {
-  @Nullable
-  String resolveString(@Nullable String unresolvedText, @Nonnull ConvertContext context);
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
-  @Nonnull
-  PsiReference[] inject(@Nullable String unresolvedText, @Nonnull PsiElement element, @Nonnull ConvertContext context);
+@ExtensionAPI(ComponentScope.PROJECT)
+public interface DomReferenceInjector
+{
+	static void walk(@Nonnull Project project, @Nonnull DomFileDescription<?> fileDescription, @Nonnull Consumer<DomReferenceInjector> consumer)
+	{
+		project.getExtensionPoint(DomReferenceInjector.class).forEachExtensionSafe(domReferenceInjector ->
+		{
+			if(domReferenceInjector.isAvaliable(fileDescription))
+			{
+				consumer.accept(domReferenceInjector);
+			}
+		});
+	}
+
+	boolean isAvaliable(DomFileDescription<?> fileDescription);
+
+	@Nullable
+	String resolveString(@Nullable String unresolvedText, @Nonnull ConvertContext context);
+
+	@Nonnull
+	PsiReference[] inject(@Nullable String unresolvedText, @Nonnull PsiElement element, @Nonnull ConvertContext context);
 }

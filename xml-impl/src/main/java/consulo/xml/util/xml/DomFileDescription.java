@@ -55,7 +55,6 @@ public class DomFileDescription<T>
 	private final String[] myAllPossibleRootTagNamespaces;
 
 	private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
-	private final List<DomReferenceInjector> myInjectors = new SmartList<>();
 	private final Map<String, Function<XmlTag, List<String>>> myNamespacePolicies = ContainerUtil.newConcurrentMap();
 
 	public DomFileDescription(final Class<T> rootElementClass, final String rootTagName, final String... allPossibleRootTagNamespaces)
@@ -63,6 +62,8 @@ public class DomFileDescription<T>
 		myRootElementClass = rootElementClass;
 		myRootTagName = rootTagName;
 		myAllPossibleRootTagNamespaces = allPossibleRootTagNamespaces;
+
+		initializeFileDescription();
 	}
 
 	public String[] getAllPossibleRootTagNamespaces()
@@ -143,16 +144,6 @@ public class DomFileDescription<T>
 	public final TypeChooserManager getTypeChooserManager()
 	{
 		return myTypeChooserManager;
-	}
-
-	protected final void registerReferenceInjector(DomReferenceInjector injector)
-	{
-		myInjectors.add(injector);
-	}
-
-	public List<DomReferenceInjector> getReferenceInjectors()
-	{
-		return myInjectors;
 	}
 
 	public boolean isAutomaticHighlightingEnabled()
