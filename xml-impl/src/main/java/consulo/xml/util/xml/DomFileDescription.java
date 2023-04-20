@@ -17,15 +17,14 @@ package consulo.xml.util.xml;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
+import consulo.application.Application;
 import consulo.application.util.CachedValue;
 import consulo.component.extension.ExtensionPointName;
 import consulo.component.util.Iconable;
 import consulo.ide.impl.idea.util.ConstantFunction;
-import consulo.ide.impl.idea.util.containers.ConcurrentInstanceMap;
 import consulo.project.Project;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
-import consulo.util.collection.SmartList;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -38,6 +37,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
@@ -49,7 +49,7 @@ public class DomFileDescription<T>
 {
 	public static final ExtensionPointName<DomFileDescription> EP_NAME = ExtensionPointName.create(DomFileDescription.class);
 
-	private final Map<Class<? extends ScopeProvider>, ScopeProvider> myScopeProviders = ConcurrentInstanceMap.create();
+	private final Map<Class<? extends ScopeProvider>, ScopeProvider> myScopeProviders = new ConcurrentHashMap<>();
 	protected final Class<T> myRootElementClass;
 	protected final String myRootTagName;
 	private final String[] myAllPossibleRootTagNamespaces;
@@ -267,7 +267,11 @@ public class DomFileDescription<T>
 		final Scope scope = element.getAnnotation(Scope.class);
 		if(scope != null)
 		{
-			return myScopeProviders.get(scope.value()).getScope(element);
+			return myScopeProviders.computeIfAbsent(scope.value(), aClass ->
+			{
+				Application application = Application.get();
+				return application.getUnbindedInstance(aClass);
+			}).getScope(element);
 		}
 		return null;
 	}
