@@ -17,8 +17,6 @@ package consulo.xml.util.xml.stubs.builder;
 
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.component.extension.Extensions;
-import consulo.ide.impl.idea.util.indexing.FileBasedIndexImpl;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.stub.BinaryFileStubBuilder;
@@ -26,6 +24,7 @@ import consulo.language.psi.stub.FileContent;
 import consulo.language.psi.stub.Stub;
 import consulo.logging.Logger;
 import consulo.project.Project;
+import consulo.project.ProjectCoreUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
@@ -58,7 +57,7 @@ public class DomStubBuilder implements BinaryFileStubBuilder {
   @Override
   public boolean acceptsFile(VirtualFile file) {
     FileType fileType = file.getFileType();
-    return fileType == XmlFileType.INSTANCE && !FileBasedIndexImpl.isProjectOrWorkspaceFile(file, fileType);
+    return fileType == XmlFileType.INSTANCE && !ProjectCoreUtil.isProjectOrWorkspaceFile(file, fileType);
   }
 
   @Override
