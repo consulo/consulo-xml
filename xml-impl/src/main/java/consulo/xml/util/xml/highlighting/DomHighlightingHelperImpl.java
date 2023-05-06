@@ -22,7 +22,7 @@ import consulo.language.editor.FileModificationService;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -232,7 +232,8 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
   }
 
 
-  private static class AddRequiredSubtagFix implements LocalQuickFix, IntentionAction {
+  private static class AddRequiredSubtagFix implements LocalQuickFix, SyntheticIntentionAction
+  {
     private final String tagName;
     private final String tagNamespace;
     private final XmlTag parentTag;
