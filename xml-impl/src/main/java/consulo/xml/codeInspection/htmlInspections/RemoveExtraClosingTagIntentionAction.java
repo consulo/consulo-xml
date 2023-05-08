@@ -16,32 +16,32 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
-import consulo.language.editor.FileModificationService;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.editor.WriteCommandAction;
-import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.intention.IntentionAction;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.ast.ASTNode;
 import consulo.document.Document;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.intention.SyntheticIntentionAction;
+import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiErrorElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiErrorElement;
-import consulo.language.psi.PsiFile;
-import consulo.project.Project;
-import consulo.language.util.IncorrectOperationException;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
-public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, IntentionAction {
+public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, SyntheticIntentionAction {
   @Override
   @Nonnull
   public String getFamilyName() {
