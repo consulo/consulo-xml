@@ -15,26 +15,20 @@
  */
 package com.intellij.xml.util;
 
-import java.awt.Color;
+import com.intellij.xml.XmlBundle;
+import consulo.codeEditor.Editor;
+import consulo.ide.impl.idea.ui.ColorPickerListenerFactory;
+import consulo.language.editor.completion.lookup.*;
+import consulo.language.psi.PsiElement;
+import consulo.project.ui.wm.WindowManager;
+import consulo.ui.ex.awt.ColorChooser;
+import consulo.ui.ex.awt.event.ColorPickerListener;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.util.ColorSampleLookupValue;
 
 import javax.annotation.Nullable;
-
-import consulo.ide.impl.idea.ui.ColorChooser;
-import consulo.ide.impl.idea.ui.ColorPickerListener;
-import consulo.language.editor.completion.lookup.LookupElementBuilder;
-import consulo.language.editor.completion.lookup.PrioritizedLookupElement;
-import consulo.language.editor.completion.lookup.LookupElement;
-import consulo.language.editor.completion.lookup.LookupElementDecorator;
-import consulo.language.editor.completion.lookup.LookupValueWithPriority;
-import consulo.codeEditor.Editor;
-import consulo.project.ui.wm.WindowManager;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.ide.impl.idea.ui.ColorPickerListenerFactory;
-import consulo.xml.util.ColorSampleLookupValue;
-import com.intellij.xml.XmlBundle;
-import consulo.language.editor.completion.lookup.InsertionContext;
-import consulo.ui.ex.awtUnsafe.TargetAWT;
+import java.awt.*;
 
 /**
  * @author maxim
