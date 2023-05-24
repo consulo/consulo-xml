@@ -1,14 +1,14 @@
-package consulo.xml.html.lexer;
+package consulo.xml.lexer;
 
+import consulo.annotation.DeprecationInfo;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
 import consulo.application.util.PerApplicationInstance;
+import consulo.language.Language;
 import consulo.language.ast.IElementType;
+import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
-import consulo.xml.lexer.BaseHtmlLexer;
-import consulo.xml.lexer.EmbeddedTokenTypesProvider;
-import consulo.xml.lexer.HtmlLexer;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -19,25 +19,30 @@ import java.util.List;
 /**
  * @author VISTALL
  * @since 2020-08-07
+ *
+ * @see ExternalPluginHelper
  */
 @Singleton
 @ServiceAPI(ComponentScope.APPLICATION)
 @ServiceImpl
-public class InlineElementTypeHolder
+@Deprecated
+@DeprecationInfo("Find another way, this create hard reference to other plugins")
+public class ExternalPluginElementTypeHolder
 {
-	private static PerApplicationInstance<InlineElementTypeHolder> ourInstance = PerApplicationInstance.of(InlineElementTypeHolder.class);
+	private static PerApplicationInstance<ExternalPluginElementTypeHolder> ourInstance = PerApplicationInstance.of(ExternalPluginElementTypeHolder.class);
 
 	@Nonnull
-	public static InlineElementTypeHolder getInstance()
+	public static ExternalPluginElementTypeHolder getInstance()
 	{
 		return ourInstance.get();
 	}
 
 	private final IElementType myInlineStyleElementType;
 	private final IElementType myInlineScriptElementType;
+	private final FileType myInlineScriptFileType;
 
 	@Inject
-	InlineElementTypeHolder()
+	ExternalPluginElementTypeHolder()
 	{
 		List<EmbeddedTokenTypesProvider> extensions = EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME.getExtensionList();
 		IElementType inlineStyleElementType = null;
@@ -50,9 +55,11 @@ public class InlineElementTypeHolder
 			}
 		}
 		myInlineStyleElementType = inlineStyleElementType;
-		// At the moment only JS.
-		HtmlInlineScriptTokenTypesProvider provider = BaseHtmlLexer.ourDefaultLanguage == null ? null : HtmlInlineScriptTokenTypesProvider.forLanguage(BaseHtmlLexer.ourDefaultLanguage);
+
+		Language javaScriptLanguage = ExternalPluginHelper.getJavaScriptLanguage();
+		HtmlInlineScriptTokenTypesProvider provider = javaScriptLanguage == null ? null : HtmlInlineScriptTokenTypesProvider.forLanguage(javaScriptLanguage);
 		myInlineScriptElementType = provider != null ? provider.getElementType() : null;
+		myInlineScriptFileType = provider == null ? null : provider.getFileType();
 	}
 
 	@Nullable
@@ -65,5 +72,11 @@ public class InlineElementTypeHolder
 	public IElementType getInlineStyleElementType()
 	{
 		return myInlineStyleElementType;
+	}
+
+	@Nullable
+	public FileType getInlineScriptFileType()
+	{
+		return myInlineScriptFileType;
 	}
 }

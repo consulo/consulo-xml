@@ -72,7 +72,6 @@ open module com.intellij.xml
 	exports consulo.xml.editor;
 	exports consulo.xml.editor.bidi;
 	exports consulo.xml.featureStatistics;
-	exports consulo.xml.html.lexer;
 	exports consulo.xml.ide.actions;
 	exports consulo.xml.ide.highlighter;
 	exports consulo.xml.ide.structureView.impl.xml;

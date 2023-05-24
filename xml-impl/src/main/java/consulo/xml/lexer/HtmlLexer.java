@@ -22,7 +22,6 @@ import consulo.language.lexer.FlexAdapter;
 import consulo.language.lexer.Lexer;
 import consulo.language.lexer.MergingLexerAdapter;
 import consulo.language.util.LanguageUtil;
-import consulo.xml.html.lexer.InlineElementTypeHolder;
 import consulo.xml.psi.xml.XmlTokenType;
 
 import javax.annotation.Nonnull;
@@ -47,7 +46,7 @@ public class HtmlLexer extends BaseHtmlLexer {
   protected HtmlLexer(Lexer _baseLexer, boolean _caseInsensitive) {
     super(_baseLexer, _caseInsensitive);
 
-    InlineElementTypeHolder elementTypeHolder = InlineElementTypeHolder.getInstance();
+    ExternalPluginElementTypeHolder elementTypeHolder = ExternalPluginElementTypeHolder.getInstance();
     myInlineStyleElementType = elementTypeHolder.getInlineStyleElementType();
     myInlineScriptElementType = elementTypeHolder.getInlineScriptElementType();
   }

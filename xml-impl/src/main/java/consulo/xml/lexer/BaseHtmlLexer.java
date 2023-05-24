@@ -45,11 +45,6 @@ import java.util.Locale;
  */
 public abstract class BaseHtmlLexer extends DelegateLexer
 {
-	@Nullable
-	public static final Language ourDefaultLanguage = Language.findLanguageByID("JavaScript");
-	@Nullable
-	public static final Language ourDefaultStyleLanguage = Language.findLanguageByID("CSS");
-
 	protected static final int BASE_STATE_MASK = 0x3F;
 	private static final int SEEN_STYLE = 0x40;
 	private static final int SEEN_TAG = 0x80;
@@ -216,9 +211,10 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	@Nullable
 	protected LanguageVersion getStyleLanguageVersion()
 	{
-		if(ourDefaultStyleLanguage != null && styleType != null && !"text/css".equals(styleType))
+		Language cssLanguage = ExternalPluginHelper.getCssLanguage();
+		if(cssLanguage != null && styleType != null && !"text/css".equals(styleType))
 		{
-			for(LanguageVersion languageVersion : ourDefaultStyleLanguage.getVersions())
+			for(LanguageVersion languageVersion : cssLanguage.getVersions())
 			{
 				for(String mimeType : languageVersion.getMimeTypes())
 				{
@@ -230,7 +226,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			}
 		}
 		//noinspection RequiredXAction
-		return ourDefaultStyleLanguage == null ? null : LanguageVersionUtil.findDefaultVersion(ourDefaultStyleLanguage);
+		return cssLanguage == null ? null : LanguageVersionUtil.findDefaultVersion(cssLanguage);
 	}
 
 	@Nullable
@@ -262,7 +258,8 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	{
 		if(StringUtil.isEmpty(mimeType))
 		{
-			return ourDefaultLanguage != null ? HtmlScriptContentProvider.forLanguage(ourDefaultLanguage) : null;
+			Language javaScriptLanguage = ExternalPluginHelper.getJavaScriptLanguage();
+			return javaScriptLanguage != null ? HtmlScriptContentProvider.forLanguage(javaScriptLanguage) : null;
 		}
 		Collection<Language> instancesByMimeType = Language.findInstancesByMimeType(mimeType.trim());
 		if(instancesByMimeType.isEmpty() && mimeType.contains("template"))

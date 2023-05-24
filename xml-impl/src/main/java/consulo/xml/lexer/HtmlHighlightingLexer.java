@@ -19,7 +19,6 @@ import consulo.language.Language;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.language.editor.highlight.SyntaxHighlighterFactory;
-import consulo.language.file.FileTypeManager;
 import consulo.language.lexer.FlexAdapter;
 import consulo.language.lexer.Lexer;
 import consulo.language.lexer.MergingLexerAdapter;
@@ -42,18 +41,7 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 	private Lexer embeddedLexer;
 	private Lexer styleLexer;
 	private Lexer scriptLexer;
-	protected Lexer elLexer;
 	private boolean hasNoEmbeddments;
-	private final static FileType ourStyleFileType = FileTypeManager.getInstance().getStdFileType("CSS");
-	private static FileType ourInlineScriptFileType = null;
-
-	static
-	{
-		// At the moment only JS.
-		Language javaScriptLanguage = Language.findLanguageByID("JavaScript");
-		HtmlInlineScriptTokenTypesProvider provider = javaScriptLanguage == null ? null : HtmlInlineScriptTokenTypesProvider.forLanguage(javaScriptLanguage);
-		ourInlineScriptFileType = provider != null ? provider.getFileType() : null;
-	}
 
 	public class XmlEmbeddmentHandler implements TokenHandler
 	{
@@ -143,7 +131,11 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 		{
 			if(styleLexer == null)
 			{
-				styleLexer = (ourStyleFileType != null) ? SyntaxHighlighterFactory.getSyntaxHighlighter(ourStyleFileType, null, null).getHighlightingLexer() : null;
+				Language cssLanguage = ExternalPluginHelper.getCssLanguage();
+				if(cssLanguage != null)
+				{
+					styleLexer = SyntaxHighlighterFactory.getSyntaxHighlighter(cssLanguage, null, null).getHighlightingLexer();
+				}
 			}
 
 			newLexer = styleLexer;
@@ -166,8 +158,9 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 				}
 				else if(hasSeenAttribute())
 				{
+					FileType inlineScriptFileType = ExternalPluginElementTypeHolder.getInstance().getInlineScriptFileType();
 					SyntaxHighlighter syntaxHighlighter =
-							(ourInlineScriptFileType != null) ? SyntaxHighlighterFactory.getSyntaxHighlighter(ourInlineScriptFileType, null, null) : null;
+							(inlineScriptFileType != null) ? SyntaxHighlighterFactory.getSyntaxHighlighter(inlineScriptFileType, null, null) : null;
 					scriptLexer = syntaxHighlighter != null ? syntaxHighlighter.getHighlightingLexer() : null;
 				}
 			}
