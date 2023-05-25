@@ -19,10 +19,7 @@ import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -31,6 +28,21 @@ public class ResourceRegistrarImpl implements ResourceRegistrar
 {
 	private final Map<String, Map<String, ExternalResourceManagerExImpl.Resource>> myResources = new HashMap<>();
 	private final List<String> myIgnored = new ArrayList<>();
+
+	private ClassLoader myClassLoader = getClass().getClassLoader();
+
+	public void withClassLoader(ClassLoader classLoader, Runnable runnable)
+	{
+		try
+		{
+			myClassLoader = classLoader;
+			runnable.run();
+		}
+		finally
+		{
+			myClassLoader = getClass().getClassLoader();
+		}
+	}
 
 	@Override
 	public void addStdResource(@NonNls String resource, @NonNls String fileName)
@@ -44,18 +56,34 @@ public class ResourceRegistrarImpl implements ResourceRegistrar
 		addStdResource(resource, null, fileName, klass);
 	}
 
-	public void addStdResource(@NonNls String resource, @NonNls String version, @NonNls String fileName, @Nullable Class klass, @Nullable ClassLoader classLoader)
+	public void addStdResourceImpl(@NonNls String resource, @NonNls String version, @NonNls String fileName, @Nullable Class klass)
 	{
 		Map<String, ExternalResourceManagerExImpl.Resource> map = ExternalResourceManagerExImpl.getMap(myResources, version, true);
+
 		assert map != null;
-		resource = new String(resource); // enforce copying; todo remove after final migration to JDK 1.7
-		map.put(resource, new ExternalResourceManagerExImpl.Resource(fileName, klass, classLoader));
+
+		ClassLoader classLoader;
+		if(klass == null)
+		{
+			classLoader = myClassLoader;
+		}
+		else
+		{
+			classLoader = klass.getClassLoader();
+		}
+		map.put(resource, new ExternalResourceManagerExImpl.Resource(fileName, Objects.requireNonNull(classLoader)));
+	}
+
+	@Override
+	public void addStdResource(@NonNls String resource, @Nullable @NonNls String version, @NonNls String fileName)
+	{
+		addStdResourceImpl(resource, version, fileName, null);
 	}
 
 	@Override
 	public void addStdResource(@NonNls String resource, @Nullable @NonNls String version, @NonNls String fileName, Class klass)
 	{
-		addStdResource(resource, version, fileName, klass, null);
+		addStdResourceImpl(resource, version, fileName, klass);
 	}
 
 	@Override

@@ -18,14 +18,11 @@ package consulo.xml.javaee;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.component.extension.ExtensionPointName;
 
 /**
  * @author Dmitry Avdeev
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface StandardResourceProvider {
-  ExtensionPointName<StandardResourceProvider> EP_NAME = ExtensionPointName.create(StandardResourceProvider.class);
-  
   void registerResources(ResourceRegistrar registrar);
 }

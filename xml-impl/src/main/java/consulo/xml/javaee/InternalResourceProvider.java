@@ -23,7 +23,7 @@ import consulo.annotation.component.ExtensionImpl;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class InternalResourceProvider implements StandardResourceProvider{
+public class InternalResourceProvider implements StandardResourceProvider {
 
   public void registerResources(ResourceRegistrar registrar) {
     ResourceRegistrarImpl impl = (ResourceRegistrarImpl)registrar;

@@ -19,11 +19,14 @@ import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.Application;
 import consulo.application.ApplicationManager;
+import consulo.application.ApplicationProperties;
 import consulo.application.macro.PathMacros;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
 import consulo.application.util.SystemInfo;
+import consulo.component.extension.ExtensionPoint;
 import consulo.component.macro.ExpandMacroToPathMap;
 import consulo.component.macro.ReplacePathToMacroMap;
 import consulo.component.persist.PersistentStateComponent;
@@ -64,7 +67,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	public static final String JAVAEE_NS = "http://java.sun.com/xml/ns/javaee/";
 
 	private static final String CATALOG_PROPERTIES_ELEMENT = "CATALOG_PROPERTIES";
-	private static final String XSD_1_1 = new Resource("/standardSchemas/XMLSchema-1_1/XMLSchema.xsd", ExternalResourceManagerExImpl.class, null).getResourceUrl();
+	private static final String XSD_1_1 = new Resource("/standardSchemas/XMLSchema-1_1/XMLSchema.xsd", ExternalResourceManagerExImpl.class.getClassLoader()).getResourceUrl();
 
 	private final Map<String, Map<String, String>> myResources = new HashMap<>();
 	private final Set<String> myResourceLocations = new HashSet<>();
@@ -111,10 +114,11 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	protected Map<String, Map<String, Resource>> computeStdResources()
 	{
 		ResourceRegistrarImpl registrar = new ResourceRegistrarImpl();
-		for(StandardResourceProvider provider : StandardResourceProvider.EP_NAME.getExtensions())
+		ExtensionPoint<StandardResourceProvider> point = Application.get().getExtensionPoint(StandardResourceProvider.class);
+		point.forEachExtensionSafe(provider ->
 		{
-			provider.registerResources(registrar);
-		}
+			registrar.withClassLoader(provider.getClass().getClassLoader(), () -> provider.registerResources(registrar));
+		});
 
 		myStandardIgnoredResources.addAll(registrar.getIgnored());
 		return registrar.getResources();
@@ -734,20 +738,19 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	static class Resource
 	{
 		private final String myFile;
+		@Nonnull
 		private final ClassLoader myClassLoader;
-		private final Class myClass;
 		private volatile String myResolvedResourcePath;
 
-		Resource(String _file, Class _class, ClassLoader _classLoader)
+		Resource(String _file, @Nonnull ClassLoader _classLoader)
 		{
 			myFile = _file;
-			myClass = _class;
 			myClassLoader = _classLoader;
 		}
 
 		Resource(String _file, Resource baseResource)
 		{
-			this(_file, baseResource.myClass, baseResource.myClassLoader);
+			this(_file, baseResource.myClassLoader);
 		}
 
 		String directoryName()
@@ -765,12 +768,12 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 				return resolvedResourcePath;
 			}
 
-			final URL resource = myClass == null ? myClassLoader.getResource(myFile) : myClass.getResource(myFile);
+			final URL resource = myClassLoader.getResource(myFile);
 
 			if(resource == null)
 			{
-				String message = "Cannot find standard resource. filename:" + myFile + " class=" + myClass + ", classLoader:" + myClassLoader;
-				if(ApplicationManager.getApplication().isUnitTestMode())
+				String message = "Cannot find standard resource. filename:" + myFile + ", classLoader:" + myClassLoader;
+				if(ApplicationProperties.isInSandbox())
 				{
 					LOG.error(message);
 				}
@@ -808,10 +811,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 			{
 				return false;
 			}
-			if(myClass != resource.myClass)
-			{
-				return false;
-			}
+
 			if(myFile != null ? !myFile.equals(resource.myFile) : resource.myFile != null)
 			{
 				return false;
