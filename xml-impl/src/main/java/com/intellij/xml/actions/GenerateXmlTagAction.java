@@ -19,7 +19,8 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
-import consulo.application.ApplicationManager;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
@@ -27,8 +28,6 @@ import consulo.colorScheme.EditorFontType;
 import consulo.document.Document;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.codeInsight.CodeInsightUtilBase;
-import consulo.ide.impl.idea.codeInsight.lookup.impl.LookupCellRenderer;
-import consulo.ide.impl.ui.impl.PopupChooserBuilder;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.action.SimpleCodeInsightAction;
@@ -39,18 +38,21 @@ import consulo.language.editor.template.TemplateBuilderFactory;
 import consulo.language.editor.template.macro.CompleteMacro;
 import consulo.language.editor.template.macro.CompleteSmartMacro;
 import consulo.language.editor.template.macro.MacroCallNode;
+import consulo.language.editor.util.LanguageEditorUtil;
 import consulo.language.impl.ast.Factory;
 import consulo.language.impl.ast.LeafElement;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
 import consulo.project.Project;
-import consulo.ui.ex.awt.JBList;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.popup.JBPopup;
-import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.function.Condition;
+import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
 import consulo.xml.psi.xml.*;
@@ -65,277 +67,312 @@ import java.util.*;
 /**
  * @author Dmitry Avdeev
  */
-public class GenerateXmlTagAction extends SimpleCodeInsightAction {
+public class GenerateXmlTagAction extends SimpleCodeInsightAction
+{
+	private final static Logger LOG = Logger.getInstance(GenerateXmlTagAction.class);
 
-  public static final ThreadLocal<String> TEST_THREAD_LOCAL = new ThreadLocal<String>();
-  private final static Logger LOG = Logger.getInstance(GenerateXmlTagAction.class);
+	@RequiredUIAccess
+	@Override
+	public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file)
+	{
+		if(!LanguageEditorUtil.checkModificationAllowed(editor))
+		{
+			return;
+		}
+		try
+		{
+			final XmlTag contextTag = getContextTag(editor, file);
+			if(contextTag == null)
+			{
+				throw new CommonRefactoringUtil.RefactoringErrorHintException("Caret should be positioned inside a tag");
+			}
+			XmlElementDescriptor currentTagDescriptor = contextTag.getDescriptor();
+			final XmlElementDescriptor[] descriptors = currentTagDescriptor.getElementsDescriptors(contextTag);
+			Arrays.sort(descriptors, (o1, o2) -> o1.getName().compareTo(o2.getName()));
 
-  @Override
-  public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
-    if (!CodeInsightUtilBase.prepareEditorForWrite(editor)) return;
-    try {
-      final XmlTag contextTag = getContextTag(editor, file);
-      if (contextTag == null) {
-        throw new CommonRefactoringUtil.RefactoringErrorHintException("Caret should be positioned inside a tag");
-      }
-      XmlElementDescriptor currentTagDescriptor = contextTag.getDescriptor();
-      final XmlElementDescriptor[] descriptors = currentTagDescriptor.getElementsDescriptors(contextTag);
-      Arrays.sort(descriptors, new Comparator<XmlElementDescriptor>() {
-        @Override
-        public int compare(XmlElementDescriptor o1, XmlElementDescriptor o2) {
-          return o1.getName().compareTo(o2.getName());
-        }
-      });
-      final JBList list = new JBList(descriptors);
-      list.setCellRenderer(new MyListCellRenderer());
-      Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-          final XmlElementDescriptor selected = (XmlElementDescriptor) list.getSelectedValue();
-          new WriteCommandAction.Simple(project, "Generate XML Tag", file) {
-            @Override
-            protected void run() {
-              if (selected == null) return;
-              XmlTag newTag = createTag(contextTag, selected);
+			JBPopup popup = JBPopupFactory.getInstance().createPopupChooserBuilder(List.of(descriptors))
+					.setTitle("Choose Tag Name")
+					.setRenderer(new ColoredListCellRenderer<XmlElementDescriptor>()
+					{
+						@Override
+						protected void customizeCellRenderer(@Nonnull JList<? extends XmlElementDescriptor> list, XmlElementDescriptor value, int index, boolean selected, boolean hasFocus)
+						{
+							EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
+							Font font = scheme.getFont(EditorFontType.PLAIN);
 
-              PsiElement anchor = getAnchor(contextTag, editor, selected);
-              if (anchor == null) { // insert it in the cursor position
-                int offset = editor.getCaretModel().getOffset();
-                Document document = editor.getDocument();
-                document.insertString(offset, newTag.getText());
-                PsiDocumentManager.getInstance(project).commitDocument(document);
-                newTag = PsiTreeUtil.getParentOfType(file.findElementAt(offset + 1), XmlTag.class, false);
-              } else {
-                newTag = (XmlTag) contextTag.addAfter(newTag, anchor);
-              }
-              generateTag(newTag);
-            }
-          }.execute();
-        }
-      };
-      if (ApplicationManager.getApplication().isUnitTestMode()) {
-        XmlElementDescriptor descriptor = ContainerUtil.find(descriptors, new Condition<XmlElementDescriptor>() {
-          @Override
-          public boolean value(XmlElementDescriptor xmlElementDescriptor) {
-            return xmlElementDescriptor.getName().equals(TEST_THREAD_LOCAL.get());
-          }
-        });
-        list.setSelectedValue(descriptor, false);
-        runnable.run();
-      } else {
-        JBPopup popup = new PopupChooserBuilder<>(list)
-            .setTitle("Choose Tag Name")
-            .setItemChoosenCallback(runnable)
-            .setFilteringEnabled(o -> ((XmlElementDescriptor) o).getName())
-            .createPopup();
+							setFont(font);
+							append(value.getName());
+							String namespace = getNamespace(value);
+							if(!namespace.isEmpty())
+							{
+								append(namespace, SimpleTextAttributes.GRAY_ATTRIBUTES);
+							}
+						}
+					})
+					.setItemChosenCallback(selected ->
+					{
+						if(selected == null)
+						{
+							return;
+						}
 
-        editor.showPopupInBestPositionFor(popup);
-      }
-    } catch (CommonRefactoringUtil.RefactoringErrorHintException e) {
-      HintManager.getInstance().showErrorHint(editor, e.getMessage());
-    }
-  }
+						new WriteCommandAction.Simple(project, "Generate XML Tag", file)
+						{
+							@Override
+							@RequiredWriteAction
+							protected void run()
+							{
+								XmlTag newTag = createTag(contextTag, selected);
 
-  @Nullable
-  private static XmlTag getAnchor(@Nonnull XmlTag contextTag, Editor editor, XmlElementDescriptor selected) {
-    XmlContentDFA contentDFA = XmlContentDFA.getContentDFA(contextTag);
-    int offset = editor.getCaretModel().getOffset();
-    if (contentDFA == null) {
-      return null;
-    }
-    XmlTag anchor = null;
-    boolean previousPositionIsPossible = true;
-    for (XmlTag subTag : contextTag.getSubTags()) {
-      if (contentDFA.getPossibleElements().contains(selected)) {
-        if (subTag.getTextOffset() > offset) {
-          break;
-        }
-        anchor = subTag;
-        previousPositionIsPossible = true;
-      } else {
-        previousPositionIsPossible = false;
-      }
-      contentDFA.transition(subTag);
-    }
-    return previousPositionIsPossible ? null : anchor;
-  }
+								PsiElement anchor = getAnchor(contextTag, editor, selected);
+								if(anchor == null)
+								{ // insert it in the cursor position
+									int offset = editor.getCaretModel().getOffset();
+									Document document = editor.getDocument();
+									document.insertString(offset, newTag.getText());
+									PsiDocumentManager.getInstance(project).commitDocument(document);
+									newTag = PsiTreeUtil.getParentOfType(file.findElementAt(offset + 1), XmlTag.class, false);
+								}
+								else
+								{
+									newTag = (XmlTag) contextTag.addAfter(newTag, anchor);
+								}
+								generateTag(newTag);
+							}
+						}.execute();
+					})
+					.setNamerForFiltering(PsiMetaData::getName)
+					.createPopup();
 
-  public static void generateTag(XmlTag newTag) {
-    generateRaw(newTag);
-    final XmlTag restored = CodeInsightUtilBase.forcePsiPostprocessAndRestoreElement(newTag);
-    if (restored == null) {
-      LOG.error("Could not restore tag: " + newTag.getText());
-    }
-    TemplateBuilder builder = TemplateBuilderFactory.getInstance().createTemplateBuilder(restored);
-    replaceElements(restored, builder);
-    builder.run();
-  }
+			editor.showPopupInBestPositionFor(popup);
+		}
+		catch(CommonRefactoringUtil.RefactoringErrorHintException e)
+		{
+			HintManager.getInstance().showErrorHint(editor, e.getMessage());
+		}
+	}
 
-  private static void generateRaw(final XmlTag newTag) {
-    XmlElementDescriptor selected = newTag.getDescriptor();
-    if (selected == null) return;
-    switch (selected.getContentType()) {
-      case XmlElementDescriptor.CONTENT_TYPE_EMPTY:
-        newTag.collapseIfEmpty();
-        ASTNode node = newTag.getNode();
-        assert node != null;
-        ASTNode elementEnd = node.findChildByType(XmlTokenType.XML_EMPTY_ELEMENT_END);
-        if (elementEnd == null) {
-          LeafElement emptyTagEnd = Factory.createSingleLeafElement(XmlTokenType.XML_EMPTY_ELEMENT_END, "/>", 0, 2, null, newTag.getManager());
-          node.addChild(emptyTagEnd);
-        }
-        break;
-      case XmlElementDescriptor.CONTENT_TYPE_MIXED:
-        newTag.getValue().setText("");
-    }
-    for (XmlAttributeDescriptor descriptor : selected.getAttributesDescriptors(newTag)) {
-      if (descriptor.isRequired()) {
-        newTag.setAttribute(descriptor.getName(), "");
-      }
-    }
-    List<XmlElementDescriptor> tags = getRequiredSubTags(selected);
-    for (XmlElementDescriptor descriptor : tags) {
-      if (descriptor == null) {
-        XmlTag tag = XmlElementFactory.getInstance(newTag.getProject()).createTagFromText("<", newTag.getLanguage());
-        newTag.addSubTag(tag, false);
-      } else {
-        XmlTag subTag = newTag.addSubTag(createTag(newTag, descriptor), false);
-        generateRaw(subTag);
-      }
-    }
-  }
+	@Nullable
+	private static XmlTag getAnchor(@Nonnull XmlTag contextTag, Editor editor, XmlElementDescriptor selected)
+	{
+		XmlContentDFA contentDFA = XmlContentDFA.getContentDFA(contextTag);
+		int offset = editor.getCaretModel().getOffset();
+		if(contentDFA == null)
+		{
+			return null;
+		}
+		XmlTag anchor = null;
+		boolean previousPositionIsPossible = true;
+		for(XmlTag subTag : contextTag.getSubTags())
+		{
+			if(contentDFA.getPossibleElements().contains(selected))
+			{
+				if(subTag.getTextOffset() > offset)
+				{
+					break;
+				}
+				anchor = subTag;
+				previousPositionIsPossible = true;
+			}
+			else
+			{
+				previousPositionIsPossible = false;
+			}
+			contentDFA.transition(subTag);
+		}
+		return previousPositionIsPossible ? null : anchor;
+	}
 
-  public static List<XmlElementDescriptor> getRequiredSubTags(XmlElementDescriptor selected) {
-    XmlElementsGroup topGroup = selected.getTopGroup();
-    if (topGroup == null) return Collections.emptyList();
-    return computeRequiredSubTags(topGroup);
-  }
+	@RequiredReadAction
+	public static void generateTag(XmlTag newTag)
+	{
+		generateRaw(newTag);
+		final XmlTag restored = CodeInsightUtilBase.forcePsiPostprocessAndRestoreElement(newTag);
+		if(restored == null)
+		{
+			LOG.error("Could not restore tag: " + newTag.getText());
+		}
+		TemplateBuilder builder = TemplateBuilderFactory.getInstance().createTemplateBuilder(restored);
+		replaceElements(restored, builder);
+		builder.run();
+	}
 
-  private static void replaceElements(XmlTag tag, TemplateBuilder builder) {
-    for (XmlAttribute attribute : tag.getAttributes()) {
-      XmlAttributeValue value = attribute.getValueElement();
-      if (value != null) {
-        builder.replaceElement(value, TextRange.from(1, 0), new MacroCallNode(new CompleteMacro()));
-      }
-    }
-    if ("<".equals(tag.getText())) {
-      builder.replaceElement(tag, TextRange.from(1, 0), new MacroCallNode(new CompleteSmartMacro()));
-    } else if (tag.getSubTags().length == 0) {
-      int i = tag.getText().indexOf("></");
-      if (i > 0) {
-        builder.replaceElement(tag, TextRange.from(i + 1, 0), new MacroCallNode(new CompleteMacro()));
-      }
-    }
-    for (XmlTag subTag : tag.getSubTags()) {
-      replaceElements(subTag, builder);
-    }
-  }
+	@RequiredReadAction
+	private static void generateRaw(final XmlTag newTag)
+	{
+		XmlElementDescriptor selected = newTag.getDescriptor();
+		if(selected == null)
+		{
+			return;
+		}
+		switch(selected.getContentType())
+		{
+			case XmlElementDescriptor.CONTENT_TYPE_EMPTY:
+				newTag.collapseIfEmpty();
+				ASTNode node = newTag.getNode();
+				assert node != null;
+				ASTNode elementEnd = node.findChildByType(XmlTokenType.XML_EMPTY_ELEMENT_END);
+				if(elementEnd == null)
+				{
+					LeafElement emptyTagEnd = Factory.createSingleLeafElement(XmlTokenType.XML_EMPTY_ELEMENT_END, "/>", 0, 2, null, newTag.getManager());
+					node.addChild(emptyTagEnd);
+				}
+				break;
+			case XmlElementDescriptor.CONTENT_TYPE_MIXED:
+				newTag.getValue().setText("");
+		}
+		for(XmlAttributeDescriptor descriptor : selected.getAttributesDescriptors(newTag))
+		{
+			if(descriptor.isRequired())
+			{
+				newTag.setAttribute(descriptor.getName(), "");
+			}
+		}
+		List<XmlElementDescriptor> tags = getRequiredSubTags(selected);
+		for(XmlElementDescriptor descriptor : tags)
+		{
+			if(descriptor == null)
+			{
+				XmlTag tag = XmlElementFactory.getInstance(newTag.getProject()).createTagFromText("<", newTag.getLanguage());
+				newTag.addSubTag(tag, false);
+			}
+			else
+			{
+				XmlTag subTag = newTag.addSubTag(createTag(newTag, descriptor), false);
+				generateRaw(subTag);
+			}
+		}
+	}
 
-  private static XmlTag createTag(@Nonnull XmlTag contextTag, @Nonnull XmlElementDescriptor descriptor) {
-    String namespace = getNamespace(descriptor);
-    XmlTag tag = contextTag.createChildTag(descriptor.getName(), namespace, null, false);
-    PsiElement lastChild = tag.getLastChild();
-    assert lastChild != null;
-    lastChild.delete(); // remove XML_EMPTY_ELEMENT_END
-    return tag;
-  }
+	public static List<XmlElementDescriptor> getRequiredSubTags(XmlElementDescriptor selected)
+	{
+		XmlElementsGroup topGroup = selected.getTopGroup();
+		if(topGroup == null)
+		{
+			return Collections.emptyList();
+		}
+		return computeRequiredSubTags(topGroup);
+	}
 
-  private static String getNamespace(XmlElementDescriptor descriptor) {
-    return descriptor instanceof XmlElementDescriptorImpl ? ((XmlElementDescriptorImpl) descriptor).getNamespace() : "";
-  }
+	@RequiredReadAction
+	private static void replaceElements(XmlTag tag, TemplateBuilder builder)
+	{
+		for(XmlAttribute attribute : tag.getAttributes())
+		{
+			XmlAttributeValue value = attribute.getValueElement();
+			if(value != null)
+			{
+				builder.replaceElement(value, TextRange.from(1, 0), new MacroCallNode(new CompleteMacro()));
+			}
+		}
+		if("<".equals(tag.getText()))
+		{
+			builder.replaceElement(tag, TextRange.from(1, 0), new MacroCallNode(new CompleteSmartMacro()));
+		}
+		else if(tag.getSubTags().length == 0)
+		{
+			int i = tag.getText().indexOf("></");
+			if(i > 0)
+			{
+				builder.replaceElement(tag, TextRange.from(i + 1, 0), new MacroCallNode(new CompleteMacro()));
+			}
+		}
+		for(XmlTag subTag : tag.getSubTags())
+		{
+			replaceElements(subTag, builder);
+		}
+	}
 
-  @Nullable
-  private static XmlTag getContextTag(Editor editor, PsiFile file) {
-    PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
-    XmlTag tag = null;
-    if (element != null) {
-      tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
-    }
-    if (tag == null) {
-      tag = ((XmlFile) file).getRootTag();
-    }
-    return tag;
-  }
+	@RequiredReadAction
+	private static XmlTag createTag(@Nonnull XmlTag contextTag, @Nonnull XmlElementDescriptor descriptor)
+	{
+		String namespace = getNamespace(descriptor);
+		XmlTag tag = contextTag.createChildTag(descriptor.getName(), namespace, null, false);
+		PsiElement lastChild = tag.getLastChild();
+		assert lastChild != null;
+		lastChild.delete(); // remove XML_EMPTY_ELEMENT_END
+		return tag;
+	}
 
-  private static List<XmlElementDescriptor> computeRequiredSubTags(XmlElementsGroup group) {
+	private static String getNamespace(XmlElementDescriptor descriptor)
+	{
+		return descriptor instanceof XmlElementDescriptorImpl ? ((XmlElementDescriptorImpl) descriptor).getNamespace() : "";
+	}
 
-    if (group.getMinOccurs() < 1) return Collections.emptyList();
-    switch (group.getGroupType()) {
-      case LEAF:
-        XmlElementDescriptor descriptor = group.getLeafDescriptor();
-        return descriptor == null ? Collections.<XmlElementDescriptor>emptyList() : Collections.singletonList(descriptor);
-      case CHOICE:
-        LinkedHashSet<XmlElementDescriptor> set = null;
-        for (XmlElementsGroup subGroup : group.getSubGroups()) {
-          List<XmlElementDescriptor> descriptors = computeRequiredSubTags(subGroup);
-          if (set == null) {
-            set = new LinkedHashSet<XmlElementDescriptor>(descriptors);
-          } else {
-            set.retainAll(descriptors);
-          }
-        }
-        if (set == null || set.isEmpty()) {
-          return Collections.singletonList(null); // placeholder for smart completion
-        }
-        return new ArrayList<XmlElementDescriptor>(set);
+	@RequiredReadAction
+	@Nullable
+	private static XmlTag getContextTag(Editor editor, PsiFile file)
+	{
+		PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
+		XmlTag tag = null;
+		if(element != null)
+		{
+			tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
+		}
+		if(tag == null)
+		{
+			tag = ((XmlFile) file).getRootTag();
+		}
+		return tag;
+	}
 
-      default:
-        ArrayList<XmlElementDescriptor> list = new ArrayList<XmlElementDescriptor>();
-        for (XmlElementsGroup subGroup : group.getSubGroups()) {
-          list.addAll(computeRequiredSubTags(subGroup));
-        }
-        return list;
-    }
-  }
+	private static List<XmlElementDescriptor> computeRequiredSubTags(XmlElementsGroup group)
+	{
 
-  @Override
-  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
-    if (!(file instanceof XmlFile)) return false;
-    XmlTag contextTag = getContextTag(editor, file);
-    return contextTag != null && contextTag.getDescriptor() != null;
-  }
+		if(group.getMinOccurs() < 1)
+		{
+			return Collections.emptyList();
+		}
+		switch(group.getGroupType())
+		{
+			case LEAF:
+				XmlElementDescriptor descriptor = group.getLeafDescriptor();
+				return descriptor == null ? Collections.<XmlElementDescriptor>emptyList() : Collections.singletonList(descriptor);
+			case CHOICE:
+				LinkedHashSet<XmlElementDescriptor> set = null;
+				for(XmlElementsGroup subGroup : group.getSubGroups())
+				{
+					List<XmlElementDescriptor> descriptors = computeRequiredSubTags(subGroup);
+					if(set == null)
+					{
+						set = new LinkedHashSet<>(descriptors);
+					}
+					else
+					{
+						set.retainAll(descriptors);
+					}
+				}
+				if(set == null || set.isEmpty())
+				{
+					return Collections.singletonList(null); // placeholder for smart completion
+				}
+				return new ArrayList<>(set);
 
-  @Override
-  public boolean startInWriteAction() {
-    return false;
-  }
+			default:
+				ArrayList<XmlElementDescriptor> list = new ArrayList<>();
+				for(XmlElementsGroup subGroup : group.getSubGroups())
+				{
+					list.addAll(computeRequiredSubTags(subGroup));
+				}
+				return list;
+		}
+	}
 
-  private static class MyListCellRenderer implements ListCellRenderer {
-    private final JPanel myPanel;
-    private final JLabel myNameLabel;
-    private final JLabel myNSLabel;
+	@Override
+	@RequiredReadAction
+	protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file)
+	{
+		if(!(file instanceof XmlFile))
+		{
+			return false;
+		}
+		XmlTag contextTag = getContextTag(editor, file);
+		return contextTag != null && contextTag.getDescriptor() != null;
+	}
 
-    public MyListCellRenderer() {
-      myPanel = new JPanel(new BorderLayout());
-      myPanel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
-      myNameLabel = new JLabel();
-
-      myPanel.add(myNameLabel, BorderLayout.WEST);
-      myPanel.add(new JLabel("     "));
-      myNSLabel = new JLabel();
-      myPanel.add(myNSLabel, BorderLayout.EAST);
-
-      EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-      Font font = scheme.getFont(EditorFontType.PLAIN);
-      myNameLabel.setFont(font);
-      myNSLabel.setFont(font);
-    }
-
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-
-      XmlElementDescriptor descriptor = (XmlElementDescriptor) value;
-      Color backgroundColor = isSelected ? list.getSelectionBackground() : list.getBackground();
-
-      myNameLabel.setText(descriptor.getName());
-      myNameLabel.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-      myPanel.setBackground(backgroundColor);
-
-      myNSLabel.setText(getNamespace(descriptor));
-      myNSLabel.setForeground(LookupCellRenderer.getGrayedForeground(isSelected));
-      myNSLabel.setBackground(backgroundColor);
-
-      return myPanel;
-    }
-  }
+	@Override
+	public boolean startInWriteAction()
+	{
+		return false;
+	}
 }
