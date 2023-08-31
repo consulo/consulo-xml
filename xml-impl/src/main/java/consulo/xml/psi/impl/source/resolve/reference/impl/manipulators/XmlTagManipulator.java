@@ -19,6 +19,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlText;
@@ -31,6 +32,8 @@ import javax.annotation.Nonnull;
 @ExtensionImpl
 public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 {
+	private static final Logger LOG = Logger.getInstance(XmlTagManipulator.class);
+
 	@Override
 	public XmlTag handleContentChange(@Nonnull XmlTag tag, @Nonnull TextRange range, String newContent) throws IncorrectOperationException
 	{
@@ -57,7 +60,12 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 		switch(texts.length)
 		{
 			case 0:
-				return value.getTextRange().shiftRight(-tag.getTextOffset());
+				TextRange range = value.getTextRange();
+				if(range.getStartOffset() <= 0 && range.getEndOffset() <= 0 && tag.getTextOffset() > 0)
+				{
+					LOG.error("Invalid range for element '%s', text '%s', range '%s'".formatted(value.getClass().getName(), value.getText(), range.toString()));
+				}
+				return range.shiftRight(-tag.getTextOffset());
 			case 1:
 				return getValueRange(texts[0]);
 			default:
