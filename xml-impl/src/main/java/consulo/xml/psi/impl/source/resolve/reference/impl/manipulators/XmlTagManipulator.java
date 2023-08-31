@@ -25,6 +25,7 @@ import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlText;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * @author Maxim.Mossienko
@@ -63,7 +64,7 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 				TextRange range = value.getTextRange();
 				if(range.getStartOffset() <= 0 && range.getEndOffset() <= 0 && tag.getTextOffset() > 0)
 				{
-					LOG.error("Invalid range for element '%s', text '%s', range '%s'".formatted(value.getClass().getName(), value.getText(), range.toString()));
+					LOG.error("Invalid range for element '%s', text '%s', range '%s', file '%s'".formatted(value.getClass().getName(), value.getText(), range.toString(), Objects.toString(tag.getContainingFile())));
 				}
 				return range.shiftRight(-tag.getTextOffset());
 			case 1:
