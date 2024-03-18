@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.FileModificationService;
@@ -28,48 +29,56 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
-  @NonNls private static final String AMP_ENTITY = "&amp;";
+public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider
+{
+	private static final String AMP_ENTITY = "&amp;";
 
-  public void registerErrorQuickFix(final PsiErrorElement element, final HighlightInfo highlightInfo) {
-    if (PsiTreeUtil.getParentOfType(element, XmlTag.class) != null) {
-      registerXmlErrorQuickFix(element,highlightInfo);
-    }
-  }
+	@RequiredReadAction
+	public void registerErrorQuickFix(final PsiErrorElement element, final HighlightInfo.Builder builder)
+	{
+		if(PsiTreeUtil.getParentOfType(element, XmlTag.class) != null)
+		{
+			registerXmlErrorQuickFix(element, builder);
+		}
+	}
 
-  private static void registerXmlErrorQuickFix(final PsiErrorElement element, final HighlightInfo highlightInfo) {
-    final String text = element.getErrorDescription();
-    if (text != null && text.startsWith(XmlErrorMessages.message("unescaped.ampersand"))) {
-      QuickFixAction.registerQuickFixAction(highlightInfo, new IntentionAction() {
-        @Nonnull
-        public String getText() {
-          return XmlErrorMessages.message("escape.ampersand.quickfix");
-        }
+	private static void registerXmlErrorQuickFix(final PsiErrorElement element, final HighlightInfo.Builder builder)
+	{
+		final String text = element.getErrorDescription();
+		if(text != null && text.startsWith(XmlErrorMessages.message("unescaped.ampersand")))
+		{
+			builder.registerFix(new IntentionAction()
+			{
+				@Nonnull
+				public String getText()
+				{
+					return XmlErrorMessages.message("escape.ampersand.quickfix");
+				}
 
-        @Nonnull
-        public String getFamilyName() {
-          return getText();
-        }
+				public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
+				{
+					return true;
+				}
 
-        public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
-          return true;
-        }
+				public void invoke(@Nonnull Project project, Editor editor, PsiFile file)
+				{
+					if(!FileModificationService.getInstance().prepareFileForWrite(file))
+					{
+						return;
+					}
+					final int textOffset = element.getTextOffset();
+					editor.getDocument().replaceString(textOffset, textOffset + 1, AMP_ENTITY);
+				}
 
-        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) {
-          if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
-          final int textOffset = element.getTextOffset();
-          editor.getDocument().replaceString(textOffset,textOffset + 1,AMP_ENTITY);
-        }
-
-        public boolean startInWriteAction() {
-          return true;
-        }
-      });
-    }
-  }
+				public boolean startInWriteAction()
+				{
+					return true;
+				}
+			}, null, null, null, null);
+		}
+	}
 }
