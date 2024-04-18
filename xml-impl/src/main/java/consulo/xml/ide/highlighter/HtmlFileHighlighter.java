@@ -15,109 +15,96 @@
  */
 package consulo.xml.ide.highlighter;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.intellij.xml.highlighter.EmbeddedTokenHighlighter;
+import consulo.application.Application;
+import consulo.codeEditor.HighlighterColors;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.component.extension.ExtensionPointCacheKey;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.highlight.SyntaxHighlighterBase;
+import consulo.language.lexer.Lexer;
+import consulo.util.collection.MultiMap;
+import consulo.xml.editor.XmlHighlighterColors;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lexer.HtmlHighlightingLexer;
+import consulo.xml.psi.xml.XmlTokenType;
 
 import javax.annotation.Nonnull;
 
-import consulo.xml.lexer.HtmlHighlightingLexer;
-import consulo.codeEditor.HighlighterColors;
-import consulo.language.ast.IElementType;
-import consulo.language.lexer.Lexer;
-import consulo.xml.editor.XmlHighlighterColors;
-import consulo.colorScheme.TextAttributesKey;
-import consulo.language.editor.highlight.SyntaxHighlighterBase;
-import consulo.xml.psi.xml.XmlTokenType;
+public class HtmlFileHighlighter extends SyntaxHighlighterBase {
+  private static final ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> CACHE_KEY =
+    ExtensionPointCacheKey.create("HtmlFileHighlighter.tokens", embeddedTokenHighlighterExtensionWalker -> {
+      MultiMap<IElementType, TextAttributesKey> map = MultiMap.createLinked();
 
-public class HtmlFileHighlighter extends SyntaxHighlighterBase
-{
-	private static final Map<IElementType, TextAttributesKey> keys1;
-	private static final Map<IElementType, TextAttributesKey> keys2;
+      storeDefaults(map);
 
-	static
-	{
-		keys1 = new HashMap<>();
-		keys2 = new HashMap<>();
+      embeddedTokenHighlighterExtensionWalker.walk(it -> map.putAllValues(it.getEmbeddedTokenAttributes(HTMLLanguage.INSTANCE)));
 
-		keys1.put(XmlTokenType.XML_COMMENT_START, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_COMMENT_END, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_COMMENT_CHARACTERS, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_CONDITIONAL_COMMENT_END, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_CONDITIONAL_COMMENT_END_START, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_CONDITIONAL_COMMENT_START, XmlHighlighterColors.HTML_COMMENT);
-		keys1.put(XmlTokenType.XML_CONDITIONAL_COMMENT_START_END, XmlHighlighterColors.HTML_COMMENT);
+      return map;
+    });
 
-		keys1.put(XmlTokenType.XML_START_TAG_START, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_END_TAG_START, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_TAG_END, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_EMPTY_ELEMENT_END, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_TAG_NAME, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.TAG_WHITE_SPACE, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_NAME, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_TAG_CHARACTERS, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_EQ, XmlHighlighterColors.HTML_TAG);
+  private static void storeDefaults(MultiMap<IElementType, TextAttributesKey> keys) {
+    keys.putValue(XmlTokenType.XML_COMMENT_START, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_COMMENT_END, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_COMMENT_CHARACTERS, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_CONDITIONAL_COMMENT_END, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_CONDITIONAL_COMMENT_END_START, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_CONDITIONAL_COMMENT_START, XmlHighlighterColors.HTML_COMMENT);
+    keys.putValue(XmlTokenType.XML_CONDITIONAL_COMMENT_START_END, XmlHighlighterColors.HTML_COMMENT);
 
-		keys2.put(XmlTokenType.XML_TAG_NAME, XmlHighlighterColors.HTML_TAG_NAME);
-		keys2.put(XmlTokenType.XML_NAME, XmlHighlighterColors.HTML_ATTRIBUTE_NAME);
-		keys2.put(XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
-		keys2.put(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
-		keys2.put(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
-		keys2.put(XmlTokenType.XML_EQ, XmlHighlighterColors.HTML_ATTRIBUTE_NAME);
+    keys.putValue(XmlTokenType.XML_START_TAG_START, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_END_TAG_START, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_TAG_END, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_EMPTY_ELEMENT_END, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_TAG_NAME, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.TAG_WHITE_SPACE, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_NAME, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_TAG_CHARACTERS, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_EQ, XmlHighlighterColors.HTML_TAG);
 
-		keys1.put(XmlTokenType.XML_PI_START, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_PI_END, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_PI_TARGET, XmlHighlighterColors.HTML_TAG);
-		keys2.put(XmlTokenType.XML_PI_TARGET, XmlHighlighterColors.HTML_TAG_NAME);
+    keys.putValue(XmlTokenType.XML_TAG_NAME, XmlHighlighterColors.HTML_TAG_NAME);
+    keys.putValue(XmlTokenType.XML_NAME, XmlHighlighterColors.HTML_ATTRIBUTE_NAME);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
+    keys.putValue(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER, XmlHighlighterColors.HTML_ATTRIBUTE_VALUE);
+    keys.putValue(XmlTokenType.XML_EQ, XmlHighlighterColors.HTML_ATTRIBUTE_NAME);
 
-		keys1.put(XmlTokenType.XML_DOCTYPE_START, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_DOCTYPE_END, XmlHighlighterColors.HTML_TAG);
-		keys1.put(XmlTokenType.XML_DOCTYPE_PUBLIC, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_PI_START, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_PI_END, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_PI_TARGET, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_PI_TARGET, XmlHighlighterColors.HTML_TAG_NAME);
 
-		keys2.put(XmlTokenType.XML_CHAR_ENTITY_REF, XmlHighlighterColors.HTML_ENTITY_REFERENCE);
-		keys2.put(XmlTokenType.XML_ENTITY_REF_TOKEN, XmlHighlighterColors.HTML_ENTITY_REFERENCE);
+    keys.putValue(XmlTokenType.XML_DOCTYPE_START, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_DOCTYPE_END, XmlHighlighterColors.HTML_TAG);
+    keys.putValue(XmlTokenType.XML_DOCTYPE_PUBLIC, XmlHighlighterColors.HTML_TAG);
 
-		keys1.put(XmlTokenType.XML_BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
-	}
+    keys.putValue(XmlTokenType.XML_CHAR_ENTITY_REF, XmlHighlighterColors.HTML_ENTITY_REFERENCE);
+    keys.putValue(XmlTokenType.XML_ENTITY_REF_TOKEN, XmlHighlighterColors.HTML_ENTITY_REFERENCE);
 
-	@Override
-	@Nonnull
-	public Lexer getHighlightingLexer()
-	{
-		return new HtmlHighlightingLexer();
-	}
+    keys.putValue(XmlTokenType.XML_BAD_CHARACTER, HighlighterColors.BAD_CHARACTER);
+  }
 
-	@Override
-	@Nonnull
-	public TextAttributesKey[] getTokenHighlights(IElementType tokenType)
-	{
-		return SyntaxHighlighterBase.pack(XmlHighlighterColors.HTML_CODE, pack(keys1.get(tokenType), keys2.get(tokenType)));
-	}
+  private final Application myApplication;
 
-	public static void registerEmbeddedTokenAttributes(Map<IElementType, TextAttributesKey> _keys1, Map<IElementType, TextAttributesKey> _keys2)
-	{
-		if(_keys1 != null)
-		{
-			for(IElementType iElementType : _keys1.keySet())
-			{
-				if(!keys1.containsKey(iElementType))
-				{
-					keys1.put(iElementType, _keys1.get(iElementType));
-				}
-			}
-		}
+  public HtmlFileHighlighter(Application application) {
+    myApplication = application;
+  }
 
-		if(_keys2 != null)
-		{
-			for(IElementType iElementType : _keys2.keySet())
-			{
-				if(!keys2.containsKey(iElementType))
-				{
-					keys2.put(iElementType, _keys2.get(iElementType));
-				}
-			}
-		}
-	}
+  @Override
+  @Nonnull
+  public Lexer getHighlightingLexer() {
+    return new HtmlHighlightingLexer();
+  }
+
+  @Override
+  @Nonnull
+  public TextAttributesKey[] getTokenHighlights(@Nonnull IElementType tokenType) {
+    MultiMap<IElementType, TextAttributesKey> map =
+      myApplication.getExtensionPoint(EmbeddedTokenHighlighter.class).getOrBuildCache(CACHE_KEY);
+
+    return SyntaxHighlighterBase.pack(XmlHighlighterColors.HTML_CODE, map.get(tokenType).toArray(new TextAttributesKey[0]));
+  }
 }

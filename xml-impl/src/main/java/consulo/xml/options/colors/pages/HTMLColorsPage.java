@@ -27,21 +27,32 @@ import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.HtmlFileHighlighter;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 
 @ExtensionImpl
 public class HTMLColorsPage implements ColorSettingsPage {
-  private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[] {
+  private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[]{
     new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.code"), XmlHighlighterColors.HTML_CODE),
     new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.comment"), XmlHighlighterColors.HTML_COMMENT),
     new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.tag"), XmlHighlighterColors.HTML_TAG),
     new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.tag.name"), XmlHighlighterColors.HTML_TAG_NAME),
-    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.attribute.name"), XmlHighlighterColors.HTML_ATTRIBUTE_NAME),
-    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.attribute.value"), XmlHighlighterColors.HTML_ATTRIBUTE_VALUE),
-    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.entity.reference"), XmlHighlighterColors.HTML_ENTITY_REFERENCE),
+    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.attribute.name"),
+                             XmlHighlighterColors.HTML_ATTRIBUTE_NAME),
+    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.attribute.value"),
+                             XmlHighlighterColors.HTML_ATTRIBUTE_VALUE),
+    new AttributesDescriptor(OptionsBundle.message("options.html.attribute.descriptor.entity.reference"),
+                             XmlHighlighterColors.HTML_ENTITY_REFERENCE),
   };
+
+  private final Application myApplication;
+
+  @Inject
+  public HTMLColorsPage(Application application) {
+    myApplication = application;
+  }
 
   @Nonnull
   public String getDisplayName() {
@@ -70,25 +81,25 @@ public class HTMLColorsPage implements ColorSettingsPage {
 
   @Nonnull
   public SyntaxHighlighter getHighlighter() {
-    return new HtmlFileHighlighter();
+    return new HtmlFileHighlighter(myApplication);
   }
 
   @Nonnull
   public String getDemoText() {
     return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n" +
-           "<!--\n" +
-           "*        Sample comment\n" +
-           "-->\n" +
-           "<HTML>\n" +
-           "<head>\n" +
-           "<title>" + Application.get().getName() + "</title>\n" +
-           "</head>\n" +
-           "<body>\n" +
-           "<h1>" + Application.get().getName() + "</h1>\n" +
-           "<p><br><b><IMG border=0 height=12 src=\"images/hg.gif\" width=18 >\n" +
-           "What is " + Application.get().getName() + "? &#x00B7; &Alpha; </b><br><br>\n" +
-           "</body>\n" +
-           "</html>";
+      "<!--\n" +
+      "*        Sample comment\n" +
+      "-->\n" +
+      "<HTML>\n" +
+      "<head>\n" +
+      "<title>" + Application.get().getName() + "</title>\n" +
+      "</head>\n" +
+      "<body>\n" +
+      "<h1>" + Application.get().getName() + "</h1>\n" +
+      "<p><br><b><IMG border=0 height=12 src=\"images/hg.gif\" width=18 >\n" +
+      "What is " + Application.get().getName() + "? &#x00B7; &Alpha; </b><br><br>\n" +
+      "</body>\n" +
+      "</html>";
   }
 
   public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {

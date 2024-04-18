@@ -15,14 +15,14 @@
  */
 package consulo.xml.ide.highlighter;
 
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.util.lang.Pair;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+import consulo.util.lang.Pair;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
+import consulo.xml.lang.xml.XMLLanguage;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.Charset;
@@ -63,7 +63,7 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 	@Override
 	public Image getIcon()
 	{
-		return AllIcons.FileTypes.Xml;
+		return PlatformIconGroup.filetypesXml();
 	}
 
 	@Nonnull

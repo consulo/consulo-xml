@@ -7,27 +7,28 @@ import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.language.ast.IElementType;
 import consulo.language.lexer.Lexer;
 import consulo.util.collection.MultiMap;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.lexer.XmlHighlightingLexer;
-import jakarta.annotation.Nonnull;
+import consulo.xml.lang.dtd.DTDLanguage;
+import consulo.xml.lexer.DtdLexer;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
  * @since 2024-04-18
  */
-public class XmlFileHighlighter extends BaseXmlFileHighlighter {
+public class DTDFileHighlighter extends BaseXmlFileHighlighter {
   private static final ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> CACHE_KEY =
-    ExtensionPointCacheKey.create("XmlFileHighlighter.tokens", embeddedTokenHighlighterExtensionWalker -> {
+    ExtensionPointCacheKey.create("DTDFileHighlighter.tokens", embeddedTokenHighlighterExtensionWalker -> {
       MultiMap<IElementType, TextAttributesKey> map = MultiMap.createLinked();
 
       storeDefaults(map);
 
-      embeddedTokenHighlighterExtensionWalker.walk(it -> map.putAllValues(it.getEmbeddedTokenAttributes(XMLLanguage.INSTANCE)));
+      embeddedTokenHighlighterExtensionWalker.walk(it -> map.putAllValues(it.getEmbeddedTokenAttributes(DTDLanguage.INSTANCE)));
 
       return map;
     });
 
-  public XmlFileHighlighter(Application application) {
+  public DTDFileHighlighter(Application application) {
     super(application);
   }
 
@@ -36,9 +37,9 @@ public class XmlFileHighlighter extends BaseXmlFileHighlighter {
     return CACHE_KEY;
   }
 
-  @Override
   @Nonnull
+  @Override
   public Lexer getHighlightingLexer() {
-    return new XmlHighlightingLexer();
+    return new DtdLexer(true);
   }
 }

@@ -1,10 +1,12 @@
 package consulo.xml.ide.highlighter;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.application.Application;
 import consulo.language.Language;
 import consulo.language.editor.highlight.SingleLazyInstanceSyntaxHighlighterFactory;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 
@@ -14,10 +16,17 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XHtmlSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlighterFactory {
+  private final Application myApplication;
+
+  @Inject
+  public XHtmlSyntaxHighlighterFactory(Application application) {
+    myApplication = application;
+  }
+
   @Nonnull
   @Override
   protected SyntaxHighlighter createHighlighter() {
-    return new XmlFileHighlighter(false, true);
+    return new XHtmlFileHighlighter(myApplication);
   }
 
   @Nonnull

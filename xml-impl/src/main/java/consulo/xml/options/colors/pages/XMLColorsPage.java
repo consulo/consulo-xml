@@ -16,6 +16,7 @@
 package consulo.xml.options.colors.pages;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.application.Application;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.colorScheme.setting.AttributesDescriptor;
 import consulo.colorScheme.setting.ColorDescriptor;
@@ -24,6 +25,7 @@ import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.XmlFileHighlighter;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -40,6 +42,13 @@ public class XMLColorsPage implements ColorSettingsPage {
     new AttributesDescriptor(OptionsBundle.message("options.xml.attribute.descriptor.tag.data"), XmlHighlighterColors.XML_TAG_DATA),
     new AttributesDescriptor(OptionsBundle.message("options.xml.attribute.descriptor.descriptor.entity,reference"), XmlHighlighterColors.XML_ENTITY_REFERENCE),
   };
+
+  private final Application myApplication;
+
+  @Inject
+  public XMLColorsPage(Application application) {
+    myApplication = application;
+  }
 
   @Nonnull
   public String getDisplayName() {
@@ -58,7 +67,7 @@ public class XMLColorsPage implements ColorSettingsPage {
 
   @Nonnull
   public SyntaxHighlighter getHighlighter() {
-    return new XmlFileHighlighter();
+    return new XmlFileHighlighter(myApplication);
   }
 
   @Nonnull

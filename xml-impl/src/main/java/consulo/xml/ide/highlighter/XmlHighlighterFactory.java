@@ -19,12 +19,14 @@
  */
 package consulo.xml.ide.highlighter;
 
+import consulo.application.Application;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.colorScheme.EditorColorsScheme;
 import consulo.language.editor.highlight.HighlighterFactory;
+import consulo.xml.lang.xml.XMLLanguage;
 
 public class XmlHighlighterFactory {
   public static EditorHighlighter createXMLHighlighter(EditorColorsScheme settings){
-    return HighlighterFactory.createHighlighter(new XmlFileHighlighter(), settings);
+    return HighlighterFactory.createHighlighter(new XmlFileHighlighter(Application.get()), settings);
   }
 }

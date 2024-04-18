@@ -19,14 +19,15 @@
  */
 package consulo.xml.ide.highlighter;
 
+import consulo.application.Application;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.colorScheme.EditorColorsScheme;
 import consulo.language.editor.highlight.HighlighterFactory;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 
 public class HtmlHighlighterFactory {
-  public static EditorHighlighter createHTMLHighlighter(EditorColorsScheme settings){
-    SyntaxHighlighter highlighter = new HtmlFileHighlighter();
+  public static EditorHighlighter createHTMLHighlighter(Application application, EditorColorsScheme settings){
+    SyntaxHighlighter highlighter = new HtmlFileHighlighter(application);
     return HighlighterFactory.createHighlighter(highlighter, settings);
   }
 }

@@ -7,38 +7,38 @@ import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.language.ast.IElementType;
 import consulo.language.lexer.Lexer;
 import consulo.util.collection.MultiMap;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.lexer.XmlHighlightingLexer;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.lexer.XHtmlHighlightingLexer;
 import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
  * @since 2024-04-18
  */
-public class XmlFileHighlighter extends BaseXmlFileHighlighter {
+public class XHtmlFileHighlighter extends BaseXmlFileHighlighter {
   private static final ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> CACHE_KEY =
-    ExtensionPointCacheKey.create("XmlFileHighlighter.tokens", embeddedTokenHighlighterExtensionWalker -> {
+    ExtensionPointCacheKey.create("XHtmlFileHighlighter.tokens", embeddedTokenHighlighterExtensionWalker -> {
       MultiMap<IElementType, TextAttributesKey> map = MultiMap.createLinked();
 
       storeDefaults(map);
 
-      embeddedTokenHighlighterExtensionWalker.walk(it -> map.putAllValues(it.getEmbeddedTokenAttributes(XMLLanguage.INSTANCE)));
+      embeddedTokenHighlighterExtensionWalker.walk(it -> map.putAllValues(it.getEmbeddedTokenAttributes(HTMLLanguage.INSTANCE)));
 
       return map;
     });
 
-  public XmlFileHighlighter(Application application) {
+  public XHtmlFileHighlighter(Application application) {
     super(application);
   }
 
   @Override
-  public ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> getCacheKey() {
+  protected ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> getCacheKey() {
     return CACHE_KEY;
   }
 
-  @Override
   @Nonnull
+  @Override
   public Lexer getHighlightingLexer() {
-    return new XmlHighlightingLexer();
+    return new XHtmlHighlightingLexer();
   }
 }
