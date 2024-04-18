@@ -145,6 +145,7 @@ open module com.intellij.xml
 	exports consulo.xml.util.xml.ui.actions.generate;
 	exports consulo.xml.vcsUtil;
 	exports consulo.xml.dom;
+	exports com.intellij.xml.highlighter;
 	exports org.intellij.html;
 	exports org.intellij.plugins.relaxNG;
 	exports org.intellij.plugins.relaxNG.compact;
