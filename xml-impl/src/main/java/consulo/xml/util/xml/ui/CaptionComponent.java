@@ -18,7 +18,6 @@ package consulo.xml.util.xml.ui;
 
 import consulo.disposer.Disposer;
 import consulo.ui.ex.JBColor;
-import consulo.xml.util.xml.DomElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,10 +112,6 @@ public class CaptionComponent extends JPanel implements Committable, Highlightab
   }
 
   public final void dispose() {
-  }
-
-  public void initErrorPanel(final DomElement... elements) {
-    DomUIFactory.getDomUIFactory().addErrorPanel(this, elements);
   }
 
   public void initErrorPanel(final CommittablePanel errorPanel) {

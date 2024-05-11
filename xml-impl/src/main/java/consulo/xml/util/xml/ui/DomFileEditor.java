@@ -21,15 +21,16 @@ import consulo.ide.ServiceManager;
 import consulo.project.Project;
 import consulo.ui.ex.awt.MnemonicHelper;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.util.xml.*;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.DomEventListener;
+import consulo.xml.util.xml.DomManager;
+import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
-import java.awt.*;
 import java.util.function.Supplier;
 
 /**
@@ -53,11 +54,9 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     myComponentFactory = component;
     myName = name;
 
-    DomElementAnnotationsManager.getInstance(project).addHighlightingListener(new DomElementAnnotationsManager.DomHighlightingListener() {
-      public void highlightingFinished(@Nonnull DomFileElement element) {
-        if (isInitialised() && getComponent().isShowing() && element.isValid()) {
-          updateHighlighting();
-        }
+    DomElementAnnotationsManager.getInstance(project).addHighlightingListener(element -> {
+      if (isInitialised() && getComponent().isShowing() && element.isValid()) {
+        updateHighlighting();
       }
     }, this);
   }
@@ -138,45 +137,4 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
       myComponent.reset();
     }
   }
-
-  public static DomFileEditor createDomFileEditor(final String name,
-                                                  @Nullable final Icon icon,
-                                                  final DomElement element,
-                                                  final Supplier<? extends CommittablePanel> committablePanel) {
-
-    final XmlFile file = DomUtil.getFile(element);
-    final Supplier<BasicDomElementComponent> factory = new Supplier<BasicDomElementComponent>() {
-      public BasicDomElementComponent get() {
-        CaptionComponent captionComponent = new CaptionComponent(name, icon);
-        captionComponent.initErrorPanel(element);
-        BasicDomElementComponent component = createComponentWithCaption(committablePanel.get(), captionComponent, element);
-        Disposer.register(component, captionComponent);
-        return component;
-      }
-    };
-    return new DomFileEditor<BasicDomElementComponent>(file.getProject(), file.getVirtualFile(), name, factory) {
-      public JComponent getPreferredFocusedComponent() {
-        return null;
-      }
-    };
-  }
-
-  public static BasicDomElementComponent createComponentWithCaption(final CommittablePanel committablePanel,
-                                                                    final CaptionComponent captionComponent,
-                                                                    final DomElement element) {
-    final JPanel panel = new JPanel(new BorderLayout());
-    panel.add(captionComponent, BorderLayout.NORTH);
-    panel.add(element.isValid() ? committablePanel.getComponent() : new JPanel(), BorderLayout.CENTER);
-
-    BasicDomElementComponent component = new BasicDomElementComponent(element) {
-      public JComponent getComponent() {
-        return panel;
-      }
-    };
-
-    component.addComponent(committablePanel);
-    component.addComponent(captionComponent);
-    return component;
-  }
-
 }

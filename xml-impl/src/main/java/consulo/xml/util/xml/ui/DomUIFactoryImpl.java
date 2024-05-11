@@ -37,7 +37,6 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManagerImpl;
-import consulo.xml.util.xml.highlighting.DomElementsErrorPanel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -136,11 +135,6 @@ public class DomUIFactoryImpl extends DomUIFactory {
   public BaseControl createCustomControl(final Type type, DomWrapper<String> wrapper, final boolean commitOnEveryChange) {
     final Function<DomWrapper<String>, BaseControl> factory = myCustomControlCreators.get(ReflectionUtil.getRawType(type));
     return factory == null ? null : factory.apply(wrapper);
-  }
-
-  public CaptionComponent addErrorPanel(CaptionComponent captionComponent, DomElement... elements) {
-    captionComponent.initErrorPanel(new DomElementsErrorPanel(elements));
-    return captionComponent;
   }
 
   public BackgroundEditorHighlighter createDomHighlighter(final Project project,
