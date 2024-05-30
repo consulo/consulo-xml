@@ -16,7 +16,6 @@
 package consulo.xml.lang.html.structureView;
 
 import com.intellij.xml.XmlBundle;
-import consulo.application.AllIcons;
 import consulo.fileEditor.structureView.tree.ActionPresentation;
 import consulo.fileEditor.structureView.tree.ActionPresentationData;
 import consulo.fileEditor.structureView.tree.FileStructureNodeProvider;
@@ -24,6 +23,7 @@ import consulo.fileEditor.structureView.tree.TreeElement;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.ui.ex.action.Shortcut;
 import consulo.ui.ex.keymap.KeymapManager;
+import consulo.xml.icon.XmlIconGroup;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -47,7 +47,7 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
 
   @Nonnull
   public ActionPresentation getPresentation() {
-    return new ActionPresentationData(XmlBundle.message("html5.outline.mode"), null, AllIcons.Xml.Html5);
+    return new ActionPresentationData(XmlBundle.message("html5.outline.mode"), null, XmlIconGroup.html5());
   }
 
   public String getCheckBoxText() {
@@ -70,10 +70,10 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
     final XmlDocument document = xmlFile == null ? null : xmlFile.getDocument();
     if (document == null) return Collections.emptyList();
 
-    final List<XmlTag> rootTags = new ArrayList<XmlTag>();
+    final List<XmlTag> rootTags = new ArrayList<>();
     document.processElements(new FilterElementProcessor(XmlTagFilter.INSTANCE, rootTags), document);
 
-    final Collection<Html5SectionTreeElement> result = new ArrayList<Html5SectionTreeElement>();
+    final Collection<Html5SectionTreeElement> result = new ArrayList<>();
 
     for (XmlTag tag : rootTags) {
       result.addAll(Html5SectionsProcessor.processAndGetRootSections(tag));
