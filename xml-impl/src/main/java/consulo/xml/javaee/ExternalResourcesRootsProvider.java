@@ -16,13 +16,17 @@
 package consulo.xml.javaee;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.util.NotNullLazyValue;
+import consulo.application.Application;
+import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.language.psi.stub.IndexableSetContributor;
 import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
+import consulo.xml.impl.internal.ExternalResource;
+import consulo.xml.impl.internal.StandardExternalResourceData;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -33,45 +37,65 @@ import java.util.Set;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class ExternalResourcesRootsProvider extends IndexableSetContributor {
-  private final NotNullLazyValue<Set<String>> myStandardResources = new NotNullLazyValue<Set<String>>() {
-    @Nonnull
-    @Override
-    protected Set<String> compute() {
-      ExternalResourceManagerExImpl manager = (ExternalResourceManagerExImpl) ExternalResourceManager.getInstance();
-      Set<ExternalResourceManagerExImpl.Resource> dirs = new HashSet<>();
-      Set<String> set = new HashSet<>();
-      for (Map<String, ExternalResourceManagerExImpl.Resource> map : manager.getStandardResources()) {
-        for (ExternalResourceManagerExImpl.Resource resource : map.values()) {
-          ExternalResourceManagerExImpl.Resource dir = new ExternalResourceManagerExImpl.Resource(resource.directoryName(), resource);
+public class ExternalResourcesRootsProvider extends IndexableSetContributor
+{
+	private record Cache(Set<String> urls)
+	{
+		private static final ExtensionPointCacheKey<StandardResourceProvider, Cache> CACHE_KEY = ExtensionPointCacheKey.create("ExternalResourcesRootsProvider#Cache", walker ->
+		{
+			StandardExternalResourceData data = StandardExternalResourceData.build(walker);
 
-          if (dirs.add(dir)) {
-            String url = resource.getResourceUrl();
-            if (url != null) {
-              set.add(url.substring(0, url.lastIndexOf('/') + 1));
-            }
-          }
-        }
-      }
-      return set;
-    }
-  };
+			Set<String> set = new HashSet<>();
+			Set<ExternalResource> dirs = new HashSet<>();
 
-  @Nonnull
-  @Override
-  public Set<VirtualFile> getAdditionalRootsToIndex() {
-    Set<VirtualFile> roots = new HashSet<>();
-    for (String url : myStandardResources.getValue()) {
-      VirtualFile file = VirtualFileUtil.findRelativeFile(url, null);
-      if (file != null) {
-        roots.add(file);
-      }
-    }
+			for(Map<String, ExternalResource> map : data.resources().values())
+			{
+				for(ExternalResource resource : map.values())
+				{
+					ExternalResource dir = new ExternalResource(resource.directoryName(), resource);
 
-    String path = FetchExtResourceAction.getExternalResourcesPath();
-    VirtualFile extResources = LocalFileSystem.getInstance().findFileByPath(path);
-    ContainerUtil.addIfNotNull(roots, extResources);
+					if(dirs.add(dir))
+					{
+						String url = resource.getResourceUrl();
+						if(url != null)
+						{
+							set.add(url.substring(0, url.lastIndexOf('/') + 1));
+						}
+					}
+				}
+			}
+			return new Cache(set);
+		});
+	}
 
-    return roots;
-  }
+	private final Application myApplication;
+
+	@Inject
+	public ExternalResourcesRootsProvider(Application application)
+	{
+		myApplication = application;
+	}
+
+	@Nonnull
+	@Override
+	public Set<VirtualFile> getAdditionalRootsToIndex()
+	{
+		Cache cache = myApplication.getExtensionPoint(StandardResourceProvider.class).getOrBuildCache(Cache.CACHE_KEY);
+
+		Set<VirtualFile> roots = new HashSet<>();
+		for(String url : cache.urls())
+		{
+			VirtualFile file = VirtualFileUtil.findRelativeFile(url, null);
+			if(file != null)
+			{
+				roots.add(file);
+			}
+		}
+
+		String path = FetchExtResourceAction.getExternalResourcesPath();
+		VirtualFile extResources = LocalFileSystem.getInstance().findFileByPath(path);
+		ContainerUtil.addIfNotNull(roots, extResources);
+
+		return roots;
+	}
 }

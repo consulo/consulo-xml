@@ -20,11 +20,12 @@ import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
+import consulo.xml.impl.internal.StandardExternalResourceData;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -35,10 +36,12 @@ import java.util.Map;
 @ServiceImpl
 public class ProjectExternalResourceManagerImpl extends ExternalResourceManagerExImpl
 {
+	private StandardExternalResourceData myData = new StandardExternalResourceData(Map.of(), Set.of());
+
 	@Nonnull
 	@Override
-	protected Map<String, Map<String, Resource>> computeStdResources()
+	protected StandardExternalResourceData getData()
 	{
-		return Collections.emptyMap();
+		return myData;
 	}
 }

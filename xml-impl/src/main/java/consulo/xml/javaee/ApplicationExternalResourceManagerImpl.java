@@ -1,10 +1,16 @@
 package consulo.xml.javaee;
 
 import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
+import consulo.component.extension.ExtensionPoint;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
 import consulo.component.persist.StoragePathMacros;
+import consulo.xml.impl.internal.StandardExternalResourceData;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -18,4 +24,19 @@ import jakarta.inject.Singleton;
 @ServiceImpl
 public class ApplicationExternalResourceManagerImpl extends ExternalResourceManagerExImpl implements ApplicationExternalResourceManager
 {
+	private final Application myApplication;
+
+	@Inject
+	public ApplicationExternalResourceManagerImpl(Application application)
+	{
+		myApplication = application;
+	}
+
+	@Nonnull
+	@Override
+	protected StandardExternalResourceData getData()
+	{
+		ExtensionPoint<StandardResourceProvider> point = myApplication.getExtensionPoint(StandardResourceProvider.class);
+		return point.getOrBuildCache(StandardExternalResourceData.CACHE_KEY);
+	}
 }

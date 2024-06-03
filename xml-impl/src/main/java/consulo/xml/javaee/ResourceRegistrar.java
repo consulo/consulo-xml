@@ -17,7 +17,6 @@
 package consulo.xml.javaee;
 
 import consulo.annotation.DeprecationInfo;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Dmitry Avdeev
@@ -25,17 +24,26 @@ import org.jetbrains.annotations.NonNls;
  */
 public interface ResourceRegistrar
 {
-	void addStdResource(@NonNls String resource, @NonNls String fileName);
+	void addIgnoredResource(String url);
+
+	void addStdResource(String resource, String version, String fileName);
+
+	default void addStdResource(String resource, String fileName)
+	{
+		addStdResource(resource, null, fileName);
+	}
 
 	@Deprecated
 	@DeprecationInfo("ClassLoader will be used from provider")
-	void addStdResource(@NonNls String resource, @NonNls String fileName, Class klass);
-
-	void addStdResource(@NonNls String resource, @NonNls String version, @NonNls String fileName);
+	default void addStdResource(String resource, String fileName, Class klass)
+	{
+		addStdResource(resource, fileName);
+	}
 
 	@Deprecated
 	@DeprecationInfo("ClassLoader will be used from provider")
-	void addStdResource(@NonNls String resource, @NonNls String version, @NonNls String fileName, Class klass);
-
-	void addIgnoredResource(@NonNls String url);
+	default void addStdResource(String resource, String version, String fileName, Class klass)
+	{
+		addStdResource(resource, version, fileName);
+	}
 }

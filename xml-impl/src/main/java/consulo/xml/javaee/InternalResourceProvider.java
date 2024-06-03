@@ -18,6 +18,7 @@ package consulo.xml.javaee;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.xml.impl.internal.ResourceRegistrarImpl;
 
 /**
  * @author Dmitry Avdeev
