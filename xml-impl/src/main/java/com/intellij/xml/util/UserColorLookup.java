@@ -17,12 +17,10 @@ package com.intellij.xml.util;
 
 import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
-import consulo.ide.impl.idea.ui.ColorPickerListenerFactory;
 import consulo.language.editor.completion.lookup.*;
 import consulo.language.psi.PsiElement;
 import consulo.project.ui.wm.WindowManager;
 import consulo.ui.ex.awt.ColorChooser;
-import consulo.ui.ex.awt.event.ColorPickerListener;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.util.ColorSampleLookupValue;
@@ -56,8 +54,7 @@ public class UserColorLookup extends LookupElementDecorator<LookupElement>
 
 		context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
 
-		ColorPickerListener[] listeners = ColorPickerListenerFactory.createListenersFor(element);
-		ColorChooser.chooseColor(TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, listeners, true, color ->
+		ColorChooser.chooseColor(TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, true, color ->
 		{
 			if(color != null)
 			{
