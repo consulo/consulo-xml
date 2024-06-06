@@ -23,6 +23,7 @@ import consulo.document.Document;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
@@ -37,7 +38,8 @@ import java.util.Set;
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlNamespaceHelper
 {
-	private static final ExtensionPointName<XmlNamespaceHelper> EP_NAME = ExtensionPointName.create(XmlNamespaceHelper.class);
+	private static final ExtensionPointName<XmlNamespaceHelper> EP_NAME =
+		ExtensionPointName.create(XmlNamespaceHelper.class);
 
 	public static XmlNamespaceHelper getHelper(PsiFile file)
 	{
@@ -72,14 +74,19 @@ public abstract class XmlNamespaceHelper
 		}
 	}
 
-	public abstract void insertNamespaceDeclaration(@Nonnull final XmlFile file,
-													@Nullable final Editor editor,
-													@NonNls @Nonnull final Set<String> possibleNamespaces,
-													@NonNls @Nullable final String nsPrefix,
-													@Nullable Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException;
+	public abstract void insertNamespaceDeclaration(
+		@Nonnull final XmlFile file,
+		@Nullable final Editor editor,
+		@NonNls @Nonnull final Set<String> possibleNamespaces,
+		@NonNls @Nullable final String nsPrefix,
+		@Nullable Runner<String, IncorrectOperationException> runAfter
+	) throws IncorrectOperationException;
 
-	public boolean qualifyWithPrefix(final String namespacePrefix, final PsiElement element, final Document document) throws
-			IncorrectOperationException
+	public boolean qualifyWithPrefix(
+		final String namespacePrefix,
+		final PsiElement element,
+		final Document document
+	) throws IncorrectOperationException
 	{
 		final PsiElement tag = element instanceof XmlTag ? element : element.getParent();
 		if(tag instanceof XmlTag)
@@ -103,6 +110,6 @@ public abstract class XmlNamespaceHelper
 
 	public String getNamespaceAlias(@Nonnull final XmlFile file)
 	{
-		return XmlBundle.message("namespace.alias");
+		return XmlLocalize.namespaceAlias().get();
 	}
 }

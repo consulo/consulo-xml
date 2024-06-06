@@ -1,6 +1,6 @@
-/.consulo
-!/.consulo/codeStyleSettings.xml
-/out
-/target
-target/
+.consulo
+!.consulo/codeStyleSettings.xml
+!.consulo/runConfigurations
+out/
 sandbox/
+target/

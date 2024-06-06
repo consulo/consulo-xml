@@ -29,6 +29,7 @@ import consulo.language.template.TemplateLanguageFileViewProvider;
 import consulo.language.util.IncorrectOperationException;
 import consulo.language.util.ProcessingContext;
 import consulo.util.collection.ArrayUtil;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
@@ -269,7 +270,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider
 		@Nonnull
 		public String getUnresolvedMessagePattern()
 		{
-			return XmlBundle.message("xml.dtd.unresolved.entity.reference", getCanonicalText());
+			return XmlLocalize.xmlDtdUnresolvedEntityReference(getCanonicalText()).get();
 		}
 	}
 

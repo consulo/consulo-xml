@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
@@ -27,6 +26,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
@@ -44,7 +44,7 @@ public class XmlSplitTagAction implements IntentionAction {
   @Override
   @Nonnull
   public String getText() {
-    return XmlBundle.message("xml.split.tag.intention.action");
+    return XmlLocalize.xmlSplitTagIntentionAction().get();
   }
 
   @Override
