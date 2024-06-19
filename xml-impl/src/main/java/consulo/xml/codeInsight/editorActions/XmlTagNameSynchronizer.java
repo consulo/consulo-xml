@@ -16,13 +16,13 @@ import consulo.document.RangeMarker;
 import consulo.document.event.DocumentEvent;
 import consulo.document.event.DocumentListener;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.pom.core.impl.PomModelImpl;
 import consulo.language.Language;
 import consulo.language.editor.completion.lookup.LookupEx;
 import consulo.language.editor.completion.lookup.LookupManager;
 import consulo.language.impl.ast.TreeUtil;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
 import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.pom.PomModel;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
@@ -130,10 +130,12 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
     private final Language myLanguage;
     private final RealEditor myEditor;
     private boolean myApplying;
+    private final PomModel myPomModel;
 
     private TagNameSynchronizer(RealEditor editor, Project project, Language language) {
       myEditor = editor;
       myLanguage = language;
+      myPomModel = project.getInstance(PomModel.class);
       myDocumentManager = PsiDocumentManager.getInstance(project);
     }
 
@@ -153,7 +155,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
       final Document document = event.getDocument();
       Project project = Objects.requireNonNull(myEditor.getProject());
       if (myApplying || project.isDefault() || ProjectUndoManager.getInstance(project).isUndoInProgress() ||
-        !PomModelImpl.isAllowPsiModification() || document.isInBulkUpdate()) {
+        !myPomModel.isAllowPsiModification() || document.isInBulkUpdate()) {
         return;
       }
 
