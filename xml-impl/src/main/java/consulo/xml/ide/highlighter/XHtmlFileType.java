@@ -15,11 +15,11 @@
  */
 package consulo.xml.ide.highlighter;
 
-import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
-import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
+import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 
 import javax.annotation.Nonnull;
 
@@ -37,7 +37,7 @@ public class XHtmlFileType extends HtmlFileType {
 
   @Nonnull
   public LocalizeValue getDescription() {
-    return IdeLocalize.filetypeDescriptionXhtml();
+    return XmlLocalize.filetypeDescriptionXhtml();
   }
 
   @Nonnull

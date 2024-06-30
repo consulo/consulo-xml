@@ -1,0 +1,8 @@
+filetype.description.dtd:
+  text: XML Document Type Definition
+filetype.description.html:
+  text: HTML files
+filetype.description.xhtml:
+  text: XHTML files
+filetype.description.xml:
+  text: XML files

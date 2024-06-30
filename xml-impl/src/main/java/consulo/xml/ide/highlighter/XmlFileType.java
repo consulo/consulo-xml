@@ -17,12 +17,12 @@ package consulo.xml.ide.highlighter;
 
 import consulo.localize.LocalizeValue;
 import consulo.platform.base.icon.PlatformIconGroup;
-import consulo.platform.base.localize.IdeLocalize;
 import consulo.ui.image.Image;
 import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.Charset;
@@ -49,7 +49,7 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 	@Nonnull
 	public LocalizeValue getDescription()
 	{
-		return IdeLocalize.filetypeDescriptionXml();
+		return XmlLocalize.filetypeDescriptionXml();
 	}
 
 	@Override

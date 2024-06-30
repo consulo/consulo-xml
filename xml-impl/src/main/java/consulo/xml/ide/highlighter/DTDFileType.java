@@ -15,12 +15,12 @@
  */
 package consulo.xml.ide.highlighter;
 
-import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.language.file.LanguageFileType;
-import consulo.application.AllIcons;
 import consulo.localize.LocalizeValue;
-import consulo.platform.base.localize.IdeLocalize;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.image.Image;
+import consulo.xml.lang.dtd.DTDLanguage;
+import consulo.xml.localize.XmlLocalize;
 
 import javax.annotation.Nonnull;
 
@@ -38,7 +38,7 @@ public class DTDFileType extends LanguageFileType {
 
   @Nonnull
   public LocalizeValue getDescription() {
-    return IdeLocalize.filetypeDescriptionDtd();
+    return XmlLocalize.filetypeDescriptionDtd();
   }
 
   @Nonnull
@@ -49,6 +49,6 @@ public class DTDFileType extends LanguageFileType {
   @Nonnull
   @Override
   public Image getIcon() {
-    return AllIcons.FileTypes.Dtd;
+    return PlatformIconGroup.filetypesDtd();
   }
 }
