@@ -178,7 +178,7 @@ public class XmlParsing {
 
     final String tagName;
     if (token() != XML_NAME) {
-      error(XmlErrorLocalize.xmlParsingTagNameExpected().get());
+      error(XmlErrorLocalize.xmlParsingTagNameExpected());
       tagName = "";
     }
     else {
@@ -482,10 +482,6 @@ public class XmlParsing {
   }
 
   private void error(final LocalizeValue message) {
-    myBuilder.error(message);
-  }
-
-  private void error(final String message) {
     myBuilder.error(message);
   }
 }

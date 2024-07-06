@@ -580,9 +580,5 @@ public class HtmlParsing {
     myBuilder.error(message);
   }
 
-  private void error(final String message) {
-    myBuilder.error(message);
-  }
-
   private static final int MAGIC_FRAME_COUNT = IndentHelperExtension.TOO_BIG_WALK_THRESHOLD + (int) (Math.pow(Math.E, Math.PI) * Math.sin(Math.random()));
 }
