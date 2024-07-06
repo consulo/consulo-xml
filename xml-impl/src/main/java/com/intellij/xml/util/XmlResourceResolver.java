@@ -15,6 +15,39 @@
  */
 package com.intellij.xml.util;
 
+import com.intellij.xml.actions.validate.ErrorReporter;
+import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
+import com.intellij.xml.index.XmlNamespaceIndex;
+import consulo.application.ApplicationManager;
+import consulo.application.util.function.Computable;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiReference;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.http.HttpFileSystem;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManagerEx;
+import consulo.xml.javaee.UriUtil;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import org.apache.xerces.xni.XMLResourceIdentifier;
+import org.apache.xerces.xni.XNIException;
+import org.apache.xerces.xni.parser.XMLEntityResolver;
+import org.apache.xerces.xni.parser.XMLInputSource;
+import org.jetbrains.annotations.NonNls;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -23,39 +56,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import consulo.application.ApplicationManager;
-import consulo.language.psi.PsiElement;
-import consulo.logging.Logger;
-import consulo.util.lang.StringUtil;
-import consulo.virtualFileSystem.util.VirtualFileUtil;
-import org.apache.xerces.xni.XMLResourceIdentifier;
-import org.apache.xerces.xni.XNIException;
-import org.apache.xerces.xni.parser.XMLEntityResolver;
-import org.apache.xerces.xni.parser.XMLInputSource;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.javaee.ExternalResourceManagerEx;
-import consulo.xml.javaee.UriUtil;
-import consulo.project.Project;
-import consulo.application.util.function.Computable;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.virtualFileSystem.VirtualFileManager;
-import consulo.virtualFileSystem.http.HttpFileSystem;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiManager;
-import consulo.language.psi.PsiReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.actions.validate.ErrorReporter;
-import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
-import com.intellij.xml.index.XmlNamespaceIndex;
 
 /**
  * @author Maxim.Mossienko
@@ -322,8 +322,16 @@ public class XmlResourceResolver implements XMLEntityResolver
 			{
 				try
 				{
-					myErrorReporter.processError(new SAXParseException(XmlErrorMessages.message("xml.validate.external.resource.is.not.registered", publicId), publicId, null, 0, 0),
-							ValidateXmlActionHandler.ProblemType.ERROR);
+					myErrorReporter.processError(
+						new SAXParseException(
+							XmlErrorLocalize.xmlValidateExternalResourceIsNotRegistered(publicId).get(),
+							publicId,
+							null,
+							0,
+							0
+						),
+						ValidateXmlActionHandler.ProblemType.ERROR
+					);
 				}
 				catch(SAXException ignore)
 				{

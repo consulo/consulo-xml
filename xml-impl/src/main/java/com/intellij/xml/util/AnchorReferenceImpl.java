@@ -29,6 +29,7 @@ import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
@@ -264,7 +265,9 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 	public String getUnresolvedMessagePattern()
 	{
 		final XmlFile xmlFile = getFile();
-		return xmlFile == null ? XmlBundle.message("cannot.resolve.anchor", myAnchor) : XmlBundle.message("cannot.resolve.anchor.in.file", myAnchor, xmlFile.getName());
+		return xmlFile == null
+		  ? XmlLocalize.cannotResolveAnchor(myAnchor).get()
+		  : XmlLocalize.cannotResolveAnchorInFile(myAnchor, xmlFile.getName()).get();
 	}
 
 	// separate static class to avoid memory leak via this$0

@@ -15,30 +15,27 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
-
-import consulo.language.psi.*;
-import consulo.language.psi.path.FileReferenceUtil;
-import consulo.virtualFileSystem.VirtualFile;
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
-
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.javaee.ExternalResourceManagerEx;
+import com.intellij.xml.XmlNSDescriptor;
+import com.intellij.xml.util.XmlUtil;
+import consulo.application.util.function.Processor;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.language.psi.PsiReference;
+import consulo.language.psi.*;
+import consulo.language.psi.path.FileReferenceUtil;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.IncorrectOperationException;
-import consulo.application.util.function.Processor;
-import com.intellij.xml.XmlNSDescriptor;
-import com.intellij.xml.util.XmlUtil;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -258,7 +255,9 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider
 	@Nonnull
 	public String getUnresolvedMessagePattern()
 	{
-		return XmlErrorMessages.message(myIncorrectResourceMapped ? "registered.resource.is.not.recognized" : "uri.is.not.registered");
+		return myIncorrectResourceMapped
+			? XmlErrorLocalize.registeredResourceIsNotRecognized().get()
+			: XmlErrorLocalize.uriIsNotRegistered().get();
 	}
 
 	public static void processWsdlSchemas(final XmlTag rootTag, Processor<XmlTag> processor)

@@ -15,19 +15,19 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.xml.Html5SchemaProvider;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.DaemonCodeAnalyzer;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.xml.javaee.ExternalResourceManagerEx;
-import consulo.project.Project;
-import consulo.language.psi.PsiFile;
-import com.intellij.xml.Html5SchemaProvider;
 import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.javaee.ExternalResourceManagerEx;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -37,7 +37,7 @@ public class SwitchToHtml5Action implements LocalQuickFix, IntentionAction {
   @Nonnull
   @Override
   public String getName() {
-    return XmlErrorMessages.message("switch.to.html5.quickfix.text");
+    return XmlErrorLocalize.switchToHtml5QuickfixText().get();
   }
 
   @Nonnull

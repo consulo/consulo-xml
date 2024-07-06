@@ -32,9 +32,9 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
@@ -147,17 +147,19 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool
 					}
 					final LocalQuickFix localQuickFix = new MyLocalQuickFix(doctype.getNameElement().getText());
 
-					holder.registerProblem(XmlChildRole.START_TAG_NAME_FINDER.findChild(tag.getNode()).getPsi(),
-							XmlErrorMessages.message("wrong.root.element"),
-							ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
+					holder.registerProblem(
+						XmlChildRole.START_TAG_NAME_FINDER.findChild(tag.getNode()).getPsi(),
+						XmlErrorLocalize.wrongRootElement().get(),
+						ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
 					);
 
 					final ASTNode astNode = XmlChildRole.CLOSING_TAG_NAME_FINDER.findChild(tag.getNode());
 					if(astNode != null)
 					{
-						holder.registerProblem(astNode.getPsi(),
-								XmlErrorMessages.message("wrong.root.element"),
-								ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
+						holder.registerProblem(
+							astNode.getPsi(),
+							XmlErrorLocalize.wrongRootElement().get(),
+							ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
 						);
 					}
 				}

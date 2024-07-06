@@ -30,6 +30,8 @@ unbound.namespace.no.param:
   text: Namespace is not bound
 attribute.is.not.allowed.here:
   text: Attribute {0} is not allowed here
+attribute.is.not.boolean:
+  text: Attribute {0} is not boolean
 empty.attribute.is.not.allowed:
   text: Empty attribute {0} is not allowed
 duplicate.attribute:

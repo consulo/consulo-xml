@@ -31,7 +31,7 @@ import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
@@ -45,13 +45,13 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Synt
   @Override
   @Nonnull
   public String getFamilyName() {
-    return XmlErrorMessages.message("remove.extra.closing.tag.quickfix");
+    return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
   }
 
   @Override
   @Nonnull
   public String getName() {
-    return XmlErrorMessages.message("remove.extra.closing.tag.quickfix");
+    return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
   }
 
 

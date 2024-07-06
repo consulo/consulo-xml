@@ -23,8 +23,8 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.*;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -131,8 +131,12 @@ public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool imp
 	{
 		if(refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value))
 		{
-			holder.registerProblem(value, XmlErrorMessages.message("duplicate.id.reference"), ProblemHighlightType.GENERIC_ERROR,
-					ElementManipulators.getValueTextRange(value));
+			holder.registerProblem(
+				value,
+				XmlErrorLocalize.duplicateIdReference().get(),
+				ProblemHighlightType.GENERIC_ERROR,
+				ElementManipulators.getValueTextRange(value)
+			);
 		}
 	}
 }

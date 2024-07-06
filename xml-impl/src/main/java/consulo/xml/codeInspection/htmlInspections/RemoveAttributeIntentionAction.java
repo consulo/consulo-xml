@@ -16,18 +16,18 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-
-import consulo.language.editor.FileModificationService;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.application.Result;
-import consulo.language.psi.util.PsiTreeUtil;
-import consulo.project.Project;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.language.editor.FileModificationService;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.psi.xml.XmlAttribute;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -42,13 +42,13 @@ public class RemoveAttributeIntentionAction implements LocalQuickFix {
   @Override
   @Nonnull
   public String getName() {
-    return XmlErrorMessages.message("remove.attribute.quickfix.text", myLocalName);
+    return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName).get();
   }
 
   @Override
   @Nonnull
   public String getFamilyName() {
-    return XmlErrorMessages.message("remove.attribute.quickfix.family");
+    return XmlErrorLocalize.removeAttributeQuickfixFamily().get();
   }
 
   @Override

@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.util;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiReferenceBase;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 import consulo.document.util.TextRange;
 import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -70,7 +70,7 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
   public String getUnresolvedMessagePattern() {
     String name = getElement() instanceof XmlTag ? "tag" : "attribute";
     return myDescriptor.isFixed()
-           ? XmlErrorMessages.message("should.have.fixed.value", StringUtil.capitalize(name), myDescriptor.getDefaultValue())
-           : XmlErrorMessages.message("wrong.value", name);
+      ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue()).get()
+      : XmlErrorLocalize.wrongValue(name).get();
   }
 }

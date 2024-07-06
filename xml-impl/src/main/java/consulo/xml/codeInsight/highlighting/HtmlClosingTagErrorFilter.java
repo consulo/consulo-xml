@@ -20,7 +20,7 @@ import consulo.language.editor.HighlightErrorFilter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -41,7 +41,7 @@ public class HtmlClosingTagErrorFilter extends HighlightErrorFilter {
     final PsiElement[] children = element.getChildren();
     if (children.length > 0) {
       if (children[0] instanceof XmlToken && XmlTokenType.XML_END_TAG_START == ((XmlToken)children[0]).getTokenType()) {
-        if (XmlErrorMessages.message("xml.parsing.closing.tag.matches.nothing").equals(element.getErrorDescription())) {
+        if (XmlErrorLocalize.xmlParsingClosingTagMatchesNothing().get().equals(element.getErrorDescription())) {
           return false;
         }
       }

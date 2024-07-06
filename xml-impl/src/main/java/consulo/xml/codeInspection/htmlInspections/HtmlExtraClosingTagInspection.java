@@ -24,7 +24,7 @@ import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
@@ -71,8 +71,12 @@ public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
     final XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
     if (endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName())) {
-      holder.registerProblem(endTagName, XmlErrorMessages.message("extra.closing.tag.for.empty.element"),
-                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING, new RemoveExtraClosingTagIntentionAction());
+      holder.registerProblem(
+        endTagName,
+        XmlErrorLocalize.extraClosingTagForEmptyElement().get(),
+        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+        new RemoveExtraClosingTagIntentionAction()
+      );
     }
   }
 }

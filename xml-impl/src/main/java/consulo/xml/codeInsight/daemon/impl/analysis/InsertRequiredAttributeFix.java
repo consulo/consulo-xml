@@ -15,29 +15,29 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import consulo.language.ast.ASTNode;
-import consulo.language.editor.FileModificationService;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.editor.completion.lookup.LookupElement;
-import consulo.language.editor.completion.lookup.LookupElementBuilder;
-import consulo.application.ApplicationManager;
-import consulo.language.editor.template.*;
-import consulo.language.impl.psi.SourceTreeToPsiMap;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.undoRedo.CommandProcessor;
-import consulo.codeEditor.Editor;
-import consulo.project.Project;
-import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.access.RequiredWriteAction;
+import consulo.application.ApplicationManager;
+import consulo.codeEditor.Editor;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.editor.intention.HighPriorityAction;
+import consulo.language.editor.template.*;
+import consulo.language.impl.psi.SourceTreeToPsiMap;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.undoRedo.CommandProcessor;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.psi.html.HtmlTag;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -65,14 +65,14 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
 	@Nonnull
 	public String getText()
 	{
-		return XmlErrorMessages.message("insert.required.attribute.quickfix.text", myAttrName);
+		return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName).get();
 	}
 
 	@Override
 	@Nonnull
 	public String getFamilyName()
 	{
-		return XmlErrorMessages.message("insert.required.attribute.quickfix.family");
+		return XmlErrorLocalize.insertRequiredAttributeQuickfixFamily().get();
 	}
 
 	@Override

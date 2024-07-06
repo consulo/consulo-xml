@@ -29,9 +29,10 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.XmlFile;
@@ -59,7 +60,7 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
   @Nls
   @Nonnull
   public String getDisplayName() {
-    return XmlBundle.message("html.inspections.unknown.tag");
+    return XmlLocalize.htmlInspectionsUnknownTag().get();
   }
 
   @Override
@@ -71,7 +72,7 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
 
   @Override
   protected LocalizeValue getCheckboxTitle() {
-    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.checkbox.title"));
+    return LocalizeValue.localizeTODO(XmlLocalize.htmlInspectionsUnknownTagCheckboxTitle().get());
   }
 
   @Override
@@ -102,10 +103,8 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
 
         // todo: support "element is not allowed" message for html5
         // some tags in html5 cannot be found in xhtml5.xsd if they are located in incorrect context, so they get any-element descriptor (ex. "canvas: tag)
-        final String message =
-          isAbstractDescriptor(ownDescriptor) ? XmlErrorMessages.message("unknown.html.tag", name) : XmlErrorMessages.message(
-            "element.is.not.allowed.here",
-            name);
+        final LocalizeValue message =
+          isAbstractDescriptor(ownDescriptor) ? XmlErrorLocalize.unknownHtmlTag(name) : XmlErrorLocalize.elementIsNotAllowedHere(name);
 
         final PsiElement startTagName = XmlTagUtil.getStartTagNameElement(tag);
         assert startTagName != null;
@@ -130,11 +129,11 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
         ProblemHighlightType highlightType =
           tag.getContainingFile().getContext() == null ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.INFORMATION;
         if (startTagName.getTextLength() > 0) {
-          holder.registerProblem(startTagName, message, highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
+          holder.registerProblem(startTagName, message.get(), highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
         }
 
         if (endTagName != null) {
-          holder.registerProblem(endTagName, message, highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
+          holder.registerProblem(endTagName, message.get(), highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
         }
       }
     }

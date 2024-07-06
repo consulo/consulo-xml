@@ -23,12 +23,14 @@ import consulo.language.ast.IElementType;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
+import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.parser.ParserDefinition;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.localize.LocalizeValue;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlElementType;
@@ -68,12 +70,12 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
           final PsiFile psiFile = psiElement.getContainingFile();
 
           if (psiFile != null && (HTMLLanguage.INSTANCE == psiFile.getViewProvider().getBaseLanguage() || HTMLLanguage.INSTANCE == parent.getLanguage())) {
-            final String message = XmlErrorMessages.message("xml.parsing.closing.tag.matches.nothing");
+            final LocalizeValue message = XmlErrorLocalize.xmlParsingClosingTagMatchesNothing();
 
             if (message.equals(((PsiErrorElement)parent).getErrorDescription()) &&
                 psiFile.getContext() == null
                ) {
-              final Annotation annotation = holder.createWarningAnnotation(parent, message);
+              final Annotation annotation = holder.createWarningAnnotation(parent, message.get());
               annotation.registerFix(new RemoveExtraClosingTagIntentionAction());
             }
           }
@@ -82,10 +84,12 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
     }
   }
 
-  private static void registerProblem(@Nonnull final AnnotationHolder holder,
-                                      @Nonnull final XmlTag tag,
-                                      @Nullable final XmlToken start,
-                                      @Nonnull final XmlToken end) {
+  private static void registerProblem(
+    @Nonnull final AnnotationHolder holder,
+    @Nonnull final XmlTag tag,
+    @Nullable final XmlToken start,
+    @Nonnull final XmlToken end
+  ) {
     PsiElement context = tag.getContainingFile().getContext();
     if (context != null) {
       ParserDefinition parserDefinition = ParserDefinition.forLanguage(context.getLanguage());
@@ -104,15 +108,19 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
     final RenameTagBeginOrEndIntentionAction renameStartAction = new RenameTagBeginOrEndIntentionAction(endTokenText, tagName, true);
 
     if (start != null) {
-      final Annotation annotation = holder.createErrorAnnotation(start, XmlErrorMessages.message("tag.has.wrong.closing.tag.name"));
-      annotation.registerFix(renameEndAction);
-      annotation.registerFix(renameStartAction);
+      holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName().get())
+        .range(start)
+        .withFix(renameEndAction)
+        .withFix(renameStartAction)
+        .create();
     }
 
-    final Annotation annotation = holder.createErrorAnnotation(end, XmlErrorMessages.message("wrong.closing.tag.name"));
-    annotation.registerFix(new RemoveExtraClosingTagIntentionAction());
-    annotation.registerFix(renameEndAction);
-    annotation.registerFix(renameStartAction);
+    holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName().get())
+      .range(end)
+      .withFix(new RemoveExtraClosingTagIntentionAction())
+      .withFix(renameEndAction)
+      .withFix(renameStartAction)
+      .create();
   }
 
   @Nullable
