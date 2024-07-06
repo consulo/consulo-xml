@@ -15,12 +15,18 @@
  */
 package consulo.xml.codeInsight.daemon;
 
+import consulo.annotation.DeprecationInfo;
+import consulo.annotation.internal.MigratedExtensionsTo;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import org.jetbrains.annotations.PropertyKey;
 import consulo.component.util.localize.AbstractBundle;
 
 /**
  * @author max
  */
+@Deprecated
+@DeprecationInfo("Use XmlErrorLocalize")
+@MigratedExtensionsTo(XmlErrorLocalize.class)
 public class XmlErrorMessages extends AbstractBundle
 {
 	private static final XmlErrorMessages ourInstance = new XmlErrorMessages();
