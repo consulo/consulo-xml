@@ -15,17 +15,17 @@
  */
 package consulo.xml.ide.highlighter;
 
-import consulo.language.Language;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.util.io.CharsetToolkit;
-import consulo.util.xml.fastReader.XmlCharsetDetector;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.application.AllIcons;
+import consulo.language.Language;
 import consulo.localize.LocalizeValue;
-import consulo.platform.base.localize.IdeLocalize;
 import consulo.project.Project;
 import consulo.ui.image.Image;
+import consulo.util.io.CharsetToolkit;
+import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -59,7 +59,7 @@ public class HtmlFileType extends XmlLikeFileType
 	@Nonnull
 	public LocalizeValue getDescription()
 	{
-		return IdeLocalize.filetypeDescriptionHtml();
+		return XmlLocalize.filetypeDescriptionHtml();
 	}
 
 	@Nonnull

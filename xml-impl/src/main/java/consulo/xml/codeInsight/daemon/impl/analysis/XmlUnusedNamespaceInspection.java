@@ -69,7 +69,6 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool
 
 		return new XmlElementVisitor()
 		{
-
 			@Override
 			public void visitXmlAttribute(XmlAttribute attribute)
 			{
@@ -88,13 +87,9 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool
 				String declaredPrefix = getDeclaredPrefix(attribute);
 				if(namespace != null && !refCountHolder.isInUse(declaredPrefix))
 				{
-
-					for(ImplicitUsageProvider provider : ImplicitUsageProvider.EP_NAME.getExtensionList())
+					if(holder.getProject().getExtensionPoint(ImplicitUsageProvider.class).findFirstSafe(it -> it.isImplicitUsage(attribute)) != null)
 					{
-						if(provider.isImplicitUsage(attribute))
-						{
-							return;
-						}
+						return;
 					}
 
 					XmlAttributeValue value = attribute.getValueElement();

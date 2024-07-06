@@ -21,10 +21,10 @@
 package consulo.xml.application.options.editor;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
-import consulo.platform.base.localize.ApplicationLocalize;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
