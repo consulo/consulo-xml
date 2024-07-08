@@ -28,6 +28,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
@@ -65,7 +66,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
   @Nullable
   protected abstract PsiElement resolveReference(@Nullable final T t, final ConvertContext context);
 
-  protected abstract String getUnresolvedMessage(String value);
+  protected abstract LocalizeValue buildUnresolvedMessageInner(String value);
 
   @Nonnull
   public Collection<? extends List<T>> getVariants(final ConvertContext context) {
@@ -75,7 +76,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
   public static <T> void filterVariants(List<T> variants, GenericDomValue<List<T>> genericDomValue) {
     final List<T> list = genericDomValue.getValue();
     if (list != null) {
-      for (Iterator<T> i = variants.iterator(); i.hasNext();) {
+      for (Iterator<T> i = variants.iterator(); i.hasNext(); ) {
         final T variant = i.next();
         for (T existing : list) {
           if (existing.equals(variant)) {
@@ -142,11 +143,11 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
-                                                                 int start,
-                                                                 int end,
-                                                                 final ConvertContext context,
-                                                                 final GenericDomValue<List<T>> genericDomValue,
-                                                                 final boolean delimitersOnly) {
+                                            int start,
+                                            int end,
+                                            final ConvertContext context,
+                                            final GenericDomValue<List<T>> genericDomValue,
+                                            final boolean delimitersOnly) {
 
     return new MyPsiReference(element, new TextRange(start, end), context, genericDomValue, delimitersOnly);
   }
@@ -200,7 +201,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
       PsiElement element = referenceHandleElementRename(this, newElementName, getSuperElementRenameFunction(ref));
       if (!ref.isNull()) {
-         throw ref.get();
+        throw ref.get();
       }
 
       return element;
@@ -209,9 +210,10 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     @Override
     public PsiElement bindToElement(@Nonnull final PsiElement element) throws consulo.language.util.IncorrectOperationException {
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
-      PsiElement bindElement =  referenceBindToElement(this, element, getSuperBindToElementFunction(ref), getSuperElementRenameFunction(ref));
+      PsiElement bindElement =
+        referenceBindToElement(this, element, getSuperBindToElementFunction(ref), getSuperElementRenameFunction(ref));
       if (!ref.isNull()) {
-         throw ref.get();
+        throw ref.get();
       }
 
       return bindElement;
@@ -223,16 +225,14 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
     private Function<PsiElement, PsiElement> getSuperBindToElementFunction(final Ref<IncorrectOperationException> ref) {
-      return new Function<PsiElement, PsiElement>() {
-        public PsiElement apply(final PsiElement s) {
-          try {
-            return MyPsiReference.super.bindToElement(s);
-          }
-          catch (consulo.language.util.IncorrectOperationException e) {
-            ref.set(e);
-          }
-          return null;
+      return s -> {
+        try {
+          return MyPsiReference.super.bindToElement(s);
         }
+        catch (IncorrectOperationException e) {
+          ref.set(e);
+        }
+        return null;
       };
     }
 
@@ -250,24 +250,24 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       };
     }
 
-
     @Nonnull
-    public String getUnresolvedMessagePattern() {
-      return getUnresolvedMessage(getValue());
+    @Override
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+      return buildUnresolvedMessageInner(getValue());
     }
   }
 
   protected PsiElement referenceBindToElement(final PsiReference psiReference, final PsiElement element,
                                               final Function<PsiElement, PsiElement> superBindToElementFunction,
                                               final Function<String, PsiElement> superElementRenameFunction)
-      throws consulo.language.util.IncorrectOperationException {
+    throws consulo.language.util.IncorrectOperationException {
     return superBindToElementFunction.apply(element);
   }
 
   protected PsiElement referenceHandleElementRename(final PsiReference psiReference,
                                                     final String newName,
                                                     final Function<String, PsiElement> superHandleElementRename)
-      throws consulo.language.util.IncorrectOperationException {
+    throws consulo.language.util.IncorrectOperationException {
 
     return superHandleElementRename.apply(newName);
   }

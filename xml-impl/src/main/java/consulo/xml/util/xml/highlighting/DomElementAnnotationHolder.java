@@ -15,18 +15,19 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
-
-import consulo.language.editor.annotation.Annotation;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import consulo.language.editor.inspection.ProblemHighlightType;
-import consulo.language.psi.PsiReference;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDescriptor>{
@@ -59,7 +60,8 @@ public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDe
    * @return annotation
    */
   @Nonnull
-  Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nullable String message);
+  @RequiredReadAction
+  Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message);
 
   int getSize();
 }

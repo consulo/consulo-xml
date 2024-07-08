@@ -16,6 +16,7 @@
 
 package consulo.xml.util.xml.converters.values;
 
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomBundle;
 import consulo.xml.util.xml.ResolvingConverter;
@@ -51,12 +52,13 @@ public class NumberValueConverter extends ResolvingConverter<String> {
     return null;
   }
 
-  public String getErrorMessage(@Nullable final String s, final ConvertContext context) {
-    if (s == null) return super.getErrorMessage(s, context);
+  @Nonnull
+  public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
+    if (s == null) return super.buildUnresolvedMessage(s, context);
 
-    return  s.trim().length() == 0 ?
+    return LocalizeValue.localizeTODO(s.isBlank() ?
           DomBundle.message("value.converter.format.exception.empty.string", myNumberClass.getName()) :
-          DomBundle.message("value.converter.format.exception", s, myNumberClass.getName());
+          DomBundle.message("value.converter.format.exception", s, myNumberClass.getName()));
   }
 
   @Nonnull

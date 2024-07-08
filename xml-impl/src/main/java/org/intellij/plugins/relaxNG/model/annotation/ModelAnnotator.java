@@ -20,15 +20,16 @@ import consulo.codeEditor.markup.GutterIconRenderer;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
+import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.SmartList;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
-import consulo.language.editor.annotation.HighlightSeverity;
-import consulo.language.psi.PsiFile;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Grammar;
@@ -37,17 +38,17 @@ import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 04.12.2007
-*/
+ * Created by IntelliJ IDEA.
+ * User: sweinreuter
+ * Date: 04.12.2007
+ */
 public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 
   @Override
@@ -91,7 +92,7 @@ public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
             return result.size() == 0 || super.execute(file);
           }
         };
-        
+
         RelaxIncludeIndex.processBackwardDependencies(xmlFile, processor);
 
         if (processor.isFound()) {
@@ -100,7 +101,7 @@ public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
       }
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({"unchecked"})
     private void createGutterAnnotation(CommonElement t, GutterIconRenderer renderer) {
       final Annotation a = myHolder.createAnnotation((T)t, HighlightSeverity.INFORMATION, null);
       a.setGutterIconRenderer(renderer);
@@ -122,7 +123,8 @@ public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
         final Set<Define> set = map.get(define.getName());
         if (set == null || set.size() == 0) {
           //noinspection unchecked
-          myHolder.createAnnotation((T)define, HighlightSeverity.ERROR, "Definition doesn't override anything from " + file.getName());
+          myHolder.createAnnotation((T)define, HighlightSeverity.ERROR, LocalizeValue.localizeTODO(
+            "Definition doesn't override anything from " + file.getName()));
           continue;
         }
 

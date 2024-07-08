@@ -16,34 +16,35 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.document.util.TextRange;
 import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.LocalQuickFixProvider;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceProvider;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.ProcessingContext;
+import consulo.localize.LocalizeValue;
+import consulo.logging.Logger;
+import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
 import consulo.xml.lang.xml.XMLLanguage;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.BasicAttributeValueReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
-import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import consulo.language.util.ProcessingContext;
-import consulo.language.editor.inspection.LocalQuickFixProvider;
-import consulo.language.psi.EmptyResolveMessageProvider;
-import consulo.language.psi.PsiReference;
-import consulo.language.psi.PsiReferenceProvider;
-import consulo.logging.Logger;
-import consulo.util.collection.ArrayUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 24.07.2007
-*/
+ * Created by IntelliJ IDEA.
+ * User: sweinreuter
+ * Date: 24.07.2007
+ */
 public class PrefixReferenceProvider extends PsiReferenceProvider {
   private static final Logger LOG = Logger.getInstance("#PrefixReferenceProvider");
 
@@ -59,7 +60,7 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
     }
 
     return new PsiReference[]{
-            new PrefixReference(value, i)
+      new PrefixReference(value, i)
     };
   }
 
@@ -105,24 +106,13 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
       final String[] name = value.split(":");
       final XmlTag tag = factory.createTagFromText("<" + (name.length > 1 ? name[1] : value) + " />", XMLLanguage.INSTANCE);
 
-      return new LocalQuickFix[] { XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(tag, getCanonicalText(), null) };
+      return new LocalQuickFix[]{XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(tag, getCanonicalText(), null)};
     }
 
-    @Override
     @Nonnull
-    public Object[] getVariants() {
-      return ArrayUtil.EMPTY_OBJECT_ARRAY;
-    }
-
     @Override
-    public boolean isSoft() {
-      return false;
-    }
-
-    @Override
-    @Nonnull
-    public String getUnresolvedMessagePattern() {
-      return "Undefined namespace prefix ''{0}''";
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+      return LocalizeValue.localizeTODO( "Undefined namespace prefix '" + s + "'");
     }
   }
 }

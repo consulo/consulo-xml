@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
@@ -22,6 +23,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.LocalQuickFixProvider;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
@@ -94,14 +96,15 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     return addProblem(new DomElementResolveProblemDescriptorImpl(element, reference, getQuickFixes(element, reference)));
   }
 
+  @RequiredReadAction
   @Nonnull
-  public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nullable String message) {
+  public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message) {
     final XmlElement xmlElement = element.getXmlElement();
     LOG.assertTrue(xmlElement != null, "No XML element for " + element);
     final TextRange range = xmlElement.getTextRange();
     final int startOffset = range.getStartOffset();
-    final int endOffset = message == null ? startOffset : range.getEndOffset();
-    final Annotation annotation = new Annotation(startOffset, endOffset, severity, message, null);
+    final int endOffset = message == LocalizeValue.of() ? startOffset : range.getEndOffset();
+    final Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of());
     myAnnotations.add(annotation);
     return annotation;
   }

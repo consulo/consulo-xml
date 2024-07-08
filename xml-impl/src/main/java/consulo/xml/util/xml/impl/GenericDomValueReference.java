@@ -27,6 +27,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -143,9 +144,10 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
   }
 
   @Nonnull
-  public String getUnresolvedMessagePattern() {
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
     final ConvertContext context = getConvertContext();
-    return getConverter().getErrorMessage(getStringValue(), context);
+    return getConverter().buildUnresolvedMessage(getStringValue(), context);
   }
 
   public final ConvertContext getConvertContext() {

@@ -15,9 +15,11 @@
  */
 package com.intellij.xml.util;
 
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
@@ -67,10 +69,10 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
 
   @Nonnull
   @Override
-  public String getUnresolvedMessagePattern() {
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
     String name = getElement() instanceof XmlTag ? "tag" : "attribute";
     return myDescriptor.isFixed()
-           ? XmlErrorMessages.message("should.have.fixed.value", StringUtil.capitalize(name), myDescriptor.getDefaultValue())
-           : XmlErrorMessages.message("wrong.value", name);
+      ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue())
+      : XmlErrorLocalize.wrongValue(name);
   }
 }

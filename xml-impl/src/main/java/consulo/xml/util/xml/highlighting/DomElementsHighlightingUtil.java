@@ -26,6 +26,7 @@ import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.xml.XmlStringUtil;
@@ -41,7 +42,8 @@ public class DomElementsHighlightingUtil {
   }
 
   @Nullable
-  public static ProblemDescriptor createProblemDescriptors(final InspectionManager manager, final DomElementProblemDescriptor problemDescriptor) {
+  public static ProblemDescriptor createProblemDescriptors(final InspectionManager manager,
+                                                           final DomElementProblemDescriptor problemDescriptor) {
     final ProblemHighlightType type = getProblemHighlightType(problemDescriptor);
     return createProblemDescriptors(problemDescriptor, new Function<Pair<TextRange, PsiElement>, ProblemDescriptor>() {
       public ProblemDescriptor apply(final Pair<TextRange, PsiElement> s) {
@@ -83,7 +85,7 @@ public class DomElementsHighlightingUtil {
           annotation.setTextAttributes(CodeInsightColors.WRONG_REFERENCES_ATTRIBUTES);
         }
 
-        for(LocalQuickFix fix:problemDescriptor.getFixes()) {
+        for (LocalQuickFix fix : problemDescriptor.getFixes()) {
           if (fix instanceof IntentionAction) annotation.registerFix((IntentionAction)fix);
         }
         return annotation;
@@ -95,12 +97,16 @@ public class DomElementsHighlightingUtil {
                                              final TextRange range,
                                              final String text) {
     String tooltip = text == null ? null : "<html><body>" + XmlStringUtil.escapeString(text) + "</body></html>";
-    return new Annotation(range.getStartOffset(), range.getEndOffset(), severity, text, tooltip);
+    return new Annotation(range.getStartOffset(),
+                          range.getEndOffset(),
+                          severity,
+                          text == null ? LocalizeValue.of() : LocalizeValue.of(text),
+                          tooltip == null ? LocalizeValue.of() : LocalizeValue.of(tooltip));
   }
 
   @Nullable
   private static <T> T createProblemDescriptors(final DomElementProblemDescriptor problemDescriptor,
-                                                      final Function<Pair<TextRange, PsiElement>, T> creator) {
+                                                final Function<Pair<TextRange, PsiElement>, T> creator) {
 
     final Pair<TextRange, PsiElement> range = ((DomElementProblemDescriptorImpl)problemDescriptor).getProblemRange();
     return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.apply(range);

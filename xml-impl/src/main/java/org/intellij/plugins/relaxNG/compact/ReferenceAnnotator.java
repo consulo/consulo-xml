@@ -16,23 +16,20 @@
 
 package org.intellij.plugins.relaxNG.compact;
 
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.editor.inspection.LocalQuickFixProvider;
-import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.inspection.ProblemHighlightType;
-import consulo.language.editor.inspection.scheme.InspectionManager;
-import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.document.util.TextRange;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
-import consulo.document.util.TextRange;
+import consulo.language.editor.inspection.*;
+import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiPolyVariantReference;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import org.intellij.plugins.relaxNG.compact.psi.*;
-import javax.annotation.Nonnull;
 
-import java.text.MessageFormat;
+import javax.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -94,19 +91,15 @@ public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
     }
   }
 
+  @RequiredReadAction
   private void addError(PsiReference reference) {
     final TextRange rangeInElement = reference.getRangeInElement();
     final TextRange range = TextRange.from(reference.getElement().getTextRange().getStartOffset()
             + rangeInElement.getStartOffset(), rangeInElement.getLength());
 
-    final Annotation annotation;
-    if (reference instanceof EmptyResolveMessageProvider) {
-      final String s = ((EmptyResolveMessageProvider)reference).getUnresolvedMessagePattern();
-      annotation = myHolder.createErrorAnnotation(range, MessageFormat.format(s, reference.getCanonicalText()));
-    }
-    else {
-      annotation = myHolder.createErrorAnnotation(range, "Cannot resolve symbol");
-    }
+    LocalizeValue message = ProblemsHolder.unresolvedReferenceMessage(reference);
+    final Annotation annotation = myHolder.createErrorAnnotation(range, message.get());
+
     annotation.setHighlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
 
     if (reference instanceof LocalQuickFixProvider) {
@@ -114,7 +107,7 @@ public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
       if (fixes != null) {
         InspectionManager inspectionManager = InspectionManager.getInstance(reference.getElement().getProject());
         for (LocalQuickFix fix : fixes) {
-          ProblemDescriptor descriptor = inspectionManager.createProblemDescriptor(reference.getElement(), annotation.getMessage(), fix,
+          ProblemDescriptor descriptor = inspectionManager.createProblemDescriptor(reference.getElement(), annotation.getMessage().get(), fix,
                                                                                    ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, true);
           annotation.registerFix(fix, null, null, descriptor);
         }

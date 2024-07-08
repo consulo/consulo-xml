@@ -16,6 +16,7 @@
 
 package consulo.xml.util.xml.converters.values;
 
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomBundle;
@@ -85,7 +86,7 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     return Arrays.asList(VARIANTS);
   }
 
-  public String getErrorMessage(@Nullable final String s, final ConvertContext context) {
-    return DomBundle.message("value.converter.format.exception", s, BOOLEAN);
+  public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
+    return LocalizeValue.localizeTODO(DomBundle.message("value.converter.format.exception", s, BOOLEAN));
   }
 }

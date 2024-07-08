@@ -16,8 +16,10 @@
 
 package org.intellij.plugins.relaxNG.model.annotation;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.language.editor.annotation.Annotation;
@@ -34,7 +36,8 @@ abstract class CommonAnnotationHolder<C> {
     return new HolderAdapter<>(holder);
   }
 
-  public abstract Annotation createAnnotation(C element, @Nonnull HighlightSeverity severity, String message);
+  @RequiredReadAction
+  public abstract Annotation createAnnotation(C element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message);
 
   private static class DomHolderAdapter<T extends DomElement> extends CommonAnnotationHolder<T> {
     private final DomElementAnnotationHolder myHolder;
@@ -44,7 +47,8 @@ abstract class CommonAnnotationHolder<C> {
     }
 
     @Override
-    public Annotation createAnnotation(DomElement element, @Nonnull HighlightSeverity severity, String message) {
+    @RequiredReadAction
+    public Annotation createAnnotation(DomElement element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message) {
       final Annotation annotation = myHolder.createAnnotation(element, severity, message);
       annotation.setTooltip(message);  // no tooltip by default??
       return annotation;
@@ -58,16 +62,17 @@ abstract class CommonAnnotationHolder<C> {
       myHolder = holder;
     }
 
+    @RequiredReadAction
     @Override
-    public Annotation createAnnotation(T element, @Nonnull HighlightSeverity severity, String message) {
+    public Annotation createAnnotation(T element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message) {
       if (severity == HighlightSeverity.ERROR) {
-        return myHolder.createErrorAnnotation(element, message);
+        return myHolder.createErrorAnnotation(element, message == LocalizeValue.of() ? null : message.get());
       } else if (severity == HighlightSeverity.WARNING) {
-        return myHolder.createWarningAnnotation(element, message);
+        return myHolder.createWarningAnnotation(element, message == LocalizeValue.of() ? null : message.get());
       } else if (severity == HighlightSeverity.WEAK_WARNING) {
-        return myHolder.createWeakWarningAnnotation(element, message);
+        return myHolder.createWeakWarningAnnotation(element, message == LocalizeValue.of() ? null : message.get());
       } else {
-        return myHolder.createInfoAnnotation(element, message);
+        return myHolder.createInfoAnnotation(element, message == LocalizeValue.of() ? null : message.get());
       }
     }
   }

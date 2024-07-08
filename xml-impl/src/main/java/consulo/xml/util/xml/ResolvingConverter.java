@@ -15,19 +15,17 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.util.xml.converters.values.BooleanValueConverter;
-import consulo.language.editor.CodeInsightBundle;
-import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.localize.CodeInsightLocalize;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.converters.values.BooleanValueConverter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.lang.Object;
-import java.lang.String;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -85,8 +83,8 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
     }
   };
 
-  public String getErrorMessage(@Nullable String s, final ConvertContext context) {
-    return CodeInsightBundle.message("error.cannot.resolve.default.message", s);
+  public LocalizeValue buildUnresolvedMessage(@Nullable String s, final ConvertContext context) {
+    return CodeInsightLocalize.errorCannotResolveDefaultMessage(s);
   }
 
   /**
