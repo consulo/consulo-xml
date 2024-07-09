@@ -20,11 +20,12 @@ import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
 import consulo.application.util.ConcurrentFactoryMap;
-import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.pom.PomService;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiModificationTracker;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.util.collection.SoftFactoryMap;
 import consulo.xml.util.xml.highlighting.ResolvingElementQuickFix;
@@ -107,8 +108,8 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
     return invocationElement.getManager().getResolvingScope((GenericDomValue)invocationElement);
   }
 
-  public String getErrorMessage(final String s, final ConvertContext context) {
-    return CodeInsightBundle.message("error.cannot.resolve.0.1", TypePresentationService.getInstance().getTypeName(myClass), s);
+  public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
+    return CodeInsightLocalize.errorCannotResolve01(TypePresentationService.getInstance().getTypeName(myClass), s);
   }
 
   public final String toString(final T t, final ConvertContext context) {

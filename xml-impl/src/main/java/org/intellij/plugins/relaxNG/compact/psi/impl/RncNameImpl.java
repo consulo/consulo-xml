@@ -32,9 +32,10 @@ import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.psi.PsiReference;
-import consulo.language.psi.resolve.BaseScopeProcessor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
 import consulo.language.psi.resolve.ResolveState;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
@@ -153,10 +154,10 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     return "xsd".equals(prefix) || "xml".equals(prefix);
   }
 
-  @Override
   @Nonnull
-  public String getUnresolvedMessagePattern() {
-    return "Unresolved namespace prefix ''{0}''";
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    return LocalizeValue.localizeTODO("Unresolved namespace prefix '" + s + "'");
   }
 
   @Nullable
@@ -168,7 +169,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     return LocalQuickFix.EMPTY_ARRAY;
   }
 
-  private static class MyResolver extends BaseScopeProcessor {
+  private static class MyResolver implements PsiScopeProcessor {
     private final String myPrefix;
     private final Kind myKind;
     private PsiElement myResult;

@@ -15,14 +15,18 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis.encoding;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 import consulo.util.io.CharsetToolkit;
 import consulo.language.psi.PsiReference;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.util.IncorrectOperationException;
 import javax.annotation.Nonnull;
@@ -49,14 +53,17 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     myPriority = priority;
   }
 
+  @RequiredReadAction
   public PsiElement getElement() {
     return myValue;
   }
 
+  @RequiredReadAction
   public TextRange getRangeInElement() {
     return myRangeInElement;
   }
 
+  @RequiredReadAction
   @Nullable
   public PsiElement resolve() {
     return CharsetToolkit.forName(myCharsetName) == null ? null : myValue;
@@ -66,28 +73,33 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
   }
 
   @Nonnull
-  public String getUnresolvedMessagePattern() {
-    //noinspection UnresolvedPropertyKey
-    return XmlErrorMessages.message("unknown.encoding.0");
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+    return XmlErrorLocalize.unknownEncoding0(referenceText);
   }
 
+  @RequiredReadAction
   @Nonnull
   public String getCanonicalText() {
     return myCharsetName;
   }
 
+  @RequiredWriteAction
   public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
     return null;
   }
 
+  @RequiredWriteAction
   public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
     return null;
   }
 
+  @RequiredReadAction
   public boolean isReferenceTo(PsiElement element) {
     return false;
   }
 
+  @RequiredReadAction
   @Nonnull
   public Object[] getVariants() {
     Charset[] charsets = CharsetToolkit.getAvailableCharsets();
@@ -96,10 +108,6 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
       suggestions.add(LookupElementBuilder.create(charset.name()).withCaseSensitivity(false));
     }
     return suggestions.toArray(new LookupElement[suggestions.size()]);
-  }
-
-  public boolean isSoft() {
-    return false;
   }
 
   public int compareTo(XmlEncodingReference ref) {

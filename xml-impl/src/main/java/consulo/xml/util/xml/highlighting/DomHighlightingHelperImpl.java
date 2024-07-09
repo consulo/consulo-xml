@@ -28,6 +28,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.language.util.ProcessingContext;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
@@ -131,19 +132,14 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
             (domReference != null || isResolvingConverter &&
                                      hasBadResolve(domReference = new GenericDomValueReference(element)))) {
           hasBadResolve = true;
-          final String errorMessage = converter
-            .getErrorMessage(element.getStringValue(), ConvertContextFactory.createConvertContext(
-              DomManagerImpl.getDomInvocationHandler(element)));
-          if (errorMessage != null && XmlHighlightVisitor.getErrorDescription(domReference) != null) {
-            list.add(holder.createResolveProblem(element, domReference));
-          }
+          list.add(holder.createResolveProblem(element, domReference));
         }
       }
       if (!hasBadResolve && psiReferences.length == 0 && element.getValue() == null && !PsiTreeUtil.hasErrorElements(valueElement)) {
-        final String errorMessage = converter
-          .getErrorMessage(element.getStringValue(), ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element)));
-        if (errorMessage != null) {
-          list.add(holder.createProblem(element, errorMessage));
+        final LocalizeValue errorMessage = converter
+          .buildUnresolvedMessage(element.getStringValue(), ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element)));
+        if (errorMessage != LocalizeValue.of()) {
+          list.add(holder.createProblem(element, errorMessage.get()));
         }
       }
       return list;

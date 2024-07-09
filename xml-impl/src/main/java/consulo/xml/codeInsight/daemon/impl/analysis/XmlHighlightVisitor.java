@@ -21,10 +21,10 @@ import com.intellij.xml.util.AnchorReference;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.UserDataCache;
 import consulo.colorScheme.TextAttributes;
-import consulo.component.util.localize.BundleBase;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -612,6 +612,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     doCheckRefs(value, value.getReferences(), 0);
   }
 
+  @RequiredReadAction
   private void doCheckRefs(final PsiElement value, final PsiReference[] references, int start) {
     for (int i = start; i < references.length; ++i) {
       PsiReference reference = references[i];
@@ -622,7 +623,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
       if (!hasBadResolve(reference, false)) {
         continue;
       }
-      String description = getErrorDescription(reference);
+      String description = ProblemsHolder.unresolvedReferenceMessage(reference).get();
 
       final int startOffset = reference.getElement().getTextRange().getStartOffset();
       final TextRange referenceRange = reference.getRangeInElement();
@@ -666,28 +667,6 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
   public static boolean isUrlReference(PsiReference reference) {
     return reference instanceof FileReferenceOwner || reference instanceof AnchorReference;
-  }
-
-  @Nonnull
-  public static String getErrorDescription(@Nonnull PsiReference reference) {
-    String message;
-    if (reference instanceof EmptyResolveMessageProvider) {
-      message = ((EmptyResolveMessageProvider)reference).getUnresolvedMessagePattern();
-    }
-    else {
-      //noinspection UnresolvedPropertyKey
-      message = PsiBundle.message("cannot.resolve.symbol");
-    }
-
-    String description;
-    try {
-      description = BundleBase.format(message, reference.getCanonicalText()); // avoid double formatting
-    }
-    catch (IllegalArgumentException ex) {
-      // unresolvedMessage provided by third-party reference contains wrong format string (e.g. {}), tolerate it
-      description = message;
-    }
-    return description;
   }
 
   public static boolean hasBadResolve(final PsiReference reference, boolean checkSoft) {

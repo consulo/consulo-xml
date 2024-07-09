@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -39,105 +40,86 @@ import javax.annotation.Nullable;
  * Date: 9/3/12
  */
 @ExtensionImpl
-public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool
-{
-	@Nonnull
-	@Override
-	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
-	{
-		return new XmlElementVisitor()
-		{
-			@Override
-			public void visitXmlAttributeValue(XmlAttributeValue value)
-			{
-				checkRefs(value, holder, isOnTheFly);
-			}
+public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
+  @Nonnull
+  @Override
+  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+    return new XmlElementVisitor() {
+      @Override
+      public void visitXmlAttributeValue(XmlAttributeValue value) {
+        checkRefs(value, holder, isOnTheFly);
+      }
 
-			@Override
-			public void visitXmlDoctype(XmlDoctype xmlDoctype)
-			{
-				checkRefs(xmlDoctype, holder, isOnTheFly);
-			}
+      @Override
+      public void visitXmlDoctype(XmlDoctype xmlDoctype) {
+        checkRefs(xmlDoctype, holder, isOnTheFly);
+      }
 
-			@Override
-			public void visitXmlTag(XmlTag tag)
-			{
-				checkRefs(tag, holder, isOnTheFly);
-			}
-		};
-	}
+      @Override
+      public void visitXmlTag(XmlTag tag) {
+        checkRefs(tag, holder, isOnTheFly);
+      }
+    };
+  }
 
-	private void checkRefs(PsiElement element, ProblemsHolder holder, boolean isOnTheFly)
-	{
-		PsiReference[] references = element.getReferences();
-		for(PsiReference reference : references)
-		{
-			if(!XmlHighlightVisitor.isUrlReference(reference))
-			{
-				continue;
-			}
-			if(!needToCheckRef(reference))
-			{
-				continue;
-			}
-			boolean isHtml = HtmlUtil.isHtmlTagContainingFile(element);
-			if(isHtml ^ isForHtml())
-			{
-				continue;
-			}
-			if(!isHtml && XmlHighlightVisitor.skipValidation(element))
-			{
-				continue;
-			}
-			if(XmlHighlightVisitor.hasBadResolve(reference, false))
-			{
-				holder.registerProblem(reference, ProblemsHolder.unresolvedReferenceMessage(reference),
-						isHtml ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
-			}
-		}
-	}
+  @RequiredReadAction
+  private void checkRefs(PsiElement element, ProblemsHolder holder, boolean isOnTheFly) {
+    PsiReference[] references = element.getReferences();
+    for (PsiReference reference : references) {
+      if (!XmlHighlightVisitor.isUrlReference(reference)) {
+        continue;
+      }
+      if (!needToCheckRef(reference)) {
+        continue;
+      }
+      boolean isHtml = HtmlUtil.isHtmlTagContainingFile(element);
+      if (isHtml ^ isForHtml()) {
+        continue;
+      }
+      if (!isHtml && XmlHighlightVisitor.skipValidation(element)) {
+        continue;
+      }
+      if (XmlHighlightVisitor.hasBadResolve(reference, false)) {
+        holder.registerProblem(reference, ProblemsHolder.unresolvedReferenceMessage(reference).get(),
+                               isHtml ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+      }
+    }
+  }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return XMLLanguage.INSTANCE;
+  }
 
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return "XML";
-	}
+  @Nonnull
+  @Override
+  public String getGroupDisplayName() {
+    return "XML";
+  }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "File path resolving in XML";
-	}
+  @Nonnull
+  @Override
+  public String getDisplayName() {
+    return "File path resolving in XML";
+  }
 
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.ERROR;
+  }
 
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+  @Override
+  public boolean isEnabledByDefault() {
+    return true;
+  }
 
-	protected boolean needToCheckRef(PsiReference reference)
-	{
-		return true;
-	}
+  protected boolean needToCheckRef(PsiReference reference) {
+    return true;
+  }
 
-	protected boolean isForHtml()
-	{
-		return false;
-	}
+  protected boolean isForHtml() {
+    return false;
+  }
 }

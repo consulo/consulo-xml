@@ -30,6 +30,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiPolyVariantReferenceBase;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ResolveResult;
+import consulo.localize.LocalizeValue;
 import consulo.util.lang.StringUtil;
 import com.intellij.xml.util.XmlTagTextUtil;
 import consulo.xml.util.xml.*;
@@ -64,7 +65,7 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
   @Nonnull
   protected abstract ResolveResult[] multiResolveReference(@Nullable final T t, final ConvertContext context);
 
-  protected abstract String getUnresolvedMessage(String value);
+  protected abstract LocalizeValue buildUnresolvedMessageInner(String value);
 
   @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
@@ -155,8 +156,9 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     }
 
     @Nonnull
-    public String getUnresolvedMessagePattern() {
-      return myBadQuotation? DomBundle.message("message.invalid.value.quotation") : getUnresolvedMessage(getValue());
+    @Override
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+      return myBadQuotation ? LocalizeValue.localizeTODO(DomBundle.message("message.invalid.value.quotation", s)) : buildUnresolvedMessageInner(getValue());
     }
   }
 }

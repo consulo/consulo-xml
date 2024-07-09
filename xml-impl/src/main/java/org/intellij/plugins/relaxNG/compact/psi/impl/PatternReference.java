@@ -26,6 +26,7 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.*;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
@@ -51,7 +52,7 @@ import java.util.function.Function;
  * Date: 13.08.2007
  */
 class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function<Define, ResolveResult>,
-    LocalQuickFixProvider, EmptyResolveMessageProvider {
+  LocalQuickFixProvider, EmptyResolveMessageProvider {
 
   public PatternReference(RncRef ref) {
     super(ref);
@@ -101,6 +102,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
       public PsiElement getElement() {
         return null;
       }
+
       @Override
       public boolean isValidResult() {
         return false;
@@ -145,7 +147,11 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
     final Map<String, Set<Define>> map = DefinitionResolver.getAllVariants(scope);
     if (map == null || map.size() == 0) return ArrayUtil.EMPTY_OBJECT_ARRAY;
 
-    return ContainerUtil.mapNotNull(map.values(), (Function<Set<Define>, Object>)defines -> defines.size() == 0 ? null : defines.iterator().next().getPsiElement()).toArray();
+    return ContainerUtil.mapNotNull(map.values(),
+                                    (Function<Set<Define>, Object>)defines -> defines.size() == 0 ? null : defines.iterator()
+                                                                                                                  .next()
+                                                                                                                  .getPsiElement())
+                        .toArray();
   }
 
   @Override
@@ -153,17 +159,17 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
     return false;
   }
 
-  @Override
   @Nonnull
-  public String getUnresolvedMessagePattern() {
-    return "Unresolved pattern reference ''{0}''";
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    return LocalizeValue.localizeTODO("Unresolved pattern reference '" + s + "'");
   }
 
   @Nullable
   @Override
   public LocalQuickFix[] getQuickFixes() {
     if (getScope() != null) {
-      return new LocalQuickFix[] { new CreatePatternFix(this) };
+      return new LocalQuickFix[]{new CreatePatternFix(this)};
     }
     return LocalQuickFix.EMPTY_ARRAY;
   }
@@ -189,7 +195,8 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
 
     @Override
     public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-      final RncFile rncfile = (RncFile) PsiFileFactory.getInstance(myReference.getElement().getProject()).createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
+      final RncFile rncfile = (RncFile)PsiFileFactory.getInstance(myReference.getElement().getProject())
+                                                     .createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
 
       final RncGrammar grammar = rncfile.getGrammar();
       assert grammar != null;
@@ -227,7 +234,8 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef> implements Function
 
       VirtualFile virtualFile = myReference.getElement().getContainingFile().getVirtualFile();
       if (virtualFile != null) {
-        FileEditorManager.getInstance(project).openTextEditor(OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build(), true);
+        FileEditorManager.getInstance(project)
+                         .openTextEditor(OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build(), true);
       }
     }
   }

@@ -15,20 +15,20 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
-
-import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
 import consulo.document.util.UnfairTextRange;
 import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.language.psi.path.FileReference;
-import consulo.util.lang.Pair;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.language.psi.path.FileReference;
+import consulo.util.lang.Pair;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.util.xml.GenericDomValue;
-import consulo.language.editor.inspection.LocalQuickFix;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
@@ -37,8 +37,15 @@ class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptor
   @Nonnull
   private final PsiReference myReference;
 
-  public DomElementResolveProblemDescriptorImpl(@Nonnull final GenericDomValue domElement, @Nonnull final PsiReference reference, LocalQuickFix... quickFixes) {
-    super(domElement, reference instanceof FileReference ? ProblemsHolder.unresolvedReferenceMessage(reference) : XmlHighlightVisitor.getErrorDescription(reference), HighlightSeverity.ERROR, quickFixes);
+  @RequiredReadAction
+  public DomElementResolveProblemDescriptorImpl(@Nonnull final GenericDomValue domElement,
+                                                @Nonnull final PsiReference reference,
+                                                LocalQuickFix... quickFixes) {
+    super(domElement,
+          reference instanceof FileReference ? ProblemsHolder.unresolvedReferenceMessage(reference).get()
+            : ProblemsHolder.unresolvedReferenceMessage(reference).get(),
+          HighlightSeverity.ERROR,
+          quickFixes);
     myReference = reference;
   }
 
@@ -62,8 +69,8 @@ class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptor
     if (referenceRange.isEmpty()) {
       int startOffset = referenceRange.getStartOffset();
       return element instanceof XmlAttributeValue
-             ? Pair.create((TextRange)new UnfairTextRange(startOffset - 1, startOffset + 1), element)
-             : Pair.create(TextRange.from(startOffset, 1), element);
+        ? Pair.create((TextRange)new UnfairTextRange(startOffset - 1, startOffset + 1), element)
+        : Pair.create(TextRange.from(startOffset, 1), element);
     }
     return Pair.create(referenceRange, element);
   }

@@ -15,12 +15,14 @@
  */
 package consulo.xml.util.xml.converters.values;
 
-import javax.annotation.Nullable;
-
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.DomBundle;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CharacterValueConverter extends Converter<String> {
   @NonNls private static final String UNICODE_PREFIX = "\\u";
@@ -57,7 +59,8 @@ public class CharacterValueConverter extends Converter<String> {
     return s;
   }
 
-  public String getErrorMessage(@Nullable final String s, final ConvertContext context) {
-   return DomBundle.message("value.converter.format.exception", s, "char");
+  @Nonnull
+  public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
+   return LocalizeValue.localizeTODO(DomBundle.message("value.converter.format.exception", s, "char"));
   }
 }

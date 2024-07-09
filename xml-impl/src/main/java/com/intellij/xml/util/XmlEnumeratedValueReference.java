@@ -20,6 +20,7 @@ import consulo.document.util.TextRange;
 import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
@@ -67,10 +68,10 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
 
   @Nonnull
   @Override
-  public String getUnresolvedMessagePattern() {
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
     String name = getElement() instanceof XmlTag ? "tag" : "attribute";
     return myDescriptor.isFixed()
-      ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue()).get()
-      : XmlErrorLocalize.wrongValue(name).get();
+      ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue())
+      : XmlErrorLocalize.wrongValue(name);
   }
 }

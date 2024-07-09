@@ -15,10 +15,15 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.util.xml.converters.values.NumberValueConverter;
 import consulo.ide.IdeBundle;
+import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.localize.CodeInsightLocalize;
+import consulo.localize.LocalizeValue;
+import consulo.xml.util.xml.converters.values.NumberValueConverter;
+import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
 
 /**
@@ -43,9 +48,9 @@ public abstract class Converter<T> {
    * @param context context
    * @return error message used to highlight the errors somewhere in the UI, most often - like unresolved references in XML
    */
-  @Nullable
-  public String getErrorMessage(@Nullable String s, final ConvertContext context) {
-    return CodeInsightBundle.message("error.cannot.convert.default.message", s);
+  @Nonnull
+  public LocalizeValue buildUnresolvedMessage(@Nullable String s, final ConvertContext context) {
+    return CodeInsightLocalize.errorCannotConvertDefaultMessage(s);
   }
 
 
@@ -68,8 +73,8 @@ public abstract class Converter<T> {
       return t == null? null: t.toString();
     }
 
-    public String getErrorMessage(final String s, final ConvertContext context) {
-      return IdeBundle.message("value.should.be.integer");
+    public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
+      return IdeLocalize.valueShouldBeInteger();
     }
   };
 

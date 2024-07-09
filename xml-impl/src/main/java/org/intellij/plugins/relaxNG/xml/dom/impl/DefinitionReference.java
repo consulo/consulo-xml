@@ -23,6 +23,7 @@ import consulo.language.psi.*;
 import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -139,9 +140,9 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
     return LocalQuickFix.EMPTY_ARRAY;
   }
 
-  @Override
   @Nonnull
-  public String getUnresolvedMessagePattern() {
-    return "Unresolved pattern reference ''{0}''";
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    return LocalizeValue.localizeTODO("Unresolved pattern reference ''" + s + "'");
   }
 }
