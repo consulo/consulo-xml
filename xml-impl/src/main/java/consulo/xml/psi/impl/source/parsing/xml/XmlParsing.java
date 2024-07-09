@@ -15,12 +15,14 @@
  */
 package consulo.xml.psi.impl.source.parsing.xml;
 
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
-import consulo.language.parser.PsiBuilder;
 import consulo.language.ast.CustomParsingType;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.ILazyParseableElementType;
+import consulo.language.parser.PsiBuilder;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.Stack;
+import consulo.xml.impl.localize.XmlErrorLocalize;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -76,13 +78,13 @@ public class XmlParsing {
     }
 
     if (error != null) {
-      error.error(XmlErrorMessages.message("top.level.element.is.not.completed"));
+      error.error(XmlErrorLocalize.topLevelElementIsNotCompleted());
     }
 
     if (rootTagCount == 0) {
       final PsiBuilder.Marker rootTag = mark();
       error = mark();
-      error.error(XmlErrorMessages.message("xml.parsing.absent.root.tag"));
+      error.error(XmlErrorLocalize.xmlParsingAbsentRootTag());
       rootTag.done(XML_TAG);
     }
 
@@ -92,7 +94,7 @@ public class XmlParsing {
   @Nullable
   private static PsiBuilder.Marker flushError(PsiBuilder.Marker error) {
     if (error != null) {
-      error.error(XmlErrorMessages.message("xml.parsing.unexpected.tokens"));
+      error.error(XmlErrorLocalize.xmlParsingUnexpectedTokens());
       error = null;
     }
     return error;
@@ -105,7 +107,7 @@ public class XmlParsing {
 
     while (token() != XML_DOCTYPE_END && !eof()) advance();
     if (eof()) {
-      error(XmlErrorMessages.message("xml.parsing.unexpected.end.of.file"));
+      error(XmlErrorLocalize.xmlParsingUnexpectedEndOfFile());
     }
     else {
       advance();
@@ -133,7 +135,7 @@ public class XmlParsing {
         if (!tagName.equals(endName) && myTagNamesStack.contains(endName)) {
           footer.rollbackTo();
           myTagNamesStack.pop();
-          tag.doneBefore(XML_TAG, content, XmlErrorMessages.message("named.element.is.not.closed", tagName));
+          tag.doneBefore(XML_TAG, content, XmlErrorLocalize.namedElementIsNotClosed(tagName));
           content.drop();
           return;
         }
@@ -143,7 +145,7 @@ public class XmlParsing {
       footer.drop();
 
       while (token() != XML_TAG_END && token() != XML_START_TAG_START && token() != XML_END_TAG_START && !eof()) {
-        error(XmlErrorMessages.message("xml.parsing.unexpected.token"));
+        error(XmlErrorLocalize.xmlParsingUnexpectedToken());
         advance();
       }
 
@@ -151,11 +153,11 @@ public class XmlParsing {
         advance();
       }
       else {
-        error(XmlErrorMessages.message("xml.parsing.closing.tag.is.not.done"));
+        error(XmlErrorLocalize.xmlParsingClosingTagIsNotDone());
       }
     }
     else {
-      error(XmlErrorMessages.message("xml.parsing.unexpected.end.of.file"));
+      error(XmlErrorLocalize.xmlParsingUnexpectedEndOfFile());
     }
 
     content.drop();
@@ -168,7 +170,7 @@ public class XmlParsing {
     if (multipleRootTagError) {
       final PsiBuilder.Marker error = mark();
       advance();
-      error.error(XmlErrorMessages.message("xml.parsing.multiple.root.tags"));
+      error.error(XmlErrorLocalize.xmlParsingMultipleRootTags());
     }
     else {
       advance();
@@ -176,7 +178,7 @@ public class XmlParsing {
 
     final String tagName;
     if (token() != XML_NAME) {
-      error(XmlErrorMessages.message("xml.parsing.tag.name.expected"));
+      error(XmlErrorLocalize.xmlParsingTagNameExpected());
       tagName = "";
     }
     else {
@@ -211,14 +213,14 @@ public class XmlParsing {
       advance();
     }
     else {
-      error(XmlErrorMessages.message("tag.start.is.not.closed"));
+      error(XmlErrorLocalize.tagStartIsNotClosed());
       myTagNamesStack.pop();
       tag.done(XML_TAG);
       return null;
     }
 
     if (myTagNamesStack.size() > BALANCING_DEPTH_THRESHOLD) {
-      error(XmlErrorMessages.message("way.too.unbalanced"));
+      error(XmlErrorLocalize.wayTooUnbalanced());
       tag.done(XML_TAG);
       return null;
     }
@@ -258,7 +260,7 @@ public class XmlParsing {
         xmlText = startText(xmlText);
         final PsiBuilder.Marker error = mark();
         advance();
-        error.error(XmlErrorMessages.message("unescaped.ampersand.or.nonterminated.character.entity.reference"));
+        error.error(XmlErrorLocalize.unescapedAmpersandOrNonterminatedCharacterEntityReference());
       }
       else if (tt instanceof CustomParsingType || tt instanceof ILazyParseableElementType) {
         xmlText = terminateText(xmlText);
@@ -327,7 +329,7 @@ public class XmlParsing {
       else if (tt == XML_BAD_CHARACTER) {
         final PsiBuilder.Marker error = mark();
         advance();
-        error.error(XmlErrorMessages.message("xml.parsing.bad.character"));
+        error.error(XmlErrorLocalize.xmlParsingBadCharacter());
         continue;
       }
       if (tt == XML_COMMENT_END) {
@@ -362,7 +364,7 @@ public class XmlParsing {
       att.done(XML_ATTRIBUTE);
     }
     else {
-      error(XmlErrorMessages.message("expected.attribute.eq.sign"));
+      error(XmlErrorLocalize.expectedAttributeEqSign());
       att.done(XML_ATTRIBUTE);
     }
   }
@@ -380,7 +382,7 @@ public class XmlParsing {
         if (tt == XML_BAD_CHARACTER) {
           final PsiBuilder.Marker error = mark();
           advance();
-          error.error(XmlErrorMessages.message("unescaped.ampersand.or.nonterminated.character.entity.reference"));
+          error.error(XmlErrorLocalize.unescapedAmpersandOrNonterminatedCharacterEntityReference());
         }
         else if (tt == XML_ENTITY_REF_TOKEN) {
           parseReference();
@@ -394,11 +396,11 @@ public class XmlParsing {
         advance();
       }
       else {
-        error(XmlErrorMessages.message("xml.parsing.unclosed.attribute.value"));
+        error(XmlErrorLocalize.xmlParsingUnclosedAttributeValue());
       }
     }
     else {
-      error(XmlErrorMessages.message("xml.parsing.attribute.value.expected"));
+      error(XmlErrorLocalize.xmlParsingAttributeValueExpected());
     }
 
     attValue.done(XML_ATTRIBUTE_VALUE);
@@ -432,7 +434,7 @@ public class XmlParsing {
     final PsiBuilder.Marker pi = mark();
     advance();
     if (token() != XML_NAME) {
-      error(XmlErrorMessages.message("xml.parsing.processing.instruction.name.expected"));
+      error(XmlErrorLocalize.xmlParsingProcessingInstructionNameExpected());
     }
     else {
       advance();
@@ -450,7 +452,7 @@ public class XmlParsing {
           advance();
         }
         else {
-          error(XmlErrorMessages.message("expected.attribute.eq.sign"));
+          error(XmlErrorLocalize.expectedAttributeEqSign());
         }
         parseAttributeValue();
       }
@@ -460,7 +462,7 @@ public class XmlParsing {
       advance();
     }
     else {
-      error(XmlErrorMessages.message("xml.parsing.unterminated.processing.instruction"));
+      error(XmlErrorLocalize.xmlParsingUnterminatedProcessingInstruction());
     }
 
     pi.done(XML_PROCESSING_INSTRUCTION);
@@ -479,7 +481,7 @@ public class XmlParsing {
     myBuilder.advanceLexer();
   }
 
-  private void error(final String message) {
+  private void error(final LocalizeValue message) {
     myBuilder.error(message);
   }
 }

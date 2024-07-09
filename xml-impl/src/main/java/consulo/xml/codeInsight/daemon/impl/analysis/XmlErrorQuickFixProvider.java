@@ -21,13 +21,12 @@ import consulo.codeEditor.Editor;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.intention.ErrorQuickFixProvider;
 import consulo.language.editor.intention.IntentionAction;
-import consulo.language.editor.intention.QuickFixAction;
 import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
@@ -49,14 +48,14 @@ public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider
 	private static void registerXmlErrorQuickFix(final PsiErrorElement element, final HighlightInfo.Builder builder)
 	{
 		final String text = element.getErrorDescription();
-		if(text != null && text.startsWith(XmlErrorMessages.message("unescaped.ampersand")))
+		if(text != null && text.startsWith(XmlErrorLocalize.unescapedAmpersand().get()))
 		{
 			builder.registerFix(new IntentionAction()
 			{
 				@Nonnull
 				public String getText()
 				{
-					return XmlErrorMessages.message("escape.ampersand.quickfix");
+					return XmlErrorLocalize.escapeAmpersandQuickfix().get();
 				}
 
 				public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)

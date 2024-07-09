@@ -32,6 +32,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
@@ -54,12 +55,13 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
   private static final String MAP_ELEMENT_NAME = "map";
   private static final Key<CachedValue<Map<String, XmlTag>>> ourCachedIdsKey = Key.create("cached.ids");
 
-  AnchorReferenceImpl(final String anchor,
-                      @Nullable final FileReference psiReference,
-                      final PsiElement element,
-                      final int offset,
-                      final boolean soft) {
-
+  AnchorReferenceImpl(
+    final String anchor,
+    @Nullable final FileReference psiReference,
+    final PsiElement element,
+    final int offset,
+    final boolean soft
+  ) {
     myAnchor = anchor;
     myFileReference = psiReference;
     myElement = element;

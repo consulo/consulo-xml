@@ -24,7 +24,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
@@ -83,10 +83,12 @@ public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElem
             quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();
           }
 
-          registerProblemOnAttributeName(attribute,
-                                         XmlErrorMessages.message("attribute.is.not.allowed.here", attribute.getName()),
-                                         holder,
-                                         quickfixes);
+          registerProblemOnAttributeName(
+            attribute,
+            XmlErrorLocalize.attributeIsNotAllowedHere(attribute.getName()).get(),
+            holder,
+            quickfixes
+          );
         }
       }
     }

@@ -23,6 +23,7 @@ import consulo.document.util.TextRange;
 import consulo.language.codeStyle.CodeStyleManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -73,7 +74,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
         public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String attrName) throws IncorrectOperationException {
           doIt(file, editor, uri, tag, attrName);
         }
-      }, XmlErrorMessages.message("select.namespace.location.title"), this, editor);
+      }, XmlErrorLocalize.selectNamespaceLocationTitle().get(), this, editor);
   }
 
   private static void doIt(final PsiFile file, final Editor editor, final String uri, final XmlTag tag, final String s) throws IncorrectOperationException {

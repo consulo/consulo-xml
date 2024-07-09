@@ -55,6 +55,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.application.options.XmlSettings;
 import consulo.xml.codeInsight.completion.ExtendedTagInsertHandler;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -110,7 +111,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   @Nonnull
   public String getText() {
     final String alias = StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()));
-    return XmlErrorMessages.message("create.namespace.declaration.quickfix", alias);
+    return XmlErrorLocalize.createNamespaceDeclarationQuickfix(alias).get();
   }
 
   private XmlNamespaceHelper getXmlExtension() {
@@ -200,7 +201,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
   }
 
   private String getTitle() {
-    return XmlErrorMessages.message("select.namespace.title", StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile())));
+    return XmlErrorLocalize.selectNamespaceTitle(StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()))).get();
   }
 
   @Override
@@ -346,7 +347,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
               processExternalUrisImpl(metaHandler, file, processor);
             }
           },
-          XmlErrorMessages.message("finding.acceptable.uri"),
+          XmlErrorLocalize.findingAcceptableUri().get(),
           false,
           file.getProject()
       );
@@ -391,7 +392,9 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
     final String searchFor = metaHandler.searchFor();
 
-    if (pi != null) pi.setText(XmlErrorMessages.message("looking.in.schemas"));
+    if (pi != null) {
+      pi.setTextValue(XmlErrorLocalize.lookingInSchemas());
+    }
     final ExternalResourceManager instanceEx = ExternalResourceManager.getInstance();
     final String[] availableUrls = instanceEx.getResourceUrls(null, true);
     int i = 0;

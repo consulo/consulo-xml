@@ -31,8 +31,9 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.editor.rawHighlight.HighlightInfoType;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.*;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
@@ -133,12 +134,15 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool
 				PsiReference[] references = value.getReferences();
 				for(PsiReference reference : references)
 				{
-					if(reference instanceof SchemaPrefixReference)
+					if(reference instanceof SchemaPrefixReference schemaPrefixReference)
 					{
-						if(!XML.equals(((SchemaPrefixReference) reference).getNamespacePrefix()) && reference.resolve() == null)
+						if(!XML.equals(schemaPrefixReference.getNamespacePrefix()) && reference.resolve() == null)
 						{
-							holder.registerProblem(reference, XmlErrorMessages.message("unbound.namespace",
-									((SchemaPrefixReference) reference).getNamespacePrefix()), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+							holder.registerProblem(
+								reference,
+								XmlErrorLocalize.unboundNamespace(schemaPrefixReference.getNamespacePrefix()).get(),
+								ProblemHighlightType.LIKE_UNKNOWN_SYMBOL
+							);
 						}
 					}
 				}
@@ -146,8 +150,14 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool
 		};
 	}
 
-	private static void checkUnboundNamespacePrefix(final XmlElement element, final XmlTag context, String namespacePrefix, final XmlToken token,
-													final ProblemsHolder holder, boolean isOnTheFly)
+	private static void checkUnboundNamespacePrefix(
+		final XmlElement element,
+		final XmlTag context,
+		String namespacePrefix,
+		final XmlToken token,
+		final ProblemsHolder holder,
+		boolean isOnTheFly
+	)
 	{
 
 		if(namespacePrefix.length() == 0 && (!(element instanceof XmlTag) || !(element.getParent() instanceof XmlDocument))
@@ -178,14 +188,16 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool
 			return;
 		}
 
-		final String localizedMessage = isOnTheFly ? XmlErrorMessages.message("unbound.namespace", namespacePrefix) : XmlErrorMessages.message("unbound.namespace.no.param");
+		final LocalizeValue localizedMessage = isOnTheFly
+			? XmlErrorLocalize.unboundNamespace(namespacePrefix)
+			: XmlErrorLocalize.unboundNamespaceNoParam();
 
 		if(namespacePrefix.length() == 0)
 		{
 			final XmlTag tag = (XmlTag) element;
 			if(!XmlUtil.JSP_URI.equals(tag.getNamespace()))
 			{
-				reportTagProblem(tag, localizedMessage, null, ProblemHighlightType.INFORMATION,
+				reportTagProblem(tag, localizedMessage.get(), null, ProblemHighlightType.INFORMATION,
 						isOnTheFly ? new CreateNSDeclarationIntentionFix(context, namespacePrefix, token) : null,
 						holder);
 			}
@@ -199,17 +211,22 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool
 		if(element instanceof XmlTag)
 		{
 			final CreateNSDeclarationIntentionFix fix = isOnTheFly ? new CreateNSDeclarationIntentionFix(context, namespacePrefix, token) : null;
-			reportTagProblem(element, localizedMessage, range, highlightType, fix, holder);
+			reportTagProblem(element, localizedMessage.get(), range, highlightType, fix, holder);
 		}
 		else
 		{
-			holder.registerProblem(element, localizedMessage, highlightType, range);
+			holder.registerProblem(element, localizedMessage.get(), highlightType, range);
 		}
 	}
 
-	private static void reportTagProblem(final XmlElement element, final String localizedMessage, final TextRange range, final ProblemHighlightType highlightType,
-										 final CreateNSDeclarationIntentionFix fix,
-										 final ProblemsHolder holder)
+	private static void reportTagProblem(
+		final XmlElement element,
+		final String localizedMessage,
+		final TextRange range,
+		final ProblemHighlightType highlightType,
+		final CreateNSDeclarationIntentionFix fix,
+		final ProblemsHolder holder
+	)
 	{
 
 		XmlToken nameToken = XmlTagUtil.getStartTagNameElement((XmlTag) element);

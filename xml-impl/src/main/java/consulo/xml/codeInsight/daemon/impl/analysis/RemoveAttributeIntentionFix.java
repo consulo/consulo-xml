@@ -15,17 +15,17 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.language.editor.FileModificationService;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.codeEditor.Editor;
-import consulo.project.Project;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
-import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Maxim.Mossienko
@@ -40,20 +40,22 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
 
   @Nonnull
   public String getText() {
-    return XmlErrorMessages.message("remove.attribute.quickfix.text", myLocalName);
+    return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName).get();
   }
 
   @Nonnull
   public String getFamilyName() {
-    return XmlErrorMessages.message("remove.attribute.quickfix.family");
+    return XmlErrorLocalize.removeAttributeQuickfixFamily().get();
   }
 
   @Override
-  public void invoke(@Nonnull Project project,
-                     @Nonnull PsiFile file,
-                     @Nullable Editor editor,
-                     @Nonnull PsiElement startElement,
-                     @Nonnull PsiElement endElement) {
+  public void invoke(
+    @Nonnull Project project,
+    @Nonnull PsiFile file,
+    @Nullable Editor editor,
+    @Nonnull PsiElement startElement,
+    @Nonnull PsiElement endElement
+  ) {
     if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
     PsiElement next = findNextAttribute((XmlAttribute)startElement);
     startElement.delete();

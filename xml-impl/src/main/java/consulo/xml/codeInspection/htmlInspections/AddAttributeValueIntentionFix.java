@@ -16,23 +16,23 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.application.Result;
 import consulo.codeEditor.Editor;
+import consulo.language.editor.AutoPopupController;
+import consulo.language.editor.FileModificationService;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
-import consulo.application.Result;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
-import consulo.language.psi.PsiElement;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.language.editor.AutoPopupController;
-import consulo.language.editor.FileModificationService;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement
 {
@@ -45,7 +45,7 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
 	@Override
 	public String getText()
 	{
-		return XmlErrorMessages.message("add.attribute.value.quickfix.text");
+		return XmlErrorLocalize.addAttributeValueQuickfixText().get();
 	}
 
 	@Override

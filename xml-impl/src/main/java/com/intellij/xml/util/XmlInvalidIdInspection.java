@@ -22,8 +22,8 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.file.FileViewProvider;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
@@ -75,13 +75,16 @@ public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements
 				final FileViewProvider viewProvider = tag.getContainingFile().getViewProvider();
 				if(viewProvider instanceof MultiplePsiFilesPerDocumentFileViewProvider)
 				{
-					holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
-							new XmlDeclareIdInCommentAction(idRef));
-
+					holder.registerProblem(
+						value,
+						XmlErrorLocalize.invalidIdReference().get(),
+						ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
+						new XmlDeclareIdInCommentAction(idRef)
+					);
 				}
 				else
 				{
-					holder.registerProblem(value, XmlErrorMessages.message("invalid.id.reference"), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+					holder.registerProblem(value, XmlErrorLocalize.invalidIdReference().get(), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
 				}
 			}
 		}

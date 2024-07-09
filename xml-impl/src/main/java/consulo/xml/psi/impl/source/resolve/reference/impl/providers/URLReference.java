@@ -27,7 +27,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -84,9 +84,8 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
     if (canonicalText.isEmpty()) {
       final XmlAttribute attr = PsiTreeUtil.getParentOfType(getElement(), XmlAttribute.class);
 
-      if (attr != null && attr.isNamespaceDeclaration() && attr.getNamespacePrefix().isEmpty() || ExternalResourceManagerEx.getInstanceEx()
-                                                                                                                           .isIgnoredResource(
-                                                                                                                             canonicalText)) {
+      if (attr != null && attr.isNamespaceDeclaration() && attr.getNamespacePrefix().isEmpty()
+        || ExternalResourceManagerEx.getInstanceEx().isIgnoredResource(canonicalText)) {
         // Namespaces in XML 1.0 2nd edition, Section 6.2, last paragraph
         // The attribute value in a default namespace declaration MAY be empty. This has the same effect, within the scope of the declaration,
         // of there being no default namespace
@@ -192,9 +191,11 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
     final int offsetFromStart =
       myElement.getTextRange().getStartOffset() + textRangeInElement.getStartOffset() - elementToChange.getTextOffset();
 
-    manipulator.handleContentChange(elementToChange,
-                                    new TextRange(offsetFromStart, offsetFromStart + textRangeInElement.getLength()),
-                                    newElementName);
+    manipulator.handleContentChange(
+      elementToChange,
+      new TextRange(offsetFromStart, offsetFromStart + textRangeInElement.getLength()),
+      newElementName
+    );
     return myElement;
   }
 
@@ -238,7 +239,9 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
   @Nonnull
   @Override
   public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
-    return LocalizeValue.localizeTODO(XmlErrorMessages.message(myIncorrectResourceMapped ? "registered.resource.is.not.recognized" : "uri.is.not.registered"));
+    return myIncorrectResourceMapped
+      ? XmlErrorLocalize.registeredResourceIsNotRecognized()
+      : XmlErrorLocalize.uriIsNotRegistered();
   }
 
   public static void processWsdlSchemas(final XmlTag rootTag, Predicate<XmlTag> processor) {

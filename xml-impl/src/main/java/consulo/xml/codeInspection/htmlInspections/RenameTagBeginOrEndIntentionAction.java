@@ -27,7 +27,7 @@ import consulo.language.psi.*;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
@@ -161,6 +161,8 @@ public class RenameTagBeginOrEndIntentionAction implements SyntheticIntentionAct
 	@Nonnull
 	public String getName()
 	{
-		return myStart ? XmlErrorMessages.message("rename.start.tag.name.intention", mySourceName, myTargetName) : XmlErrorMessages.message("rename.end.tag.name.intention", mySourceName, myTargetName);
+		return myStart
+			? XmlErrorLocalize.renameStartTagNameIntention(mySourceName, myTargetName).get()
+			: XmlErrorLocalize.renameEndTagNameIntention(mySourceName, myTargetName).get();
 	}
 }

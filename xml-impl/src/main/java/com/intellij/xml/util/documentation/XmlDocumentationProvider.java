@@ -36,6 +36,7 @@ import consulo.logging.Logger;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.documentation.DocumentationUtil;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
@@ -146,7 +147,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider
 
 					if(processor.result != null)
 					{
-						typeName = XmlBundle.message("xml.javadoc.enumeration.value.message");
+						typeName = XmlLocalize.xmlJavadocEnumerationValueMessage().get();
 					}
 				}
 			}
@@ -164,7 +165,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider
 				{
 					XmlUtil.processXmlElements(declaration, processor, true);
 					name = declaration.getAttributeValue(NAME_ATTR_NAME);
-					typeName = XmlBundle.message("xml.javadoc.complex.type.message");
+					typeName = XmlLocalize.xmlJavadocComplexTypeMessage().get();
 				}
 			}
 			if(processor.result == null)
@@ -284,9 +285,10 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider
 				if(descriptor != null && append)
 				{
 					buf.append("<br>");
-					buf.append(XmlBundle.message("html.quickdoc.additional.template",
-							descriptor.getHelpRef(),
-							BASE_SITEPOINT_URL + tag.getName()));
+					buf.append(XmlLocalize.htmlQuickdocAdditionalTemplate(
+						descriptor.getHelpRef(),
+						BASE_SITEPOINT_URL + tag.getName()
+					).get());
 				}
 			}
 		}

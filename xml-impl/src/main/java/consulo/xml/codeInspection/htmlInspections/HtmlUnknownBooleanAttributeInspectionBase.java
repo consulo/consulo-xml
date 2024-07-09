@@ -25,8 +25,8 @@ import com.intellij.xml.util.HtmlUtil;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
@@ -87,19 +87,18 @@ public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnkn
             };
 
 
-            String error = null;
+            LocalizeValue error = null;
             if (html5) {
-              if (attributeDescriptor instanceof XmlEnumerationDescriptor && ((XmlEnumerationDescriptor)attributeDescriptor).getValueDeclaration(
-                attribute,
-                "") == null) {
-                error = XmlErrorMessages.message("wrong.value", "attribute");
+              if (attributeDescriptor instanceof XmlEnumerationDescriptor enumDesc
+                && enumDesc.getValueDeclaration(attribute, "") == null) {
+                error = XmlErrorLocalize.wrongValue("attribute");
               }
             }
             else {
-              error = XmlErrorMessages.message("attribute.is.not.boolean", attribute.getName());
+              error = XmlErrorLocalize.attributeIsNotBoolean(attribute.getName());
             }
             if (error != null) {
-              registerProblemOnAttributeName(attribute, error, holder, quickFixes);
+              registerProblemOnAttributeName(attribute, error.get(), holder, quickFixes);
             }
           }
         }

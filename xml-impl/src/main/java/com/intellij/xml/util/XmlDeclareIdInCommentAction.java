@@ -29,7 +29,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
@@ -49,7 +49,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
 
   @Nonnull
   public String getName() {
-    return XmlErrorMessages.message("declare.id.in.comment.quickfix");
+    return XmlErrorLocalize.declareIdInCommentQuickfix().get();
   }
 
   @Nonnull

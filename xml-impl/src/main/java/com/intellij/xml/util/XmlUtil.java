@@ -42,6 +42,7 @@ import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.module.Module;
 import consulo.project.Project;
@@ -57,6 +58,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.Validator;
 import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.UriUtil;
@@ -536,15 +538,15 @@ public class XmlUtil {
 
       if (presentNames.containsKey(nameKey)) {
         final T psiElement = presentNames.get(nameKey);
-        final String message = XmlErrorMessages.message("duplicate.declaration", nameKey);
+        final LocalizeValue message = XmlErrorLocalize.duplicateDeclaration(nameKey);
 
         if (psiElement != null) {
           presentNames.put(nameKey, null);
 
-          host.addMessage(provider.getNodeForMessage(psiElement), message, Validator.ValidationHost.ErrorType.ERROR);
+          host.addMessage(provider.getNodeForMessage(psiElement), message.get(), Validator.ValidationHost.ErrorType.ERROR);
         }
 
-        host.addMessage(provider.getNodeForMessage(t), message, Validator.ValidationHost.ErrorType.ERROR);
+        host.addMessage(provider.getNodeForMessage(t), message.get(), Validator.ValidationHost.ErrorType.ERROR);
       } else {
         presentNames.put(nameKey, t);
       }

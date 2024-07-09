@@ -28,7 +28,7 @@ import consulo.language.parser.PsiBuilderFactory;
 import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersionUtil;
 import consulo.logging.Logger;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
+import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.lexer.DtdLexer;
 import consulo.xml.lexer._DtdLexer;
@@ -238,7 +238,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
       if (myBuilder.getTokenType() == XML_LEFT_PAREN) {
         parseGroup();
       } else {
-        myBuilder.error(XmlErrorMessages.message("dtd.parser.message.name.expected"));
+        myBuilder.error(XmlErrorLocalize.dtdParserMessageNameExpected());
         return true;
       }
     }
@@ -250,7 +250,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
     if (tokenType != XML_ATTRIBUTE_VALUE_START_DELIMITER &&
         tokenType != XML_DOCTYPE_PUBLIC &&
         tokenType != XML_DOCTYPE_SYSTEM) {
-      myBuilder.error(XmlErrorMessages.message("dtd.parser.message.literal.public.system.expected"));
+      myBuilder.error(XmlErrorLocalize.dtdParserMessageLiteralPublicSystemExpected());
       return;
     }
 
@@ -501,7 +501,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
 
   private void doParseContentSpec(boolean topLevel) {
     if (!topLevel && myBuilder.rawLookup(0) != XML_WHITE_SPACE) {
-      myBuilder.error(XmlErrorMessages.message("dtd.parser.message.whitespace.expected"));
+      myBuilder.error(XmlErrorLocalize.dtdParserMessageWhitespaceExpected());
     } else if (!topLevel) {
       final IElementType tokenType = myBuilder.getTokenType();
       String tokenText;
@@ -514,7 +514,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
       ) {
         PsiBuilder.Marker spec = myBuilder.mark();
         spec.done(XML_ELEMENT_CONTENT_SPEC);
-        myBuilder.error(XmlErrorMessages.message("dtd.parser.message.left.paren.or.entityref.or.empty.or.any.expected"));
+        myBuilder.error(XmlErrorLocalize.dtdParserMessageLeftParenOrEntityrefOrEmptyOrAnyExpected());
         return;
       }
     }
@@ -556,7 +556,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
         addToken();
         endedWithDelimiter = false;
       } else {
-        myBuilder.error(XmlErrorMessages.message("dtd.parser.message.name.or.entity.ref.expected"));
+        myBuilder.error(XmlErrorLocalize.dtdParserMessageNameOrEntityRefExpected());
         return false;
       }
 
@@ -582,7 +582,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
     }
 
     if (endedWithDelimiter && tokenType == XML_RIGHT_PAREN) {
-      myBuilder.error(XmlErrorMessages.message("dtd.parser.message.name.or.entity.ref.expected"));
+      myBuilder.error(XmlErrorLocalize.dtdParserMessageNameOrEntityRefExpected());
     }
     return true;
   }
@@ -596,7 +596,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
       group.done(XML_ELEMENT_CONTENT_GROUP);
       return true;
     } else if (b) {
-      myBuilder.error(XmlErrorMessages.message("dtd.parser.message.rbrace.expected"));
+      myBuilder.error(XmlErrorLocalize.dtdParserMessageRbraceExpected());
       group.done(XML_ELEMENT_CONTENT_GROUP);
       return false;
     }
@@ -617,7 +617,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
       if (tokenType == XML_LEFT_PAREN) {
         parseGroup();
       } else {
-        myBuilder.error(XmlErrorMessages.message("dtd.parser.message.name.expected"));
+        myBuilder.error(XmlErrorLocalize.dtdParserMessageNameExpected());
         decl.done(XML_ATTLIST_DECL);
         return;
       }
@@ -721,7 +721,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
     if (myBuilder.getTokenType() == XML_DECL_END) {
       addToken();
     } else {
-      myBuilder.error(XmlErrorMessages.message("expected.prologue.tag.termination.expected"));
+      myBuilder.error(XmlErrorLocalize.expectedPrologueTagTerminationExpected());
     }
 
     decl.done(XML_DECL);
@@ -741,7 +741,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
 
       if (lastPosition != -1) {
         if (lastPosition == myBuilder.getCurrentOffset()) {
-          myBuilder.error(XmlErrorMessages.message("expected.whitespace"));
+          myBuilder.error(XmlErrorLocalize.expectedWhitespace());
           lastPosition = -1;
         }
       }
@@ -749,7 +749,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
       addToken();
 
       if (myBuilder.getTokenType() != XML_EQ) {
-        myBuilder.error(XmlErrorMessages.message("expected.attribute.eq.sign"));
+        myBuilder.error(XmlErrorLocalize.expectedAttributeEqSign());
         continue;
       }
 
