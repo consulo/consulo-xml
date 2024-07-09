@@ -23,6 +23,7 @@ import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.ExternalAnnotator;
+import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.*;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -331,27 +332,28 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 		@Override
 		protected void createAnnotation(ASTNode node, String message)
 		{
-			if(MISSING_START_ELEMENT.equals(message))
+			if (MISSING_START_ELEMENT.equals(message))
 			{
 				final PsiFile psiFile = node.getPsi().getContainingFile();
-				if(psiFile instanceof XmlFile)
+				if (psiFile instanceof XmlFile xmlFile)
 				{
 					final PsiElementProcessor.FindElement<XmlFile> processor = new PsiElementProcessor.FindElement<>();
-					RelaxIncludeIndex.processBackwardDependencies((XmlFile) psiFile, processor);
-					if(processor.isFound())
+					RelaxIncludeIndex.processBackwardDependencies(xmlFile, processor);
+					if (processor.isFound())
 					{
 						// files that are included from other files do not need a <start> element.
-						myHolder.createWeakWarningAnnotation(node, message);
+						myHolder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
+							.range(node);
 						return;
 					}
 				}
 			}
-			else if(message != null && message.startsWith(UNDEFINED_PATTERN))
+			else if (message != null && message.startsWith(UNDEFINED_PATTERN))
 			{
 				// we've got our own validation for that
 				return;
 			}
-			myHolder.createErrorAnnotation(node, message);
+			myHolder.newAnnotation(HighlightSeverity.ERROR, message).range(node);
 		}
 	}
 
@@ -366,7 +368,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 		@Override
 		protected void createAnnotation(ASTNode node, String message)
 		{
-			myHolder.createWarningAnnotation(node, message);
+			myHolder.newAnnotation(HighlightSeverity.WARNING, message).range(node);
 		}
 	}
 

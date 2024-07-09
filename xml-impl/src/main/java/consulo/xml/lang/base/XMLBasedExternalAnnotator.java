@@ -15,15 +15,13 @@
  */
 package consulo.xml.lang.base;
 
+import consulo.language.editor.annotation.*;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
-import consulo.language.editor.annotation.Annotation;
-import consulo.language.editor.annotation.AnnotationHolder;
-import consulo.language.editor.annotation.ExternalAnnotator;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
@@ -38,7 +36,8 @@ import java.util.List;
 /**
  * @author ven
  */
-public abstract class XMLBasedExternalAnnotator extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
+public abstract class XMLBasedExternalAnnotator
+  extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
   @Nullable
   @Override
   public MyHost collectInformation(@Nonnull PsiFile file) {
@@ -68,14 +67,14 @@ public abstract class XMLBasedExternalAnnotator extends ExternalAnnotator<XMLBas
     annotationResult.apply(holder);
   }
 
-  private static void appendFixes(final Annotation annotation, final IntentionAction... actions) {
+  private static void appendFixes(final AnnotationBuilder builder, final IntentionAction... actions) {
     if (actions != null) {
-      for (IntentionAction action : actions) annotation.registerFix(action);
+      for (IntentionAction action : actions) builder.newFix(action);
     }
   }
 
   static class MyHost implements Validator.ValidationHost {
-    private final List<Trinity<PsiElement, String, ErrorType>> messages = new ArrayList<Trinity<PsiElement, String, ErrorType>>();
+    private final List<Trinity<PsiElement, String, ErrorType>> messages = new ArrayList<>();
 
     @Override
     public void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
@@ -90,27 +89,31 @@ public abstract class XMLBasedExternalAnnotator extends ExternalAnnotator<XMLBas
   }
 
 
-  public static void addMessageWithFixes(final PsiElement context,
-                                         final String message,
-                                         @Nonnull final Validator.ValidationHost.ErrorType type,
-                                         AnnotationHolder myHolder,
-                                         @Nonnull final IntentionAction... fixes) {
+  public static void addMessageWithFixes(
+    final PsiElement context,
+    final String message,
+    @Nonnull final Validator.ValidationHost.ErrorType type,
+    AnnotationHolder myHolder,
+    @Nonnull final IntentionAction... fixes
+  ) {
     if (message != null && !message.isEmpty()) {
       if (context instanceof XmlTag) {
         addMessagesForTag((XmlTag)context, message, type, myHolder, fixes);
       }
       else {
-        if (type == Validator.ValidationHost.ErrorType.ERROR) {
-          appendFixes(myHolder.createErrorAnnotation(context, message), fixes);
-        }
-        else {
-          appendFixes(myHolder.createWarningAnnotation(context, message), fixes);
-        }
+        HighlightSeverity severity = type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
+        appendFixes(myHolder.newAnnotation(severity, message).range(context), fixes);
       }
     }
   }
 
-  private static void addMessagesForTag(XmlTag tag, String message, Validator.ValidationHost.ErrorType type, AnnotationHolder myHolder, IntentionAction... actions) {
+  private static void addMessagesForTag(
+    XmlTag tag,
+    String message,
+    Validator.ValidationHost.ErrorType type,
+    AnnotationHolder myHolder,
+    IntentionAction... actions
+  ) {
     XmlToken childByRole = XmlTagUtil.getStartTagNameElement(tag);
 
     addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
@@ -119,20 +122,15 @@ public abstract class XMLBasedExternalAnnotator extends ExternalAnnotator<XMLBas
     addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
   }
 
-  private static void addMessagesForTreeChild(final XmlToken childByRole,
-                                              final Validator.ValidationHost.ErrorType type,
-                                              final String message,
-                                              AnnotationHolder myHolder, IntentionAction... actions) {
+  private static void addMessagesForTreeChild(
+    final XmlToken childByRole,
+    final Validator.ValidationHost.ErrorType type,
+    final String message,
+    AnnotationHolder myHolder, IntentionAction... actions
+  ) {
     if (childByRole != null) {
-      Annotation annotation;
-      if (type == Validator.ValidationHost.ErrorType.ERROR) {
-        annotation = myHolder.createErrorAnnotation(childByRole, message);
-      }
-      else {
-        annotation = myHolder.createWarningAnnotation(childByRole, message);
-      }
-
-      appendFixes(annotation, actions);
+      HighlightSeverity severity = type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
+      appendFixes(myHolder.newAnnotation(severity, message).range(childByRole), actions);
     }
   }
 }

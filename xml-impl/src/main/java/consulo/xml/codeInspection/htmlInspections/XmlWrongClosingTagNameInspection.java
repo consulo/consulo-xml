@@ -48,10 +48,9 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
 
   @Override
   public void annotate(final PsiElement psiElement, final AnnotationHolder holder) {
-    if (psiElement instanceof XmlToken) {
+    if (psiElement instanceof XmlToken token) {
       final PsiElement parent = psiElement.getParent();
-      if (parent instanceof XmlTag) {
-        final XmlTag tag = (XmlTag)parent;
+      if (parent instanceof XmlTag tag) {
         final XmlToken start = XmlTagUtil.getStartTagNameElement(tag);
         XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
         if (endTagName != null && !(tag instanceof HtmlTag) && !tag.getName().equals(endTagName.getText())) {
@@ -65,18 +64,18 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
           }
         }
       }
-      else if (parent instanceof PsiErrorElement) {
-        if (XmlTokenType.XML_NAME == ((XmlToken)psiElement).getTokenType()) {
+      else if (parent instanceof PsiErrorElement errorElement) {
+        if (XmlTokenType.XML_NAME == token.getTokenType()) {
           final PsiFile psiFile = psiElement.getContainingFile();
 
-          if (psiFile != null && (HTMLLanguage.INSTANCE == psiFile.getViewProvider().getBaseLanguage() || HTMLLanguage.INSTANCE == parent.getLanguage())) {
+          if (psiFile != null
+            && (HTMLLanguage.INSTANCE == psiFile.getViewProvider().getBaseLanguage() || HTMLLanguage.INSTANCE == parent.getLanguage())) {
             final LocalizeValue message = XmlErrorLocalize.xmlParsingClosingTagMatchesNothing();
 
-            if (message.equals(((PsiErrorElement)parent).getErrorDescription()) &&
-                psiFile.getContext() == null
-               ) {
-              final Annotation annotation = holder.createWarningAnnotation(parent, message.get());
-              annotation.registerFix(new RemoveExtraClosingTagIntentionAction());
+            if (message.get().equals(errorElement.getErrorDescription()) && psiFile.getContext() == null) {
+              holder.newAnnotation(HighlightSeverity.WARNING, message.get())
+                .range(parent)
+                .newFix(new RemoveExtraClosingTagIntentionAction());
             }
           }
         }
@@ -108,14 +107,14 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
     final RenameTagBeginOrEndIntentionAction renameStartAction = new RenameTagBeginOrEndIntentionAction(endTokenText, tagName, true);
 
     if (start != null) {
-      holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName().get())
+      holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName())
         .range(start)
         .withFix(renameEndAction)
         .withFix(renameStartAction)
         .create();
     }
 
-    holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName().get())
+    holder.newAnnotation(HighlightSeverity.ERROR, XmlErrorLocalize.tagHasWrongClosingTagName())
       .range(end)
       .withFix(new RemoveExtraClosingTagIntentionAction())
       .withFix(renameEndAction)

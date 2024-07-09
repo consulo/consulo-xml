@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlTagUtil;
 import consulo.colorScheme.TextAttributesKey;
@@ -40,11 +41,15 @@ public class XmlNamespaceAnnotator implements Annotator {
       if (key != null) {
         TextRange range = XmlTagUtil.getStartTagRange(tag);
         if (range != null) {
-          holder.createInfoAnnotation(range, null).setTextAttributes(key);
+          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(range)
+            .textAttributes(key);
         }
         TextRange endTagRange = XmlTagUtil.getEndTagRange(tag);
         if (endTagRange != null) {
-          holder.createInfoAnnotation(endTagRange, null).setTextAttributes(key);
+          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(endTagRange)
+            .textAttributes(key);
         }
       }
     }
