@@ -32,103 +32,86 @@ import javax.annotation.Nullable;
 /**
  * @author Maxim.Mossienko
  */
-public class RelaxedHtmlFromSchemaElementDescriptor extends XmlElementDescriptorImpl
-{
-	RelaxedHtmlFromSchemaElementDescriptor(XmlTag tag)
-	{
-		super(tag);
-	}
+public class RelaxedHtmlFromSchemaElementDescriptor extends XmlElementDescriptorImpl {
+    RelaxedHtmlFromSchemaElementDescriptor(XmlTag tag) {
+        super(tag);
+    }
 
-	@Override
-	public XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag)
-	{
-		XmlElementDescriptor elementDescriptor = super.getElementDescriptor(childTag, contextTag);
+    @Override
+    public XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag) {
+        XmlElementDescriptor elementDescriptor = super.getElementDescriptor(childTag, contextTag);
 
-		if(elementDescriptor == null)
-		{
-			return getRelaxedDescriptor(this, childTag);
-		}
+        if (elementDescriptor == null) {
+            return getRelaxedDescriptor(this, childTag);
+        }
 
-		return elementDescriptor;
-	}
+        return elementDescriptor;
+    }
 
-	@Override
-	public XmlElementDescriptor[] getElementsDescriptors(final XmlTag context)
-	{
-		return ArrayUtil.mergeArrays(super.getElementsDescriptors(context), HtmlUtil.getCustomTagDescriptors(context));
-	}
+    @Override
+    public XmlElementDescriptor[] getElementsDescriptors(final XmlTag context) {
+        return ArrayUtil.mergeArrays(super.getElementsDescriptors(context), HtmlUtil.getCustomTagDescriptors(context));
+    }
 
-	public static XmlElementDescriptor getRelaxedDescriptor(XmlElementDescriptor base, final XmlTag childTag)
-	{
-		final String namespace = childTag.getNamespace();
-		final XmlExtension extension = XmlExtension.getExtensionByElement(childTag);
-		if(!XmlUtil.XHTML_URI.equals(namespace) && (base.getContentType() != CONTENT_TYPE_EMPTY || (extension != null && extension.isCustomTagAllowed(childTag)) // allow custom
-		// tag
-		))
-		{
-			return new AnyXmlElementDescriptor(base, childTag.getNSDescriptor(namespace, true));
-		}
-		return null;
-	}
+    public static XmlElementDescriptor getRelaxedDescriptor(XmlElementDescriptor base, final XmlTag childTag) {
+        final String namespace = childTag.getNamespace();
+        final XmlExtension extension = XmlExtension.getExtensionByElement(childTag);
+        if (!XmlUtil.XHTML_URI.equals(namespace)
+			&& (base.getContentType() != CONTENT_TYPE_EMPTY || (extension != null && extension.isCustomTagAllowed(childTag)) // allow custom
+            // tag
+        )) {
+            return new AnyXmlElementDescriptor(base, childTag.getNSDescriptor(namespace, true));
+        }
+        return null;
+    }
 
-	@Override
-	public XmlAttributeDescriptor[] getAttributesDescriptors(final XmlTag context)
-	{
-		return addAttrDescriptorsForFacelets(context, super.getAttributesDescriptors(context));
-	}
+    @Override
+    public XmlAttributeDescriptor[] getAttributesDescriptors(final XmlTag context) {
+        return addAttrDescriptorsForFacelets(context, super.getAttributesDescriptors(context));
+    }
 
-	public static XmlAttributeDescriptor[] addAttrDescriptorsForFacelets(final XmlTag context, XmlAttributeDescriptor[] descriptors)
-	{
-		if(context == null)
-		{
-			return descriptors;
-		}
-		for(XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList())
-		{
-			descriptors = ArrayUtil.mergeArrays(descriptors, provider.getAttributeDescriptors(context), XmlAttributeDescriptor.ARRAY_FACTORY);
-		}
-		return descriptors;
-	}
+    public static XmlAttributeDescriptor[] addAttrDescriptorsForFacelets(final XmlTag context, XmlAttributeDescriptor[] descriptors) {
+        if (context == null) {
+            return descriptors;
+        }
+        for (XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList()) {
+            descriptors =
+                ArrayUtil.mergeArrays(descriptors, provider.getAttributeDescriptors(context), XmlAttributeDescriptor.ARRAY_FACTORY);
+        }
+        return descriptors;
+    }
 
-	@Override
-	public XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute)
-	{
-		return getAttributeDescriptor(attribute.getName(), attribute.getParent());
-	}
+    @Override
+    public XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute) {
+        return getAttributeDescriptor(attribute.getName(), attribute.getParent());
+    }
 
-	@Override
-	public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, final XmlTag context)
-	{
-		final XmlAttributeDescriptor descriptor = super.getAttributeDescriptor(attributeName.toLowerCase(), context);
-		if(descriptor != null)
-		{
-			return descriptor;
-		}
+    @Override
+    public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, final XmlTag context) {
+        final XmlAttributeDescriptor descriptor = super.getAttributeDescriptor(attributeName.toLowerCase(), context);
+        if (descriptor != null) {
+            return descriptor;
+        }
 
-		return getAttributeDescriptorFromFacelets(attributeName, context);
-	}
+        return getAttributeDescriptorFromFacelets(attributeName, context);
+    }
 
-	@Nullable
-	public static XmlAttributeDescriptor getAttributeDescriptorFromFacelets(final String attributeName, final XmlTag context)
-	{
-		if(context == null)
-		{
-			return null;
-		}
-		for(XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList())
-		{
-			final XmlAttributeDescriptor descriptor = provider.getAttributeDescriptor(attributeName, context);
-			if(descriptor != null)
-			{
-				return descriptor;
-			}
-		}
-		return null;
-	}
+    @Nullable
+    public static XmlAttributeDescriptor getAttributeDescriptorFromFacelets(final String attributeName, final XmlTag context) {
+        if (context == null) {
+            return null;
+        }
+        for (XmlAttributeDescriptorsProvider provider : XmlAttributeDescriptorsProvider.EP_NAME.getExtensionList()) {
+            final XmlAttributeDescriptor descriptor = provider.getAttributeDescriptor(attributeName, context);
+            if (descriptor != null) {
+                return descriptor;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public boolean allowElementsFromNamespace(final String namespace, final XmlTag context)
-	{
-		return true;
-	}
+    @Override
+    public boolean allowElementsFromNamespace(final String namespace, final XmlTag context) {
+        return true;
+    }
 }

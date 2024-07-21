@@ -39,61 +39,54 @@ import java.util.List;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class Html5CustomAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider
-{
-	@Override
-	public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag tag)
-	{
-		if(tag == null || !HtmlUtil.isHtml5Context(tag))
-		{
-			return XmlAttributeDescriptor.EMPTY;
-		}
-		final List<String> currentAttrs = new ArrayList<>();
-		for(XmlAttribute attribute : tag.getAttributes())
-		{
-			currentAttrs.add(attribute.getName());
-		}
-		final Project project = tag.getProject();
-		final Collection<String> keys = CachedValuesManager.getManager(project).getCachedValue(project, () ->
-		{
-			final Collection<String> keys1 = FileBasedIndex.getInstance().getAllKeys(Html5CustomAttributesIndex.INDEX_ID, project);
-			final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
-			return CachedValueProvider.Result.<Collection<String>>create(ContainerUtil.filter(keys1, key -> !FileBasedIndex.getInstance().processValues(Html5CustomAttributesIndex.INDEX_ID, key,
-					null, (file, value) -> false, scope)), PsiModificationTracker.MODIFICATION_COUNT);
-		});
-		if(keys.isEmpty())
-		{
-			return XmlAttributeDescriptor.EMPTY;
-		}
+public class Html5CustomAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider {
+    @Override
+    public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag tag) {
+        if (tag == null || !HtmlUtil.isHtml5Context(tag)) {
+            return XmlAttributeDescriptor.EMPTY;
+        }
+        final List<String> currentAttrs = new ArrayList<>();
+        for (XmlAttribute attribute : tag.getAttributes()) {
+            currentAttrs.add(attribute.getName());
+        }
+        final Project project = tag.getProject();
+        final Collection<String> keys = CachedValuesManager.getManager(project).getCachedValue(project, () ->
+        {
+            final Collection<String> keys1 = FileBasedIndex.getInstance().getAllKeys(Html5CustomAttributesIndex.INDEX_ID, project);
+            final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
+            return CachedValueProvider.Result.<Collection<String>>create(ContainerUtil.filter(
+                keys1,
+                key -> !FileBasedIndex.getInstance().processValues(Html5CustomAttributesIndex.INDEX_ID, key,
+                    null, (file, value) -> false, scope
+                )
+            ), PsiModificationTracker.MODIFICATION_COUNT);
+        });
+        if (keys.isEmpty()) {
+            return XmlAttributeDescriptor.EMPTY;
+        }
 
-		final List<XmlAttributeDescriptor> result = new ArrayList<>();
-		for(String key : keys)
-		{
-			boolean add = true;
-			for(String attr : currentAttrs)
-			{
-				if(attr.startsWith(key))
-				{
-					add = false;
-				}
-			}
-			if(add)
-			{
-				result.add(new AnyXmlAttributeDescriptor(key));
-			}
-		}
+        final List<XmlAttributeDescriptor> result = new ArrayList<>();
+        for (String key : keys) {
+            boolean add = true;
+            for (String attr : currentAttrs) {
+                if (attr.startsWith(key)) {
+                    add = false;
+                }
+            }
+            if (add) {
+                result.add(new AnyXmlAttributeDescriptor(key));
+            }
+        }
 
-		return result.toArray(new XmlAttributeDescriptor[result.size()]);
-	}
+        return result.toArray(new XmlAttributeDescriptor[result.size()]);
+    }
 
-	@Override
-	public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context)
-	{
-		if(context != null && HtmlUtil.isCustomHtml5Attribute(attributeName) && HtmlUtil.tagHasHtml5Schema(context))
-		{
-			return new AnyXmlAttributeDescriptor(attributeName);
-		}
-		return null;
-	}
+    @Override
+    public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context) {
+        if (context != null && HtmlUtil.isCustomHtml5Attribute(attributeName) && HtmlUtil.tagHasHtml5Schema(context)) {
+            return new AnyXmlAttributeDescriptor(attributeName);
+        }
+        return null;
+    }
 
 }

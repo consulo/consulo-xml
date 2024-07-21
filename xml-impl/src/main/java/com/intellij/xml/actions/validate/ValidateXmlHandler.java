@@ -7,11 +7,10 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
-public interface ValidateXmlHandler
-{
-	ExtensionPointName<ValidateXmlHandler> EP_NAME = ExtensionPointName.create(ValidateXmlHandler.class);
+public interface ValidateXmlHandler {
+    ExtensionPointName<ValidateXmlHandler> EP_NAME = ExtensionPointName.create(ValidateXmlHandler.class);
 
-	void doValidate(XmlFile file);
+    void doValidate(XmlFile file);
 
-	boolean isAvailable(XmlFile file);
+    boolean isAvailable(XmlFile file);
 }

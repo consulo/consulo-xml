@@ -30,49 +30,49 @@ import consulo.component.ProcessCanceledException;
 import com.intellij.xml.util.XmlResourceResolver;
 
 public abstract class ErrorReporter {
-  protected final Set<String> ourErrorsSet = new HashSet<String>();
-  protected final ValidateXmlActionHandler myHandler;
+    protected final Set<String> ourErrorsSet = new HashSet<String>();
+    protected final ValidateXmlActionHandler myHandler;
 
-  public ErrorReporter(ValidateXmlActionHandler handler) {
-    myHandler = handler;
-  }
-
-  public abstract void processError(SAXParseException ex, ValidateXmlActionHandler.ProblemType warning) throws SAXException;
-
-  public boolean filterValidationException(Exception ex) {
-    if (ex instanceof ProcessCanceledException) throw (ProcessCanceledException)ex;
-    if (ex instanceof XmlResourceResolver.IgnoredResourceException) throw (XmlResourceResolver.IgnoredResourceException)ex;
-
-    if (ex instanceof FileNotFoundException ||
-        ex instanceof MalformedURLException ||
-        ex instanceof NoRouteToHostException ||
-        ex instanceof SocketTimeoutException ||
-        ex instanceof UnknownHostException ||
-        ex instanceof ConnectException
-      ) {
-      // do not log problems caused by malformed and/or ignored external resources
-      return true;
+    public ErrorReporter(ValidateXmlActionHandler handler) {
+        myHandler = handler;
     }
 
-    if (ex instanceof NullPointerException) {
-      return true; // workaround for NPE at org.apache.xerces.impl.dtd.XMLDTDProcessor.checkDeclaredElements
+    public abstract void processError(SAXParseException ex, ValidateXmlActionHandler.ProblemType warning) throws SAXException;
+
+    public boolean filterValidationException(Exception ex) {
+        if (ex instanceof ProcessCanceledException processCanceledException) throw processCanceledException;
+        if (ex instanceof XmlResourceResolver.IgnoredResourceException ignoredResourceException) throw ignoredResourceException;
+
+        if (ex instanceof FileNotFoundException ||
+            ex instanceof MalformedURLException ||
+            ex instanceof NoRouteToHostException ||
+            ex instanceof SocketTimeoutException ||
+            ex instanceof UnknownHostException ||
+            ex instanceof ConnectException
+        ) {
+            // do not log problems caused by malformed and/or ignored external resources
+            return true;
+        }
+
+        if (ex instanceof NullPointerException) {
+            return true; // workaround for NPE at org.apache.xerces.impl.dtd.XMLDTDProcessor.checkDeclaredElements
+        }
+
+        return false;
     }
 
-    return false;
-  }
+    public void startProcessing() {
+        myHandler.doParse();
+    }
 
-  public void startProcessing() {
-    myHandler.doParse();
-  }
+    public boolean isStopOnUndeclaredResource() {
+        return false;
+    }
 
-  public boolean isStopOnUndeclaredResource() {
-    return false;
-  }
-
-  public boolean isUniqueProblem(final SAXParseException e) {
-    String error = myHandler.buildMessageString(e);
-    if (ourErrorsSet.contains(error)) return false;
-    ourErrorsSet.add(error);
-    return true;
-  }
+    public boolean isUniqueProblem(final SAXParseException e) {
+        String error = myHandler.buildMessageString(e);
+        if (ourErrorsSet.contains(error)) return false;
+        ourErrorsSet.add(error);
+        return true;
+    }
 }

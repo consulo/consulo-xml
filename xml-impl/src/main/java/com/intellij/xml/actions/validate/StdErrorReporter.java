@@ -28,6 +28,7 @@ import consulo.project.ui.wm.ToolWindowManager;
 import consulo.relaxng.ContentManagerUtilHack;
 import consulo.ui.ex.MessageCategory;
 import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.content.Content;
 import consulo.ui.ex.content.ContentFactory;
 import consulo.ui.ex.content.ContentManager;
@@ -44,193 +45,168 @@ import org.xml.sax.SAXParseException;
 import javax.annotation.Nonnull;
 import java.util.concurrent.Future;
 
-public class StdErrorReporter extends ErrorReporter
-{
-	private static final Logger LOG = Logger.getInstance(StdErrorReporter.class);
-	private static final Key<NewErrorTreeViewPanel> KEY = Key.create("ValidateXmlAction.KEY");
+public class StdErrorReporter extends ErrorReporter {
+    private static final Logger LOG = Logger.getInstance(StdErrorReporter.class);
+    private static final Key<NewErrorTreeViewPanel> KEY = Key.create("ValidateXmlAction.KEY");
 
-	private final NewErrorTreeViewPanel myErrorsView;
-	private final String myContentName;
-	private final Project myProject;
+    private final NewErrorTreeViewPanel myErrorsView;
+    private final String myContentName;
+    private final Project myProject;
 
-	public StdErrorReporter(ValidateXmlActionHandler handler, PsiFile psiFile, Runnable rerunAction)
-	{
-		super(handler);
-		myProject = psiFile.getProject();
-		myContentName = XmlBundle.message("xml.validate.tab.content.title", psiFile.getName());
-		myErrorsView = Application.get().getInstance(NewErrorTreeViewPanelFactory.class).createPanel(myProject, null, true, true, rerunAction);
-		//myErrorsView.getEmptyText().setText("No errors found");
-	}
+    public StdErrorReporter(ValidateXmlActionHandler handler, PsiFile psiFile, Runnable rerunAction) {
+        super(handler);
+        myProject = psiFile.getProject();
+        myContentName = XmlBundle.message("xml.validate.tab.content.title", psiFile.getName());
+        myErrorsView = Application.get().getInstance(NewErrorTreeViewPanelFactory.class)
+            .createPanel(myProject, null, true, true, rerunAction);
+        //myErrorsView.getEmptyText().setText("No errors found");
+    }
 
-	@Override
-	public void startProcessing()
-	{
-		final MyProcessController processController = new MyProcessController();
-		myErrorsView.setProcessController(processController);
-		openMessageView();
-		processController.setFuture(ApplicationManager.getApplication().executeOnPooledThread(
-				() -> ApplicationManager.getApplication().runReadAction(() -> super.startProcessing())));
+    @Override
+    public void startProcessing() {
+        final MyProcessController processController = new MyProcessController();
+        myErrorsView.setProcessController(processController);
+        openMessageView();
+        processController.setFuture(ApplicationManager.getApplication().executeOnPooledThread(
+            () -> ApplicationManager.getApplication().runReadAction(() -> super.startProcessing())
+        ));
 
-		ToolWindowManager.getInstance(myProject).getToolWindow(ToolWindowId.MESSAGES_WINDOW).activate(null);
-	}
+        ToolWindowManager.getInstance(myProject).getToolWindow(ToolWindowId.MESSAGES_WINDOW).activate(null);
+    }
 
-	private void openMessageView()
-	{
-		CommandProcessor commandProcessor = CommandProcessor.getInstance();
-		commandProcessor.executeCommand(
-				myProject, () -> {
-					MessageView messageView = MessageView.SERVICE.getInstance(myProject);
-					final Content content = ContentFactory.SERVICE.getInstance().createContent(myErrorsView.getComponent(), myContentName, true);
-					content.putUserData(KEY, myErrorsView);
-					messageView.getContentManager().addContent(content);
-					messageView.getContentManager().setSelectedContent(content);
-					messageView.getContentManager().addContentManagerListener(new CloseListener(content, messageView.getContentManager()));
-					ContentManagerUtilHack.cleanupContents(content, myProject, myContentName);
-					messageView.getContentManager().addContentManagerListener(new MyContentDisposer(content, messageView));
-				},
-				XmlBundle.message("validate.xml.open.message.view.command.name"),
-				null
-		);
-	}
+    private void openMessageView() {
+        CommandProcessor commandProcessor = CommandProcessor.getInstance();
+        commandProcessor.executeCommand(
+            myProject,
+            () -> {
+                MessageView messageView = MessageView.SERVICE.getInstance(myProject);
+                final Content content =
+                    ContentFactory.SERVICE.getInstance().createContent(myErrorsView.getComponent(), myContentName, true);
+                content.putUserData(KEY, myErrorsView);
+                messageView.getContentManager().addContent(content);
+                messageView.getContentManager().setSelectedContent(content);
+                messageView.getContentManager().addContentManagerListener(new CloseListener(content, messageView.getContentManager()));
+                ContentManagerUtilHack.cleanupContents(content, myProject, myContentName);
+                messageView.getContentManager().addContentManagerListener(new MyContentDisposer(content, messageView));
+            },
+            XmlBundle.message("validate.xml.open.message.view.command.name"),
+            null
+        );
+    }
 
-	@Override
-	public void processError(final SAXParseException ex, final ValidateXmlActionHandler.ProblemType problemType)
-	{
-		if(LOG.isDebugEnabled())
-		{
-			String error = myHandler.buildMessageString(ex);
-			LOG.debug("enter: processError(error='" + error + "')");
-		}
+    @Override
+    public void processError(final SAXParseException ex, final ValidateXmlActionHandler.ProblemType problemType) {
+        if (LOG.isDebugEnabled()) {
+            String error = myHandler.buildMessageString(ex);
+            LOG.debug("enter: processError(error='" + error + "')");
+        }
 
-		if(ApplicationManager.getApplication().isUnitTestMode())
-		{
-			return;
-		}
-		ApplicationManager.getApplication().invokeLater(() -> {
-					final VirtualFile file = myHandler.getProblemFile(ex);
-					myErrorsView.addMessage(
-							problemType == ValidateXmlActionHandler.ProblemType.WARNING ? MessageCategory.WARNING : MessageCategory.ERROR,
-							new String[]{ex.getLocalizedMessage()},
-							file,
-							ex.getLineNumber() - 1,
-							ex.getColumnNumber() - 1,
-							null
-					);
-				}
-		);
-	}
+        if (ApplicationManager.getApplication().isUnitTestMode()) {
+            return;
+        }
+        ApplicationManager.getApplication().invokeLater(() -> {
+            final VirtualFile file = myHandler.getProblemFile(ex);
+            myErrorsView.addMessage(
+                problemType == ValidateXmlActionHandler.ProblemType.WARNING ? MessageCategory.WARNING : MessageCategory.ERROR,
+                new String[]{ex.getLocalizedMessage()},
+                file,
+                ex.getLineNumber() - 1,
+                ex.getColumnNumber() - 1,
+                null
+            );
+        });
+    }
 
-	private static class MyContentDisposer implements ContentManagerListener
-	{
-		private final Content myContent;
-		private final MessageView myMessageView;
+    private static class MyContentDisposer implements ContentManagerListener {
+        private final Content myContent;
+        private final MessageView myMessageView;
 
-		MyContentDisposer(final Content content, final MessageView messageView)
-		{
-			myContent = content;
-			myMessageView = messageView;
-		}
+        MyContentDisposer(final Content content, final MessageView messageView) {
+            myContent = content;
+            myMessageView = messageView;
+        }
 
-		@Override
-		public void contentRemoved(@Nonnull ContentManagerEvent event)
-		{
-			final Content eventContent = event.getContent();
-			if(!eventContent.equals(myContent))
-			{
-				return;
-			}
-			myMessageView.getContentManager().removeContentManagerListener(this);
-			NewErrorTreeViewPanel errorTreeView = eventContent.getUserData(KEY);
-			if(errorTreeView != null)
-			{
-				Disposer.dispose(errorTreeView);
-			}
-			eventContent.putUserData(KEY, null);
-		}
+        @Override
+        public void contentRemoved(@Nonnull ContentManagerEvent event) {
+            final Content eventContent = event.getContent();
+            if (!eventContent.equals(myContent)) {
+                return;
+            }
+            myMessageView.getContentManager().removeContentManagerListener(this);
+            NewErrorTreeViewPanel errorTreeView = eventContent.getUserData(KEY);
+            if (errorTreeView != null) {
+                Disposer.dispose(errorTreeView);
+            }
+            eventContent.putUserData(KEY, null);
+        }
 
-		@Override
-		public void contentAdded(@Nonnull ContentManagerEvent event)
-		{
-		}
+        @Override
+        public void contentAdded(@Nonnull ContentManagerEvent event) {
+        }
 
-		@Override
-		public void contentRemoveQuery(@Nonnull ContentManagerEvent event)
-		{
-		}
+        @Override
+        public void contentRemoveQuery(@Nonnull ContentManagerEvent event) {
+        }
 
-		@Override
-		public void selectionChanged(@Nonnull ContentManagerEvent event)
-		{
-		}
-	}
+        @Override
+        public void selectionChanged(@Nonnull ContentManagerEvent event) {
+        }
+    }
 
-	private class CloseListener extends ContentManagerAdapter
-	{
-		private Content myContent;
-		private final ContentManager myContentManager;
+    private class CloseListener extends ContentManagerAdapter {
+        private Content myContent;
+        private final ContentManager myContentManager;
 
-		CloseListener(Content content, ContentManager contentManager)
-		{
-			myContent = content;
-			myContentManager = contentManager;
-		}
+        CloseListener(Content content, ContentManager contentManager) {
+            myContent = content;
+            myContentManager = contentManager;
+        }
 
-		@Override
-		public void contentRemoved(@Nonnull ContentManagerEvent event)
-		{
-			if(event.getContent() == myContent)
-			{
-				myErrorsView.stopProcess();
+        @Override
+        public void contentRemoved(@Nonnull ContentManagerEvent event) {
+            if (event.getContent() == myContent) {
+                myErrorsView.stopProcess();
 
-				myContentManager.removeContentManagerListener(this);
-				myContent.release();
-				myContent = null;
-			}
-		}
+                myContentManager.removeContentManagerListener(this);
+                myContent.release();
+                myContent = null;
+            }
+        }
 
-		@Override
-		public void contentRemoveQuery(@Nonnull ContentManagerEvent event)
-		{
-			if(event.getContent() == myContent)
-			{
-				if(!myErrorsView.isProcessStopped())
-				{
-					int result = Messages.showYesNoDialog(
-							XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.text"),
-							XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.title"),
-							Messages.getQuestionIcon()
-					);
-					if(result != Messages.YES)
-					{
-						event.consume();
-					}
-				}
-			}
-		}
-	}
+        @Override
+        public void contentRemoveQuery(@Nonnull ContentManagerEvent event) {
+            if (event.getContent() == myContent) {
+                if (!myErrorsView.isProcessStopped()) {
+                    int result = Messages.showYesNoDialog(
+                        XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.text"),
+                        XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.title"),
+                        UIUtil.getQuestionIcon()
+                    );
+                    if (result != Messages.YES) {
+                        event.consume();
+                    }
+                }
+            }
+        }
+    }
 
-	private static class MyProcessController implements NewErrorTreeViewPanel.ProcessController
-	{
-		private Future<?> myFuture;
+    private static class MyProcessController implements NewErrorTreeViewPanel.ProcessController {
+        private Future<?> myFuture;
 
-		public void setFuture(Future<?> future)
-		{
-			myFuture = future;
-		}
+        public void setFuture(Future<?> future) {
+            myFuture = future;
+        }
 
-		@Override
-		public void stopProcess()
-		{
-			if(myFuture != null)
-			{
-				myFuture.cancel(true);
-			}
-		}
+        @Override
+        public void stopProcess() {
+            if (myFuture != null) {
+                myFuture.cancel(true);
+            }
+        }
 
-		@Override
-		public boolean isProcessStopped()
-		{
-			return myFuture != null && myFuture.isDone();
-		}
-	}
+        @Override
+        public boolean isProcessStopped() {
+            return myFuture != null && myFuture.isDone();
+        }
+    }
 }
