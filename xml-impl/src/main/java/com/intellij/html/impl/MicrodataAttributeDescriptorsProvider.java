@@ -40,123 +40,102 @@ import static com.intellij.html.impl.util.MicrodataUtil.*;
  * @author: Fedor.Korotkov
  */
 @ExtensionImpl
-public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider
-{
-	@Override
-	public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag context)
-	{
-		if(!HtmlUtil.isHtml5Context(context))
-		{
-			return XmlAttributeDescriptor.EMPTY;
-		}
-		final String tagName = context.getName();
-		List<XmlAttributeDescriptor> result = new ArrayList<>();
-		final boolean goodContextForProps = "div".equalsIgnoreCase(tagName) || "span".equalsIgnoreCase(tagName) || "a".equalsIgnoreCase(tagName);
-		if(goodContextForProps && hasScopeTag(context))
-		{
-			result.add(new MicrodataPropertyAttributeDescriptor(context));
-		}
-		if(context.getAttribute(ITEM_SCOPE) == null)
-		{
-			result.add(new AnyXmlAttributeDescriptor(ITEM_SCOPE));
-		}
-		else
-		{
-			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_ID));
-			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_TYPE));
-			result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_REF));
-		}
-		return result.toArray(new XmlAttributeDescriptor[result.size()]);
-	}
+public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescriptorsProvider {
+    @Override
+    public XmlAttributeDescriptor[] getAttributeDescriptors(XmlTag context) {
+        if (!HtmlUtil.isHtml5Context(context)) {
+            return XmlAttributeDescriptor.EMPTY;
+        }
+        final String tagName = context.getName();
+        List<XmlAttributeDescriptor> result = new ArrayList<>();
+        final boolean goodContextForProps =
+            "div".equalsIgnoreCase(tagName) || "span".equalsIgnoreCase(tagName) || "a".equalsIgnoreCase(tagName);
+        if (goodContextForProps && hasScopeTag(context)) {
+            result.add(new MicrodataPropertyAttributeDescriptor(context));
+        }
+        if (context.getAttribute(ITEM_SCOPE) == null) {
+            result.add(new AnyXmlAttributeDescriptor(ITEM_SCOPE));
+        }
+        else {
+            result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_ID));
+            result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_TYPE));
+            result.add(new XmlAttributeDescriptorWithEmptyDefaultValue(ITEM_REF));
+        }
+        return result.toArray(new XmlAttributeDescriptor[result.size()]);
+    }
 
-	@Nullable
-	@Override
-	public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context)
-	{
-		if(!HtmlUtil.isHtml5Context(context))
-		{
-			return null;
-		}
-		if(ITEM_SCOPE.equalsIgnoreCase(attributeName))
-		{
-			return new AnyXmlAttributeDescriptor(attributeName);
-		}
-		if(context.getAttribute(ITEM_SCOPE) != null && (ITEM_TYPE.equalsIgnoreCase(attributeName) || ITEM_ID.equalsIgnoreCase(attributeName) || ITEM_REF.equalsIgnoreCase(attributeName)))
-		{
-			return new XmlAttributeDescriptorWithEmptyDefaultValue(attributeName);
-		}
-		if(ITEM_PROP.equalsIgnoreCase(attributeName) && hasScopeTag(context))
-		{
-			return new MicrodataPropertyAttributeDescriptor(context);
-		}
-		return null;
-	}
+    @Nullable
+    @Override
+    public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, XmlTag context) {
+        if (!HtmlUtil.isHtml5Context(context)) {
+            return null;
+        }
+        if (ITEM_SCOPE.equalsIgnoreCase(attributeName)) {
+            return new AnyXmlAttributeDescriptor(attributeName);
+        }
+        if (context.getAttribute(ITEM_SCOPE) != null
+            && (ITEM_TYPE.equalsIgnoreCase(attributeName) || ITEM_ID.equalsIgnoreCase(attributeName)
+            || ITEM_REF.equalsIgnoreCase(attributeName))) {
+            return new XmlAttributeDescriptorWithEmptyDefaultValue(attributeName);
+        }
+        if (ITEM_PROP.equalsIgnoreCase(attributeName) && hasScopeTag(context)) {
+            return new MicrodataPropertyAttributeDescriptor(context);
+        }
+        return null;
+    }
 
-	private static class XmlAttributeDescriptorWithEmptyDefaultValue extends AnyXmlAttributeDescriptor
-	{
-		public XmlAttributeDescriptorWithEmptyDefaultValue(String name)
-		{
-			super(name);
-		}
+    private static class XmlAttributeDescriptorWithEmptyDefaultValue extends AnyXmlAttributeDescriptor {
+        public XmlAttributeDescriptorWithEmptyDefaultValue(String name) {
+            super(name);
+        }
 
-		@Override
-		public String getDefaultValue()
-		{
-			return "";
-		}
-	}
+        @Override
+        public String getDefaultValue() {
+            return "";
+        }
+    }
 
-	private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor
-	{
+    private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor {
+        @Nonnull
+        private final XmlTag myContext;
 
-		@Nonnull
-		private final XmlTag myContext;
+        public MicrodataPropertyAttributeDescriptor(@Nonnull XmlTag context) {
+            super(ITEM_PROP);
+            myContext = context;
+        }
 
-		public MicrodataPropertyAttributeDescriptor(@Nonnull XmlTag context)
-		{
-			super(ITEM_PROP);
-			myContext = context;
-		}
+        @Override
+        public String getDefaultValue() {
+            return "";
+        }
 
-		@Override
-		public String getDefaultValue()
-		{
-			return "";
-		}
+        @Override
+        public boolean isEnumerated() {
+            final String[] enumeratedValues = getEnumeratedValues();
+            return enumeratedValues == null ? super.isEnumerated() : enumeratedValues.length > 0;
+        }
 
-		@Override
-		public boolean isEnumerated()
-		{
-			final String[] enumeratedValues = getEnumeratedValues();
-			return enumeratedValues == null ? super.isEnumerated() : enumeratedValues.length > 0;
-		}
+        @Override
+        public String[] getEnumeratedValues() {
+            final XmlTag scopeParent = findScopeTag(myContext);
+            return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
+        }
 
-		@Override
-		public String[] getEnumeratedValues()
-		{
-			final XmlTag scopeParent = findScopeTag(myContext);
-			return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
-		}
-
-		private static String[] findProperties(@Nonnull XmlTag tag)
-		{
-			final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
-			if(typeAttribute != null)
-			{
-				final XmlAttributeValue valueElement = typeAttribute.getValueElement();
-				final PsiReference[] references = valueElement != null ? valueElement.getReferences() : PsiReference.EMPTY_ARRAY;
-				List<String> result = new ArrayList<>();
-				for(PsiReference reference : references)
-				{
-					final PsiElement target = reference != null ? reference.resolve() : null;
-					if(target instanceof PsiFile)
-					{
-						result.addAll(extractProperties((PsiFile) target, StringUtil.stripQuotesAroundValue(reference.getCanonicalText())));
-					}
-				}
-				return ArrayUtil.toStringArray(result);
-			}
-			return ArrayUtil.EMPTY_STRING_ARRAY;
-		}
-	}
+        private static String[] findProperties(@Nonnull XmlTag tag) {
+            final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
+            if (typeAttribute != null) {
+                final XmlAttributeValue valueElement = typeAttribute.getValueElement();
+                final PsiReference[] references = valueElement != null ? valueElement.getReferences() : PsiReference.EMPTY_ARRAY;
+                List<String> result = new ArrayList<>();
+                for (PsiReference reference : references) {
+                    final PsiElement target = reference != null ? reference.resolve() : null;
+                    if (target instanceof PsiFile file) {
+                        result.addAll(extractProperties(file, StringUtil.stripQuotesAroundValue(reference.getCanonicalText())));
+                    }
+                }
+                return ArrayUtil.toStringArray(result);
+            }
+            return ArrayUtil.EMPTY_STRING_ARRAY;
+        }
+    }
 }

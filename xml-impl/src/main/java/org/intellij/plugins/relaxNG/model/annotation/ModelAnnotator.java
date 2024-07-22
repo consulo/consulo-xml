@@ -51,86 +51,86 @@ import java.util.Set;
  */
 public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 
-  @Override
-  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
-    if (psiElement instanceof CommonElement) {
-      ((CommonElement)psiElement).accept(new MyAnnotator<>(CommonAnnotationHolder.create(holder)));
-    }
-  }
-
-  @Override
-  public void annotate(DomElement element, DomElementAnnotationHolder holder) {
-    if (element instanceof RngDomElement) {
-      ((RngDomElement)element).accept(new MyAnnotator<>(CommonAnnotationHolder.create(holder)));
-    }
-  }
-
-  private final class MyAnnotator<T> extends CommonElement.Visitor {
-    private final CommonAnnotationHolder<T> myHolder;
-
-    public MyAnnotator(CommonAnnotationHolder<T> holder) {
-      myHolder = holder;
+    @Override
+    public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
+        if (psiElement instanceof CommonElement commonElement) {
+            commonElement.accept(new MyAnnotator<>(CommonAnnotationHolder.create(holder)));
+        }
     }
 
     @Override
-    public void visitDefine(final Define define) {
-      final PsiElement element = define.getPsiElement();
-      if (element != null) {
-        final XmlFile xmlFile = (XmlFile)element.getContainingFile();
-
-        final List<Define> result = new SmartList<>();
-        final OverriddenDefineSearcher searcher = new OverriddenDefineSearcher(define, xmlFile, result);
-
-        final PsiElementProcessor.FindElement<XmlFile> processor = new PsiElementProcessor.FindElement<XmlFile>() {
-          @Override
-          public boolean execute(@Nonnull XmlFile file) {
-            final Grammar grammar = GrammarFactory.getGrammar(file);
-            if (grammar == null) return true;
-
-            grammar.acceptChildren(searcher);
-
-            return result.size() == 0 || super.execute(file);
-          }
-        };
-
-        RelaxIncludeIndex.processBackwardDependencies(xmlFile, processor);
-
-        if (processor.isFound()) {
-          createGutterAnnotation(define, new OverriddenDefineRenderer(define));
+    public void annotate(DomElement element, DomElementAnnotationHolder holder) {
+        if (element instanceof RngDomElement rngDomElement) {
+            rngDomElement.accept(new MyAnnotator<>(CommonAnnotationHolder.create(holder)));
         }
-      }
     }
 
-    @SuppressWarnings({"unchecked"})
-    private void createGutterAnnotation(CommonElement t, GutterIconRenderer renderer) {
-      final Annotation a = myHolder.createAnnotation((T)t, HighlightSeverity.INFORMATION, null);
-      a.setGutterIconRenderer(renderer);
-    }
+    private final class MyAnnotator<T> extends CommonElement.Visitor {
+        private final CommonAnnotationHolder<T> myHolder;
 
-    @Override
-    public void visitInclude(Include inc) {
-      final Define[] overrides = inc.getOverrides();
-      for (Define define : overrides) {
-        final PsiFile file = inc.getInclude();
-        if (!(file instanceof XmlFile)) continue; //
-
-        final Grammar grammar = GrammarFactory.getGrammar((XmlFile)file);
-        if (grammar == null) continue;
-
-        final Map<String, Set<Define>> map = DefinitionResolver.getAllVariants(grammar);
-        if (map == null) continue;
-
-        final Set<Define> set = map.get(define.getName());
-        if (set == null || set.size() == 0) {
-          //noinspection unchecked
-          myHolder.createAnnotation((T)define, HighlightSeverity.ERROR, LocalizeValue.localizeTODO(
-            "Definition doesn't override anything from " + file.getName()));
-          continue;
+        public MyAnnotator(CommonAnnotationHolder<T> holder) {
+            myHolder = holder;
         }
 
-        final String message = "Overrides '" + define.getName() + "' in " + file.getName();
-        createGutterAnnotation(define, new OverridingDefineRenderer(message, set));
-      }
+        @Override
+        public void visitDefine(final Define define) {
+            final PsiElement element = define.getPsiElement();
+            if (element != null) {
+                final XmlFile xmlFile = (XmlFile)element.getContainingFile();
+
+                final List<Define> result = new SmartList<>();
+                final OverriddenDefineSearcher searcher = new OverriddenDefineSearcher(define, xmlFile, result);
+
+                final PsiElementProcessor.FindElement<XmlFile> processor = new PsiElementProcessor.FindElement<XmlFile>() {
+                    @Override
+                    public boolean execute(@Nonnull XmlFile file) {
+                        final Grammar grammar = GrammarFactory.getGrammar(file);
+                        if (grammar == null) return true;
+
+                        grammar.acceptChildren(searcher);
+
+                        return result.size() == 0 || super.execute(file);
+                    }
+                };
+
+                RelaxIncludeIndex.processBackwardDependencies(xmlFile, processor);
+
+                if (processor.isFound()) {
+                    createGutterAnnotation(define, new OverriddenDefineRenderer(define));
+                }
+            }
+        }
+
+        @SuppressWarnings({"unchecked"})
+        private void createGutterAnnotation(CommonElement t, GutterIconRenderer renderer) {
+            final Annotation a = myHolder.createAnnotation((T)t, HighlightSeverity.INFORMATION, null);
+            a.setGutterIconRenderer(renderer);
+        }
+
+        @Override
+        public void visitInclude(Include inc) {
+            final Define[] overrides = inc.getOverrides();
+            for (Define define : overrides) {
+                final PsiFile file = inc.getInclude();
+                if (!(file instanceof XmlFile)) continue; //
+
+                final Grammar grammar = GrammarFactory.getGrammar((XmlFile)file);
+                if (grammar == null) continue;
+
+                final Map<String, Set<Define>> map = DefinitionResolver.getAllVariants(grammar);
+                if (map == null) continue;
+
+                final Set<Define> set = map.get(define.getName());
+                if (set == null || set.size() == 0) {
+                    //noinspection unchecked
+                    myHolder.createAnnotation((T)define, HighlightSeverity.ERROR, LocalizeValue.localizeTODO(
+                        "Definition doesn't override anything from " + file.getName()));
+                    continue;
+                }
+
+                final String message = "Overrides '" + define.getName() + "' in " + file.getName();
+                createGutterAnnotation(define, new OverridingDefineRenderer(message, set));
+            }
+        }
     }
-  }
 }

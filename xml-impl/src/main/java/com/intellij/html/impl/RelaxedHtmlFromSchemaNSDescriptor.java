@@ -28,32 +28,30 @@ import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 
-public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor
-{
-	@Override
-	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
-	{
-		XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
+public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor {
+    @Override
+    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+        XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
-		String namespace;
-		if(elementDescriptor == null && !((namespace = tag.getNamespace()).equals(XmlUtil.XHTML_URI)))
-		{
-			return new AnyXmlElementDescriptor(null, XmlUtil.HTML_URI.equals(namespace) ? this : tag.getNSDescriptor(tag.getNamespace(), true));
-		}
+        String namespace;
+        if (elementDescriptor == null && !XmlUtil.XHTML_URI.equals(namespace = tag.getNamespace())) {
+            return new AnyXmlElementDescriptor(
+                null,
+                XmlUtil.HTML_URI.equals(namespace) ? this : tag.getNSDescriptor(tag.getNamespace(), true)
+            );
+        }
 
-		return elementDescriptor;
-	}
+        return elementDescriptor;
+    }
 
-	@Override
-	protected XmlElementDescriptor createElementDescriptor(final XmlTag tag)
-	{
-		return new RelaxedHtmlFromSchemaElementDescriptor(tag);
-	}
+    @Override
+    protected XmlElementDescriptor createElementDescriptor(final XmlTag tag) {
+        return new RelaxedHtmlFromSchemaElementDescriptor(tag);
+    }
 
-	@Override
-	@Nonnull
-	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc)
-	{
-		return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));
-	}
+    @Override
+    @Nonnull
+    public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
+        return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));
+    }
 }

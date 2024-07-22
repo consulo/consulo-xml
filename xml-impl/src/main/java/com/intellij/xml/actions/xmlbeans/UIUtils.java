@@ -35,50 +35,53 @@ import java.util.List;
  * @author Konstantin Bulenkov
  */
 public class UIUtils {
-  private UIUtils() {}
+    private UIUtils() {
+    }
 
-  public static void configureBrowseButton(final Project myProject,
-                                       final TextFieldWithBrowseButton wsdlUrl,
-                                       final String[] _extensions,
-                                       final String selectFileDialogTitle,
-                                       final boolean multipleFileSelection) {
-    wsdlUrl.getButton().setToolTipText(XmlBundle.message("browse.button.tooltip"));
-    wsdlUrl.getButton().addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent actionEvent) {
-          final FileChooserDescriptor fileChooserDescriptor = new FileChooserDescriptor(true, false, false, false, false, multipleFileSelection) {
-            private final List<String> extensions = Arrays.asList(_extensions);
+    public static void configureBrowseButton(
+        final Project myProject,
+        final TextFieldWithBrowseButton wsdlUrl,
+        final String[] _extensions,
+        final String selectFileDialogTitle,
+        final boolean multipleFileSelection
+    ) {
+        wsdlUrl.getButton().setToolTipText(XmlBundle.message("browse.button.tooltip"));
+        wsdlUrl.getButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                final FileChooserDescriptor fileChooserDescriptor =
+                    new FileChooserDescriptor(true, false, false, false, false, multipleFileSelection) {
+                        private final List<String> extensions = Arrays.asList(_extensions);
 
-            public boolean isFileSelectable(VirtualFile virtualFile) {
-              return extensions.contains(virtualFile.getExtension());
+                        public boolean isFileSelectable(VirtualFile virtualFile) {
+                            return extensions.contains(virtualFile.getExtension());
+                        }
+
+                        @Override
+                        public boolean isFileVisible(VirtualFile file, boolean showHiddenFiles) {
+                            return super.isFileVisible(file, showHiddenFiles) && (file.isDirectory() || isFileSelectable(file));
+                        }
+                    };
+
+                fileChooserDescriptor.setTitle(selectFileDialogTitle);
+
+                VirtualFile initialFile = myProject.getBaseDir();
+                String selectedItem = wsdlUrl.getTextField().getText();
+                if (selectedItem != null && selectedItem.startsWith(LocalFileSystem.PROTOCOL_PREFIX)) {
+                    VirtualFile fileByPath = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance()
+                        .getResourceLocation(VfsUtil.fixURLforIDEA(selectedItem)), null);
+                    if (fileByPath != null) initialFile = fileByPath;
+                }
+
+                final VirtualFile[] virtualFiles = IdeaFileChooser.chooseFiles(fileChooserDescriptor, myProject, initialFile);
+                if (virtualFiles.length == 1) {
+                    String url = fixIDEAUrl(virtualFiles[0].getUrl());
+                    wsdlUrl.setText(url);
+                }
             }
+        });
+    }
 
-            @Override
-            public boolean isFileVisible(VirtualFile file, boolean showHiddenFiles) {
-              return super.isFileVisible(file, showHiddenFiles) && (file.isDirectory() || isFileSelectable(file));
-            }
-          };
-
-          fileChooserDescriptor.setTitle(selectFileDialogTitle);
-
-          VirtualFile initialFile = myProject.getBaseDir();
-          String selectedItem = wsdlUrl.getTextField().getText();
-          if (selectedItem != null && selectedItem.startsWith(LocalFileSystem.PROTOCOL_PREFIX)) {
-            VirtualFile fileByPath = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(VfsUtil.fixURLforIDEA(selectedItem)), null);
-            if (fileByPath != null) initialFile = fileByPath;
-          }
-
-          final VirtualFile[] virtualFiles = IdeaFileChooser.chooseFiles(fileChooserDescriptor, myProject, initialFile);
-          if (virtualFiles.length == 1) {
-            String url = fixIDEAUrl(virtualFiles[0].getUrl());
-            wsdlUrl.setText(url);
-          }
-        }
-      }
-    );
-  }
-
-  public static String fixIDEAUrl(String url) {
-    return SystemInfo.isWindows ? VfsUtil.fixIDEAUrl(url) : url;
-  }
+    public static String fixIDEAUrl(String url) {
+        return SystemInfo.isWindows ? VfsUtil.fixIDEAUrl(url) : url;
+    }
 }
