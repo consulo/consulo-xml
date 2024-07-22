@@ -36,102 +36,101 @@ import javax.annotation.Nullable;
  * @author mike
  */
 public class DomAttributeXmlDescriptor implements NamespaceAwareXmlAttributeDescriptor {
-  private final DomAttributeChildDescription myDescription;
-  private final Project myProject;
+    private final DomAttributeChildDescription myDescription;
+    private final Project myProject;
 
-  public DomAttributeXmlDescriptor(final DomAttributeChildDescription description, Project project) {
-    myDescription = description;
-    myProject = project;
-  }
+    public DomAttributeXmlDescriptor(final DomAttributeChildDescription description, Project project) {
+        myDescription = description;
+        myProject = project;
+    }
 
-  public boolean isRequired() {
-    return false;
-  }
+    public boolean isRequired() {
+        return false;
+    }
 
-  public boolean isFixed() {
-    return false;
-  }
+    public boolean isFixed() {
+        return false;
+    }
 
-  public boolean hasIdType() {
-    return false;
-  }
+    public boolean hasIdType() {
+        return false;
+    }
 
-  public boolean hasIdRefType() {
-    return false;
-  }
+    public boolean hasIdRefType() {
+        return false;
+    }
 
-  @Nullable
-  public String getDefaultValue() {
-    return null;
-  }//todo: refactor to hierarchy of value descriptor?
+    @Nullable
+    public String getDefaultValue() {
+        return null;
+    }//todo: refactor to hierarchy of value descriptor?
 
-  public boolean isEnumerated() {
-    return false;
-  }
+    public boolean isEnumerated() {
+        return false;
+    }
 
-  @Nullable
-  public String[] getEnumeratedValues() {
-    return null;
-  }
+    @Nullable
+    public String[] getEnumeratedValues() {
+        return null;
+    }
 
-  @Nullable
-  public String validateValue(final XmlElement context, final String value) {
-    return null;
-  }
+    @Nullable
+    public String validateValue(final XmlElement context, final String value) {
+        return null;
+    }
 
-  @Nullable
-  public PsiElement getDeclaration() {
-    return myDescription.getDeclaration(myProject);
-  }
+    @Nullable
+    public PsiElement getDeclaration() {
+        return myDescription.getDeclaration(myProject);
+    }
 
-  @NonNls
-  public String getName(final PsiElement context) {
-    return getQualifiedAttributeName(context, myDescription.getXmlName());
-  }
+    @NonNls
+    public String getName(final PsiElement context) {
+        return getQualifiedAttributeName(context, myDescription.getXmlName());
+    }
 
-  static String getQualifiedAttributeName(PsiElement context, XmlName xmlName) {
-    final String localName = xmlName.getLocalName();
-    if (context instanceof XmlTag) {
-      final XmlTag tag = (XmlTag)context;
-      final DomInvocationHandler handler = DomManagerImpl.getDomManager(context.getProject()).getDomHandler(tag);
-      if (handler != null) {
-        final String ns = handler.createEvaluatedXmlName(xmlName).getNamespace(tag, handler.getFile());
-        if (!ns.equals(XmlUtil.EMPTY_URI) && !ns.equals(tag.getNamespace())) {
-          final String prefix = tag.getPrefixByNamespace(ns);
-          if (StringUtil.isNotEmpty(prefix)) {
-            return prefix + ":" + localName;
-          }
+    static String getQualifiedAttributeName(PsiElement context, XmlName xmlName) {
+        final String localName = xmlName.getLocalName();
+        if (context instanceof XmlTag tag) {
+            final DomInvocationHandler handler = DomManagerImpl.getDomManager(context.getProject()).getDomHandler(tag);
+            if (handler != null) {
+                final String ns = handler.createEvaluatedXmlName(xmlName).getNamespace(tag, handler.getFile());
+                if (!ns.equals(XmlUtil.EMPTY_URI) && !ns.equals(tag.getNamespace())) {
+                    final String prefix = tag.getPrefixByNamespace(ns);
+                    if (StringUtil.isNotEmpty(prefix)) {
+                        return prefix + ":" + localName;
+                    }
+                }
+            }
         }
-      }
+
+        return localName;
     }
 
-    return localName;
-  }
-
-  @NonNls
-  public String getName() {
-    return getLocalName();
-  }
-
-  private String getLocalName() {
-    return myDescription.getXmlName().getLocalName();
-  }
-
-  @Nullable
-  public String getNamespace(@Nonnull XmlTag context) {
-    final DomInvocationHandler handler = DomManagerImpl.getDomManager(myProject).getDomHandler(context);
-
-    if (handler == null) {
-      return null;
+    @NonNls
+    public String getName() {
+        return getLocalName();
     }
-    return handler.createEvaluatedXmlName(myDescription.getXmlName()).getNamespace(context, handler.getFile());
-  }
 
-  public void init(final PsiElement element) {
-    throw new UnsupportedOperationException("Method init not implemented in " + getClass());
-  }
+    private String getLocalName() {
+        return myDescription.getXmlName().getLocalName();
+    }
 
-  public Object[] getDependences() {
-    throw new UnsupportedOperationException("Method getDependences not implemented in " + getClass());
-  }
+    @Nullable
+    public String getNamespace(@Nonnull XmlTag context) {
+        final DomInvocationHandler handler = DomManagerImpl.getDomManager(myProject).getDomHandler(context);
+
+        if (handler == null) {
+            return null;
+        }
+        return handler.createEvaluatedXmlName(myDescription.getXmlName()).getNamespace(context, handler.getFile());
+    }
+
+    public void init(final PsiElement element) {
+        throw new UnsupportedOperationException("Method init not implemented in " + getClass());
+    }
+
+    public Object[] getDependences() {
+        throw new UnsupportedOperationException("Method getDependences not implemented in " + getClass());
+    }
 }

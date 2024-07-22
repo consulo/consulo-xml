@@ -50,250 +50,260 @@ import java.util.List;
  * @author Mike
  */
 public class XmlElementDescriptorImpl extends BaseXmlElementDescriptorImpl implements PsiWritableMetaData {
-  protected XmlElementDecl myElementDecl;
-  private String myName;
+    protected XmlElementDecl myElementDecl;
+    private String myName;
 
-  private static final Class[] ourParentClassesToScanAttributes = new Class[]{
-      XmlMarkupDecl.class,
-      XmlDocument.class
-  };
-  private static final Key<CachedValue<XmlAttlistDecl[]>> ourCachedAttlistKeys = Key.create("cached_declarations");
-
-  public XmlElementDescriptorImpl(XmlElementDecl elementDecl) {
-    init(elementDecl);
-  }
-
-  public XmlElementDescriptorImpl() {
-  }
-
-  private static final UserDataCache<CachedValue<XmlAttlistDecl[]>, XmlElement, Object> myAttlistDeclCache = new UserDataCache<CachedValue<XmlAttlistDecl[]>, XmlElement, Object>() {
-    @Override
-    protected final CachedValue<XmlAttlistDecl[]> compute(final XmlElement owner, Object o) {
-      return CachedValuesManager.getManager(owner.getProject()).createCachedValue(() -> new CachedValueProvider.Result<>(doCollectAttlistDeclarations(owner), owner));
-    }
-  };
-
-  @Override
-  public PsiElement getDeclaration() {
-    return myElementDecl;
-  }
-
-  @Override
-  public String getName(PsiElement context) {
-    return getName();
-  }
-
-  @Override
-  public String getName() {
-    if (myName != null) {
-      return myName;
-    }
-    return myName = myElementDecl.getName();
-  }
-
-  @Override
-  public void init(PsiElement element) {
-    myElementDecl = (XmlElementDecl) element;
-  }
-
-  @Override
-  @SuppressWarnings("SpellCheckingInspection")
-  public Object[] getDependences() {
-    return new Object[]{
-        myElementDecl,
-        ExternalResourceManager.getInstance()
+    private static final Class[] ourParentClassesToScanAttributes = new Class[]{
+        XmlMarkupDecl.class,
+        XmlDocument.class
     };
-  }
+    private static final Key<CachedValue<XmlAttlistDecl[]>> ourCachedAttlistKeys = Key.create("cached_declarations");
 
-  @Override
-  public XmlNSDescriptor getNSDescriptor() {
-    return getNsDescriptorFrom(myElementDecl);
-  }
-
-  @Nullable
-  private static XmlNSDescriptor getNsDescriptorFrom(final PsiElement elementDecl) {
-    final XmlFile file = XmlUtil.getContainingFile(elementDecl);
-    if (file == null) {
-      return null;
+    public XmlElementDescriptorImpl(XmlElementDecl elementDecl) {
+        init(elementDecl);
     }
-    final XmlDocument document = file.getDocument();
-    assert document != null;
-    XmlNSDescriptor descriptor = (XmlNSDescriptor) document.getMetaData();
-    return descriptor == null ? document.getDefaultNSDescriptor(XmlUtil.EMPTY_URI, false) : descriptor;
-  }
 
-  // Read-only action
-  @Override
-  protected final XmlElementDescriptor[] doCollectXmlDescriptors(final XmlTag context) {
-    final LinkedHashSet<XmlElementDescriptor> result = new LinkedHashSet<>();
-    final XmlElementContentSpec contentSpecElement = myElementDecl.getContentSpecElement();
-    final XmlNSDescriptor nsDescriptor = getNSDescriptor();
-    final XmlNSDescriptor NSDescriptor = nsDescriptor != null ? nsDescriptor : getNsDescriptorFrom(context);
+    public XmlElementDescriptorImpl() {
+    }
 
-    XmlUtil.processXmlElements(contentSpecElement, new PsiElementProcessor() {
-      @Override
-      public boolean execute(@Nonnull PsiElement child) {
-        if (child instanceof XmlToken) {
-          final XmlToken token = (XmlToken) child;
-
-          if (token.getTokenType() == XmlTokenType.XML_NAME) {
-            final String text = child.getText();
-            XmlElementDescriptor element = getElementDescriptor(text, NSDescriptor);
-
-            if (element != null) {
-              result.add(element);
+    private static final UserDataCache<CachedValue<XmlAttlistDecl[]>, XmlElement, Object> myAttlistDeclCache =
+        new UserDataCache<CachedValue<XmlAttlistDecl[]>, XmlElement, Object>() {
+            @Override
+            protected final CachedValue<XmlAttlistDecl[]> compute(final XmlElement owner, Object o) {
+                return CachedValuesManager.getManager(owner.getProject())
+                    .createCachedValue(() -> new CachedValueProvider.Result<>(doCollectAttlistDeclarations(owner), owner));
             }
-          } else if (token.getTokenType() == XmlTokenType.XML_CONTENT_ANY) {
-            if (NSDescriptor instanceof XmlNSDescriptorImpl) {
-              ContainerUtil.addAll(result, ((XmlNSDescriptorImpl) NSDescriptor).getElements());
-            } else if (NSDescriptor instanceof XmlNSDescriptorSequence) {
+        };
 
-              for (XmlNSDescriptor xmlNSDescriptor : ((XmlNSDescriptorSequence) NSDescriptor).getSequence()) {
-                if (xmlNSDescriptor instanceof XmlNSDescriptorImpl) {
-                  ContainerUtil.addAll(result, ((XmlNSDescriptorImpl) xmlNSDescriptor).getElements());
+    @Override
+    public PsiElement getDeclaration() {
+        return myElementDecl;
+    }
+
+    @Override
+    public String getName(PsiElement context) {
+        return getName();
+    }
+
+    @Override
+    public String getName() {
+        if (myName != null) {
+            return myName;
+        }
+        return myName = myElementDecl.getName();
+    }
+
+    @Override
+    public void init(PsiElement element) {
+        myElementDecl = (XmlElementDecl)element;
+    }
+
+    @Override
+    @SuppressWarnings("SpellCheckingInspection")
+    public Object[] getDependences() {
+        return new Object[]{
+            myElementDecl,
+            ExternalResourceManager.getInstance()
+        };
+    }
+
+    @Override
+    public XmlNSDescriptor getNSDescriptor() {
+        return getNsDescriptorFrom(myElementDecl);
+    }
+
+    @Nullable
+    private static XmlNSDescriptor getNsDescriptorFrom(final PsiElement elementDecl) {
+        final XmlFile file = XmlUtil.getContainingFile(elementDecl);
+        if (file == null) {
+            return null;
+        }
+        final XmlDocument document = file.getDocument();
+        assert document != null;
+        XmlNSDescriptor descriptor = (XmlNSDescriptor)document.getMetaData();
+        return descriptor == null ? document.getDefaultNSDescriptor(XmlUtil.EMPTY_URI, false) : descriptor;
+    }
+
+    // Read-only action
+    @Override
+    protected final XmlElementDescriptor[] doCollectXmlDescriptors(final XmlTag context) {
+        final LinkedHashSet<XmlElementDescriptor> result = new LinkedHashSet<>();
+        final XmlElementContentSpec contentSpecElement = myElementDecl.getContentSpecElement();
+        final XmlNSDescriptor nsDescriptor = getNSDescriptor();
+        final XmlNSDescriptor NSDescriptor = nsDescriptor != null ? nsDescriptor : getNsDescriptorFrom(context);
+
+        XmlUtil.processXmlElements(contentSpecElement, new PsiElementProcessor() {
+            @Override
+            public boolean execute(@Nonnull PsiElement child) {
+                if (child instanceof XmlToken token) {
+                    if (token.getTokenType() == XmlTokenType.XML_NAME) {
+                        final String text = child.getText();
+                        XmlElementDescriptor element = getElementDescriptor(text, NSDescriptor);
+
+                        if (element != null) {
+                            result.add(element);
+                        }
+                    }
+                    else if (token.getTokenType() == XmlTokenType.XML_CONTENT_ANY) {
+                        if (NSDescriptor instanceof XmlNSDescriptorImpl) {
+                            ContainerUtil.addAll(result, ((XmlNSDescriptorImpl)NSDescriptor).getElements());
+                        }
+                        else if (NSDescriptor instanceof XmlNSDescriptorSequence) {
+
+                            for (XmlNSDescriptor xmlNSDescriptor : ((XmlNSDescriptorSequence)NSDescriptor).getSequence()) {
+                                if (xmlNSDescriptor instanceof XmlNSDescriptorImpl) {
+                                    ContainerUtil.addAll(result, ((XmlNSDescriptorImpl)xmlNSDescriptor).getElements());
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+                return true;
             }
-          }
+        }, true, false, XmlUtil.getContainingFile(getDeclaration()));
+
+        return result.toArray(new XmlElementDescriptor[result.size()]);
+    }
+
+    private static XmlElementDescriptor getElementDescriptor(final String text, final XmlNSDescriptor nsDescriptor) {
+        XmlElementDescriptor element = null;
+        if (nsDescriptor instanceof XmlNSDescriptorImpl xmlNSDescriptor) {
+            element = xmlNSDescriptor.getElementDescriptor(text);
         }
-        return true;
-      }
-    }, true, false, XmlUtil.getContainingFile(getDeclaration()));
-
-    return result.toArray(new XmlElementDescriptor[result.size()]);
-  }
-
-  private static XmlElementDescriptor getElementDescriptor(final String text, final XmlNSDescriptor NSDescriptor) {
-    XmlElementDescriptor element = null;
-    if (NSDescriptor instanceof XmlNSDescriptorImpl) {
-      element = ((XmlNSDescriptorImpl) NSDescriptor).getElementDescriptor(text);
-    } else if (NSDescriptor instanceof XmlNSDescriptorSequence) {
-      final List<XmlNSDescriptor> sequence = ((XmlNSDescriptorSequence) NSDescriptor).getSequence();
-      for (XmlNSDescriptor xmlNSDescriptor : sequence) {
-        if (xmlNSDescriptor instanceof XmlNSDescriptorImpl) {
-          element = ((XmlNSDescriptorImpl) xmlNSDescriptor).getElementDescriptor(text);
-          if (element != null) {
-            break;
-          }
+        else if (nsDescriptor instanceof XmlNSDescriptorSequence xmlNSDescriptorSequence) {
+            final List<XmlNSDescriptor> sequence = xmlNSDescriptorSequence.getSequence();
+            for (XmlNSDescriptor xmlNSDescriptor : sequence) {
+                if (xmlNSDescriptor instanceof XmlNSDescriptorImpl xmlNSDescriptorImpl) {
+                    element = xmlNSDescriptorImpl.getElementDescriptor(text);
+                    if (element != null) {
+                        break;
+                    }
+                }
+            }
         }
-      }
-    } else {
-      element = null;
-    }
-    return element;
-  }
-
-  // Read-only calculation
-  @Override
-  protected final XmlAttributeDescriptor[] collectAttributeDescriptors(final XmlTag context) {
-    final List<XmlAttributeDescriptor> result = new SmartList<>();
-    for (XmlAttlistDecl attlistDecl : findAttlistDeclarations(getName())) {
-      for (XmlAttributeDecl attributeDecl : attlistDecl.getAttributeDecls()) {
-        final PsiMetaData psiMetaData = attributeDecl.getMetaData();
-        assert psiMetaData instanceof XmlAttributeDescriptor;
-        result.add((XmlAttributeDescriptor) psiMetaData);
-      }
-    }
-    return result.toArray(new XmlAttributeDescriptor[result.size()]);
-  }
-
-  // Read-only calculation
-  @Override
-  protected HashMap<String, XmlAttributeDescriptor> collectAttributeDescriptorsMap(final XmlTag context) {
-    final HashMap<String, XmlAttributeDescriptor> localADM;
-    final XmlAttributeDescriptor[] xmlAttributeDescriptors = getAttributesDescriptors(context);
-    localADM = new HashMap<>(xmlAttributeDescriptors.length);
-
-    for (final XmlAttributeDescriptor xmlAttributeDescriptor : xmlAttributeDescriptors) {
-      localADM.put(xmlAttributeDescriptor.getName(), xmlAttributeDescriptor);
-    }
-    return localADM;
-  }
-
-  private XmlAttlistDecl[] findAttlistDeclarations(String elementName) {
-    final List<XmlAttlistDecl> result = new ArrayList<>();
-    for (final XmlAttlistDecl declaration : getAttlistDeclarations()) {
-      final String name = declaration.getName();
-      if (name != null && name.equals(elementName)) {
-        result.add(declaration);
-      }
-    }
-    return result.toArray(new XmlAttlistDecl[result.size()]);
-  }
-
-  private XmlAttlistDecl[] getAttlistDeclarations() {
-    return getCachedAttributeDeclarations((XmlElement) getDeclaration());
-  }
-
-  public static
-  @Nonnull
-  XmlAttlistDecl[] getCachedAttributeDeclarations(@Nullable XmlElement owner) {
-    if (owner == null) {
-      return XmlAttlistDecl.EMPTY_ARRAY;
-    }
-    owner = (XmlElement) PsiTreeUtil.getParentOfType(owner, ourParentClassesToScanAttributes);
-    if (owner == null) {
-      return XmlAttlistDecl.EMPTY_ARRAY;
-    }
-    return myAttlistDeclCache.get(ourCachedAttlistKeys, owner, null).getValue();
-  }
-
-  private static XmlAttlistDecl[] doCollectAttlistDeclarations(XmlElement xmlElement) {
-    final List<XmlAttlistDecl> result = new ArrayList<>();
-    XmlUtil.processXmlElements(xmlElement, new FilterElementProcessor(new ClassFilter(XmlAttlistDecl.class), result), false, false, XmlUtil.getContainingFile(xmlElement));
-    return result.toArray(new XmlAttlistDecl[result.size()]);
-  }
-
-  @Override
-  public XmlElementsGroup getTopGroup() {
-    XmlElementContentGroup topGroup = myElementDecl.getContentSpecElement().getTopGroup();
-    return topGroup == null ? null : new XmlElementsGroupImpl(topGroup, null);
-  }
-
-  @Override
-  public int getContentType() {
-    if (myElementDecl.getContentSpecElement().isAny()) {
-      return CONTENT_TYPE_ANY;
-    }
-    if (myElementDecl.getContentSpecElement().hasChildren()) {
-      return CONTENT_TYPE_CHILDREN;
-    }
-    if (myElementDecl.getContentSpecElement().isEmpty()) {
-      return CONTENT_TYPE_EMPTY;
-    }
-    if (myElementDecl.getContentSpecElement().isMixed()) {
-      return CONTENT_TYPE_MIXED;
+        else {
+            element = null;
+        }
+        return element;
     }
 
-    return CONTENT_TYPE_ANY;
-  }
-
-  // Read-only calculation
-  @Override
-  protected HashMap<String, XmlElementDescriptor> collectElementDescriptorsMap(final XmlTag element) {
-    final HashMap<String, XmlElementDescriptor> elementDescriptorsMap;
-    final XmlElementDescriptor[] descriptors = getElementsDescriptors(element);
-    elementDescriptorsMap = new HashMap<>(descriptors.length);
-
-    for (final XmlElementDescriptor descriptor : descriptors) {
-      elementDescriptorsMap.put(descriptor.getName(), descriptor);
+    // Read-only calculation
+    @Override
+    protected final XmlAttributeDescriptor[] collectAttributeDescriptors(final XmlTag context) {
+        final List<XmlAttributeDescriptor> result = new SmartList<>();
+        for (XmlAttlistDecl attlistDecl : findAttlistDeclarations(getName())) {
+            for (XmlAttributeDecl attributeDecl : attlistDecl.getAttributeDecls()) {
+                final PsiMetaData psiMetaData = attributeDecl.getMetaData();
+                assert psiMetaData instanceof XmlAttributeDescriptor;
+                result.add((XmlAttributeDescriptor)psiMetaData);
+            }
+        }
+        return result.toArray(new XmlAttributeDescriptor[result.size()]);
     }
-    return elementDescriptorsMap;
-  }
 
-  @Override
-  public String getQualifiedName() {
-    return getName();
-  }
+    // Read-only calculation
+    @Override
+    protected HashMap<String, XmlAttributeDescriptor> collectAttributeDescriptorsMap(final XmlTag context) {
+        final HashMap<String, XmlAttributeDescriptor> localADM;
+        final XmlAttributeDescriptor[] xmlAttributeDescriptors = getAttributesDescriptors(context);
+        localADM = new HashMap<>(xmlAttributeDescriptors.length);
 
-  @Override
-  public String getDefaultName() {
-    return getName();
-  }
+        for (final XmlAttributeDescriptor xmlAttributeDescriptor : xmlAttributeDescriptors) {
+            localADM.put(xmlAttributeDescriptor.getName(), xmlAttributeDescriptor);
+        }
+        return localADM;
+    }
 
-  @Override
-  public void setName(final String name) throws IncorrectOperationException {
-    // IDEADEV-11439
-    myName = null;
-  }
+    private XmlAttlistDecl[] findAttlistDeclarations(String elementName) {
+        final List<XmlAttlistDecl> result = new ArrayList<>();
+        for (final XmlAttlistDecl declaration : getAttlistDeclarations()) {
+            final String name = declaration.getName();
+            if (name != null && name.equals(elementName)) {
+                result.add(declaration);
+            }
+        }
+        return result.toArray(new XmlAttlistDecl[result.size()]);
+    }
+
+    private XmlAttlistDecl[] getAttlistDeclarations() {
+        return getCachedAttributeDeclarations((XmlElement)getDeclaration());
+    }
+
+    public static
+    @Nonnull
+    XmlAttlistDecl[] getCachedAttributeDeclarations(@Nullable XmlElement owner) {
+        if (owner == null) {
+            return XmlAttlistDecl.EMPTY_ARRAY;
+        }
+        owner = (XmlElement)PsiTreeUtil.getParentOfType(owner, ourParentClassesToScanAttributes);
+        if (owner == null) {
+            return XmlAttlistDecl.EMPTY_ARRAY;
+        }
+        return myAttlistDeclCache.get(ourCachedAttlistKeys, owner, null).getValue();
+    }
+
+    private static XmlAttlistDecl[] doCollectAttlistDeclarations(XmlElement xmlElement) {
+        final List<XmlAttlistDecl> result = new ArrayList<>();
+        XmlUtil.processXmlElements(
+            xmlElement,
+            new FilterElementProcessor(new ClassFilter(XmlAttlistDecl.class), result),
+            false,
+            false,
+            XmlUtil.getContainingFile(xmlElement)
+        );
+        return result.toArray(new XmlAttlistDecl[result.size()]);
+    }
+
+    @Override
+    public XmlElementsGroup getTopGroup() {
+        XmlElementContentGroup topGroup = myElementDecl.getContentSpecElement().getTopGroup();
+        return topGroup == null ? null : new XmlElementsGroupImpl(topGroup, null);
+    }
+
+    @Override
+    public int getContentType() {
+        if (myElementDecl.getContentSpecElement().isAny()) {
+            return CONTENT_TYPE_ANY;
+        }
+        if (myElementDecl.getContentSpecElement().hasChildren()) {
+            return CONTENT_TYPE_CHILDREN;
+        }
+        if (myElementDecl.getContentSpecElement().isEmpty()) {
+            return CONTENT_TYPE_EMPTY;
+        }
+        if (myElementDecl.getContentSpecElement().isMixed()) {
+            return CONTENT_TYPE_MIXED;
+        }
+
+        return CONTENT_TYPE_ANY;
+    }
+
+    // Read-only calculation
+    @Override
+    protected HashMap<String, XmlElementDescriptor> collectElementDescriptorsMap(final XmlTag element) {
+        final HashMap<String, XmlElementDescriptor> elementDescriptorsMap;
+        final XmlElementDescriptor[] descriptors = getElementsDescriptors(element);
+        elementDescriptorsMap = new HashMap<>(descriptors.length);
+
+        for (final XmlElementDescriptor descriptor : descriptors) {
+            elementDescriptorsMap.put(descriptor.getName(), descriptor);
+        }
+        return elementDescriptorsMap;
+    }
+
+    @Override
+    public String getQualifiedName() {
+        return getName();
+    }
+
+    @Override
+    public String getDefaultName() {
+        return getName();
+    }
+
+    @Override
+    public void setName(final String name) throws IncorrectOperationException {
+        // IDEADEV-11439
+        myName = null;
+    }
 }

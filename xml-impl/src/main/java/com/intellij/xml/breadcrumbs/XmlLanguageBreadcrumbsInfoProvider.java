@@ -34,59 +34,51 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider
-{
-	@NonNls
-	protected static final String CLASS_ATTRIBUTE_NAME = "class";
-	@NonNls
-	protected static final String ID_ATTRIBUTE_NAME = "id";
+public class XmlLanguageBreadcrumbsInfoProvider implements BreadcrumbsProvider {
+    @NonNls
+    protected static final String CLASS_ATTRIBUTE_NAME = "class";
+    @NonNls
+    protected static final String ID_ATTRIBUTE_NAME = "id";
 
-	@RequiredReadAction
-	@Override
-	public boolean acceptElement(@Nonnull final PsiElement e)
-	{
-		return e instanceof XmlTag && e.isValid();
-	}
+    @RequiredReadAction
+    @Override
+    public boolean acceptElement(@Nonnull final PsiElement e) {
+        return e instanceof XmlTag && e.isValid();
+    }
 
-	@Override
-	@Nonnull
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Override
+    @Nonnull
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@RequiredReadAction
-	@Override
-	@Nonnull
-	public String getElementInfo(@Nonnull final PsiElement e)
-	{
-		final XmlTag tag = (XmlTag) e;
-		return tag.getName();
-	}
+    @RequiredReadAction
+    @Override
+    @Nonnull
+    public String getElementInfo(@Nonnull final PsiElement e) {
+        final XmlTag tag = (XmlTag)e;
+        return tag.getName();
+    }
 
-	@RequiredReadAction
-	@Override
-	@Nullable
-	public String getElementTooltip(@Nonnull final PsiElement e)
-	{
-		final XmlTag tag = (XmlTag) e;
-		final StringBuilder result = new StringBuilder("&lt;");
-		result.append(tag.getName());
-		final XmlAttribute[] attributes = tag.getAttributes();
-		for(final XmlAttribute each : attributes)
-		{
-			result.append(" ").append(each.getText());
-		}
+    @RequiredReadAction
+    @Override
+    @Nullable
+    public String getElementTooltip(@Nonnull final PsiElement e) {
+        final XmlTag tag = (XmlTag)e;
+        final StringBuilder result = new StringBuilder("&lt;");
+        result.append(tag.getName());
+        final XmlAttribute[] attributes = tag.getAttributes();
+        for (final XmlAttribute each : attributes) {
+            result.append(" ").append(each.getText());
+        }
 
-		if(tag.isEmpty())
-		{
-			result.append("/&gt;");
-		}
-		else
-		{
-			result.append("&gt;...&lt;/").append(tag.getName()).append("&gt;");
-		}
+        if (tag.isEmpty()) {
+            result.append("/&gt;");
+        }
+        else {
+            result.append("&gt;...&lt;/").append(tag.getName()).append("&gt;");
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 }

@@ -12,23 +12,23 @@ import javax.annotation.Nonnull;
  * @author Eugene.Kudelevsky
  */
 public class XmlArrangementPanel extends ArrangementSettingsPanel {
-  public XmlArrangementPanel(@Nonnull CodeStyleSettings settings) {
-    super(settings, XMLLanguage.INSTANCE);
-  }
+    public XmlArrangementPanel(@Nonnull CodeStyleSettings settings) {
+        super(settings, XMLLanguage.INSTANCE);
+    }
 
-  @Override
-  protected int getRightMargin() {
-    return 80;
-  }
+    @Override
+    protected int getRightMargin() {
+        return 80;
+    }
 
-  @Nonnull
-  @Override
-  protected FileType getFileType() {
-    return XmlFileType.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    protected FileType getFileType() {
+        return XmlFileType.INSTANCE;
+    }
 
-  @Override
-  protected String getPreviewText() {
-    return null;
-  }
+    @Override
+    protected String getPreviewText() {
+        return null;
+    }
 }
