@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.index.io.KeyDescriptor;
@@ -39,110 +40,88 @@ import consulo.index.io.EnumeratorStringDescriptor;
 /**
  * @author Dmitry Avdeev
  */
-public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V>
-{
-	protected static GlobalSearchScope createFilter(final Project project)
-	{
-		final GlobalSearchScope projectScope = GlobalSearchScope.allScope(project);
-		return new GlobalSearchScope(project)
-		{
-			@Override
-			public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2)
-			{
-				return projectScope.compare(file1, file2);
-			}
+public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
+    protected static GlobalSearchScope createFilter(final Project project) {
+        final GlobalSearchScope projectScope = GlobalSearchScope.allScope(project);
+        return new GlobalSearchScope(project) {
+            @Override
+            public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2) {
+                return projectScope.compare(file1, file2);
+            }
 
-			@Override
-			public boolean isSearchInModuleContent(@Nonnull consulo.module.Module aModule)
-			{
-				return true;
-			}
+            @Override
+            public boolean isSearchInModuleContent(@Nonnull consulo.module.Module aModule) {
+                return true;
+            }
 
-			@Override
-			public boolean contains(@Nonnull VirtualFile file)
-			{
-				final VirtualFile parent = file.getParent();
-				return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
-			}
+            @Override
+            public boolean contains(@Nonnull VirtualFile file) {
+                final VirtualFile parent = file.getParent();
+                return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
+            }
 
-			@Override
-			public boolean isSearchInLibraries()
-			{
-				return true;
-			}
-		};
-	}
+            @Override
+            public boolean isSearchInLibraries() {
+                return true;
+            }
+        };
+    }
 
+    protected static VirtualFileFilter createFilter(@Nonnull final consulo.module.Module module) {
+        final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
+        return new VirtualFileFilter() {
+            @Override
+            public boolean accept(final VirtualFile file) {
+                Module moduleForFile = fileIndex.getModuleForFile(file);
+                if (moduleForFile != null) { // in module content
+                    return module.equals(moduleForFile);
+                }
+                if (fileIndex.isInLibraryClasses(file)) {
+                    List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(file);
+                    if (orderEntries.isEmpty()) {
+                        return false;
+                    }
+                    for (OrderEntry orderEntry : orderEntries) {
+                        consulo.module.Module ownerModule = orderEntry.getOwnerModule();
+                        if (ownerModule.equals(module)) {
+                            return true;
+                        }
+                    }
+                }
+                final VirtualFile parent = file.getParent();
+                assert parent != null;
+                return parent.getName().equals("standardSchemas");
+            }
+        };
+    }
 
-	protected static VirtualFileFilter createFilter(@Nonnull final consulo.module.Module module)
-	{
+    @Override
+    @Nonnull
+    public KeyDescriptor<String> getKeyDescriptor() {
+        return EnumeratorStringDescriptor.INSTANCE;
+    }
 
-		final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
-		return new VirtualFileFilter()
-		{
-			@Override
-			public boolean accept(final VirtualFile file)
-			{
-				Module moduleForFile = fileIndex.getModuleForFile(file);
-				if(moduleForFile != null)
-				{ // in module content
-					return module.equals(moduleForFile);
-				}
-				if(fileIndex.isInLibraryClasses(file))
-				{
-					List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(file);
-					if(orderEntries.isEmpty())
-					{
-						return false;
-					}
-					for(OrderEntry orderEntry : orderEntries)
-					{
-						consulo.module.Module ownerModule = orderEntry.getOwnerModule();
-						if(ownerModule.equals(module))
-						{
-							return true;
-						}
-					}
-				}
-				final VirtualFile parent = file.getParent();
-				assert parent != null;
-				return parent.getName().equals("standardSchemas");
-			}
-		};
-	}
+    @Override
+    @Nonnull
+    public FileBasedIndex.InputFilter getInputFilter() {
+        return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE) {
+            @Override
+            public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file) {
+                FileType fileType = file.getFileType();
+                final String extension = file.getExtension();
+                return XmlFileType.INSTANCE.equals(fileType) && "xsd".equals(extension)
+                    || DTDFileType.INSTANCE.equals(fileType) && "dtd".equals(extension);
+            }
+        };
+    }
 
-	@Override
-	@Nonnull
-	public KeyDescriptor<String> getKeyDescriptor()
-	{
-		return EnumeratorStringDescriptor.INSTANCE;
-	}
+    @Override
+    public boolean dependsOnFileContent() {
+        return true;
+    }
 
-	@Override
-	@Nonnull
-	public FileBasedIndex.InputFilter getInputFilter()
-	{
-		return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE)
-		{
-			@Override
-			public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file)
-			{
-				FileType fileType = file.getFileType();
-				final String extension = file.getExtension();
-				return XmlFileType.INSTANCE.equals(fileType) && "xsd".equals(extension) || DTDFileType.INSTANCE.equals(fileType) && "dtd".equals(extension);
-			}
-		};
-	}
-
-	@Override
-	public boolean dependsOnFileContent()
-	{
-		return true;
-	}
-
-	@Override
-	public int getVersion()
-	{
-		return 0;
-	}
+    @Override
+    public int getVersion() {
+        return 0;
+    }
 }

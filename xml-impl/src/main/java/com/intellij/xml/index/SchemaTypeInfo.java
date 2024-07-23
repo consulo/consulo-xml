@@ -22,53 +22,63 @@ package com.intellij.xml.index;
  * Time: 7:14 PM
  */
 public class SchemaTypeInfo implements Comparable<SchemaTypeInfo> {
-  private final String myTagName;
-  private final String myNamespaceUri;
-//  private final String myFileUrl;
-  private final boolean myIsTypeName; // false -> enclosing element name
+    private final String myTagName;
+    private final String myNamespaceUri;
+    //  private final String myFileUrl;
+    private final boolean myIsTypeName; // false -> enclosing element name
 
-  public SchemaTypeInfo(String tagName, final boolean isTypeName, String namespace) {
-    myNamespaceUri = namespace;
-    myTagName = tagName;
-    myIsTypeName = isTypeName;
-  }
+    public SchemaTypeInfo(String tagName, final boolean isTypeName, String namespace) {
+        myNamespaceUri = namespace;
+        myTagName = tagName;
+        myIsTypeName = isTypeName;
+    }
 
-  public String getTagName() {
-    return myTagName;
-  }
+    public String getTagName() {
+        return myTagName;
+    }
 
-  public String getNamespaceUri() {
-    return myNamespaceUri;
-  }
+    public String getNamespaceUri() {
+        return myNamespaceUri;
+    }
 
-  public boolean isIsTypeName() {
-    return myIsTypeName;
-  }
+    public boolean isIsTypeName() {
+        return myIsTypeName;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-    SchemaTypeInfo info = (SchemaTypeInfo)o;
+        SchemaTypeInfo info = (SchemaTypeInfo)o;
 
-    if (myIsTypeName != info.myIsTypeName) return false;
-    if (myNamespaceUri != null ? !myNamespaceUri.equals(info.myNamespaceUri) : info.myNamespaceUri != null) return false;
-    if (!myTagName.equals(info.myTagName)) return false;
+        if (myIsTypeName != info.myIsTypeName) {
+            return false;
+        }
+        if (myNamespaceUri != null ? !myNamespaceUri.equals(info.myNamespaceUri) : info.myNamespaceUri != null) {
+            return false;
+        }
+        if (!myTagName.equals(info.myTagName)) {
+            return false;
+        }
 
-    return true;
-  }
+        return true;
+    }
 
-  @Override
-  public int hashCode() {
-    int result = myTagName.hashCode();
-    result = 31 * result + (myNamespaceUri != null ? myNamespaceUri.hashCode() : 0);
-    result = 31 * result + (myIsTypeName ? 1 : 0);
-    return result;
-  }
+    @Override
+    public int hashCode() {
+        int result = myTagName.hashCode();
+        result = 31 * result + (myNamespaceUri != null ? myNamespaceUri.hashCode() : 0);
+        result = 31 * result + (myIsTypeName ? 1 : 0);
+        return result;
+    }
 
-  @Override
-  public int compareTo(SchemaTypeInfo o) {
-    return myTagName.compareTo(o.getTagName());
-  }
+    @Override
+    public int compareTo(SchemaTypeInfo o) {
+        return myTagName.compareTo(o.getTagName());
+    }
 }

@@ -24,18 +24,20 @@ import consulo.xml.psi.xml.XmlTag;
  * @author maxim
  */
 class CompositeAttributeTagDescriptor extends HtmlAttributeDescriptor {
-  List<HtmlAttributeDescriptor> attributes = new LinkedList<HtmlAttributeDescriptor>();
+    List<HtmlAttributeDescriptor> attributes = new LinkedList<>();
 
-  HtmlAttributeDescriptor findHtmlAttributeInContext(XmlTag tag) {
-    if (tag == null) return null;
-    String contextName = tag.getName();
+    HtmlAttributeDescriptor findHtmlAttributeInContext(XmlTag tag) {
+        if (tag == null) {
+            return null;
+        }
+        String contextName = tag.getName();
 
-    for (final HtmlAttributeDescriptor attributeDescriptor : attributes) {
-      if (attributeDescriptor.isValidParentTagName(contextName)) {
-        return attributeDescriptor;
-      }
+        for (final HtmlAttributeDescriptor attributeDescriptor : attributes) {
+            if (attributeDescriptor.isValidParentTagName(contextName)) {
+                return attributeDescriptor;
+            }
+        }
+
+        return null;
     }
-
-    return null;
-  }
 }

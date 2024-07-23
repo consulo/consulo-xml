@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import javax.annotation.Nullable;
+
 import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
 import consulo.application.ApplicationManager;
 import consulo.language.editor.completion.lookup.LookupManager;
@@ -60,181 +61,153 @@ import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.usage.UsageViewUtil;
 import consulo.util.lang.StringUtil;
 
-public class XmlTagRenameDialog extends RefactoringDialog
-{
-	private static final Logger LOG = Logger.getInstance(XmlTagRenameDialog.class);
-	private static final String REFACTORING_NAME = RefactoringBundle.message("rename.title");
+public class XmlTagRenameDialog extends RefactoringDialog {
+    private static final Logger LOG = Logger.getInstance(XmlTagRenameDialog.class);
+    private static final String REFACTORING_NAME = RefactoringBundle.message("rename.title");
 
-	private final PsiElement myElement;
-	private final Editor myEditor;
-	private JLabel myTitleLabel;
-	private NameSuggestionsField myNameSuggestionsField;
-	private String myHelpID;
-	private final XmlTag myTag;
-	private NameSuggestionsField.DataChanged myNameChangedListener;
+    private final PsiElement myElement;
+    private final Editor myEditor;
+    private JLabel myTitleLabel;
+    private NameSuggestionsField myNameSuggestionsField;
+    private String myHelpID;
+    private final XmlTag myTag;
+    private NameSuggestionsField.DataChanged myNameChangedListener;
 
-	public XmlTagRenameDialog(@Nonnull final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag)
-	{
-		super(element.getProject(), true);
+    public XmlTagRenameDialog(@Nonnull final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag) {
+        super(element.getProject(), true);
 
-		myEditor = editor;
-		myElement = element;
-		myTag = tag;
+        myEditor = editor;
+        myElement = element;
+        myTag = tag;
 
-		setTitle(REFACTORING_NAME);
-		createNewNameComponent();
+        setTitle(REFACTORING_NAME);
+        createNewNameComponent();
 
-		init();
+        init();
 
-		myTitleLabel.setText(XmlBundle.message("rename.current.tag", getFullName(tag)));
+        myTitleLabel.setText(XmlBundle.message("rename.current.tag", getFullName(tag)));
 
-		validateButtons();
-	}
+        validateButtons();
+    }
 
-	@Override
-	protected void dispose()
-	{
-		myNameSuggestionsField.removeDataChangedListener(myNameChangedListener);
-		super.dispose();
-	}
+    @Override
+    protected void dispose() {
+        myNameSuggestionsField.removeDataChangedListener(myNameChangedListener);
+        super.dispose();
+    }
 
-	@Override
-	protected boolean hasHelpAction()
-	{
-		return false;
-	}
+    @Override
+    protected boolean hasHelpAction() {
+        return false;
+    }
 
-	private static String getFullName(@Nonnull final XmlTag tag)
-	{
-		final String name = DescriptiveNameUtil.getDescriptiveName(tag);
-		return (UsageViewUtil.getType(tag) + " " + name).trim();
-	}
+    private static String getFullName(@Nonnull final XmlTag tag) {
+        final String name = DescriptiveNameUtil.getDescriptiveName(tag);
+        return (UsageViewUtil.getType(tag) + " " + name).trim();
+    }
 
-	public static void renameXmlTag(final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag)
-	{
-		final XmlTagRenameDialog dialog = new XmlTagRenameDialog(editor, element, tag);
-		dialog.show();
-	}
+    public static void renameXmlTag(final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag) {
+        final XmlTagRenameDialog dialog = new XmlTagRenameDialog(editor, element, tag);
+        dialog.show();
+    }
 
-	private void createNewNameComponent()
-	{
-		myNameSuggestionsField = new NameSuggestionsField(new String[]{myTag.getName()}, myProject, PlainTextFileType.INSTANCE, myEditor);
-		myNameChangedListener = new NameSuggestionsField.DataChanged()
-		{
-			@Override
-			public void dataChanged()
-			{
-				validateButtons();
-			}
-		};
-		myNameSuggestionsField.addDataChangedListener(myNameChangedListener);
+    private void createNewNameComponent() {
+        myNameSuggestionsField = new NameSuggestionsField(new String[]{myTag.getName()}, myProject, PlainTextFileType.INSTANCE, myEditor);
+        myNameChangedListener = new NameSuggestionsField.DataChanged() {
+            @Override
+            public void dataChanged() {
+                validateButtons();
+            }
+        };
+        myNameSuggestionsField.addDataChangedListener(myNameChangedListener);
 
-		myNameSuggestionsField.getComponent().registerKeyboardAction(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				completeVariable(myNameSuggestionsField.getEditor());
-			}
-		}, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_MASK), JComponent.WHEN_IN_FOCUSED_WINDOW);
-	}
+        myNameSuggestionsField.getComponent().registerKeyboardAction(
+            e -> completeVariable(myNameSuggestionsField.getEditor()),
+            KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, InputEvent.CTRL_MASK),
+            JComponent.WHEN_IN_FOCUSED_WINDOW
+        );
+    }
 
-	private void completeVariable(final Editor editor)
-	{
-		String prefix = myNameSuggestionsField.getEnteredName();
+    private void completeVariable(final Editor editor) {
+        String prefix = myNameSuggestionsField.getEnteredName();
 
-		final PsiReference reference = myTag.getReference();
-		if(reference instanceof TagNameReference)
-		{
-			LookupElement[] lookupItems = TagNameReferenceCompletionProvider.getTagNameVariants(myTag, myTag.getNamespacePrefix());
-			editor.getCaretModel().moveToOffset(prefix.length());
-			editor.getSelectionModel().removeSelection();
-			LookupManager.getInstance(getProject()).showLookup(editor, lookupItems, prefix);
-		}
-	}
+        final PsiReference reference = myTag.getReference();
+        if (reference instanceof TagNameReference) {
+            LookupElement[] lookupItems = TagNameReferenceCompletionProvider.getTagNameVariants(myTag, myTag.getNamespacePrefix());
+            editor.getCaretModel().moveToOffset(prefix.length());
+            editor.getSelectionModel().removeSelection();
+            LookupManager.getInstance(getProject()).showLookup(editor, lookupItems, prefix);
+        }
+    }
 
-	@Override
-	protected void doAction()
-	{
-		LOG.assertTrue(myElement.isValid());
+    @Override
+    protected void doAction() {
+        LOG.assertTrue(myElement.isValid());
 
-		CommandProcessor.getInstance().executeCommand(myProject, new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				ApplicationManager.getApplication().runWriteAction(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						try
-						{
-							myTag.setName(getNewName());
-						}
-						catch(IncorrectOperationException e)
-						{
-							LOG.error(e);
-						}
-					}
-				});
-			}
-		}, RefactoringBundle.message("rename.title"), null);
+        CommandProcessor.getInstance().executeCommand(
+            myProject,
+            () -> ApplicationManager.getApplication().runWriteAction(() -> {
+                try {
+                    myTag.setName(getNewName());
+                }
+                catch (IncorrectOperationException e) {
+                    LOG.error(e);
+                }
+            }),
+            RefactoringBundle.message("rename.title"),
+            null
+        );
 
-		close(DialogWrapper.OK_EXIT_CODE);
-	}
+        close(DialogWrapper.OK_EXIT_CODE);
+    }
 
-	@Override
-	@Nullable
-	protected JComponent createCenterPanel()
-	{
-		return null;
-	}
+    @Override
+    @Nullable
+    protected JComponent createCenterPanel() {
+        return null;
+    }
 
-	@Override
-	public JComponent getPreferredFocusedComponent()
-	{
-		return myNameSuggestionsField.getFocusableComponent();
-	}
+    @Override
+    public JComponent getPreferredFocusedComponent() {
+        return myNameSuggestionsField.getFocusableComponent();
+    }
 
-	@Override
-	protected JComponent createNorthPanel()
-	{
-		final JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+    @Override
+    protected JComponent createNorthPanel() {
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 
-		myTitleLabel = new JLabel();
-		panel.add(myTitleLabel);
-		panel.add(Box.createVerticalStrut(8));
-		panel.add(myNameSuggestionsField.getComponent());
+        myTitleLabel = new JLabel();
+        panel.add(myTitleLabel);
+        panel.add(Box.createVerticalStrut(8));
+        panel.add(myNameSuggestionsField.getComponent());
 
-		return panel;
-	}
+        return panel;
+    }
 
-	@Override
-	protected void doHelpAction()
-	{
-		HelpManager.getInstance().invokeHelp(myHelpID);
-	}
+    @Override
+    protected void doHelpAction() {
+        HelpManager.getInstance().invokeHelp(myHelpID);
+    }
 
-	public String getNewName()
-	{
-		return myNameSuggestionsField.getEnteredName().trim();
-	}
+    public String getNewName() {
+        return myNameSuggestionsField.getEnteredName().trim();
+    }
 
-	@Override
-	protected void validateButtons()
-	{
-		super.validateButtons();
+    @Override
+    protected void validateButtons() {
+        super.validateButtons();
 
-		getPreviewAction().setEnabled(false);
-	}
+        getPreviewAction().setEnabled(false);
+    }
 
-	@Override
-	protected boolean areButtonsValid()
-	{
-		final String newName = getNewName();
-		return !StringUtil.containsAnyChar(newName, "\t ;*'\"\\/,()^&<>={}"); // RenameUtil.isValidName(myProject, myTag, newName); // IDEADEV-34531
-	}
+    @Override
+    protected boolean areButtonsValid() {
+        final String newName = getNewName();
+        return !StringUtil.containsAnyChar(
+            newName,
+            "\t ;*'\"\\/,()^&<>={}"
+        ); // RenameUtil.isValidName(myProject, myTag, newName); // IDEADEV-34531
+    }
 }
