@@ -21,7 +21,7 @@ import consulo.xml.psi.xml.XmlTag;
  * @author Mike
  */
 class SimpleTypeDescriptor extends TypeDescriptor {
-  public SimpleTypeDescriptor(XmlTag tag) {
-    super();
-  }
+    public SimpleTypeDescriptor(XmlTag tag) {
+        super();
+    }
 }

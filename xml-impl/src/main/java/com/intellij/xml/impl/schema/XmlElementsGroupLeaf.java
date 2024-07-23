@@ -26,26 +26,25 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 public class XmlElementsGroupLeaf extends XmlElementsGroupBase {
+    private final XmlElementDescriptor myDescriptor;
 
-  private final XmlElementDescriptor myDescriptor;
+    public XmlElementsGroupLeaf(XmlTag tag, XmlElementDescriptor descriptor, XmlElementsGroup parent, XmlTag ref) {
+        super(tag, parent, ref);
+        myDescriptor = descriptor;
+    }
 
-  public XmlElementsGroupLeaf(XmlTag tag, XmlElementDescriptor descriptor, XmlElementsGroup parent, XmlTag ref) {
-    super(tag, parent, ref);
-    myDescriptor = descriptor;
-  }
+    @Override
+    public Type getGroupType() {
+        return Type.LEAF;
+    }
 
-  @Override
-  public Type getGroupType() {
-    return Type.LEAF;
-  }
+    @Override
+    public List<XmlElementsGroup> getSubGroups() {
+        return Collections.emptyList();
+    }
 
-  @Override
-  public List<XmlElementsGroup> getSubGroups() {
-    return Collections.emptyList();
-  }
-
-  @Override
-  public XmlElementDescriptor getLeafDescriptor() {
-    return myDescriptor;
-  }
+    @Override
+    public XmlElementDescriptor getLeafDescriptor() {
+        return myDescriptor;
+    }
 }

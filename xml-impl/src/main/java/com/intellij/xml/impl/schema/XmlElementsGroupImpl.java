@@ -28,46 +28,46 @@ import com.intellij.xml.XmlElementsGroup;
  * @author Dmitry Avdeev
  */
 public class XmlElementsGroupImpl extends XmlElementsGroupBase {
+    private final static Map<String, Type> TYPES = new HashMap<>();
 
-  private final static Map<String, Type> TYPES = new HashMap<String, Type>();
-  static {
-    TYPES.put("sequence", Type.SEQUENCE);
-    TYPES.put("choice", Type.CHOICE);
-    TYPES.put("all", Type.ALL);
-    TYPES.put("group", Type.GROUP);
-  }
+    static {
+        TYPES.put("sequence", Type.SEQUENCE);
+        TYPES.put("choice", Type.CHOICE);
+        TYPES.put("all", Type.ALL);
+        TYPES.put("group", Type.GROUP);
+    }
 
-  private final List<XmlElementsGroup> mySubGroups = new ArrayList<XmlElementsGroup>();
+    private final List<XmlElementsGroup> mySubGroups = new ArrayList<XmlElementsGroup>();
 
-  public XmlElementsGroupImpl(XmlTag tag, XmlElementsGroup parent, XmlTag ref) {
-    super(tag, parent, ref);
-  }
+    public XmlElementsGroupImpl(XmlTag tag, XmlElementsGroup parent, XmlTag ref) {
+        super(tag, parent, ref);
+    }
 
-  @Override
-  public Type getGroupType() {
-    return getTagType(myTag);
-  }
+    @Override
+    public Type getGroupType() {
+        return getTagType(myTag);
+    }
 
-  public static Type getTagType(XmlTag tag) {
-    return TYPES.get(tag.getLocalName());
-  }
+    public static Type getTagType(XmlTag tag) {
+        return TYPES.get(tag.getLocalName());
+    }
 
-  @Override
-  public List<XmlElementsGroup> getSubGroups() {
-    return mySubGroups;
-  }
+    @Override
+    public List<XmlElementsGroup> getSubGroups() {
+        return mySubGroups;
+    }
 
-  @Override
-  public XmlElementDescriptor getLeafDescriptor() {
-    throw new RuntimeException("not a leaf group");
-  }
+    @Override
+    public XmlElementDescriptor getLeafDescriptor() {
+        throw new RuntimeException("not a leaf group");
+    }
 
-  public void addSubGroup(XmlElementsGroup group) {
-    mySubGroups.add(group);
-  }
+    public void addSubGroup(XmlElementsGroup group) {
+        mySubGroups.add(group);
+    }
 
-  @Override
-  public String toString() {
-    return getGroupType().toString();
-  }
+    @Override
+    public String toString() {
+        return getGroupType().toString();
+    }
 }

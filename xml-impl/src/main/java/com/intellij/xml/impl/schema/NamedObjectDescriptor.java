@@ -27,44 +27,44 @@ import consulo.language.util.IncorrectOperationException;
  * @author Maxim.Mossienko
  */
 public class NamedObjectDescriptor implements PsiWritableMetaData, PsiMetaData {
-  private XmlTag myDcl;
+    private XmlTag myDcl;
 
-  public NamedObjectDescriptor() {}
-
-  public void setName(String name) throws IncorrectOperationException {
-    setName(myDcl, name);
-  }
-
-  static void setName(final XmlTag dcl, final String name) throws IncorrectOperationException {
-    if (dcl.isWritable()) {
-      final VirtualFile virtualFile = dcl.getContainingFile().getVirtualFile();
-
-      if (virtualFile!=null &&
-          ProjectRootManager.getInstance(dcl.getProject()).getFileIndex().getModuleForFile(virtualFile)!=null
-          ) {
-        dcl.setAttribute("name",name.substring(name.indexOf(':')+1));
-      }
+    public NamedObjectDescriptor() {
     }
-  }
 
-  public PsiElement getDeclaration() {
-    return myDcl;
-  }
+    public void setName(String name) throws IncorrectOperationException {
+        setName(myDcl, name);
+    }
 
-  public String getName(PsiElement context) {
-    return getName();
-  }
+    static void setName(final XmlTag dcl, final String name) throws IncorrectOperationException {
+        if (dcl.isWritable()) {
+            final VirtualFile virtualFile = dcl.getContainingFile().getVirtualFile();
 
-  public String getName() {
-    return myDcl.getAttributeValue("name");
-  }
+            if (virtualFile != null &&
+                ProjectRootManager.getInstance(dcl.getProject()).getFileIndex().getModuleForFile(virtualFile) != null
+            ) {
+                dcl.setAttribute("name", name.substring(name.indexOf(':') + 1));
+            }
+        }
+    }
 
-  public void init(PsiElement element) {
-    myDcl = (XmlTag)element;
-  }
+    public PsiElement getDeclaration() {
+        return myDcl;
+    }
 
-  public Object[] getDependences() {
-    return new Object[] { myDcl };
-  }
+    public String getName(PsiElement context) {
+        return getName();
+    }
 
+    public String getName() {
+        return myDcl.getAttributeValue("name");
+    }
+
+    public void init(PsiElement element) {
+        myDcl = (XmlTag)element;
+    }
+
+    public Object[] getDependences() {
+        return new Object[]{myDcl};
+    }
 }

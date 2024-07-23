@@ -32,36 +32,38 @@ import consulo.xml.psi.xml.XmlElement;
 import com.intellij.xml.XmlAttributeDescriptor;
 
 public abstract class BasicXmlAttributeDescriptor extends XmlEnumerationDescriptor implements XmlAttributeDescriptor {
-  public String validateValue(XmlElement context, String value) {
-    return null;
-  }
+    public String validateValue(XmlElement context, String value) {
+        return null;
+    }
 
-  public String getName(PsiElement context){
-    return getName();
-  }
+    public String getName(PsiElement context) {
+        return getName();
+    }
 
-  @Nullable
-  public String[] getEnumeratedValues(@Nullable XmlElement context) {
-    return getEnumeratedValues();
-  }
+    @Nullable
+    public String[] getEnumeratedValues(@Nullable XmlElement context) {
+        return getEnumeratedValues();
+    }
 
-  @Override
-  public boolean isEnumerated(XmlElement context) {
-    return isEnumerated();
-  }
+    @Override
+    public boolean isEnumerated(XmlElement context) {
+        return isEnumerated();
+    }
 
-  @Override
-  public String toString() {
-    return getName();
-  }
+    @Override
+    public String toString() {
+        return getName();
+    }
 
-  protected PsiElement getEnumeratedValueDeclaration(XmlElement xmlElement, String value) {
-    String[] values = getEnumeratedValues();
-    if (values == null || values.length == 0) return getDeclaration();
-    return ArrayUtilRt.find(values, value) != -1 ? getDeclaration() : null;
-  }
+    protected PsiElement getEnumeratedValueDeclaration(XmlElement xmlElement, String value) {
+        String[] values = getEnumeratedValues();
+      if (values == null || values.length == 0) {
+        return getDeclaration();
+      }
+        return ArrayUtilRt.find(values, value) != -1 ? getDeclaration() : null;
+    }
 
-  protected PsiElement getDefaultValueDeclaration() {
-    return getDeclaration();
-  }
+    protected PsiElement getDefaultValueDeclaration() {
+        return getDeclaration();
+    }
 }

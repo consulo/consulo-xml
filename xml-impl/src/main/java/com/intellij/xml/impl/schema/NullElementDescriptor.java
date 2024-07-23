@@ -29,78 +29,78 @@ import com.intellij.xml.XmlNSDescriptor;
 import consulo.util.collection.ArrayUtil;
 
 public class NullElementDescriptor implements XmlElementDescriptor {
-  private static final NullElementDescriptor INSTANCE = new NullElementDescriptor();
+    private static final NullElementDescriptor INSTANCE = new NullElementDescriptor();
 
-  public static NullElementDescriptor getInstance() {
-    return INSTANCE;
-  }
+    public static NullElementDescriptor getInstance() {
+        return INSTANCE;
+    }
 
-  private NullElementDescriptor() {
-  }
+    private NullElementDescriptor() {
+    }
 
-  public String getQualifiedName() {
-    return null;
-  }
+    public String getQualifiedName() {
+        return null;
+    }
 
-  public String getDefaultName() {
-    return null;
-  }
+    public String getDefaultName() {
+        return null;
+    }
 
-  //todo: refactor to support full DTD spec
-  public XmlElementDescriptor[] getElementsDescriptors(XmlTag context) {
-    return new XmlElementDescriptor[0];
-  }
+    //todo: refactor to support full DTD spec
+    public XmlElementDescriptor[] getElementsDescriptors(XmlTag context) {
+        return new XmlElementDescriptor[0];
+    }
 
-  public XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag) {
-    return null;
-  }
+    public XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag) {
+        return null;
+    }
 
-  public XmlAttributeDescriptor[] getAttributesDescriptors(final XmlTag context) {
-    return new XmlAttributeDescriptor[0];
-  }
+    public XmlAttributeDescriptor[] getAttributesDescriptors(final XmlTag context) {
+        return new XmlAttributeDescriptor[0];
+    }
 
-  public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, final XmlTag context) {
-    return null;
-  }
+    public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, final XmlTag context) {
+        return null;
+    }
 
-  public XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute) {
-    return null;
-  }
+    public XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute) {
+        return null;
+    }
 
-  public XmlNSDescriptor getNSDescriptor() {
-    return null;
-  }
+    public XmlNSDescriptor getNSDescriptor() {
+        return null;
+    }
 
-  @Override
-  public XmlElementsGroup getTopGroup() {
-    return null;
-  }
+    @Override
+    public XmlElementsGroup getTopGroup() {
+        return null;
+    }
 
-  public int getContentType() {
-    return 0;
-  }
+    public int getContentType() {
+        return 0;
+    }
 
-  @Override
-  public String getDefaultValue() {
-    return null;
-  }
+    @Override
+    public String getDefaultValue() {
+        return null;
+    }
 
-  public PsiElement getDeclaration() {
-    return null;
-  }
+    public PsiElement getDeclaration() {
+        return null;
+    }
 
-  public String getName(PsiElement context) {
-    return null;
-  }
+    public String getName(PsiElement context) {
+        return null;
+    }
 
-  public String getName() {
-    return null;
-  }
+    public String getName() {
+        return null;
+    }
 
-  public void init(PsiElement element) {
-  }
+    public void init(PsiElement element) {
+    }
 
-  public Object[] getDependences() {
-    return ArrayUtil.EMPTY_OBJECT_ARRAY;
-  }
+    public Object[] getDependences() {
+        return ArrayUtil.EMPTY_OBJECT_ARRAY;
+    }
 }

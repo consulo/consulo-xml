@@ -33,148 +33,133 @@ import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 22.08.13
+ * Date: 22.08.13
  */
-public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends XmlEnumerationDescriptor<T>
-{
+public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends XmlEnumerationDescriptor<T> {
+    private boolean myExhaustiveEnum;
 
-	private boolean myExhaustiveEnum;
+    public abstract XmlTag getDeclaration();
 
-	public abstract XmlTag getDeclaration();
+    @Override
+    public String getDefaultValue() {
+        if (isFixed()) {
+            return getDeclaration().getAttributeValue("fixed");
+        }
 
-	@Override
-	public String getDefaultValue()
-	{
-		if(isFixed())
-		{
-			return getDeclaration().getAttributeValue("fixed");
-		}
+        return getDeclaration().getAttributeValue("default");
+    }
 
-		return getDeclaration().getAttributeValue("default");
-	}
+    @Override
+    public boolean isFixed() {
+        return getDeclaration().getAttributeValue("fixed") != null;
+    }
 
-	@Override
-	public boolean isFixed()
-	{
-		return getDeclaration().getAttributeValue("fixed") != null;
-	}
+    @Override
+    public String[] getEnumeratedValues() {
+        return getEnumeratedValues(false);
+    }
 
-	@Override
-	public String[] getEnumeratedValues()
-	{
-		return getEnumeratedValues(false);
-	}
+    @Override
+    public String[] getValuesForCompletion() {
+        return getEnumeratedValues(true);
+    }
 
-	@Override
-	public String[] getValuesForCompletion()
-	{
-		return getEnumeratedValues(true);
-	}
+    private String[] getEnumeratedValues(boolean forCompletion) {
+        final List<String> list = new SmartList<>();
+        processEnumeration(
+            null,
+            (element, s) -> {
+                list.add(s);
+                return true;
+            },
+            forCompletion
+        );
+        String defaultValue = getDefaultValue();
+        if (defaultValue != null) {
+            list.add(defaultValue);
+        }
+        return ArrayUtil.toStringArray(list);
+    }
 
-	private String[] getEnumeratedValues(boolean forCompletion)
-	{
-		final List<String> list = new SmartList<>();
-		processEnumeration(null, (element, s) ->
-		{
-			list.add(s);
-			return true;
-		}, forCompletion);
-		String defaultValue = getDefaultValue();
-		if(defaultValue != null)
-		{
-			list.add(defaultValue);
-		}
-		return ArrayUtil.toStringArray(list);
-	}
+    private boolean processEnumeration(XmlElement context, PairProcessor<PsiElement, String> processor, boolean forCompletion) {
+        XmlTag contextTag = context != null ? PsiTreeUtil.getContextOfType(context, XmlTag.class, false) : null;
+        final XmlElementDescriptorImpl elementDescriptor =
+            (XmlElementDescriptorImpl)XmlUtil.findXmlDescriptorByType(getDeclaration(), contextTag);
 
-	private boolean processEnumeration(XmlElement context, PairProcessor<PsiElement, String> processor, boolean forCompletion)
-	{
-		XmlTag contextTag = context != null ? PsiTreeUtil.getContextOfType(context, XmlTag.class, false) : null;
-		final XmlElementDescriptorImpl elementDescriptor = (XmlElementDescriptorImpl) XmlUtil.findXmlDescriptorByType(getDeclaration(), contextTag);
+        if (elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptor typeDescriptor) {
+            return processEnumerationImpl(typeDescriptor.getDeclaration(), processor, forCompletion);
+        }
 
-		if(elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptor)
-		{
-			return processEnumerationImpl(((ComplexTypeDescriptor) elementDescriptor.getType()).getDeclaration(), processor, forCompletion);
-		}
+        final String namespacePrefix = getDeclaration().getNamespacePrefix();
+        XmlTag type = getDeclaration().findFirstSubTag(((namespacePrefix.length() > 0) ? namespacePrefix + ":" : "") + "simpleType");
 
-		final String namespacePrefix = getDeclaration().getNamespacePrefix();
-		XmlTag type = getDeclaration().findFirstSubTag(((namespacePrefix.length() > 0) ? namespacePrefix + ":" : "") + "simpleType");
+        if (type != null) {
+            return processEnumerationImpl(type, processor, forCompletion);
+        }
 
-		if(type != null)
-		{
-			return processEnumerationImpl(type, processor, forCompletion);
-		}
+        return false;
+    }
 
-		return false;
-	}
+    private boolean processEnumerationImpl(
+        final XmlTag declaration,
+        final PairProcessor<PsiElement, String> pairProcessor,
+        boolean forCompletion
+    ) {
+        XmlAttribute name = declaration.getAttribute("name");
+        if (name != null && "boolean".equals(name.getValue())) {
+            XmlAttributeValue valueElement = name.getValueElement();
+            pairProcessor.process(valueElement, "true");
+            pairProcessor.process(valueElement, "false");
+            if (!forCompletion) {
+                pairProcessor.process(valueElement, "1");
+                pairProcessor.process(valueElement, "0");
+            }
+            myExhaustiveEnum = true;
+            return true;
+        }
+        else {
+            final Ref<Boolean> found = new Ref<>(Boolean.FALSE);
+            myExhaustiveEnum = XmlUtil.processEnumerationValues(
+                declaration,
+                tag -> {
+                    found.set(Boolean.TRUE);
+                    XmlAttribute name1 = tag.getAttribute("value");
+                    return name1 == null || pairProcessor.process(tag, name1.getValue());
+                }
+            );
+            return found.get();
+        }
+    }
 
-	private boolean processEnumerationImpl(final XmlTag declaration, final PairProcessor<PsiElement, String> pairProcessor, boolean forCompletion)
-	{
-		XmlAttribute name = declaration.getAttribute("name");
-		if(name != null && "boolean".equals(name.getValue()))
-		{
-			XmlAttributeValue valueElement = name.getValueElement();
-			pairProcessor.process(valueElement, "true");
-			pairProcessor.process(valueElement, "false");
-			if(!forCompletion)
-			{
-				pairProcessor.process(valueElement, "1");
-				pairProcessor.process(valueElement, "0");
-			}
-			myExhaustiveEnum = true;
-			return true;
-		}
+    @Override
+    public PsiElement getValueDeclaration(XmlElement attributeValue, String value) {
+        PsiElement declaration = super.getValueDeclaration(attributeValue, value);
+        if (declaration == null && !myExhaustiveEnum) {
+            return getDeclaration();
+        }
+        return declaration;
+    }
 
-		else
-		{
-			final Ref<Boolean> found = new Ref<>(Boolean.FALSE);
-			myExhaustiveEnum = XmlUtil.processEnumerationValues(declaration, tag ->
-			{
-				found.set(Boolean.TRUE);
-				XmlAttribute name1 = tag.getAttribute("value");
-				return name1 == null || pairProcessor.process(tag, name1.getValue());
-			});
-			return found.get();
-		}
-	}
+    @Override
+    public boolean isEnumerated(@Nullable XmlElement context) {
+        return processEnumeration(context, PairProcessor.TRUE, false);
+    }
 
-	@Override
-	public PsiElement getValueDeclaration(XmlElement attributeValue, String value)
-	{
-		PsiElement declaration = super.getValueDeclaration(attributeValue, value);
-		if(declaration == null && !myExhaustiveEnum)
-		{
-			return getDeclaration();
-		}
-		return declaration;
-	}
+    @Override
+    public PsiElement getEnumeratedValueDeclaration(XmlElement xmlElement, final String value) {
+        final Ref<PsiElement> result = new Ref<>();
+        processEnumeration(getDeclaration(), (element, s) -> {
+            if (value.equals(s)) {
+                result.set(element);
+                return false;
+            }
+            return true;
+        }, false);
+        return result.get();
+    }
 
-
-	@Override
-	public boolean isEnumerated(@Nullable XmlElement context)
-	{
-		return processEnumeration(context, PairProcessor.TRUE, false);
-	}
-
-	@Override
-	public PsiElement getEnumeratedValueDeclaration(XmlElement xmlElement, final String value)
-	{
-		final Ref<PsiElement> result = new Ref<>();
-		processEnumeration(getDeclaration(), (element, s) ->
-		{
-			if(value.equals(s))
-			{
-				result.set(element);
-				return false;
-			}
-			return true;
-		}, false);
-		return result.get();
-	}
-
-	@Override
-	protected PsiElement getDefaultValueDeclaration()
-	{
-		return getDeclaration();
-	}
+    @Override
+    protected PsiElement getDefaultValueDeclaration() {
+        return getDeclaration();
+    }
 }

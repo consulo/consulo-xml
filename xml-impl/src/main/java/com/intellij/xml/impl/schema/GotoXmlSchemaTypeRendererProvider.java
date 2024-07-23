@@ -31,40 +31,41 @@ import consulo.language.psi.PsiFile;
  */
 @ExtensionImpl
 public class GotoXmlSchemaTypeRendererProvider implements GotoTargetRendererProvider {
-  @Override
-  public PsiElementListCellRenderer getRenderer(PsiElement element) {
-    if (element instanceof XmlTagImpl) {
-      if (SchemaDefinitionsSearch.isTypeElement((XmlTagImpl)element)) {
-        return new MyRenderer("");
-      }  else if (SchemaDefinitionsSearch.isElementWithSomeEmbeddedType((XmlTagImpl)element)) {
-        return new MyRenderer("xsd:element: ");
-      }
-    }
-    return null;
-  }
-
-  private static class MyRenderer extends PsiElementListCellRenderer<XmlTagImpl> {
-    private final String myPrefix;
-
-    private MyRenderer(String prefix) {
-      myPrefix = prefix;
-    }
-
     @Override
-    public String getElementText(XmlTagImpl element) {
-      final XmlAttribute attr = SchemaDefinitionsSearch.getNameAttr(element);
-      return myPrefix + (attr == null || attr.getValue() == null ? element.getName() : attr.getValue());
+    public PsiElementListCellRenderer getRenderer(PsiElement element) {
+        if (element instanceof XmlTagImpl tag) {
+            if (SchemaDefinitionsSearch.isTypeElement(tag)) {
+                return new MyRenderer("");
+            }
+            else if (SchemaDefinitionsSearch.isElementWithSomeEmbeddedType(tag)) {
+                return new MyRenderer("xsd:element: ");
+            }
+        }
+        return null;
     }
 
-    @Override
-    protected String getContainerText(XmlTagImpl element, String name) {
-      final PsiFile file = element.getContainingFile();
-      return "(" + file.getName() + ")";
-    }
+    private static class MyRenderer extends PsiElementListCellRenderer<XmlTagImpl> {
+        private final String myPrefix;
 
-    @Override
-    protected int getIconFlags() {
-      return 0;
+        private MyRenderer(String prefix) {
+            myPrefix = prefix;
+        }
+
+        @Override
+        public String getElementText(XmlTagImpl element) {
+            final XmlAttribute attr = SchemaDefinitionsSearch.getNameAttr(element);
+            return myPrefix + (attr == null || attr.getValue() == null ? element.getName() : attr.getValue());
+        }
+
+        @Override
+        protected String getContainerText(XmlTagImpl element, String name) {
+            final PsiFile file = element.getContainingFile();
+            return "(" + file.getName() + ")";
+        }
+
+        @Override
+        protected int getIconFlags() {
+            return 0;
+        }
     }
-  }
 }

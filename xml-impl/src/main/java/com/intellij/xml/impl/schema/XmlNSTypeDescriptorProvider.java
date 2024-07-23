@@ -23,9 +23,9 @@ import consulo.xml.psi.xml.XmlTag;
  * @author nik
  */
 public interface XmlNSTypeDescriptorProvider {
-  @Nullable
-  TypeDescriptor getTypeDescriptor(String name, XmlTag context);
+    @Nullable
+    TypeDescriptor getTypeDescriptor(String name, XmlTag context);
 
-  @Nullable
-  TypeDescriptor getTypeDescriptor(XmlTag descriptorTag);
+    @Nullable
+    TypeDescriptor getTypeDescriptor(XmlTag descriptorTag);
 }
