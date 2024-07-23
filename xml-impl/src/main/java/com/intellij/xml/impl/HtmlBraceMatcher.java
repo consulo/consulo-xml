@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlBraceMatcher extends XmlBaseBraceMatcher {
-  @Nonnull
-  @Override
-  public FileType getFileType() {
-    return HtmlFileType.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public FileType getFileType() {
+        return HtmlFileType.INSTANCE;
+    }
 }
