@@ -11,10 +11,10 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenHighlighter {
-  /**
-   * @param language can be XMLLanguage, HTMLLanguage, XHTMLLanguage, DTDLanguage
-   * @return a map of text attributes to be used for highlighting specific non-XML token types that can occur inside XML/HTML
-   */
-  @Nonnull
-  MultiMap<IElementType, TextAttributesKey> getEmbeddedTokenAttributes(@Nonnull XMLLanguage language);
+    /**
+     * @param language can be XMLLanguage, HTMLLanguage, XHTMLLanguage, DTDLanguage
+     * @return a map of text attributes to be used for highlighting specific non-XML token types that can occur inside XML/HTML
+     */
+    @Nonnull
+    MultiMap<IElementType, TextAttributesKey> getEmbeddedTokenAttributes(@Nonnull XMLLanguage language);
 }

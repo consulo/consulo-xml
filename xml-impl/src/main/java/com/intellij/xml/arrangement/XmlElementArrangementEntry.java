@@ -16,32 +16,31 @@ import java.util.Set;
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlElementArrangementEntry extends DefaultArrangementEntry
-  implements TypeAwareArrangementEntry, NameAwareArrangementEntry {
+public class XmlElementArrangementEntry extends DefaultArrangementEntry implements TypeAwareArrangementEntry, NameAwareArrangementEntry {
+    private final ArrangementSettingsToken myType;
+    private final String myName;
 
-  private final ArrangementSettingsToken myType;
-  private final String                   myName;
+    public XmlElementArrangementEntry(
+        @Nullable ArrangementEntry parent,
+        @Nonnull TextRange range,
+        @Nonnull ArrangementSettingsToken type,
+        @Nullable String name,
+        boolean canBeMatched
+    ) {
+        super(parent, range.getStartOffset(), range.getEndOffset(), canBeMatched);
+        myName = name;
+        myType = type;
+    }
 
-  public XmlElementArrangementEntry(@Nullable ArrangementEntry parent,
-                                    @Nonnull TextRange range,
-                                    @Nonnull ArrangementSettingsToken type,
-                                    @Nullable String name,
-                                    boolean canBeMatched)
-  {
-    super(parent, range.getStartOffset(), range.getEndOffset(), canBeMatched);
-    myName = name;
-    myType = type;
-  }
+    @Nullable
+    @Override
+    public String getName() {
+        return myName;
+    }
 
-  @Nullable
-  @Override
-  public String getName() {
-    return myName;
-  }
-
-  @Nonnull
-  @Override
-  public Set<ArrangementSettingsToken> getTypes() {
-    return Collections.singleton(myType);
-  }
+    @Nonnull
+    @Override
+    public Set<ArrangementSettingsToken> getTypes() {
+        return Collections.singleton(myType);
+    }
 }

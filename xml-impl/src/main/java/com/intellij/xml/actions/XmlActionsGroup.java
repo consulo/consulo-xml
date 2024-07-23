@@ -21,9 +21,8 @@ import consulo.ui.ex.action.DefaultActionGroup;
  * @author Konstantin Bulenkov
  */
 public class XmlActionsGroup extends DefaultActionGroup {
-  public XmlActionsGroup() {
-    super();
-    getTemplatePresentation().setText("XML Actions");
-  }
-
+    public XmlActionsGroup() {
+        super();
+        getTemplatePresentation().setText("XML Actions");
+    }
 }

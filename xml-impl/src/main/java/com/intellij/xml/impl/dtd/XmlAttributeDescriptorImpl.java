@@ -31,88 +31,87 @@ import consulo.language.util.IncorrectOperationException;
  * @author Mike
  */
 public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor implements PsiWritableMetaData {
-  private XmlAttributeDecl myDecl;
-  private boolean myRequired;
-  private boolean myEnumerated;
-  private boolean myFixed;
-  private String myName;
+    private XmlAttributeDecl myDecl;
+    private boolean myRequired;
+    private boolean myEnumerated;
+    private boolean myFixed;
+    private String myName;
 
-  public XmlAttributeDescriptorImpl() {
-
-  }
-  public XmlAttributeDescriptorImpl(XmlAttributeDecl decl) {
-    init(decl);
-  }
-
-  public boolean isRequired() {
-    return myRequired;
-  }
-
-  public PsiElement getDeclaration(){
-    return myDecl;
-  }
-
-  public String getName() {
-    if (myName!=null) {
-      return myName;
-    }
-    myName = myDecl.getNameElement().getText();
-    return myName;
-  }
-
-  public void init(PsiElement element){
-    myDecl = (XmlAttributeDecl) element;
-    myRequired = myDecl.isAttributeRequired();
-    myFixed = myDecl.isAttributeFixed();
-    myEnumerated = myDecl.isEnumerated();
-  }
-
-  public Object[] getDependences(){
-    return new Object[]{myDecl};
-  }
-
-  public boolean isFixed() {
-    return myFixed;
-  }
-
-  public boolean hasIdType() {
-    return myDecl.isIdAttribute();
-  }
-
-  public boolean hasIdRefType() {
-    return myDecl.isIdRefAttribute();
-  }
-
-  public String getDefaultValue() {
-    String text = myDecl.getDefaultValueText();
-    if (text != null) {
-      return text.substring(1, text.length() - 1);
+    public XmlAttributeDescriptorImpl() {
     }
 
-    return null;
-  }
-
-  public boolean isEnumerated() {
-    return myEnumerated;
-  }
-
-  public String[] getEnumeratedValues() {
-
-    XmlElement[] values = myDecl.getEnumeratedValues();
-    List<String> result = new ArrayList<String>();
-    for (XmlElement value : values) {
-      result.add(value.getText());
+    public XmlAttributeDescriptorImpl(XmlAttributeDecl decl) {
+        init(decl);
     }
 
-    return ArrayUtil.toStringArray(result);
-  }
+    public boolean isRequired() {
+        return myRequired;
+    }
 
-  public String getQualifiedName() {
-    return getName();
-  }
+    public PsiElement getDeclaration() {
+        return myDecl;
+    }
 
-  public void setName(String name) throws IncorrectOperationException {
-    myName = name;
-    ((PsiNamedElement)getDeclaration()).setName(name);
-  }
+    public String getName() {
+        if (myName != null) {
+            return myName;
+        }
+        myName = myDecl.getNameElement().getText();
+        return myName;
+    }
+
+    public void init(PsiElement element) {
+        myDecl = (XmlAttributeDecl)element;
+        myRequired = myDecl.isAttributeRequired();
+        myFixed = myDecl.isAttributeFixed();
+        myEnumerated = myDecl.isEnumerated();
+    }
+
+    public Object[] getDependences() {
+        return new Object[]{myDecl};
+    }
+
+    public boolean isFixed() {
+        return myFixed;
+    }
+
+    public boolean hasIdType() {
+        return myDecl.isIdAttribute();
+    }
+
+    public boolean hasIdRefType() {
+        return myDecl.isIdRefAttribute();
+    }
+
+    public String getDefaultValue() {
+        String text = myDecl.getDefaultValueText();
+        if (text != null) {
+            return text.substring(1, text.length() - 1);
+        }
+
+        return null;
+    }
+
+    public boolean isEnumerated() {
+        return myEnumerated;
+    }
+
+    public String[] getEnumeratedValues() {
+        XmlElement[] values = myDecl.getEnumeratedValues();
+        List<String> result = new ArrayList<>();
+        for (XmlElement value : values) {
+            result.add(value.getText());
+        }
+
+        return ArrayUtil.toStringArray(result);
+    }
+
+    public String getQualifiedName() {
+        return getName();
+    }
+
+    public void setName(String name) throws IncorrectOperationException {
+        myName = name;
+        ((PsiNamedElement)getDeclaration()).setName(name);
+    }
 }

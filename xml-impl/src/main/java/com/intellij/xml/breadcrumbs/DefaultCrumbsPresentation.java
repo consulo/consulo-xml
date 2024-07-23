@@ -22,11 +22,9 @@ import consulo.ui.color.ColorValue;
 /**
  * @author Eugene.Kudelevsky
  */
-public class DefaultCrumbsPresentation extends CrumbPresentation
-{
-	@Override
-	public ColorValue getBackgroundColor(boolean selected, boolean hovered, boolean light)
-	{
-		return BreadcrumbsComponent.ButtonSettings.getBackgroundColor(selected, hovered, light, false);
-	}
+public class DefaultCrumbsPresentation extends CrumbPresentation {
+    @Override
+    public ColorValue getBackgroundColor(boolean selected, boolean hovered, boolean light) {
+        return BreadcrumbsComponent.ButtonSettings.getBackgroundColor(selected, hovered, light, false);
+    }
 }

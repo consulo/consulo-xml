@@ -28,73 +28,73 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 public class XmlElementsGroupImpl implements XmlElementsGroup {
+    private final XmlContentParticle myParticle;
+    private final XmlElementsGroup myParent;
+    private final NotNullLazyValue<List<XmlElementsGroup>> mySubGroups = new NotNullLazyValue<List<XmlElementsGroup>>() {
+        @Nonnull
+        @Override
+        protected List<XmlElementsGroup> compute() {
+            return ContainerUtil.map(
+                myParticle.getSubParticles(),
+                xmlContentParticle -> new XmlElementsGroupImpl(xmlContentParticle, XmlElementsGroupImpl.this)
+            );
+        }
+    };
 
-  private final XmlContentParticle myParticle;
-  private final XmlElementsGroup myParent;
-  private final NotNullLazyValue<List<XmlElementsGroup>> mySubGroups = new NotNullLazyValue<List<XmlElementsGroup>>() {
-    @Nonnull
+    public XmlElementsGroupImpl(@Nonnull XmlContentParticle particle, XmlElementsGroup parent) {
+        myParticle = particle;
+        myParent = parent;
+    }
+
     @Override
-    protected List<XmlElementsGroup> compute() {
-      return ContainerUtil.map(myParticle.getSubParticles(), xmlContentParticle -> new  XmlElementsGroupImpl(xmlContentParticle, XmlElementsGroupImpl.this));
+    public int getMinOccurs() {
+        switch (myParticle.getQuantifier()) {
+            case ONE_OR_MORE:
+            case REQUIRED:
+                return 1;
+            case ZERO_OR_MORE:
+            case OPTIONAL:
+                return 0;
+        }
+        throw new AssertionError(myParticle.getQuantifier());
     }
-  };
 
-  public XmlElementsGroupImpl(@Nonnull XmlContentParticle particle, XmlElementsGroup parent) {
-    myParticle = particle;
-    myParent = parent;
-  }
-
-  @Override
-  public int getMinOccurs() {
-    switch (myParticle.getQuantifier()) {
-      case ONE_OR_MORE:
-      case REQUIRED:
-        return 1;
-      case ZERO_OR_MORE:
-      case OPTIONAL:
-        return 0;
+    @Override
+    public int getMaxOccurs() {
+        switch (myParticle.getQuantifier()) {
+            case ONE_OR_MORE:
+            case ZERO_OR_MORE:
+                return Integer.MAX_VALUE;
+            case OPTIONAL:
+            case REQUIRED:
+                return 1;
+        }
+        throw new AssertionError(myParticle.getQuantifier());
     }
-    throw new AssertionError(myParticle.getQuantifier());
-  }
 
-  @Override
-  public int getMaxOccurs() {
-    switch (myParticle.getQuantifier()) {
-      case ONE_OR_MORE:
-      case ZERO_OR_MORE:
-        return Integer.MAX_VALUE;
-      case OPTIONAL:
-      case REQUIRED:
-        return 1;
+    @Override
+    public Type getGroupType() {
+      XmlContentParticle.Type type = myParticle.getType();
+      return switch (type) {
+            case SEQUENCE -> Type.SEQUENCE;
+            case CHOICE -> Type.CHOICE;
+            case ELEMENT -> Type.LEAF;
+            default -> throw new AssertionError(type);
+        };
     }
-    throw new AssertionError(myParticle.getQuantifier());
-  }
 
-  @Override
-  public Type getGroupType() {
-    switch (myParticle.getType()) {
-      case SEQUENCE:
-        return Type.SEQUENCE;
-      case CHOICE:
-        return Type.CHOICE;
-      case ELEMENT:
-        return Type.LEAF;
+    @Override
+    public XmlElementsGroup getParentGroup() {
+        return myParent;
     }
-    throw new AssertionError(myParticle.getType());
-  }
 
-  @Override
-  public XmlElementsGroup getParentGroup() {
-    return myParent;
-  }
+    @Override
+    public List<XmlElementsGroup> getSubGroups() {
+        return mySubGroups.getValue();
+    }
 
-  @Override
-  public List<XmlElementsGroup> getSubGroups() {
-    return mySubGroups.getValue();
-  }
-
-  @Override
-  public XmlElementDescriptor getLeafDescriptor() {
-    return myParticle.getElementDescriptor();
-  }
+    @Override
+    public XmlElementDescriptor getLeafDescriptor() {
+        return myParticle.getElementDescriptor();
+    }
 }
