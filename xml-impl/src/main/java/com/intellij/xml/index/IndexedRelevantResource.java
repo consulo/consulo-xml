@@ -37,95 +37,98 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 public class IndexedRelevantResource<K, V extends Comparable> implements Comparable<IndexedRelevantResource<K, V>> {
-
-  public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getResources(ID<K, V> indexId,
-                                                                                           final K key,
-                                                                                           @Nullable final consulo.module.Module module,
-                                                                                           @Nonnull Project project,
-                                                                                           @Nullable final GlobalSearchScope additionalScope) {
-
-    if (project.isDefault()) return Collections.emptyList();
-    final ArrayList<IndexedRelevantResource<K, V>> resources = new ArrayList<IndexedRelevantResource<K, V>>();
-    final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-    FileBasedIndex.getInstance().processValues(indexId, key, null, new FileBasedIndex.ValueProcessor<V>() {
-      public boolean process(VirtualFile file, V value) {
-        ResourceRelevance relevance = ResourceRelevance.getRelevance(file, module, fileIndex, additionalScope);
-        if (relevance != ResourceRelevance.NONE) {
-          resources.add(new IndexedRelevantResource<K, V>(file, key, value, relevance));
+    public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getResources(
+        ID<K, V> indexId,
+        final K key,
+        @Nullable final consulo.module.Module module,
+        @Nonnull Project project,
+        @Nullable final GlobalSearchScope additionalScope
+    ) {
+        if (project.isDefault()) {
+            return Collections.emptyList();
         }
-        return true;
-      }
-    }, new AdditionalIndexedRootsScope(GlobalSearchScope.allScope(project)));
-    return resources;
-  }
-
-  public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getAllResources(ID<K, V> indexId,
-                                                                                              @Nullable final Module module,
-                                                                                              @Nonnull Project project,
-                                                                                              @Nullable NullableFunction<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser) {
-    ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<IndexedRelevantResource<K, V>>();
-    Collection<K> allKeys = FileBasedIndex.getInstance().getAllKeys(indexId, project);
-    for (K key : allKeys) {
-      List<IndexedRelevantResource<K, V>> resources = getResources(indexId, key, module, project, null);
-      if (!resources.isEmpty()) {
-        if (chooser == null) {
-          all.add(resources.get(0));
-        }
-        else {
-          IndexedRelevantResource<K, V> resource = chooser.apply(resources);
-          if (resource != null) {
-            all.add(resource);
-          }
-        }
-      }
+        final ArrayList<IndexedRelevantResource<K, V>> resources = new ArrayList<>();
+        final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+        FileBasedIndex.getInstance().processValues(
+            indexId,
+            key,
+            null,
+            (file, value) -> {
+                ResourceRelevance relevance = ResourceRelevance.getRelevance(file, module, fileIndex, additionalScope);
+                if (relevance != ResourceRelevance.NONE) {
+                    resources.add(new IndexedRelevantResource<>(file, key, value, relevance));
+                }
+                return true;
+            },
+            new AdditionalIndexedRootsScope(GlobalSearchScope.allScope(project))
+        );
+        return resources;
     }
-    return all;
-  }
 
-  private final VirtualFile myFile;
-  private final K myKey;
-  private final V myValue;
-  private final ResourceRelevance myRelevance;
+    public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getAllResources(
+        ID<K, V> indexId,
+        @Nullable final Module module,
+        @Nonnull Project project,
+        @Nullable NullableFunction<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser
+    ) {
+        ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<>();
+        Collection<K> allKeys = FileBasedIndex.getInstance().getAllKeys(indexId, project);
+        for (K key : allKeys) {
+            List<IndexedRelevantResource<K, V>> resources = getResources(indexId, key, module, project, null);
+            if (!resources.isEmpty()) {
+                if (chooser == null) {
+                    all.add(resources.get(0));
+                }
+                else {
+                    IndexedRelevantResource<K, V> resource = chooser.apply(resources);
+                    if (resource != null) {
+                        all.add(resource);
+                    }
+                }
+            }
+        }
+        return all;
+    }
 
-  public IndexedRelevantResource(VirtualFile file, K key, V value, ResourceRelevance relevance) {
-    myFile = file;
-    myKey = key;
-    myValue = value;
-    myRelevance = relevance;
-  }
+    private final VirtualFile myFile;
+    private final K myKey;
+    private final V myValue;
+    private final ResourceRelevance myRelevance;
 
-  public VirtualFile getFile() {
-    return myFile;
-  }
+    public IndexedRelevantResource(VirtualFile file, K key, V value, ResourceRelevance relevance) {
+        myFile = file;
+        myKey = key;
+        myValue = value;
+        myRelevance = relevance;
+    }
 
-  public V getValue() {
-    return myValue;
-  }
+    public VirtualFile getFile() {
+        return myFile;
+    }
 
-  public ResourceRelevance getRelevance() {
-    return myRelevance;
-  }
+    public V getValue() {
+        return myValue;
+    }
 
-  public int compareTo(IndexedRelevantResource<K, V> o) {
-    int i = myRelevance.compareTo(o.getRelevance());
-    return i == 0 ? myValue.compareTo(o.getValue()) : i;
-  }
+    public ResourceRelevance getRelevance() {
+        return myRelevance;
+    }
 
-  public K getKey() {
-    return myKey;
-  }
+    public int compareTo(IndexedRelevantResource<K, V> o) {
+        int i = myRelevance.compareTo(o.getRelevance());
+        return i == 0 ? myValue.compareTo(o.getValue()) : i;
+    }
 
-  @Override
-  public String toString() {
-    return "IndexedRelevantResource{" +
-           "myRelevance=" +
-           myRelevance +
-           ", myKey=" +
-           myKey +
-           ", myValue=" +
-           myValue +
-           ", myFile=" +
-           myFile +
-           '}';
-  }
+    public K getKey() {
+        return myKey;
+    }
+
+    @Override
+    public String toString() {
+        return "IndexedRelevantResource{" +
+            "myRelevance=" + myRelevance +
+            ", myKey=" + myKey +
+            ", myValue=" + myValue +
+            ", myFile=" + myFile + '}';
+    }
 }

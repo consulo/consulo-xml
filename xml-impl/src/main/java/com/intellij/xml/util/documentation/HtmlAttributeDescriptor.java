@@ -21,45 +21,45 @@ import java.util.Arrays;
  * @author maxim
  */
 class HtmlAttributeDescriptor extends EntityDescriptor {
-  private String myType;
-  private boolean myHasDefaultValue;
-  private String[] mySetOfParentTags;
-  private boolean myParentSetIsExclusionSet;
+    private String myType;
+    private boolean myHasDefaultValue;
+    private String[] mySetOfParentTags;
+    private boolean myParentSetIsExclusionSet;
 
-  boolean isValidParentTagName(String str) {
-    boolean containsInSet = Arrays.binarySearch(mySetOfParentTags, str) >= 0;
-    return containsInSet == !myParentSetIsExclusionSet;
-  }
+    boolean isValidParentTagName(String str) {
+        boolean containsInSet = Arrays.binarySearch(mySetOfParentTags, str) >= 0;
+        return containsInSet == !myParentSetIsExclusionSet;
+    }
 
-  String getType() {
-    return myType;
-  }
+    String getType() {
+        return myType;
+    }
 
-  void setType(String type) {
-    this.myType = type;
-  }
+    void setType(String type) {
+        this.myType = type;
+    }
 
-  boolean isHasDefaultValue() {
-    return myHasDefaultValue;
-  }
+    boolean isHasDefaultValue() {
+        return myHasDefaultValue;
+    }
 
-  void setHasDefaultValue(boolean hasDefaultValue) {
-    this.myHasDefaultValue = hasDefaultValue;
-  }
+    void setHasDefaultValue(boolean hasDefaultValue) {
+        this.myHasDefaultValue = hasDefaultValue;
+    }
 
-  String[] getSetOfParentTags() {
-    return mySetOfParentTags;
-  }
+    String[] getSetOfParentTags() {
+        return mySetOfParentTags;
+    }
 
-  boolean isParentSetIsExclusionSet() {
-    return myParentSetIsExclusionSet;
-  }
+    boolean isParentSetIsExclusionSet() {
+        return myParentSetIsExclusionSet;
+    }
 
-  void setParentSetIsExclusionSet(boolean _parentSetIsExclusionSet) {
-    myParentSetIsExclusionSet = _parentSetIsExclusionSet;
-  }
+    void setParentSetIsExclusionSet(boolean _parentSetIsExclusionSet) {
+        myParentSetIsExclusionSet = _parentSetIsExclusionSet;
+    }
 
-  void setSetOfParentTags(String[] _setOfParentTags) {
-    mySetOfParentTags = _setOfParentTags;
-  }
+    void setSetOfParentTags(String[] _setOfParentTags) {
+        mySetOfParentTags = _setOfParentTags;
+    }
 }

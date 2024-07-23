@@ -25,12 +25,11 @@ import org.jetbrains.annotations.NonNls;
  * @author peter
  */
 public interface XmlAttributeDescriptorEx extends XmlAttributeDescriptor {
-
-  /**
-   * @param newTargetName
-   * @return new attribute local name
-   */
-  @Nullable
-  @NonNls
-  String handleTargetRename(@Nonnull @NonNls final String newTargetName);
+    /**
+     * @param newTargetName
+     * @return new attribute local name
+     */
+    @Nullable
+    @NonNls
+    String handleTargetRename(@Nonnull @NonNls final String newTargetName);
 }

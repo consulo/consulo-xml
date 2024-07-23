@@ -113,14 +113,9 @@ public class SchemaDefinitionsSearch implements DefinitionsScopedSearchExecutor 
                                         final PsiElementProcessor processor = new PsiElementProcessor() {
                                             @Override
                                             public boolean execute(@Nonnull PsiElement element) {
-                                                if (element instanceof XmlTagImpl) {
-                                                    if (isCertainTypeElement(
-                                                        (XmlTagImpl)element,
-                                                        info.getTagName(),
-                                                        prefixByURI
-                                                    ) || isElementWithEmbeddedType((XmlTagImpl)element,
-                                                        info.getTagName(), prefixByURI
-                                                    )) {
+                                                if (element instanceof XmlTagImpl tag) {
+                                                    if (isCertainTypeElement(tag, info.getTagName(), prefixByURI)
+                                                        || isElementWithEmbeddedType(tag, info.getTagName(), prefixByURI)) {
                                                         consumer.process(element);
                                                         return false;
                                                     }

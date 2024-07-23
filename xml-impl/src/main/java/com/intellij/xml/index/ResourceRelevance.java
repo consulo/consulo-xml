@@ -16,6 +16,7 @@
 package com.intellij.xml.index;
 
 import javax.annotation.Nullable;
+
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.module.content.ProjectFileIndex;
@@ -27,40 +28,40 @@ import consulo.module.Module;
  * @author Dmitry Avdeev
  */
 public enum ResourceRelevance {
+    NONE,
+    STANDARD,
+    LIBRARY,
+    SOURCE,
+    MAPPED;
 
-  NONE,
-  STANDARD,
-  LIBRARY,
-  SOURCE,
-  MAPPED;
-
-  public static ResourceRelevance getRelevance(VirtualFile resource,
-                                               @Nullable consulo.module.Module module,
-                                               ProjectFileIndex fileIndex,
-                                               @Nullable GlobalSearchScope additionalScope) {
-    boolean inTest = fileIndex.isInTestSourceContent(resource);
-    if (module != null) {
-      GlobalSearchScope scope = GlobalSearchScope.moduleRuntimeScope(module, inTest);
-      Module resourceModule = fileIndex.getModuleForFile(resource);
-      if (resourceModule != null &&
-          (resourceModule == module || scope.isSearchInModuleContent(resourceModule)) ||
-          scope.contains(resource) || (additionalScope != null && additionalScope.contains(resource))) {
-        return inTest || fileIndex.isInSource(resource) ? SOURCE : LIBRARY;
-      }
+    public static ResourceRelevance getRelevance(
+        VirtualFile resource,
+        @Nullable consulo.module.Module module,
+        ProjectFileIndex fileIndex,
+        @Nullable GlobalSearchScope additionalScope
+    ) {
+        boolean inTest = fileIndex.isInTestSourceContent(resource);
+        if (module != null) {
+            GlobalSearchScope scope = GlobalSearchScope.moduleRuntimeScope(module, inTest);
+            Module resourceModule = fileIndex.getModuleForFile(resource);
+            if (resourceModule != null && (resourceModule == module || scope.isSearchInModuleContent(resourceModule))
+                || scope.contains(resource) || (additionalScope != null && additionalScope.contains(resource))) {
+                return inTest || fileIndex.isInSource(resource) ? SOURCE : LIBRARY;
+            }
+        }
+        else if (inTest || fileIndex.isInSource(resource)) {
+            return SOURCE;
+        }
+        else if (fileIndex.isInLibraryClasses(resource)) {
+            return LIBRARY;
+        }
+        ExternalResourceManagerEx resourceManager = (ExternalResourceManagerEx)ExternalResourceManager.getInstance();
+        if (resourceManager.isUserResource(resource)) {
+            return MAPPED;
+        }
+        if (resourceManager.isStandardResource(resource)) {
+            return STANDARD;
+        }
+        return NONE;
     }
-    else if (inTest ||  fileIndex.isInSource(resource)) {
-      return SOURCE;
-    }
-    else if (fileIndex.isInLibraryClasses(resource)) {
-      return LIBRARY;
-    }
-    ExternalResourceManagerEx resourceManager = (ExternalResourceManagerEx)ExternalResourceManager.getInstance();
-    if (resourceManager.isUserResource(resource)) {
-      return MAPPED;
-    }
-    if (resourceManager.isStandardResource(resource)) {
-      return STANDARD;
-    }
-    return NONE;
-  }
 }

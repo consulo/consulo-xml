@@ -31,45 +31,50 @@ import consulo.util.xml.fastReader.NanoXmlUtil;
  * @author Dmitry Avdeev
  */
 public class XsdTagNameBuilder extends NanoXmlUtil.IXMLBuilderAdapter {
-
-  @Nullable
-  public static Collection<String> computeTagNames(final InputStream is) {
-    return computeTagNames(new InputStreamReader(is));
-  }
-
-  @Nullable
-  public static Collection<String> computeTagNames(final Reader reader) {
-    try {
-      final XsdTagNameBuilder builder = new XsdTagNameBuilder();
-      NanoXmlUtil.parse(reader, builder);
-      return builder.myTagNames;
+    @Nullable
+    public static Collection<String> computeTagNames(final InputStream is) {
+        return computeTagNames(new InputStreamReader(is));
     }
-    finally {
-      try {
-        if (reader != null) {
-          reader.close();
+
+    @Nullable
+    public static Collection<String> computeTagNames(final Reader reader) {
+        try {
+            final XsdTagNameBuilder builder = new XsdTagNameBuilder();
+            NanoXmlUtil.parse(reader, builder);
+            return builder.myTagNames;
         }
-      }
-      catch (IOException e) {
-        // can never happen
-      }
+        finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            }
+            catch (IOException e) {
+                // can never happen
+            }
+        }
     }
-  }
 
-  private final Collection<String> myTagNames = new ArrayList<String>();
-  private boolean myElementStarted;
+    private final Collection<String> myTagNames = new ArrayList<String>();
+    private boolean myElementStarted;
 
-  public void startElement(@NonNls final String name, @NonNls final String nsPrefix, @NonNls final String nsURI, final String systemID, final int lineNr)
-      throws Exception {
+    public void startElement(
+        @NonNls final String name,
+        @NonNls final String nsPrefix,
+        @NonNls final String nsURI,
+        final String systemID,
+        final int lineNr
+    )
+        throws Exception {
 
-    myElementStarted = nsPrefix != null && nsURI.equals("http://www.w3.org/2001/XMLSchema") && name.equals("element");
-  }
-
-  public void addAttribute(@NonNls final String key, final String nsPrefix, final String nsURI, final String value, final String type)
-      throws Exception {
-    if (myElementStarted && key.equals("name")) {
-      myTagNames.add(value);
-      myElementStarted = false;
+        myElementStarted = nsPrefix != null && nsURI.equals("http://www.w3.org/2001/XMLSchema") && name.equals("element");
     }
-  }
+
+    public void addAttribute(@NonNls final String key, final String nsPrefix, final String nsURI, final String value, final String type)
+        throws Exception {
+        if (myElementStarted && key.equals("name")) {
+            myTagNames.add(value);
+            myElementStarted = false;
+        }
+    }
 }
