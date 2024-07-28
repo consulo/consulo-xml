@@ -34,110 +34,108 @@ import javax.annotation.Nullable;
  * @author peter
  */
 public abstract class IncludedXmlElement<T extends XmlElement> extends LightElement implements XmlElement {
-  private final PsiAnchor myOriginal;
-  private SoftReference<T> myRef;
-  private final PsiElement myParent;
+    private final PsiAnchor myOriginal;
+    private SoftReference<T> myRef;
+    private final PsiElement myParent;
 
-  public IncludedXmlElement(@Nonnull T original, @Nullable PsiElement parent) {
-    super(original.getManager(), original.getLanguage());
-    //noinspection unchecked
-    T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>) original).getOriginal() : original;
-    myOriginal = PsiAnchor.create(realOriginal);
-    myRef = new SoftReference<T>(realOriginal);
-    myParent = parent;
-  }
-
-  @Override
-  public boolean isValid() {
-    T t = myRef.get();
-    if (t != null) {
-      return t.isValid();
+    public IncludedXmlElement(@Nonnull T original, @Nullable PsiElement parent) {
+        super(original.getManager(), original.getLanguage());
+        //noinspection unchecked
+        T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>)original).getOriginal() : original;
+        myOriginal = PsiAnchor.create(realOriginal);
+        myRef = new SoftReference<>(realOriginal);
+        myParent = parent;
     }
 
-    return myOriginal.retrieve() != null;
-  }
+    @Override
+    public boolean isValid() {
+        T t = myRef.get();
+        if (t != null) {
+            return t.isValid();
+        }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    IncludedXmlElement element = (IncludedXmlElement) o;
-
-    if (!myParent.equals(element.myParent)) return false;
-    if (!myOriginal.equals(element.myOriginal)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = myOriginal.hashCode();
-    result = 31 * result + myParent.hashCode();
-    return result;
-  }
-
-  public T getOriginal() {
-    T element = myRef.get();
-    if (element != null) {
-      return element;
+        return myOriginal.retrieve() != null;
     }
 
-    element = (T) myOriginal.retrieve();
-    if (element == null) {
-      throw new PsiInvalidElementAccessException(this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        IncludedXmlElement element = (IncludedXmlElement)o;
+
+        return myParent.equals(element.myParent) && myOriginal.equals(element.myOriginal);
     }
-    myRef = new SoftReference<T>(element);
-    return element;
-  }
 
-  @Nonnull
-  @Override
-  public T getNavigationElement() {
-    return getOriginal();
-  }
+    @Override
+    public int hashCode() {
+        int result = myOriginal.hashCode();
+        result = 31 * result + myParent.hashCode();
+        return result;
+    }
 
-  @Override
-  public PsiFile getContainingFile() {
-    return myParent.getContainingFile();
-  }
-
-  @Override
-  public PsiElement getParent() {
-    return myParent;
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName();
-  }
-
-  @Override
-  public boolean processElements(final PsiElementProcessor processor, PsiElement place) {
-    final IncludedXmlElement<T> self = this;
-    return getOriginal().processElements(new PsiElementProcessor() {
-      @SuppressWarnings("unchecked")
-      @Override
-      public boolean execute(@Nonnull PsiElement element) {
-        if (element instanceof XmlTag) {
-          XmlTag theirParent = ((XmlTag) element).getParentTag();
-          PsiElement parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
-          return processor.execute(new IncludedXmlTag((XmlTag) element, parent));
+    public T getOriginal() {
+        T element = myRef.get();
+        if (element != null) {
+            return element;
         }
-        if (element instanceof XmlAttribute) {
-          XmlTag theirParent = ((XmlAttribute) element).getParent();
-          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
-          return processor.execute(new IncludedXmlAttribute((XmlAttribute) element, parent));
-        }
-        if (element instanceof XmlText) {
-          XmlTag theirParent = ((XmlText) element).getParentTag();
-          XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag) self : theirParent;
-          return processor.execute(new IncludedXmlText((XmlText) element, parent));
-        }
-        return processor.execute(element);
-      }
-    }, place);
-  }
 
+        element = (T)myOriginal.retrieve();
+        if (element == null) {
+            throw new PsiInvalidElementAccessException(this);
+        }
+        myRef = new SoftReference<>(element);
+        return element;
+    }
 
+    @Nonnull
+    @Override
+    public T getNavigationElement() {
+        return getOriginal();
+    }
+
+    @Override
+    public PsiFile getContainingFile() {
+        return myParent.getContainingFile();
+    }
+
+    @Override
+    public PsiElement getParent() {
+        return myParent;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
+
+    @Override
+    public boolean processElements(final PsiElementProcessor processor, PsiElement place) {
+        final IncludedXmlElement<T> self = this;
+        return getOriginal().processElements(
+            element -> {
+                if (element instanceof XmlTag tag) {
+                    XmlTag theirParent = tag.getParentTag();
+                    PsiElement parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
+                    return processor.execute(new IncludedXmlTag(tag, parent));
+                }
+                if (element instanceof XmlAttribute attribute) {
+                    XmlTag theirParent = attribute.getParent();
+                    XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
+                    return processor.execute(new IncludedXmlAttribute(attribute, parent));
+                }
+                if (element instanceof XmlText text) {
+                    XmlTag theirParent = text.getParentTag();
+                    XmlTag parent = getOriginal().equals(theirParent) ? (XmlTag)self : theirParent;
+                    return processor.execute(new IncludedXmlText(text, parent));
+                }
+                return processor.execute(element);
+            },
+            place
+        );
+    }
 }

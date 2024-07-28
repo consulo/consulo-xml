@@ -36,104 +36,99 @@ import org.jetbrains.annotations.PropertyKey;
 
 import javax.annotation.Nonnull;
 
-public class AddDtdDeclarationFix implements LocalQuickFix
-{
-	private final String myMessageKey;
-	private final String myElementDeclarationName;
-	private final String myReference;
+public class AddDtdDeclarationFix implements LocalQuickFix {
+    private final String myMessageKey;
+    private final String myElementDeclarationName;
+    private final String myReference;
 
-	public AddDtdDeclarationFix(@PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey, @Nonnull String elementDeclarationName, @Nonnull PsiReference reference)
-	{
-		myMessageKey = messageKey;
-		myElementDeclarationName = elementDeclarationName;
-		myReference = reference.getCanonicalText();
-	}
+    public AddDtdDeclarationFix(
+        @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
+        @Nonnull String elementDeclarationName,
+        @Nonnull PsiReference reference
+    ) {
+        myMessageKey = messageKey;
+        myElementDeclarationName = elementDeclarationName;
+        myReference = reference.getCanonicalText();
+    }
 
-	@Override
-	@Nonnull
-	public String getFamilyName()
-	{
-		return XmlBundle.message(myMessageKey, myReference);
-	}
+    @Override
+    @Nonnull
+    public String getFamilyName() {
+        return XmlBundle.message(myMessageKey, myReference);
+    }
 
-	@Override
-	public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
-	{
-		final PsiElement element = descriptor.getPsiElement();
-		final PsiFile containingFile = element.getContainingFile();
+    @Override
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+        final PsiElement element = descriptor.getPsiElement();
+        final PsiFile containingFile = element.getContainingFile();
 
-		@NonNls String prefixToInsert = "";
-		@NonNls String suffixToInsert = "";
+        @NonNls String prefixToInsert = "";
+        @NonNls String suffixToInsert = "";
 
-		final int UNDEFINED_OFFSET = -1;
-		int anchorOffset = UNDEFINED_OFFSET;
-		PsiElement anchor = PsiTreeUtil.getParentOfType(element, XmlElementDecl.class, XmlAttlistDecl.class, XmlEntityDecl.class, XmlConditionalSection.class);
-		if(anchor != null)
-		{
-			anchorOffset = anchor.getTextRange().getStartOffset();
-		}
+        final int UNDEFINED_OFFSET = -1;
+        int anchorOffset = UNDEFINED_OFFSET;
+        PsiElement anchor = PsiTreeUtil.getParentOfType(element,
+            XmlElementDecl.class,
+            XmlAttlistDecl.class,
+            XmlEntityDecl.class,
+            XmlConditionalSection.class
+        );
+        if (anchor != null) {
+            anchorOffset = anchor.getTextRange().getStartOffset();
+        }
 
-		if(anchorOffset == UNDEFINED_OFFSET && containingFile.getLanguage() == XMLLanguage.INSTANCE)
-		{
-			XmlFile file = (XmlFile) containingFile;
-			final XmlProlog prolog = file.getDocument().getProlog();
-			assert prolog != null;
+        if (anchorOffset == UNDEFINED_OFFSET && containingFile.getLanguage() == XMLLanguage.INSTANCE) {
+            XmlFile file = (XmlFile)containingFile;
+            final XmlProlog prolog = file.getDocument().getProlog();
+            assert prolog != null;
 
-			final XmlDoctype doctype = prolog.getDoctype();
-			final XmlMarkupDecl markupDecl;
+            final XmlDoctype doctype = prolog.getDoctype();
+            final XmlMarkupDecl markupDecl;
 
-			if(doctype != null)
-			{
-				markupDecl = doctype.getMarkupDecl();
-			}
-			else
-			{
-				markupDecl = null;
-			}
+            if (doctype != null) {
+                markupDecl = doctype.getMarkupDecl();
+            }
+            else {
+                markupDecl = null;
+            }
 
-			if(doctype == null)
-			{
-				final XmlTag rootTag = file.getDocument().getRootTag();
-				prefixToInsert = "<!DOCTYPE " + ((rootTag != null) ? rootTag.getName() : "null");
-				suffixToInsert = ">\n";
-			}
-			if(markupDecl == null)
-			{
-				prefixToInsert += " [\n";
-				suffixToInsert = "]" + suffixToInsert;
+            if (doctype == null) {
+                final XmlTag rootTag = file.getDocument().getRootTag();
+                prefixToInsert = "<!DOCTYPE " + ((rootTag != null) ? rootTag.getName() : "null");
+                suffixToInsert = ">\n";
+            }
+            if (markupDecl == null) {
+                prefixToInsert += " [\n";
+                suffixToInsert = "]" + suffixToInsert;
 
-				if(doctype != null)
-				{
-					anchorOffset = doctype.getTextRange().getEndOffset() - 1; // just before last '>'
-				}
-				else
-				{
-					anchorOffset = prolog.getTextRange().getEndOffset();
-				}
-			}
-		}
+                if (doctype != null) {
+                    anchorOffset = doctype.getTextRange().getEndOffset() - 1; // just before last '>'
+                }
+                else {
+                    anchorOffset = prolog.getTextRange().getEndOffset();
+                }
+            }
+        }
 
-		if(anchorOffset == UNDEFINED_OFFSET)
-		{
-			anchorOffset = element.getTextRange().getStartOffset();
-		}
+        if (anchorOffset == UNDEFINED_OFFSET) {
+            anchorOffset = element.getTextRange().getStartOffset();
+        }
 
-		OpenFileDescriptor openDescriptor = OpenFileDescriptorFactory.getInstance(project).builder(containingFile.getVirtualFile()).offset(anchorOffset).build();
-		final Editor editor = FileEditorManager.getInstance(project).openTextEditor(openDescriptor, true);
-		final TemplateManager templateManager = TemplateManager.getInstance(project);
-		final Template t = templateManager.createTemplate("", "");
+        OpenFileDescriptor openDescriptor =
+            OpenFileDescriptorFactory.getInstance(project).builder(containingFile.getVirtualFile()).offset(anchorOffset).build();
+        final Editor editor = FileEditorManager.getInstance(project).openTextEditor(openDescriptor, true);
+        final TemplateManager templateManager = TemplateManager.getInstance(project);
+        final Template t = templateManager.createTemplate("", "");
 
-		if(!prefixToInsert.isEmpty())
-		{
-			t.addTextSegment(prefixToInsert);
-		}
-		t.addTextSegment("<!" + myElementDeclarationName + " " + myReference + " ");
-		t.addEndVariable();
-		t.addTextSegment(">\n");
-		if(!suffixToInsert.isEmpty())
-		{
-			t.addTextSegment(suffixToInsert);
-		}
-		templateManager.startTemplate(editor, t);
-	}
+        if (!prefixToInsert.isEmpty()) {
+            t.addTextSegment(prefixToInsert);
+        }
+        t.addTextSegment("<!" + myElementDeclarationName + " " + myReference + " ");
+        t.addEndVariable();
+        t.addTextSegment(">\n");
+        if (!suffixToInsert.isEmpty()) {
+            t.addTextSegment(suffixToInsert);
+        }
+        templateManager.startTemplate(editor, t);
+    }
 }

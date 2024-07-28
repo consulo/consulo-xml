@@ -28,18 +28,15 @@ import javax.annotation.Nullable;
  * @author yole
  */
 @ExtensionImpl
-public class HtmlFileNSInfoProvider implements XmlFileNSInfoProvider
-{
-	@Nullable
-	@Override
-	public String[][] getDefaultNamespaces(@Nonnull XmlFile file)
-	{
-		return null;
-	}
+public class HtmlFileNSInfoProvider implements XmlFileNSInfoProvider {
+    @Nullable
+    @Override
+    public String[][] getDefaultNamespaces(@Nonnull XmlFile file) {
+        return null;
+    }
 
-	@Override
-	public boolean overrideNamespaceFromDocType(@Nonnull XmlFile file)
-	{
-		return file.getFileType() == HtmlFileType.INSTANCE || file.getFileType() == XHtmlFileType.INSTANCE;
-	}
+    @Override
+    public boolean overrideNamespaceFromDocType(@Nonnull XmlFile file) {
+        return file.getFileType() == HtmlFileType.INSTANCE || file.getFileType() == XHtmlFileType.INSTANCE;
+    }
 }
