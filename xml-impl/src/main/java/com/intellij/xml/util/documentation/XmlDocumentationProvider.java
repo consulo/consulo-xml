@@ -461,14 +461,14 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
 
             XmlUtil.processXmlElements(
                 xmlFile,
-                element1 -> {
-                    if (element1 instanceof XmlEntityDecl entityDecl) {
+                xmlElement -> {
+                    if (xmlElement instanceof XmlEntityDecl entityDecl) {
                         if (entityDecl.isInternalReference() && name.equals(entityDecl.getName())) {
                             result[0] = entityDecl;
                             return false;
                         }
                     }
-                    else if (element1 instanceof XmlElementDecl elementDecl) {
+                    else if (xmlElement instanceof XmlElementDecl elementDecl) {
                         if (name.equals(elementDecl.getName())) {
                             result[0] = elementDecl;
                             return false;

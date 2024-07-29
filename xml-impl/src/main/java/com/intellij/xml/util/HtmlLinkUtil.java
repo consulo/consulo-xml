@@ -55,15 +55,14 @@ public class HtmlLinkUtil {
                 if (injectedDocument != null) {
                     final XmlTag rootTag = injectedDocument.getRootTag();
                     if (rootTag != null) {
-                        for (PsiElement element1 = rootTag; element1 != null; element1 = element1.getNextSibling()) {
-                            if (element1 instanceof XmlTag) {
-                                final XmlTag tag = (XmlTag)element1;
+                        for (PsiElement htmlElement = rootTag; htmlElement != null; htmlElement = htmlElement.getNextSibling()) {
+                            if (htmlElement instanceof XmlTag tag) {
                                 String tagName = tag.getLocalName();
-                                if (element1 instanceof HtmlTag || tag.getNamespacePrefix().length() > 0) {
+                                if (htmlElement instanceof HtmlTag || tag.getNamespacePrefix().length() > 0) {
                                     tagName = tagName.toLowerCase();
                                 }
                                 if (LINK.equalsIgnoreCase(tagName)) {
-                                    tagProcessor.process((XmlTag)element1);
+                                    tagProcessor.process(tag);
                                 }
                             }
                         }
