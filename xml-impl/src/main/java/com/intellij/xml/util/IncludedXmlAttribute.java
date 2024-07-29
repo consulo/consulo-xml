@@ -32,85 +32,84 @@ import com.intellij.xml.XmlAttributeDescriptor;
  * @author peter
  */
 public class IncludedXmlAttribute extends IncludedXmlElement<XmlAttribute> implements XmlAttribute {
+    public IncludedXmlAttribute(@Nonnull XmlAttribute original, @Nullable XmlTag parent) {
+        super(original, parent);
+    }
 
-  public IncludedXmlAttribute(@Nonnull XmlAttribute original, @Nullable XmlTag parent) {
-    super(original, parent);
-  }
+    @Override
+    @NonNls
+    @Nonnull
+    public String getName() {
+        return getOriginal().getName();
+    }
 
-  @Override
-  @NonNls
-  @Nonnull
-  public String getName() {
-    return getOriginal().getName();
-  }
+    @Override
+    public PsiElement setName(@NonNls @Nonnull String name) throws consulo.language.util.IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 
-  @Override
-  public PsiElement setName(@NonNls @Nonnull String name) throws consulo.language.util.IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    @NonNls
+    @Nonnull
+    public String getLocalName() {
+        return getOriginal().getLocalName();
+    }
 
-  @NonNls
-  @Nonnull
-  public String getLocalName() {
-    return getOriginal().getLocalName();
-  }
+    @Override
+    public XmlElement getNameElement() {
+        return getOriginal().getNameElement();
+    }
 
-  @Override
-  public XmlElement getNameElement() {
-    return getOriginal().getNameElement();
-  }
+    @NonNls
+    @Nonnull
+    public String getNamespace() {
+        return getOriginal().getNamespace();
+    }
 
-  @NonNls
-  @Nonnull
-  public String getNamespace() {
-    return getOriginal().getNamespace();
-  }
+    @NonNls
+    @Nonnull
+    public String getNamespacePrefix() {
+        return getOriginal().getNamespacePrefix();
+    }
 
-  @NonNls
-  @Nonnull
-  public String getNamespacePrefix() {
-    return getOriginal().getNamespacePrefix();
-  }
+    public XmlTag getParent() {
+        return (XmlTag)super.getParent();
+    }
 
-  public XmlTag getParent() {
-    return (XmlTag)super.getParent();
-  }
+    public String getValue() {
+        return getOriginal().getValue();
+    }
 
-  public String getValue() {
-    return getOriginal().getValue();
-  }
+    public String getDisplayValue() {
+        return getOriginal().getDisplayValue();
+    }
 
-  public String getDisplayValue() {
-    return getOriginal().getDisplayValue();
-  }
+    public int physicalToDisplay(int offset) {
+        return getOriginal().physicalToDisplay(offset);
+    }
 
-  public int physicalToDisplay(int offset) {
-    return getOriginal().physicalToDisplay(offset);
-  }
+    public int displayToPhysical(int offset) {
+        return getOriginal().displayToPhysical(offset);
+    }
 
-  public int displayToPhysical(int offset) {
-    return getOriginal().displayToPhysical(offset);
-  }
+    public TextRange getValueTextRange() {
+        return getOriginal().getValueTextRange();
+    }
 
-  public TextRange getValueTextRange() {
-    return getOriginal().getValueTextRange();
-  }
+    public boolean isNamespaceDeclaration() {
+        return getOriginal().isNamespaceDeclaration();
+    }
 
-  public boolean isNamespaceDeclaration() {
-    return getOriginal().isNamespaceDeclaration();
-  }
+    @Nullable
+    public XmlAttributeDescriptor getDescriptor() {
+        return getOriginal().getDescriptor();
+    }
 
-  @Nullable
-  public XmlAttributeDescriptor getDescriptor() {
-    return getOriginal().getDescriptor();
-  }
+    @Nullable
+    public XmlAttributeValue getValueElement() {
+        return getOriginal().getValueElement();
+    }
 
-  @Nullable
-  public XmlAttributeValue getValueElement() {
-    return getOriginal().getValueElement();
-  }
-
-  public void setValue(String value) throws IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    public void setValue(String value) throws IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 }

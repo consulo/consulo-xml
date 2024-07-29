@@ -28,60 +28,60 @@ import consulo.language.util.IncorrectOperationException;
  * @author peter
  */
 public class IncludedXmlText extends IncludedXmlElement<XmlText> implements XmlText {
-  public IncludedXmlText(@Nonnull XmlText original, @Nullable XmlTag parent) {
-    super(original, parent);
-  }
+    public IncludedXmlText(@Nonnull XmlText original, @Nullable XmlTag parent) {
+        super(original, parent);
+    }
 
-  @Override
-  public XmlTag getParentTag() {
-    return (XmlTag)getParent();
-  }
+    @Override
+    public XmlTag getParentTag() {
+        return (XmlTag)getParent();
+    }
 
-  @Override
-  public XmlTagChild getNextSiblingInTag() {
-    return null;
-  }
+    @Override
+    public XmlTagChild getNextSiblingInTag() {
+        return null;
+    }
 
-  @Override
-  public XmlTagChild getPrevSiblingInTag() {
-    return null;
-  }
+    @Override
+    public XmlTagChild getPrevSiblingInTag() {
+        return null;
+    }
 
-  @Override
-  public String getText() {
-    return getOriginal().getText();
-  }
+    @Override
+    public String getText() {
+        return getOriginal().getText();
+    }
 
-  public String getValue() {
-    return getOriginal().getValue();
-  }
+    public String getValue() {
+        return getOriginal().getValue();
+    }
 
-  public void setValue(String s) throws IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    public void setValue(String s) throws IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 
-  public XmlElement insertAtOffset(XmlElement element, int displayOffset) throws consulo.language.util.IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    public XmlElement insertAtOffset(XmlElement element, int displayOffset) throws consulo.language.util.IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 
-  public void insertText(String text, int displayOffset) throws consulo.language.util.IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    public void insertText(String text, int displayOffset) throws consulo.language.util.IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 
-  public void removeText(int displayStart, int displayEnd) throws consulo.language.util.IncorrectOperationException {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    public void removeText(int displayStart, int displayEnd) throws consulo.language.util.IncorrectOperationException {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 
-  public int physicalToDisplay(int offset) {
-    return getOriginal().physicalToDisplay(offset);
-  }
+    public int physicalToDisplay(int offset) {
+        return getOriginal().physicalToDisplay(offset);
+    }
 
-  public int displayToPhysical(int offset) {
-    return getOriginal().displayToPhysical(offset);
-  }
+    public int displayToPhysical(int offset) {
+        return getOriginal().displayToPhysical(offset);
+    }
 
-  @Nullable
-  public XmlText split(int displayIndex) {
-    throw new UnsupportedOperationException("Can't modify included elements");
-  }
+    @Nullable
+    public XmlText split(int displayIndex) {
+        throw new UnsupportedOperationException("Can't modify included elements");
+    }
 }

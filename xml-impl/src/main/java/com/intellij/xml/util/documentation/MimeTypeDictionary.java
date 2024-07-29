@@ -28,66 +28,55 @@ import java.util.TreeSet;
 /**
  * @author Dennis.Ushakov
  */
-public class MimeTypeDictionary
-{
-	private static Set<String> ourContentTypes;
+public class MimeTypeDictionary {
+    private static Set<String> ourContentTypes;
 
-	public static Collection<String> getContentTypes()
-	{
-		if(ourContentTypes == null)
-		{
-			ourContentTypes = loadContentTypes();
-		}
-		return ourContentTypes;
-	}
+    public static Collection<String> getContentTypes() {
+        if (ourContentTypes == null) {
+            ourContentTypes = loadContentTypes();
+        }
+        return ourContentTypes;
+    }
 
-	private static Set<String> loadContentTypes()
-	{
-		final TreeSet<String> result = new TreeSet<String>();
-		result.add("*/*");
-		// IANA Media Types: http://www.iana.org/assignments/media-types/media-types.xhtml
-		readMediaTypes(result, "application");
-		readMediaTypes(result, "audio");
-		readMediaTypes(result, "image");
-		readMediaTypes(result, "message");
-		readMediaTypes(result, "model");
-		readMediaTypes(result, "multipart");
-		readMediaTypes(result, "text");
-		readMediaTypes(result, "video");
-		return result;
-	}
+    private static Set<String> loadContentTypes() {
+        final TreeSet<String> result = new TreeSet<String>();
+        result.add("*/*");
+        // IANA Media Types: http://www.iana.org/assignments/media-types/media-types.xhtml
+        readMediaTypes(result, "application");
+        readMediaTypes(result, "audio");
+        readMediaTypes(result, "image");
+        readMediaTypes(result, "message");
+        readMediaTypes(result, "model");
+        readMediaTypes(result, "multipart");
+        readMediaTypes(result, "text");
+        readMediaTypes(result, "video");
+        return result;
+    }
 
-	private static void readMediaTypes(TreeSet<String> result, final String category)
-	{
-		final InputStream stream = MimeTypeDictionary.class.getResourceAsStream("mimeTypes/" + category + ".csv");
-		String csv = "";
-		try
-		{
-			csv = stream != null ? FileUtil.loadTextAndClose(stream) : "";
-		}
-		catch(IOException e)
-		{
-			Logger.getInstance(MimeTypeDictionary.class).error(e);
-		}
-		final String[] lines = StringUtil.splitByLines(csv);
-		for(String line : lines)
-		{
-			if(line == lines[0])
-			{
-				continue;
-			}
+    private static void readMediaTypes(TreeSet<String> result, final String category) {
+        final InputStream stream = MimeTypeDictionary.class.getResourceAsStream("mimeTypes/" + category + ".csv");
+        String csv = "";
+        try {
+            csv = stream != null ? FileUtil.loadTextAndClose(stream) : "";
+        }
+        catch (IOException e) {
+            Logger.getInstance(MimeTypeDictionary.class).error(e);
+        }
+        final String[] lines = StringUtil.splitByLines(csv);
+        for (String line : lines) {
+            if (line == lines[0]) {
+                continue;
+            }
 
-			final String[] split = line.split(",");
-			if(split.length > 1)
-			{
-				result.add(!split[1].isEmpty() ? split[1] : withCategory(category, split[0]));
-			}
-		}
-	}
+            final String[] split = line.split(",");
+            if (split.length > 1) {
+                result.add(!split[1].isEmpty() ? split[1] : withCategory(category, split[0]));
+            }
+        }
+    }
 
-	private static String withCategory(String category, String name)
-	{
-		final int whitespacePosition = name.indexOf(' ');
-		return category + "/" + (whitespacePosition > 0 ? name.substring(0, whitespacePosition) : name);
-	}
+    private static String withCategory(String category, String name) {
+        final int whitespacePosition = name.indexOf(' ');
+        return category + "/" + (whitespacePosition > 0 ? name.substring(0, whitespacePosition) : name);
+    }
 }

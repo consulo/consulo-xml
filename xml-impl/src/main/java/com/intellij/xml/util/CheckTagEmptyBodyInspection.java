@@ -50,126 +50,104 @@ import javax.annotation.Nullable;
  * @author Maxim Mossienko
  */
 @ExtensionImpl
-public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool
-{
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nonnull
-	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly)
-	{
-		return new XmlElementVisitor()
-		{
-			@Override
-			public void visitXmlTag(final XmlTag tag)
-			{
-				if(!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag))
-				{
-					final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+    @Nonnull
+    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+        return new XmlElementVisitor() {
+            @Override
+            public void visitXmlTag(final XmlTag tag) {
+                if (!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag)) {
+                    final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
 
-					if(child != null)
-					{
-						final ASTNode node = child.getTreeNext();
+                    if (child != null) {
+                        final ASTNode node = child.getTreeNext();
 
-						if(node != null &&
-								node.getElementType() == XmlTokenType.XML_END_TAG_START)
-						{
-							final LocalQuickFix localQuickFix = new ReplaceEmptyTagBodyByEmptyEndFix();
-							holder.registerProblem(
-									tag,
-									XmlBundle.message("xml.inspections.tag.empty.body"),
-									isCollapsableTag(tag) ? localQuickFix : null
-							);
-						}
-					}
-				}
-			}
-		};
-	}
+                        if (node != null && node.getElementType() == XmlTokenType.XML_END_TAG_START) {
+                            final LocalQuickFix localQuickFix = new ReplaceEmptyTagBodyByEmptyEndFix();
+                            holder.registerProblem(
+                                tag,
+                                XmlBundle.message("xml.inspections.tag.empty.body"),
+                                isCollapsableTag(tag) ? localQuickFix : null
+                            );
+                        }
+                    }
+                }
+            }
+        };
+    }
 
-	@SuppressWarnings({"HardCodedStringLiteral"})
-	private static boolean isCollapsableTag(final XmlTag tag)
-	{
-		final String name = tag.getName().toLowerCase();
-		return tag.getLanguage() == XMLLanguage.INSTANCE ||
-				"link".equals(name) || "br".equals(name) || "meta".equals(name) || "img".equals(name) || "input".equals(name) || "hr".equals(name);
-	}
+    @SuppressWarnings({"HardCodedStringLiteral"})
+    private static boolean isCollapsableTag(final XmlTag tag) {
+        final String name = tag.getName().toLowerCase();
+        return tag.getLanguage() == XMLLanguage.INSTANCE
+            || "link".equals(name) || "br".equals(name) || "meta".equals(name)
+            || "img".equals(name) || "input".equals(name) || "hr".equals(name);
+    }
 
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return XmlInspectionGroupNames.XML_INSPECTIONS;
-	}
+    @Nonnull
+    public String getGroupDisplayName() {
+        return XmlInspectionGroupNames.XML_INSPECTIONS;
+    }
 
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("xml.inspections.check.tag.empty.body");
-	}
+    @Nonnull
+    public String getDisplayName() {
+        return XmlBundle.message("xml.inspections.check.tag.empty.body");
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	@NonNls
-	public String getShortName()
-	{
-		return "CheckTagEmptyBody";
-	}
+    @Nonnull
+    @NonNls
+    public String getShortName() {
+        return "CheckTagEmptyBody";
+    }
 
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.WARNING;
-	}
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
 
-	private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix
-	{
-		@Nonnull
-		public String getName()
-		{
-			return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
-		}
+    private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
+        @Nonnull
+        public String getName() {
+            return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
+        }
 
-		@Nonnull
-		public String getFamilyName()
-		{
-			return getName();
-		}
+        @Nonnull
+        public String getFamilyName() {
+            return getName();
+        }
 
-		public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
-		{
-			final PsiElement tag = descriptor.getPsiElement();
-			if(!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile()))
-			{
-				return;
-			}
+        public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+            final PsiElement tag = descriptor.getPsiElement();
+            if (!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile())) {
+                return;
+            }
 
-			PsiDocumentManager.getInstance(project).commitAllDocuments();
+            PsiDocumentManager.getInstance(project).commitAllDocuments();
 
-			final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
-			if(child == null)
-			{
-				return;
-			}
-			final int offset = child.getTextRange().getStartOffset();
-			VirtualFile file = tag.getContainingFile().getVirtualFile();
-			final Document document = FileDocumentManager.getInstance().getDocument(file);
+            final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+            if (child == null) {
+                return;
+            }
+            final int offset = child.getTextRange().getStartOffset();
+            VirtualFile file = tag.getContainingFile().getVirtualFile();
+            final Document document = FileDocumentManager.getInstance().getDocument(file);
 
-			new WriteCommandAction(project)
-			{
-				protected void run(final Result result) throws Throwable
-				{
-					document.replaceString(offset, tag.getTextRange().getEndOffset(), "/>");
-				}
-			}.execute();
-		}
-	}
+            new WriteCommandAction(project) {
+                protected void run(final Result result) throws Throwable {
+                    document.replaceString(offset, tag.getTextRange().getEndOffset(), "/>");
+                }
+            }.execute();
+        }
+    }
 }

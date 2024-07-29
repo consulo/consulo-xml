@@ -51,133 +51,113 @@ import java.util.Set;
  * @author Maxim Mossienko
  */
 @ExtensionImpl
-public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool
-{
-	private static final Logger LOG = Logger.getInstance(CheckEmptyTagInspection.class);
-	@NonNls
-	private static final String SCRIPT_TAG_NAME = "script";
-	private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new HashSet<String>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
+public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
+    private static final Logger LOG = Logger.getInstance(CheckEmptyTagInspection.class);
+    @NonNls
+    private static final String SCRIPT_TAG_NAME = "script";
+    private static final Set<String> ourTagsWithEmptyEndsNotAllowed = new HashSet<>(Arrays.asList(SCRIPT_TAG_NAME, "div", "iframe"));
 
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nonnull
-	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly)
-	{
-		return new XmlElementVisitor()
-		{
-			@Override
-			public void visitXmlTag(final XmlTag tag)
-			{
-				if(!isTagWithEmptyEndNotAllowed(tag))
-				{
-					return;
-				}
-				final ASTNode child = XmlChildRole.EMPTY_TAG_END_FINDER.findChild(tag.getNode());
+    @Nonnull
+    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+        return new XmlElementVisitor() {
+            @Override
+            public void visitXmlTag(final XmlTag tag) {
+                if (!isTagWithEmptyEndNotAllowed(tag)) {
+                    return;
+                }
+                final ASTNode child = XmlChildRole.EMPTY_TAG_END_FINDER.findChild(tag.getNode());
 
-				if(child == null)
-				{
-					return;
-				}
+                if (child == null) {
+                    return;
+                }
 
-				final LocalQuickFix fix = new MyLocalQuickFix();
+                final LocalQuickFix fix = new MyLocalQuickFix();
 
-				holder.registerProblem(tag,
-						XmlBundle.message("html.inspections.check.empty.script.message"),
-						tag.getContainingFile().getContext() != null ?
-								ProblemHighlightType.INFORMATION :
-								ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-						fix);
-			}
-		};
-	}
+                holder.registerProblem(
+                    tag,
+                    XmlBundle.message("html.inspections.check.empty.script.message"),
+                    tag.getContainingFile().getContext() != null ?
+                        ProblemHighlightType.INFORMATION :
+                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                    fix
+                );
+            }
+        };
+    }
 
-	static boolean isTagWithEmptyEndNotAllowed(final XmlTag tag)
-	{
-		String tagName = tag.getName();
-		if(tag instanceof HtmlTag)
-		{
-			tagName = tagName.toLowerCase();
-		}
+    static boolean isTagWithEmptyEndNotAllowed(final XmlTag tag) {
+        String tagName = tag.getName();
+        if (tag instanceof HtmlTag) {
+            tagName = tagName.toLowerCase();
+        }
 
-		Language language = tag.getLanguage();
-		return ourTagsWithEmptyEndsNotAllowed.contains(tagName) && language != XMLLanguage.INSTANCE ||
-				language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
-	}
+        Language language = tag.getLanguage();
+        return ourTagsWithEmptyEndsNotAllowed.contains(tagName) && language != XMLLanguage.INSTANCE
+            || language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
+    }
 
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return XmlInspectionGroupNames.HTML_INSPECTIONS;
-	}
+    @Nonnull
+    public String getGroupDisplayName() {
+        return XmlInspectionGroupNames.HTML_INSPECTIONS;
+    }
 
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspections.check.empty.tag");
-	}
+    @Nonnull
+    public String getDisplayName() {
+        return XmlBundle.message("html.inspections.check.empty.tag");
+    }
 
-	@Nonnull
-	@NonNls
-	public String getShortName()
-	{
-		return "CheckEmptyScriptTag";
-	}
+    @Nonnull
+    @NonNls
+    public String getShortName() {
+        return "CheckEmptyScriptTag";
+    }
 
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.WARNING;
-	}
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	private static class MyLocalQuickFix implements LocalQuickFix
-	{
-		@Nonnull
-		public String getName()
-		{
-			return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
-		}
+    private static class MyLocalQuickFix implements LocalQuickFix {
+        @Nonnull
+        public String getName() {
+            return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
+        }
 
-		public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor)
-		{
-			final XmlTag tag = (XmlTag) descriptor.getPsiElement();
-			if(tag == null)
-			{
-				return;
-			}
-			final PsiFile psiFile = tag.getContainingFile();
+        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+            final XmlTag tag = (XmlTag)descriptor.getPsiElement();
+            if (tag == null) {
+                return;
+            }
+            final PsiFile psiFile = tag.getContainingFile();
 
-			if(psiFile == null)
-			{
-				return;
-			}
-			ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(psiFile.getVirtualFile());
+            if (psiFile == null) {
+                return;
+            }
+            ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(psiFile.getVirtualFile());
 
-			try
-			{
-				XmlUtil.expandTag(tag);
-			}
-			catch(IncorrectOperationException e)
-			{
-				LOG.error(e);
-			}
-		}
+            try {
+                XmlUtil.expandTag(tag);
+            }
+            catch (IncorrectOperationException e) {
+                LOG.error(e);
+            }
+        }
 
-		//to appear in "Apply Fix" statement when multiple Quick Fixes exist
-		@Nonnull
-		public String getFamilyName()
-		{
-			return getName();
-		}
-	}
+        //to appear in "Apply Fix" statement when multiple Quick Fixes exist
+        @Nonnull
+        public String getFamilyName() {
+            return getName();
+        }
+    }
 }
