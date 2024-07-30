@@ -60,343 +60,279 @@ import java.util.Map;
 /**
  * @author Maxim.Mossienko
  */
-public class XmlResourceResolver implements XMLEntityResolver
-{
-	private static final Logger LOG = Logger.getInstance("#XmlResourceResolver");
-	private final XmlFile myFile;
-	private final Project myProject;
-	private final Map<String, String> myExternalResourcesMap = new HashMap<>(1);
-	private boolean myStopOnUnDeclaredResource;
-	@NonNls
-	public static final String HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY = "idea.xml.honour.all.schema.locations";
-	private final ErrorReporter myErrorReporter;
+public class XmlResourceResolver implements XMLEntityResolver {
+    private static final Logger LOG = Logger.getInstance("#XmlResourceResolver");
+    private final XmlFile myFile;
+    private final Project myProject;
+    private final Map<String, String> myExternalResourcesMap = new HashMap<>(1);
+    private boolean myStopOnUnDeclaredResource;
+    @NonNls
+    public static final String HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY = "idea.xml.honour.all.schema.locations";
+    private final ErrorReporter myErrorReporter;
 
-	public XmlResourceResolver(XmlFile _xmlFile, Project _project, final ErrorReporter errorReporter)
-	{
-		myFile = _xmlFile;
-		myProject = _project;
-		myErrorReporter = errorReporter;
-	}
+    public XmlResourceResolver(XmlFile _xmlFile, Project _project, final ErrorReporter errorReporter) {
+        myFile = _xmlFile;
+        myProject = _project;
+        myErrorReporter = errorReporter;
+    }
 
-	public String getPathByPublicId(String baseId)
-	{
-		return myExternalResourcesMap.get(baseId);
-	}
+    public String getPathByPublicId(String baseId) {
+        return myExternalResourcesMap.get(baseId);
+    }
 
-	public String[] getResourcePaths()
-	{
-		return myExternalResourcesMap.values().toArray(new String[myExternalResourcesMap.size()]);
-	}
+    public String[] getResourcePaths() {
+        return myExternalResourcesMap.values().toArray(new String[myExternalResourcesMap.size()]);
+    }
 
-	@Nullable
-	public PsiFile resolve(@Nullable final String baseSystemId, final String _systemId)
-	{
-		if(LOG.isDebugEnabled())
-		{
-			LOG.debug("enter: resolveEntity(baseSystemId='" + baseSystemId + "' systemId='" + _systemId + "," + toString() + "')");
-		}
+    @Nullable
+    public PsiFile resolve(@Nullable final String baseSystemId, final String _systemId) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("enter: resolveEntity(baseSystemId='" + baseSystemId + "' systemId='" + _systemId + "," + toString() + "')");
+        }
 
-		if(_systemId == null)
-		{
-			return null;
-		}
-		if(myStopOnUnDeclaredResource && ExternalResourceManagerEx.getInstanceEx().isIgnoredResource(_systemId))
-		{
-			throw new IgnoredResourceException();
-		}
+        if (_systemId == null) {
+            return null;
+        }
+        if (myStopOnUnDeclaredResource && ExternalResourceManagerEx.getInstanceEx().isIgnoredResource(_systemId)) {
+            throw new IgnoredResourceException();
+        }
 
-		final int length = XmlUtil.getPrefixLength(_systemId);
-		final String systemId = _systemId.substring(length);
+        final int length = XmlUtil.getPrefixLength(_systemId);
+        final String systemId = _systemId.substring(length);
 
-		final Computable<PsiFile> action = () ->
-		{
+        final Computable<PsiFile> action = () -> {
+            PsiFile baseFile = null;
+            if (baseSystemId != null) {
+                baseFile = getBaseFile(baseSystemId);
+            }
+            if (baseFile == null) {
+                baseFile = myFile;
+            }
 
-			PsiFile baseFile = null;
-			if(baseSystemId != null)
-			{
-				baseFile = getBaseFile(baseSystemId);
-			}
-			if(baseFile == null)
-			{
-				baseFile = myFile;
-			}
+            String version = null;
+            String tagName = null;
+            if (baseFile == myFile) {
+                XmlTag rootTag = myFile.getRootTag();
+                if (rootTag != null) {
+                    tagName = rootTag.getLocalName();
+                    version = rootTag.getAttributeValue("version");
+                }
+            }
+            String resource =
+                ((ExternalResourceManagerEx)ExternalResourceManager.getInstance()).getUserResource(myProject, systemId, version);
+            if (resource != null) {
+                XmlFile file = XmlUtil.findXmlFile(myFile, resource);
+                if (file != null) {
+                    return file;
+                }
+            }
 
-			String version = null;
-			String tagName = null;
-			if(baseFile == myFile)
-			{
-				XmlTag rootTag = myFile.getRootTag();
-				if(rootTag != null)
-				{
-					tagName = rootTag.getLocalName();
-					version = rootTag.getAttributeValue("version");
-				}
-			}
-			String resource = ((ExternalResourceManagerEx) ExternalResourceManager.getInstance()).getUserResource(myProject, systemId, version);
-			if(resource != null)
-			{
-				XmlFile file = XmlUtil.findXmlFile(myFile, resource);
-				if(file != null)
-				{
-					return file;
-				}
-			}
+            PsiFile byLocation = resolveByLocation(myFile, systemId);
+            if (byLocation != null) {
+                return byLocation;
+            }
 
-			PsiFile byLocation = resolveByLocation(myFile, systemId);
-			if(byLocation != null)
-			{
-				return byLocation;
-			}
+            PsiFile psiFile = ExternalResourceManager.getInstance().getResourceLocation(systemId, baseFile, version);
+            if (psiFile == null) {
+                psiFile = XmlUtil.findXmlFile(baseFile, systemId);
+            }
+            // autodetection
+            if (psiFile == null) {
+                psiFile = XmlNamespaceIndex.guessSchema(systemId, tagName, version, null, myFile);
+                if (psiFile == null) {
+                    psiFile = XmlNamespaceIndex.guessDtd(systemId, myFile);
+                }
+            }
 
-			PsiFile psiFile = ExternalResourceManager.getInstance().getResourceLocation(systemId, baseFile, version);
-			if(psiFile == null)
-			{
-				psiFile = XmlUtil.findXmlFile(baseFile, systemId);
-			}
-			// autodetection
-			if(psiFile == null)
-			{
-				psiFile = XmlNamespaceIndex.guessSchema(systemId, tagName, version, null, myFile);
-				if(psiFile == null)
-				{
-					psiFile = XmlNamespaceIndex.guessDtd(systemId, myFile);
-				}
-			}
+            if (psiFile == null && baseSystemId != null) {
+                String fullUrl = baseSystemId.substring(0, baseSystemId.lastIndexOf('/') + 1) + systemId;
+                psiFile = XmlUtil.findXmlFile(baseFile, fullUrl);
+            }
 
-			if(psiFile == null && baseSystemId != null)
-			{
-				String fullUrl = baseSystemId.substring(0, baseSystemId.lastIndexOf('/') + 1) + systemId;
-				psiFile = XmlUtil.findXmlFile(baseFile, fullUrl);
-			}
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("before relative file checking:" + psiFile + "," + systemId + "," + baseSystemId + ")");
+            }
+            if (psiFile == null && baseSystemId == null) { // entity file
+                File workingFile = new File("");
+                String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/') + "/";
 
-			if(LOG.isDebugEnabled())
-			{
-				LOG.debug("before relative file checking:" + psiFile + "," + systemId + "," + baseSystemId + ")");
-			}
-			if(psiFile == null && baseSystemId == null)
-			{ // entity file
-				File workingFile = new File("");
-				String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/') + "/";
+                String relativePath = StringUtil.replace(systemId, workingDir, "");
 
-				String relativePath = StringUtil.replace(systemId, workingDir, "");
+                if (relativePath.equals(systemId)) {
+                    // on Windows systemId consisting of idea install path could become encoded DOS short name (e.g. idea%7f1.504)
+                    // I am not aware how to get such name from 'workingDir' so let just pickup filename from there
+                    relativePath = systemId.substring(systemId.lastIndexOf('/') + 1);
+                }
 
-				if(relativePath.equals(systemId))
-				{
-					// on Windows systemId consisting of idea install path could become encoded DOS short name (e.g. idea%7f1.504)
-					// I am not aware how to get such name from 'workingDir' so let just pickup filename from there
-					relativePath = systemId.substring(systemId.lastIndexOf('/') + 1);
-				}
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("next to relative file checking:" + relativePath + "," + myExternalResourcesMap.size() + ")");
+                }
 
-				if(LOG.isDebugEnabled())
-				{
-					LOG.debug("next to relative file checking:" + relativePath + "," + myExternalResourcesMap.size() + ")");
-				}
+                for (String path : getResourcePaths()) {
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Finding file by url:" + path);
+                    }
+                    VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(path);
+                    if (file == null) {
+                        continue;
+                    }
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Finding " + relativePath + " relative to:" + file.getPath());
+                    }
+                    final VirtualFile relativeFile = UriUtil.findRelativeFile(relativePath, file);
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Found " + (relativeFile != null ? relativeFile.getPath() : "null"));
+                    }
 
-				for(String path : getResourcePaths())
-				{
-					if(LOG.isDebugEnabled())
-					{
-						LOG.debug("Finding file by url:" + path);
-					}
-					VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(path);
-					if(file == null)
-					{
-						continue;
-					}
-					if(LOG.isDebugEnabled())
-					{
-						LOG.debug("Finding " + relativePath + " relative to:" + file.getPath());
-					}
-					final VirtualFile relativeFile = UriUtil.findRelativeFile(relativePath, file);
-					if(LOG.isDebugEnabled())
-					{
-						LOG.debug("Found " + (relativeFile != null ? relativeFile.getPath() : "null"));
-					}
+                    if (relativeFile != null) {
+                        psiFile = PsiManager.getInstance(myProject).findFile(relativeFile);
+                        if (psiFile != null) {
+                            break;
+                        }
+                    }
+                }
+            }
 
-					if(relativeFile != null)
-					{
-						psiFile = PsiManager.getInstance(myProject).findFile(relativeFile);
-						if(psiFile != null)
-						{
-							break;
-						}
-					}
-				}
-			}
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("resolveEntity: psiFile='" + (psiFile != null ? psiFile.getVirtualFile() : null) + "'");
+            }
+            return psiFile;
+        };
 
-			if(LOG.isDebugEnabled())
-			{
-				LOG.debug("resolveEntity: psiFile='" + (psiFile != null ? psiFile.getVirtualFile() : null) + "'");
-			}
-			return psiFile;
-		};
+        final PsiFile psiFile = ApplicationManager.getApplication().runReadAction(action);
+        if (psiFile != null) {
+            final VirtualFile file = psiFile.getVirtualFile();
+            if (file != null) {
+                final String url = file.getUrl();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Adding external resource ref:" + systemId + "," + url + "," + toString());
+                }
+                myExternalResourcesMap.put(systemId, url);
+            }
+        }
+        return psiFile;
+    }
 
-		final PsiFile psiFile = ApplicationManager.getApplication().runReadAction(action);
-		if(psiFile != null)
-		{
-			final VirtualFile file = psiFile.getVirtualFile();
-			if(file != null)
-			{
-				final String url = file.getUrl();
-				if(LOG.isDebugEnabled())
-				{
-					LOG.debug("Adding external resource ref:" + systemId + "," + url + "," + toString());
-				}
-				myExternalResourcesMap.put(systemId, url);
-			}
-		}
-		return psiFile;
-	}
+    private PsiFile getBaseFile(String baseSystemId) {
+        PsiFile baseFile = resolve(null, baseSystemId);
+        if (baseFile != null) {
+            return baseFile;
+        }
 
-	private PsiFile getBaseFile(String baseSystemId)
-	{
+        // Find relative to myFile
+        File workingFile = new File("");
+        String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/');
+        String id = StringUtil.replace(baseSystemId, workingDir, myFile.getVirtualFile().getParent().getPath());
+        VirtualFile vFile = UriUtil.findRelative(id, myFile);
 
-		PsiFile baseFile = resolve(null, baseSystemId);
-		if(baseFile != null)
-		{
-			return baseFile;
-		}
+        if (vFile == null) {
+            vFile = UriUtil.findRelative(baseSystemId, myFile);
+        }
+        if (vFile == null) {
+            try {
+                vFile = VirtualFileManager.getInstance().findFileByUrl(VirtualFileUtil.convertFromUrl(new URL(baseSystemId)));
+            }
+            catch (MalformedURLException ignore) {
+            }
+        }
 
-		// Find relative to myFile
-		File workingFile = new File("");
-		String workingDir = workingFile.getAbsoluteFile().getAbsolutePath().replace(File.separatorChar, '/');
-		String id = StringUtil.replace(baseSystemId, workingDir, myFile.getVirtualFile().getParent().getPath());
-		VirtualFile vFile = UriUtil.findRelative(id, myFile);
+        if (vFile != null && !vFile.isDirectory() && !(vFile.getFileSystem() instanceof HttpFileSystem)) {
+            baseFile = PsiManager.getInstance(myProject).findFile(vFile);
+        }
+        return baseFile;
+    }
 
-		if(vFile == null)
-		{
-			vFile = UriUtil.findRelative(baseSystemId, myFile);
-		}
-		if(vFile == null)
-		{
-			try
-			{
-				vFile = VirtualFileManager.getInstance().findFileByUrl(VirtualFileUtil.convertFromUrl(new URL(baseSystemId)));
-			}
-			catch(MalformedURLException ignore)
-			{
-			}
-		}
+    @Override
+    @Nullable
+    public XMLInputSource resolveEntity(XMLResourceIdentifier xmlResourceIdentifier) throws XNIException, IOException {
+        String publicId =
+            xmlResourceIdentifier.getLiteralSystemId() != null ? xmlResourceIdentifier.getLiteralSystemId() : xmlResourceIdentifier.getNamespace();
 
-		if(vFile != null && !vFile.isDirectory() && !(vFile.getFileSystem() instanceof HttpFileSystem))
-		{
-			baseFile = PsiManager.getInstance(myProject).findFile(vFile);
-		}
-		return baseFile;
-	}
+        if (publicId != null) {
+            try {
+                String userDir = new File(System.getProperty("user.dir")).toURI().getPath();
+                String publicIdPath = new URI(publicId).getPath();
+                if (publicIdPath.startsWith(userDir)) {
+                    publicId = publicIdPath.substring(publicIdPath.indexOf(userDir) + userDir.length());
+                }
+            }
+            catch (Exception e) {
+            }
+        }
+        PsiFile psiFile = resolve(xmlResourceIdentifier.getBaseSystemId(), publicId);
+        if (psiFile == null && xmlResourceIdentifier.getBaseSystemId() != null) {
+            psiFile = ExternalResourceManager.getInstance()
+                .getResourceLocation(xmlResourceIdentifier.getBaseSystemId(), myFile, null);
+        }
+        if (psiFile == null && xmlResourceIdentifier.getLiteralSystemId() != null && xmlResourceIdentifier.getNamespace() != null) {
+            psiFile = resolve(xmlResourceIdentifier.getBaseSystemId(), publicId = xmlResourceIdentifier.getNamespace());
+        }
 
-	@Override
-	@Nullable
-	public XMLInputSource resolveEntity(XMLResourceIdentifier xmlResourceIdentifier) throws XNIException, IOException
-	{
-		String publicId = xmlResourceIdentifier.getLiteralSystemId() != null ? xmlResourceIdentifier.getLiteralSystemId() : xmlResourceIdentifier.getNamespace();
+        if (psiFile == null) {
+            if (publicId != null && publicId.contains(":/")) {
+                try {
+                    myErrorReporter.processError(
+                        new SAXParseException(
+                            XmlErrorLocalize.xmlValidateExternalResourceIsNotRegistered(publicId).get(),
+                            publicId,
+                            null,
+                            0,
+                            0
+                        ),
+                        ValidateXmlActionHandler.ProblemType.ERROR
+                    );
+                }
+                catch (SAXException ignore) {
+                }
+                final XMLInputSource source = new XMLInputSource(xmlResourceIdentifier);
+                source.setPublicId(publicId);
+                source.setCharacterStream(new StringReader(""));
+                return source;
+            }
+            return null;
+        }
 
-		if(publicId != null)
-		{
-			try
-			{
-				String userDir = new File(System.getProperty("user.dir")).toURI().getPath();
-				String publicIdPath = new URI(publicId).getPath();
-				if(publicIdPath.startsWith(userDir))
-				{
-					publicId = publicIdPath.substring(publicIdPath.indexOf(userDir) + userDir.length());
-				}
-			}
-			catch(Exception e)
-			{
-			}
-		}
-		PsiFile psiFile = resolve(xmlResourceIdentifier.getBaseSystemId(), publicId);
-		if(psiFile == null && xmlResourceIdentifier.getBaseSystemId() != null)
-		{
-			psiFile = ExternalResourceManager.getInstance().getResourceLocation(xmlResourceIdentifier.getBaseSystemId(), myFile, null);
-		}
-		if(psiFile == null && xmlResourceIdentifier.getLiteralSystemId() != null && xmlResourceIdentifier.getNamespace() != null)
-		{
-			psiFile = resolve(xmlResourceIdentifier.getBaseSystemId(), publicId = xmlResourceIdentifier.getNamespace());
-		}
+        XMLInputSource source = new XMLInputSource(xmlResourceIdentifier);
+        if (xmlResourceIdentifier.getLiteralSystemId() == null) {
+            VirtualFile virtualFile = psiFile.getVirtualFile();
+            if (virtualFile != null) {
+                final String url = VirtualFileUtil.fixIDEAUrl(virtualFile.getUrl());
+                source.setBaseSystemId(url);
+                source.setSystemId(url);
+            }
+        }
+        source.setPublicId(publicId);
+        source.setCharacterStream(new StringReader(psiFile.getText()));
 
-		if(psiFile == null)
-		{
-			if(publicId != null && publicId.contains(":/"))
-			{
-				try
-				{
-					myErrorReporter.processError(
-						new SAXParseException(
-							XmlErrorLocalize.xmlValidateExternalResourceIsNotRegistered(publicId).get(),
-							publicId,
-							null,
-							0,
-							0
-						),
-						ValidateXmlActionHandler.ProblemType.ERROR
-					);
-				}
-				catch(SAXException ignore)
-				{
+        return source;
+    }
 
-				}
-				final XMLInputSource source = new XMLInputSource(xmlResourceIdentifier);
-				source.setPublicId(publicId);
-				source.setCharacterStream(new StringReader(""));
-				return source;
-			}
-			return null;
-		}
+    private static PsiFile resolveByLocation(PsiFile baseFile, String location) {
+        if (baseFile instanceof XmlFile xmlFile) {
+            XmlTag tag = xmlFile.getRootTag();
+            if (tag != null) {
+                XmlAttribute attribute = tag.getAttribute("schemaLocation", XmlUtil.XML_SCHEMA_INSTANCE_URI);
+                if (attribute != null) {
+                    XmlAttributeValue element = attribute.getValueElement();
+                    if (element != null) {
+                        PsiReference[] references = element.getReferences();
+                        for (PsiReference reference : references) {
+                            if (location.equals(reference.getCanonicalText())) {
+                                PsiElement resolve = reference.resolve();
+                                return resolve instanceof PsiFile ? (PsiFile)resolve : null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-		XMLInputSource source = new XMLInputSource(xmlResourceIdentifier);
-		if(xmlResourceIdentifier.getLiteralSystemId() == null)
-		{
-			VirtualFile virtualFile = psiFile.getVirtualFile();
-			if(virtualFile != null)
-			{
-				final String url = VirtualFileUtil.fixIDEAUrl(virtualFile.getUrl());
-				source.setBaseSystemId(url);
-				source.setSystemId(url);
-			}
-		}
-		source.setPublicId(publicId);
-		source.setCharacterStream(new StringReader(psiFile.getText()));
+    public void setStopOnUnDeclaredResource(final boolean stopOnUnDeclaredResource) {
+        myStopOnUnDeclaredResource = stopOnUnDeclaredResource;
+    }
 
-		return source;
-	}
-
-	private static PsiFile resolveByLocation(PsiFile baseFile, String location)
-	{
-		if(baseFile instanceof XmlFile)
-		{
-			XmlTag tag = ((XmlFile) baseFile).getRootTag();
-			if(tag != null)
-			{
-				XmlAttribute attribute = tag.getAttribute("schemaLocation", XmlUtil.XML_SCHEMA_INSTANCE_URI);
-				if(attribute != null)
-				{
-					XmlAttributeValue element = attribute.getValueElement();
-					if(element != null)
-					{
-						PsiReference[] references = element.getReferences();
-						for(PsiReference reference : references)
-						{
-							if(location.equals(reference.getCanonicalText()))
-							{
-								PsiElement resolve = reference.resolve();
-								return resolve instanceof PsiFile ? (PsiFile) resolve : null;
-							}
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	public void setStopOnUnDeclaredResource(final boolean stopOnUnDeclaredResource)
-	{
-		myStopOnUnDeclaredResource = stopOnUnDeclaredResource;
-	}
-
-	public static class IgnoredResourceException extends RuntimeException
-	{
-	}
+    public static class IgnoredResourceException extends RuntimeException {
+    }
 }

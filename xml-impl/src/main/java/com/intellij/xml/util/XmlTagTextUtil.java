@@ -16,5 +16,4 @@
 package com.intellij.xml.util;
 
 public class XmlTagTextUtil extends XmlTagUtil {
-
 }

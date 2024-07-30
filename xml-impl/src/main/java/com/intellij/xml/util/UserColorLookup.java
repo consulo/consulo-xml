@@ -31,58 +31,53 @@ import java.awt.*;
 /**
  * @author maxim
  */
-public class UserColorLookup extends LookupElementDecorator<LookupElement>
-{
-	private static final String COLOR_STRING = XmlBundle.message("choose.color.in.color.lookup");
+public class UserColorLookup extends LookupElementDecorator<LookupElement> {
+    private static final String COLOR_STRING = XmlBundle.message("choose.color.in.color.lookup");
 
-	public UserColorLookup()
-	{
-		super(PrioritizedLookupElement.withPriority(LookupElementBuilder.create(COLOR_STRING).withInsertHandler((context, item) -> handleUserSelection(context)), LookupValueWithPriority.HIGH));
-	}
+    public UserColorLookup() {
+        super(PrioritizedLookupElement.withPriority(LookupElementBuilder.create(COLOR_STRING)
+            .withInsertHandler((context, item) -> handleUserSelection(context)), LookupValueWithPriority.HIGH));
+    }
 
-	private static void handleUserSelection(InsertionContext context)
-	{
-		Color myColorAtCaret = null;
+    private static void handleUserSelection(InsertionContext context) {
+        Color myColorAtCaret = null;
 
-		Editor selectedTextEditor = context.getEditor();
-		PsiElement element = context.getFile().findElementAt(selectedTextEditor.getCaretModel().getOffset());
+        Editor selectedTextEditor = context.getEditor();
+        PsiElement element = context.getFile().findElementAt(selectedTextEditor.getCaretModel().getOffset());
 
-		if(element instanceof XmlToken)
-		{
-			myColorAtCaret = getColorFromElement(element);
-		}
+        if (element instanceof XmlToken) {
+            myColorAtCaret = getColorFromElement(element);
+        }
 
-		context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
+        context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
 
-		ColorChooser.chooseColor(TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())), XmlBundle.message("choose.color.dialog.title"), myColorAtCaret, true, true, color ->
-		{
-			if(color != null)
-			{
-				String s = Integer.toHexString(color.getRGB() & 0xFFFFFF);
-				if(s.length() != 6)
-				{
-					StringBuilder buf = new StringBuilder(s);
-					for(int i = 6 - buf.length(); i > 0; --i)
-					{
-						buf.insert(0, '0');
-					}
-					s = buf.toString();
-				}
-				s = "#" + s;
-				context.getDocument().insertString(context.getStartOffset(), s);
-				context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
-			}
-		});
-	}
+        ColorChooser.chooseColor(
+            TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())),
+            XmlBundle.message("choose.color.dialog.title"),
+            myColorAtCaret,
+            true,
+            true,
+            color ->
+            {
+                if (color != null) {
+                    String s = Integer.toHexString(color.getRGB() & 0xFFFFFF);
+                    if (s.length() != 6) {
+                        StringBuilder buf = new StringBuilder(s);
+                        for (int i = 6 - buf.length(); i > 0; --i) {
+                            buf.insert(0, '0');
+                        }
+                        s = buf.toString();
+                    }
+                    s = "#" + s;
+                    context.getDocument().insertString(context.getStartOffset(), s);
+                    context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
+                }
+            }
+        );
+    }
 
-	@Nullable
-	public static Color getColorFromElement(final PsiElement element)
-	{
-		if(!(element instanceof XmlToken))
-		{
-			return null;
-		}
-
-		return ColorSampleLookupValue.getColor(element.getText());
-	}
+    @Nullable
+    public static Color getColorFromElement(final PsiElement element) {
+        return element instanceof XmlToken ? ColorSampleLookupValue.getColor(element.getText()) : null;
+    }
 }
