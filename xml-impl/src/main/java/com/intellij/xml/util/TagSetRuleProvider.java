@@ -16,6 +16,7 @@
 package com.intellij.xml.util;
 
 import consulo.xml.psi.xml.XmlTag;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -27,42 +28,45 @@ import java.util.Map;
  * @author Sergey Evdokimov
  */
 public abstract class TagSetRuleProvider extends XmlTagRuleProviderBase {
+    private final Map<String, TagsRuleMap> map = Collections.synchronizedMap(new HashMap<String, TagsRuleMap>());
 
-  private final Map<String, TagsRuleMap> map = Collections.synchronizedMap(new HashMap<String, TagsRuleMap>());
+    @Nullable
+    protected abstract String getNamespace(@Nonnull XmlTag tag);
 
-  @Nullable
-  protected abstract String getNamespace(@Nonnull XmlTag tag);
+    protected abstract void initMap(TagsRuleMap map, @Nonnull String version);
 
-  protected abstract void initMap(TagsRuleMap map, @Nonnull String version);
+    @Override
+    public Rule[] getTagRule(@Nonnull XmlTag tag) {
+        String namespace = getNamespace(tag);
+        if (namespace == null) {
+            return Rule.EMPTY_ARRAY;
+        }
 
-  @Override
-  public Rule[] getTagRule(@Nonnull XmlTag tag) {
-    String namespace = getNamespace(tag);
-    if (namespace == null) return Rule.EMPTY_ARRAY;
-
-    return getTagRule(tag, namespace);
-  }
-
-  public Rule[] getTagRule(@Nonnull XmlTag tag, String namespace) {
-    TagsRuleMap ruleMap = map.get(namespace);
-    if (ruleMap == null) {
-      ruleMap = new TagsRuleMap();
-      initMap(ruleMap, namespace);
-      map.put(namespace, ruleMap);
+        return getTagRule(tag, namespace);
     }
 
-    String tagName = tag.getLocalName();
-    Rule[] rules = ruleMap.get(tagName);
-    if (rules == null) return Rule.EMPTY_ARRAY;
+    public Rule[] getTagRule(@Nonnull XmlTag tag, String namespace) {
+        TagsRuleMap ruleMap = map.get(namespace);
+        if (ruleMap == null) {
+            ruleMap = new TagsRuleMap();
+            initMap(ruleMap, namespace);
+            map.put(namespace, ruleMap);
+        }
 
-    return rules;
-  }
+        String tagName = tag.getLocalName();
+        Rule[] rules = ruleMap.get(tagName);
+        if (rules == null) {
+            return Rule.EMPTY_ARRAY;
+        }
 
-  protected static class TagsRuleMap extends HashMap<String, Rule[]> {
-    public void add(String tagName, Rule ... rules) {
-      assert rules.length > 0;
-      Rule[] oldValue = put(tagName, rules);
-      assert oldValue == null;
+        return rules;
     }
-  }
+
+    protected static class TagsRuleMap extends HashMap<String, Rule[]> {
+        public void add(String tagName, Rule... rules) {
+            assert rules.length > 0;
+            Rule[] oldValue = put(tagName, rules);
+            assert oldValue == null;
+        }
+    }
 }

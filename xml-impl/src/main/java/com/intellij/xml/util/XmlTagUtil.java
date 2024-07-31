@@ -26,6 +26,7 @@ import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -38,153 +39,160 @@ import java.util.Set;
  */
 @SuppressWarnings({"HardCodedStringLiteral"})
 public class XmlTagUtil extends XmlTagUtilBase {
-  private static final Map<String, Character> ourCharacterEntities;
+    private static final Map<String, Character> ourCharacterEntities;
 
-  static {
-    ourCharacterEntities = new HashMap<String, Character>();
-    ourCharacterEntities.put("lt", new Character('<'));
-    ourCharacterEntities.put("gt", new Character('>'));
-    ourCharacterEntities.put("apos", new Character('\''));
-    ourCharacterEntities.put("quot", new Character('\"'));
-    ourCharacterEntities.put("nbsp", new Character('\u00a0'));
-    ourCharacterEntities.put("amp", new Character('&'));
-  }
-
-  /**
-   * if text contains XML-sensitive characters (<,>), quote text with ![CDATA[ ... ]]
-   *
-   * @param text
-   * @return quoted text
-   */
-  public static String getCDATAQuote(String text) {
-    if (text == null) return null;
-    String offensiveChars = "<>&\n";
-    final int textLength = text.length();
-    if (textLength > 0 && (Character.isWhitespace(text.charAt(0)) || Character.isWhitespace(text.charAt(textLength - 1)))) {
-      return "<![CDATA[" + text + "]]>";
+    static {
+        ourCharacterEntities = new HashMap<>();
+        ourCharacterEntities.put("lt", '<');
+        ourCharacterEntities.put("gt", '>');
+        ourCharacterEntities.put("apos", '\'');
+        ourCharacterEntities.put("quot", '\"');
+        ourCharacterEntities.put("nbsp", '\u00a0');
+        ourCharacterEntities.put("amp", '&');
     }
-    for (int i = 0; i < offensiveChars.length(); i++) {
-      char c = offensiveChars.charAt(i);
-      if (text.indexOf(c) != -1) {
-        return "<![CDATA[" + text + "]]>";
-      }
+
+    /**
+     * if text contains XML-sensitive characters (<,>), quote text with ![CDATA[ ... ]]
+     *
+     * @param text
+     * @return quoted text
+     */
+    public static String getCDATAQuote(String text) {
+        if (text == null) {
+            return null;
+        }
+        String offensiveChars = "<>&\n";
+        final int textLength = text.length();
+        if (textLength > 0 && (Character.isWhitespace(text.charAt(0)) || Character.isWhitespace(text.charAt(textLength - 1)))) {
+            return "<![CDATA[" + text + "]]>";
+        }
+        for (int i = 0; i < offensiveChars.length(); i++) {
+            char c = offensiveChars.charAt(i);
+            if (text.indexOf(c) != -1) {
+                return "<![CDATA[" + text + "]]>";
+            }
+        }
+        return text;
     }
-    return text;
-  }
 
-  public static String getInlineQuote(String text) {
-    if (text == null) return null;
-    String offensiveChars = "<>&";
-    for (int i = 0; i < offensiveChars.length(); i++) {
-      char c = offensiveChars.charAt(i);
-      if (text.indexOf(c) != -1) {
-        return "<![CDATA[" + text + "]]>";
-      }
+    public static String getInlineQuote(String text) {
+        if (text == null) {
+            return null;
+        }
+        String offensiveChars = "<>&";
+        for (int i = 0; i < offensiveChars.length(); i++) {
+            char c = offensiveChars.charAt(i);
+            if (text.indexOf(c) != -1) {
+                return "<![CDATA[" + text + "]]>";
+            }
+        }
+        return text;
     }
-    return text;
-  }
 
 
-  public static String composeTagText(@NonNls String tagName, @NonNls String tagValue) {
-    String result = "<" + tagName;
-    if (tagValue == null || "".equals(tagValue)) {
-      result += "/>";
+    public static String composeTagText(@NonNls String tagName, @NonNls String tagValue) {
+        String result = "<" + tagName;
+        if (tagValue == null || "".equals(tagValue)) {
+            result += "/>";
+        }
+        else {
+            result += ">" + getCDATAQuote(tagValue) + "</" + tagName + ">";
+        }
+        return result;
     }
-    else {
-      result += ">" + getCDATAQuote(tagValue) + "</" + tagName + ">";
+
+    public static String[] getCharacterEntityNames() {
+        Set<String> strings = ourCharacterEntities.keySet();
+        return ArrayUtil.toStringArray(strings);
     }
-    return result;
-  }
 
-  public static String[] getCharacterEntityNames() {
-    Set<String> strings = ourCharacterEntities.keySet();
-    return ArrayUtil.toStringArray(strings);
-  }
-
-  public static Character getCharacterByEntityName(String entityName) {
-    return ourCharacterEntities.get(entityName);
-  }
-
-  @Nullable
-  public static XmlToken getStartTagNameElement(@Nonnull XmlTag tag) {
-    final ASTNode node = tag.getNode();
-    if (node == null) return null;
-
-    ASTNode current = node.getFirstChildNode();
-    IElementType elementType;
-    while (current != null
-           && (elementType = current.getElementType()) != XmlTokenType.XML_NAME
-           && elementType != XmlTokenType.XML_TAG_NAME) {
-      current = current.getTreeNext();
+    public static Character getCharacterByEntityName(String entityName) {
+        return ourCharacterEntities.get(entityName);
     }
-    return current == null ? null : (XmlToken)current.getPsi();
-  }
 
-  @Nullable
-  public static XmlToken getEndTagNameElement(@Nonnull XmlTag tag) {
-    final ASTNode node = tag.getNode();
-    if (node == null) return null;
+    @Nullable
+    public static XmlToken getStartTagNameElement(@Nonnull XmlTag tag) {
+        final ASTNode node = tag.getNode();
+        if (node == null) {
+            return null;
+        }
 
-    ASTNode current = node.getLastChildNode();
-    ASTNode prev = current;
-
-    while (current != null) {
-      final IElementType elementType = prev.getElementType();
-      if ((elementType == XmlTokenType.XML_NAME || elementType == XmlTokenType.XML_TAG_NAME) &&
-          current.getElementType() == XmlTokenType.XML_END_TAG_START) {
-        return (XmlToken)prev.getPsi();
-      }
-
-      prev = current;
-      current = current.getTreePrev();
-
+        ASTNode current = node.getFirstChildNode();
+        IElementType elementType;
+        while (current != null
+            && (elementType = current.getElementType()) != XmlTokenType.XML_NAME
+            && elementType != XmlTokenType.XML_TAG_NAME) {
+            current = current.getTreeNext();
+        }
+        return current == null ? null : (XmlToken)current.getPsi();
     }
-    return null;
-  }
 
-  @Nonnull
-  public static TextRange getTrimmedValueRange(final @Nonnull XmlTag tag) {
-    XmlTagValue tagValue = tag.getValue();
-    final String text = tagValue.getText();
-    final String trimmed = text.trim();
-    final int index = text.indexOf(trimmed);
-    final int startOffset = tagValue.getTextRange().getStartOffset() - tag.getTextRange().getStartOffset() + index;
-    return new TextRange(startOffset, startOffset + trimmed.length());
-  }
+    @Nullable
+    public static XmlToken getEndTagNameElement(@Nonnull XmlTag tag) {
+        final ASTNode node = tag.getNode();
+        if (node == null) {
+            return null;
+        }
 
-  @Nullable
-  public static TextRange getStartTagRange(@Nonnull XmlTag tag) {
-    XmlToken tagName = getStartTagNameElement(tag);
-    return getTag(tagName, XmlTokenType.XML_START_TAG_START);
-  }
+        ASTNode current = node.getLastChildNode();
+        ASTNode prev = current;
 
+        while (current != null) {
+            final IElementType elementType = prev.getElementType();
+            if ((elementType == XmlTokenType.XML_NAME || elementType == XmlTokenType.XML_TAG_NAME)
+                && current.getElementType() == XmlTokenType.XML_END_TAG_START) {
+                return (XmlToken)prev.getPsi();
+            }
 
-  @Nullable
-  public static TextRange getEndTagRange(@Nonnull XmlTag tag) {
-    XmlToken tagName = getEndTagNameElement(tag);
-
-    return getTag(tagName, XmlTokenType.XML_END_TAG_START);
-  }
-
-  private static TextRange getTag(XmlToken tagName, IElementType tagStart) {
-    if (tagName != null) {
-      PsiElement s = tagName.getPrevSibling();
-
-      while (s != null && s.getNode().getElementType() != tagStart) {
-        s = s.getPrevSibling();
-      }
-
-      PsiElement f = tagName.getNextSibling();
-
-      while (f != null &&
-             !(f.getNode().getElementType() == XmlTokenType.XML_TAG_END ||
-               f.getNode().getElementType() == XmlTokenType.XML_EMPTY_ELEMENT_END)) {
-        f = f.getNextSibling();
-      }
-      if (s != null && f != null) {
-        return new TextRange(s.getTextRange().getStartOffset(), f.getTextRange().getEndOffset());
-      }
+            prev = current;
+            current = current.getTreePrev();
+        }
+        return null;
     }
-    return null;
-  }
+
+    @Nonnull
+    public static TextRange getTrimmedValueRange(final @Nonnull XmlTag tag) {
+        XmlTagValue tagValue = tag.getValue();
+        final String text = tagValue.getText();
+        final String trimmed = text.trim();
+        final int index = text.indexOf(trimmed);
+        final int startOffset = tagValue.getTextRange().getStartOffset() - tag.getTextRange().getStartOffset() + index;
+        return new TextRange(startOffset, startOffset + trimmed.length());
+    }
+
+    @Nullable
+    public static TextRange getStartTagRange(@Nonnull XmlTag tag) {
+        XmlToken tagName = getStartTagNameElement(tag);
+        return getTag(tagName, XmlTokenType.XML_START_TAG_START);
+    }
+
+
+    @Nullable
+    public static TextRange getEndTagRange(@Nonnull XmlTag tag) {
+        XmlToken tagName = getEndTagNameElement(tag);
+
+        return getTag(tagName, XmlTokenType.XML_END_TAG_START);
+    }
+
+    private static TextRange getTag(XmlToken tagName, IElementType tagStart) {
+        if (tagName != null) {
+            PsiElement s = tagName.getPrevSibling();
+
+            while (s != null && s.getNode().getElementType() != tagStart) {
+                s = s.getPrevSibling();
+            }
+
+            PsiElement f = tagName.getNextSibling();
+
+            while (f != null
+                && !(f.getNode().getElementType() == XmlTokenType.XML_TAG_END
+                || f.getNode().getElementType() == XmlTokenType.XML_EMPTY_ELEMENT_END)) {
+                f = f.getNextSibling();
+            }
+            if (s != null && f != null) {
+                return new TextRange(s.getTextRange().getStartOffset(), f.getTextRange().getEndOffset());
+            }
+        }
+        return null;
+    }
 }

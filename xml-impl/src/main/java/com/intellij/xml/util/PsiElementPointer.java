@@ -8,6 +8,6 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  */
 public interface PsiElementPointer {
-  @Nullable
-  PsiElement getPsiElement();
+    @Nullable
+    PsiElement getPsiElement();
 }

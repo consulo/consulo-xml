@@ -32,46 +32,46 @@ import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 16.08.13
+ * Date: 16.08.13
  */
 public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> implements EmptyResolveMessageProvider {
-  private final XmlEnumerationDescriptor myDescriptor;
+    private final XmlEnumerationDescriptor myDescriptor;
 
-  public XmlEnumeratedValueReference(XmlElement value, XmlEnumerationDescriptor descriptor) {
-    super(value);
-    myDescriptor = descriptor;
-  }
-
-  public XmlEnumeratedValueReference(XmlElement value, XmlEnumerationDescriptor descriptor, TextRange range) {
-    super(value, range);
-    myDescriptor = descriptor;
-  }
-
-  @Nullable
-  @Override
-  public PsiElement resolve() {
-    return myDescriptor.getValueDeclaration(getElement(), getValue());
-  }
-
-  @Nonnull
-  @Override
-  public Object[] getVariants() {
-    if (myDescriptor.isFixed()) {
-      String defaultValue = myDescriptor.getDefaultValue();
-      return defaultValue == null ? ArrayUtil.EMPTY_OBJECT_ARRAY : new Object[] {defaultValue};
+    public XmlEnumeratedValueReference(XmlElement value, XmlEnumerationDescriptor descriptor) {
+        super(value);
+        myDescriptor = descriptor;
     }
-    else {
-      String[] values = myDescriptor.getEnumeratedValues();
-      return values == null ? ArrayUtil.EMPTY_OBJECT_ARRAY : values;
-    }
-  }
 
-  @Nonnull
-  @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
-    String name = getElement() instanceof XmlTag ? "tag" : "attribute";
-    return myDescriptor.isFixed()
-      ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue())
-      : XmlErrorLocalize.wrongValue(name);
-  }
+    public XmlEnumeratedValueReference(XmlElement value, XmlEnumerationDescriptor descriptor, TextRange range) {
+        super(value, range);
+        myDescriptor = descriptor;
+    }
+
+    @Nullable
+    @Override
+    public PsiElement resolve() {
+        return myDescriptor.getValueDeclaration(getElement(), getValue());
+    }
+
+    @Nonnull
+    @Override
+    public Object[] getVariants() {
+        if (myDescriptor.isFixed()) {
+            String defaultValue = myDescriptor.getDefaultValue();
+            return defaultValue == null ? ArrayUtil.EMPTY_OBJECT_ARRAY : new Object[]{defaultValue};
+        }
+        else {
+            String[] values = myDescriptor.getEnumeratedValues();
+            return values == null ? ArrayUtil.EMPTY_OBJECT_ARRAY : values;
+        }
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+        String name = getElement() instanceof XmlTag ? "tag" : "attribute";
+        return myDescriptor.isFixed()
+            ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue())
+            : XmlErrorLocalize.wrongValue(name);
+    }
 }
