@@ -31,26 +31,26 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlLanguageCodeStyleSettings extends LanguageCodeStyleSettingsProvider {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return HTMLLanguage.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
+    }
 
-  @Override
-  public String getCodeSample(@Nonnull SettingsType settingsType) {
-    return CodeStyleAbstractPanel.readFromFile(this.getClass(), "preview.html.template");
-  }
+    @Override
+    public String getCodeSample(@Nonnull SettingsType settingsType) {
+        return CodeStyleAbstractPanel.readFromFile(this.getClass(), "preview.html.template");
+    }
 
-  @Override
-  public CommonCodeStyleSettings getDefaultCommonSettings() {
-    CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(HTMLLanguage.INSTANCE);
-    defaultSettings.initIndentOptions();
-    return defaultSettings;
-  }
+    @Override
+    public CommonCodeStyleSettings getDefaultCommonSettings() {
+        CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(HTMLLanguage.INSTANCE);
+        defaultSettings.initIndentOptions();
+        return defaultSettings;
+    }
 
-  @Override
-  public IndentOptionsEditor getIndentOptionsEditor() {
-    return new SmartIndentOptionsEditor();
-  }
+    @Override
+    public IndentOptionsEditor getIndentOptionsEditor() {
+        return new SmartIndentOptionsEditor();
+    }
 }

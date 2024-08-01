@@ -31,36 +31,30 @@ import consulo.xml.psi.xml.XmlTokenType;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl(id = "htmlText")
-public class HtmlTextCompletionConfidence extends CompletionConfidence
-{
-	@Nonnull
-	@Override
-	public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset)
-	{
-		return shouldSkipAutopopupInHtml(contextElement, offset) ? ThreeState.YES : ThreeState.UNSURE;
-	}
+public class HtmlTextCompletionConfidence extends CompletionConfidence {
+    @Nonnull
+    @Override
+    public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset) {
+        return shouldSkipAutopopupInHtml(contextElement, offset) ? ThreeState.YES : ThreeState.UNSURE;
+    }
 
-	public static boolean shouldSkipAutopopupInHtml(@Nonnull PsiElement contextElement, int offset)
-	{
-		ASTNode node = contextElement.getNode();
-		if(node != null && node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS)
-		{
-			PsiElement parent = contextElement.getParent();
-			if(parent instanceof XmlText || parent instanceof XmlDocument)
-			{
-				String contextElementText = contextElement.getText();
-				int endOffset = offset - contextElement.getTextRange().getStartOffset();
-				String prefix = contextElementText.substring(0, Math.min(contextElementText.length(), endOffset));
-				return !StringUtil.startsWithChar(prefix, '<') && !StringUtil.startsWithChar(prefix, '&');
-			}
-		}
-		return false;
-	}
+    public static boolean shouldSkipAutopopupInHtml(@Nonnull PsiElement contextElement, int offset) {
+        ASTNode node = contextElement.getNode();
+        if (node != null && node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) {
+            PsiElement parent = contextElement.getParent();
+            if (parent instanceof XmlText || parent instanceof XmlDocument) {
+                String contextElementText = contextElement.getText();
+                int endOffset = offset - contextElement.getTextRange().getStartOffset();
+                String prefix = contextElementText.substring(0, Math.min(contextElementText.length(), endOffset));
+                return !StringUtil.startsWithChar(prefix, '<') && !StringUtil.startsWithChar(prefix, '&');
+            }
+        }
+        return false;
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return HTMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
+    }
 }

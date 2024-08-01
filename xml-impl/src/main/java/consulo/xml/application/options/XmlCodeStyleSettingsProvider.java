@@ -32,29 +32,28 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
+    public static final String CONFIGURABLE_DISPLAY_NAME = ApplicationBundle.message("title.xml");
 
-  public static final String CONFIGURABLE_DISPLAY_NAME = ApplicationBundle.message("title.xml");
+    @Nonnull
+    public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.xml")) {
+            protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
+                return new XmlCodeStyleMainPanel(getCurrentSettings(), settings);
+            }
 
-  @Nonnull
-  public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
-    return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.xml")){
-      protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
-        return new XmlCodeStyleMainPanel(getCurrentSettings(), settings);
-      }
+            public String getHelpTopic() {
+                return "reference.settingsdialog.IDE.globalcodestyle.xml";
+            }
+        };
+    }
 
-      public String getHelpTopic() {
-        return "reference.settingsdialog.IDE.globalcodestyle.xml";
-      }
-    };
-  }
+    @Override
+    public String getConfigurableDisplayName() {
+        return CONFIGURABLE_DISPLAY_NAME;
+    }
 
-  @Override
-  public String getConfigurableDisplayName() {
-    return CONFIGURABLE_DISPLAY_NAME;
-  }
-
-  @Override
-  public CustomCodeStyleSettings createCustomSettings(CodeStyleSettings settings) {
-    return new XmlCodeStyleSettings(settings);
-  }
+    @Override
+    public CustomCodeStyleSettings createCustomSettings(CodeStyleSettings settings) {
+        return new XmlCodeStyleSettings(settings);
+    }
 }

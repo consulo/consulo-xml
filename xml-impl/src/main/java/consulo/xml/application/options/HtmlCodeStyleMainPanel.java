@@ -22,15 +22,14 @@ import consulo.xml.lang.html.HTMLLanguage;
 /**
  * @author Rustam Vishnyakov
  */
-public class HtmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel
-{
-  protected HtmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
-    super(HTMLLanguage.INSTANCE, currentSettings, settings);
-  }
+public class HtmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
+    protected HtmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
+        super(HTMLLanguage.INSTANCE, currentSettings, settings);
+    }
 
-  @Override
-  protected void initTabs(CodeStyleSettings settings) {
-    addIndentOptionsTab(settings);
-    addTab(new CodeStyleHtmlPanel(settings));
-  }
+    @Override
+    protected void initTabs(CodeStyleSettings settings) {
+        addIndentOptionsTab(settings);
+        addTab(new CodeStyleHtmlPanel(settings));
+    }
 }
