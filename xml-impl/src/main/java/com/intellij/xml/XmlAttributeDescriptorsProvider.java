@@ -27,10 +27,10 @@ import javax.annotation.Nullable;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlAttributeDescriptorsProvider {
-  ExtensionPointName<XmlAttributeDescriptorsProvider> EP_NAME = ExtensionPointName.create(XmlAttributeDescriptorsProvider.class);
+    ExtensionPointName<XmlAttributeDescriptorsProvider> EP_NAME = ExtensionPointName.create(XmlAttributeDescriptorsProvider.class);
 
-  XmlAttributeDescriptor[] getAttributeDescriptors(final XmlTag context);
+    XmlAttributeDescriptor[] getAttributeDescriptors(final XmlTag context);
 
-  @Nullable
-  XmlAttributeDescriptor getAttributeDescriptor(final String attributeName, final XmlTag context);
+    @Nullable
+    XmlAttributeDescriptor getAttributeDescriptor(final String attributeName, final XmlTag context);
 }

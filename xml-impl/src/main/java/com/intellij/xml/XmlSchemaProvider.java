@@ -39,79 +39,82 @@ import java.util.Set;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlSchemaProvider {
-  public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = ExtensionPointName.create(XmlSchemaProvider.class);
+    public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = ExtensionPointName.create(XmlSchemaProvider.class);
 
-  @Nullable
-  public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nullable Module module, @Nonnull PsiFile file) {
-    if (file.getProject().isDefault()) return null;
-    final boolean dumb = DumbService.getInstance(file.getProject()).isDumb();
-    for (XmlSchemaProvider provider: EP_NAME.getExtensionList()) {
-      if (dumb && !DumbService.isDumbAware(provider)) {
-        continue;
+    @Nullable
+    public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nullable Module module, @Nonnull PsiFile file) {
+      if (file.getProject().isDefault()) {
+        return null;
       }
+        final boolean dumb = DumbService.getInstance(file.getProject()).isDumb();
+        for (XmlSchemaProvider provider : EP_NAME.getExtensionList()) {
+            if (dumb && !DumbService.isDumbAware(provider)) {
+                continue;
+            }
 
-      if (file instanceof XmlFile && !provider.isAvailable((XmlFile)file)) {
-        continue;
-      }
-      final XmlFile schema = provider.getSchema(namespace, module, file);
-      if (schema != null) {
-        return schema;
-      }
+            if (file instanceof XmlFile && !provider.isAvailable((XmlFile)file)) {
+                continue;
+            }
+            final XmlFile schema = provider.getSchema(namespace, module, file);
+            if (schema != null) {
+                return schema;
+            }
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Nullable
-  public static XmlFile findSchema(@Nonnull String namespace, @Nonnull PsiFile baseFile) {
-    final PsiDirectory directory = baseFile.getParent();
-    final Module module = ModuleUtilCore.findModuleForPsiElement(directory == null ? baseFile : directory);
-    return findSchema(namespace, module, baseFile);
-  }
-
-  /**
-   * @see #getAvailableProviders(XmlFile)
-   */
-  @Deprecated
-  @Nullable
-  public static XmlSchemaProvider getAvailableProvider(@Nonnull final XmlFile file) {
-    for (XmlSchemaProvider provider: EP_NAME.getExtensionList()) {
-      if (provider.isAvailable(file)) {
-        return provider;
-      }
+    @Nullable
+    public static XmlFile findSchema(@Nonnull String namespace, @Nonnull PsiFile baseFile) {
+        final PsiDirectory directory = baseFile.getParent();
+        final Module module = ModuleUtilCore.findModuleForPsiElement(directory == null ? baseFile : directory);
+        return findSchema(namespace, module, baseFile);
     }
-    return null;    
-  }
 
-  public static List<XmlSchemaProvider> getAvailableProviders(@Nonnull final XmlFile file) {
-    return ContainerUtil.findAll(EP_NAME.getExtensionList(), it -> it.isAvailable(file));
-  }
+    /**
+     * @see #getAvailableProviders(XmlFile)
+     */
+    @Deprecated
+    @Nullable
+    public static XmlSchemaProvider getAvailableProvider(@Nonnull final XmlFile file) {
+        for (XmlSchemaProvider provider : EP_NAME.getExtensionList()) {
+            if (provider.isAvailable(file)) {
+                return provider;
+            }
+        }
+        return null;
+    }
 
-  @Nullable
-  public abstract XmlFile getSchema(@Nonnull @NonNls String url, @Nullable Module module, @Nonnull final PsiFile baseFile);
+    public static List<XmlSchemaProvider> getAvailableProviders(@Nonnull final XmlFile file) {
+        return ContainerUtil.findAll(EP_NAME.getExtensionList(), it -> it.isAvailable(file));
+    }
+
+    @Nullable
+    public abstract XmlFile getSchema(@Nonnull @NonNls String url, @Nullable Module module, @Nonnull final PsiFile baseFile);
 
 
-  public boolean isAvailable(@Nonnull final XmlFile file) {
-    return false;
-  }
+    public boolean isAvailable(@Nonnull final XmlFile file) {
+        return false;
+    }
 
-  /**
-   * Provides specific namespaces for given xml file.
-   * @param file an xml or jsp file.
-   * @param tagName optional
-   * @return available namespace uris, or <code>null</code> if the provider did not recognize the file.
-   */
-  @Nonnull
-  public Set<String> getAvailableNamespaces(@Nonnull final XmlFile file, @Nullable final String tagName) {
-    return Collections.emptySet();
-  }
+    /**
+     * Provides specific namespaces for given xml file.
+     *
+     * @param file    an xml or jsp file.
+     * @param tagName optional
+     * @return available namespace uris, or <code>null</code> if the provider did not recognize the file.
+     */
+    @Nonnull
+    public Set<String> getAvailableNamespaces(@Nonnull final XmlFile file, @Nullable final String tagName) {
+        return Collections.emptySet();
+    }
 
-  @Nullable
-  public String getDefaultPrefix(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
-    return null;
-  }
+    @Nullable
+    public String getDefaultPrefix(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
+        return null;
+    }
 
-  @Nullable
-  public Set<String> getLocations(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
-    return null;
-  }
+    @Nullable
+    public Set<String> getLocations(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
+        return null;
+    }
 }

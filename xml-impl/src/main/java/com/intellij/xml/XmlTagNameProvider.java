@@ -28,9 +28,8 @@ import java.util.List;
  * Provides custom tag names.
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
-public interface XmlTagNameProvider
-{
-	ExtensionPointName<XmlTagNameProvider> EP_NAME = ExtensionPointName.create(XmlTagNameProvider.class);
+public interface XmlTagNameProvider {
+    ExtensionPointName<XmlTagNameProvider> EP_NAME = ExtensionPointName.create(XmlTagNameProvider.class);
 
-	void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
+    void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
 }

@@ -34,42 +34,37 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @ExtensionImpl
-public class XmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable
-{
-	@RequiredUIAccess
-	@Nonnull
-	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable)
-	{
-		VerticalLayout layout = VerticalLayout.create();
+public class XmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
+    @RequiredUIAccess
+    @Nonnull
+    @Override
+    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
+        VerticalLayout layout = VerticalLayout.create();
 
-		XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
+        XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
 
-		CheckBox collapseXmlTags = CheckBox.create(ApplicationLocalize.checkboxCollapseXmlTags());
-		layout.add(collapseXmlTags);
-		propertyBuilder.add(collapseXmlTags, settings::isCollapseXmlTags, settings::setCollapseXmlTags);
+        CheckBox collapseXmlTags = CheckBox.create(ApplicationLocalize.checkboxCollapseXmlTags());
+        layout.add(collapseXmlTags);
+        propertyBuilder.add(collapseXmlTags, settings::isCollapseXmlTags, settings::setCollapseXmlTags);
 
-		return layout;
-	}
+        return layout;
+    }
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "editor.preferences.folding.xml";
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return "editor.preferences.folding.xml";
+    }
 
-	@Nullable
-	@Override
-	public String getParentId()
-	{
-		return "editor.preferences.folding";
-	}
+    @Nullable
+    @Override
+    public String getParentId() {
+        return "editor.preferences.folding";
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "XML";
-	}
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return "XML";
+    }
 }

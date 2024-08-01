@@ -20,9 +20,7 @@ import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.xml.lang.xml.XMLLanguage;
 import consulo.virtualFileSystem.fileType.FileTypeFactory;
-import consulo.ide.impl.idea.codeInsight.editorActions.TypedHandler;
 import consulo.virtualFileSystem.fileType.FileTypeConsumer;
 
 import javax.annotation.Nonnull;
@@ -32,11 +30,11 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlFileTypeFactory extends FileTypeFactory {
-  public void createFileTypes(@Nonnull final FileTypeConsumer consumer) {
-    consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
-    consumer.consume(XHtmlFileType.INSTANCE, "xhtml");
-    consumer.consume(DTDFileType.INSTANCE, "dtd;ent;mod;elt");
+    public void createFileTypes(@Nonnull final FileTypeConsumer consumer) {
+        consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
+        consumer.consume(XHtmlFileType.INSTANCE, "xhtml");
+        consumer.consume(DTDFileType.INSTANCE, "dtd;ent;mod;elt");
 
-    consumer.consume(XmlFileType.INSTANCE, "xml;xsd;tld;xsl;jnlp;wsdl;jhm;ant;xul;xslt;rng;");
-  }
+        consumer.consume(XmlFileType.INSTANCE, "xml;xsd;tld;xsl;jnlp;wsdl;jhm;ant;xul;xslt;rng;");
+    }
 }

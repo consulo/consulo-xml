@@ -27,28 +27,32 @@ import javax.annotation.Nullable;
  * @author Mike
  */
 public interface XmlAttributeDescriptor extends PsiMetaData {
-  XmlAttributeDescriptor[] EMPTY = new XmlAttributeDescriptor[0];
-  ArrayFactory<XmlAttributeDescriptor> ARRAY_FACTORY = new ArrayFactory<XmlAttributeDescriptor>() {
-    @Nonnull
-    @Override
-    public XmlAttributeDescriptor[] create(int count) {
-      return new XmlAttributeDescriptor[count];
-    }
-  };
+    XmlAttributeDescriptor[] EMPTY = new XmlAttributeDescriptor[0];
+    ArrayFactory<XmlAttributeDescriptor> ARRAY_FACTORY = new ArrayFactory<>() {
+        @Nonnull
+        @Override
+        public XmlAttributeDescriptor[] create(int count) {
+            return new XmlAttributeDescriptor[count];
+        }
+    };
 
-  boolean isRequired();
-  boolean isFixed();
-  boolean hasIdType();
-  boolean hasIdRefType();
+    boolean isRequired();
 
-  @Nullable
-  String getDefaultValue();
+    boolean isFixed();
 
-  //todo: refactor to hierarchy of value descriptor?
-  boolean isEnumerated();
-  @Nullable
-  String[] getEnumeratedValues();
+    boolean hasIdType();
 
-  @Nullable
-  String validateValue(XmlElement context, String value);
+    boolean hasIdRefType();
+
+    @Nullable
+    String getDefaultValue();
+
+    //todo: refactor to hierarchy of value descriptor?
+    boolean isEnumerated();
+
+    @Nullable
+    String[] getEnumeratedValues();
+
+    @Nullable
+    String validateValue(XmlElement context, String value);
 }
