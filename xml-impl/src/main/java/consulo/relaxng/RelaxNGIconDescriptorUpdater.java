@@ -15,15 +15,12 @@ import javax.annotation.Nonnull;
  * @since 18-Jan-17
  */
 @ExtensionImpl
-public class RelaxNGIconDescriptorUpdater implements IconDescriptorUpdater
-{
-	@RequiredReadAction
-	@Override
-	public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement psiElement, int i)
-	{
-		if(psiElement instanceof RncDefine)
-		{
-			iconDescriptor.setMainIcon(AllIcons.Nodes.Property);
-		}
-	}
+public class RelaxNGIconDescriptorUpdater implements IconDescriptorUpdater {
+    @RequiredReadAction
+    @Override
+    public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement psiElement, int i) {
+        if (psiElement instanceof RncDefine) {
+            iconDescriptor.setMainIcon(AllIcons.Nodes.Property);
+        }
+    }
 }

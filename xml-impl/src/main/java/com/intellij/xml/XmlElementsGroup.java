@@ -23,33 +23,31 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 public interface XmlElementsGroup {
+    enum Type {
+        SEQUENCE,
+        CHOICE,
+        ALL,
+        GROUP,
+        LEAF
+    }
 
-  enum Type {
-    SEQUENCE,
-    CHOICE,
-    ALL,
-    GROUP,
+    /**
+     * @return minimal occurrence constraint value (e.g. 0 or 1)
+     */
+    int getMinOccurs();
 
-    LEAF
-  }
+    /**
+     * @return maximal occurrence constraint value (e.g. 1 or {@link Integer#MAX_VALUE})
+     */
+    int getMaxOccurs();
 
-  /**
-   * @return minimal occurrence constraint value (e.g. 0 or 1)
-   */
-  int getMinOccurs();
+    Type getGroupType();
 
-  /**
-   * @return maximal occurrence constraint value (e.g. 1 or {@link Integer#MAX_VALUE})
-   */
-  int getMaxOccurs();
+    @Nullable
+    XmlElementsGroup getParentGroup();
 
-  Type getGroupType();
+    List<XmlElementsGroup> getSubGroups();
 
-  @Nullable
-  XmlElementsGroup getParentGroup();
-
-  List<XmlElementsGroup> getSubGroups();
-
-  @Nullable
-  XmlElementDescriptor getLeafDescriptor();
+    @Nullable
+    XmlElementDescriptor getLeafDescriptor();
 }

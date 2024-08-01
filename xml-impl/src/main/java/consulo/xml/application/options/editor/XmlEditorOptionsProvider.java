@@ -31,54 +31,62 @@ import javax.annotation.Nullable;
 /**
  * @author VISTALL
  */
-public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable, ApplicationConfigurable
-{
-	@RequiredUIAccess
-	@Nonnull
-	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable)
-	{
-		VerticalLayout layout = VerticalLayout.create();
+public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable, ApplicationConfigurable {
+    @RequiredUIAccess
+    @Nonnull
+    @Override
+    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
+        VerticalLayout layout = VerticalLayout.create();
 
-		XmlEditorOptions options = XmlEditorOptions.getInstance();
+        XmlEditorOptions options = XmlEditorOptions.getInstance();
 
-		CheckBox automaticallyInsertClosingTag = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert closing tag"));
-		layout.add(automaticallyInsertClosingTag);
-		propertyBuilder.add(automaticallyInsertClosingTag, options::isAutomaticallyInsertClosingTag, options::setAutomaticallyInsertClosingTag);
+        CheckBox automaticallyInsertClosingTag = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert closing tag"));
+        layout.add(automaticallyInsertClosingTag);
+        propertyBuilder.add(
+            automaticallyInsertClosingTag,
+            options::isAutomaticallyInsertClosingTag,
+            options::setAutomaticallyInsertClosingTag
+        );
 
-		CheckBox automaticallyInsertRequiredAttributes = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required attributes"));
-		layout.add(automaticallyInsertRequiredAttributes);
-		propertyBuilder.add(automaticallyInsertRequiredAttributes, options::isAutomaticallyInsertRequiredAttributes, options::setAutomaticallyInsertRequiredAttributes);
+        CheckBox automaticallyInsertRequiredAttributes =
+            CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required attributes"));
+        layout.add(automaticallyInsertRequiredAttributes);
+        propertyBuilder.add(
+            automaticallyInsertRequiredAttributes,
+            options::isAutomaticallyInsertRequiredAttributes,
+            options::setAutomaticallyInsertRequiredAttributes
+        );
 
-		CheckBox automaticallyStartAttribute = CheckBox.create(LocalizeValue.localizeTODO("Automatically start attribute"));
-		layout.add(automaticallyStartAttribute);
-		propertyBuilder.add(automaticallyStartAttribute, options::isAutomaticallyStartAttribute, options::setAutomaticallyStartAttribute);
+        CheckBox automaticallyStartAttribute = CheckBox.create(LocalizeValue.localizeTODO("Automatically start attribute"));
+        layout.add(automaticallyStartAttribute);
+        propertyBuilder.add(automaticallyStartAttribute, options::isAutomaticallyStartAttribute, options::setAutomaticallyStartAttribute);
 
-		CheckBox automaticallyInsertRequiredSubTags = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required subtags"));
-		layout.add(automaticallyInsertRequiredSubTags);
-		propertyBuilder.add(automaticallyInsertRequiredSubTags, options::isAutomaticallyInsertRequiredSubTags, options::setAutomaticallyInsertRequiredSubTags);
+        CheckBox automaticallyInsertRequiredSubTags = CheckBox.create(LocalizeValue.localizeTODO("Automatically insert required subtags"));
+        layout.add(automaticallyInsertRequiredSubTags);
+        propertyBuilder.add(
+            automaticallyInsertRequiredSubTags,
+            options::isAutomaticallyInsertRequiredSubTags,
+            options::setAutomaticallyInsertRequiredSubTags
+        );
 
-		return layout;
-	}
+        return layout;
+    }
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "editor.preferences.smartKeys.xml";
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return "editor.preferences.smartKeys.xml";
+    }
 
-	@Nullable
-	@Override
-	public String getParentId()
-	{
-		return "editor.preferences.smartKeys";
-	}
+    @Nullable
+    @Override
+    public String getParentId() {
+        return "editor.preferences.smartKeys";
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "XML/HTML";
-	}
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return "XML/HTML";
+    }
 }

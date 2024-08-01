@@ -19,6 +19,7 @@ import consulo.language.psi.meta.PsiMetaData;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
 
 /**
@@ -27,48 +28,52 @@ import javax.annotation.Nullable;
  * @author Mike
  */
 public interface XmlElementDescriptor extends PsiMetaData {
-  XmlElementDescriptor[] EMPTY_ARRAY = new XmlElementDescriptor[0];
+    XmlElementDescriptor[] EMPTY_ARRAY = new XmlElementDescriptor[0];
 
-  @NonNls
-  String getQualifiedName();
+    @NonNls
+    String getQualifiedName();
 
-  /**
-   * Should return either simple or qualified name depending on the schema/DTD properties.
-   * This name should be used in XML documents.
-   * @return either simple or qualified name.
-   */
-  @NonNls
-  String getDefaultName();
+    /**
+     * Should return either simple or qualified name depending on the schema/DTD properties.
+     * This name should be used in XML documents.
+     *
+     * @return either simple or qualified name.
+     */
+    @NonNls
+    String getDefaultName();
 
-  /**
-   * Returns an array of child tag descriptors.
-   * @param context the parent tag.
-   * @return an array of child tag descriptors, or empty array if no child tag allowed.
-   */
-  XmlElementDescriptor[] getElementsDescriptors(XmlTag context);
+    /**
+     * Returns an array of child tag descriptors.
+     *
+     * @param context the parent tag.
+     * @return an array of child tag descriptors, or empty array if no child tag allowed.
+     */
+    XmlElementDescriptor[] getElementsDescriptors(XmlTag context);
 
-  @Nullable
-  XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag);
+    @Nullable
+    XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag);
 
-  XmlAttributeDescriptor[] getAttributesDescriptors(final @Nullable XmlTag context);
-  @Nullable
-  XmlAttributeDescriptor getAttributeDescriptor(@NonNls String attributeName, final @Nullable XmlTag context);
-  @Nullable
-  XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute);
+    XmlAttributeDescriptor[] getAttributesDescriptors(final @Nullable XmlTag context);
 
-  XmlNSDescriptor getNSDescriptor();
+    @Nullable
+    XmlAttributeDescriptor getAttributeDescriptor(@NonNls String attributeName, final @Nullable XmlTag context);
 
-  @Nullable
-  XmlElementsGroup getTopGroup();
+    @Nullable
+    XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute);
 
-  int getContentType();
+    XmlNSDescriptor getNSDescriptor();
 
-  int CONTENT_TYPE_UNKNOWN = -1;
-  int CONTENT_TYPE_EMPTY = 0;
-  int CONTENT_TYPE_ANY = 1;
-  int CONTENT_TYPE_CHILDREN = 2;
-  int CONTENT_TYPE_MIXED = 3;
+    @Nullable
+    XmlElementsGroup getTopGroup();
 
-  @Nullable
-  String getDefaultValue();
+    int getContentType();
+
+    int CONTENT_TYPE_UNKNOWN = -1;
+    int CONTENT_TYPE_EMPTY = 0;
+    int CONTENT_TYPE_ANY = 1;
+    int CONTENT_TYPE_CHILDREN = 2;
+    int CONTENT_TYPE_MIXED = 3;
+
+    @Nullable
+    String getDefaultValue();
 }
