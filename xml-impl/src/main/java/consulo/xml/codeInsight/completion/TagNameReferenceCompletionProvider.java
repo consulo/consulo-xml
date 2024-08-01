@@ -37,63 +37,67 @@ import java.util.function.Consumer;
 /**
  * @author yole
  */
-public class TagNameReferenceCompletionProvider implements CompletionProvider
-{
-	public static LookupElement[] getTagNameVariants(final @Nonnull XmlTag tag, final String prefix)
-	{
-		List<LookupElement> elements = new ArrayList<>();
-		for(XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensionList())
-		{
-			tagNameProvider.addTagNameVariants(elements, tag, prefix);
-		}
-		return elements.toArray(new LookupElement[elements.size()]);
-	}
+public class TagNameReferenceCompletionProvider implements CompletionProvider {
+    public static LookupElement[] getTagNameVariants(final @Nonnull XmlTag tag, final String prefix) {
+        List<LookupElement> elements = new ArrayList<>();
+        for (XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensionList()) {
+            tagNameProvider.addTagNameVariants(elements, tag, prefix);
+        }
+        return elements.toArray(new LookupElement[elements.size()]);
+    }
 
-	@Override
-	public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull final CompletionResultSet result)
-	{
-		LegacyCompletionContributor.processReferences(parameters, result, (reference, set) ->
-		{
-			if(reference instanceof TagNameReference)
-			{
-				collectCompletionVariants((TagNameReference) reference, set);
-			}
-			else if(reference instanceof SchemaPrefixReference)
-			{
-				TagNameReference tagNameReference = ((SchemaPrefixReference) reference).getTagNameReference();
-				if(tagNameReference != null && !tagNameReference.isStartTagFlag())
-				{
-					set.accept(createClosingTagLookupElement((XmlTag) tagNameReference.getElement(), true, tagNameReference.getNameElement()));
-				}
-			}
-		});
-	}
+    @Override
+    public void addCompletions(
+        @Nonnull CompletionParameters parameters,
+        ProcessingContext context,
+        @Nonnull final CompletionResultSet result
+    ) {
+        LegacyCompletionContributor.processReferences(
+            parameters,
+            result,
+            (reference, set) ->
+            {
+                if (reference instanceof TagNameReference tagNameReference) {
+                    collectCompletionVariants(tagNameReference, set);
+                }
+                else if (reference instanceof SchemaPrefixReference schemaPrefixReference) {
+                    TagNameReference tagNameReference = schemaPrefixReference.getTagNameReference();
+                    if (tagNameReference != null && !tagNameReference.isStartTagFlag()) {
+                        set.accept(createClosingTagLookupElement(
+                            (XmlTag)tagNameReference.getElement(),
+                            true,
+                            tagNameReference.getNameElement()
+                        ));
+                    }
+                }
+            }
+        );
+    }
 
-	public static void collectCompletionVariants(TagNameReference tagNameReference, Consumer<LookupElement> consumer)
-	{
-		PsiElement element = tagNameReference.getElement();
-		if(element instanceof XmlTag)
-		{
-			if(!tagNameReference.isStartTagFlag())
-			{
-				consumer.accept(createClosingTagLookupElement((XmlTag) element, false, tagNameReference.getNameElement()));
-			}
-			else
-			{
-				XmlTag tag = (XmlTag) element;
-				for(LookupElement variant : getTagNameVariants(tag, tag.getNamespacePrefix()))
-				{
-					consumer.accept(variant);
-				}
-			}
-		}
-	}
+    public static void collectCompletionVariants(TagNameReference tagNameReference, Consumer<LookupElement> consumer) {
+        PsiElement element = tagNameReference.getElement();
+        if (element instanceof XmlTag tag) {
+            if (!tagNameReference.isStartTagFlag()) {
+                consumer.accept(createClosingTagLookupElement((XmlTag)element, false, tagNameReference.getNameElement()));
+            }
+            else {
+                for (LookupElement variant : getTagNameVariants(tag, tag.getNamespacePrefix())) {
+                    consumer.accept(variant);
+                }
+            }
+        }
+    }
 
-	public static LookupElement createClosingTagLookupElement(XmlTag tag, boolean includePrefix, ASTNode nameElement)
-	{
-		LookupElementBuilder builder = LookupElementBuilder.create(includePrefix || !nameElement.getText().contains(":") ? tag.getName() : tag.getLocalName());
-		return LookupElementDecorator.withInsertHandler(TailTypeDecorator.withTail(AutoCompletionPolicy.GIVE_CHANCE_TO_OVERWRITE.applyPolicy(builder), TailType.createSimpleTailType('>')),
-				XmlClosingTagInsertHandler.INSTANCE);
-	}
-
+    public static LookupElement createClosingTagLookupElement(XmlTag tag, boolean includePrefix, ASTNode nameElement) {
+        LookupElementBuilder builder = LookupElementBuilder.create(
+            includePrefix || !nameElement.getText().contains(":") ? tag.getName() : tag.getLocalName()
+        );
+        return LookupElementDecorator.withInsertHandler(
+            TailTypeDecorator.withTail(
+                AutoCompletionPolicy.GIVE_CHANCE_TO_OVERWRITE.applyPolicy(builder),
+                TailType.createSimpleTailType('>')
+            ),
+            XmlClosingTagInsertHandler.INSTANCE
+        );
+    }
 }

@@ -32,34 +32,28 @@ import jakarta.inject.Singleton;
 @ServiceAPI(ComponentScope.APPLICATION)
 @ServiceImpl
 @State(name = "XmlSettings", storages = @Storage("editor.codeinsight.xml"))
-public class XmlSettings implements PersistentStateComponent<XmlSettings>
-{
-	public boolean SHOW_XML_ADD_IMPORT_HINTS = true;
+public class XmlSettings implements PersistentStateComponent<XmlSettings> {
+    public boolean SHOW_XML_ADD_IMPORT_HINTS = true;
 
-	public static XmlSettings getInstance()
-	{
-		return ServiceManager.getService(XmlSettings.class);
-	}
+    public static XmlSettings getInstance() {
+        return ServiceManager.getService(XmlSettings.class);
+    }
 
-	public void setShowXmlImportHints(boolean value)
-	{
-		SHOW_XML_ADD_IMPORT_HINTS = value;
-	}
+    public void setShowXmlImportHints(boolean value) {
+        SHOW_XML_ADD_IMPORT_HINTS = value;
+    }
 
-	public boolean isShowXmlImportsHints()
-	{
-		return SHOW_XML_ADD_IMPORT_HINTS;
-	}
+    public boolean isShowXmlImportsHints() {
+        return SHOW_XML_ADD_IMPORT_HINTS;
+    }
 
-	@Override
-	public XmlSettings getState()
-	{
-		return this;
-	}
+    @Override
+    public XmlSettings getState() {
+        return this;
+    }
 
-	@Override
-	public void loadState(final XmlSettings state)
-	{
-		XmlSerializerUtil.copyBean(state, this);
-	}
+    @Override
+    public void loadState(final XmlSettings state) {
+        XmlSerializerUtil.copyBean(state, this);
+    }
 }

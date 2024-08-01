@@ -22,72 +22,72 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class TagListDialog extends DialogWrapper {
-  private final JPanel myPanel;
-  private final JList myList = new JBList(new DefaultListModel());
-  private ArrayList<String> myData;
+    private final JPanel myPanel;
+    private final JList myList = new JBList(new DefaultListModel());
+    private ArrayList<String> myData;
 
-  public TagListDialog(String title) {
-    super(true);
-    myPanel = ToolbarDecorator.createDecorator(myList)
-      .setAddAction(new AnActionButtonRunnable() {
-        @Override
-        public void run(AnActionButton button) {
-          final String tagName = Messages.showInputDialog(ApplicationBundle.message("editbox.enter.tag.name"),
-                                                          ApplicationBundle.message("title.tag.name"), Messages.getQuestionIcon());
-          if (tagName != null) {
-            while (myData.contains(tagName)) {
-              myData.remove(tagName);
-            }
-            myData.add(tagName);
-            updateData();
-            myList.setSelectedIndex(myData.size() - 1);
-          }
-        }
-      }).setRemoveAction(new AnActionButtonRunnable() {
-        @Override
-        public void run(AnActionButton button) {
-          int selectedIndex = myList.getSelectedIndex();
-          if (selectedIndex >= 0) {
-            myData.remove(selectedIndex);
-            updateData();
-            if (selectedIndex >= myData.size()) {
-              selectedIndex -= 1;
-            }
-            if (selectedIndex >= 0) {
-              myList.setSelectedIndex(selectedIndex);
-            }
-          }
-        }
-      }).disableUpDownActions().createPanel();
-    setTitle(title);
-    init();
-  }
-
-  public void setData(ArrayList<String> data) {
-    myData = data;
-    updateData();
-    if (!myData.isEmpty()) {
-      myList.setSelectedIndex(0);
+    public TagListDialog(String title) {
+        super(true);
+        myPanel = ToolbarDecorator.createDecorator(myList)
+            .setAddAction(button -> {
+                final String tagName = Messages.showInputDialog(
+                    ApplicationBundle.message("editbox.enter.tag.name"),
+                    ApplicationBundle.message("title.tag.name"),
+                    UIUtil.getQuestionIcon()
+                );
+                if (tagName != null) {
+                    while (myData.contains(tagName)) {
+                        myData.remove(tagName);
+                    }
+                    myData.add(tagName);
+                    updateData();
+                    myList.setSelectedIndex(myData.size() - 1);
+                }
+            })
+            .setRemoveAction(button -> {
+                int selectedIndex = myList.getSelectedIndex();
+                if (selectedIndex >= 0) {
+                    myData.remove(selectedIndex);
+                    updateData();
+                    if (selectedIndex >= myData.size()) {
+                        selectedIndex -= 1;
+                    }
+                    if (selectedIndex >= 0) {
+                        myList.setSelectedIndex(selectedIndex);
+                    }
+                }
+            })
+            .disableUpDownActions()
+            .createPanel();
+        setTitle(title);
+        init();
     }
-  }
 
-  private void updateData() {
-    final DefaultListModel model = ((DefaultListModel)myList.getModel());
-    model.clear();
-    for (String data : myData) {
-      model.addElement(data);
+    public void setData(ArrayList<String> data) {
+        myData = data;
+        updateData();
+        if (!myData.isEmpty()) {
+            myList.setSelectedIndex(0);
+        }
     }
-  }
 
-  public ArrayList<String> getData() {
-    return myData;
-  }
+    private void updateData() {
+        final DefaultListModel model = ((DefaultListModel)myList.getModel());
+        model.clear();
+        for (String data : myData) {
+            model.addElement(data);
+        }
+    }
 
-  protected JComponent createCenterPanel() {
-    return myPanel;
-  }
+    public ArrayList<String> getData() {
+        return myData;
+    }
 
-  public JComponent getPreferredFocusedComponent() {
-    return myList;
-  }
+    protected JComponent createCenterPanel() {
+        return myPanel;
+    }
+
+    public JComponent getPreferredFocusedComponent() {
+        return myList;
+    }
 }

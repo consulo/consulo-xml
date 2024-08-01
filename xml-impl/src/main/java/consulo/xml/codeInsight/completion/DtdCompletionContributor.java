@@ -39,113 +39,115 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
 
 @ExtensionImpl(id = "dtd")
 public class DtdCompletionContributor extends CompletionContributor {
-  private static final String[] KEYWORDS = new String[]{
-      "#PCDATA",
-      "#IMPLIED",
-      "#REQUIRED",
-      "#FIXED",
-      "<!ATTLIST",
-      "<!ELEMENT",
-      "<!NOTATION",
-      "INCLUDE",
-      "IGNORE",
-      "CDATA",
-      "ID",
-      "IDREF",
-      "EMPTY",
-      "ANY",
-      "IDREFS",
-      "ENTITIES",
-      "ENTITY",
-      "<!ENTITY",
-      "NMTOKEN",
-      "NMTOKENS",
-      "SYSTEM",
-      "PUBLIC"
-  };
-
-  private static final InsertHandler<LookupElement> INSERT_HANDLER = new InsertHandler<LookupElement>() {
-    @Override
-    public void handleInsert(InsertionContext context, LookupElement item) {
-      if (item.getObject().toString().startsWith("<!")) {
-        context.commitDocument();
-
-        int caretOffset = context.getEditor().getCaretModel().getOffset();
-        PsiElement tag = PsiTreeUtil.getParentOfType(context.getFile().findElementAt(caretOffset), PsiNamedElement.class);
-
-        if (tag == null) {
-          context.getEditor().getDocument().insertString(caretOffset, " >");
-          context.getEditor().getCaretModel().moveToOffset(caretOffset + 1);
-        }
-      }
-    }
-  };
-
-  public DtdCompletionContributor() {
-    extend(CompletionType.BASIC, psiElement(), new CompletionProvider() {
-      @Override
-      public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result) {
-        PsiElement position = parameters.getPosition();
-        PsiElement prev = PsiTreeUtil.prevVisibleLeaf(position);
-        if (prev != null && hasDtdKeywordCompletion(prev)) {
-          addKeywordCompletions(result.withPrefixMatcher(keywordPrefix(position, result.getPrefixMatcher().getPrefix())));
-        }
-        if (prev != null && prev.textMatches("%")) {
-          addEntityCompletions(result, position);
-        }
-      }
-    });
-  }
-
-  @Nonnull
-  private static String keywordPrefix(@Nonnull PsiElement position, @Nonnull String prefix) {
-    final PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
-    final PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
-
-    if (prevLeaf != null) {
-      final String prevLeafText = prevLeaf.getText();
-
-      if ("#".equals(prevLeafText)) {
-        prefix = "#" + prefix;
-      } else if ("!".equals(prevLeafText) && prevPrevLeaf != null && "<".equals(prevPrevLeaf.getText())) {
-        prefix = "<!" + prefix;
-      }
-    }
-
-    return prefix;
-
-  }
-
-  private static void addKeywordCompletions(@Nonnull CompletionResultSet result) {
-    for (String keyword : KEYWORDS) {
-      result.addElement(LookupElementBuilder.create(keyword).withInsertHandler(INSERT_HANDLER));
-    }
-  }
-
-  private static void addEntityCompletions(@Nonnull final CompletionResultSet result, PsiElement position) {
-    final PsiElementProcessor processor = new PsiElementProcessor() {
-      @Override
-      public boolean execute(@Nonnull final PsiElement element) {
-        if (element instanceof XmlEntityDecl) {
-          final XmlEntityDecl xmlEntityDecl = (XmlEntityDecl) element;
-          String name = xmlEntityDecl.getName();
-          if (name != null && xmlEntityDecl.isInternalReference()) {
-            result.addElement(LookupElementBuilder.create(name).withInsertHandler(XmlCompletionContributor.ENTITY_INSERT_HANDLER));
-          }
-        }
-        return true;
-      }
+    private static final String[] KEYWORDS = new String[]{
+        "#PCDATA",
+        "#IMPLIED",
+        "#REQUIRED",
+        "#FIXED",
+        "<!ATTLIST",
+        "<!ELEMENT",
+        "<!NOTATION",
+        "INCLUDE",
+        "IGNORE",
+        "CDATA",
+        "ID",
+        "IDREF",
+        "EMPTY",
+        "ANY",
+        "IDREFS",
+        "ENTITIES",
+        "ENTITY",
+        "<!ENTITY",
+        "NMTOKEN",
+        "NMTOKENS",
+        "SYSTEM",
+        "PUBLIC"
     };
-    XmlUtil.processXmlElements((XmlFile) position.getContainingFile().getOriginalFile(), processor, true);
-  }
 
-  private static boolean hasDtdKeywordCompletion(@Nonnull PsiElement prev) {
-    return prev.textMatches("#") || prev.textMatches("!") || prev.textMatches("(") || prev.textMatches(",") || prev.textMatches("|") || prev.textMatches("[") || prev.getNode().getElementType() == XmlTokenType.XML_NAME;
-  }
+    private static final InsertHandler<LookupElement> INSERT_HANDLER = new InsertHandler<LookupElement>() {
+        @Override
+        public void handleInsert(InsertionContext context, LookupElement item) {
+            if (item.getObject().toString().startsWith("<!")) {
+                context.commitDocument();
 
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return DTDLanguage.INSTANCE;
-  }
+                int caretOffset = context.getEditor().getCaretModel().getOffset();
+                PsiElement tag = PsiTreeUtil.getParentOfType(context.getFile().findElementAt(caretOffset), PsiNamedElement.class);
+
+                if (tag == null) {
+                    context.getEditor().getDocument().insertString(caretOffset, " >");
+                    context.getEditor().getCaretModel().moveToOffset(caretOffset + 1);
+                }
+            }
+        }
+    };
+
+    public DtdCompletionContributor() {
+        extend(
+            CompletionType.BASIC,
+            psiElement(),
+            (parameters, context, result) -> {
+                PsiElement position = parameters.getPosition();
+                PsiElement prev = PsiTreeUtil.prevVisibleLeaf(position);
+                if (prev != null && hasDtdKeywordCompletion(prev)) {
+                    addKeywordCompletions(result.withPrefixMatcher(keywordPrefix(position, result.getPrefixMatcher().getPrefix())));
+                }
+                if (prev != null && prev.textMatches("%")) {
+                    addEntityCompletions(result, position);
+                }
+            }
+        );
+    }
+
+    @Nonnull
+    private static String keywordPrefix(@Nonnull PsiElement position, @Nonnull String prefix) {
+        final PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
+        final PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
+
+        if (prevLeaf != null) {
+            final String prevLeafText = prevLeaf.getText();
+
+            if ("#".equals(prevLeafText)) {
+                prefix = "#" + prefix;
+            }
+            else if ("!".equals(prevLeafText) && prevPrevLeaf != null && "<".equals(prevPrevLeaf.getText())) {
+                prefix = "<!" + prefix;
+            }
+        }
+
+        return prefix;
+
+    }
+
+    private static void addKeywordCompletions(@Nonnull CompletionResultSet result) {
+        for (String keyword : KEYWORDS) {
+            result.addElement(LookupElementBuilder.create(keyword).withInsertHandler(INSERT_HANDLER));
+        }
+    }
+
+    private static void addEntityCompletions(@Nonnull final CompletionResultSet result, PsiElement position) {
+        final PsiElementProcessor processor = element -> {
+            if (element instanceof XmlEntityDecl xmlEntityDecl) {
+                String name = xmlEntityDecl.getName();
+                if (name != null && xmlEntityDecl.isInternalReference()) {
+                    result.addElement(
+                        LookupElementBuilder.create(name).withInsertHandler(XmlCompletionContributor.ENTITY_INSERT_HANDLER)
+                    );
+                }
+            }
+            return true;
+        };
+        XmlUtil.processXmlElements((XmlFile)position.getContainingFile().getOriginalFile(), processor, true);
+    }
+
+    private static boolean hasDtdKeywordCompletion(@Nonnull PsiElement prev) {
+        return prev.textMatches("#") || prev.textMatches("!") || prev.textMatches("(")
+            || prev.textMatches(",") || prev.textMatches("|") || prev.textMatches("[")
+            || prev.getNode().getElementType() == XmlTokenType.XML_NAME;
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return DTDLanguage.INSTANCE;
+    }
 }

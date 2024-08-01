@@ -31,29 +31,29 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
-
-  @Override
-  public String getCodeSample(@Nonnull SettingsType settingsType) {
-    if (settingsType == SettingsType.INDENT_SETTINGS) {
-      return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
     }
-    return "";
-  }
 
-  @Override
-  public CommonCodeStyleSettings getDefaultCommonSettings() {
-    CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(XMLLanguage.INSTANCE);
-    defaultSettings.initIndentOptions();
-    return defaultSettings;
-  }
+    @Override
+    public String getCodeSample(@Nonnull SettingsType settingsType) {
+        if (settingsType == SettingsType.INDENT_SETTINGS) {
+            return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
+        }
+        return "";
+    }
 
-  @Override
-  public IndentOptionsEditor getIndentOptionsEditor() {
-    return new SmartIndentOptionsEditor();
-  }
+    @Override
+    public CommonCodeStyleSettings getDefaultCommonSettings() {
+        CommonCodeStyleSettings defaultSettings = new CommonCodeStyleSettings(XMLLanguage.INSTANCE);
+        defaultSettings.initIndentOptions();
+        return defaultSettings;
+    }
+
+    @Override
+    public IndentOptionsEditor getIndentOptionsEditor() {
+        return new SmartIndentOptionsEditor();
+    }
 }

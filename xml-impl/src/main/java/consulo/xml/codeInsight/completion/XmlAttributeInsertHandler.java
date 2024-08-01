@@ -44,137 +44,112 @@ import java.util.Collections;
 /**
  * @author peter
  */
-public class XmlAttributeInsertHandler implements InsertHandler<LookupElement>
-{
-	private static final Logger LOG = Logger.getInstance(XmlAttributeInsertHandler.class);
+public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
+    private static final Logger LOG = Logger.getInstance(XmlAttributeInsertHandler.class);
 
-	public static final XmlAttributeInsertHandler INSTANCE = new XmlAttributeInsertHandler();
+    public static final XmlAttributeInsertHandler INSTANCE = new XmlAttributeInsertHandler();
 
-	private final String myNamespaceToInsert;
+    private final String myNamespaceToInsert;
 
-	public XmlAttributeInsertHandler()
-	{
-		this(null);
-	}
+    public XmlAttributeInsertHandler() {
+        this(null);
+    }
 
-	public XmlAttributeInsertHandler(@Nullable String namespaceToInsert)
-	{
-		myNamespaceToInsert = namespaceToInsert;
-	}
+    public XmlAttributeInsertHandler(@Nullable String namespaceToInsert) {
+        myNamespaceToInsert = namespaceToInsert;
+    }
 
-	@Override
-	public void handleInsert(final InsertionContext context, final LookupElement item)
-	{
-		final Editor editor = context.getEditor();
+    @Override
+    public void handleInsert(final InsertionContext context, final LookupElement item) {
+        final Editor editor = context.getEditor();
 
-		final Document document = editor.getDocument();
-		final int caretOffset = editor.getCaretModel().getOffset();
-		final PsiFile file = context.getFile();
+        final Document document = editor.getDocument();
+        final int caretOffset = editor.getCaretModel().getOffset();
+        final PsiFile file = context.getFile();
 
-		final CharSequence chars = document.getCharsSequence();
-		final boolean insertQuotes = XmlEditorOptions.getInstance().isInsertQuotesForAttributeValue();
-		final boolean hasQuotes = CharArrayUtil.regionMatches(chars, caretOffset, "=\"");
-		if(!hasQuotes && !CharArrayUtil.regionMatches(chars, caretOffset, "='"))
-		{
-			PsiElement fileContext = file.getContext();
-			String toInsert = "=\"\"";
+        final CharSequence chars = document.getCharsSequence();
+        final boolean insertQuotes = XmlEditorOptions.getInstance().isInsertQuotesForAttributeValue();
+        final boolean hasQuotes = CharArrayUtil.regionMatches(chars, caretOffset, "=\"");
+        if (!hasQuotes && !CharArrayUtil.regionMatches(chars, caretOffset, "='")) {
+            PsiElement fileContext = file.getContext();
+            String toInsert = "=\"\"";
 
-			if(fileContext != null)
-			{
-				if(fileContext.getText().startsWith("\""))
-				{
-					toInsert = "=''";
-				}
-			}
+            if (fileContext != null && fileContext.getText().startsWith("\"")) {
+                toInsert = "=''";
+            }
 
-			if(!insertQuotes)
-			{
-				toInsert = "=";
-			}
+            if (!insertQuotes) {
+                toInsert = "=";
+            }
 
-			if(caretOffset >= document.getTextLength() || "/> \n\t\r".indexOf(document.getCharsSequence().charAt(caretOffset)) < 0)
-			{
-				document.insertString(caretOffset, toInsert + " ");
-			}
-			else
-			{
-				document.insertString(caretOffset, toInsert);
-			}
+            if (caretOffset >= document.getTextLength() || "/> \n\t\r".indexOf(document.getCharsSequence().charAt(caretOffset)) < 0) {
+                document.insertString(caretOffset, toInsert + " ");
+            }
+            else {
+                document.insertString(caretOffset, toInsert);
+            }
 
-			if('=' == context.getCompletionChar())
-			{
-				context.setAddCompletionChar(false); // IDEA-19449
-			}
-		}
+            if ('=' == context.getCompletionChar()) {
+                context.setAddCompletionChar(false); // IDEA-19449
+            }
+        }
 
-		editor.getCaretModel().moveToOffset(caretOffset + (insertQuotes || hasQuotes ? 2 : 1));
-		editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
-		editor.getSelectionModel().removeSelection();
-		AutoPopupController.getInstance(editor.getProject()).scheduleAutoPopup(editor);
+        editor.getCaretModel().moveToOffset(caretOffset + (insertQuotes || hasQuotes ? 2 : 1));
+        editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
+        editor.getSelectionModel().removeSelection();
+        AutoPopupController.getInstance(editor.getProject()).scheduleAutoPopup(editor);
 
-		if(myNamespaceToInsert != null && file instanceof XmlFile)
-		{
-			final PsiElement element = file.findElementAt(context.getStartOffset());
-			final XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
+        if (myNamespaceToInsert != null && file instanceof XmlFile) {
+            final PsiElement element = file.findElementAt(context.getStartOffset());
+            final XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
 
-			if(tag != null)
-			{
-				String prefix = ExtendedTagInsertHandler.suggestPrefix((XmlFile) file, myNamespaceToInsert);
+            if (tag != null) {
+                String prefix = ExtendedTagInsertHandler.suggestPrefix((XmlFile)file, myNamespaceToInsert);
 
-				if(prefix != null)
-				{
-					prefix = makePrefixUnique(prefix, tag);
-					final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
+                if (prefix != null) {
+                    prefix = makePrefixUnique(prefix, tag);
+                    final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
 
-					if(helper != null)
-					{
-						final Project project = context.getProject();
-						PsiDocumentManager.getInstance(project).commitDocument(document);
-						qualifyWithPrefix(prefix, element);
-						helper.insertNamespaceDeclaration((XmlFile) file, editor, Collections.singleton(myNamespaceToInsert), prefix, null);
-					}
-				}
-			}
-		}
-	}
+                    if (helper != null) {
+                        final Project project = context.getProject();
+                        PsiDocumentManager.getInstance(project).commitDocument(document);
+                        qualifyWithPrefix(prefix, element);
+                        helper.insertNamespaceDeclaration((XmlFile)file, editor, Collections.singleton(myNamespaceToInsert), prefix, null);
+                    }
+                }
+            }
+        }
+    }
 
-	private static void qualifyWithPrefix(@Nonnull String namespacePrefix, @Nonnull PsiElement context)
-	{
-		final PsiElement parent = context.getParent();
+    private static void qualifyWithPrefix(@Nonnull String namespacePrefix, @Nonnull PsiElement context) {
+        final PsiElement parent = context.getParent();
 
-		if(parent instanceof XmlAttribute)
-		{
-			final XmlAttribute attribute = (XmlAttribute) parent;
-			final String prefix = attribute.getNamespacePrefix();
+        if (parent instanceof XmlAttribute) {
+            final XmlAttribute attribute = (XmlAttribute)parent;
+            final String prefix = attribute.getNamespacePrefix();
 
-			if(!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix))
-			{
-				final String name = namespacePrefix + ":" + attribute.getLocalName();
-				try
-				{
-					attribute.setName(name);
-				}
-				catch(IncorrectOperationException e)
-				{
-					LOG.error(e);
-				}
-			}
-		}
-	}
+            if (!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix)) {
+                final String name = namespacePrefix + ":" + attribute.getLocalName();
+                try {
+                    attribute.setName(name);
+                }
+                catch (IncorrectOperationException e) {
+                    LOG.error(e);
+                }
+            }
+        }
+    }
 
-	@Nonnull
-	private static String makePrefixUnique(@Nonnull String basePrefix, @Nonnull XmlTag context)
-	{
-		if(context.getNamespaceByPrefix(basePrefix).isEmpty())
-		{
-			return basePrefix;
-		}
-		int i = 1;
+    @Nonnull
+    private static String makePrefixUnique(@Nonnull String basePrefix, @Nonnull XmlTag context) {
+        if (context.getNamespaceByPrefix(basePrefix).isEmpty()) {
+            return basePrefix;
+        }
+        int i = 1;
 
-		while(!context.getNamespaceByPrefix(basePrefix + i).isEmpty())
-		{
-			i++;
-		}
-		return basePrefix + i;
-	}
+        while (!context.getNamespaceByPrefix(basePrefix + i).isEmpty()) {
+            i++;
+        }
+        return basePrefix + i;
+    }
 }

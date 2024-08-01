@@ -11,12 +11,10 @@ import javax.annotation.Nonnull;
  * @since 31-Jul-22
  */
 @ExtensionImpl(id = "xhtmlText")
-public class XHtmlTextCompletionConfidence extends HtmlTextCompletionConfidence
-{
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XHTMLLanguage.INSTANCE;
-	}
+public class XHtmlTextCompletionConfidence extends HtmlTextCompletionConfidence {
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XHTMLLanguage.INSTANCE;
+    }
 }
