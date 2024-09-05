@@ -46,66 +46,67 @@ import javax.annotation.Nullable;
  * Date: 22.05.2003
  * Time: 13:46:54
  */
-public class GenerateDTDAction extends BaseCodeInsightAction
-{
-  private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
-  @Nonnull
-  protected CodeInsightActionHandler getHandler(){
-    return new CodeInsightActionHandler(){
-      public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
-        final XmlDocument document = findSuitableXmlDocument(file);
-        if (document != null) {
-          final @NonNls StringBuffer buffer = new StringBuffer();
-          buffer.append("<!DOCTYPE " + document.getRootTag().getName() + " [\n");
-          buffer.append(XmlUtil.generateDocumentDTD(document, true));
-          buffer.append("]>\n");
-          XmlFile tempFile;
-            try{
-              final XmlProlog prolog = document.getProlog();
-              final PsiElement childOfType = PsiTreeUtil.getChildOfType(prolog, XmlProcessingInstruction.class);
-              if (childOfType != null) {
-                final String text = childOfType.getText();
-                buffer.insert(0,text);
-                final PsiElement nextSibling = childOfType.getNextSibling();
-                if (nextSibling instanceof PsiWhiteSpace) {
-                  buffer.insert(text.length(),nextSibling.getText());
+public class GenerateDTDAction extends BaseCodeInsightAction {
+    private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
+
+    @Nonnull
+    protected CodeInsightActionHandler getHandler() {
+        return new CodeInsightActionHandler() {
+            public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+                final XmlDocument document = findSuitableXmlDocument(file);
+                if (document != null) {
+                    final @NonNls StringBuffer buffer = new StringBuffer();
+                    buffer.append("<!DOCTYPE " + document.getRootTag().getName() + " [\n");
+                    buffer.append(XmlUtil.generateDocumentDTD(document, true));
+                    buffer.append("]>\n");
+                    XmlFile tempFile;
+                    try {
+                        final XmlProlog prolog = document.getProlog();
+                        final PsiElement childOfType = PsiTreeUtil.getChildOfType(prolog, XmlProcessingInstruction.class);
+                        if (childOfType != null) {
+                            final String text = childOfType.getText();
+                            buffer.insert(0, text);
+                            final PsiElement nextSibling = childOfType.getNextSibling();
+                            if (nextSibling instanceof PsiWhiteSpace) {
+                                buffer.insert(text.length(), nextSibling.getText());
+                            }
+                        }
+                        tempFile =
+                            (XmlFile)PsiFileFactory.getInstance(file.getProject()).createFileFromText("dummy.xml", buffer.toString());
+                        prolog.replace(tempFile.getDocument().getProlog());
+                    }
+                    catch (IncorrectOperationException e) {
+                        LOG.error(e);
+                    }
                 }
-              }
-              tempFile = (XmlFile)PsiFileFactory.getInstance(file.getProject()).createFileFromText("dummy.xml", buffer.toString());
-              prolog.replace(tempFile.getDocument().getProlog());
             }
-          catch (IncorrectOperationException e) {
-            LOG.error(e);
-          }
+
+            public boolean startInWriteAction() {
+                return true;
+            }
+        };
+    }
+
+    @Nullable
+    private static XmlDocument findSuitableXmlDocument(@Nullable PsiFile psiFile) {
+        if (psiFile instanceof XmlFile) {
+            final XmlDocument document = ((XmlFile)psiFile).getDocument();
+            if (document != null && document.getRootTag() != null) {
+                return document;
+            }
         }
-      }
-
-      public boolean startInWriteAction(){
-        return true;
-      }
-    };
-  }
-
-  @Nullable
-  private static XmlDocument findSuitableXmlDocument(@Nullable PsiFile psiFile) {
-    if (psiFile instanceof XmlFile) {
-      final XmlDocument document = ((XmlFile)psiFile).getDocument();
-      if (document != null && document.getRootTag() != null) {
-        return document;
-      }
+        return null;
     }
-    return null;
-  }
 
-  public void update(AnActionEvent event) {
-    super.update(event);
-    if (ActionPlaces.isPopupPlace(event.getPlace())) {
-      Presentation presentation = event.getPresentation();
-      presentation.setVisible(presentation.isEnabled());
+    public void update(AnActionEvent event) {
+        super.update(event);
+        if (ActionPlaces.isPopupPlace(event.getPlace())) {
+            Presentation presentation = event.getPresentation();
+            presentation.setVisible(presentation.isEnabled());
+        }
     }
-  }
 
-  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file){
-    return file.getLanguage() == XMLLanguage.INSTANCE && findSuitableXmlDocument(file) != null;
-  }
+    protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+        return file.getLanguage() == XMLLanguage.INSTANCE && findSuitableXmlDocument(file) != null;
+    }
 }

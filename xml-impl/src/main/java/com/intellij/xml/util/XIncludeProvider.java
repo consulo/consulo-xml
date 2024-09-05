@@ -35,51 +35,53 @@ import java.util.function.Consumer;
  */
 @ExtensionImpl
 public class XIncludeProvider extends FileIncludeProvider {
-  @Nonnull
-  @Override
-  public String getId() {
-    return "XInclude";
-  }
-
-  @Override
-  public boolean acceptFile(VirtualFile file) {
-    return file.getFileType() == XmlFileType.INSTANCE;
-  }
-
-  @Override
-  public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
-    fileTypeSink.accept(XmlFileType.INSTANCE);
-  }
-
-  @Nonnull
-  @Override
-  public FileIncludeInfo[] getIncludeInfos(FileContent content) {
-    CharSequence contentAsText = content.getContentAsText();
-    if (CharArrayUtil.indexOf(contentAsText, XmlUtil.XINCLUDE_URI, 0) == -1) {
-      return FileIncludeInfo.EMPTY;
+    @Nonnull
+    @Override
+    public String getId() {
+        return "XInclude";
     }
-    final ArrayList<FileIncludeInfo> infos = new ArrayList<FileIncludeInfo>();
-    NanoXmlUtil.parse(Readers.readerFromCharSequence(contentAsText), new NanoXmlUtil.IXMLBuilderAdapter() {
 
-      boolean isXInclude;
+    @Override
+    public boolean acceptFile(VirtualFile file) {
+        return file.getFileType() == XmlFileType.INSTANCE;
+    }
 
-      @Override
-      public void startElement(String name, String nsPrefix, String nsURI, String systemID, int lineNr) throws Exception {
-        isXInclude = XmlUtil.XINCLUDE_URI.equals(nsURI) && "include".equals(name);
-      }
+    @Override
+    public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
+        fileTypeSink.accept(XmlFileType.INSTANCE);
+    }
 
-      @Override
-      public void addAttribute(String key, String nsPrefix, String nsURI, String value, String type) throws Exception {
-        if (isXInclude && "href".equals(key)) {
-          infos.add(new FileIncludeInfo(value));
+    @Nonnull
+    @Override
+    public FileIncludeInfo[] getIncludeInfos(FileContent content) {
+        CharSequence contentAsText = content.getContentAsText();
+        if (CharArrayUtil.indexOf(contentAsText, XmlUtil.XINCLUDE_URI, 0) == -1) {
+            return FileIncludeInfo.EMPTY;
         }
-      }
+        final ArrayList<FileIncludeInfo> infos = new ArrayList<>();
+        NanoXmlUtil.parse(
+            Readers.readerFromCharSequence(contentAsText),
+            new NanoXmlUtil.IXMLBuilderAdapter() {
+                boolean isXInclude;
 
-      @Override
-      public void endElement(String name, String nsPrefix, String nsURI) throws Exception {
-        isXInclude = false;
-      }
-    });
-    return infos.toArray(new FileIncludeInfo[infos.size()]);
-  }
+                @Override
+                public void startElement(String name, String nsPrefix, String nsURI, String systemID, int lineNr) throws Exception {
+                    isXInclude = XmlUtil.XINCLUDE_URI.equals(nsURI) && "include".equals(name);
+                }
+
+                @Override
+                public void addAttribute(String key, String nsPrefix, String nsURI, String value, String type) throws Exception {
+                    if (isXInclude && "href".equals(key)) {
+                        infos.add(new FileIncludeInfo(value));
+                    }
+                }
+
+                @Override
+                public void endElement(String name, String nsPrefix, String nsURI) throws Exception {
+                    isXInclude = false;
+                }
+            }
+        );
+        return infos.toArray(new FileIncludeInfo[infos.size()]);
+    }
 }

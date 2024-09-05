@@ -39,42 +39,91 @@ import consulo.xml.psi.xml.*;
  */
 @ExtensionImpl
 public class XmlMetaDataContributor implements MetaDataContributor {
-  @Override
-  public void contributeMetaData(final MetaDataRegistrar registrar) {
-    {
-      registrar.registerMetaData(new AndFilter(new NamespaceFilter(XmlUtil.SCHEMA_URIS), new ClassFilter(XmlDocument.class)), SchemaNSDescriptor::new);
+    @Override
+    public void contributeMetaData(final MetaDataRegistrar registrar) {
+        {
+            registrar.registerMetaData(
+                new AndFilter(new NamespaceFilter(XmlUtil.SCHEMA_URIS), new ClassFilter(XmlDocument.class)),
+                SchemaNSDescriptor::new
+            );
 
-      registrar.registerMetaData(new AndFilter(XmlTagFilter.INSTANCE, new NamespaceFilter(XmlUtil.SCHEMA_URIS), new XmlTextFilter("schema")), SchemaNSDescriptor::new);
-    }
-    {
-      registrar.registerMetaData(new OrFilter(new AndFilter(new ContentFilter(new OrFilter(new ClassFilter(XmlElementDecl.class), new ClassFilter(XmlEntityDecl.class), new ClassFilter
-          (XmlConditionalSection.class), new ClassFilter(XmlEntityRef.class))), new ClassFilter(XmlDocument.class)), new ClassFilter(XmlMarkupDecl.class)), XmlNSDescriptorImpl::new);
-    }
+            registrar.registerMetaData(
+                new AndFilter(
+                    XmlTagFilter.INSTANCE,
+                    new NamespaceFilter(XmlUtil.SCHEMA_URIS),
+                    new XmlTextFilter("schema")
+                ),
+                SchemaNSDescriptor::new
+            );
+        }
+        {
+            registrar.registerMetaData(
+                new OrFilter(
+                    new AndFilter(
+                        new ContentFilter(new OrFilter(
+                            new ClassFilter(XmlElementDecl.class),
+                            new ClassFilter(XmlEntityDecl.class),
+                            new ClassFilter(XmlConditionalSection.class),
+                            new ClassFilter(XmlEntityRef.class)
+                        )),
+                        new ClassFilter(XmlDocument.class)
+                    ),
+                    new ClassFilter(XmlMarkupDecl.class)
+                ),
+                XmlNSDescriptorImpl::new
+            );
+        }
 
-    {
-      registrar.registerMetaData(new AndFilter(XmlTagFilter.INSTANCE, new NamespaceFilter(XmlUtil.SCHEMA_URIS), new XmlTextFilter("element")), XmlElementDescriptorImpl::new);
-    }
+        {
+            registrar.registerMetaData(
+                new AndFilter(
+                    XmlTagFilter.INSTANCE,
+                    new NamespaceFilter(XmlUtil.SCHEMA_URIS),
+                    new XmlTextFilter("element")
+                ),
+                XmlElementDescriptorImpl::new
+            );
+        }
 
-    {
-      registrar.registerMetaData(new AndFilter(XmlTagFilter.INSTANCE, new NamespaceFilter(XmlUtil.SCHEMA_URIS), new XmlTextFilter("attribute")), XmlAttributeDescriptorImpl::new);
-    }
+        {
+            registrar.registerMetaData(
+                new AndFilter(
+                    XmlTagFilter.INSTANCE,
+                    new NamespaceFilter(XmlUtil.SCHEMA_URIS),
+                    new XmlTextFilter("attribute")
+                ),
+                XmlAttributeDescriptorImpl::new
+            );
+        }
 
-    {
-      registrar.registerMetaData(new ClassFilter(XmlElementDecl.class), com.intellij.xml.impl.dtd.XmlElementDescriptorImpl::new);
-    }
+        {
+            registrar.registerMetaData(new ClassFilter(XmlElementDecl.class), com.intellij.xml.impl.dtd.XmlElementDescriptorImpl::new);
+        }
 
-    {
-      registrar.registerMetaData(new ClassFilter(XmlAttributeDecl.class), com.intellij.xml.impl.dtd.XmlAttributeDescriptorImpl::new);
-    }
+        {
+            registrar.registerMetaData(new ClassFilter(XmlAttributeDecl.class), com.intellij.xml.impl.dtd.XmlAttributeDescriptorImpl::new);
+        }
 
-    {
-      registrar.registerMetaData(new AndFilter(new ClassFilter(XmlDocument.class), new TargetNamespaceFilter(XmlUtil.XHTML_URI), new NamespaceFilter(XmlUtil.SCHEMA_URIS)),
-          RelaxedHtmlFromSchemaNSDescriptor::new);
-    }
+        {
+            registrar.registerMetaData(
+                new AndFilter(
+                    new ClassFilter(XmlDocument.class),
+                    new TargetNamespaceFilter(XmlUtil.XHTML_URI),
+                    new NamespaceFilter(XmlUtil.SCHEMA_URIS)
+                ),
+                RelaxedHtmlFromSchemaNSDescriptor::new
+            );
+        }
 
-    {
-      registrar.registerMetaData(new AndFilter(XmlTagFilter.INSTANCE, new NamespaceFilter(XmlUtil.SCHEMA_URIS), new XmlTextFilter("complexType", "simpleType", "group", "attributeGroup")),
-          NamedObjectDescriptor::new);
+        {
+            registrar.registerMetaData(
+                new AndFilter(
+                    XmlTagFilter.INSTANCE,
+                    new NamespaceFilter(XmlUtil.SCHEMA_URIS),
+                    new XmlTextFilter("complexType", "simpleType", "group", "attributeGroup")
+                ),
+                NamedObjectDescriptor::new
+            );
+        }
     }
-  }
 }

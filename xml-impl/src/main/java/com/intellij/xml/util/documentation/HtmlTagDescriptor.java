@@ -19,31 +19,31 @@ package com.intellij.xml.util.documentation;
  * @author maxim
  */
 class HtmlTagDescriptor extends EntityDescriptor {
-  boolean isHasStartTag() {
-    return hasStartTag;
-  }
+    boolean isHasStartTag() {
+        return hasStartTag;
+    }
 
-  void setHasStartTag(boolean hasStartTag) {
-    this.hasStartTag = hasStartTag;
-  }
+    void setHasStartTag(boolean hasStartTag) {
+        this.hasStartTag = hasStartTag;
+    }
 
-  boolean isHasEndTag() {
-    return hasEndTag;
-  }
+    boolean isHasEndTag() {
+        return hasEndTag;
+    }
 
-  void setHasEndTag(boolean hasEndTag) {
-    this.hasEndTag = hasEndTag;
-  }
+    void setHasEndTag(boolean hasEndTag) {
+        this.hasEndTag = hasEndTag;
+    }
 
-  boolean isEmpty() {
-    return empty;
-  }
+    boolean isEmpty() {
+        return empty;
+    }
 
-  void setEmpty(boolean empty) {
-    this.empty = empty;
-  }
+    void setEmpty(boolean empty) {
+        this.empty = empty;
+    }
 
-  private boolean hasStartTag;
-  private boolean hasEndTag;
-  private boolean empty;
+    private boolean hasStartTag;
+    private boolean hasEndTag;
+    private boolean empty;
 }

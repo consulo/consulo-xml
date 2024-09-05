@@ -39,104 +39,86 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
-{
-	@Override
-	public boolean runForWholeFile()
-	{
-		return true;
-	}
+public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
+    @Override
+    public boolean runForWholeFile() {
+        return true;
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return XmlBundle.message("xml.inspections.group.name");
-	}
+    @Nonnull
+    @Override
+    public String getGroupDisplayName() {
+        return XmlBundle.message("xml.inspections.group.name");
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return XmlBundle.message("xml.inspections.duplicate.id");
-	}
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return XmlBundle.message("xml.inspections.duplicate.id");
+    }
 
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.ERROR;
+    }
 
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+    @Override
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nonnull
-	@Override
-	public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly)
-	{
-		return new XmlElementVisitor()
-		{
-			@Override
-			public void visitXmlAttributeValue(final XmlAttributeValue value)
-			{
-				if(value.getTextRange().isEmpty())
-				{
-					return;
-				}
-				final PsiFile file = value.getContainingFile();
-				if(!(file instanceof XmlFile))
-				{
-					return;
-				}
-				PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
-				if(baseFile != file && !(baseFile instanceof XmlFile))
-				{
-					return;
-				}
-				final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
-				if(refHolder == null)
-				{
-					return;
-				}
+    @Nonnull
+    @Override
+    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+        return new XmlElementVisitor() {
+            @Override
+            public void visitXmlAttributeValue(final XmlAttributeValue value) {
+                if (value.getTextRange().isEmpty()) {
+                    return;
+                }
+                final PsiFile file = value.getContainingFile();
+                if (!(file instanceof XmlFile)) {
+                    return;
+                }
+                PsiFile baseFile = PsiUtilCore.getTemplateLanguageFile(file);
+                if (baseFile != file && !(baseFile instanceof XmlFile)) {
+                    return;
+                }
+                final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
+                if (refHolder == null) {
+                    return;
+                }
 
-				final PsiElement parent = value.getParent();
-				if(!(parent instanceof XmlAttribute))
-				{
-					return;
-				}
+                final PsiElement parent = value.getParent();
+                if (!(parent instanceof XmlAttribute)) {
+                    return;
+                }
 
-				final XmlTag tag = (XmlTag) parent.getParent();
-				if(tag == null)
-				{
-					return;
-				}
+                final XmlTag tag = (XmlTag)parent.getParent();
+                if (tag == null) {
+                    return;
+                }
 
-				checkValue(value, (XmlFile) file, refHolder, tag, holder);
-			}
-		};
-	}
+                checkValue(value, (XmlFile)file, refHolder, tag, holder);
+            }
+        };
+    }
 
-	protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder)
-	{
-		if(refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value))
-		{
-			holder.registerProblem(
-				value,
-				XmlErrorLocalize.duplicateIdReference().get(),
-				ProblemHighlightType.GENERIC_ERROR,
-				ElementManipulators.getValueTextRange(value)
-			);
-		}
-	}
+    protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
+        if (refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value)) {
+            holder.registerProblem(
+                value,
+                XmlErrorLocalize.duplicateIdReference().get(),
+                ProblemHighlightType.GENERIC_ERROR,
+                ElementManipulators.getValueTextRange(value)
+            );
+        }
+    }
 }

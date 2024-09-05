@@ -12,12 +12,10 @@ import javax.annotation.Nonnull;
  * @since 31-Jul-22
  */
 @ExtensionImpl
-public class XHtmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor
-{
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XHTMLLanguage.INSTANCE;
-	}
+public class XHtmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor {
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XHTMLLanguage.INSTANCE;
+    }
 }

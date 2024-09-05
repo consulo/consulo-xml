@@ -36,132 +36,105 @@ import com.intellij.xml.XmlNSDescriptor;
  * Time: 17:27:43
  * To change this template use Options | File Templates.
  */
-public class XmlNSDescriptorSequence implements XmlNSDescriptor
-{
-	final List<XmlNSDescriptor> sequence = new ArrayList<XmlNSDescriptor>();
+public class XmlNSDescriptorSequence implements XmlNSDescriptor {
+    final List<XmlNSDescriptor> sequence = new ArrayList<>();
 
-	public XmlNSDescriptorSequence()
-	{
-	}
+    public XmlNSDescriptorSequence() {
+    }
 
-	public XmlNSDescriptorSequence(XmlNSDescriptor[] descriptors)
-	{
-		for(final XmlNSDescriptor descriptor : descriptors)
-		{
-			add(descriptor);
-		}
-	}
+    public XmlNSDescriptorSequence(XmlNSDescriptor[] descriptors) {
+        for (final XmlNSDescriptor descriptor : descriptors) {
+            add(descriptor);
+        }
+    }
 
-	public void add(XmlNSDescriptor descriptor)
-	{
-		sequence.add(descriptor);
-	}
+    public void add(XmlNSDescriptor descriptor) {
+        sequence.add(descriptor);
+    }
 
-	@Override
-	public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag)
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			final XmlElementDescriptor elementDescriptor = descriptor.getElementDescriptor(tag);
-			if(elementDescriptor != null)
-			{
-				return elementDescriptor;
-			}
-		}
-		return null;
-	}
+    @Override
+    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+        for (XmlNSDescriptor descriptor : sequence) {
+            final XmlElementDescriptor elementDescriptor = descriptor.getElementDescriptor(tag);
+            if (elementDescriptor != null) {
+                return elementDescriptor;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	@Nonnull
-	public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document)
-	{
-		final List<XmlElementDescriptor> descriptors = new ArrayList<XmlElementDescriptor>();
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			ContainerUtil.addAll(descriptors, descriptor.getRootElementsDescriptors(document));
-		}
+    @Override
+    @Nonnull
+    public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
+        final List<XmlElementDescriptor> descriptors = new ArrayList<>();
+        for (XmlNSDescriptor descriptor : sequence) {
+            ContainerUtil.addAll(descriptors, descriptor.getRootElementsDescriptors(document));
+        }
 
-		return descriptors.toArray(new XmlElementDescriptor[descriptors.size()]);
-	}
+        return descriptors.toArray(new XmlElementDescriptor[descriptors.size()]);
+    }
 
-	@Override
-	public XmlFile getDescriptorFile()
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			final XmlFile file = descriptor.getDescriptorFile();
-			if(file != null)
-			{
-				return file;
-			}
-		}
-		return null;
-	}
+    @Override
+    public XmlFile getDescriptorFile() {
+        for (XmlNSDescriptor descriptor : sequence) {
+            final XmlFile file = descriptor.getDescriptorFile();
+            if (file != null) {
+                return file;
+            }
+        }
+        return null;
+    }
 
-	public List<XmlNSDescriptor> getSequence()
-	{
-		return sequence;
-	}
+    public List<XmlNSDescriptor> getSequence() {
+        return sequence;
+    }
 
-	@Override
-	public PsiElement getDeclaration()
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			final PsiElement declaration = descriptor.getDeclaration();
-			if(declaration != null)
-			{
-				return declaration;
-			}
-		}
-		return null;
-	}
+    @Override
+    public PsiElement getDeclaration() {
+        for (XmlNSDescriptor descriptor : sequence) {
+            final PsiElement declaration = descriptor.getDeclaration();
+            if (declaration != null) {
+                return declaration;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public String getName(PsiElement context)
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			final String name = descriptor.getName(context);
-			if(name != null)
-			{
-				return name;
-			}
-		}
-		return null;
-	}
+    @Override
+    public String getName(PsiElement context) {
+        for (XmlNSDescriptor descriptor : sequence) {
+            final String name = descriptor.getName(context);
+            if (name != null) {
+                return name;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public String getName()
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			final String name = descriptor.getName();
-			if(name != null)
-			{
-				return name;
-			}
-		}
-		return null;
-	}
+    @Override
+    public String getName() {
+        for (XmlNSDescriptor descriptor : sequence) {
+            final String name = descriptor.getName();
+            if (name != null) {
+                return name;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public void init(PsiElement element)
-	{
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			descriptor.init(element);
-		}
-	}
+    @Override
+    public void init(PsiElement element) {
+        for (XmlNSDescriptor descriptor : sequence) {
+            descriptor.init(element);
+        }
+    }
 
-	@Override
-	public Object[] getDependences()
-	{
-		final List<Object> ret = new ArrayList<Object>();
-		for(XmlNSDescriptor descriptor : sequence)
-		{
-			ContainerUtil.addAll(ret, descriptor.getDependences());
-		}
-		return ret.toArray();
-	}
+    @Override
+    public Object[] getDependences() {
+        final List<Object> ret = new ArrayList<>();
+        for (XmlNSDescriptor descriptor : sequence) {
+            ContainerUtil.addAll(ret, descriptor.getDependences());
+        }
+        return ret.toArray();
+    }
 }

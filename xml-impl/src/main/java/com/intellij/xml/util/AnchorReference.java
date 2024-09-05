@@ -15,6 +15,5 @@
  */
 package com.intellij.xml.util;
 
-public interface AnchorReference
-{
+public interface AnchorReference {
 }

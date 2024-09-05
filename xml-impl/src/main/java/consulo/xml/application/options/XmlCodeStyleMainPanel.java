@@ -24,22 +24,21 @@ import consulo.xml.lang.xml.XMLLanguage;
 /**
  * @author Rustam Vishnyakov
  */
-public class XmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel
-{
-  protected XmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
-    super(XMLLanguage.INSTANCE, currentSettings, settings);
-  }
-
-  @Override
-  protected void initTabs(CodeStyleSettings settings) {
-    addIndentOptionsTab(settings);
-    addTab(new CodeStyleXmlPanel(settings));
-    addTab(new XmlArrangementPanel(settings));
-
-    for (CodeStyleSettingsProvider provider : CodeStyleSettingsProvider.EXTENSION_POINT_NAME.getExtensionList()) {
-      if (provider.getLanguage() == XMLLanguage.INSTANCE && !provider.hasSettingsPage()) {
-        createTab(provider);
-      }
+public class XmlCodeStyleMainPanel extends TabbedLanguageCodeStylePanel {
+    protected XmlCodeStyleMainPanel(CodeStyleSettings currentSettings, CodeStyleSettings settings) {
+        super(XMLLanguage.INSTANCE, currentSettings, settings);
     }
-  }
+
+    @Override
+    protected void initTabs(CodeStyleSettings settings) {
+        addIndentOptionsTab(settings);
+        addTab(new CodeStyleXmlPanel(settings));
+        addTab(new XmlArrangementPanel(settings));
+
+        for (CodeStyleSettingsProvider provider : CodeStyleSettingsProvider.EXTENSION_POINT_NAME.getExtensionList()) {
+            if (provider.getLanguage() == XMLLanguage.INSTANCE && !provider.hasSettingsPage()) {
+                createTab(provider);
+            }
+        }
+    }
 }

@@ -38,104 +38,90 @@ import java.util.Set;
 /**
  * @author Dennis.Ushakov
  */
-public class HTMLControls
-{
-	private static final Logger LOG = Logger.getInstance(HTMLControls.class);
-	private static Control[] ourControls;
+public class HTMLControls {
+    private static final Logger LOG = Logger.getInstance(HTMLControls.class);
+    private static Control[] ourControls;
 
-	public static Control[] getControls()
-	{
-		if(ourControls == null)
-		{
-			ourControls = loadControls();
-		}
-		return ourControls;
-	}
+    public static Control[] getControls() {
+        if (ourControls == null) {
+            ourControls = loadControls();
+        }
+        return ourControls;
+    }
 
-	@SuppressWarnings("IOResourceOpenedButNotSafelyClosed")
-	private static Control[] loadControls()
-	{
-		Document document;
-		try
-		{
-			// use temporary bytes stream because otherwise inputStreamSkippingBOM will fail
-			// on ZipFileInputStream used in jar files
-			final InputStream stream = HTMLControls.class.getResourceAsStream("HtmlControls.xml");
-			final byte[] bytes = FileUtilRt.loadBytes(stream);
-			stream.close();
-			final UnsyncByteArrayInputStream bytesStream = new UnsyncByteArrayInputStream(bytes);
-			document = JDOMUtil.loadDocument(CharsetToolkit.inputStreamSkippingBOM(bytesStream));
-			bytesStream.close();
-		}
-		catch(Exception e)
-		{
-			LOG.error(e);
-			return new Control[0];
-		}
-		if(!document.getRootElement().getName().equals("htmlControls"))
-		{
-			LOG.error("HTMLControls storage is broken");
-			return new Control[0];
-		}
-		return XmlSerializer.deserialize(document, Control[].class);
-	}
+    @SuppressWarnings("IOResourceOpenedButNotSafelyClosed")
+    private static Control[] loadControls() {
+        Document document;
+        try {
+            // use temporary bytes stream because otherwise inputStreamSkippingBOM will fail
+            // on ZipFileInputStream used in jar files
+            final InputStream stream = HTMLControls.class.getResourceAsStream("HtmlControls.xml");
+            final byte[] bytes = FileUtilRt.loadBytes(stream);
+            stream.close();
+            final UnsyncByteArrayInputStream bytesStream = new UnsyncByteArrayInputStream(bytes);
+            document = JDOMUtil.loadDocument(CharsetToolkit.inputStreamSkippingBOM(bytesStream));
+            bytesStream.close();
+        }
+        catch (Exception e) {
+            LOG.error(e);
+            return new Control[0];
+        }
+        if (!document.getRootElement().getName().equals("htmlControls")) {
+            LOG.error("HTMLControls storage is broken");
+            return new Control[0];
+        }
+        return XmlSerializer.deserialize(document, Control[].class);
+    }
 
-	public enum TagState
-	{
-		REQUIRED, OPTIONAL, FORBIDDEN
-	}
+    public enum TagState {
+        REQUIRED,
+        OPTIONAL,
+        FORBIDDEN
+    }
 
-	@Tag("control")
-	public static class Control
-	{
-		@Attribute("name")
-		public String name;
-		@Attribute(value = "startTag", converter = TagStateConverter.class)
-		public TagState startTag;
-		@Attribute(value = "endTag", converter = TagStateConverter.class)
-		public TagState endTag;
-		@Attribute("emptyAllowed")
-		public boolean emptyAllowed;
-		@Attribute(value = "autoClosedBy", converter = AutoCloseConverter.class)
-		public Set<String> autoClosedBy = Collections.emptySet();
-	}
+    @Tag("control")
+    public static class Control {
+        @Attribute("name")
+        public String name;
+        @Attribute(value = "startTag", converter = TagStateConverter.class)
+        public TagState startTag;
+        @Attribute(value = "endTag", converter = TagStateConverter.class)
+        public TagState endTag;
+        @Attribute("emptyAllowed")
+        public boolean emptyAllowed;
+        @Attribute(value = "autoClosedBy", converter = AutoCloseConverter.class)
+        public Set<String> autoClosedBy = Collections.emptySet();
+    }
 
-	private static class TagStateConverter extends Converter<TagState>
-	{
-		@Nullable
-		@Override
-		public TagState fromString(@Nonnull String value)
-		{
-			return TagState.valueOf(value.toUpperCase(Locale.US));
-		}
+    private static class TagStateConverter extends Converter<TagState> {
+        @Nullable
+        @Override
+        public TagState fromString(@Nonnull String value) {
+            return TagState.valueOf(value.toUpperCase(Locale.US));
+        }
 
-		@Nonnull
-		@Override
-		public String toString(@Nonnull TagState state)
-		{
-			return state.name().toLowerCase(Locale.US);
-		}
-	}
+        @Nonnull
+        @Override
+        public String toString(@Nonnull TagState state) {
+            return state.name().toLowerCase(Locale.US);
+        }
+    }
 
-	private static class AutoCloseConverter extends Converter<Set<String>>
-	{
-		@Nullable
-		@Override
-		public Set<String> fromString(@Nonnull String value)
-		{
-			final Set<String> result = new HashSet<String>();
-			for(String closingTag : StringUtil.split(value, ","))
-			{
-				result.add(closingTag.trim().toLowerCase(Locale.US));
-			}
-			return result;
-		}
+    private static class AutoCloseConverter extends Converter<Set<String>> {
+        @Nullable
+        @Override
+        public Set<String> fromString(@Nonnull String value) {
+            final Set<String> result = new HashSet<String>();
+            for (String closingTag : StringUtil.split(value, ",")) {
+                result.add(closingTag.trim().toLowerCase(Locale.US));
+            }
+            return result;
+        }
 
-		@Nonnull
-		@Override
-		public String toString(@Nonnull Set<String> o)
-		{
-			return StringUtil.join(o, ", ");
-		}
-	}
+        @Nonnull
+        @Override
+        public String toString(@Nonnull Set<String> o) {
+            return StringUtil.join(o, ", ");
+        }
+    }
 }

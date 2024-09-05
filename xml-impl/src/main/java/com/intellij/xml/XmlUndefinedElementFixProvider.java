@@ -22,6 +22,7 @@ import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -30,27 +31,26 @@ import javax.annotation.Nullable;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlUndefinedElementFixProvider {
-  public static final ExtensionPointName<XmlUndefinedElementFixProvider> EP_NAME = ExtensionPointName.create(XmlUndefinedElementFixProvider.class);
+    public static final ExtensionPointName<XmlUndefinedElementFixProvider> EP_NAME =
+        ExtensionPointName.create(XmlUndefinedElementFixProvider.class);
 
-  /**
-   *
-   * @param tag
-   * @return null if this provider doesn't know anything about this file; empty array if no fixes are available and no other
-   * providers should be asked
-   */
-  @Nullable
-  public IntentionAction[] createFixes(final @Nonnull XmlAttribute attribute) {
-    return null;
-  }
+    /**
+     * @param tag
+     * @return null if this provider doesn't know anything about this file; empty array if no fixes are available and no other
+     * providers should be asked
+     */
+    @Nullable
+    public IntentionAction[] createFixes(final @Nonnull XmlAttribute attribute) {
+        return null;
+    }
 
-  /**
-   *
-   * @param tag
-   * @return null if this provider doesn't know anything about this file; empty array if no fixes are available and no other
-   * providers should be asked
-   */
-  @Nullable
-  public LocalQuickFix[] createFixes(final @Nonnull XmlTag tag) {
-    return null;
-  }
+    /**
+     * @param tag
+     * @return null if this provider doesn't know anything about this file; empty array if no fixes are available and no other
+     * providers should be asked
+     */
+    @Nullable
+    public LocalQuickFix[] createFixes(final @Nonnull XmlTag tag) {
+        return null;
+    }
 }

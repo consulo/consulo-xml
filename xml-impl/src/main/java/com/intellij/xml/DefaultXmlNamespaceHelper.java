@@ -42,192 +42,196 @@ import java.util.*;
  */
 @ExtensionImpl(order = "last")
 public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
-  private static final Logger LOG = Logger.getInstance(DefaultXmlNamespaceHelper.class);
+    private static final Logger LOG = Logger.getInstance(DefaultXmlNamespaceHelper.class);
 
-  protected boolean isAvailable(PsiFile file) {
-    return true;
-  }
-
-  public void insertNamespaceDeclaration(@Nonnull final XmlFile file,
-                                         @Nullable final Editor editor,
-                                         @Nonnull final Set<String> possibleNamespaces,
-                                         @Nullable String nsPrefix,
-                                         @Nullable final Runner<String, IncorrectOperationException> runAfter) throws IncorrectOperationException {
-
-    final String namespace = possibleNamespaces.iterator().next();
-
-    final Project project = file.getProject();
-    final XmlTag rootTag = file.getRootTag();
-    assert rootTag != null;
-    XmlAttribute anchor = getAnchor(rootTag);
-
-    final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(file);
-    String prefix = getPrefix(file, nsPrefix, namespace, providers);
-
-    final XmlElementFactory elementFactory = XmlElementFactory.getInstance(project);
-    String location = getLocation(file, namespace, providers);
-    String xsiPrefix = null;
-    if (location != null) {
-      xsiPrefix = rootTag.getPrefixByNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI);
-      if (xsiPrefix == null) {
-        xsiPrefix = "xsi";
-        rootTag.add(elementFactory.createXmlAttribute("xmlns:xsi", XmlUtil.XML_SCHEMA_INSTANCE_URI));
-      }
+    protected boolean isAvailable(PsiFile file) {
+        return true;
     }
 
-    @NonNls final String qname = "xmlns" + (prefix.length() > 0 ? ":"+ prefix :"");
-    final XmlAttribute attribute = elementFactory.createXmlAttribute(qname, namespace);
-    if (anchor == null) {
-      rootTag.add(attribute);
-    } else {
-      rootTag.addAfter(attribute, anchor);
-    }
+    public void insertNamespaceDeclaration(
+        @Nonnull final XmlFile file,
+        @Nullable final Editor editor,
+        @Nonnull final Set<String> possibleNamespaces,
+        @Nullable String nsPrefix,
+        @Nullable final Runner<String, IncorrectOperationException> runAfter
+    ) throws IncorrectOperationException {
 
-    if (location != null) {
-      XmlAttribute locationAttribute = rootTag.getAttribute(XmlUtil.SCHEMA_LOCATION_ATT, XmlUtil.XML_SCHEMA_INSTANCE_URI);
-      final String pair = namespace + " " + location;
-      if (locationAttribute == null) {
-        locationAttribute = elementFactory.createXmlAttribute(xsiPrefix + ":" + XmlUtil.SCHEMA_LOCATION_ATT, pair);
-        rootTag.add(locationAttribute);
-      }
-      else {
-        final String value = locationAttribute.getValue();
-        if (!StringUtil.notNullize(value).contains(namespace)) {
-          if (value == null || StringUtil.isEmptyOrSpaces(value)) {
-            locationAttribute.setValue(pair);
-          }
-          else {
-            locationAttribute.setValue(value.trim() + " " + pair);
-          }
+        final String namespace = possibleNamespaces.iterator().next();
+
+        final Project project = file.getProject();
+        final XmlTag rootTag = file.getRootTag();
+        assert rootTag != null;
+        XmlAttribute anchor = getAnchor(rootTag);
+
+        final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(file);
+        String prefix = getPrefix(file, nsPrefix, namespace, providers);
+
+        final XmlElementFactory elementFactory = XmlElementFactory.getInstance(project);
+        String location = getLocation(file, namespace, providers);
+        String xsiPrefix = null;
+        if (location != null) {
+            xsiPrefix = rootTag.getPrefixByNamespace(XmlUtil.XML_SCHEMA_INSTANCE_URI);
+            if (xsiPrefix == null) {
+                xsiPrefix = "xsi";
+                rootTag.add(elementFactory.createXmlAttribute("xmlns:xsi", XmlUtil.XML_SCHEMA_INSTANCE_URI));
+            }
         }
-      }
-    }
-    XmlUtil.reformatTagStart(rootTag);
 
-    if (editor != null && namespace.length() == 0) {
-      final XmlAttribute xmlAttribute = rootTag.getAttribute(qname);
-      if (xmlAttribute != null) {
-        final XmlAttributeValue value = xmlAttribute.getValueElement();
-        assert value != null;
-        final int startOffset = value.getTextOffset();
-        editor.getCaretModel().moveToOffset(startOffset);
-        editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
-      }
-    }
-    if (runAfter != null) {
-      runAfter.run(prefix);
-    }
-  }
-
-  private static String getPrefix(XmlFile file, String nsPrefix, String namespace, List<XmlSchemaProvider> providers) {
-    String prefix = nsPrefix;
-    if (prefix == null) {
-      for (XmlSchemaProvider provider : providers) {
-        prefix = provider.getDefaultPrefix(namespace, file);
-        if (prefix != null) {
-          break;
+        @NonNls final String qname = "xmlns" + (prefix.length() > 0 ? ":" + prefix : "");
+        final XmlAttribute attribute = elementFactory.createXmlAttribute(qname, namespace);
+        if (anchor == null) {
+            rootTag.add(attribute);
         }
-      }
-    }
-    if (prefix == null) {
-      prefix = "";
-    }
-    return prefix;
-  }
-
-  private static XmlAttribute getAnchor(XmlTag rootTag) {
-    final XmlAttribute[] attributes = rootTag.getAttributes();
-    XmlAttribute anchor = null;
-    for (XmlAttribute attribute : attributes) {
-      final XmlAttributeDescriptor descriptor = attribute.getDescriptor();
-      if (attribute.isNamespaceDeclaration() || (descriptor != null && descriptor.isRequired())) {
-        anchor = attribute;
-      } else {
-        break;
-      }
-    }
-    return anchor;
-  }
-
-  private static String getLocation(XmlFile file, String namespace, List<XmlSchemaProvider> providers) {
-    String location = null;
-    if (namespace.length() > 0) {
-      for (XmlSchemaProvider provider : providers) {
-        Set<String> locations = provider.getLocations(namespace, file);
-        if (locations != null && !locations.isEmpty()) {
-          location = locations.iterator().next();
+        else {
+            rootTag.addAfter(attribute, anchor);
         }
-      }
-    }
-    return location;
-  }
 
-  @Nonnull
-  public Set<String> guessUnboundNamespaces(@Nonnull final PsiElement element, @Nonnull XmlFile file) {
-    if (!(element instanceof XmlTag)) {
-      return Collections.emptySet();
-    }
-    final XmlTag tag = (XmlTag)element;
-    final String name = tag.getLocalName();
-    final Set<String> byTagName = getNamespacesByTagName(name, file);
-    if (!byTagName.isEmpty()) {
-      Set<String> filtered = new HashSet<String>(byTagName);
-      filtered.removeAll(Arrays.asList(tag.knownNamespaces()));
-      return filtered;
-    }
-    final Set<String> set = guessNamespace(file, name);
-    set.removeAll(Arrays.asList(tag.knownNamespaces()));
-
-    final XmlTag parentTag = tag.getParentTag();
-    ns: for (Iterator<String> i = set.iterator(); i.hasNext();) {
-      final String s = i.next();
-      final Collection<XmlFile> namespaces = XmlUtil.findNSFilesByURI(s, element.getProject(), ModuleUtilCore.findModuleForPsiElement(file));
-      for (XmlFile namespace : namespaces) {
-        final XmlDocument document = namespace.getDocument();
-        assert document != null;
-        final XmlNSDescriptor nsDescriptor = (XmlNSDescriptor)document.getMetaData();
-        assert nsDescriptor != null;
-        if (parentTag != null) {
-          continue ns;
+        if (location != null) {
+            XmlAttribute locationAttribute = rootTag.getAttribute(XmlUtil.SCHEMA_LOCATION_ATT, XmlUtil.XML_SCHEMA_INSTANCE_URI);
+            final String pair = namespace + " " + location;
+            if (locationAttribute == null) {
+                locationAttribute = elementFactory.createXmlAttribute(xsiPrefix + ":" + XmlUtil.SCHEMA_LOCATION_ATT, pair);
+                rootTag.add(locationAttribute);
+            }
+            else {
+                final String value = locationAttribute.getValue();
+                if (!StringUtil.notNullize(value).contains(namespace)) {
+                    if (value == null || StringUtil.isEmptyOrSpaces(value)) {
+                        locationAttribute.setValue(pair);
+                    }
+                    else {
+                        locationAttribute.setValue(value.trim() + " " + pair);
+                    }
+                }
+            }
         }
-        final XmlElementDescriptor[] descriptors = nsDescriptor.getRootElementsDescriptors(document);
-        for (XmlElementDescriptor descriptor : descriptors) {
-          if (descriptor == null) {
-            LOG.error(nsDescriptor + " returned null element for getRootElementsDescriptors() array");
-          }
-          if (descriptor.getName().equals(name)) {
-            continue ns;
-          }
+        XmlUtil.reformatTagStart(rootTag);
+
+        if (editor != null && namespace.length() == 0) {
+            final XmlAttribute xmlAttribute = rootTag.getAttribute(qname);
+            if (xmlAttribute != null) {
+                final XmlAttributeValue value = xmlAttribute.getValueElement();
+                assert value != null;
+                final int startOffset = value.getTextOffset();
+                editor.getCaretModel().moveToOffset(startOffset);
+                editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
+            }
         }
-      }
-      i.remove();
+        if (runAfter != null) {
+            runAfter.run(prefix);
+        }
     }
-    return set;
-  }
 
-  private static Set<String> guessNamespace(final PsiFile file, String tagName) {
-    final Project project = file.getProject();
-    final Collection<VirtualFile> files = XmlTagNamesIndex.getFilesByTagName(tagName, project);
-    final Set<String> possibleUris = new LinkedHashSet<String>(files.size());
-    for (VirtualFile virtualFile : files) {
-      final String namespace = XmlNamespaceIndex.getNamespace(virtualFile, project, file);
-      if (namespace != null) {
-        possibleUris.add(namespace);
-      }
+    private static String getPrefix(XmlFile file, String nsPrefix, String namespace, List<XmlSchemaProvider> providers) {
+        String prefix = nsPrefix;
+        if (prefix == null) {
+            for (XmlSchemaProvider provider : providers) {
+                prefix = provider.getDefaultPrefix(namespace, file);
+                if (prefix != null) {
+                    break;
+                }
+            }
+        }
+        if (prefix == null) {
+            prefix = "";
+        }
+        return prefix;
     }
-    return possibleUris;
-  }
 
-  @Nonnull
-  public Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context) {
-    final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(context);
-
-    HashSet<String> set = new HashSet<String>();
-    for (XmlSchemaProvider provider : providers) {
-      set.addAll(provider.getAvailableNamespaces(context, tagName));
+    private static XmlAttribute getAnchor(XmlTag rootTag) {
+        final XmlAttribute[] attributes = rootTag.getAttributes();
+        XmlAttribute anchor = null;
+        for (XmlAttribute attribute : attributes) {
+            final XmlAttributeDescriptor descriptor = attribute.getDescriptor();
+            if (attribute.isNamespaceDeclaration() || (descriptor != null && descriptor.isRequired())) {
+                anchor = attribute;
+            }
+            else {
+                break;
+            }
+        }
+        return anchor;
     }
-    return set;
-  }
 
+    private static String getLocation(XmlFile file, String namespace, List<XmlSchemaProvider> providers) {
+        String location = null;
+        if (namespace.length() > 0) {
+            for (XmlSchemaProvider provider : providers) {
+                Set<String> locations = provider.getLocations(namespace, file);
+                if (locations != null && !locations.isEmpty()) {
+                    location = locations.iterator().next();
+                }
+            }
+        }
+        return location;
+    }
 
+    @Nonnull
+    public Set<String> guessUnboundNamespaces(@Nonnull final PsiElement element, @Nonnull XmlFile file) {
+        if (!(element instanceof XmlTag)) {
+            return Collections.emptySet();
+        }
+        final XmlTag tag = (XmlTag)element;
+        final String name = tag.getLocalName();
+        final Set<String> byTagName = getNamespacesByTagName(name, file);
+        if (!byTagName.isEmpty()) {
+            Set<String> filtered = new HashSet<>(byTagName);
+            filtered.removeAll(Arrays.asList(tag.knownNamespaces()));
+            return filtered;
+        }
+        final Set<String> set = guessNamespace(file, name);
+        set.removeAll(Arrays.asList(tag.knownNamespaces()));
+
+        final XmlTag parentTag = tag.getParentTag();
+        ns:
+        for (Iterator<String> i = set.iterator(); i.hasNext(); ) {
+            final String s = i.next();
+            final Collection<XmlFile> namespaces =
+                XmlUtil.findNSFilesByURI(s, element.getProject(), ModuleUtilCore.findModuleForPsiElement(file));
+            for (XmlFile namespace : namespaces) {
+                final XmlDocument document = namespace.getDocument();
+                assert document != null;
+                final XmlNSDescriptor nsDescriptor = (XmlNSDescriptor)document.getMetaData();
+                assert nsDescriptor != null;
+                if (parentTag != null) {
+                    continue ns;
+                }
+                final XmlElementDescriptor[] descriptors = nsDescriptor.getRootElementsDescriptors(document);
+                for (XmlElementDescriptor descriptor : descriptors) {
+                    if (descriptor == null) {
+                        LOG.error(nsDescriptor + " returned null element for getRootElementsDescriptors() array");
+                    }
+                    if (descriptor.getName().equals(name)) {
+                        continue ns;
+                    }
+                }
+            }
+            i.remove();
+        }
+        return set;
+    }
+
+    private static Set<String> guessNamespace(final PsiFile file, String tagName) {
+        final Project project = file.getProject();
+        final Collection<VirtualFile> files = XmlTagNamesIndex.getFilesByTagName(tagName, project);
+        final Set<String> possibleUris = new LinkedHashSet<>(files.size());
+        for (VirtualFile virtualFile : files) {
+            final String namespace = XmlNamespaceIndex.getNamespace(virtualFile, project, file);
+            if (namespace != null) {
+                possibleUris.add(namespace);
+            }
+        }
+        return possibleUris;
+    }
+
+    @Nonnull
+    public Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context) {
+        final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(context);
+
+        HashSet<String> set = new HashSet<>();
+        for (XmlSchemaProvider provider : providers) {
+            set.addAll(provider.getAvailableNamespaces(context, tagName));
+        }
+        return set;
+    }
 }

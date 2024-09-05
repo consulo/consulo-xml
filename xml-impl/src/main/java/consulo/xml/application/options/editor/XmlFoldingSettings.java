@@ -33,48 +33,40 @@ import javax.annotation.Nonnull;
 @ServiceAPI(ComponentScope.APPLICATION)
 @ServiceImpl
 @State(name = "XmlFoldingSettings", storages = @Storage("editor.codeinsight.xml"))
-public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings>
-{
-	public boolean COLLAPSE_XML_TAGS = false;
-	public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
+public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentStateComponent<XmlFoldingSettings> {
+    public boolean COLLAPSE_XML_TAGS = false;
+    public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
 
-	@Nonnull
-	public static XmlFoldingSettings getInstance()
-	{
-		return ServiceManager.getService(XmlFoldingSettings.class);
-	}
+    @Nonnull
+    public static XmlFoldingSettings getInstance() {
+        return ServiceManager.getService(XmlFoldingSettings.class);
+    }
 
-	@Override
-	public boolean isCollapseXmlTags()
-	{
-		return COLLAPSE_XML_TAGS;
-	}
+    @Override
+    public boolean isCollapseXmlTags() {
+        return COLLAPSE_XML_TAGS;
+    }
 
-	public void setCollapseXmlTags(boolean value)
-	{
-		COLLAPSE_XML_TAGS = value;
-	}
+    public void setCollapseXmlTags(boolean value) {
+        COLLAPSE_XML_TAGS = value;
+    }
 
-	@Override
-	public boolean isCollapseHtmlStyleAttribute()
-	{
-		return COLLAPSE_HTML_STYLE_ATTRIBUTE;
-	}
+    @Override
+    public boolean isCollapseHtmlStyleAttribute() {
+        return COLLAPSE_HTML_STYLE_ATTRIBUTE;
+    }
 
-	public void setCollapseHtmlStyleAttribute(boolean value)
-	{
-		this.COLLAPSE_HTML_STYLE_ATTRIBUTE = value;
-	}
+    public void setCollapseHtmlStyleAttribute(boolean value) {
+        this.COLLAPSE_HTML_STYLE_ATTRIBUTE = value;
+    }
 
-	@Override
-	public XmlFoldingSettings getState()
-	{
-		return this;
-	}
+    @Override
+    public XmlFoldingSettings getState() {
+        return this;
+    }
 
-	@Override
-	public void loadState(final XmlFoldingSettings state)
-	{
-		XmlSerializerUtil.copyBean(state, this);
-	}
+    @Override
+    public void loadState(final XmlFoldingSettings state) {
+        XmlSerializerUtil.copyBean(state, this);
+    }
 }

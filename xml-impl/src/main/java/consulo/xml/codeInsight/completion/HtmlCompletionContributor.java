@@ -41,180 +41,156 @@ import java.nio.charset.Charset;
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 
 @ExtensionImpl(id = "html")
-public class HtmlCompletionContributor extends CompletionContributor
-{
-	public HtmlCompletionContributor()
-	{
-		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlAttributeValue()), new CompletionProvider()
-		{
-			@Override
-			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
-			{
-				final PsiElement position = parameters.getPosition();
-				if(!hasHtmlAttributesCompletion(position))
-				{
-					return;
-				}
-				final XmlAttributeValue attributeValue = PsiTreeUtil.getParentOfType(position, XmlAttributeValue.class, false);
-				if(attributeValue != null && attributeValue.getParent() instanceof XmlAttribute)
-				{
-					for(String element : addSpecificCompletions((XmlAttribute) attributeValue.getParent()))
-					{
-						result.addElement(LookupElementBuilder.create(element));
-					}
-				}
-			}
-		});
-	}
+public class HtmlCompletionContributor extends CompletionContributor {
+    public HtmlCompletionContributor() {
+        extend(
+            CompletionType.BASIC,
+            psiElement().inside(XmlPatterns.xmlAttributeValue()),
+            (parameters, context, result) -> {
+                final PsiElement position = parameters.getPosition();
+                if (!hasHtmlAttributesCompletion(position)) {
+                    return;
+                }
+                final XmlAttributeValue attributeValue = PsiTreeUtil.getParentOfType(position, XmlAttributeValue.class, false);
+                if (attributeValue != null && attributeValue.getParent() instanceof XmlAttribute attribute) {
+                    for (String element : addSpecificCompletions(attribute)) {
+                        result.addElement(LookupElementBuilder.create(element));
+                    }
+                }
+            }
+        );
+    }
 
-	private static boolean hasHtmlAttributesCompletion(PsiElement position)
-	{
-		if(PsiTreeUtil.getParentOfType(position, HtmlTag.class, false) != null)
-		{
-			return true;
-		}
-		XmlTag xmlTag = PsiTreeUtil.getParentOfType(position, XmlTag.class, false);
-		return xmlTag != null && xmlTag.getLanguage() == XHTMLLanguage.INSTANCE;
-	}
+    private static boolean hasHtmlAttributesCompletion(PsiElement position) {
+        if (PsiTreeUtil.getParentOfType(position, HtmlTag.class, false) != null) {
+            return true;
+        }
+        XmlTag xmlTag = PsiTreeUtil.getParentOfType(position, XmlTag.class, false);
+        return xmlTag != null && xmlTag.getLanguage() == XHTMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	@NonNls
-	protected static String[] addSpecificCompletions(final XmlAttribute attribute)
-	{
-		@NonNls String name = attribute.getName();
-		final XmlTag tag = attribute.getParent();
-		if(tag == null)
-		{
-			return ArrayUtil.EMPTY_STRING_ARRAY;
-		}
+    @Nonnull
+    @NonNls
+    protected static String[] addSpecificCompletions(final XmlAttribute attribute) {
+        @NonNls String name = attribute.getName();
+        final XmlTag tag = attribute.getParent();
+        if (tag == null) {
+            return ArrayUtil.EMPTY_STRING_ARRAY;
+        }
 
-		@NonNls String tagName = tag.getName();
-		if(tag.getDescriptor() instanceof HtmlElementDescriptorImpl)
-		{
-			name = name.toLowerCase();
-			tagName = tagName.toLowerCase();
-		}
+        @NonNls String tagName = tag.getName();
+        if (tag.getDescriptor() instanceof HtmlElementDescriptorImpl) {
+            name = name.toLowerCase();
+            tagName = tagName.toLowerCase();
+        }
 
-		final String namespace = tag.getNamespace();
-		if(XmlUtil.XHTML_URI.equals(namespace) || XmlUtil.HTML_URI.equals(namespace))
-		{
+        final String namespace = tag.getNamespace();
+        if (XmlUtil.XHTML_URI.equals(namespace) || XmlUtil.HTML_URI.equals(namespace)) {
 
-			if("target".equals(name))
-			{
-				return new String[]{
-						"_blank",
-						"_top",
-						"_self",
-						"_parent"
-				};
-			}
-			else if("enctype".equals(name))
-			{
-				return new String[]{
-						"multipart/form-data",
-						"application/x-www-form-urlencoded"
-				};
-			}
-			else if("rel".equals(name) || "rev".equals(name))
-			{
-				return new String[]{
-						"alternate",
-						"author",
-						"bookmark",
-						"help",
-						"icon",
-						"license",
-						"next",
-						"nofollow",
-						"noreferrer",
-						"prefetch",
-						"prev",
-						"search",
-						"stylesheet",
-						"tag",
-						"start",
-						"contents",
-						"index",
-						"glossary",
-						"copyright",
-						"chapter",
-						"section",
-						"subsection",
-						"appendix",
-						"script",
-						"import",
-						"apple-touch-icon",
-						"apple-touch-icon-precomposed",
-						"apple-touch-startup-image"
-				};
-			}
-			else if("media".equals(name))
-			{
-				return new String[]{
-						"all",
-						"braille",
-						"embossed",
-						"handheld",
-						"print",
-						"projection",
-						"screen",
-						"speech",
-						"tty",
-						"tv"
-				};
-			}
-			else if("language".equals(name))
-			{
-				return new String[]{
-						"JavaScript",
-						"VBScript",
-						"JScript",
-						"JavaScript1.2",
-						"JavaScript1.3",
-						"JavaScript1.4",
-						"JavaScript1.5"
-				};
-			}
-			else if("type".equals(name) && "link".equals(tagName))
-			{
-				return new String[]{
-						"text/css",
-						"text/html",
-						"text/plain",
-						"text/xml"
-				};
-			}
-			else if("http-equiv".equals(name) && "meta".equals(tagName))
-			{
-				return HtmlUtil.RFC2616_HEADERS;
-			}
-			else if("content".equals(name) && "meta".equals(tagName) && tag.getAttribute("name") == null)
-			{
-				return HtmlUtil.CONTENT_TYPES;
-			}
-			else if("accept".equals(name) && "input".equals(tagName))
-			{
-				return HtmlUtil.CONTENT_TYPES;
-			}
-			else if("accept-charset".equals(name) || "charset".equals(name))
-			{
-				Charset[] charSets = CharsetToolkit.getAvailableCharsets();
-				String[] names = new String[charSets.length];
-				for(int i = 0; i < names.length; i++)
-				{
-					names[i] = charSets[i].toString();
-				}
-				return names;
-			}
-		}
+            if ("target".equals(name)) {
+                return new String[]{
+                    "_blank",
+                    "_top",
+                    "_self",
+                    "_parent"
+                };
+            }
+            else if ("enctype".equals(name)) {
+                return new String[]{
+                    "multipart/form-data",
+                    "application/x-www-form-urlencoded"
+                };
+            }
+            else if ("rel".equals(name) || "rev".equals(name)) {
+                return new String[]{
+                    "alternate",
+                    "author",
+                    "bookmark",
+                    "help",
+                    "icon",
+                    "license",
+                    "next",
+                    "nofollow",
+                    "noreferrer",
+                    "prefetch",
+                    "prev",
+                    "search",
+                    "stylesheet",
+                    "tag",
+                    "start",
+                    "contents",
+                    "index",
+                    "glossary",
+                    "copyright",
+                    "chapter",
+                    "section",
+                    "subsection",
+                    "appendix",
+                    "script",
+                    "import",
+                    "apple-touch-icon",
+                    "apple-touch-icon-precomposed",
+                    "apple-touch-startup-image"
+                };
+            }
+            else if ("media".equals(name)) {
+                return new String[]{
+                    "all",
+                    "braille",
+                    "embossed",
+                    "handheld",
+                    "print",
+                    "projection",
+                    "screen",
+                    "speech",
+                    "tty",
+                    "tv"
+                };
+            }
+            else if ("language".equals(name)) {
+                return new String[]{
+                    "JavaScript",
+                    "VBScript",
+                    "JScript",
+                    "JavaScript1.2",
+                    "JavaScript1.3",
+                    "JavaScript1.4",
+                    "JavaScript1.5"
+                };
+            }
+            else if ("type".equals(name) && "link".equals(tagName)) {
+                return new String[]{
+                    "text/css",
+                    "text/html",
+                    "text/plain",
+                    "text/xml"
+                };
+            }
+            else if ("http-equiv".equals(name) && "meta".equals(tagName)) {
+                return HtmlUtil.RFC2616_HEADERS;
+            }
+            else if ("content".equals(name) && "meta".equals(tagName) && tag.getAttribute("name") == null) {
+                return HtmlUtil.CONTENT_TYPES;
+            }
+            else if ("accept".equals(name) && "input".equals(tagName)) {
+                return HtmlUtil.CONTENT_TYPES;
+            }
+            else if ("accept-charset".equals(name) || "charset".equals(name)) {
+                Charset[] charSets = CharsetToolkit.getAvailableCharsets();
+                String[] names = new String[charSets.length];
+                for (int i = 0; i < names.length; i++) {
+                    names[i] = charSets[i].toString();
+                }
+                return names;
+            }
+        }
 
-		return ArrayUtil.EMPTY_STRING_ARRAY;
-	}
+        return ArrayUtil.EMPTY_STRING_ARRAY;
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return Language.ANY;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return Language.ANY;
+    }
 }

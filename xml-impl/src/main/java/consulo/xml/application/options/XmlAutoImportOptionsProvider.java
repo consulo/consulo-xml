@@ -32,42 +32,37 @@ import javax.annotation.Nullable;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements ApplicationConfigurable
-{
-	@RequiredUIAccess
-	@Nonnull
-	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable)
-	{
-		VerticalLayout layout = VerticalLayout.create();
+public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements ApplicationConfigurable {
+    @RequiredUIAccess
+    @Nonnull
+    @Override
+    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
+        VerticalLayout layout = VerticalLayout.create();
 
-		XmlSettings settings = XmlSettings.getInstance();
+        XmlSettings settings = XmlSettings.getInstance();
 
-		CheckBox showAddImports = CheckBox.create(ApplicationLocalize.checkboxShowImportPopup());
-		layout.add(showAddImports);
-		propertyBuilder.add(showAddImports, settings::isShowXmlImportsHints, settings::setShowXmlImportHints);
+        CheckBox showAddImports = CheckBox.create(ApplicationLocalize.checkboxShowImportPopup());
+        layout.add(showAddImports);
+        propertyBuilder.add(showAddImports, settings::isShowXmlImportsHints, settings::setShowXmlImportHints);
 
-		return layout;
-	}
+        return layout;
+    }
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "editor.preferences.import.xml";
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return "editor.preferences.import.xml";
+    }
 
-	@Nullable
-	@Override
-	public String getParentId()
-	{
-		return "editor.preferences.import";
-	}
+    @Nullable
+    @Override
+    public String getParentId() {
+        return "editor.preferences.import";
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "XML";
-	}
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return "XML";
+    }
 }

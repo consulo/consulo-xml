@@ -26,14 +26,13 @@ import consulo.language.psi.meta.PsiMetaData;
 /**
  * @author Mike
  */
-public interface XmlNSDescriptor extends PsiMetaData
-{
-	@Nullable
-	XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag);
+public interface XmlNSDescriptor extends PsiMetaData {
+    @Nullable
+    XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag);
 
-	@Nonnull
-	XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document);
+    @Nonnull
+    XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document);
 
-	@Nullable
-	XmlFile getDescriptorFile();
+    @Nullable
+    XmlFile getDescriptorFile();
 }

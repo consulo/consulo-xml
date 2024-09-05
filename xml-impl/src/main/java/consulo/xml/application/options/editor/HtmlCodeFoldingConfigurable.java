@@ -34,42 +34,37 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @ExtensionImpl
-public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable
-{
-	@RequiredUIAccess
-	@Nonnull
-	@Override
-	protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable)
-	{
-		VerticalLayout layout = VerticalLayout.create();
+public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
+    @RequiredUIAccess
+    @Nonnull
+    @Override
+    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
+        VerticalLayout layout = VerticalLayout.create();
 
-		XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
+        XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
 
-		CheckBox collapseHtmlStyles = CheckBox.create(ApplicationLocalize.checkboxCollapseHtmlStyleAttribute());
-		layout.add(collapseHtmlStyles);
-		propertyBuilder.add(collapseHtmlStyles, settings::isCollapseHtmlStyleAttribute, settings::setCollapseHtmlStyleAttribute);
+        CheckBox collapseHtmlStyles = CheckBox.create(ApplicationLocalize.checkboxCollapseHtmlStyleAttribute());
+        layout.add(collapseHtmlStyles);
+        propertyBuilder.add(collapseHtmlStyles, settings::isCollapseHtmlStyleAttribute, settings::setCollapseHtmlStyleAttribute);
 
-		return layout;
-	}
+        return layout;
+    }
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "editor.preferences.folding.html";
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return "editor.preferences.folding.html";
+    }
 
-	@Nullable
-	@Override
-	public String getParentId()
-	{
-		return "editor.preferences.folding";
-	}
+    @Nullable
+    @Override
+    public String getParentId() {
+        return "editor.preferences.folding";
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "HTML";
-	}
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return "HTML";
+    }
 }

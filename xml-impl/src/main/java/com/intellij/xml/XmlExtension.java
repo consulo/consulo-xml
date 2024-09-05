@@ -43,168 +43,140 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
-public abstract class XmlExtension
-{
-	public static final ExtensionPointName<XmlExtension> EP_NAME = ExtensionPointName.create(XmlExtension.class);
+public abstract class XmlExtension {
+    public static final ExtensionPointName<XmlExtension> EP_NAME = ExtensionPointName.create(XmlExtension.class);
 
-	public static XmlExtension getExtension(@Nonnull final PsiFile file)
-	{
-		return LanguageCachedValueUtil.getCachedValue(file, () -> CachedValueProvider.Result.create(calcExtension(file), PsiModificationTracker.MODIFICATION_COUNT));
-	}
+    public static XmlExtension getExtension(@Nonnull final PsiFile file) {
+        return LanguageCachedValueUtil.getCachedValue(
+            file,
+            () -> CachedValueProvider.Result.create(calcExtension(file), PsiModificationTracker.MODIFICATION_COUNT)
+        );
+    }
 
-	private static XmlExtension calcExtension(PsiFile file)
-	{
-		for(XmlExtension extension : EP_NAME.getExtensionList())
-		{
-			if(extension.isAvailable(file))
-			{
-				return extension;
-			}
-		}
-		return DefaultXmlExtension.DEFAULT_EXTENSION;
-	}
+    private static XmlExtension calcExtension(PsiFile file) {
+        for (XmlExtension extension : EP_NAME.getExtensionList()) {
+            if (extension.isAvailable(file)) {
+                return extension;
+            }
+        }
+        return DefaultXmlExtension.DEFAULT_EXTENSION;
+    }
 
-	@SuppressWarnings("ConstantConditions")
-	public static XmlExtension getExtensionByElement(PsiElement element)
-	{
-		final PsiFile psiFile = element.getContainingFile();
-		if(psiFile != null)
-		{
-			return getExtension(psiFile);
-		}
-		return null;
-	}
+    @SuppressWarnings("ConstantConditions")
+    public static XmlExtension getExtensionByElement(PsiElement element) {
+        final PsiFile psiFile = element.getContainingFile();
+        if (psiFile != null) {
+            return getExtension(psiFile);
+        }
+        return null;
+    }
 
-	public abstract boolean isAvailable(PsiFile file);
+    public abstract boolean isAvailable(PsiFile file);
 
-	public static class TagInfo
-	{
+    public static class TagInfo {
+        public final String name;
+        public final String namespace;
 
-		public final String name;
-		public final String namespace;
+        public TagInfo(String name, String namespace) {
+            this.name = name;
+            this.namespace = namespace;
+        }
 
-		public TagInfo(String name, String namespace)
-		{
-			this.name = name;
-			this.namespace = namespace;
-		}
+        @Nullable
+        public PsiElement getDeclaration() {
+            return null;
+        }
+    }
 
-		@Nullable
-		public PsiElement getDeclaration()
-		{
-			return null;
-		}
-	}
+    @Nonnull
+    public abstract List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context);
 
-	@Nonnull
-	public abstract List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context);
+    @Nullable
+    public TagNameReference createTagNameReference(final ASTNode nameElement, final boolean startTagFlag) {
+        return new TagNameReference(nameElement, startTagFlag);
+    }
 
-	@Nullable
-	public TagNameReference createTagNameReference(final ASTNode nameElement, final boolean startTagFlag)
-	{
-		return new TagNameReference(nameElement, startTagFlag);
-	}
+    @Nullable
+    public String[][] getNamespacesFromDocument(final XmlDocument parent, boolean declarationsExist) {
+        return declarationsExist ? null : XmlUtil.getDefaultNamespaces(parent);
+    }
 
-	@Nullable
-	public String[][] getNamespacesFromDocument(final XmlDocument parent, boolean declarationsExist)
-	{
-		return declarationsExist ? null : XmlUtil.getDefaultNamespaces(parent);
-	}
+    public boolean canBeDuplicated(XmlAttribute attribute) {
+        return false;
+    }
 
-	public boolean canBeDuplicated(XmlAttribute attribute)
-	{
-		return false;
-	}
+    public boolean isRequiredAttributeImplicitlyPresent(XmlTag tag, String attrName) {
+        return false;
+    }
 
-	public boolean isRequiredAttributeImplicitlyPresent(XmlTag tag, String attrName)
-	{
-		return false;
-	}
+    public HighlightInfoType getHighlightInfoType(XmlFile file) {
+        return HighlightInfoType.ERROR;
+    }
 
-	public HighlightInfoType getHighlightInfoType(XmlFile file)
-	{
-		return HighlightInfoType.ERROR;
-	}
+    @Nullable
+    public abstract SchemaPrefix getPrefixDeclaration(final XmlTag context, String namespacePrefix);
 
-	@Nullable
-	public abstract SchemaPrefix getPrefixDeclaration(final XmlTag context, String namespacePrefix);
+    public SearchScope getNsPrefixScope(XmlAttribute declaration) {
+        return new LocalSearchScope(declaration.getParent());
+    }
 
-	public SearchScope getNsPrefixScope(XmlAttribute declaration)
-	{
-		return new LocalSearchScope(declaration.getParent());
-	}
+    public boolean shouldBeHighlightedAsTag(XmlTag tag) {
+        return true;
+    }
 
-	public boolean shouldBeHighlightedAsTag(XmlTag tag)
-	{
-		return true;
-	}
+    @Nullable
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag, XmlTag contextTag, final XmlElementDescriptor parentDescriptor) {
+        return parentDescriptor.getElementDescriptor(tag, contextTag);
+    }
 
-	@Nullable
-	public XmlElementDescriptor getElementDescriptor(XmlTag tag, XmlTag contextTag, final XmlElementDescriptor parentDescriptor)
-	{
-		return parentDescriptor.getElementDescriptor(tag, contextTag);
-	}
+    @Nullable
+    public XmlNSDescriptor getNSDescriptor(final XmlTag element, final String namespace, final boolean strict) {
+        return element.getNSDescriptor(namespace, strict);
+    }
 
-	@Nullable
-	public XmlNSDescriptor getNSDescriptor(final XmlTag element, final String namespace, final boolean strict)
-	{
-		return element.getNSDescriptor(namespace, strict);
-	}
+    @Nullable
+    public XmlTag getParentTagForNamespace(XmlTag tag, XmlNSDescriptor namespace) {
+        return tag.getParentTag();
+    }
 
-	@Nullable
-	public XmlTag getParentTagForNamespace(XmlTag tag, XmlNSDescriptor namespace)
-	{
-		return tag.getParentTag();
-	}
+    @Nullable
+    public XmlFile getContainingFile(PsiElement element) {
+        if (element == null) {
+            return null;
+        }
+        final PsiFile psiFile = element.getContainingFile();
+        return psiFile instanceof XmlFile ? (XmlFile)psiFile : null;
+    }
 
-	@Nullable
-	public XmlFile getContainingFile(PsiElement element)
-	{
-		if(element == null)
-		{
-			return null;
-		}
-		final PsiFile psiFile = element.getContainingFile();
-		return psiFile instanceof XmlFile ? (XmlFile) psiFile : null;
-	}
+    public XmlNSDescriptor getDescriptorFromDoctype(final XmlFile containingFile, XmlNSDescriptor descr) {
+        return descr;
+    }
 
-	public XmlNSDescriptor getDescriptorFromDoctype(final XmlFile containingFile, XmlNSDescriptor descr)
-	{
-		return descr;
-	}
+    public boolean hasDynamicComponents(final PsiElement element) {
+        return false;
+    }
 
-	public boolean hasDynamicComponents(final PsiElement element)
-	{
-		return false;
-	}
+    public boolean isIndirectSyntax(final XmlAttributeDescriptor descriptor) {
+        return false;
+    }
 
-	public boolean isIndirectSyntax(final XmlAttributeDescriptor descriptor)
-	{
-		return false;
-	}
+    public boolean shouldBeInserted(final XmlAttributeDescriptor descriptor) {
+        return descriptor.isRequired();
+    }
 
-	public boolean shouldBeInserted(final XmlAttributeDescriptor descriptor)
-	{
-		return descriptor.isRequired();
-	}
+    public boolean isCustomTagAllowed(final XmlTag tag) {
+        return false;
+    }
 
-	public boolean isCustomTagAllowed(final XmlTag tag)
-	{
-		return false;
-	}
+    public boolean useXmlTagInsertHandler() {
+        return true;
+    }
 
-	public boolean useXmlTagInsertHandler()
-	{
-		return true;
-	}
+    public boolean isSingleTagException(@Nonnull XmlTag tag) {
+        return false;
+    }
 
-	public boolean isSingleTagException(@Nonnull XmlTag tag)
-	{
-		return false;
-	}
-
-	public boolean isCollapsibleTag(XmlTag tag)
-	{
-		return false;
-	}
+    public boolean isCollapsibleTag(XmlTag tag) {
+        return false;
+    }
 }

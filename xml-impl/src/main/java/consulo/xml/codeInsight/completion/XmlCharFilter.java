@@ -41,85 +41,85 @@ import consulo.xml.psi.xml.XmlText;
 
 @ExtensionImpl(id = "xml")
 public class XmlCharFilter extends CharFilter {
-  public static boolean isInXmlContext(Lookup lookup) {
-    if (!lookup.isCompletion()) {
-      return false;
-    }
-
-    PsiElement psiElement = lookup.getPsiElement();
-    PsiFile file = lookup.getPsiFile();
-    if (!(file instanceof XmlFile) && psiElement != null) {
-      file = psiElement.getContainingFile();
-    }
-
-
-    if (file instanceof XmlFile) {
-      if (psiElement != null) {
-        PsiElement elementToTest = psiElement;
-        if (elementToTest instanceof PsiWhiteSpace) {
-          elementToTest = elementToTest.getParent(); // JSPX has whitespace with language Java
+    public static boolean isInXmlContext(Lookup lookup) {
+        if (!lookup.isCompletion()) {
+            return false;
         }
 
-        final Language language = elementToTest.getLanguage();
-        if (!(language instanceof XMLLanguage)) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return false;
-  }
-
-  public static boolean isWithinTag(Lookup lookup) {
-    if (isInXmlContext(lookup)) {
-      PsiElement psiElement = lookup.getPsiElement();
-      final PsiElement parentElement = psiElement != null ? psiElement.getParent() : null;
-      if (parentElement instanceof XmlTag) {
-        return true;
-      }
-      if (parentElement instanceof PsiErrorElement && parentElement.getParent() instanceof XmlDocument) {
-        return true;
-      }
-
-      return (parentElement instanceof XmlDocument || parentElement instanceof XmlText) && (psiElement.textMatches("<") || psiElement.textMatches("\""));
-    }
-    return false;
-  }
-
-  @Override
-  public Result acceptChar(char c, final int prefixLength, final Lookup lookup) {
-    if (!isInXmlContext(lookup)) {
-      return null;
-    }
-
-    if (Character.isJavaIdentifierPart(c)) {
-      return Result.ADD_TO_PREFIX;
-    }
-    switch (c) {
-      case '-':
-      case ':':
-      case '?':
-        return Result.ADD_TO_PREFIX;
-      case '/':
-        if (isWithinTag(lookup)) {
-          if (prefixLength > 0) {
-            return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
-          }
-          XmlAutoPopupHandler.autoPopupXmlLookup(lookup.getProject(), lookup.getEditor());
-          return Result.HIDE_LOOKUP;
-        }
-        return Result.ADD_TO_PREFIX;
-
-      case '>':
-        if (prefixLength > 0) {
-          return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
+        PsiElement psiElement = lookup.getPsiElement();
+        PsiFile file = lookup.getPsiFile();
+        if (!(file instanceof XmlFile) && psiElement != null) {
+            file = psiElement.getContainingFile();
         }
 
-      case '\'':
-      case '\"':
-        return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
-      default:
-        return null;
+        if (file instanceof XmlFile) {
+            if (psiElement != null) {
+                PsiElement elementToTest = psiElement;
+                if (elementToTest instanceof PsiWhiteSpace) {
+                    elementToTest = elementToTest.getParent(); // JSPX has whitespace with language Java
+                }
+
+                final Language language = elementToTest.getLanguage();
+                if (!(language instanceof XMLLanguage)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
-  }
+
+    public static boolean isWithinTag(Lookup lookup) {
+        if (isInXmlContext(lookup)) {
+            PsiElement psiElement = lookup.getPsiElement();
+            final PsiElement parentElement = psiElement != null ? psiElement.getParent() : null;
+            if (parentElement instanceof XmlTag) {
+                return true;
+            }
+            if (parentElement instanceof PsiErrorElement && parentElement.getParent() instanceof XmlDocument) {
+                return true;
+            }
+
+            return (parentElement instanceof XmlDocument || parentElement instanceof XmlText)
+                && (psiElement.textMatches("<") || psiElement.textMatches("\""));
+        }
+        return false;
+    }
+
+    @Override
+    public Result acceptChar(char c, final int prefixLength, final Lookup lookup) {
+        if (!isInXmlContext(lookup)) {
+            return null;
+        }
+
+        if (Character.isJavaIdentifierPart(c)) {
+            return Result.ADD_TO_PREFIX;
+        }
+        switch (c) {
+            case '-':
+            case ':':
+            case '?':
+                return Result.ADD_TO_PREFIX;
+            case '/':
+                if (isWithinTag(lookup)) {
+                    if (prefixLength > 0) {
+                        return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
+                    }
+                    XmlAutoPopupHandler.autoPopupXmlLookup(lookup.getProject(), lookup.getEditor());
+                    return Result.HIDE_LOOKUP;
+                }
+                return Result.ADD_TO_PREFIX;
+
+            case '>':
+                if (prefixLength > 0) {
+                    return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
+                }
+
+            case '\'':
+            case '\"':
+                return Result.SELECT_ITEM_AND_FINISH_LOOKUP;
+            default:
+                return null;
+        }
+    }
 }

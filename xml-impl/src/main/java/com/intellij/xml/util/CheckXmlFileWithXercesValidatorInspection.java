@@ -35,46 +35,39 @@ import javax.annotation.Nullable;
  * @see ExternalDocumentValidator
  */
 @ExtensionImpl
-public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool
-{
-	public static final
-	@NonNls
-	String SHORT_NAME = "CheckXmlFileWithXercesValidator";
+public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
+    public static final
+    @NonNls
+    String SHORT_NAME = "CheckXmlFileWithXercesValidator";
 
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+    @Nonnull
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.ERROR;
+    }
 
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return XmlInspectionGroupNames.XML_INSPECTIONS;
-	}
+    @Nonnull
+    public String getGroupDisplayName() {
+        return XmlInspectionGroupNames.XML_INSPECTIONS;
+    }
 
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlBundle.message("xml.inspections.check.file.with.xerces");
-	}
+    @Nonnull
+    public String getDisplayName() {
+        return XmlBundle.message("xml.inspections.check.file.with.xerces");
+    }
 
-	@Nonnull
-	@NonNls
-	public String getShortName()
-	{
-		return SHORT_NAME;
-	}
+    @Nonnull
+    @NonNls
+    public String getShortName() {
+        return SHORT_NAME;
+    }
 }

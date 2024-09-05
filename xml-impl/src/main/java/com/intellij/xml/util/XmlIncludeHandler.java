@@ -16,7 +16,9 @@
 package com.intellij.xml.util;
 
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nullable;
+
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.path.FileReferenceSet;
@@ -30,39 +32,46 @@ import consulo.xml.psi.xml.XmlTag;
  * @author mike
  */
 public class XmlIncludeHandler {
-  @NonNls private static final String INCLUDE_TAG_NAME = "include";
-  public static boolean isXInclude(PsiElement element) {
-    if (element instanceof XmlTag) {
-      XmlTag xmlTag = (XmlTag)element;
+    @NonNls
+    private static final String INCLUDE_TAG_NAME = "include";
 
-      if (xmlTag.getParent() instanceof XmlDocument) return false;
+    public static boolean isXInclude(PsiElement element) {
+        if (element instanceof XmlTag xmlTag) {
+            if (xmlTag.getParent() instanceof XmlDocument) {
+                return false;
+            }
 
-      if (xmlTag.getLocalName().equals(INCLUDE_TAG_NAME) && xmlTag.getAttributeValue("href") != null) {
-        if (xmlTag.getNamespace().equals(XmlUtil.XINCLUDE_URI)) {
-          return true;
+            if (INCLUDE_TAG_NAME.equals(xmlTag.getLocalName())
+                && xmlTag.getAttributeValue("href") != null
+                && XmlUtil.XINCLUDE_URI.equals(xmlTag.getNamespace())) {
+                return true;
+            }
         }
-      }
+
+        return false;
     }
 
-    return false;
-  }
+    @Nullable
+    public static XmlFile resolveXIncludeFile(XmlTag xincludeTag) {
+        final XmlAttribute hrefAttribute = xincludeTag.getAttribute("href", null);
+        if (hrefAttribute == null) {
+            return null;
+        }
 
-  @Nullable
-  public static XmlFile resolveXIncludeFile(XmlTag xincludeTag) {
-    final XmlAttribute hrefAttribute = xincludeTag.getAttribute("href", null);
-    if (hrefAttribute == null) return null;
+        final XmlAttributeValue xmlAttributeValue = hrefAttribute.getValueElement();
+        if (xmlAttributeValue == null) {
+            return null;
+        }
 
-    final XmlAttributeValue xmlAttributeValue = hrefAttribute.getValueElement();
-    if (xmlAttributeValue == null) return null;
+        final FileReferenceSet referenceSet = FileReferenceSet.createSet(xmlAttributeValue, false, true, false);
 
-    final FileReferenceSet referenceSet = FileReferenceSet.createSet(xmlAttributeValue, false, true, false);
+        final PsiReference reference = referenceSet.getLastReference();
+        if (reference == null) {
+            return null;
+        }
 
-    final PsiReference reference = referenceSet.getLastReference();
-    if (reference == null) return null;
+        final PsiElement target = reference.resolve();
 
-    final PsiElement target = reference.resolve();
-
-    if (!(target instanceof XmlFile)) return null;
-    return (XmlFile)target;
-  }
+        return target instanceof XmlFile file ? file : null;
+    }
 }

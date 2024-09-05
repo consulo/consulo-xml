@@ -30,21 +30,21 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
-  @Nonnull
-  public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
-    return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.html")) {
-      protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
-        return new HtmlCodeStyleMainPanel(settings, originalSettings);
-      }
+    @Nonnull
+    public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.html")) {
+            protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
+                return new HtmlCodeStyleMainPanel(settings, originalSettings);
+            }
 
-      public String getHelpTopic() {
-        return "reference.settingsdialog.IDE.globalcodestyle.html";
-      }
-    };
-  }
+            public String getHelpTopic() {
+                return "reference.settingsdialog.IDE.globalcodestyle.html";
+            }
+        };
+    }
 
-  @Override
-  public String getConfigurableDisplayName() {
-    return ApplicationBundle.message("title.html");
-  }
+    @Override
+    public String getConfigurableDisplayName() {
+        return ApplicationBundle.message("title.html");
+    }
 }

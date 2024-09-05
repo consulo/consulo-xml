@@ -34,26 +34,27 @@ import javax.annotation.Nonnull;
  */
 @ExtensionImpl(id = "xml")
 public class XmlIconDescriptorUpdater implements IconDescriptorUpdater {
-  private static final String XSD_FILE_EXTENSION = "xsd";
-  private static final String WSDL_FILE_EXTENSION = "wsdl";
+    private static final String XSD_FILE_EXTENSION = "xsd";
+    private static final String WSDL_FILE_EXTENSION = "wsdl";
 
-  @RequiredReadAction
-  @Override
-  public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
-    if (element instanceof XmlFile) {
-      final VirtualFile vf = ((XmlFile) element).getVirtualFile();
-      if (vf != null) {
-        final String extension = vf.getExtension();
+    @RequiredReadAction
+    @Override
+    public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
+        if (element instanceof XmlFile file) {
+            final VirtualFile vf = file.getVirtualFile();
+            if (vf != null) {
+                final String extension = vf.getExtension();
 
-        if (XSD_FILE_EXTENSION.equals(extension)) {
-          iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
+                if (XSD_FILE_EXTENSION.equals(extension)) {
+                    iconDescriptor.setMainIcon(AllIcons.FileTypes.XsdFile);
+                }
+                if (WSDL_FILE_EXTENSION.equals(extension)) {
+                    iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
+                }
+            }
         }
-        if (WSDL_FILE_EXTENSION.equals(extension)) {
-          iconDescriptor.setMainIcon(AllIcons.FileTypes.WsdlFile);
+        else if (element instanceof XmlTag) {
+            iconDescriptor.setMainIcon(PlatformIconGroup.nodesTag());
         }
-      }
-    } else if (element instanceof XmlTag) {
-      iconDescriptor.setMainIcon(PlatformIconGroup.nodesTag());
     }
-  }
 }

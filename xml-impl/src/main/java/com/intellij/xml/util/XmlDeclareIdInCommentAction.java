@@ -39,93 +39,96 @@ import javax.annotation.Nullable;
  * @author spleaner
  */
 public class XmlDeclareIdInCommentAction implements LocalQuickFix {
-  private static final Logger LOG = Logger.getInstance(XmlDeclareIdInCommentAction.class);
+    private static final Logger LOG = Logger.getInstance(XmlDeclareIdInCommentAction.class);
 
-  private final String myId;
+    private final String myId;
 
-  public XmlDeclareIdInCommentAction(@Nonnull final String id) {
-    myId = id;
-  }
-
-  @Nonnull
-  public String getName() {
-    return XmlErrorLocalize.declareIdInCommentQuickfix().get();
-  }
-
-  @Nonnull
-  public String getFamilyName() {
-    return getName();
-  }
-
-  @Nullable
-  public static String getImplicitlyDeclaredId(@Nonnull final PsiComment comment) {
-    final String text = getUncommentedText(comment);
-    if (text == null) return null;
-
-    if (text.startsWith("@declare id=\"")) {
-      final String result = text.substring("@declare id=\"".length() - 1);
-      return StringUtil.unquoteString(result);
+    public XmlDeclareIdInCommentAction(@Nonnull final String id) {
+        myId = id;
     }
 
-    return null;
-  }
+    @Nonnull
+    public String getName() {
+        return XmlErrorLocalize.declareIdInCommentQuickfix().get();
+    }
 
-  @Nullable
-  private static String getUncommentedText(@Nonnull final PsiComment comment) {
-    final PsiFile psiFile = comment.getContainingFile();
-    final Language language = psiFile.getViewProvider().getBaseLanguage();
-    final Commenter commenter = Commenter.forLanguage(language);
-    if (commenter != null) {
-      String text = comment.getText();
+    @Nonnull
+    public String getFamilyName() {
+        return getName();
+    }
 
-      final String prefix = commenter.getBlockCommentPrefix();
-      if (prefix != null && text.startsWith(prefix)) {
-        text = text.substring(prefix.length());
-        final String suffix = commenter.getBlockCommentSuffix();
-        if (suffix != null && text.length() > suffix.length()) {
-          return text.substring(0, text.length() - suffix.length()).trim();
+    @Nullable
+    public static String getImplicitlyDeclaredId(@Nonnull final PsiComment comment) {
+        final String text = getUncommentedText(comment);
+        if (text == null) {
+            return null;
         }
-      }
+
+        if (text.startsWith("@declare id=\"")) {
+            final String result = text.substring("@declare id=\"".length() - 1);
+            return StringUtil.unquoteString(result);
+        }
+
+        return null;
     }
 
-    return null;
-  }
-
-  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-    final PsiElement psiElement = descriptor.getPsiElement();
-    final PsiFile psiFile = psiElement.getContainingFile();
-
-    new WriteCommandAction(project, psiFile) {
-      protected void run(final Result result) throws Throwable {
-        final XmlTag tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
-        if (tag == null) return;
-
+    @Nullable
+    private static String getUncommentedText(@Nonnull final PsiComment comment) {
+        final PsiFile psiFile = comment.getContainingFile();
         final Language language = psiFile.getViewProvider().getBaseLanguage();
         final Commenter commenter = Commenter.forLanguage(language);
-        if (commenter == null) return;
+        if (commenter != null) {
+            String text = comment.getText();
 
-        final PsiFile tempFile = PsiFileFactory.getInstance(project).createFileFromText("dummy", language.getAssociatedFileType(),
-            commenter.getBlockCommentPrefix() +
-                "@declare id=\"" +
-                myId +
-                "\"" +
-                commenter.getBlockCommentSuffix() +
-                "\n");
-
-        final XmlTag parent = tag.getParentTag();
-        if (parent != null && parent.isValid()) {
-          final XmlTag[] tags = parent.getSubTags();
-          if (tags.length > 0) {
-            final PsiFile psi = tempFile.getViewProvider().getPsi(language);
-            if (psi != null) {
-              final PsiElement element = psi.findElementAt(1);
-              if (element instanceof PsiComment) {
-                parent.getNode().addChild(element.getNode(), tags[0].getNode());
-              }
+            final String prefix = commenter.getBlockCommentPrefix();
+            if (prefix != null && text.startsWith(prefix)) {
+                text = text.substring(prefix.length());
+                final String suffix = commenter.getBlockCommentSuffix();
+                if (suffix != null && text.length() > suffix.length()) {
+                    return text.substring(0, text.length() - suffix.length()).trim();
+                }
             }
-          }
         }
-      }
-    }.execute();
-  }
+
+        return null;
+    }
+
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+        final PsiElement psiElement = descriptor.getPsiElement();
+        final PsiFile psiFile = psiElement.getContainingFile();
+
+        new WriteCommandAction(project, psiFile) {
+            protected void run(final Result result) throws Throwable {
+                final XmlTag tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
+                if (tag == null) {
+                    return;
+                }
+
+                final Language language = psiFile.getViewProvider().getBaseLanguage();
+                final Commenter commenter = Commenter.forLanguage(language);
+                if (commenter == null) {
+                    return;
+                }
+
+                final PsiFile tempFile = PsiFileFactory.getInstance(project).createFileFromText(
+                    "dummy",
+                    language.getAssociatedFileType(),
+                    commenter.getBlockCommentPrefix() +
+                        "@declare id=\"" + myId + "\"" +
+                        commenter.getBlockCommentSuffix() + "\n"
+                );
+
+                final XmlTag parent = tag.getParentTag();
+                if (parent != null && parent.isValid()) {
+                    final XmlTag[] tags = parent.getSubTags();
+                    if (tags.length > 0) {
+                        final PsiFile psi = tempFile.getViewProvider().getPsi(language);
+                        if (psi != null && psi.findElementAt(1) instanceof PsiComment comment) {
+                            parent.getNode().addChild(comment.getNode(), tags[0].getNode());
+                        }
+                    }
+                }
+            }
+        }.execute();
+    }
 }

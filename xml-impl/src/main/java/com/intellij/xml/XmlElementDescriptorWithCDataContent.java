@@ -20,5 +20,5 @@ import javax.annotation.Nonnull;
 import consulo.xml.psi.xml.XmlTag;
 
 public interface XmlElementDescriptorWithCDataContent {
-  boolean requiresCdataBracesInContext(@Nonnull XmlTag context);
+    boolean requiresCdataBracesInContext(@Nonnull XmlTag context);
 }
