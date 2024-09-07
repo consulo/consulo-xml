@@ -39,6 +39,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
@@ -52,6 +53,7 @@ import javax.annotation.Nullable;
 public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
     private static final Logger LOG = Logger.getInstance(XmlTagRenameHandler.class);
 
+    @Override
     public boolean isAvailableOnDataContext(final DataContext dataContext) {
         final PsiElement element = getElement(dataContext);
         if (element == null || PsiElementRenameHandler.isVetoed(element)) {
@@ -75,13 +77,15 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         return isDeclarationOutOfProjectOrAbsent(element.getProject(), dataContext);
     }
 
+    @Override
     public boolean isRenaming(final DataContext dataContext) {
         return isAvailableOnDataContext(dataContext);
     }
 
+    @Nonnull
     @Override
-    public String getActionTitle() {
-        return "Rename XML tag";
+    public LocalizeValue getActionTitleValue() {
+        return LocalizeValue.localizeTODO("Rename XML tag");
     }
 
     private static boolean isInplaceRenameAvailable(final Editor editor) {
@@ -147,6 +151,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         }
     }
 
+    @Override
     public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext) {
         if (!isRenaming(dataContext)) {
             return;
@@ -158,6 +163,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         invoke(editor, element, dataContext);
     }
 
+    @Override
     public void invoke(@Nonnull final Project project, @Nonnull final PsiElement[] elements, @Nullable final DataContext dataContext) {
         PsiElement element = elements.length == 1 ? elements[0] : null;
         if (element == null) {
