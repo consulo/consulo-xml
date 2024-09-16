@@ -18,7 +18,8 @@ package consulo.xml.codeInsight.template;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.CodeInsightBundle;
-import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.editor.localize.CodeInsightLocalize;
+import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
 import consulo.xml.lang.xml.XMLLanguage;
@@ -29,9 +30,9 @@ import javax.annotation.Nonnull;
  * @author yole
  */
 @ExtensionImpl
-public class XmlContextType extends TemplateContextType {
+public class XmlContextType extends BaseTemplateContextType {
   public XmlContextType() {
-    super("XML", CodeInsightBundle.message("dialog.edit.template.checkbox.xml"));
+    super("XML", CodeInsightLocalize.dialogEditTemplateCheckboxXml());
   }
 
   @Override

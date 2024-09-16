@@ -16,8 +16,8 @@
 package consulo.xml.codeInsight.template;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.editor.CodeInsightBundle;
-import consulo.language.editor.template.context.TemplateContextType;
+import consulo.language.editor.localize.CodeInsightLocalize;
+import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
@@ -33,9 +33,9 @@ import javax.annotation.Nonnull;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class HtmlTextContextType extends TemplateContextType {
+public class HtmlTextContextType extends BaseTemplateContextType {
   public HtmlTextContextType() {
-    super("HTML_TEXT", CodeInsightBundle.message("dialog.edit.template.checkbox.html.text"), HtmlContextType.class);
+    super("HTML_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxHtmlText(), HtmlContextType.class);
   }
 
   @Override
