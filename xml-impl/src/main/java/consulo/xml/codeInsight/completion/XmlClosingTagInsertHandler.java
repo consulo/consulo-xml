@@ -24,27 +24,25 @@ import consulo.language.editor.completion.lookup.InsertHandler;
 import consulo.language.editor.completion.lookup.InsertionContext;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 
-public class XmlClosingTagInsertHandler implements InsertHandler<LookupElement>
-{
-	public final static XmlClosingTagInsertHandler INSTANCE = new XmlClosingTagInsertHandler();
+public class XmlClosingTagInsertHandler implements InsertHandler<LookupElement> {
+    public final static XmlClosingTagInsertHandler INSTANCE = new XmlClosingTagInsertHandler();
 
-	private XmlClosingTagInsertHandler()
-	{
-	}
+    private XmlClosingTagInsertHandler() {
+    }
 
-	@Override
-	public void handleInsert(InsertionContext context, LookupElement item)
-	{
-		Editor editor = context.getEditor();
-		Document document = editor.getDocument();
-		Project project = context.getProject();
-		if(item instanceof LookupElementDecorator)
-		{
-			((LookupElementDecorator) item).getDelegate().handleInsert(context);
-		}
-		PsiDocumentManager.getInstance(project).commitDocument(document);
-		int lineOffset = document.getLineStartOffset(document.getLineNumber(editor.getCaretModel().getOffset()));
-		CodeStyleManager.getInstance(project).adjustLineIndent(document, lineOffset);
-	}
+    @Override
+    @RequiredUIAccess
+    public void handleInsert(InsertionContext context, LookupElement item) {
+        Editor editor = context.getEditor();
+        Document document = editor.getDocument();
+        Project project = context.getProject();
+        if (item instanceof LookupElementDecorator lookupElementDecorator) {
+            lookupElementDecorator.getDelegate().handleInsert(context);
+        }
+        PsiDocumentManager.getInstance(project).commitDocument(document);
+        int lineOffset = document.getLineStartOffset(document.getLineNumber(editor.getCaretModel().getOffset()));
+        CodeStyleManager.getInstance(project).adjustLineIndent(document, lineOffset);
+    }
 }
