@@ -58,10 +58,12 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
         addPanelToWatch(myPanel);
     }
 
+    @Override
     protected EditorHighlighter createHighlighter(final EditorColorsScheme scheme) {
         return XmlHighlighterFactory.createXMLHighlighter(scheme);
     }
 
+    @Override
     protected int getRightMargin() {
         return 60;
     }
@@ -91,6 +93,7 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
         }
     }
 
+    @Override
     protected void resetImpl(final CodeStyleSettings settings) {
         XmlCodeStyleSettings xmlSettings = settings.getCustomSettings(XmlCodeStyleSettings.class);
         myKeepBlankLines.setText(String.valueOf(xmlSettings.XML_KEEP_BLANK_LINES));
@@ -107,51 +110,22 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
         myKeepWhitespaceInsideCDATACheckBox.setSelected(xmlSettings.XML_KEEP_WHITE_SPACES_INSIDE_CDATA);
     }
 
+    @Override
     public boolean isModified(CodeStyleSettings settings) {
         XmlCodeStyleSettings xmlSettings = settings.getCustomSettings(XmlCodeStyleSettings.class);
-        if (myWrapText.isSelected() != wrapText(settings)) {
-            return true;
-        }
-        if (xmlSettings.XML_KEEP_BLANK_LINES != getIntValue(myKeepBlankLines)) {
-            return true;
-        }
-        if (xmlSettings.XML_ATTRIBUTE_WRAP != ourWrappings[myWrapAttributes.getSelectedIndex()]) {
-            return true;
-        }
-        if (xmlSettings.XML_ALIGN_ATTRIBUTES != myAlignAttributes.isSelected()) {
-            return true;
-        }
-        if (xmlSettings.XML_KEEP_WHITESPACES != myKeepWhiteSpaces.isSelected()) {
-            return true;
-        }
+        return myWrapText.isSelected() != wrapText(settings)
+            || xmlSettings.XML_KEEP_BLANK_LINES != getIntValue(myKeepBlankLines)
+            || xmlSettings.XML_ATTRIBUTE_WRAP != ourWrappings[myWrapAttributes.getSelectedIndex()]
+            || xmlSettings.XML_ALIGN_ATTRIBUTES != myAlignAttributes.isSelected()
+            || xmlSettings.XML_KEEP_WHITESPACES != myKeepWhiteSpaces.isSelected()
+            || xmlSettings.XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE != mySpacesAroundEquality.isSelected()
+            || xmlSettings.XML_SPACE_AFTER_TAG_NAME != mySpacesAfterTagName.isSelected()
+            || xmlSettings.XML_KEEP_LINE_BREAKS != myKeepLineBreaks.isSelected()
+            || xmlSettings.XML_KEEP_LINE_BREAKS_IN_TEXT != myKeepLineBreaksInText.isSelected()
+            || xmlSettings.XML_SPACE_INSIDE_EMPTY_TAG != myInEmptyTag.isSelected()
+            || xmlSettings.XML_WHITE_SPACE_AROUND_CDATA != myWhiteSpaceAroundCDATA.getSelectedIndex()
+            || xmlSettings.XML_KEEP_WHITE_SPACES_INSIDE_CDATA != this.myKeepWhitespaceInsideCDATACheckBox.isSelected();
 
-        if (xmlSettings.XML_SPACE_AROUND_EQUALITY_IN_ATTRIBUTE != mySpacesAroundEquality.isSelected()) {
-            return true;
-        }
-
-        if (xmlSettings.XML_SPACE_AFTER_TAG_NAME != mySpacesAfterTagName.isSelected()) {
-            return true;
-        }
-
-        if (xmlSettings.XML_KEEP_LINE_BREAKS != myKeepLineBreaks.isSelected()) {
-            return true;
-        }
-
-        if (xmlSettings.XML_KEEP_LINE_BREAKS_IN_TEXT != myKeepLineBreaksInText.isSelected()) {
-            return true;
-        }
-
-        if (xmlSettings.XML_SPACE_INSIDE_EMPTY_TAG != myInEmptyTag.isSelected()) {
-            return true;
-        }
-        if (xmlSettings.XML_WHITE_SPACE_AROUND_CDATA != myWhiteSpaceAroundCDATA.getSelectedIndex()) {
-            return true;
-        }
-        if (xmlSettings.XML_KEEP_WHITE_SPACES_INSIDE_CDATA != this.myKeepWhitespaceInsideCDATACheckBox.isSelected()) {
-            return true;
-        }
-
-        return false;
     }
 
     private boolean wrapText(final CodeStyleSettings settings) {
@@ -159,19 +133,23 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
         return xmlSettings.XML_TEXT_WRAP == CodeStyleSettings.WRAP_AS_NEEDED;
     }
 
+    @Override
     public JComponent getPanel() {
         return myPanel;
     }
 
+    @Override
     protected String getPreviewText() {
         return readFromFile(getClass(), "preview.xml.template");
     }
 
     @Nonnull
+    @Override
     protected FileType getFileType() {
         return XmlFileType.INSTANCE;
     }
 
+    @Override
     protected void prepareForReformat(final PsiFile psiFile) {
         //psiFile.putUserData(PsiUtil.FILE_LANGUAGE_LEVEL_KEY, LanguageLevel.HIGHEST);
     }

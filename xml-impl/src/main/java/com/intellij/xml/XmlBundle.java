@@ -15,12 +15,18 @@
  */
 package com.intellij.xml;
 
+import consulo.annotation.DeprecationInfo;
+import consulo.annotation.internal.MigratedExtensionsTo;
 import consulo.component.util.localize.AbstractBundle;
+import consulo.xml.impl.localize.XmlLocalize;
 import org.jetbrains.annotations.PropertyKey;
 
 /**
  * @author lesya
  */
+@Deprecated
+@DeprecationInfo("Use XmlLocalize")
+@MigratedExtensionsTo(XmlLocalize.class)
 public class XmlBundle extends AbstractBundle {
   public static final String PATH_TO_BUNDLE = "messages.XmlBundle";
   private static final XmlBundle ourInstance = new XmlBundle();

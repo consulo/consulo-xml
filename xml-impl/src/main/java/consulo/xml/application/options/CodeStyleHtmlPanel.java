@@ -16,12 +16,14 @@
 package consulo.xml.application.options;
 
 import consulo.application.AllIcons;
-import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.colorScheme.EditorColorsScheme;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.awt.JBScrollPane;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import consulo.util.collection.ArrayUtil;
@@ -38,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
     private JTextField myKeepBlankLines;
@@ -70,12 +73,12 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
         fillWrappingCombo(myWrapAttributes);
 
-        customizeField(ApplicationBundle.message("title.insert.new.line.before.tags"), myInsertNewLineTagNames);
-        customizeField(ApplicationBundle.message("title.remove.line.breaks.before.tags"), myRemoveNewLineTagNames);
-        customizeField(ApplicationBundle.message("title.do.not.indent.children.of"), myDoNotAlignChildrenTagNames);
-        customizeField(ApplicationBundle.message("title.inline.elements"), myInlineElementsTagNames);
-        customizeField(ApplicationBundle.message("title.keep.whitespaces.inside"), myKeepWhiteSpacesTagNames);
-        customizeField(ApplicationBundle.message("title.dont.wrap.if.inline.content"), myDontBreakIfInlineContent);
+        customizeField(ApplicationLocalize.titleInsertNewLineBeforeTags(), myInsertNewLineTagNames);
+        customizeField(ApplicationLocalize.titleRemoveLineBreaksBeforeTags(), myRemoveNewLineTagNames);
+        customizeField(ApplicationLocalize.titleDoNotIndentChildrenOf(), myDoNotAlignChildrenTagNames);
+        customizeField(ApplicationLocalize.titleInlineElements(), myInlineElementsTagNames);
+        customizeField(ApplicationLocalize.titleKeepWhitespacesInside(), myKeepWhiteSpacesTagNames);
+        customizeField(ApplicationLocalize.titleDontWrapIfInlineContent(), myDontBreakIfInlineContent);
 
         myInsertNewLineTagNames.getTextField().setColumns(5);
         myRemoveNewLineTagNames.getTextField().setColumns(5);
@@ -84,10 +87,10 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         myInlineElementsTagNames.getTextField().setColumns(5);
         myDontBreakIfInlineContent.getTextField().setColumns(5);
 
-
         addPanelToWatch(myPanel);
     }
 
+    @Override
     protected EditorHighlighter createHighlighter(final EditorColorsScheme scheme) {
         return XmlHighlighterFactory.createXMLHighlighter(scheme);
     }
@@ -102,12 +105,14 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         };
     }
 
-    private static void customizeField(final String title, final TextFieldWithBrowseButton uiField) {
+    private static void customizeField(@Nonnull final LocalizeValue title, final TextFieldWithBrowseButton uiField) {
         uiField.getTextField().setEditable(false);
         uiField.setButtonIcon(AllIcons.Actions.ShowViewer);
         uiField.addActionListener(new ActionListener() {
+            @Override
+            @RequiredUIAccess
             public void actionPerformed(ActionEvent e) {
-                final TagListDialog tagListDialog = new TagListDialog(title);
+                final TagListDialog tagListDialog = new TagListDialog(title.get());
                 tagListDialog.setData(createCollectionOn(uiField.getText()));
                 tagListDialog.show();
                 if (tagListDialog.isOK()) {
@@ -121,18 +126,19 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
 
             private ArrayList<String> createCollectionOn(final String data) {
                 if (data == null) {
-                    return new ArrayList<String>();
+                    return new ArrayList<>();
                 }
-                return new ArrayList<String>(Arrays.asList(data.split(",")));
+                return new ArrayList<>(Arrays.asList(data.split(",")));
             }
-
         });
     }
 
+    @Override
     protected int getRightMargin() {
         return 60;
     }
 
+    @Override
     public void apply(CodeStyleSettings settings) {
         settings.HTML_KEEP_BLANK_LINES = getIntValue(myKeepBlankLines);
         settings.HTML_ATTRIBUTE_WRAP = ourWrappings[myWrapAttributes.getSelectedIndex()];
@@ -164,6 +170,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         }
     }
 
+    @Override
     protected void resetImpl(final CodeStyleSettings settings) {
         myKeepBlankLines.setText(String.valueOf(settings.HTML_KEEP_BLANK_LINES));
         myWrapAttributes.setSelectedIndex(getIndexForWrapping(settings.HTML_ATTRIBUTE_WRAP));
@@ -186,94 +193,45 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         myKeepWhiteSpacesTagNames.setText(settings.HTML_KEEP_WHITESPACES_INSIDE);
     }
 
+    @Override
     public boolean isModified(CodeStyleSettings settings) {
-        if (settings.HTML_KEEP_BLANK_LINES != getIntValue(myKeepBlankLines)) {
-            return true;
-        }
-        if (settings.HTML_ATTRIBUTE_WRAP != ourWrappings[myWrapAttributes.getSelectedIndex()]) {
-            return true;
-        }
-
-        if ((settings.HTML_TEXT_WRAP == CodeStyleSettings.WRAP_AS_NEEDED) != myWrapText.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_SPACE_INSIDE_EMPTY_TAG != mySpaceInEmptyTag.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_ALIGN_ATTRIBUTES != myAlignAttributes.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_ALIGN_TEXT != myAlignText.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_KEEP_WHITESPACES != myKeepWhiteSpaces.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_SPACE_AROUND_EQUALITY_IN_ATTRINUTE != mySpacesAroundEquality.isSelected()) {
-            return true;
-        }
-
-        if (settings.HTML_SPACE_AFTER_TAG_NAME != mySpacesAroundTagName.isSelected()) {
-            return true;
-        }
-
-        if (!Comparing.equal(settings.HTML_ELEMENTS_TO_INSERT_NEW_LINE_BEFORE, myInsertNewLineTagNames.getText().trim())) {
-            return true;
-        }
-
-        if (!Comparing.equal(settings.HTML_ELEMENTS_TO_REMOVE_NEW_LINE_BEFORE, myRemoveNewLineTagNames.getText().trim())) {
-            return true;
-        }
-
-        if (!Comparing.equal(settings.HTML_DO_NOT_INDENT_CHILDREN_OF, myDoNotAlignChildrenTagNames.getText().trim())) {
-            return true;
-        }
-
-        if (settings.HTML_DO_NOT_ALIGN_CHILDREN_OF_MIN_LINES != getIntValue(myDoNotAlignChildrenMinSize)) {
-            return true;
-        }
-
-        if (!Comparing.equal(settings.HTML_INLINE_ELEMENTS, myInlineElementsTagNames.getText().trim())) {
-            return true;
-        }
-        if (!Comparing.equal(settings.HTML_DONT_ADD_BREAKS_IF_INLINE_CONTENT, myDontBreakIfInlineContent.getText().trim())) {
-            return true;
-        }
-
-        if (!Comparing.equal(settings.HTML_KEEP_WHITESPACES_INSIDE, myKeepWhiteSpacesTagNames.getText().trim())) {
-            return true;
-        }
-
-        if (myShouldKeepBlankLines.isSelected() != settings.HTML_KEEP_LINE_BREAKS) {
-            return true;
-        }
-
-        if (myShouldKeepLineBreaksInText.isSelected() != settings.HTML_KEEP_LINE_BREAKS_IN_TEXT) {
-            return true;
-        }
-
-        return false;
+        return settings.HTML_KEEP_BLANK_LINES != getIntValue(myKeepBlankLines)
+            || settings.HTML_ATTRIBUTE_WRAP != ourWrappings[myWrapAttributes.getSelectedIndex()]
+            || (settings.HTML_TEXT_WRAP == CodeStyleSettings.WRAP_AS_NEEDED) != myWrapText.isSelected()
+            || settings.HTML_SPACE_INSIDE_EMPTY_TAG != mySpaceInEmptyTag.isSelected()
+            || settings.HTML_ALIGN_ATTRIBUTES != myAlignAttributes.isSelected()
+            || settings.HTML_ALIGN_TEXT != myAlignText.isSelected()
+            || settings.HTML_KEEP_WHITESPACES != myKeepWhiteSpaces.isSelected()
+            || settings.HTML_SPACE_AROUND_EQUALITY_IN_ATTRINUTE != mySpacesAroundEquality.isSelected()
+            || settings.HTML_SPACE_AFTER_TAG_NAME != mySpacesAroundTagName.isSelected()
+            || !Objects.equals(settings.HTML_ELEMENTS_TO_INSERT_NEW_LINE_BEFORE, myInsertNewLineTagNames.getText().trim())
+            || !Objects.equals(settings.HTML_ELEMENTS_TO_REMOVE_NEW_LINE_BEFORE, myRemoveNewLineTagNames.getText().trim())
+            || !Objects.equals(settings.HTML_DO_NOT_INDENT_CHILDREN_OF, myDoNotAlignChildrenTagNames.getText().trim())
+            || settings.HTML_DO_NOT_ALIGN_CHILDREN_OF_MIN_LINES != getIntValue(myDoNotAlignChildrenMinSize)
+            || !Comparing.equal(settings.HTML_INLINE_ELEMENTS, myInlineElementsTagNames.getText().trim())
+            || !Objects.equals(settings.HTML_DONT_ADD_BREAKS_IF_INLINE_CONTENT, myDontBreakIfInlineContent.getText().trim())
+            || !Objects.equals(settings.HTML_KEEP_WHITESPACES_INSIDE, myKeepWhiteSpacesTagNames.getText().trim())
+            || myShouldKeepBlankLines.isSelected() != settings.HTML_KEEP_LINE_BREAKS
+            || myShouldKeepLineBreaksInText.isSelected() != settings.HTML_KEEP_LINE_BREAKS_IN_TEXT;
     }
 
+    @Override
     public JComponent getPanel() {
         return myPanel;
     }
 
+    @Override
     protected String getPreviewText() {
         return readFromFile(this.getClass(), "preview.html.template");
-
     }
 
     @Nonnull
+    @Override
     protected FileType getFileType() {
         return HtmlFileType.INSTANCE;
     }
 
+    @Override
     protected void prepareForReformat(final PsiFile psiFile) {
         //psiFile.putUserData(PsiUtil.FILE_LANGUAGE_LEVEL_KEY, LanguageLevel.HIGHEST);
     }
