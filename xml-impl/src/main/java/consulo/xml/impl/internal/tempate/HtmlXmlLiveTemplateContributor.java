@@ -1,4 +1,4 @@
-package consulo.xml;
+package consulo.xml.impl.internal.tempate;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.localize.CodeInsightLocalize;
