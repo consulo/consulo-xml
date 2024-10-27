@@ -19,7 +19,7 @@ public class XslLiveTemplateContributor implements LiveTemplateContributor {
     @Override
     @Nonnull
     public LocalizeValue groupName() {
-        return LocalizeValue.localizeTODO("xsl");
+        return LocalizeValue.localizeTODO("XSL");
     }
 
     @Override
