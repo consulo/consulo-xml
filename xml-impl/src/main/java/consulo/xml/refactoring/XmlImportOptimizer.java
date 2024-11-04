@@ -17,12 +17,6 @@ package consulo.xml.refactoring;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.codeInsight.daemon.impl.analysis.XmlUnusedNamespaceInspection;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.QuickFix;
@@ -34,13 +28,17 @@ import consulo.language.psi.PsiRecursiveElementVisitor;
 import consulo.language.psi.SmartPsiElementPointer;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
-import consulo.util.collection.ContainerUtil;
-import consulo.util.lang.function.Condition;
+import consulo.xml.codeInsight.daemon.impl.analysis.XmlUnusedNamespaceInspection;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * @author Dmitry Avdeev
@@ -50,13 +48,11 @@ import java.util.Map;
 public class XmlImportOptimizer implements ImportOptimizer {
   
   private final XmlUnusedNamespaceInspection myInspection = new XmlUnusedNamespaceInspection();
-  private final Condition<ProblemDescriptor> myCondition = new Condition<ProblemDescriptor>() {
-    @Override
-    public boolean value(ProblemDescriptor descriptor) {
-      PsiElement element = descriptor.getPsiElement();
-      PsiElement parent = element.getParent();
-      return parent != null && !myInspection.isSuppressedFor(parent);
-    }
+
+  private final Predicate<ProblemDescriptor> myCondition = descriptor -> {
+    PsiElement element = descriptor.getPsiElement();
+    PsiElement parent = element.getParent();
+    return parent != null && !myInspection.isSuppressedFor(parent);
   };
 
   @Override
@@ -72,8 +68,9 @@ public class XmlImportOptimizer implements ImportOptimizer {
       public void run() {
         XmlFile xmlFile = (XmlFile)file;
         Project project = xmlFile.getProject();
-        ProblemsHolder holder = new ProblemsHolder(InspectionManager.getInstance(project), xmlFile, false);
-        final XmlElementVisitor visitor = (XmlElementVisitor)myInspection.buildVisitor(holder, false);
+        InspectionManager manager = InspectionManager.getInstance(project);
+        ProblemsHolder holder = manager.createProblemsHolder(file, false);
+        XmlElementVisitor visitor = (XmlElementVisitor)myInspection.buildVisitor(holder, false);
         new PsiRecursiveElementVisitor() {
           @Override
           public void visitElement(PsiElement element) {
@@ -87,10 +84,13 @@ public class XmlImportOptimizer implements ImportOptimizer {
         }.visitFile(xmlFile);
         ProblemDescriptor[] results = holder.getResultsArray();
         ArrayUtil.reverseArray(results);
-        List<ProblemDescriptor> list = ContainerUtil.filter(results, myCondition);
 
-        Map<XmlUnusedNamespaceInspection.RemoveNamespaceDeclarationFix, ProblemDescriptor> fixes = new LinkedHashMap<XmlUnusedNamespaceInspection.RemoveNamespaceDeclarationFix, ProblemDescriptor>();
-        for (ProblemDescriptor result : list) {
+        Map<XmlUnusedNamespaceInspection.RemoveNamespaceDeclarationFix, ProblemDescriptor> fixes = new LinkedHashMap<>();
+        for (ProblemDescriptor result : results) {
+          if (!myCondition.test(result)) {
+            continue;
+          }
+
           for (QuickFix fix : result.getFixes()) {
             if (fix instanceof XmlUnusedNamespaceInspection.RemoveNamespaceDeclarationFix) {
               fixes.put((XmlUnusedNamespaceInspection.RemoveNamespaceDeclarationFix)fix, result);
