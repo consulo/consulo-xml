@@ -17,7 +17,7 @@ package consulo.xml.codeInsight.daemon.impl.quickfix;
 
 import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
-import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 /**
  * @author mike
  */
-abstract class BaseExtResourceAction implements IntentionAction
+abstract class BaseExtResourceAction implements SyntheticIntentionAction
 {
 	public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
 	{
