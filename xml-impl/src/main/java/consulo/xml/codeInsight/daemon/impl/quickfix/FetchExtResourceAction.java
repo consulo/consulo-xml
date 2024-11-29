@@ -17,8 +17,8 @@ package consulo.xml.codeInsight.daemon.impl.quickfix;
 
 import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
-import consulo.application.AccessToken;
 import consulo.application.ApplicationManager;
+import consulo.application.WriteAction;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
 import consulo.application.progress.Task;
@@ -185,18 +185,12 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
     LOG.assertTrue(extResources.mkdirs() || extResources.exists(), extResources);
 
     final PsiManager psiManager = PsiManager.getInstance(project);
-    ApplicationManager.getApplication().invokeAndWait(new Runnable() {
-      @Override
-      public void run() {
-        @SuppressWarnings("deprecation") final AccessToken token = ApplicationManager.getApplication().acquireWriteActionLock(FetchExtResourceAction.class);
-        try {
-          final String path = FileUtil.toSystemIndependentName(extResources.getAbsolutePath());
-          final VirtualFile vFile = LocalFileSystem.getInstance().refreshAndFindFileByPath(path);
-          LOG.assertTrue(vFile != null, path);
-        } finally {
-          token.finish();
-        }
-      }
+    ApplicationManager.getApplication().invokeAndWait(() -> {
+      WriteAction.run(() -> {
+        final String path = FileUtil.toSystemIndependentName(extResources.getAbsolutePath());
+        final VirtualFile vFile = LocalFileSystem.getInstance().refreshAndFindFileByPath(path);
+        LOG.assertTrue(vFile != null, path); 
+      });
     }, indicator.getModalityState());
 
     final List<String> downloadedResources = new LinkedList<String>();
