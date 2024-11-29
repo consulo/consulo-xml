@@ -25,6 +25,7 @@ import consulo.configurable.StandardConfigurableIds;
 import consulo.disposer.Disposable;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.JBColor;
 import consulo.ui.ex.awt.AddEditRemovePanel;
 import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.table.JBTable;
@@ -344,7 +345,12 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
                     path = LocalFileSystem.getInstance().findFileByPath(loc);
                 }
 
-                setForeground(path != null ? isSelected ? UIUtil.getTableSelectionForeground() : Color.black : new Color(210, 0, 0));
+                if (path != null) {
+                    setForeground(UIUtil.getTableForeground(isSelected));
+                }
+                else {
+                    setForeground(JBColor.RED);
+                }
             }
             return rendererComponent;
         }
