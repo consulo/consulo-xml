@@ -42,6 +42,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
+import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
@@ -361,10 +362,11 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
       resPath += Integer.toHexString(resourceUrl.hashCode()) + "_" + resourceUrl.substring(slashIndex + 1);
     }
 
-    final int lastDoPosInResourceUrl = resourceUrl.lastIndexOf('.', slashIndex);
-    if (lastDoPosInResourceUrl == -1 || FileTypeManager.getInstance().getFileTypeByExtension(resourceUrl.substring(lastDoPosInResourceUrl + 1)) == UnknownFileType.INSTANCE) {
+    final int lastDoPosInResourceUrl = StringUtil.lastIndexOf(resourceUrl, '.', slashIndex, resourceUrl.length());
+    String extension = resourceUrl.substring(lastDoPosInResourceUrl + 1);
+    if (lastDoPosInResourceUrl == -1 || FileTypeManager.getInstance().getFileTypeByExtension(extension) == UnknownFileType.INSTANCE) {
       // remote url does not contain file with extension
-      final String extension = result.contentType != null && result.contentType.contains(HTML_MIME) ? HtmlFileType.INSTANCE.getDefaultExtension() : XmlFileType.INSTANCE.getDefaultExtension();
+      extension = result.contentType != null && result.contentType.contains(HTML_MIME) ? HtmlFileType.INSTANCE.getDefaultExtension() : XmlFileType.INSTANCE.getDefaultExtension();
       resPath += "." + extension;
     }
 
