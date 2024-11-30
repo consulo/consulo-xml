@@ -16,8 +16,8 @@
 
 package consulo.xml.util.xml.tree.actions;
 
-import consulo.application.AllIcons;
 import consulo.application.presentation.TypePresentationService;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.ToggleAction;
 import consulo.ui.image.Image;
@@ -42,11 +42,11 @@ public class DomElementsToggleAction extends ToggleAction {
     myTreeView = treeView;
     myClass = aClass;
 
-    Image myIcon = ElementPresentationManager.getIcon(myClass);
-    if (myIcon == null) {
-      myIcon = AllIcons.Nodes.Pointcut;
+    Image icon = ElementPresentationManager.getIcon(myClass);
+    if (icon == null) {
+      icon = PlatformIconGroup.nodesProperty();
     }
-    this.myIcon = myIcon;
+    myIcon = icon;
 
     myText = TypePresentationService.getInstance().getTypeNameOrStub(myClass);
 
