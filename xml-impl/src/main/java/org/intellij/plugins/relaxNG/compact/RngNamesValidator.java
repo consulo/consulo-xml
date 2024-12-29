@@ -6,7 +6,7 @@ import consulo.language.editor.refactoring.NamesValidator;
 import consulo.project.Project;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RngNamesValidator implements NamesValidator

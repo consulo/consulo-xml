@@ -33,7 +33,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

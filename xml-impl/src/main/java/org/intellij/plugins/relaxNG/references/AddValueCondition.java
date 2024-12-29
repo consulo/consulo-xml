@@ -20,7 +20,7 @@ import consulo.language.pattern.PatternCondition;
 import consulo.language.util.ProcessingContext;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Set;
 
 class AddValueCondition<T> extends PatternCondition<T> {

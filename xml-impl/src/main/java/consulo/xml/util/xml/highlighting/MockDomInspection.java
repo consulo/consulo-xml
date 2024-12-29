@@ -19,7 +19,7 @@ import consulo.xml.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

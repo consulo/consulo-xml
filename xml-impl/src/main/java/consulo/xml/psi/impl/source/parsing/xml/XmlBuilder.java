@@ -21,7 +21,7 @@ package consulo.xml.psi.impl.source.parsing.xml;
 
 import consulo.localize.LocalizeValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public interface XmlBuilder {
   void doctype(@Nullable final CharSequence publicId, @Nullable final CharSequence systemId, final int startOffset, final int endOffset);

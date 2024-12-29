@@ -22,7 +22,7 @@ import consulo.ui.image.Image;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.localize.XmlLocalize;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class DTDFileType extends LanguageFileType {
   public static final DTDFileType INSTANCE = new DTDFileType();

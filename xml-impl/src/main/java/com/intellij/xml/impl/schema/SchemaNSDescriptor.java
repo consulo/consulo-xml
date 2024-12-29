@@ -24,7 +24,7 @@ import consulo.language.psi.PsiElement;
 import consulo.xml.Validator;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 
 /**

@@ -30,8 +30,8 @@ import consulo.language.psi.PsiFile;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class DtdStructureViewBuilderFactory implements PsiStructureViewFactory

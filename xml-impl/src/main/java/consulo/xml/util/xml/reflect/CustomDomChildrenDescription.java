@@ -19,8 +19,8 @@ package consulo.xml.util.xml.reflect;
 import consulo.language.pom.PomTarget;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.Collections;

@@ -27,7 +27,7 @@ import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky

@@ -23,8 +23,8 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.util.xml.DomElement;
 import consulo.language.editor.inspection.ProblemHighlightType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 

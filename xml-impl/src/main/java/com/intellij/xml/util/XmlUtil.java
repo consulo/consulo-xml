@@ -75,8 +75,8 @@ import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.File;
 import java.net.URL;
 import java.util.*;

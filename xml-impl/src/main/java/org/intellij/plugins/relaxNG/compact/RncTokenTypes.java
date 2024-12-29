@@ -22,7 +22,7 @@ import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.collection.primitive.ints.IntObjectMap;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.Locale;
 

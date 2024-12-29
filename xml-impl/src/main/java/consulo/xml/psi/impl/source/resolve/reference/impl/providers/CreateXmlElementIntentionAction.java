@@ -36,7 +36,7 @@ import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
   private final String myMessageKey;

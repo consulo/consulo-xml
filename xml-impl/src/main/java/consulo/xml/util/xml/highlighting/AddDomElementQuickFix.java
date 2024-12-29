@@ -16,7 +16,7 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;

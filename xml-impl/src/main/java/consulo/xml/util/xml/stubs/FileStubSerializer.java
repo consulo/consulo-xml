@@ -18,7 +18,7 @@ package consulo.xml.util.xml.stubs;
 import consulo.language.psi.stub.*;
 import consulo.util.xml.fastReader.XmlFileHeader;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.IOException;
 
 /**

@@ -46,8 +46,8 @@ import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;
 import org.kohsuke.rngom.nc.NameClass;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
 

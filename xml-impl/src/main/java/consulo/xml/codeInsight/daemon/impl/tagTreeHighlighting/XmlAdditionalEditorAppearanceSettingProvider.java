@@ -13,7 +13,7 @@ import consulo.ui.util.Indenter;
 import consulo.ui.util.LabeledBuilder;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.function.Consumer;
 
 /**

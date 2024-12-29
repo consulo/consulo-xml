@@ -18,7 +18,7 @@ package com.intellij.xml.impl.schema;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;

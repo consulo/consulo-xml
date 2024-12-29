@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.impl.dom;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
@@ -30,7 +30,7 @@ import com.intellij.xml.NamespaceAwareXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author mike

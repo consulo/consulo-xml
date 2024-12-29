@@ -17,8 +17,8 @@ package consulo.xml.util.xml.impl;
 
 import consulo.xml.util.xml.XmlName;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 /**

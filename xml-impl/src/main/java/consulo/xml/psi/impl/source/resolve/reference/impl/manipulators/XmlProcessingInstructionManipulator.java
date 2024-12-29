@@ -22,7 +22,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * User: anna

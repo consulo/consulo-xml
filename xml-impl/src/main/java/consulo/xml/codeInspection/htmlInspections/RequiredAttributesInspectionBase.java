@@ -27,7 +27,7 @@ import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
   protected static final Logger LOG = Logger.getInstance(RequiredAttributesInspectionBase.class);

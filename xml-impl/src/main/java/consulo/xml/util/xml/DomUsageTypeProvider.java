@@ -24,7 +24,7 @@ import consulo.usage.UsageTypeProvider;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Gregory.Shrago

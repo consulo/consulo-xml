@@ -10,7 +10,7 @@ import consulo.util.collection.MultiMap;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.lexer.DtdLexer;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

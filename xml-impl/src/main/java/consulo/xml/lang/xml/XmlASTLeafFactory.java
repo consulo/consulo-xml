@@ -24,8 +24,8 @@ import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import consulo.xml.psi.tree.xml.IXmlLeafElementType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import static consulo.xml.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
 

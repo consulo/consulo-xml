@@ -8,8 +8,8 @@ import consulo.language.psi.PsiFile;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL

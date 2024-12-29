@@ -24,7 +24,7 @@ import consulo.language.editor.completion.CompletionResultSet;
 import consulo.language.editor.completion.CompletionType;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

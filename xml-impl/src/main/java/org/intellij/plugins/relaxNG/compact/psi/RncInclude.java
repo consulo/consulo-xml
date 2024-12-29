@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.intellij.plugins.relaxNG.model.Include;
 

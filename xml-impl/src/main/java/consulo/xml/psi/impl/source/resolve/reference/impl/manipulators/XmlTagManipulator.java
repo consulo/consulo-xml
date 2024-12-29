@@ -24,7 +24,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlText;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Objects;
 
 /**

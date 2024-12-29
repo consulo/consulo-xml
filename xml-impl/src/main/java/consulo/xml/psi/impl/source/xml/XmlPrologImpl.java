@@ -25,7 +25,7 @@ import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlProlog;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike

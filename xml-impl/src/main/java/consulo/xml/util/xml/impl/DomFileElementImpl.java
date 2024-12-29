@@ -15,8 +15,8 @@ import consulo.xml.util.xml.reflect.*;
 import consulo.xml.util.xml.stubs.FileStub;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collections;

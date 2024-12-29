@@ -23,7 +23,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomService;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.function.Function;
 
 /**

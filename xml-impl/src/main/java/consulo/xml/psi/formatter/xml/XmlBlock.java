@@ -37,8 +37,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.SmartList;
 import consulo.language.codeStyle.Wrap;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;

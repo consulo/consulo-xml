@@ -31,8 +31,8 @@ import consulo.util.collection.ContainerUtil;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Set;

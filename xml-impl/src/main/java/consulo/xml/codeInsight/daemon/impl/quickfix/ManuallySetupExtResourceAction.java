@@ -24,7 +24,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.MapExternalResourceDialog;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author mike

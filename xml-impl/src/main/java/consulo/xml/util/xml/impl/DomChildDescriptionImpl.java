@@ -3,7 +3,7 @@ package consulo.xml.util.xml.impl;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomChildrenDescription;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.Type;
 

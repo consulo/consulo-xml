@@ -17,7 +17,7 @@ package com.intellij.xml.util;
 
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;

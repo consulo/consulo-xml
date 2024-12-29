@@ -20,7 +20,7 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.util.xml.SubTag;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

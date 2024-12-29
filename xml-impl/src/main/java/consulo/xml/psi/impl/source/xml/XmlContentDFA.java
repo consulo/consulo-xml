@@ -18,8 +18,8 @@ package consulo.xml.psi.impl.source.xml;
 import consulo.language.template.TemplateLanguageUtil;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 

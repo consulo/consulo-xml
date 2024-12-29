@@ -8,7 +8,7 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.application.AllIcons;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

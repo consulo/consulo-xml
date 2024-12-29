@@ -20,7 +20,7 @@ import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiReference;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky

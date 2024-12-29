@@ -7,7 +7,7 @@ import consulo.language.editor.refactoring.inline.InlineHandler;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky

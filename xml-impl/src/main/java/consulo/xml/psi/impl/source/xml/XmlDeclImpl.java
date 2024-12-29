@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiElementVisitor;
 import consulo.xml.psi.XmlElementVisitor;

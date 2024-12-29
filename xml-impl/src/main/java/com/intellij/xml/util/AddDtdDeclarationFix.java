@@ -34,7 +34,7 @@ import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class AddDtdDeclarationFix implements LocalQuickFix {
     private final String myMessageKey;

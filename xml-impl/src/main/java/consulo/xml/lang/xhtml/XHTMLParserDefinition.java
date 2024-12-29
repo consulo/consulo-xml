@@ -28,7 +28,7 @@ import consulo.xml.lexer.XHtmlLexer;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.xml.psi.xml.XmlElementType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author max

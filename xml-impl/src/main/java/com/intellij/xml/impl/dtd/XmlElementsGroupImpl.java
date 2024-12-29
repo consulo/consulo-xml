@@ -21,7 +21,7 @@ import consulo.application.util.NotNullLazyValue;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlContentParticle;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

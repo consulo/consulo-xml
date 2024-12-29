@@ -27,8 +27,8 @@ import consulo.util.jdom.JDOMUtil;
 import consulo.util.xml.serializer.annotation.Tag;
 import org.jdom.Document;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashSet;

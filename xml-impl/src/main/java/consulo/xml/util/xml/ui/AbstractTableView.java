@@ -40,7 +40,7 @@ import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;

@@ -20,7 +20,7 @@ import consulo.ui.ex.awt.DialogWrapper;
 import consulo.project.Project;
 import consulo.ui.ex.awt.JBTabbedPane;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Map;

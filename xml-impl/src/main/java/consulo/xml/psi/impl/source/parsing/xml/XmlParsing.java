@@ -23,8 +23,8 @@ import consulo.localize.LocalizeValue;
 import consulo.util.collection.Stack;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import static consulo.xml.psi.xml.XmlElementType.*;
 

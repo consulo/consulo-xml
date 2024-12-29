@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.compact.parser;
 import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import consulo.language.ast.ASTNode;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.ast.IElementType;

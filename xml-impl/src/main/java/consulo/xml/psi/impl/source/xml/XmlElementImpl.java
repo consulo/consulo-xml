@@ -40,8 +40,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.scope.GlobalSearchScope;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class XmlElementImpl extends CompositePsiElement implements XmlElement {
   public XmlElementImpl(IElementType type) {

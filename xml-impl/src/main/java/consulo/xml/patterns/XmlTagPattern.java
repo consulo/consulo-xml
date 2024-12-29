@@ -18,7 +18,7 @@ package consulo.xml.patterns;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.InitialPatternCondition;
@@ -27,7 +27,7 @@ import consulo.language.pattern.StandardPatterns;
 import consulo.language.psi.meta.PsiMetaData;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import consulo.util.lang.Comparing;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.ProcessingContext;

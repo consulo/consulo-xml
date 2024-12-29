@@ -28,7 +28,7 @@ import consulo.xml.impl.internal.ExternalResource;
 import consulo.xml.impl.internal.StandardExternalResourceData;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

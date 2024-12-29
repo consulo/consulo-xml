@@ -39,7 +39,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xml", order = "before line")
 class XmlMover extends LineMover

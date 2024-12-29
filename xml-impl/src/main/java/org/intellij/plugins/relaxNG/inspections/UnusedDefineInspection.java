@@ -52,7 +52,7 @@ import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * User: sweinreuter

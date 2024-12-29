@@ -15,7 +15,7 @@
  */
 package com.intellij.html.impl.providers;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.language.psi.PsiElement;

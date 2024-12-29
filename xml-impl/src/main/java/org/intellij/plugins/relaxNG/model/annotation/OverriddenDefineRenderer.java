@@ -19,8 +19,8 @@ package org.intellij.plugins.relaxNG.model.annotation;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.application.AllIcons;
 import consulo.application.dumb.DumbAware;

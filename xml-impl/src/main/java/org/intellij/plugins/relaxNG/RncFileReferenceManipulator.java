@@ -25,7 +25,7 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

@@ -25,7 +25,7 @@ import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:defineElemType interface.

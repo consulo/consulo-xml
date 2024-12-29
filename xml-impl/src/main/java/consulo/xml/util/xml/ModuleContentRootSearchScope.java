@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.content.ModuleRootManager;

@@ -17,7 +17,7 @@ package consulo.xml.util.xml;
 
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

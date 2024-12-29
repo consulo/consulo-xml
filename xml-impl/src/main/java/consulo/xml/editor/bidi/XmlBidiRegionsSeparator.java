@@ -22,7 +22,7 @@ import consulo.language.editor.bidi.TokenSetBidiRegionsSeparator;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlBidiRegionsSeparator extends TokenSetBidiRegionsSeparator

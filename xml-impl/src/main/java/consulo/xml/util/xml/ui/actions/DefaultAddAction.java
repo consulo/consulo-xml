@@ -18,8 +18,8 @@ package consulo.xml.util.xml.ui.actions;
 
 import java.lang.reflect.Type;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.application.Result;
 import consulo.ui.ex.action.AnAction;

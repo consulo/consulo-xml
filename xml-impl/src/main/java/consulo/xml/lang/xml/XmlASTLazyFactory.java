@@ -24,8 +24,8 @@ import consulo.language.impl.psi.template.TemplateDataElementType;
 import consulo.xml.psi.impl.source.tree.HtmlFileElement;
 import consulo.xml.psi.impl.source.tree.XmlFileElement;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import static consulo.xml.psi.xml.XmlElementType.*;
 

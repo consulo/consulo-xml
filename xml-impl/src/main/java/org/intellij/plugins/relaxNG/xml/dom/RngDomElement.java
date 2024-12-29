@@ -23,7 +23,7 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.JavaNameStrategy;
 import consulo.xml.util.xml.NameStrategy;
 import org.intellij.plugins.relaxNG.model.CommonElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.

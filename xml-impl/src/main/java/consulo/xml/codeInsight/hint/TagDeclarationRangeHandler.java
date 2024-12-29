@@ -24,7 +24,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class TagDeclarationRangeHandler implements DeclarationRangeHandler

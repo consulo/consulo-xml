@@ -21,7 +21,7 @@ import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Can be implemented by {@link Converter} instance

@@ -29,7 +29,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.StubbedOccurrence;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @see StubbedOccurrence

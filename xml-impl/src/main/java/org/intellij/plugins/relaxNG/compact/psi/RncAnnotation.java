@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiComment;
 

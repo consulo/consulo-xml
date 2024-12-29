@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.xml.dom;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.SubTagList;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

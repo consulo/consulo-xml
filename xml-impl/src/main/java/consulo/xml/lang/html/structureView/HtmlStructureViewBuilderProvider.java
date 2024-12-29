@@ -24,8 +24,8 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider

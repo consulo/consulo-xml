@@ -21,7 +21,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomTarget;
 import consulo.xml.util.xml.NameValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

@@ -23,7 +23,7 @@ import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.ui.image.Image;
 import consulo.language.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

@@ -35,8 +35,8 @@ import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;

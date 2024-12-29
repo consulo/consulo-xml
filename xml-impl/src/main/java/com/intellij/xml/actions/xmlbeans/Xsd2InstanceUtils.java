@@ -34,7 +34,7 @@ import org.apache.xmlbeans.*;
 import org.apache.xmlbeans.impl.tool.CommandLine;
 import org.apache.xmlbeans.impl.xsd2inst.SampleXmlUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

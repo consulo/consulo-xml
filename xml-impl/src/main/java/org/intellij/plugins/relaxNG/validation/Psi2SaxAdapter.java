@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.Attributes2Impl;
 import org.xml.sax.ext.Locator2Impl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**

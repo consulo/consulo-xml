@@ -26,7 +26,7 @@ import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 

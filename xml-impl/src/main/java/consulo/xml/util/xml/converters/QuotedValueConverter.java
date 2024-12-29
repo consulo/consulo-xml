@@ -35,8 +35,8 @@ import consulo.util.lang.StringUtil;
 import com.intellij.xml.util.XmlTagTextUtil;
 import consulo.xml.util.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;

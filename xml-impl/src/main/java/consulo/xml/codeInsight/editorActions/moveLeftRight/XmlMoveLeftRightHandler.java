@@ -23,7 +23,7 @@ import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler

@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ElementManipulators;

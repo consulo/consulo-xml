@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.compact.psi.util;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.

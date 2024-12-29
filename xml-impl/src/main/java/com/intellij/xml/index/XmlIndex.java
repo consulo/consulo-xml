@@ -17,8 +17,8 @@ package com.intellij.xml.index;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.XmlFileType;

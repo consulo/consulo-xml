@@ -3,7 +3,7 @@ package consulo.xml.impl.inject;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.impl.psi.injection.InjectionConfigProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

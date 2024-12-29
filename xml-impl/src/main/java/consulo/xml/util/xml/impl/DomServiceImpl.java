@@ -46,8 +46,8 @@ import consulo.xml.util.xml.stubs.FileStub;
 import consulo.xml.util.xml.stubs.builder.DomStubBuilder;
 import jakarta.inject.Singleton;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

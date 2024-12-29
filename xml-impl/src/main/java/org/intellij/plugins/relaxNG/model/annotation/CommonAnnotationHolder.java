@@ -25,7 +25,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 abstract class CommonAnnotationHolder<C> {
   public static <T extends DomElement> CommonAnnotationHolder<T> create(DomElementAnnotationHolder holder) {

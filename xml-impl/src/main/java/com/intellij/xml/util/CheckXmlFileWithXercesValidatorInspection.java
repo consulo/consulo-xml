@@ -27,8 +27,8 @@ import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Maxim Mossienko

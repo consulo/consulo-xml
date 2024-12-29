@@ -21,7 +21,7 @@ import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
 import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
 import consulo.util.lang.StringUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XmlTagInjection extends AbstractTagInjection {
 

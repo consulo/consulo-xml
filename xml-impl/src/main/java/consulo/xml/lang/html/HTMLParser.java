@@ -27,7 +27,7 @@ import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class HTMLParser implements PsiParser {
 

@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.converters;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

@@ -23,7 +23,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:valueElemType interface.

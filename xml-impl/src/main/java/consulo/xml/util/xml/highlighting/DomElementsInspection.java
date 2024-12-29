@@ -32,8 +32,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;

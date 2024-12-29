@@ -30,7 +30,7 @@ import consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaRefere
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 /**

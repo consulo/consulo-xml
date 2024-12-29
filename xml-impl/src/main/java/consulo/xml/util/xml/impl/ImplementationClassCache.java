@@ -20,7 +20,7 @@ import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.util.collection.MultiMap;
 import consulo.xml.dom.ImplementationProvider;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;

@@ -31,7 +31,7 @@ import consulo.xml.util.xml.reflect.DomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;

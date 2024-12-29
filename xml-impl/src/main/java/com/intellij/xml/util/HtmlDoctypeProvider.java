@@ -21,7 +21,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author traff

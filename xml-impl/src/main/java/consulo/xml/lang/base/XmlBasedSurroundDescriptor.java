@@ -25,7 +25,7 @@ import consulo.xml.psi.xml.XmlTagChild;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -19,7 +19,7 @@ package consulo.xml.util.xml;
 import consulo.util.lang.Comparing;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.util.collection.ContainerUtil;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.List;

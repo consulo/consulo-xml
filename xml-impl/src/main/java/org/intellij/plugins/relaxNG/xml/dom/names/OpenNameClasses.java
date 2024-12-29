@@ -21,7 +21,7 @@ package org.intellij.plugins.relaxNG.xml.dom.names;
 
 import org.intellij.plugins.relaxNG.xml.dom.RngChoice;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

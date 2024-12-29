@@ -23,7 +23,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.stubs.index.DomElementClassIndex;
 import consulo.xml.util.xml.stubs.index.DomNamespaceKeyIndex;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.IOException;
 
 /**

@@ -54,7 +54,7 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 public class XmlTagInsertHandler implements InsertHandler<LookupElement> {

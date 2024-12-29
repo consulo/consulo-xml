@@ -22,7 +22,7 @@ import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author yole

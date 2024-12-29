@@ -23,7 +23,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.model.DomModel;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;

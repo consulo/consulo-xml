@@ -39,7 +39,7 @@ import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.lexer.XHtmlHighlightingLexer;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

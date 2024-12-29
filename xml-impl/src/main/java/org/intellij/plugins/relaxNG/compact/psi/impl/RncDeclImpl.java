@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.util.IncorrectOperationException;

@@ -23,7 +23,7 @@ import consulo.xml.util.xml.Attribute;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Namespace;
 import org.intellij.plugins.relaxNG.xml.dom.names.OpenNameClasses;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:elementElemType interface.

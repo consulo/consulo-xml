@@ -16,8 +16,8 @@
 
 package consulo.xml.util.xml.converters;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.ConvertContext;

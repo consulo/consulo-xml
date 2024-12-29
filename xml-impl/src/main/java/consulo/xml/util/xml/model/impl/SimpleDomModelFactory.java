@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;

@@ -26,7 +26,7 @@ import consulo.util.collection.MultiMap;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class BaseXmlFileHighlighter extends SyntaxHighlighterBase {
   protected static void storeDefaults(MultiMap<IElementType, TextAttributesKey> keys) {

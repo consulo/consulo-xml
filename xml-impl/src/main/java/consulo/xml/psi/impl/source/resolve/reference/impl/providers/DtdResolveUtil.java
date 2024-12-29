@@ -25,7 +25,7 @@ import consulo.language.editor.completion.CompletionUtilCore;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author yole

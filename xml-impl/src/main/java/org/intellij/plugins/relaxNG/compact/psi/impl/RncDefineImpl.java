@@ -19,8 +19,8 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.icon.IconDescriptorUpdaters;

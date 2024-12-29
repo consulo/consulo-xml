@@ -30,7 +30,7 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XmlParser implements PsiParser {
   // tries to match an old and new XmlTag by name

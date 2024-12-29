@@ -29,7 +29,7 @@ import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 

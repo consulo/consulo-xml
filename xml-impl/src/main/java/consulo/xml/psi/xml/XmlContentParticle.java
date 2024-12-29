@@ -16,7 +16,7 @@
 package consulo.xml.psi.xml;
 
 import com.intellij.xml.XmlElementDescriptor;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

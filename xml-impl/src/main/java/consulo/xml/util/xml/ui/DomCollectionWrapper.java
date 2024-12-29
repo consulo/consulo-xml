@@ -19,7 +19,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

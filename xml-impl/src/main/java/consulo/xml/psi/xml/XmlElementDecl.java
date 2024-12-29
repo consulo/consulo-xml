@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.xml;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiNameIdentifierOwner;
 import consulo.language.psi.meta.PsiMetaOwner;

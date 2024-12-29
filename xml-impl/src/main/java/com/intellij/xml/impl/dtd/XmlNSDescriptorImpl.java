@@ -34,8 +34,8 @@ import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 /**

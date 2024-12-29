@@ -35,7 +35,7 @@ import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.*;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import static consulo.xml.patterns.XmlPatterns.*;
 

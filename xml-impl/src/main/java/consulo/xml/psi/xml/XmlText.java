@@ -16,7 +16,7 @@
 package consulo.xml.psi.xml;
 
 import consulo.language.util.IncorrectOperationException;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public interface XmlText extends XmlTagChild {
   String getText();

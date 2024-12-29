@@ -16,7 +16,7 @@
 
 package consulo.xml.util.xml.tree;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.tree.SimpleNode;

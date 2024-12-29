@@ -37,7 +37,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

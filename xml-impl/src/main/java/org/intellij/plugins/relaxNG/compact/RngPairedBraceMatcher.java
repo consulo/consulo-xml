@@ -5,7 +5,7 @@ import consulo.language.BracePair;
 import consulo.language.Language;
 import consulo.language.PairedBraceMatcher;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RngPairedBraceMatcher implements PairedBraceMatcher

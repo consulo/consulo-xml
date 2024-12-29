@@ -21,7 +21,7 @@ import consulo.ui.image.Image;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XHtmlFileType extends HtmlFileType {
   public static final XHtmlFileType INSTANCE = new XHtmlFileType();

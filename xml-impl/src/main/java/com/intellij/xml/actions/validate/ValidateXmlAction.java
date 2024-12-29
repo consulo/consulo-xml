@@ -16,7 +16,7 @@ import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author mike

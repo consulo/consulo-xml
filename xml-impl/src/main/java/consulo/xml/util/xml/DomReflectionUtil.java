@@ -19,7 +19,7 @@ import consulo.component.ProcessCanceledException;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;

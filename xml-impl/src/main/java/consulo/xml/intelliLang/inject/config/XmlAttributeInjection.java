@@ -27,7 +27,7 @@ import consulo.xml.psi.xml.XmlAttributeValue;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XmlAttributeInjection extends AbstractTagInjection {
 

@@ -23,7 +23,7 @@ import consulo.language.icon.IconDescriptorUpdater;
 import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

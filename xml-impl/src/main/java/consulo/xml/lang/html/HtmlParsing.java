@@ -34,8 +34,8 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HtmlParsing {
   @NonNls

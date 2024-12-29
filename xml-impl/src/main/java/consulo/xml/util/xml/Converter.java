@@ -24,7 +24,7 @@ import consulo.xml.util.xml.converters.values.NumberValueConverter;
 import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Base DOM class to convert objects of a definite type into {@link String} and back. Most often used with

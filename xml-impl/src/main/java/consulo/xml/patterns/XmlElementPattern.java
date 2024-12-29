@@ -22,8 +22,8 @@ import consulo.language.pattern.InitialPatternCondition;
 import consulo.language.pattern.PsiElementPattern;
 import consulo.language.util.ProcessingContext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

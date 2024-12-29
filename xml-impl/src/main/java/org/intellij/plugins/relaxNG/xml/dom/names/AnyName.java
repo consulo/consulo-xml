@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.names;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 

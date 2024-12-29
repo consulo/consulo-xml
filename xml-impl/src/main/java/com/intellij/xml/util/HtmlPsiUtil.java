@@ -5,7 +5,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.template.TemplateLanguageUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class HtmlPsiUtil {
     @Nullable

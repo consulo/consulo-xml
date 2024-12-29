@@ -4,7 +4,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.DTDFileType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

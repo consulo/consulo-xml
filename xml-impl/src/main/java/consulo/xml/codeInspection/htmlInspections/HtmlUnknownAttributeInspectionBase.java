@@ -31,7 +31,7 @@ import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
   @Override

@@ -5,7 +5,7 @@ import consulo.language.editor.action.FileQuoteHandler;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

@@ -3,7 +3,7 @@ package consulo.xml.codeInsight.daemon.impl.quickfix;
 import consulo.logging.Logger;
 import consulo.project.content.WatchedRootsProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.util.Collections;
 import java.util.Set;

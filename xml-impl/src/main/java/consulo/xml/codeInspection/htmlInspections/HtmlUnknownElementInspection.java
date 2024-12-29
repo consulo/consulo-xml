@@ -25,7 +25,7 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlChildRole;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTool {
   protected static void registerProblemOnAttributeName(@Nonnull XmlAttribute attribute,

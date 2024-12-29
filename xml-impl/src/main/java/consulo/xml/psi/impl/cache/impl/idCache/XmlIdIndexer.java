@@ -23,7 +23,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.lexer.XmlLexer;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlIdIndexer extends LexerBasedIdIndexer {

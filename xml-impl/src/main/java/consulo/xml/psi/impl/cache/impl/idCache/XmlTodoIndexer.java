@@ -22,7 +22,7 @@ import consulo.language.psi.stub.todo.LexerBasedTodoIndexer;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlTodoIndexer extends LexerBasedTodoIndexer {

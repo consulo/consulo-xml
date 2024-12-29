@@ -18,7 +18,7 @@ package consulo.xml.psi.xml;
 import consulo.language.psi.FileResolveScopeProvider;
 import consulo.language.psi.PsiFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Mike

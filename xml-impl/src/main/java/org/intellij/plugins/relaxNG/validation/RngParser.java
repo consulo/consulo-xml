@@ -64,7 +64,7 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.xml.transform.sax.SAXSource;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentMap;

@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;

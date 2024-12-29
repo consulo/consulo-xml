@@ -15,7 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.codeEditor.Editor;

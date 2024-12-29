@@ -42,7 +42,7 @@ import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
 import org.xml.sax.SAXParseException;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.concurrent.Future;
 
 public class StdErrorReporter extends ErrorReporter {

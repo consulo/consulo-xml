@@ -18,14 +18,14 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.ElementManipulators;
 import consulo.language.psi.PsiElement;

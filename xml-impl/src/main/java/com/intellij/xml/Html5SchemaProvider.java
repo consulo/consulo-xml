@@ -9,7 +9,7 @@ import consulo.util.io.URLUtil;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.net.URL;
 import java.util.List;
 

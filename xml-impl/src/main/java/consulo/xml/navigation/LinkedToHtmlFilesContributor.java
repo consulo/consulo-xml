@@ -28,7 +28,7 @@ import consulo.language.psi.PsiPolyVariantReference;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ResolveResult;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.Set;
 

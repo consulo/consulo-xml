@@ -24,7 +24,7 @@ import consulo.language.pom.PomTargetPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

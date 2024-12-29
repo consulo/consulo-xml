@@ -26,7 +26,7 @@ import consulo.project.Project;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.EventListener;
 import java.util.List;
 

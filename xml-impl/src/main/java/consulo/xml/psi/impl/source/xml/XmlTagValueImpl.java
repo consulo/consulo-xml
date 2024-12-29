@@ -28,7 +28,7 @@ import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

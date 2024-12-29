@@ -40,8 +40,8 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

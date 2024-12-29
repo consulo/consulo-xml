@@ -28,8 +28,8 @@ import consulo.language.psi.resolve.PsiElementProcessor;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class RncDocument extends RncElementImpl implements XmlDocument {
   public RncDocument(ASTNode node) {

@@ -30,7 +30,7 @@ import consulo.logging.Logger;
 import consulo.navigation.Navigatable;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike

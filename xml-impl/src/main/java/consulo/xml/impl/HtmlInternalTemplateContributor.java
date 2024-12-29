@@ -5,7 +5,7 @@ import consulo.fileTemplate.FileTemplateContributor;
 import consulo.fileTemplate.FileTemplateManager;
 import consulo.fileTemplate.FileTemplateRegistrator;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

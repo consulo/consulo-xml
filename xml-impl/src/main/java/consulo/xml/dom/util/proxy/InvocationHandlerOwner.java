@@ -2,7 +2,7 @@ package consulo.xml.dom.util.proxy;
 
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 

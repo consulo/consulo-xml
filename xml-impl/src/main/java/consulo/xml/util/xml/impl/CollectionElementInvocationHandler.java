@@ -8,8 +8,8 @@ import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Supplier;

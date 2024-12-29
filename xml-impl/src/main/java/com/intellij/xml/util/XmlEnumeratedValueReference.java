@@ -27,8 +27,8 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

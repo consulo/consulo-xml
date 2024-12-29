@@ -1,6 +1,6 @@
 package com.intellij.xml.breadcrumbs;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.Language;
 import consulo.xml.lang.xhtml.XHTMLLanguage;

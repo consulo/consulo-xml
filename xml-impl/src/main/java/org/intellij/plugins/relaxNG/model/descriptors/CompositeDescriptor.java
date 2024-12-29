@@ -23,7 +23,7 @@ import consulo.util.collection.ContainerUtil;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.Arrays;

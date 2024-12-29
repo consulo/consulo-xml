@@ -28,7 +28,7 @@ import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.model.CommonElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class RncElementImpl extends ASTWrapperPsiElement implements RncElement, CommonElement<RncElement> {
   private static final TokenSet GRAMMAR_CONTENT = TokenSet.create(

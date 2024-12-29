@@ -28,8 +28,8 @@ import com.intellij.xml.util.XmlDeclareIdInCommentAction;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

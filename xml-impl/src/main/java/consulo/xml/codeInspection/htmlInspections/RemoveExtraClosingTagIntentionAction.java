@@ -36,7 +36,7 @@ import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner

@@ -7,7 +7,7 @@ import consulo.util.dataholder.Key;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.util.xml.*;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;

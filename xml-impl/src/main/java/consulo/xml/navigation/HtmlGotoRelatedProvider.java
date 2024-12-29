@@ -25,7 +25,7 @@ import consulo.language.Language;
 import consulo.language.navigation.GotoRelatedItem;
 import consulo.language.navigation.GotoRelatedProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**

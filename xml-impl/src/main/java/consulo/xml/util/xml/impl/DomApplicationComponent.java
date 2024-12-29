@@ -32,7 +32,7 @@ import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 

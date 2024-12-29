@@ -22,7 +22,7 @@ import consulo.ide.ServiceManager;
 import consulo.project.Project;
 import consulo.xml.util.xml.DomElement;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**

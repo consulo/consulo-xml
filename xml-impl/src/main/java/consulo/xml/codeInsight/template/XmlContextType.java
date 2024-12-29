@@ -24,7 +24,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author yole

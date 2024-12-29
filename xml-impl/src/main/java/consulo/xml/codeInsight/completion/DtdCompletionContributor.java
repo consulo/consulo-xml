@@ -33,7 +33,7 @@ import consulo.xml.psi.xml.XmlEntityDecl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 

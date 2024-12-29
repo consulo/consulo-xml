@@ -22,7 +22,7 @@ import consulo.language.Commenter;
 import consulo.language.psi.LiteralTextEscaper;
 import consulo.xml.psi.impl.source.xml.XmlCommentImpl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner

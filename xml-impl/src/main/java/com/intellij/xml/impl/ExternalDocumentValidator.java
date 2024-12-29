@@ -47,7 +47,7 @@ import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXParseException;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;

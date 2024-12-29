@@ -17,12 +17,12 @@ package consulo.xml.ide.structureView.impl.xml;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;

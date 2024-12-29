@@ -17,7 +17,7 @@ package consulo.xml.util.xml;
 
 import consulo.util.collection.SmartFMap;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

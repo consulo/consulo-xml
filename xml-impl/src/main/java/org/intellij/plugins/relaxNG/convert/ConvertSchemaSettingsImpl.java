@@ -35,7 +35,7 @@ import consulo.virtualFileSystem.encoding.EncodingProjectManager;
 import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.event.ItemEvent;

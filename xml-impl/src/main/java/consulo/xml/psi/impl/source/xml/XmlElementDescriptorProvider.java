@@ -20,7 +20,7 @@ import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author yole

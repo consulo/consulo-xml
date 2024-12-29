@@ -29,7 +29,7 @@ import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Created by IntelliJ IDEA.

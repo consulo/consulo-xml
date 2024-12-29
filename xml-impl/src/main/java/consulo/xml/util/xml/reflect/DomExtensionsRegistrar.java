@@ -18,7 +18,7 @@ package consulo.xml.util.xml.reflect;
 
 import consulo.xml.util.xml.CustomChildren;
 import consulo.xml.util.xml.XmlName;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.Type;
 

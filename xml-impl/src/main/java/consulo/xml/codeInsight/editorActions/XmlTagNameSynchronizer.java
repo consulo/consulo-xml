@@ -47,7 +47,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Set;
 

@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.ui;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.FileEditorPolicy;

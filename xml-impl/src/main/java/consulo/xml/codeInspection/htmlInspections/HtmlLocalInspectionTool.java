@@ -32,7 +32,7 @@ import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.Nls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner

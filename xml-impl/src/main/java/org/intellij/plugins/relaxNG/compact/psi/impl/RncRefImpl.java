@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiReference;
 import consulo.language.ast.ASTNode;

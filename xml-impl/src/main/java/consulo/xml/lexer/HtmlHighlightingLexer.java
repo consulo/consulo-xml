@@ -29,7 +29,7 @@ import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
 import consulo.xml.lang.HtmlScriptContentProvider;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class HtmlHighlightingLexer extends BaseHtmlLexer
 {

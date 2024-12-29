@@ -25,8 +25,8 @@ import consulo.application.util.RecursionManager;
 import consulo.ide.impl.idea.openapi.util.NullableComputable;
 import consulo.language.psi.PsiModificationTracker;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

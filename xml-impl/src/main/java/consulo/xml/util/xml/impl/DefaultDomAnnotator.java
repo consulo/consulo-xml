@@ -25,7 +25,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.highlighting.*;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.List;
 
 /**

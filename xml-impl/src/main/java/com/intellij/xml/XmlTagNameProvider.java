@@ -21,7 +21,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

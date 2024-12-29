@@ -18,7 +18,7 @@ package consulo.xml.util.xml.highlighting;
 
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.util.xml.DomElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

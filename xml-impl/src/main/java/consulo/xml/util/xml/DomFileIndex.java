@@ -32,7 +32,7 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.util.xml.fastReader.XmlFileHeader;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**

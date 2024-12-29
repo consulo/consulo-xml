@@ -28,7 +28,7 @@ import consulo.xml.util.xml.impl.DomChildDescriptionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.HashMap;

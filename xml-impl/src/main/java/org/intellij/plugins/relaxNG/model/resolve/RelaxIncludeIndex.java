@@ -20,7 +20,7 @@ import consulo.language.psi.PsiManager;
 import consulo.util.collection.ContainerUtil;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.project.Project;

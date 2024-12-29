@@ -25,7 +25,7 @@ import com.intellij.xml.impl.dom.DomElementXmlDescriptor;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DefinesXml;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author yole

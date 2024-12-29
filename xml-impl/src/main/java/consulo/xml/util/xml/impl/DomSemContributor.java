@@ -43,8 +43,8 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;

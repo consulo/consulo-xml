@@ -4,7 +4,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.dom.DomElementImplementationProvider;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

@@ -25,7 +25,7 @@ import consulo.language.ast.IElementType;
 import consulo.language.codeStyle.*;
 import consulo.language.psi.PsiElement;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public class SyntheticBlock extends AbstractSyntheticBlock implements Block {

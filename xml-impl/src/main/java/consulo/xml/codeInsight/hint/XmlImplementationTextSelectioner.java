@@ -30,7 +30,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {

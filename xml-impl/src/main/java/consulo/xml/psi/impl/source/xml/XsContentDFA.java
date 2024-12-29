@@ -42,8 +42,8 @@ import org.apache.xerces.xs.XSTypeDefinition;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import java.util.ArrayList;

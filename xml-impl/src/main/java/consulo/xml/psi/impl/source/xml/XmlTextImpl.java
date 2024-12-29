@@ -41,8 +41,8 @@ import consulo.xml.psi.impl.source.tree.injected.XmlTextLiteralEscaper;
 import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Arrays;
 
 public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageInjectionHost

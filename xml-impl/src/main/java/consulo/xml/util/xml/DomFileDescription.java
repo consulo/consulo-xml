@@ -33,8 +33,8 @@ import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

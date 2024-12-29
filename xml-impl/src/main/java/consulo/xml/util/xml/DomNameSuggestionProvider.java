@@ -23,7 +23,7 @@ import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.util.collection.ContainerUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Set;
 
 /**

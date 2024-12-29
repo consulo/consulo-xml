@@ -50,8 +50,8 @@ import consulo.xml.util.xml.stubs.DomStub;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.ArrayList;

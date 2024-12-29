@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.index;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;

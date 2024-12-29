@@ -40,8 +40,8 @@ import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.util.ProcessingContext;
 import consulo.logging.Logger;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import static consulo.language.editor.completion.CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;
 

@@ -28,7 +28,7 @@ import consulo.xml.lang.xml.XmlFormattingModel;
 import consulo.xml.psi.formatter.xml.HtmlPolicy;
 import consulo.xml.psi.formatter.xml.XmlBlock;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XHtmlFormattingModelBuilder implements FormattingModelBuilder

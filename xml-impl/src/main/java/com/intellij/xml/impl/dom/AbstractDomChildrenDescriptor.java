@@ -19,8 +19,8 @@ import consulo.xml.util.xml.impl.AttributeChildDescriptionImpl;
 import consulo.xml.util.xml.reflect.*;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

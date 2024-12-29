@@ -24,7 +24,7 @@ import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.nio.charset.Charset;
 
 public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset

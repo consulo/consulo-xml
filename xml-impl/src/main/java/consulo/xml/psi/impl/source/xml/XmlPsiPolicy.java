@@ -27,7 +27,7 @@ import consulo.language.extension.LanguageOneToOne;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.behavior.CDATAOnAnyEncodedPolicy;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlPsiPolicy extends LanguageExtension

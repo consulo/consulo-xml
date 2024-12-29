@@ -34,8 +34,8 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.ui.TooltipUtils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Type;

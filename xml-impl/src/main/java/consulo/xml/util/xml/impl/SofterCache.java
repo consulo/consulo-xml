@@ -18,7 +18,7 @@ package consulo.xml.util.xml.impl;
 import consulo.application.util.SofterReference;
 import consulo.util.lang.ObjectUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;

@@ -27,8 +27,8 @@ import consulo.xml.util.xml.DomElementVisitor;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;

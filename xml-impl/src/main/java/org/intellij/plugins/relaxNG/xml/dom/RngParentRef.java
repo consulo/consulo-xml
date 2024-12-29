@@ -25,7 +25,7 @@ import consulo.xml.util.xml.Referencing;
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:parentRefElemType interface.

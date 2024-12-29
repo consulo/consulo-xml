@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.codeEditor.Editor;

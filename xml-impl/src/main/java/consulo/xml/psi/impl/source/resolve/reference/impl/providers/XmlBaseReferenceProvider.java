@@ -18,7 +18,7 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.*;
 import consulo.xml.psi.xml.XmlAttribute;

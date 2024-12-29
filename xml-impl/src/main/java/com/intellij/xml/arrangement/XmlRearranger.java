@@ -17,8 +17,8 @@ import consulo.language.psi.PsiElement;
 import consulo.util.lang.Pair;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;

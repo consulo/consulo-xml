@@ -22,7 +22,7 @@ import consulo.language.editor.inspection.SuppressQuickFix;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlInspectionSuppressor implements InspectionSuppressor

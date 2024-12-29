@@ -24,7 +24,7 @@ import consulo.language.lexer.MergingLexerAdapter;
 import consulo.language.util.LanguageUtil;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko

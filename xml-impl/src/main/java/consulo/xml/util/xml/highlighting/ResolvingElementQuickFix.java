@@ -35,8 +35,8 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Consumer;

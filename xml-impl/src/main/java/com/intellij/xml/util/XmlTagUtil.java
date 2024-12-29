@@ -27,8 +27,8 @@ import consulo.xml.psi.xml.XmlTokenType;
 import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;

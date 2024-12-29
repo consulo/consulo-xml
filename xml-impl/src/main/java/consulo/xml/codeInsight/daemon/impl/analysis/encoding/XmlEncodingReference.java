@@ -29,8 +29,8 @@ import consulo.language.psi.PsiReference;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.util.IncorrectOperationException;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;

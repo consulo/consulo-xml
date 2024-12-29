@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.convert;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package consulo.xml.codeInspection.htmlInspections;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.localize.LocalizeValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

@@ -33,8 +33,8 @@ import consulo.xml.util.xml.impl.ConvertContextFactory;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.List;
 
 public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemDescriptor> implements DomElementAnnotationHolder {

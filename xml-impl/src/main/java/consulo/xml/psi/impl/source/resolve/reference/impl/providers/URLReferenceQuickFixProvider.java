@@ -25,7 +25,7 @@ import consulo.xml.codeInsight.daemon.impl.quickfix.IgnoreExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author yole

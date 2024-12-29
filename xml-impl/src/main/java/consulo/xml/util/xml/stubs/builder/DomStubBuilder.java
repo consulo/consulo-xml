@@ -36,7 +36,7 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.stubs.FileStub;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

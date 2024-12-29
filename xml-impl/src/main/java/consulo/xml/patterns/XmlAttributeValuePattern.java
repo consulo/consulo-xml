@@ -15,8 +15,8 @@
  */
 package consulo.xml.patterns;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.InitialPatternCondition;

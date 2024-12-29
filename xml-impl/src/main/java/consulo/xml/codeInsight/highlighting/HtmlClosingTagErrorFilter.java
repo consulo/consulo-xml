@@ -25,7 +25,7 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner

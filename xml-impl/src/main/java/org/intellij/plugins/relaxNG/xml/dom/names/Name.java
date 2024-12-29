@@ -21,7 +21,7 @@ package org.intellij.plugins.relaxNG.xml.dom.names;
 
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:nameElemType interface.

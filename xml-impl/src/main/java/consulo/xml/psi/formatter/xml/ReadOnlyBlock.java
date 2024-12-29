@@ -19,7 +19,7 @@ import consulo.language.ast.ASTNode;
 import consulo.language.codeStyle.Block;
 import consulo.language.codeStyle.Spacing;
 import consulo.language.codeStyle.AbstractBlock;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;

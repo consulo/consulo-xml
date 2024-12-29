@@ -44,7 +44,7 @@ import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

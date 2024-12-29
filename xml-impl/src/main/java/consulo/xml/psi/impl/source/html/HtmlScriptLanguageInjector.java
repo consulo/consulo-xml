@@ -25,7 +25,7 @@ import consulo.language.util.LanguageUtil;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 
 public class HtmlScriptLanguageInjector implements MultiHostInjector {

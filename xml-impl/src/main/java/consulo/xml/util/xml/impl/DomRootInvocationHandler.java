@@ -14,8 +14,8 @@ import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.stubs.ElementStub;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
 

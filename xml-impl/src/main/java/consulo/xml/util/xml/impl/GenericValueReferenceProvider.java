@@ -28,8 +28,8 @@ import consulo.xml.javaee.web.PsiReferenceConverter;
 import consulo.xml.psi.xml.*;
 import consulo.xml.util.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

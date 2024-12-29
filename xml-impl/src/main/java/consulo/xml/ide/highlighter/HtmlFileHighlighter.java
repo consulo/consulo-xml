@@ -29,7 +29,7 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class HtmlFileHighlighter extends SyntaxHighlighterBase {
   private static final ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> CACHE_KEY =

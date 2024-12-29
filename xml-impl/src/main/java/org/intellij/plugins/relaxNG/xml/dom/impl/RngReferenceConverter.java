@@ -31,7 +31,7 @@ import org.intellij.plugins.relaxNG.xml.dom.RngDomVisitor;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 

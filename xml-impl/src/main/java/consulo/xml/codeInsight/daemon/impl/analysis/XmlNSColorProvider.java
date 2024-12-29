@@ -21,7 +21,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.component.extension.ExtensionPointName;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

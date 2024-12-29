@@ -14,8 +14,8 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Function;

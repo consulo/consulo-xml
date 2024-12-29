@@ -8,8 +8,8 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ContainerUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 

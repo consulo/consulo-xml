@@ -10,8 +10,8 @@ import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.util.lang.StringUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;

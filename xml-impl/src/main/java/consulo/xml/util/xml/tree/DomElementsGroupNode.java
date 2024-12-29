@@ -19,7 +19,7 @@ package consulo.xml.util.xml.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.ui.ex.SimpleTextAttributes;

@@ -29,7 +29,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

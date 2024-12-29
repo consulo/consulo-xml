@@ -3,7 +3,7 @@ package org.intellij.plugins.relaxNG.xml;
 import com.intellij.xml.Html5SchemaProvider;
 import consulo.annotation.component.ExtensionImpl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.net.URL;
 
 /**

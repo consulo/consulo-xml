@@ -32,8 +32,8 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.FileStub;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashSet;

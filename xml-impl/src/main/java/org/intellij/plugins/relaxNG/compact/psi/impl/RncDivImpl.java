@@ -19,7 +19,7 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncDiv;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.

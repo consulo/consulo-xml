@@ -21,7 +21,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlTagRuleProvider {

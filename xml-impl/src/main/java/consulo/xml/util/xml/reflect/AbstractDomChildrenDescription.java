@@ -25,8 +25,8 @@ import consulo.xml.util.xml.DomNameStrategy;
 import consulo.xml.util.xml.ElementPresentationTemplate;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 

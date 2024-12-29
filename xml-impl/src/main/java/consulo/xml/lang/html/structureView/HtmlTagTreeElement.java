@@ -24,7 +24,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;

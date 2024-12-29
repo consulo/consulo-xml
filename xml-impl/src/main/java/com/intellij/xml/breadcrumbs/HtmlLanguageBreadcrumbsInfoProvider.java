@@ -6,7 +6,7 @@ import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.annotation.access.RequiredReadAction;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.StringTokenizer;
 
 /**

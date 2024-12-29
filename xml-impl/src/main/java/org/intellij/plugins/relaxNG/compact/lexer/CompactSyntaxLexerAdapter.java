@@ -31,8 +31,8 @@ import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
 import org.kohsuke.rngom.parse.compact.Token;
 import org.kohsuke.rngom.parse.compact.TokenMgrError;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.CharArrayReader;
 import java.io.FileReader;
 import java.io.IOException;

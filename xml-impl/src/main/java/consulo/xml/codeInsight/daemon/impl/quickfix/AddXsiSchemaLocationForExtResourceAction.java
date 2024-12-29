@@ -38,7 +38,7 @@ import consulo.codeEditor.Editor;
 import consulo.language.editor.FileModificationService;
 import consulo.project.Project;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -25,7 +25,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlEq", order = "after xmlSlash")
 public class XmlEqTypedHandler extends TypedHandlerDelegate {

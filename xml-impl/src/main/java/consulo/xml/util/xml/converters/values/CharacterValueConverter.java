@@ -21,8 +21,8 @@ import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.DomBundle;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class CharacterValueConverter extends Converter<String> {
   @NonNls private static final String UNICODE_PREFIX = "\\u";

@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

@@ -19,7 +19,7 @@ import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementTypeAsPsiFactory;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.function.Function;
 
 /**

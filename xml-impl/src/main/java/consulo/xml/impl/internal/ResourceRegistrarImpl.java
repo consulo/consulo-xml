@@ -19,8 +19,8 @@ import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.ExternalResourceManagerExImpl;
 import consulo.xml.javaee.ResourceRegistrar;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.*;
 
 /**

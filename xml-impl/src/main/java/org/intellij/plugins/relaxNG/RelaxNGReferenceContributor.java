@@ -25,7 +25,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.patterns.XmlNamedElementPattern;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import static consulo.xml.patterns.XmlPatterns.*;
 

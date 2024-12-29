@@ -22,8 +22,8 @@ import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.XmlName;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;

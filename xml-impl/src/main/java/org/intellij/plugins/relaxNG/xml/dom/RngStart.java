@@ -20,7 +20,7 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.util.xml.GenericAttributeValue;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:startElemType interface.

@@ -17,7 +17,7 @@
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import consulo.document.util.TextRange;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Created by IntelliJ IDEA.

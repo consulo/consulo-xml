@@ -24,7 +24,7 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author yole

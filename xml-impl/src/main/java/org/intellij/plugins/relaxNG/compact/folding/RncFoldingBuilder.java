@@ -33,8 +33,8 @@ import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 
 /**

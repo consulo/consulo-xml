@@ -34,7 +34,7 @@ import consulo.util.lang.reflect.ReflectionUtil;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * User: Sergey.Vasiliev

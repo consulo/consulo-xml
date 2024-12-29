@@ -29,7 +29,7 @@ import consulo.xml.util.xml.DomTarget;
 import consulo.xml.util.xml.ElementPresentation;
 import consulo.xml.util.xml.ElementPresentationTemplate;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

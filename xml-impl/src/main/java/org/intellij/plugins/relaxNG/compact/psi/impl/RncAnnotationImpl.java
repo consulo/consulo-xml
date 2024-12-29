@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -24,7 +24,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

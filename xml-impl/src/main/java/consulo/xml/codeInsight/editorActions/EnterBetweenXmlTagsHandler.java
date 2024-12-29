@@ -34,7 +34,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlEnter")
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {

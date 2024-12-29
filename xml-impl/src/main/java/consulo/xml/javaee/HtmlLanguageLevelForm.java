@@ -28,7 +28,7 @@ import consulo.ui.layout.Layout;
 import consulo.ui.layout.VerticalLayout;
 import consulo.util.collection.Lists;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

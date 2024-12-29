@@ -18,8 +18,8 @@ package com.intellij.xml.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlDocument;

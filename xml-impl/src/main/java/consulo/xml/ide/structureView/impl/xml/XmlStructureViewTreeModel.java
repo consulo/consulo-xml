@@ -15,8 +15,8 @@
  */
 package consulo.xml.ide.structureView.impl.xml;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.structureView.StructureViewTreeElement;

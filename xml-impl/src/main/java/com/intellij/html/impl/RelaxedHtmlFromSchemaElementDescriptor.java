@@ -27,7 +27,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Maxim.Mossienko

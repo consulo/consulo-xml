@@ -24,7 +24,7 @@
  */
 package com.intellij.xml.impl;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.ide.impl.idea.util.ArrayUtilRt;
 import consulo.language.psi.PsiElement;

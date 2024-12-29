@@ -15,7 +15,7 @@
  */
 package com.intellij.xml;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlTag;
 

@@ -37,7 +37,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.

@@ -35,7 +35,7 @@ import consulo.project.Project;
 import consulo.xml.psi.xml.XmlElementType;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class XmlFormattingModel extends PsiBasedFormattingModel {
   private static final Logger LOG = Logger.getInstance(XmlFormattingModel.class);

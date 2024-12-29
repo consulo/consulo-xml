@@ -4,7 +4,7 @@ import consulo.language.psi.PsiManager;
 import consulo.xml.util.xml.AbstractConvertContext;
 import consulo.xml.util.xml.DomElement;
 import consulo.module.Module;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

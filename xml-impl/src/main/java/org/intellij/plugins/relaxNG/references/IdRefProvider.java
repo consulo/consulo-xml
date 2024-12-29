@@ -33,7 +33,7 @@ import consulo.language.psi.PsiReferenceBase;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 

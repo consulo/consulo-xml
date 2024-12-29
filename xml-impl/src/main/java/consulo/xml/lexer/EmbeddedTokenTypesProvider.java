@@ -21,7 +21,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.ast.IElementType;
 import consulo.language.version.LanguageVersion;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenTypesProvider

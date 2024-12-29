@@ -20,8 +20,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.component.util.ModificationTracker;
 import consulo.util.dataholder.UserDataHolder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

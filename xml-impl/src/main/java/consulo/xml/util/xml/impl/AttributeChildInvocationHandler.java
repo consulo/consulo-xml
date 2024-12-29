@@ -16,8 +16,8 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.AttributeStub;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

@@ -25,7 +25,7 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlText;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy

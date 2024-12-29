@@ -11,7 +11,7 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**

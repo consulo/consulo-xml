@@ -39,7 +39,7 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XmlBuilderDriver {
   private final Stack<String> myNamespacesStack = new Stack<String>();

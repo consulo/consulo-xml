@@ -15,12 +15,12 @@
  */
 package consulo.xml.util.xml.impl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

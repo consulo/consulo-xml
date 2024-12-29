@@ -34,7 +34,7 @@ import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagChild;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlProcessingInstruction {
   public XmlProcessingInstructionImpl() {

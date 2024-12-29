@@ -23,7 +23,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.lang.Comparing;
 import consulo.xml.psi.xml.XmlText;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Gregory.Shrago

@@ -15,8 +15,8 @@
  */
 package com.intellij.html.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import consulo.xml.psi.xml.XmlDocument;

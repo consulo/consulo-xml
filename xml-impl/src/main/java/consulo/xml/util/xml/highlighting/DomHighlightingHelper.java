@@ -19,7 +19,7 @@ import consulo.util.collection.SmartList;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;

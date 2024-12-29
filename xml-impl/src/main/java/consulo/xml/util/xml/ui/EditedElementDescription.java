@@ -17,7 +17,7 @@ package consulo.xml.util.xml.ui;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.psi.xml.XmlFile;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

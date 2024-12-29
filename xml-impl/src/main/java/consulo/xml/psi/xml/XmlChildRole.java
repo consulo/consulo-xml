@@ -23,8 +23,8 @@ import consulo.language.ast.RoleFinder;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ArrayUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface XmlChildRole
 {

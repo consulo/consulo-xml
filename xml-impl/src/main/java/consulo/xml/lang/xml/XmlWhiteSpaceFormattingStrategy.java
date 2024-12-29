@@ -26,7 +26,7 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Denis Zhdanov

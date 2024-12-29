@@ -27,8 +27,8 @@ import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSR
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author mike

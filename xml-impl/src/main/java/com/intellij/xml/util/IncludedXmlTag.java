@@ -17,13 +17,13 @@ package com.intellij.xml.util;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.logging.Logger;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.XmlTagValueImpl;

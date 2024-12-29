@@ -27,7 +27,7 @@ import consulo.project.Project;
 import consulo.ui.ex.UIBundle;
 import consulo.ui.ex.awt.DialogBuilder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

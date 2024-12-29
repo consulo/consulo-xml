@@ -32,7 +32,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner

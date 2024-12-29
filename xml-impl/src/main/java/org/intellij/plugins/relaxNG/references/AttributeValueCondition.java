@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.pattern.PatternCondition;
 import consulo.xml.psi.xml.XmlAttributeValue;

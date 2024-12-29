@@ -20,8 +20,8 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.util.collection.ArrayFactory;
 import consulo.language.psi.meta.PsiMetaData;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Mike

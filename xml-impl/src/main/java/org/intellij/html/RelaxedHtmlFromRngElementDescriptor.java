@@ -20,7 +20,7 @@ import javax.xml.namespace.QName;
 import consulo.util.collection.ArrayUtil;
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import org.kohsuke.rngom.digested.DElementPattern;
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import consulo.language.psi.PsiElement;

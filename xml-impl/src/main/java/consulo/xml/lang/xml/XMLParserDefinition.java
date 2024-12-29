@@ -33,7 +33,7 @@ import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author max

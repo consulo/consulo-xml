@@ -25,7 +25,7 @@ import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.xml.psi.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author ven
