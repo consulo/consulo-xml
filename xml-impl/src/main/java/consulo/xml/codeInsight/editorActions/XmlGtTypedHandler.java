@@ -11,9 +11,9 @@ import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorEx;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.codeEditor.ScrollType;
+import consulo.codeEditor.util.EditorModificationUtil;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.codeInsight.editorActions.TypedHandler;
-import consulo.ide.impl.idea.openapi.editor.EditorModificationUtil;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.codeStyle.CodeStyleManager;
@@ -32,10 +32,10 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Collection;
 
 @ExtensionImpl(id = "xmlGt", order = "after xmlEq")

@@ -17,7 +17,6 @@
 package org.intellij.plugins.relaxNG.compact;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.language.Language;
 import consulo.language.ast.*;
 import consulo.language.file.FileViewProvider;

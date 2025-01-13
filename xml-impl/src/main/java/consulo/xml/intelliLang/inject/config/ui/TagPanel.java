@@ -15,15 +15,15 @@
  */
 package consulo.xml.intelliLang.inject.config.ui;
 
-import consulo.xml.javaee.ExternalResourceManager;
-import consulo.ide.impl.intelliLang.inject.config.ui.AbstractInjectionPanel;
 import consulo.language.editor.ui.awt.EditorTextField;
 import consulo.language.editor.ui.awt.LanguageTextField;
+import consulo.language.inject.advanced.ui.AbstractInjectionPanel;
 import consulo.project.Project;
 import consulo.ui.ex.awt.ComboBox;
 import consulo.util.dataholder.Key;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
 import consulo.xml.intelliLang.inject.config.XmlTagInjection;
+import consulo.xml.javaee.ExternalResourceManager;
 
 import javax.swing.*;
 import java.util.ArrayList;

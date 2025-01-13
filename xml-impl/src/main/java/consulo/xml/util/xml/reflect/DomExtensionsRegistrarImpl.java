@@ -15,15 +15,15 @@
  */
 package consulo.xml.util.xml.reflect;
 
-import consulo.ide.impl.idea.util.ParameterizedTypeImpl;
+import consulo.component.bind.ParameterizedTypeImpl;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.XmlName;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;

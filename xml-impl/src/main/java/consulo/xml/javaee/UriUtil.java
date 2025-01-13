@@ -19,13 +19,12 @@
  */
 package consulo.xml.javaee;
 
+import consulo.language.psi.PsiFileSystemItem;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-
-import consulo.util.lang.StringUtil;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiFileSystemItem;
 
 public class UriUtil
 {
@@ -40,14 +39,14 @@ public class UriUtil
 	@Nullable
 	public static VirtualFile findRelativeFile(String uri, VirtualFile base)
 	{
-		return VfsUtilCore.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
+		return VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(uri), base);
 	}
 
 	@Nullable
 	public static VirtualFile findRelative(String uri, @Nonnull PsiFileSystemItem base)
 	{
 		String location = ExternalResourceManager.getInstance().getResourceLocation(uri, base.getProject());
-		return VfsUtilCore.findRelativeFile(location, base.getVirtualFile());
+		return VirtualFileUtil.findRelativeFile(location, base.getVirtualFile());
 	}
 
 	// cannot use UriUtil.SLASH_MATCHER.trimFrom - we don't depend on guava

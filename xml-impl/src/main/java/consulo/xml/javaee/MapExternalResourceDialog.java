@@ -21,11 +21,11 @@ import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import com.intellij.xml.util.XmlUtil;
+import consulo.application.ApplicationPropertiesComponent;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorFontType;
 import consulo.dataContext.DataManager;
 import consulo.fileChooser.FileChooserDescriptor;
-import consulo.ide.impl.idea.ide.util.PropertiesComponent;
 import consulo.ide.impl.idea.openapi.fileChooser.FileSystemTree;
 import consulo.ide.impl.idea.openapi.fileChooser.FileSystemTreeFactory;
 import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
@@ -47,9 +47,9 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -195,14 +195,14 @@ public class MapExternalResourceDialog extends DialogWrapper
 			myExplorer.select(schema.getVirtualFile(), null);
 		}
 
-		int index = PropertiesComponent.getInstance().getOrInitInt(MAP_EXTERNAL_RESOURCE_SELECTED_TAB, 0);
+		int index = ApplicationPropertiesComponent.getInstance().getInt(MAP_EXTERNAL_RESOURCE_SELECTED_TAB, 0);
 		myTabs.setSelectedIndex(index);
 		myTabs.getModel().addChangeListener(new ChangeListener()
 		{
 			@Override
 			public void stateChanged(ChangeEvent e)
 			{
-				PropertiesComponent.getInstance().setValue(MAP_EXTERNAL_RESOURCE_SELECTED_TAB, Integer.toString(myTabs.getSelectedIndex()));
+                ApplicationPropertiesComponent.getInstance().setValue(MAP_EXTERNAL_RESOURCE_SELECTED_TAB, Integer.toString(myTabs.getSelectedIndex()));
 			}
 		});
 		init();

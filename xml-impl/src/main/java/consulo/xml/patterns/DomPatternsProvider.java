@@ -1,8 +1,7 @@
 package consulo.xml.patterns;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.pattern.compiler.PatternClassProvider;
-
+import consulo.language.inject.advanced.pattern.PatternClassProvider;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

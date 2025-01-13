@@ -15,25 +15,20 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
+import consulo.application.ApplicationPropertiesComponent;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.ide.impl.idea.ide.util.PropertiesComponent;
-import consulo.xml.psi.filters.XmlTagFilter;
-import consulo.language.psi.resolve.FilterElementProcessor;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.language.editor.structureView.StructureViewFactoryEx;
+import consulo.language.psi.resolve.FilterElementProcessor;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
+import java.util.*;
 
 class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
 
@@ -91,7 +86,7 @@ class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
 
     if (myInStructureViewPopup) {
       final String propertyName = TreeStructureUtil.getPropertyName(Html5SectionsNodeProvider.HTML5_OUTLINE_PROVIDER_PROPERTY);
-      if (PropertiesComponent.getInstance().getBoolean(propertyName, false)) {
+      if (ApplicationPropertiesComponent.getInstance().getBoolean(propertyName, false)) {
         return true;
       }
     }

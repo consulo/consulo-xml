@@ -20,7 +20,6 @@
 package consulo.xml.lang.xml;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.psi.formatter.FormattingDocumentModelImpl;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.codeStyle.*;
@@ -29,7 +28,6 @@ import consulo.language.impl.ast.TreeUtil;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.formatter.xml.XmlBlock;
 import consulo.xml.psi.formatter.xml.XmlPolicy;
-
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
@@ -42,7 +40,7 @@ public class XmlFormattingModelBuilder implements FormattingModelBuilder
 		CodeStyleSettings settings = context.getCodeStyleSettings();
 
 		final ASTNode root = TreeUtil.getFileElement((TreeElement) element.getNode());
-		final FormattingDocumentModel documentModel = FormattingDocumentModelImpl.createOn(element.getContainingFile());
+		final FormattingDocumentModel documentModel = FormattingDocumentModel.create(element.getContainingFile());
 		return new XmlFormattingModel(element.getContainingFile(), new XmlBlock(root, null, null, new XmlPolicy(settings, documentModel), null, null, false), documentModel);
 	}
 

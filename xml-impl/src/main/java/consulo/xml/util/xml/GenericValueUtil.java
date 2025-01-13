@@ -16,13 +16,13 @@
 
 package consulo.xml.util.xml;
 
-import consulo.util.lang.Comparing;
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
 import jakarta.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago
@@ -31,8 +31,8 @@ public class GenericValueUtil {
   private GenericValueUtil() {
   }
 
-  public static NullableFunction<GenericValue, String> STRING_VALUE = genericValue -> genericValue.getStringValue();
-  public static NullableFunction<GenericValue, Object> OBJECT_VALUE = genericValue -> genericValue.getValue();
+  public static Function<GenericValue, String> STRING_VALUE = GenericValue::getStringValue;
+  public static Function<GenericValue, Object> OBJECT_VALUE = GenericValue::getValue;
 
 
   public static boolean containsString(final List<? extends GenericValue<?>> list, String value) {

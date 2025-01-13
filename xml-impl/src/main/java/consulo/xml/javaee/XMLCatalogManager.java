@@ -15,18 +15,18 @@
  */
 package consulo.xml.javaee;
 
-import consulo.ide.impl.idea.openapi.util.io.FileUtil;
 import consulo.logging.Logger;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.xml.resolver.Catalog;
 import org.apache.xml.resolver.CatalogManager;
 import org.jetbrains.annotations.TestOnly;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
 import java.util.PropertyResourceBundle;
 
 /**
@@ -58,7 +58,7 @@ public class XMLCatalogManager {
 
     File file = new File(propertiesFilePath);
     try {
-      String s = FileUtil.loadFile(file);
+      String s = Files.readString(file.toPath());
       PropertyResourceBundle bundle = new PropertyResourceBundle(new StringReader(s));
       ourResources.set(myManager, bundle);
       ourPropertyFileUri.set(myManager, file.toURI().toURL());

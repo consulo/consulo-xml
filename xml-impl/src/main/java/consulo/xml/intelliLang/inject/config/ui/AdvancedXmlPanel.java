@@ -15,13 +15,13 @@
  */
 package consulo.xml.intelliLang.inject.config.ui;
 
-import consulo.ide.impl.intelliLang.inject.config.ui.AbstractInjectionPanel;
-import consulo.ide.impl.intelliLang.inject.config.ui.AdvancedPanel;
-import consulo.xml.XPathSupportProvider;
 import consulo.language.editor.ui.awt.EditorTextField;
 import consulo.language.editor.ui.awt.LanguageTextField;
+import consulo.language.inject.advanced.ui.AbstractInjectionPanel;
+import consulo.language.inject.advanced.ui.AdvancedPanel;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
+import consulo.xml.XPathSupportProvider;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
 
 import javax.swing.*;

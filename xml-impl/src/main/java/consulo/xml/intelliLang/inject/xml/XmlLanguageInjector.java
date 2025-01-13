@@ -18,31 +18,26 @@ package consulo.xml.intelliLang.inject.xml;
 
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.util.PatternValuesIndex;
-import consulo.ide.impl.intelliLang.Configuration;
-import consulo.ide.impl.intelliLang.inject.InjectedLanguage;
-import consulo.ide.impl.intelliLang.inject.InjectorUtils;
-import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
-import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
-import consulo.ide.impl.psi.injection.LanguageInjectionSupport;
-import consulo.ide.impl.psi.injection.impl.ProjectInjectionConfiguration;
 import consulo.language.Language;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.inject.MultiHostInjector;
 import consulo.language.inject.MultiHostRegistrar;
+import consulo.language.inject.advanced.*;
 import consulo.language.pattern.ElementPattern;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.project.Project;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.Trinity;
 import consulo.util.lang.function.PairProcessor;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
 import consulo.xml.psi.xml.*;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -61,8 +56,8 @@ public abstract class XmlLanguageInjector implements MultiHostInjector {
   private volatile Trinity<Long, Pattern, Collection<String>> myXmlIndex;
   private final LanguageInjectionSupport mySupport;
 
-  public XmlLanguageInjector(ProjectInjectionConfiguration configuration) {
-    myConfiguration = configuration;
+  public XmlLanguageInjector(Project project) {
+    myConfiguration = Configuration.getProjectInstance(project);
     mySupport = InjectorUtils.findNotNullInjectionSupport(XmlLanguageInjectionSupport.XML_SUPPORT_ID);
   }
 

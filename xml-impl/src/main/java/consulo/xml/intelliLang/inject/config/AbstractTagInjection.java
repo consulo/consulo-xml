@@ -15,8 +15,8 @@
  */
 package consulo.xml.intelliLang.inject.config;
 
-import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
-import consulo.ide.impl.intelliLang.util.StringMatcher;
+import consulo.language.inject.advanced.BaseInjection;
+import consulo.language.inject.advanced.StringMatcher;
 import consulo.language.psi.PsiElement;
 import consulo.logging.Logger;
 import consulo.util.lang.StringUtil;
@@ -27,13 +27,13 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;

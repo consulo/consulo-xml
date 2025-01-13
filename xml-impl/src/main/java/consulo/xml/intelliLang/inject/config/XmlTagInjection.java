@@ -15,12 +15,11 @@
  */
 package consulo.xml.intelliLang.inject.config;
 
-import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.intelliLang.inject.InjectorUtils;
-import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
-import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
+import consulo.language.inject.advanced.BaseInjection;
+import consulo.language.inject.advanced.InjectionPlace;
+import consulo.language.inject.advanced.InjectorUtils;
 import consulo.util.lang.StringUtil;
-
+import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 
 public class XmlTagInjection extends AbstractTagInjection {

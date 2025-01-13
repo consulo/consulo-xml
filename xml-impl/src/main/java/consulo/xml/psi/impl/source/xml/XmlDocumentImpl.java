@@ -51,10 +51,10 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;

@@ -16,7 +16,6 @@
 
 package org.intellij.plugins.relaxNG.compact.lexer;
 
-import consulo.ide.impl.idea.openapi.util.io.FileUtil;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenType;
 import consulo.language.lexer.LexerBase;
@@ -25,17 +24,15 @@ import consulo.util.collection.primitive.ints.IntIntMap;
 import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.lang.CharArrayCharSequence;
 import consulo.util.lang.CharArrayUtil;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
 import org.kohsuke.rngom.parse.compact.Token;
 import org.kohsuke.rngom.parse.compact.TokenMgrError;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import java.io.CharArrayReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
@@ -245,23 +242,6 @@ public class CompactSyntaxLexerAdapter extends LexerBase
 	private static CompactSyntaxTokenManager createTokenManager(int initialState, EscapePreprocessor preprocessor)
 	{
 		return new CompactSyntaxTokenManager(new SimpleCharStream(preprocessor, 1, 1), initialState);
-	}
-
-	public static void main(String[] args) throws IOException
-	{
-		final CompactSyntaxLexerAdapter lexer = new CompactSyntaxLexerAdapter();
-		lexer.start(new CharArrayCharSequence(FileUtil.adaptiveLoadText(new FileReader(args[0]))));
-		while(lexer.getTokenType() != null)
-		{
-			System.out.println("token = " + lexer.getTokenType());
-			final int start = lexer.getTokenStart();
-			System.out.println("start = " + start);
-			final int end = lexer.getTokenEnd();
-			System.out.println("end = " + end);
-			final CharSequence t = lexer.getBufferSequence().subSequence(start, end);
-			System.out.println("t = " + t);
-			lexer.advance();
-		}
 	}
 
 	// adapted from com.intellij.util.text.CharSequenceReader with start- and endOffset support

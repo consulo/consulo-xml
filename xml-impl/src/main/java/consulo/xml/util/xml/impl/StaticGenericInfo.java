@@ -1,8 +1,6 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.application.util.function.Processor;
-import consulo.ide.impl.idea.util.ConstantFunction;
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.ObjectUtil;
 import consulo.util.lang.Pair;
@@ -12,10 +10,10 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Function;
@@ -77,7 +75,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
         addAdders(description, builder.collectionClassAdders.get(name));
       }
 
-      final NotNullFunction<String, CollectionChildDescriptionImpl> mapper = new NotNullFunction<String, CollectionChildDescriptionImpl>() {
+      final Function<String, CollectionChildDescriptionImpl> mapper = new Function<>() {
         @Nonnull
         public CollectionChildDescriptionImpl apply(final String xmlName) {
           return ObjectUtil.assertNotNull(myCollections.findDescription(xmlName));
@@ -184,7 +182,7 @@ public class StaticGenericInfo extends DomGenericInfoEx {
       return s -> (Integer)s[1];
     }
 
-    return new ConstantFunction<Object[], Integer>(Integer.MAX_VALUE);
+    return objects -> Integer.MAX_VALUE;
   }
 
   @Nullable

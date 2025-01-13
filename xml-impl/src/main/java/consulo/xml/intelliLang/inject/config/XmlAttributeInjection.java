@@ -15,19 +15,18 @@
  */
 package consulo.xml.intelliLang.inject.config;
 
-import consulo.ide.impl.intelliLang.inject.InjectorUtils;
-import consulo.ide.impl.intelliLang.inject.config.BaseInjection;
-import consulo.ide.impl.intelliLang.inject.config.InjectionPlace;
-import consulo.ide.impl.intelliLang.util.StringMatcher;
+import consulo.language.inject.advanced.BaseInjection;
+import consulo.language.inject.advanced.InjectionPlace;
+import consulo.language.inject.advanced.InjectorUtils;
+import consulo.language.inject.advanced.StringMatcher;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.StringUtil;
 import consulo.util.xml.serializer.JDOMExternalizer;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
+import jakarta.annotation.Nonnull;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-
-import jakarta.annotation.Nonnull;
 
 public class XmlAttributeInjection extends AbstractTagInjection {
 

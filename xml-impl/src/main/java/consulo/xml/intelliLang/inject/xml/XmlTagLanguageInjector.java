@@ -1,12 +1,11 @@
 package consulo.xml.intelliLang.inject.xml;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.psi.injection.impl.ProjectInjectionConfiguration;
 import consulo.language.psi.PsiElement;
+import consulo.project.Project;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.inject.Inject;
-
 import jakarta.annotation.Nonnull;
+import jakarta.inject.Inject;
 
 /**
  * @author VISTALL
@@ -16,9 +15,9 @@ import jakarta.annotation.Nonnull;
 public class XmlTagLanguageInjector extends XmlLanguageInjector
 {
 	@Inject
-	public XmlTagLanguageInjector(ProjectInjectionConfiguration configuration)
+	public XmlTagLanguageInjector(Project project)
 	{
-		super(configuration);
+		super(project);
 	}
 
 	@Nonnull

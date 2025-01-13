@@ -15,7 +15,7 @@
  */
 package consulo.xml.intelliLang.inject.config.ui.configurables;
 
-import consulo.ide.impl.intelliLang.inject.config.ui.configurables.InjectionConfigurable;
+import consulo.language.inject.advanced.ui.InjectionConfigurable;
 import consulo.project.Project;
 import consulo.xml.intelliLang.inject.config.XmlAttributeInjection;
 import consulo.xml.intelliLang.inject.config.ui.XmlAttributePanel;

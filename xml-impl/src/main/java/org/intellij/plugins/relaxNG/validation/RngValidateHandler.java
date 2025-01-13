@@ -1,19 +1,6 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package org.intellij.plugins.relaxNG.validation;
 
-import consulo.annotation.component.ExtensionImpl;
-import consulo.application.ApplicationManager;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.util.PsiTreeUtil;
-import consulo.logging.Logger;
-import consulo.document.Document;
-import consulo.document.FileDocumentManager;
-import consulo.project.Project;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.project.ui.wm.WindowManager;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.actions.validate.ValidateXmlHandler;
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -24,16 +11,29 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.ApplicationManager;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.project.ui.wm.WindowManager;
 import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanel;
 import consulo.util.dataholder.Key;
+import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeRegistry;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.psi.xml.XmlFile;
+import jakarta.annotation.Nullable;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nullable;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.concurrent.Future;
@@ -166,7 +166,7 @@ public class RngValidateHandler implements ValidateXmlHandler
 
 		try
 		{
-			final String schemaPath = VfsUtilCore.fixIDEAUrl(schemaFile.getUrl());
+			final String schemaPath = VirtualFileUtil.fixIDEAUrl(schemaFile.getUrl());
 			try
 			{
 				final ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), sr);
@@ -175,7 +175,7 @@ public class RngValidateHandler implements ValidateXmlHandler
 
 				if(driver.loadSchema(in))
 				{
-					final String path = VfsUtilCore.fixIDEAUrl(instanceFile.getUrl());
+					final String path = VirtualFileUtil.fixIDEAUrl(instanceFile.getUrl());
 					try
 					{
 						driver.validate(ValidationDriver.uriOrFileInputSource(path));

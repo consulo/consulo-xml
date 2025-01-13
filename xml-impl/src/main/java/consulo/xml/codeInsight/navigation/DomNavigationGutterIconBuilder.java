@@ -15,10 +15,6 @@
  */
 package consulo.xml.codeInsight.navigation;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.ElementPresentationManager;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
@@ -27,9 +23,12 @@ import consulo.language.navigation.GotoRelatedItem;
 import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
-
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.ElementPresentationManager;
+import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Function;
@@ -70,7 +69,7 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
     return new DomNavigationGutterIconBuilder<T>(icon, converter, gotoRelatedItemProvider);
   }
 
-  protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull NotNullFunction<T, Collection<? extends PsiElement>> converter) {
+  protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
     super(icon, converter);
   }
 

@@ -305,7 +305,7 @@ public class StaticGenericInfoBuilder {
 
   @Nullable
   private static String getPropertyName(JavaMethod method) {
-    return consulo.ide.impl.idea.openapi.util.text.StringUtil.getPropertyName(method.getMethodName());
+    return StringUtil.getPropertyName(method.getMethodName());
   }
 
   @Nonnull
