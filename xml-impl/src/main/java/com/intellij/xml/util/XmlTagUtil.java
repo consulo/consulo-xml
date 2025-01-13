@@ -16,19 +16,18 @@
 package com.intellij.xml.util;
 
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.xml.util.XmlTagUtilBase;
 import consulo.language.ast.ASTNode;
-import consulo.language.psi.PsiElement;
 import consulo.language.ast.IElementType;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.xml.XmlStringUtil;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import consulo.util.collection.ArrayUtil;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,7 @@ import java.util.Set;
  * @author peter
  */
 @SuppressWarnings({"HardCodedStringLiteral"})
-public class XmlTagUtil extends XmlTagUtilBase {
+public class XmlTagUtil {
     private static final Map<String, Character> ourCharacterEntities;
 
     static {
@@ -194,5 +193,9 @@ public class XmlTagUtil extends XmlTagUtilBase {
             }
         }
         return null;
+    }
+
+    public static String escapeString(@Nullable final String str, final boolean escapeWhiteSpace) {
+        return XmlStringUtil.escapeString(str, escapeWhiteSpace);
     }
 }

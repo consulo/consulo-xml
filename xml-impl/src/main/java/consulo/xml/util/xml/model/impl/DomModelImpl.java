@@ -16,14 +16,13 @@
 
 package consulo.xml.util.xml.model.impl;
 
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.model.DomModel;
-
 import jakarta.annotation.Nonnull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -64,11 +63,9 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
   public T getMergedModel() {
     if (myMergedModel == null) {
       final DomManager domManager = DomManager.getDomManager(myProject);
-      return domManager.createModelMerger().mergeModels(myClass, ContainerUtil.mapNotNull(myConfigFiles, new NullableFunction<XmlFile, T>() {
-        public T apply(XmlFile xmlFile) {
-          DomFileElement<T> fileElement = domManager.getFileElement(xmlFile, myClass);
-          return fileElement == null ? null : fileElement.getRootElement();
-        }
+      return domManager.createModelMerger().mergeModels(myClass, ContainerUtil.mapNotNull(myConfigFiles, xmlFile -> {
+        DomFileElement<T> fileElement = domManager.getFileElement(xmlFile, myClass);
+        return fileElement == null ? null : fileElement.getRootElement();
       }));
     }
     return myMergedModel.getRootElement();
@@ -82,11 +79,7 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
   @Nonnull
   public List<DomFileElement<T>> getRoots() {
     if (myMergedModel == null) {
-      return ContainerUtil.mapNotNull(myConfigFiles, new NullableFunction<XmlFile, DomFileElement<T>>() {
-        public DomFileElement<T> apply(XmlFile xmlFile) {
-          return DomManager.getDomManager(xmlFile.getProject()).getFileElement(xmlFile, myClass);
-        }
-      });
+      return ContainerUtil.mapNotNull(myConfigFiles, xmlFile -> DomManager.getDomManager(xmlFile.getProject()).getFileElement(xmlFile, myClass));
     }
     return myMergedModel instanceof MergedObject ? ((MergedObject) myMergedModel).getImplementations() : Collections.singletonList(myMergedModel);
   }

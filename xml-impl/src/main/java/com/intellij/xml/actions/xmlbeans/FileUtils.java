@@ -16,8 +16,8 @@
 package com.intellij.xml.actions.xmlbeans;
 
 
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import org.jetbrains.annotations.NonNls;
 
 import java.io.*;
@@ -65,7 +65,7 @@ public class FileUtils {
 
 
     public static void saveText(VirtualFile virtualFile, String text) throws IOException {
-        VfsUtil.saveText(virtualFile, text);
+        VirtualFileUtil.saveText(virtualFile, text);
     }
 
     public static boolean copyFile(File in, File out) {

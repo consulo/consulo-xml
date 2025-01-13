@@ -20,12 +20,13 @@ import com.intellij.xml.actions.validate.ErrorReporter;
 import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Computable;
-import consulo.ide.impl.idea.openapi.util.NullableComputable;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.xerces.impl.Constants;
 import org.apache.xerces.impl.xs.*;
 import org.apache.xerces.impl.xs.models.CMBuilder;
@@ -42,13 +43,12 @@ import org.apache.xerces.xs.XSTypeDefinition;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author Dmitry Avdeev
@@ -80,14 +80,7 @@ class XsContentDFA extends XmlContentDFA
 		{
 			return null;
 		}
-		XSModel xsModel = ApplicationManager.getApplication().runReadAction(new NullableComputable<XSModel>()
-		{
-			@Override
-			public XSModel compute()
-			{
-				return getXSModel((XmlFile) file);
-			}
-		});
+		XSModel xsModel = ApplicationManager.getApplication().runReadAction((Supplier<XSModel>) () -> getXSModel((XmlFile) file));
 		if(xsModel == null)
 		{
 			return null;

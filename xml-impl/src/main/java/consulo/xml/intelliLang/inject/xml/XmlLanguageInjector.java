@@ -17,13 +17,13 @@
 package consulo.xml.intelliLang.inject.xml;
 
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.util.PatternValuesIndex;
 import consulo.language.Language;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.inject.MultiHostInjector;
 import consulo.language.inject.MultiHostRegistrar;
 import consulo.language.inject.advanced.*;
 import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.PatternValuesIndex;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;

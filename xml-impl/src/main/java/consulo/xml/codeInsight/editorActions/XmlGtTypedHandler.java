@@ -13,7 +13,6 @@ import consulo.codeEditor.HighlighterIterator;
 import consulo.codeEditor.ScrollType;
 import consulo.codeEditor.util.EditorModificationUtil;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.editorActions.TypedHandler;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.codeStyle.CodeStyleManager;
@@ -41,7 +40,7 @@ import java.util.Collection;
 @ExtensionImpl(id = "xmlGt", order = "after xmlEq")
 public class XmlGtTypedHandler extends TypedHandlerDelegate
 {
-	private static final Logger LOG = Logger.getInstance(TypedHandler.class);
+	private static final Logger LOG = Logger.getInstance(XmlGtTypedHandler.class);
 
 	@Nonnull
 	@Override
