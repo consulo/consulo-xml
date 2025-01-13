@@ -34,7 +34,6 @@ open module com.intellij.xml
     exports com.intellij.xml.actions.validate;
     exports com.intellij.xml.actions.xmlbeans;
     exports com.intellij.xml.arrangement;
-    exports com.intellij.xml.breadcrumbs;
     exports com.intellij.xml.config;
     exports com.intellij.xml.impl;
     exports com.intellij.xml.impl.dom;
