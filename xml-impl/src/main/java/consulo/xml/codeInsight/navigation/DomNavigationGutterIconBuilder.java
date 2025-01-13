@@ -15,7 +15,6 @@
  */
 package consulo.xml.codeInsight.navigation;
 
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
@@ -88,7 +87,7 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
   }
 
   @Override
-  protected NullableFunction<T, String> createDefaultNamer() {
+  protected Function<T, String> createDefaultNamer() {
     return ElementPresentationManager.namer();
   }
 }

@@ -23,8 +23,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Computable;
 import consulo.application.util.function.Processor;
-import consulo.ide.impl.idea.openapi.module.ModuleUtil;
-import consulo.ide.impl.idea.util.PairConvertor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.search.DefinitionsScopedSearch;
@@ -38,9 +36,10 @@ import consulo.xml.psi.impl.source.xml.XmlTagImpl;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
+
 import java.util.*;
+import java.util.function.BiFunction;
 
 /**
  * User: Irina.Chernushina
@@ -69,7 +68,7 @@ public class SchemaDefinitionsSearch implements DefinitionsScopedSearchExecutor 
                 if (infos != null && !infos.isEmpty()) {
                     XmlFile file = XmlUtil.getContainingFile(xml);
                     final Project project = file.getProject();
-                    final Module module = ModuleUtil.findModuleForPsiElement(queryParameters);
+                    final Module module = queryParameters.getModule();
                     //if (module == null) return false;
 
                     final VirtualFile vf = file.getVirtualFile();
@@ -228,11 +227,11 @@ public class SchemaDefinitionsSearch implements DefinitionsScopedSearchExecutor 
 
         queue.add(new SchemaTypeInfo(localName, true, nsUri));
 
-        final PairConvertor<String, String, List<Set<SchemaTypeInfo>>> worker =
+        final BiFunction<String, String, List<Set<SchemaTypeInfo>>> worker =
             SchemaTypeInheritanceIndex.getWorker(project, file.getContainingFile().getVirtualFile());
         while (!queue.isEmpty()) {
             final SchemaTypeInfo info = queue.removeFirst();
-            final List<Set<SchemaTypeInfo>> childrenOfType = worker.convert(info.getNamespaceUri(), info.getTagName());
+            final List<Set<SchemaTypeInfo>> childrenOfType = worker.apply(info.getNamespaceUri(), info.getTagName());
             for (Set<SchemaTypeInfo> infos : childrenOfType) {
                 for (SchemaTypeInfo typeInfo : infos) {
                     if (typeInfo.isIsTypeName()) {

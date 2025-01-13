@@ -23,9 +23,9 @@ import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.ApplicationManager;
 import consulo.application.util.function.Processor;
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -57,7 +57,6 @@ import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.Validator;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -73,10 +72,10 @@ import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -358,13 +357,14 @@ public class XmlUtil {
         return findXmlFile(base, location);
     }
 
+    @RequiredReadAction
     public static Collection<XmlFile> findNSFilesByURI(String namespace, final Project project, Module module) {
         final List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources =
             XmlNamespaceIndex.getResourcesByNamespace(namespace, project, module);
         final PsiManager psiManager = PsiManager.getInstance(project);
         return ContainerUtil.mapNotNull(
             resources,
-            (NullableFunction<IndexedRelevantResource<String, XsdNamespaceBuilder>, XmlFile>)resource -> {
+            resource -> {
                 PsiFile file = psiManager.findFile(resource.getFile());
                 return file instanceof XmlFile ? (XmlFile)file : null;
             }

@@ -1,6 +1,5 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
@@ -9,9 +8,9 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Type;
@@ -25,7 +24,7 @@ import java.util.function.Function;
  */
 public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl implements DomCollectionChildDescription, AbstractCollectionChildDescription {
   private final Collection<JavaMethod> myGetterMethods;
-  private final NotNullFunction<DomInvocationHandler, List<XmlTag>> myTagsGetter = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
+  private final Function<DomInvocationHandler, List<XmlTag>> myTagsGetter = new Function<DomInvocationHandler, List<XmlTag>>() {
     @Nonnull
     public List<XmlTag> apply(final DomInvocationHandler handler) {
       XmlTag tag = handler.getXmlTag();
@@ -46,7 +45,7 @@ public class CollectionChildDescriptionImpl extends DomChildDescriptionImpl impl
     return "CollectionChildDescription:" + getXmlName();
   }
 
-  public NotNullFunction<DomInvocationHandler, List<XmlTag>> getTagsGetter() {
+  public Function<DomInvocationHandler, List<XmlTag>> getTagsGetter() {
     return myTagsGetter;
   }
 

@@ -29,9 +29,6 @@ import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.colorScheme.TextAttributes;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsProvider;
-import consulo.ide.impl.idea.ui.breadcrumbs.BreadcrumbsUtilEx;
-import consulo.ide.impl.idea.ui.breadcrumbs.PsiFileBreadcrumbsCollector;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -54,9 +51,9 @@ import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +69,6 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
 
   private final PsiFile myFile;
   private final EditorEx myEditor;
-  private final BreadcrumbsProvider myInfoProvider;
 
   private final List<Pair<TextRange, TextRange>> myPairsToHighlight = new ArrayList<>();
 
@@ -80,8 +76,6 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
     super(file.getProject(), editor.getDocument(), true);
     myFile = file;
     myEditor = editor;
-    final FileViewProvider viewProvider = file.getManager().findViewProvider(file.getVirtualFile());
-    myInfoProvider = BreadcrumbsUtilEx.findProvider(false, viewProvider);
   }
 
   @RequiredReadAction
@@ -96,7 +90,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
     }
 
     final int offset = myEditor.getCaretModel().getOffset();
-    PsiElement[] elements = PsiFileBreadcrumbsCollector.getLinePsiElements(myEditor.getDocument(), offset, myFile.getVirtualFile(), myProject, myInfoProvider);
+    PsiElement[] elements = null; // FIXME [VISTALL] for now idk when it used, due it based on breadcrumbs, which removed
 
     if (elements == null || elements.length == 0 || !XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements)) {
       elements = PsiElement.EMPTY_ARRAY;

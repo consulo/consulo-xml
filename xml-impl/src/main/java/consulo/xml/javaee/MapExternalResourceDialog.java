@@ -28,7 +28,6 @@ import consulo.dataContext.DataManager;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.ide.impl.idea.openapi.fileChooser.FileSystemTree;
 import consulo.ide.impl.idea.openapi.fileChooser.FileSystemTreeFactory;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.language.editor.CommonDataKeys;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
@@ -47,6 +46,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -178,7 +178,7 @@ public class MapExternalResourceDialog extends DialogWrapper
 		}
 		else if(location != null)
 		{
-			VirtualFile virtualFile = VfsUtil.findRelativeFile(location, null);
+			VirtualFile virtualFile = VirtualFileUtil.findRelativeFile(location, null);
 			if(virtualFile != null)
 			{
 				schema = PsiManager.getInstance(project).findFile(virtualFile);

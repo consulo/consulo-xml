@@ -16,19 +16,19 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import consulo.ide.impl.idea.util.NotNullFunction;
+import consulo.language.pattern.PsiFilePattern;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileSystemItem;
 import consulo.language.psi.PsiReference;
-import consulo.util.lang.function.Condition;
-import consulo.language.pattern.PsiFilePattern;
 import consulo.language.psi.path.FileReference;
 import consulo.language.psi.path.FileReferenceSet;
 import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
 import consulo.virtualFileSystem.fileType.FileType;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
+import java.util.function.Function;
 
 import static consulo.xml.patterns.XmlPatterns.*;
 
@@ -46,7 +46,7 @@ public class FileReferenceUtil {
   public static PsiReference[] restrict(FileReferenceSet set, final Condition<PsiFile> cond, final Boolean soft) {
     final FileReference[] references = set.getAllReferences();
 
-    return ContainerUtil.map2Array(references, PsiReference.class, (NotNullFunction<FileReference, PsiReference>) fileReference -> new MyFileReference(fileReference, cond, soft));
+    return ContainerUtil.map2Array(references, PsiReference.class, (Function<FileReference, PsiReference>) fileReference -> new MyFileReference(fileReference, cond, soft));
   }
 
   public static Condition<PsiFile> byType(FileType instance) {

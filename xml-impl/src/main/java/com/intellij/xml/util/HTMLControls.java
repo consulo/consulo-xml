@@ -15,20 +15,20 @@
  */
 package com.intellij.xml.util;
 
-import consulo.ide.impl.idea.openapi.util.io.FileUtilRt;
 import consulo.logging.Logger;
-import consulo.util.lang.StringUtil;
 import consulo.util.io.CharsetToolkit;
+import consulo.util.io.StreamUtil;
 import consulo.util.io.UnsyncByteArrayInputStream;
+import consulo.util.jdom.JDOMUtil;
+import consulo.util.lang.StringUtil;
 import consulo.util.xml.serializer.Converter;
 import consulo.util.xml.serializer.XmlSerializer;
 import consulo.util.xml.serializer.annotation.Attribute;
-import consulo.util.jdom.JDOMUtil;
 import consulo.util.xml.serializer.annotation.Tag;
-import org.jdom.Document;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jdom.Document;
+
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashSet;
@@ -56,7 +56,7 @@ public class HTMLControls {
             // use temporary bytes stream because otherwise inputStreamSkippingBOM will fail
             // on ZipFileInputStream used in jar files
             final InputStream stream = HTMLControls.class.getResourceAsStream("HtmlControls.xml");
-            final byte[] bytes = FileUtilRt.loadBytes(stream);
+            final byte[] bytes = StreamUtil.loadFromStream(stream);
             stream.close();
             final UnsyncByteArrayInputStream bytesStream = new UnsyncByteArrayInputStream(bytes);
             document = JDOMUtil.loadDocument(CharsetToolkit.inputStreamSkippingBOM(bytesStream));

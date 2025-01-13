@@ -54,17 +54,16 @@ import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.xml.application.options.XmlSettings;
 import consulo.xml.codeInsight.completion.ExtendedTagInsertHandler;
-import consulo.xml.codeInsight.daemon.XmlErrorMessages;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -243,7 +242,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
   private static boolean checkIfGivenXmlHasTheseWords(final String name, final XmlFile tldFileByUri) {
     if (name == null || name.isEmpty()) return true;
-    final List<String> list = consulo.ide.impl.idea.openapi.util.text.StringUtil.getWordsIn(name);
+    final List<String> list = StringUtil.getWordsIn(name);
     final String[] words = ArrayUtil.toStringArray(list);
     final boolean[] wordsFound = new boolean[words.length];
     final int[] wordsFoundCount = new int[1];

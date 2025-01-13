@@ -16,7 +16,6 @@
 package com.intellij.xml.config;
 
 import consulo.application.AllIcons;
-import consulo.ide.impl.idea.util.containers.Convertor;
 import consulo.language.icon.IconDescriptorUpdaters;
 import consulo.language.psi.PsiFile;
 import consulo.module.Module;
@@ -29,12 +28,11 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFilePresentation;
 import consulo.virtualFileSystem.archive.ArchiveFileSystem;
 import consulo.virtualFileSystem.fileType.FileType;
-
 import jakarta.annotation.Nonnull;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 import java.util.*;
 
 public class ConfigFilesTreeBuilder {
@@ -209,21 +207,19 @@ public class ConfigFilesTreeBuilder {
     }
 
     public static void installSearch(JTree tree) {
-        new TreeSpeedSearch(tree, new Convertor<TreePath, String>() {
-            public String convert(final TreePath treePath) {
-                final Object object = ((DefaultMutableTreeNode)treePath.getLastPathComponent()).getUserObject();
-                if (object instanceof Module) {
-                    return ((Module)object).getName();
-                }
-                else if (object instanceof PsiFile) {
-                    return ((PsiFile)object).getName();
-                }
-                else if (object instanceof VirtualFile) {
-                    return ((VirtualFile)object).getName();
-                }
-                else {
-                    return "";
-                }
+        new TreeSpeedSearch(tree, treePath -> {
+            final Object object = ((DefaultMutableTreeNode)treePath.getLastPathComponent()).getUserObject();
+            if (object instanceof Module) {
+                return ((Module)object).getName();
+            }
+            else if (object instanceof PsiFile) {
+                return ((PsiFile)object).getName();
+            }
+            else if (object instanceof VirtualFile) {
+                return ((VirtualFile)object).getName();
+            }
+            else {
+                return "";
             }
         });
     }

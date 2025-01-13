@@ -24,12 +24,11 @@
  */
 package com.intellij.xml.impl;
 
-import jakarta.annotation.Nullable;
-
-import consulo.ide.impl.idea.util.ArrayUtilRt;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlElement;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ArrayUtil;
+import consulo.xml.psi.xml.XmlElement;
+import jakarta.annotation.Nullable;
 
 public abstract class BasicXmlAttributeDescriptor extends XmlEnumerationDescriptor implements XmlAttributeDescriptor {
     public String validateValue(XmlElement context, String value) {
@@ -60,7 +59,7 @@ public abstract class BasicXmlAttributeDescriptor extends XmlEnumerationDescript
       if (values == null || values.length == 0) {
         return getDeclaration();
       }
-        return ArrayUtilRt.find(values, value) != -1 ? getDeclaration() : null;
+        return ArrayUtil.find(values, value) != -1 ? getDeclaration() : null;
     }
 
     protected PsiElement getDefaultValueDeclaration() {

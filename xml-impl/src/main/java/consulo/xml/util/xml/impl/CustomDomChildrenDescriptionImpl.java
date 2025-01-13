@@ -15,19 +15,19 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.util.NotNullFunction;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomExtensionImpl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -35,7 +35,7 @@ import java.util.List;
 public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptionImpl implements CustomDomChildrenDescription, AbstractCollectionChildDescription {
   @Nullable
   private final JavaMethod myGetter;
-  public static final NotNullFunction<DomInvocationHandler,List<XmlTag>> CUSTOM_TAGS_GETTER = new NotNullFunction<DomInvocationHandler, List<XmlTag>>() {
+  public static final Function<DomInvocationHandler,List<XmlTag>> CUSTOM_TAGS_GETTER = new Function<DomInvocationHandler, List<XmlTag>>() {
     @Nonnull
     public List<XmlTag> apply(final DomInvocationHandler handler) {
       return DomImplUtil.getCustomSubTags(handler, handler.getXmlTag().getSubTags(), handler.getFile());

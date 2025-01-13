@@ -16,9 +16,6 @@
 package com.intellij.xml.index;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
-import consulo.ide.impl.idea.util.PairConvertor;
-import consulo.ide.impl.idea.util.containers.EncoderDecoder;
 import consulo.index.io.DataIndexer;
 import consulo.index.io.ID;
 import consulo.index.io.data.DataExternalizer;
@@ -33,12 +30,13 @@ import consulo.util.collection.MultiMap;
 import consulo.util.io.Readers;
 import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
-
 import jakarta.annotation.Nonnull;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.BiFunction;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,11 +56,11 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
         return FileBasedIndex.getInstance().getValues(NAME, NsPlusTag.INSTANCE.encode(Pair.create(ns, name)), filter);
     }
 
-    public static PairConvertor<String, String, List<Set<SchemaTypeInfo>>> getWorker(final Project project, final VirtualFile currentFile) {
+    public static BiFunction<String, String, List<Set<SchemaTypeInfo>>> getWorker(final Project project, final VirtualFile currentFile) {
         return new MyWorker(currentFile, project);
     }
 
-    private static class MyWorker implements PairConvertor<String, String, List<Set<SchemaTypeInfo>>> {
+    private static class MyWorker implements BiFunction<String, String, List<Set<SchemaTypeInfo>>> {
         private final Project myProject;
         private final VirtualFile myCurrentFile;
         private final GlobalSearchScope myFilter;
@@ -78,17 +76,12 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
         }
 
         @Override
-        public List<Set<SchemaTypeInfo>> convert(String ns, String name) {
+        public List<Set<SchemaTypeInfo>> apply(String ns, String name) {
             List<Set<SchemaTypeInfo>> type = getDirectChildrenOfType(myProject, ns, name);
             if (myShouldParseCurrent) {
                 if (myMap == null) {
-                    try {
-                        myMap = XsdComplexTypeInfoBuilder.parse(Readers.readerFromCharSequence(VfsUtilCore.loadText(myCurrentFile)));
-                        type.add(new HashSet<SchemaTypeInfo>(myMap.get(new SchemaTypeInfo(name, true, ns))));
-                    }
-                    catch (IOException e) {
-                        LOG.info(e);
-                    }
+                    myMap = XsdComplexTypeInfoBuilder.parse(Readers.readerFromCharSequence(myCurrentFile.loadText()));
+                    type.add(new HashSet<SchemaTypeInfo>(myMap.get(new SchemaTypeInfo(name, true, ns))));
                 }
             }
             return type;
@@ -161,16 +154,14 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
         };
     }
 
-    private static class NsPlusTag implements EncoderDecoder<Pair<String, String>, String> {
+    private static class NsPlusTag {
         private final static NsPlusTag INSTANCE = new NsPlusTag();
         private final static char ourSeparator = ':';
 
-        @Override
         public String encode(Pair<String, String> pair) {
             return pair.getFirst() + ourSeparator + pair.getSecond();
         }
 
-        @Override
         public Pair<String, String> decode(String s) {
             final int i = s.indexOf(ourSeparator);
             return i <= 0 ? Pair.create("", s) : Pair.create(s.substring(0, i), s.substring(i + 1));

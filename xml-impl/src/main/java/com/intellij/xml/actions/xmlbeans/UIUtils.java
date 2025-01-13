@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import consulo.xml.javaee.ExternalResourceManager;
 import com.intellij.xml.XmlBundle;
 import consulo.application.util.SystemInfo;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.fileChooser.IdeaFileChooser;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.project.Project;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.javaee.ExternalResourceManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,8 +67,8 @@ public class UIUtils {
                 VirtualFile initialFile = myProject.getBaseDir();
                 String selectedItem = wsdlUrl.getTextField().getText();
                 if (selectedItem != null && selectedItem.startsWith(LocalFileSystem.PROTOCOL_PREFIX)) {
-                    VirtualFile fileByPath = VfsUtil.findRelativeFile(ExternalResourceManager.getInstance()
-                        .getResourceLocation(VfsUtil.fixURLforIDEA(selectedItem)), null);
+                    VirtualFile fileByPath = VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance()
+                        .getResourceLocation(VirtualFileUtil.fixURLforIDEA(selectedItem)), null);
                     if (fileByPath != null) initialFile = fileByPath;
                 }
 
@@ -82,6 +82,6 @@ public class UIUtils {
     }
 
     public static String fixIDEAUrl(String url) {
-        return SystemInfo.isWindows ? VfsUtil.fixIDEAUrl(url) : url;
+        return SystemInfo.isWindows ? VirtualFileUtil.fixIDEAUrl(url) : url;
     }
 }

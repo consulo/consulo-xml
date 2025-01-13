@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.validation;
 
 import consulo.application.Application;
 import consulo.application.ApplicationManager;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.project.ui.view.MessageView;
@@ -36,6 +35,7 @@ import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanelFactory;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -98,7 +98,7 @@ public class MessageViewHelper {
     final String systemId = ex.getSystemId();
     if (systemId != null) {
       try {
-        file = VfsUtil.findFileByURL(new URL(systemId));
+        file = VirtualFileUtil.findFileByURL(new URL(systemId));
       } catch (MalformedURLException e) {
         LOG.warn("systemId = " + systemId);
         LOG.error(e);

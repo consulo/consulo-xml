@@ -22,7 +22,6 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.application.util.RecursionManager;
-import consulo.ide.impl.idea.openapi.util.NullableComputable;
 import consulo.language.psi.PsiModificationTracker;
 
 import jakarta.annotation.Nonnull;

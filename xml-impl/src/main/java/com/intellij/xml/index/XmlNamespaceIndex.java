@@ -17,7 +17,6 @@ package com.intellij.xml.index;
 
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.index.io.DataIndexer;
 import consulo.index.io.ID;
 import consulo.index.io.data.DataExternalizer;
@@ -34,11 +33,12 @@ import consulo.util.io.StreamUtil;
 import consulo.util.lang.Comparing;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author Dmitry Avdeev
@@ -83,7 +83,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     public static List<IndexedRelevantResource<String, XsdNamespaceBuilder>> getAllResources(
         @Nullable final consulo.module.Module module,
         @Nonnull Project project,
-        @Nullable NullableFunction<List<IndexedRelevantResource<String, XsdNamespaceBuilder>>, IndexedRelevantResource<String, XsdNamespaceBuilder>> chooser
+        @Nullable Function<List<IndexedRelevantResource<String, XsdNamespaceBuilder>>, IndexedRelevantResource<String, XsdNamespaceBuilder>> chooser
     ) {
         return IndexedRelevantResource.getAllResources(NAME, module, project, chooser);
     }

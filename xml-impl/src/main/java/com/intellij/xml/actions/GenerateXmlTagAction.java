@@ -27,8 +27,8 @@ import consulo.colorScheme.EditorColorsScheme;
 import consulo.colorScheme.EditorFontType;
 import consulo.document.Document;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.codeInsight.CodeInsightUtilBase;
 import consulo.language.ast.ASTNode;
+import consulo.language.editor.CodeInsightUtilCore;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.action.SimpleCodeInsightAction;
 import consulo.language.editor.hint.HintManager;
@@ -56,9 +56,9 @@ import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
 import consulo.xml.psi.xml.*;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -171,7 +171,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     @RequiredReadAction
     public static void generateTag(XmlTag newTag) {
         generateRaw(newTag);
-        final XmlTag restored = CodeInsightUtilBase.forcePsiPostprocessAndRestoreElement(newTag);
+        final XmlTag restored = CodeInsightUtilCore.forcePsiPostprocessAndRestoreElement(newTag);
         if (restored == null) {
             LOG.error("Could not restore tag: " + newTag.getText());
         }

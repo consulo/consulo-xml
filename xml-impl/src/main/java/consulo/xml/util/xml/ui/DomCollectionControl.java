@@ -15,18 +15,26 @@
  */
 package consulo.xml.util.xml.ui;
 
+import consulo.application.ApplicationBundle;
+import consulo.application.ApplicationManager;
+import consulo.application.Result;
 import consulo.dataContext.DataSink;
+import consulo.dataContext.TypeSafeDataProvider;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.language.psi.PsiUtilCore;
+import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.project.Project;
 import consulo.proxy.EventDispatcher;
-import consulo.ui.ex.action.ActionManager;
-import consulo.ui.ex.action.ActionPlaces;
-import consulo.ui.ex.action.AnAction;
-import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.*;
 import consulo.ui.ex.awt.ColumnInfo;
 import consulo.ui.ex.awt.CommonActionsPanel;
-import consulo.ide.impl.idea.util.IconUtil;
+import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.dataholder.Key;
+import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomCollectionProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
@@ -34,22 +42,10 @@ import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.AddDomElementAction;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
-import consulo.application.ApplicationBundle;
-import consulo.application.ApplicationManager;
-import consulo.application.Result;
-import consulo.dataContext.TypeSafeDataProvider;
-import consulo.language.psi.PsiUtilCore;
-import consulo.project.Project;
-import consulo.ui.ex.action.DefaultActionGroup;
-import consulo.ui.image.Image;
-import consulo.util.collection.ArrayUtil;
-import consulo.util.collection.ContainerUtil;
-import consulo.util.dataholder.Key;
-import consulo.util.lang.reflect.ReflectionUtil;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Type;
@@ -72,9 +68,9 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
   private List<T> myCollectionElements = new ArrayList<T>();
   private ColumnInfo<T, ?>[] myColumnInfos;
   private boolean myEditable = false;
-  public static final Image ADD_ICON = IconUtil.getAddIcon();
-  public static final Image EDIT_ICON = IconUtil.getEditIcon();
-  public static final Image REMOVE_ICON = IconUtil.getRemoveIcon();
+  public static final Image ADD_ICON = PlatformIconGroup.generalAdd();
+  public static final Image EDIT_ICON = PlatformIconGroup.actionsEdit();
+  public static final Image REMOVE_ICON = PlatformIconGroup.generalRemove();
 
   public DomCollectionControl(DomElement parentElement,
                               DomCollectionChildDescription description,

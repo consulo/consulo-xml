@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.index;
 
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.index.io.ID;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.stub.AdditionalIndexedRootsScope;
@@ -25,13 +24,14 @@ import consulo.module.content.ProjectFileIndex;
 import consulo.module.content.ProjectRootManager;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Dmitry Avdeev
@@ -69,7 +69,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
         ID<K, V> indexId,
         @Nullable final Module module,
         @Nonnull Project project,
-        @Nullable NullableFunction<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser
+        @Nullable Function<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser
     ) {
         ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<>();
         Collection<K> allKeys = FileBasedIndex.getInstance().getAllKeys(indexId, project);

@@ -20,13 +20,13 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
 import consulo.document.util.TextRange;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtilCore;
 import consulo.language.psi.*;
 import consulo.language.psi.path.FileReferenceUtil;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -34,10 +34,10 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.function.Predicate;
 
 /**
@@ -208,7 +208,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
       // TODO: this should work!
       final VirtualFile virtualFile = ((PsiFile)element).getVirtualFile();
       assert virtualFile != null;
-      handleElementRename(VfsUtilCore.fixIDEAUrl(virtualFile.getPresentableUrl()));
+      handleElementRename(VirtualFileUtil.fixIDEAUrl(virtualFile.getPresentableUrl()));
     }
     return myElement;
   }

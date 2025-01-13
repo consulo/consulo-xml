@@ -1,6 +1,5 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.logging.Logger;
 import consulo.module.Module;
@@ -13,10 +12,10 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.*;
 import consulo.xml.util.xml.stubs.FileStub;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -226,7 +225,7 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
   }
 
   public Module getModule() {
-    return ModuleUtil.findModuleForPsiElement(getFile());
+    return getFile().getModule();
   }
 
   public void copyFrom(DomElement other) {

@@ -21,7 +21,6 @@ import consulo.application.presentation.TypePresentationService;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.util.Iconable;
 import consulo.ide.ServiceManager;
-import consulo.ide.impl.idea.util.NullableFunction;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
@@ -30,9 +29,9 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
@@ -89,17 +88,17 @@ public abstract class ElementPresentationManager
 	@Nonnull
 	public abstract <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags);
 
-	public static <T> NullableFunction<T, String> NAMER()
+	public static <T> Function<T, String> NAMER()
 	{
 		return o -> getElementName(o);
 	}
 
-	public static final NullableFunction<Object, String> NAMER = o -> getElementName(o);
+	public static final Function<Object, String> NAMER = o -> getElementName(o);
 
-	public static <T> NullableFunction<T, String> namer()
+	public static <T> Function<T, String> namer()
 	{
 		//noinspection unchecked
-		return (NullableFunction<T, String>) NAMER;
+		return (Function<T, String>) NAMER;
 	}
 
 	@Nullable

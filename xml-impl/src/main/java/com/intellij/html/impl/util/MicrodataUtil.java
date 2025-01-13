@@ -207,7 +207,7 @@ public class MicrodataUtil {
             if ("prop-nam".equalsIgnoreCase(getStripedAttributeValue(tag, HtmlUtil.CLASS_ATTRIBUTE_NAME))) {
                 final String code = tag.getSubTagText("code");
                 if (code != null) {
-                    myValues.add(consulo.ide.impl.idea.openapi.util.text.StringUtil.stripHtml(code, false));
+                    myValues.add(StringUtil.stripHtml(code, false));
                 }
             }
         }
