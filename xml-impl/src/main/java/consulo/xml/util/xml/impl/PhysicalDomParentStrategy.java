@@ -15,16 +15,14 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlEntityRef;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.ide.impl.idea.diagnostic.LogMessageEx;
 import consulo.language.impl.DebugUtil;
 import consulo.language.psi.PsiElement;
 import consulo.logging.Logger;
 import consulo.logging.attachment.AttachmentFactory;
-
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlEntityRef;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -119,7 +117,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
         if (nav1 != nav2) {
           PsiElement curContext = findIncluder(element);
           PsiElement navContext = findIncluder(nav1);
-          LOG.error(LogMessageEx.createEvent(
+          LOG.error(
               "x:include processing error",
               "nav1,nav2=" + nav1 + ", " + nav2 + ";\n" +
                   nav1.getContainingFile() + ":" + nav1.getTextRange().getStartOffset() + "!=" + nav2.getContainingFile() + ":" + nav2.getTextRange().getStartOffset() + ";\n" +
@@ -131,7 +129,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
                   "thatElement.physical=" + thatElement.isPhysical() + "\n" + DebugUtil.currentStackTrace(),
               AttachmentFactory.get().create("Including tag text 1.xml", curContext == null ? "null" : curContext.getText()),
               AttachmentFactory.get().create("Including tag text 2.xml", navContext == null ? "null" : navContext.getText())
-          ));
+          );
           throw new AssertionError();
         }
       }
