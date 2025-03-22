@@ -17,6 +17,7 @@
 package org.intellij.plugins.relaxNG.validation;
 
 import com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl;
+import com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl;
 import com.thaiopensource.relaxng.pattern.AnnotationsImpl;
 import com.thaiopensource.relaxng.pattern.CommentListImpl;
 import com.thaiopensource.relaxng.pattern.NameClass;
@@ -28,9 +29,12 @@ import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.impl.SchemaReaderImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.*;
+import consulo.component.ProcessCanceledException;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.logging.Logger;
@@ -40,6 +44,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.UriUtil;
 import consulo.xml.psi.xml.XmlFile;
+import jakarta.annotation.Nonnull;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.kohsuke.rngom.ast.builder.BuildException;
@@ -64,240 +69,206 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
-import jakarta.annotation.Nonnull;
 import javax.xml.transform.sax.SAXSource;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentMap;
 
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 19.07.2007
-*/
-public class RngParser
-{
-	private static final Logger LOG = Logger.getInstance("#RngParser");
+ * Created by IntelliJ IDEA.
+ * User: sweinreuter
+ * Date: 19.07.2007
+ */
+public class RngParser {
+    private static final Logger LOG = Logger.getInstance("#RngParser");
 
-	private static final NotNullLazyValue<DatatypeLibraryFactory> DT_LIBRARY_FACTORY = new AtomicNotNullLazyValue<DatatypeLibraryFactory>()
-	{
-		@Nonnull
-		@Override
-		protected DatatypeLibraryFactory compute()
-		{
-			return new BuiltinDatatypeLibraryFactory(new CachedDatatypeLibraryFactory(new CascadingDatatypeLibraryFactory(createXsdDatatypeFactory(), new DatatypeLibraryLoader()))
-			{
-				@Override
-				public synchronized DatatypeLibrary createDatatypeLibrary(String namespaceURI)
-				{
-					return super.createDatatypeLibrary(namespaceURI);
-				}
-			});
-		}
-	};
+    private static final NotNullLazyValue<DatatypeLibraryFactory> DT_LIBRARY_FACTORY = new AtomicNotNullLazyValue<>() {
+        @Nonnull
+        @Override
+        protected DatatypeLibraryFactory compute() {
+            // FIXME [VISTALL] make it more clear
+            DoNothingDatatypeLibraryFactoryImpl nothing = new DoNothingDatatypeLibraryFactoryImpl();
 
-	private static final ConcurrentMap<String, DPattern> ourCache = ContainerUtil.createConcurrentSoftMap();
+            BuiltinDatatypeLibraryFactory builtinDatatypeLibraryFactory = new BuiltinDatatypeLibraryFactory(new CachedDatatypeLibraryFactory(new CascadingDatatypeLibraryFactory(createXsdDatatypeFactory(), new DatatypeLibraryLoader())) {
+                @Override
+                public synchronized DatatypeLibrary createDatatypeLibrary(String namespaceURI) {
+                    return super.createDatatypeLibrary(namespaceURI);
+                }
+            });
+            return uri -> {
+                DatatypeLibrary library = builtinDatatypeLibraryFactory.createDatatypeLibrary(uri);
+                return library == null ? nothing.createDatatypeLibrary(uri) : library;
+            };
+        }
+    };
 
-	private static DatatypeLibraryFactory createXsdDatatypeFactory()
-	{
-		try
-		{
-			return new DatatypeLibraryFactoryImpl();
-		}
-		catch(Throwable e)
-		{
-			LOG.error("Could not create DT library implementation 'com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl'. Plugin's classpath seems to be broken.", e);
-			return new DoNothingDatatypeLibraryFactoryImpl();
-		}
-	}
+    private static final ConcurrentMap<String, DPattern> ourCache = ContainerUtil.createConcurrentSoftMap();
 
-	static final Key<CachedValue<Schema>> SCHEMA_KEY = Key.create("SCHEMA");
+    private static DatatypeLibraryFactory createXsdDatatypeFactory() {
+        try {
+            return new DatatypeLibraryFactoryImpl(new RegexEngineImpl());
+        }
+        catch (Throwable e) {
+            return new DoNothingDatatypeLibraryFactoryImpl();
+        }
+    }
 
-	public static final DefaultHandler DEFAULT_HANDLER = new DefaultHandler()
-	{
-		@Override
-		public void error(SAXParseException e) throws SAXException
-		{
-			LOG.info("e.getMessage() = " + e.getMessage() + " [" + e.getSystemId() + "]");
-			LOG.info(e);
-		}
-	};
+    static final Key<CachedValue<Schema>> SCHEMA_KEY = Key.create("SCHEMA");
 
-	static final PropertyMap EMPTY_PROPS = new PropertyMapBuilder().toPropertyMap();
+    public static final DefaultHandler DEFAULT_HANDLER = new DefaultHandler() {
+        @Override
+        public void error(SAXParseException e) throws SAXException {
+            LOG.info("e.getMessage() = " + e.getMessage() + " [" + e.getSystemId() + "]");
+            LOG.info(e);
+        }
+    };
 
-	public static DPattern getCachedPattern(final PsiFile descriptorFile, final ErrorHandler eh)
-	{
-		final VirtualFile file = descriptorFile.getVirtualFile();
+    static final PropertyMap EMPTY_PROPS = new PropertyMapBuilder().toPropertyMap();
 
-		if(file == null)
-		{
-			return parsePattern(descriptorFile, eh, false);
-		}
-		String url = file.getUrl();
-		DPattern pattern = ourCache.get(url);
-		if(pattern == null)
-		{
-			pattern = parsePattern(descriptorFile, eh, false);
-		}
-		if(pattern != null)
-		{
-			DPattern oldPattern = ourCache.putIfAbsent(url, pattern);
-			if(oldPattern != null)
-			{
-				return oldPattern;
-			}
-		}
-		return pattern;
-	}
+    public static DPattern getCachedPattern(final PsiFile descriptorFile, final ErrorHandler eh) {
+        final VirtualFile file = descriptorFile.getVirtualFile();
 
-	public static DPattern parsePattern(final PsiFile file, final ErrorHandler eh, boolean checking)
-	{
-		try
-		{
-			final Parseable p = createParsable(file, eh);
-			if(checking)
-			{
-				p.parse(new SchemaBuilderImpl(eh, DT_LIBRARY_FACTORY.getValue(), new SchemaPatternBuilder()));
-			}
-			else
-			{
-				return p.parse(new DSchemaBuilderImpl());
-			}
-		}
-		catch(BuildException e)
-		{
-			LOG.info(e);
-		}
-		catch(IllegalSchemaException e)
-		{
-			final VirtualFile virtualFile = file.getVirtualFile();
-			if(virtualFile != null)
-			{
-				if(LOG.isDebugEnabled())
-				{
-					LOG.debug("invalid schema: " + virtualFile.getPresentableUrl(), e);
-				}
-				else
-				{
-					LOG.info("invalid schema: " + virtualFile.getPresentableUrl() + ". [" + e.getMessage() + "]");
-				}
-			}
-		}
-		return null;
-	}
+        if (file == null) {
+            return parsePattern(descriptorFile, eh, false);
+        }
+        String url = file.getUrl();
+        DPattern pattern = ourCache.get(url);
+        if (pattern == null) {
+            pattern = parsePattern(descriptorFile, eh, false);
+        }
+        if (pattern != null) {
+            DPattern oldPattern = ourCache.putIfAbsent(url, pattern);
+            if (oldPattern != null) {
+                return oldPattern;
+            }
+        }
+        return pattern;
+    }
 
-	private static Parseable createParsable(final PsiFile file, final ErrorHandler eh)
-	{
-		final InputSource source = makeInputSource(file);
-		final VirtualFile virtualFile = file.getVirtualFile();
+    public static DPattern parsePattern(final PsiFile file, final ErrorHandler eh, boolean checking) {
+        try {
+            final Parseable p = createParsable(file, eh);
+            if (checking) {
+                p.parse(new SchemaBuilderImpl(eh, DT_LIBRARY_FACTORY.getValue(), new SchemaPatternBuilder()));
+            }
+            else {
+                return p.parse(new DSchemaBuilderImpl());
+            }
+        }
+        catch (BuildException e) {
+            LOG.info(e);
+        }
+        catch (IllegalSchemaException e) {
+            final VirtualFile virtualFile = file.getVirtualFile();
+            if (virtualFile != null) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("invalid schema: " + virtualFile.getPresentableUrl(), e);
+                }
+                else {
+                    LOG.info("invalid schema: " + virtualFile.getPresentableUrl() + ". [" + e.getMessage() + "]");
+                }
+            }
+        }
+        return null;
+    }
 
-		if(file.getFileType() == RncFileType.getInstance())
-		{
-			return new CompactParseable(source, eh)
-			{
-				@Override
-				public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException
-				{
-					ProgressManager.checkCanceled();
-					return super.parseInclude(resolveURI(virtualFile, uri), schemaBuilder, g, inheritedNs);
-				}
-			};
-		}
-		else
-		{
-			return new SAXParseable(source, eh)
-			{
-				@Override
-				public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException
-				{
-					ProgressManager.checkCanceled();
-					return super.parseInclude(resolveURI(virtualFile, uri), schemaBuilder, g, inheritedNs);
-				}
-			};
-		}
-	}
+    private static Parseable createParsable(final PsiFile file, final ErrorHandler eh) {
+        final InputSource source = makeInputSource(file);
+        final VirtualFile virtualFile = file.getVirtualFile();
 
-	private static String resolveURI(VirtualFile descriptorFile, String s)
-	{
-		final VirtualFile file = UriUtil.findRelativeFile(s, descriptorFile);
-		if(file != null)
-		{
-			s = VirtualFileUtil.fixIDEAUrl(file.getUrl());
-		}
-		return s;
-	}
+        if (file.getFileType() == RncFileType.getInstance()) {
+            return new CompactParseable(source, eh) {
+                @Override
+                public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException {
+                    ProgressManager.checkCanceled();
+                    return super.parseInclude(resolveURI(virtualFile, uri), schemaBuilder, g, inheritedNs);
+                }
+            };
+        }
+        else {
+            return new SAXParseable(source, eh) {
+                @Override
+                public ParsedPattern parseInclude(String uri, SchemaBuilder schemaBuilder, IncludedGrammar g, String inheritedNs) throws BuildException, IllegalSchemaException {
+                    ProgressManager.checkCanceled();
+                    return super.parseInclude(resolveURI(virtualFile, uri), schemaBuilder, g, inheritedNs);
+                }
+            };
+        }
+    }
 
-	public static Schema getCachedSchema(final XmlFile descriptorFile)
-	{
-		CachedValue<Schema> value = descriptorFile.getUserData(SCHEMA_KEY);
-		if(value == null)
-		{
-			final CachedValueProvider<Schema> provider = () ->
-			{
-				final InputSource inputSource = makeInputSource(descriptorFile);
+    private static String resolveURI(VirtualFile descriptorFile, String s) {
+        final VirtualFile file = UriUtil.findRelativeFile(s, descriptorFile);
+        if (file != null) {
+            s = VirtualFileUtil.fixIDEAUrl(file.getUrl());
+        }
+        return s;
+    }
 
-				try
-				{
-					final Schema schema = new MySchemaReader(descriptorFile).createSchema(inputSource, EMPTY_PROPS);
-					final PsiElementProcessor.CollectElements<XmlFile> processor = new PsiElementProcessor.CollectElements<>();
-					RelaxIncludeIndex.processForwardDependencies(descriptorFile, processor);
-					if(processor.getCollection().size() > 0)
-					{
-						return CachedValueProvider.Result.create(schema, processor.toArray(), descriptorFile);
-					}
-					else
-					{
-						return CachedValueProvider.Result.createSingleDependency(schema, descriptorFile);
-					}
-				}
-				catch(Exception e)
-				{
-					LOG.info(e);
-					return CachedValueProvider.Result.createSingleDependency(null, descriptorFile);
-				}
-			};
+    public static Schema getCachedSchema(final XmlFile descriptorFile) {
+        CachedValue<Schema> value = descriptorFile.getUserData(SCHEMA_KEY);
+        if (value == null) {
+            final CachedValueProvider<Schema> provider = () ->
+            {
+                final InputSource inputSource = makeInputSource(descriptorFile);
 
-			final CachedValuesManager mgr = CachedValuesManager.getManager(descriptorFile.getProject());
-			value = mgr.createCachedValue(provider, false);
-			descriptorFile.putUserData(SCHEMA_KEY, value);
-		}
-		return value.getValue();
-	}
+                try {
+                    PropertyMapBuilder properties = new PropertyMapBuilder();
+                    properties.put(ValidateProperty.RESOLVER, new VirtualFileSystemResolver());
+                    properties.put(RngProperty.DATATYPE_LIBRARY_FACTORY, DT_LIBRARY_FACTORY.get());
 
-	private static InputSource makeInputSource(PsiFile descriptorFile)
-	{
-		final InputSource inputSource = new InputSource(new StringReader(descriptorFile.getText()));
-		final VirtualFile file = descriptorFile.getVirtualFile();
-		if(file != null)
-		{
-			inputSource.setSystemId(VirtualFileUtil.fixIDEAUrl(file.getUrl()));
-		}
-		return inputSource;
-	}
+                    final Schema schema = new MySchemaReader(descriptorFile).createSchema(inputSource, properties.toPropertyMap());
+                    final PsiElementProcessor.CollectElements<XmlFile> processor = new PsiElementProcessor.CollectElements<>();
+                    RelaxIncludeIndex.processForwardDependencies(descriptorFile, processor);
+                    if (processor.getCollection().size() > 0) {
+                        return CachedValueProvider.Result.create(schema, processor.toArray(), descriptorFile);
+                    }
+                    else {
+                        return CachedValueProvider.Result.createSingleDependency(schema, descriptorFile);
+                    }
+                }
+                catch (ProcessCanceledException e) {
+                    throw e;
+                }
+                catch (Exception e) {
+                    LOG.info(e);
+                    return CachedValueProvider.Result.createSingleDependency(null, descriptorFile);
+                }
+            };
 
-	static class MySchemaReader extends SchemaReaderImpl
-	{
-		private final PsiFile myDescriptorFile;
+            final CachedValuesManager mgr = CachedValuesManager.getManager(descriptorFile.getProject());
+            value = mgr.createCachedValue(provider, false);
+            descriptorFile.putUserData(SCHEMA_KEY, value);
+        }
+        return value.getValue();
+    }
 
-		public MySchemaReader(PsiFile descriptorFile)
-		{
-			myDescriptorFile = descriptorFile;
-		}
+    private static InputSource makeInputSource(PsiFile descriptorFile) {
+        final InputSource inputSource = new InputSource(new StringReader(descriptorFile.getText()));
+        final VirtualFile file = descriptorFile.getVirtualFile();
+        if (file != null) {
+            inputSource.setSystemId(VirtualFileUtil.fixIDEAUrl(file.getUrl()));
+        }
+        return inputSource;
+    }
 
-		@Override
-		protected com.thaiopensource.relaxng.parse.Parseable<Pattern, NameClass, Locator, VoidValue, CommentListImpl, AnnotationsImpl> createParseable(SAXSource source,
-				SAXResolver resolver,
-				ErrorHandler errorHandler,
-				PropertyMap properties) throws SAXException
-		{
-			Input inputSource = SAX.createInput(source.getInputSource());
-			if(myDescriptorFile.getFileType() == RncFileType.getInstance())
-			{
-				return new com.thaiopensource.relaxng.parse.compact.CompactParseable<>(inputSource, resolver.getResolver(), errorHandler);
-			}
-			else
-			{
-				return new com.thaiopensource.relaxng.parse.sax.SAXParseable<>(source, resolver, errorHandler);
-			}
-		}
-	}
+    static class MySchemaReader extends SchemaReaderImpl {
+        private final PsiFile myDescriptorFile;
+
+        public MySchemaReader(PsiFile descriptorFile) {
+            myDescriptorFile = descriptorFile;
+        }
+
+        @Override
+        protected com.thaiopensource.relaxng.parse.Parseable<Pattern, NameClass, Locator, VoidValue, CommentListImpl, AnnotationsImpl> createParseable(SAXSource source,
+                                                                                                                                                       SAXResolver resolver,
+                                                                                                                                                       ErrorHandler errorHandler,
+                                                                                                                                                       PropertyMap properties) throws SAXException {
+            Input inputSource = SAX.createInput(source.getInputSource());
+            if (myDescriptorFile.getFileType() == RncFileType.getInstance()) {
+                return new com.thaiopensource.relaxng.parse.compact.CompactParseable<>(inputSource, resolver.getResolver(), errorHandler);
+            }
+            else {
+                return new com.thaiopensource.relaxng.parse.sax.SAXParseable<>(source, resolver, errorHandler);
+            }
+        }
+    }
 }

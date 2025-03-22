@@ -18,11 +18,14 @@ open module com.intellij.xml
 
     requires xml.resolver;
 
-    requires rngom;
+    requires com.intellij.xml.rngom;
+    requires com.intellij.xml.jingtrang;
+
+    requires relaxngDatatype;
+
     requires xmlbeans;
     requires jaxen;
     requires xercesImpl;
-    requires jingtrang;
 
     exports com.intellij.html;
     exports com.intellij.html.impl;

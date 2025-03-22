@@ -4,7 +4,7 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 [ xml:lang = "en" ]
 grammar {
-
+    include "../html5/common.rnc"
     include "../html5/aria.rnc" inherit = svg
     include "../svg11/svg11-inc.rnc" inherit = svg
 
