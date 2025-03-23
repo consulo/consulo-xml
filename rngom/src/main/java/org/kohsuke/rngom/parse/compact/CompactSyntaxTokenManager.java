@@ -1768,4 +1768,8 @@ final void SkipLexicalActions(Token matchedToken)
          break;
    }
 }
+
+public int getCurLexState() {
+    return curLexState;
+}
 }
