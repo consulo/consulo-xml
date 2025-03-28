@@ -34,33 +34,33 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlTextContextType extends BaseTemplateContextType {
-  public HtmlTextContextType() {
-    super("HTML_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxHtmlText(), HtmlContextType.class);
-  }
+    public HtmlTextContextType() {
+        super("HTML_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxHtmlText(), HtmlContextType.class);
+    }
 
-  @Override
-  public boolean isInContext(@Nonnull PsiFile file, int offset) {
-    if (!HtmlContextType.isMyLanguage(file.getLanguage())) {
-      return false;
+    @Override
+    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+        if (!HtmlContextType.isMyLanguage(file.getLanguage())) {
+            return false;
+        }
+        PsiElement element = file.findElementAt(offset);
+        return element == null || isInContext(element);
     }
-    PsiElement element = file.findElementAt(offset);
-    return element == null || isInContext(element);
-  }
 
-  public static boolean isInContext(@Nonnull PsiElement element) {
-    if (PsiTreeUtil.getParentOfType(element, XmlComment.class) != null) {
-      return false;
+    public static boolean isInContext(@Nonnull PsiElement element) {
+        if (PsiTreeUtil.getParentOfType(element, XmlComment.class) != null) {
+            return false;
+        }
+        if (PsiTreeUtil.getParentOfType(element, XmlText.class) != null) {
+            return true;
+        }
+        if (element.getNode().getElementType() == XmlTokenType.XML_START_TAG_START) {
+            return true;
+        }
+        PsiElement parent = element.getParent();
+        if (parent instanceof PsiErrorElement) {
+            parent = parent.getParent();
+        }
+        return parent instanceof XmlDocument;
     }
-    if (PsiTreeUtil.getParentOfType(element, XmlText.class) != null) {
-      return true;
-    }
-    if (element.getNode().getElementType() == XmlTokenType.XML_START_TAG_START) {
-      return true;
-    }
-    PsiElement parent = element.getParent();
-    if (parent instanceof PsiErrorElement) {
-      parent = parent.getParent();
-    }
-    return parent instanceof XmlDocument;
-  }
 }

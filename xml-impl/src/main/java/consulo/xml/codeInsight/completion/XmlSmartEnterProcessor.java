@@ -12,12 +12,10 @@ import jakarta.annotation.Nonnull;
  * @since 31-Jul-22
  */
 @ExtensionImpl
-public class XmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor
-{
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+public class XmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor {
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

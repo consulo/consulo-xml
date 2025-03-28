@@ -39,48 +39,46 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
  * @author yole
  */
 @ExtensionImpl(id = "xmlNonFirst", order = "after xml")
-public class XmlNonFirstCompletionContributor extends CompletionContributor
-{
-	public XmlNonFirstCompletionContributor()
-	{
-		extend(CompletionType.BASIC, psiElement().inside(xmlAttribute()), new XmlAttributeReferenceCompletionProvider());
-		extend(CompletionType.BASIC, psiElement().inside(xmlTag()), new TagNameReferenceCompletionProvider());
-		extend(CompletionType.BASIC, psiElement().inside(XmlPatterns.xmlAttributeValue()), new CompletionProvider()
-		{
-			@Override
-			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
-			{
-				PsiElement position = parameters.getPosition();
-				if(position.getNode().getElementType() != XmlElementType.XML_ATTRIBUTE_VALUE_TOKEN)
-				{
-					return;
-				}
-				XmlAttribute attr = PsiTreeUtil.getParentOfType(position, XmlAttribute.class);
-				if(attr != null && !hasEnumerationReference(parameters, result))
-				{
-					final XmlAttributeDescriptor descriptor = attr.getDescriptor();
+public class XmlNonFirstCompletionContributor extends CompletionContributor {
+    public XmlNonFirstCompletionContributor() {
+        extend(CompletionType.BASIC, psiElement().inside(xmlAttribute()), new XmlAttributeReferenceCompletionProvider());
+        extend(CompletionType.BASIC, psiElement().inside(xmlTag()), new TagNameReferenceCompletionProvider());
+        extend(
+            CompletionType.BASIC,
+            psiElement().inside(XmlPatterns.xmlAttributeValue()),
+            new CompletionProvider() {
+                @Override
+                public void addCompletions(
+                    @Nonnull CompletionParameters parameters,
+                    ProcessingContext context,
+                    @Nonnull CompletionResultSet result
+                ) {
+                    PsiElement position = parameters.getPosition();
+                    if (position.getNode().getElementType() != XmlElementType.XML_ATTRIBUTE_VALUE_TOKEN) {
+                        return;
+                    }
+                    XmlAttribute attr = PsiTreeUtil.getParentOfType(position, XmlAttribute.class);
+                    if (attr != null && !hasEnumerationReference(parameters, result)) {
+                        final XmlAttributeDescriptor descriptor = attr.getDescriptor();
 
-					if(descriptor != null)
-					{
-						if(descriptor.isFixed() && descriptor.getDefaultValue() != null)
-						{
-							result.addElement(LookupElementBuilder.create(descriptor.getDefaultValue()));
-							return;
-						}
-						for(String value : getEnumeratedValues(attr))
-						{
-							result.addElement(LookupElementBuilder.create(value));
-						}
-					}
-				}
-			}
-		});
-	}
+                        if (descriptor != null) {
+                            if (descriptor.isFixed() && descriptor.getDefaultValue() != null) {
+                                result.addElement(LookupElementBuilder.create(descriptor.getDefaultValue()));
+                                return;
+                            }
+                            for (String value : getEnumeratedValues(attr)) {
+                                result.addElement(LookupElementBuilder.create(value));
+                            }
+                        }
+                    }
+                }
+            }
+        );
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return Language.ANY;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return Language.ANY;
+    }
 }

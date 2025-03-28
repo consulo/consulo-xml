@@ -38,6 +38,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 
 import jakarta.annotation.Nonnull;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -46,81 +47,73 @@ import java.awt.*;
  */
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.choose.color", fileExtensions = "xml", categories = "XML")
-public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
-{
-	public XmlChooseColorIntentionAction()
-	{
-		setText(CodeInsightBundle.message("intention.color.chooser.dialog"));
-	}
+public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction {
+    public XmlChooseColorIntentionAction() {
+        setText(CodeInsightBundle.message("intention.color.chooser.dialog"));
+    }
 
-	public boolean isAvailable(@Nonnull final Project project, final Editor editor, @Nonnull final PsiElement element)
-	{
-		final PsiElement parent = element.getParent();
-		return parent instanceof XmlAttributeValue && ColorUtil.fromHex(((XmlAttributeValue) parent).getValue(), null) != null;
-	}
+    public boolean isAvailable(@Nonnull final Project project, final Editor editor, @Nonnull final PsiElement element) {
+        final PsiElement parent = element.getParent();
+        return parent instanceof XmlAttributeValue && ColorUtil.fromHex(((XmlAttributeValue)parent).getValue(), null) != null;
+    }
 
-	@Nonnull
-	public String getFamilyName()
-	{
-		return getText();
-	}
+    @Nonnull
+    public String getFamilyName() {
+        return getText();
+    }
 
-	@Override
-	public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException
-	{
-		chooseColor(editor.getComponent(), element, getText());
-	}
+    @Override
+    public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
+        chooseColor(editor.getComponent(), element, getText());
+    }
 
-	public static void chooseColor(JComponent editorComponent, PsiElement element, String caption)
-	{
-		final XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
-		if(literal == null)
-		{
-			return;
-		}
-		final String text = StringUtil.unquoteString(literal.getValue());
+    public static void chooseColor(JComponent editorComponent, PsiElement element, String caption) {
+        final XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
+        if (literal == null) {
+            return;
+        }
+        final String text = StringUtil.unquoteString(literal.getValue());
 
-		Color oldColor;
-		try
-		{
-			oldColor = Color.decode(text);
-		}
-		catch(NumberFormatException e)
-		{
-			oldColor = JBColor.GRAY;
-		}
+        Color oldColor;
+        try {
+            oldColor = Color.decode(text);
+        }
+        catch (NumberFormatException e) {
+            oldColor = JBColor.GRAY;
+        }
 
-		final Color temp = oldColor;
-		ColorChooser.chooseColor(editorComponent, caption, temp, true, color ->
-		{
-			if(color == null)
-			{
-				return;
-			}
+        final Color temp = oldColor;
+        ColorChooser.chooseColor(
+            editorComponent,
+            caption,
+            temp,
+            true,
+            color -> {
+                if (color == null) {
+                    return;
+                }
 
-			if(!Comparing.equal(color, temp))
-			{
-				if(!FileModificationService.getInstance().preparePsiElementForWrite(element))
-				{
-					return;
-				}
+                if (!Comparing.equal(color, temp)) {
+                    if (!FileModificationService.getInstance().preparePsiElementForWrite(element)) {
+                        return;
+                    }
 
-				final String newText = "#" + ColorUtil.toHex(color);
-				final PsiManager manager = literal.getManager();
-				final XmlAttribute newAttribute = XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
+                    final String newText = "#" + ColorUtil.toHex(color);
+                    final PsiManager manager = literal.getManager();
+                    final XmlAttribute newAttribute =
+                        XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
 
-				new WriteCommandAction(element.getProject(), caption)
-				{
-					@Override
-					protected void run(Result result) throws Throwable
-					{
-						final XmlAttributeValue valueElement = newAttribute.getValueElement();
-						assert valueElement != null;
-						literal.replace(valueElement);
-					}
-				}.execute();
-			}
-		});
-	}
+                    new WriteCommandAction(element.getProject(), caption) {
+                        @Override
+                        protected void run(Result result) throws Throwable {
+                            final XmlAttributeValue valueElement = newAttribute.getValueElement();
+                            assert valueElement != null;
+                            literal.replace(valueElement);
+                        }
+                    }.execute();
+                }
+            }
+        );
+    }
 }
 

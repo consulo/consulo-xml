@@ -33,55 +33,57 @@ import java.util.List;
  * @author Dmitry Avdeev
  */
 public class XmlSmartCompletionProvider {
-
-  public void complete(CompletionParameters parameters, final CompletionResultSet result, PsiElement element) {
-    if (!XmlCompletionContributor.isXmlNameCompletion(parameters)) {
-      return;
-    }
-    result.stopHere();
-    if (!(element.getParent() instanceof XmlTag)) {
-      return;
-    }
-
-    final XmlTag tag = (XmlTag)element.getParent();
-    final XmlTag parentTag = tag.getParentTag();
-    if (parentTag == null) return;
-    final XmlContentDFA dfa = XmlContentDFA.getContentDFA(parentTag);
-    if (dfa == null) return;
-    ApplicationManager.getApplication().runReadAction(new Runnable() {
-      @Override
-      public void run() {
-        for (XmlTag subTag : parentTag.getSubTags()) {
-          if (subTag == tag) {
-            break;
-          }
-          dfa.transition(subTag);
+    public void complete(CompletionParameters parameters, final CompletionResultSet result, PsiElement element) {
+        if (!XmlCompletionContributor.isXmlNameCompletion(parameters)) {
+            return;
         }
-        List<XmlElementDescriptor> elements = dfa.getPossibleElements();
-        for (XmlElementDescriptor elementDescriptor: elements) {
-          addElementToResult(elementDescriptor, result);
+        result.stopHere();
+        if (!(element.getParent() instanceof XmlTag)) {
+            return;
         }
-      }
-    });
-  }
 
-  private static void addElementToResult(@Nonnull XmlElementDescriptor descriptor, CompletionResultSet result) {
-    XmlTagInsertHandler insertHandler = XmlTagInsertHandler.INSTANCE;
-    if (descriptor instanceof XmlElementDescriptorImpl) {
-      String name = descriptor.getName();
-      if (name != null) {
-        insertHandler = new ExtendedTagInsertHandler(name, ((XmlElementDescriptorImpl)descriptor).getNamespace(), null);
-      }
+        final XmlTag tag = (XmlTag)element.getParent();
+        final XmlTag parentTag = tag.getParentTag();
+        if (parentTag == null) {
+            return;
+        }
+        final XmlContentDFA dfa = XmlContentDFA.getContentDFA(parentTag);
+        if (dfa == null) {
+            return;
+        }
+        ApplicationManager.getApplication().runReadAction(new Runnable() {
+            @Override
+            public void run() {
+                for (XmlTag subTag : parentTag.getSubTags()) {
+                    if (subTag == tag) {
+                        break;
+                    }
+                    dfa.transition(subTag);
+                }
+                List<XmlElementDescriptor> elements = dfa.getPossibleElements();
+                for (XmlElementDescriptor elementDescriptor : elements) {
+                    addElementToResult(elementDescriptor, result);
+                }
+            }
+        });
     }
-    result.addElement(createLookupElement(descriptor).withInsertHandler(insertHandler));
-  }
 
-  public static LookupElementBuilder createLookupElement(@Nonnull XmlElementDescriptor descriptor) {
-    LookupElementBuilder builder = LookupElementBuilder.create(descriptor.getName());
-    if (descriptor instanceof XmlElementDescriptorImpl) {
-      builder = builder.withTypeText(((XmlElementDescriptorImpl)descriptor).getNamespace(), true);
+    private static void addElementToResult(@Nonnull XmlElementDescriptor descriptor, CompletionResultSet result) {
+        XmlTagInsertHandler insertHandler = XmlTagInsertHandler.INSTANCE;
+        if (descriptor instanceof XmlElementDescriptorImpl) {
+            String name = descriptor.getName();
+            if (name != null) {
+                insertHandler = new ExtendedTagInsertHandler(name, ((XmlElementDescriptorImpl)descriptor).getNamespace(), null);
+            }
+        }
+        result.addElement(createLookupElement(descriptor).withInsertHandler(insertHandler));
     }
-    return builder;
-  }
 
+    public static LookupElementBuilder createLookupElement(@Nonnull XmlElementDescriptor descriptor) {
+        LookupElementBuilder builder = LookupElementBuilder.create(descriptor.getName());
+        if (descriptor instanceof XmlElementDescriptorImpl) {
+            builder = builder.withTypeText(((XmlElementDescriptorImpl)descriptor).getNamespace(), true);
+        }
+        return builder;
+    }
 }

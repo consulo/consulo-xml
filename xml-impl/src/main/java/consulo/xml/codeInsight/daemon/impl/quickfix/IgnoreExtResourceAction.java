@@ -27,15 +27,16 @@ import consulo.language.psi.PsiFile;
  * @author mike
  */
 public class IgnoreExtResourceAction extends BaseExtResourceAction {
-  protected String getQuickFixKeyId() {
-    return "ignore.external.resource.text";
-  }
+    protected String getQuickFixKeyId() {
+        return "ignore.external.resource.text";
+    }
 
-  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
-    ApplicationManager.getApplication().runWriteAction(new Runnable() {
-      public void run() {
-        ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri);
-      }
-    });
-  }
+    protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor)
+        throws IncorrectOperationException {
+        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            public void run() {
+                ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri);
+            }
+        });
+    }
 }

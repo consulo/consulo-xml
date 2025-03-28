@@ -29,21 +29,21 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionImpl
 public class XslTextContextType extends BaseTemplateContextType {
-  public XslTextContextType() {
-    super("XSL_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxXslText(), XmlContextType.class);
-  }
-
-  @Override
-  public boolean isInContext(@Nonnull PsiFile file, int offset) {
-    if (isXslOrXsltFile(file)) {
-      PsiElement element = file.findElementAt(offset);
-      return element == null || HtmlTextContextType.isInContext(element);
+    public XslTextContextType() {
+        super("XSL_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxXslText(), XmlContextType.class);
     }
-    return false;
-  }
 
-  public static boolean isXslOrXsltFile(@Nullable PsiFile file) {
-    return file != null && file.getFileType() == XmlFileType.INSTANCE
-        && (FileUtil.extensionEquals(file.getName(), "xsl") || FileUtil.extensionEquals(file.getName(), "xslt"));
-  }
+    @Override
+    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+        if (isXslOrXsltFile(file)) {
+            PsiElement element = file.findElementAt(offset);
+            return element == null || HtmlTextContextType.isInContext(element);
+        }
+        return false;
+    }
+
+    public static boolean isXslOrXsltFile(@Nullable PsiFile file) {
+        return file != null && file.getFileType() == XmlFileType.INSTANCE
+            && (FileUtil.extensionEquals(file.getName(), "xsl") || FileUtil.extensionEquals(file.getName(), "xslt"));
+    }
 }

@@ -30,6 +30,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
 
 import jakarta.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;

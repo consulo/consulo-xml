@@ -37,57 +37,69 @@ import java.util.function.Function;
  * @since 23:22/09.10.13
  */
 public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuilder<T> {
-  public static final Function<DomElement, Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR = new Function<DomElement, Collection<? extends PsiElement>>() {
-    @Nonnull
-    public Collection<? extends PsiElement> apply(final DomElement o) {
-      return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
+    public static final Function<DomElement, Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR =
+        new Function<DomElement, Collection<? extends PsiElement>>() {
+            @Nonnull
+            public Collection<? extends PsiElement> apply(final DomElement o) {
+                return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
+            }
+        };
+    public static final Function<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER =
+        new Function<DomElement, Collection<? extends GotoRelatedItem>>() {
+            @Nonnull
+            @Override
+            public Collection<? extends GotoRelatedItem> apply(DomElement dom) {
+                if (dom.getXmlElement() != null) {
+                    return Collections.singletonList(new DomGotoRelatedItem(dom));
+                }
+                return Collections.emptyList();
+            }
+        };
+
+    public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull final Image icon) {
+        return create(icon, DEFAULT_PSI_CONVERTOR, PSI_GOTO_RELATED_ITEM_PROVIDER);
     }
-  };
-  public static final Function<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER = new Function<DomElement, Collection<? extends GotoRelatedItem>>() {
-    @Nonnull
+
+    public static <T> DomNavigationGutterIconBuilder<T> create(
+        @Nonnull final Image icon,
+        @Nonnull Function<T, Collection<? extends PsiElement>> converter
+    ) {
+        return create(icon, converter, null);
+    }
+
+    public static <T> DomNavigationGutterIconBuilder<T> create(
+        @Nonnull final Image icon,
+        @Nonnull Function<T, Collection<? extends PsiElement>> converter,
+        final @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
+    ) {
+        return new DomNavigationGutterIconBuilder<T>(icon, converter, gotoRelatedItemProvider);
+    }
+
+    protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
+        super(icon, converter);
+    }
+
+    protected DomNavigationGutterIconBuilder(
+        @Nonnull Image icon,
+        @Nonnull Function<T, Collection<? extends PsiElement>> converter,
+        @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
+    ) {
+        super(icon, converter, gotoRelatedItemProvider);
+    }
+
+    @Nullable
+    public Annotation install(@Nonnull DomElementAnnotationHolder holder, @Nullable DomElement element) {
+        if (!myLazy && myTargets.get().isEmpty() || element == null) {
+            return null;
+        }
+        return doInstall(
+            holder.createAnnotation(element, HighlightSeverity.INFORMATION, null),
+            element.getManager().getProject()
+        );
+    }
+
     @Override
-    public Collection<? extends GotoRelatedItem> apply(DomElement dom) {
-      if (dom.getXmlElement() != null) {
-        return Collections.singletonList(new DomGotoRelatedItem(dom));
-      }
-      return Collections.emptyList();
+    protected Function<T, String> createDefaultNamer() {
+        return ElementPresentationManager.namer();
     }
-  };
-
-  public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull final Image icon) {
-    return create(icon, DEFAULT_PSI_CONVERTOR, PSI_GOTO_RELATED_ITEM_PROVIDER);
-  }
-
-  public static <T> DomNavigationGutterIconBuilder<T> create(@Nonnull final Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
-    return create(icon, converter, null);
-  }
-
-  public static <T> DomNavigationGutterIconBuilder<T> create(@Nonnull final Image icon,
-                                                             @Nonnull Function<T, Collection<? extends PsiElement>> converter,
-                                                             final @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider) {
-    return new DomNavigationGutterIconBuilder<T>(icon, converter, gotoRelatedItemProvider);
-  }
-
-  protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
-    super(icon, converter);
-  }
-
-  protected DomNavigationGutterIconBuilder(@Nonnull Image icon,
-                                           @Nonnull Function<T, Collection<? extends PsiElement>> converter,
-                                           @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider) {
-    super(icon, converter, gotoRelatedItemProvider);
-  }
-
-  @Nullable
-  public Annotation install(@Nonnull DomElementAnnotationHolder holder, @Nullable DomElement element) {
-    if (!myLazy && myTargets.get().isEmpty() || element == null) {
-      return null;
-    }
-    return doInstall(holder.createAnnotation(element, HighlightSeverity.INFORMATION, null), element.getManager().getProject());
-  }
-
-  @Override
-  protected Function<T, String> createDefaultNamer() {
-    return ElementPresentationManager.namer();
-  }
 }

@@ -31,16 +31,16 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlContextType extends FileTypeBasedContextType {
-  public HtmlContextType() {
-    super("HTML", CodeInsightLocalize.dialogEditTemplateCheckboxHtml(), HtmlFileType.INSTANCE);
-  }
+    public HtmlContextType() {
+        super("HTML", CodeInsightLocalize.dialogEditTemplateCheckboxHtml(), HtmlFileType.INSTANCE);
+    }
 
-  @Override
-  public boolean isInContext(@Nonnull PsiFile file, int offset) {
-    return isMyLanguage(file.getLanguage()) && !XmlContextType.isEmbeddedContent(file, offset);
-  }
+    @Override
+    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+        return isMyLanguage(file.getLanguage()) && !XmlContextType.isEmbeddedContent(file, offset);
+    }
 
-  static boolean isMyLanguage(Language language) {
-    return language.isKindOf(HTMLLanguage.INSTANCE) || language.isKindOf(XHTMLLanguage.INSTANCE);
-  }
+    static boolean isMyLanguage(Language language) {
+        return language.isKindOf(HTMLLanguage.INSTANCE) || language.isKindOf(XHTMLLanguage.INSTANCE);
+    }
 }

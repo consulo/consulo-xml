@@ -34,24 +34,26 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
-  private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
+    private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
 
-  public int getTextStartOffset(@Nonnull final PsiElement parent) {
-    return parent.getTextRange().getStartOffset();
-  }
-
-  public int getTextEndOffset(@Nonnull PsiElement element) {
-    if (element instanceof XmlAttributeValue) {
-      final XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
-      if (xmlTag != null) return xmlTag.getTextRange().getEndOffset();
-      LOG.assertTrue(false);
+    public int getTextStartOffset(@Nonnull final PsiElement parent) {
+        return parent.getTextRange().getStartOffset();
     }
-    return element.getTextRange().getEndOffset();
-  }
 
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
+    public int getTextEndOffset(@Nonnull PsiElement element) {
+        if (element instanceof XmlAttributeValue) {
+            final XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
+            if (xmlTag != null) {
+                return xmlTag.getTextRange().getEndOffset();
+            }
+            LOG.assertTrue(false);
+        }
+        return element.getTextRange().getEndOffset();
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

@@ -27,35 +27,29 @@ import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
-public class TagDeclarationRangeHandler implements DeclarationRangeHandler
-{
-	@Nonnull
-	@Override
-	public Class getElementClass()
-	{
-		return XmlTag.class;
-	}
+public class TagDeclarationRangeHandler implements DeclarationRangeHandler {
+    @Nonnull
+    @Override
+    public Class getElementClass() {
+        return XmlTag.class;
+    }
 
-	@Nonnull
-	public TextRange getDeclarationRange(@Nonnull final PsiElement container)
-	{
-		XmlTag xmlTag = (XmlTag) container;
-		int endOffset = xmlTag.getTextRange().getStartOffset();
+    @Nonnull
+    public TextRange getDeclarationRange(@Nonnull final PsiElement container) {
+        XmlTag xmlTag = (XmlTag)container;
+        int endOffset = xmlTag.getTextRange().getStartOffset();
 
-		for(PsiElement child = xmlTag.getFirstChild(); child != null; child = child.getNextSibling())
-		{
-			endOffset = child.getTextRange().getEndOffset();
-			if(child instanceof XmlToken)
-			{
-				XmlToken token = (XmlToken) child;
-				IElementType tokenType = token.getTokenType();
-				if(tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END || tokenType == XmlTokenType.XML_TAG_END)
-				{
-					break;
-				}
-			}
-		}
+        for (PsiElement child = xmlTag.getFirstChild(); child != null; child = child.getNextSibling()) {
+            endOffset = child.getTextRange().getEndOffset();
+            if (child instanceof XmlToken) {
+                XmlToken token = (XmlToken)child;
+                IElementType tokenType = token.getTokenType();
+                if (tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END || tokenType == XmlTokenType.XML_TAG_END) {
+                    break;
+                }
+            }
+        }
 
-		return new TextRange(xmlTag.getTextRange().getStartOffset(), endOffset);
-	}
+        return new TextRange(xmlTag.getTextRange().getStartOffset(), endOffset);
+    }
 }

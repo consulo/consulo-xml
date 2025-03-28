@@ -32,26 +32,26 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.manually.setup.external.resource", fileExtensions = "xml", categories = "XML")
 public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
-
-  protected String getQuickFixKeyId() {
-    return "manually.setup.external.resource";
-  }
-
-  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
-    final MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, file.getProject(), file, null);
-    dialog.show();
-    if (dialog.isOK()) {
-      ApplicationManager.getApplication().runWriteAction(new Runnable() {
-        @Override
-        public void run() {
-          String location = dialog.getResourceLocation();
-          ExternalResourceManager.getInstance().addResource(dialog.getUri(), location);
-        }
-      });
+    protected String getQuickFixKeyId() {
+        return "manually.setup.external.resource";
     }
-  }
 
-  public boolean startInWriteAction() {
-    return false;
-  }
+    protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor)
+        throws IncorrectOperationException {
+        final MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, file.getProject(), file, null);
+        dialog.show();
+        if (dialog.isOK()) {
+            ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                @Override
+                public void run() {
+                    String location = dialog.getResourceLocation();
+                    ExternalResourceManager.getInstance().addResource(dialog.getUri(), location);
+                }
+            });
+        }
+    }
+
+    public boolean startInWriteAction() {
+        return false;
+    }
 }

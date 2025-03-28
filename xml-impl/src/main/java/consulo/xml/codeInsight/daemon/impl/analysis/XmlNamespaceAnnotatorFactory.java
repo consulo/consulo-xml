@@ -14,19 +14,16 @@ import jakarta.annotation.Nullable;
  * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XmlNamespaceAnnotatorFactory implements AnnotatorFactory
-{
-	@Nullable
-	@Override
-	public Annotator createAnnotator()
-	{
-		return new XmlNamespaceAnnotator();
-	}
+public class XmlNamespaceAnnotatorFactory implements AnnotatorFactory {
+    @Nullable
+    @Override
+    public Annotator createAnnotator() {
+        return new XmlNamespaceAnnotator();
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

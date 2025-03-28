@@ -28,6 +28,7 @@ import consulo.ui.color.ColorValue;
 import consulo.ui.color.RGBColor;
 
 import jakarta.annotation.Nonnull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,79 +36,79 @@ import java.util.Set;
  * @author Eugene.Kudelevsky
  */
 class XmlTagTreeHighlightingUtil {
-  private XmlTagTreeHighlightingUtil() {
-  }
+    private XmlTagTreeHighlightingUtil() {
+    }
 
-  static boolean containsTagsWithSameName(PsiElement[] elements) {
-    final Set<String> names = new HashSet<String>();
+    static boolean containsTagsWithSameName(PsiElement[] elements) {
+        final Set<String> names = new HashSet<String>();
 
-    for (PsiElement element : elements) {
-      if (element instanceof XmlTag) {
-        final String name = ((XmlTag)element).getName();
-        if (!names.add(name)) {
-          return true;
+        for (PsiElement element : elements) {
+            if (element instanceof XmlTag) {
+                final String name = ((XmlTag)element).getName();
+                if (!names.add(name)) {
+                    return true;
+                }
+            }
         }
-      }
+
+        return false;
     }
 
-    return false;
-  }
+    static boolean isTagTreeHighlightingActive(PsiFile file) {
+        if (ApplicationManager.getApplication().isUnitTestMode()) {
+            return false;
+        }
 
-  static boolean isTagTreeHighlightingActive(PsiFile file) {
-    if (ApplicationManager.getApplication().isUnitTestMode()) {
-      return false;
-    }
+        if (!hasXmlViewProvider(file)) {
+            return false;
+        }
 
-    if (!hasXmlViewProvider(file)) {
-      return false;
-    }
-
-    if (!XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled()) {
-      return false;
-    }
-    return true;
-  }
-
-  private static boolean hasXmlViewProvider(@Nonnull PsiFile file) {
-    for (PsiFile f : file.getViewProvider().getAllFiles()) {
-      if (f instanceof XmlFile) {
+        if (!XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled()) {
+            return false;
+        }
         return true;
-      }
-    }
-    return false;
-  }
-
-  static RGBColor makeTransparent(@Nonnull ColorValue c, @Nonnull ColorValue bc, double transparency) {
-    RGBColor color = c.toRGB();
-    RGBColor backgroundColor = bc.toRGB();
-    int r = makeTransparent(transparency, color.getRed(), backgroundColor.getRed());
-    int g = makeTransparent(transparency, color.getGreen(), backgroundColor.getGreen());
-    int b = makeTransparent(transparency, color.getBlue(), backgroundColor.getBlue());
-
-    return new RGBColor(r, g, b);
-  }
-
-  private static int makeTransparent(double transparency, int channel, int backgroundChannel) {
-    final int result = (int)(backgroundChannel * (1 - transparency) + channel * transparency);
-    if (result < 0) {
-      return 0;
-    }
-    if (result > 255) {
-      return 255;
-    }
-    return result;
-  }
-
-  static ColorValue[] getBaseColors() {
-    final EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
-    final ColorValue[] colors = new ColorValue[colorKeys.length];
-
-    final EditorColorsScheme colorsScheme = EditorColorsManager.getInstance().getGlobalScheme();
-
-    for (int i = 0; i < colors.length; i++) {
-      colors[i] = colorsScheme.getColor(colorKeys[i]);
     }
 
-    return colors;
-  }
+    private static boolean hasXmlViewProvider(@Nonnull PsiFile file) {
+        for (PsiFile f : file.getViewProvider().getAllFiles()) {
+            if (f instanceof XmlFile) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static RGBColor makeTransparent(@Nonnull ColorValue c, @Nonnull ColorValue bc, double transparency) {
+        RGBColor color = c.toRGB();
+        RGBColor backgroundColor = bc.toRGB();
+        int r = makeTransparent(transparency, color.getRed(), backgroundColor.getRed());
+        int g = makeTransparent(transparency, color.getGreen(), backgroundColor.getGreen());
+        int b = makeTransparent(transparency, color.getBlue(), backgroundColor.getBlue());
+
+        return new RGBColor(r, g, b);
+    }
+
+    private static int makeTransparent(double transparency, int channel, int backgroundChannel) {
+        final int result = (int)(backgroundChannel * (1 - transparency) + channel * transparency);
+        if (result < 0) {
+            return 0;
+        }
+        if (result > 255) {
+            return 255;
+        }
+        return result;
+    }
+
+    static ColorValue[] getBaseColors() {
+        final EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
+        final ColorValue[] colors = new ColorValue[colorKeys.length];
+
+        final EditorColorsScheme colorsScheme = EditorColorsManager.getInstance().getGlobalScheme();
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = colorsScheme.getColor(colorKeys[i]);
+        }
+
+        return colors;
+    }
 }

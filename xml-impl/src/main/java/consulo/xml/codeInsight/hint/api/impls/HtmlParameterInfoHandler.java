@@ -12,9 +12,9 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlParameterInfoHandler extends XmlBasedParameterInfoHandler {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return HTMLLanguage.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
+    }
 }

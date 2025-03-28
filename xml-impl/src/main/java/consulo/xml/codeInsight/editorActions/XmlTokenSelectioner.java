@@ -28,37 +28,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtensionImpl
-public class XmlTokenSelectioner extends ExtendWordSelectionHandlerBase
-{
-	public boolean canSelect(PsiElement e)
-	{
-		return e instanceof XmlToken && !HtmlSelectioner.canSelectElement(e);
-	}
+public class XmlTokenSelectioner extends ExtendWordSelectionHandlerBase {
+    public boolean canSelect(PsiElement e) {
+        return e instanceof XmlToken && !HtmlSelectioner.canSelectElement(e);
+    }
 
-	public List<TextRange> select(PsiElement e, CharSequence editorText, int cursorOffset, Editor editor)
-	{
-		XmlToken token = (XmlToken) e;
+    public List<TextRange> select(PsiElement e, CharSequence editorText, int cursorOffset, Editor editor) {
+        XmlToken token = (XmlToken)e;
 
-		if(shouldSelectToken(token))
-		{
-			List<TextRange> ranges = super.select(e, editorText, cursorOffset, editor);
-			SelectWordUtil.addWordSelection(editor.getSettings().isCamelWords(), editorText, cursorOffset, ranges);
-			return ranges;
-		}
-		else
-		{
-			List<TextRange> result = new ArrayList<TextRange>();
-			SelectWordUtil.addWordSelection(editor.getSettings().isCamelWords(), editorText, cursorOffset, result);
-			return result;
-		}
-	}
+        if (shouldSelectToken(token)) {
+            List<TextRange> ranges = super.select(e, editorText, cursorOffset, editor);
+            SelectWordUtil.addWordSelection(editor.getSettings().isCamelWords(), editorText, cursorOffset, ranges);
+            return ranges;
+        }
+        else {
+            List<TextRange> result = new ArrayList<TextRange>();
+            SelectWordUtil.addWordSelection(editor.getSettings().isCamelWords(), editorText, cursorOffset, result);
+            return result;
+        }
+    }
 
-	static boolean shouldSelectToken(final XmlToken token)
-	{
-		return token.getTokenType() != XmlTokenType.XML_DATA_CHARACTERS &&
-				token.getTokenType() != XmlTokenType.XML_START_TAG_START &&
-				token.getTokenType() != XmlTokenType.XML_END_TAG_START &&
-				token.getTokenType() != XmlTokenType.XML_EMPTY_ELEMENT_END &&
-				token.getTokenType() != XmlTokenType.XML_TAG_END;
-	}
+    static boolean shouldSelectToken(final XmlToken token) {
+        return token.getTokenType() != XmlTokenType.XML_DATA_CHARACTERS
+            && token.getTokenType() != XmlTokenType.XML_START_TAG_START
+            && token.getTokenType() != XmlTokenType.XML_END_TAG_START
+            && token.getTokenType() != XmlTokenType.XML_EMPTY_ELEMENT_END
+            && token.getTokenType() != XmlTokenType.XML_TAG_END;
+    }
 }

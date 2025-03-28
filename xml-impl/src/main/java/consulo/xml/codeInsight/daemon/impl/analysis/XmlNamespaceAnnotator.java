@@ -31,27 +31,27 @@ import jakarta.annotation.Nonnull;
  * Date: 17.10.13
  */
 public class XmlNamespaceAnnotator implements Annotator {
-  @Override
-  public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
-    if (element instanceof XmlTag) {
-      XmlTag tag = (XmlTag) element;
-      String namespace = tag.getNamespace();
+    @Override
+    public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
+        if (element instanceof XmlTag) {
+            XmlTag tag = (XmlTag)element;
+            String namespace = tag.getNamespace();
 
-      TextAttributesKey key = XmlNSColorProvider.EP_NAME.computeSafeIfAny(it -> it.getKeyForNamespace(namespace, tag));
-      if (key != null) {
-        TextRange range = XmlTagUtil.getStartTagRange(tag);
-        if (range != null) {
-          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(range)
-            .textAttributes(key);
+            TextAttributesKey key = XmlNSColorProvider.EP_NAME.computeSafeIfAny(it -> it.getKeyForNamespace(namespace, tag));
+            if (key != null) {
+                TextRange range = XmlTagUtil.getStartTagRange(tag);
+                if (range != null) {
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(range)
+                        .textAttributes(key);
+                }
+                TextRange endTagRange = XmlTagUtil.getEndTagRange(tag);
+                if (endTagRange != null) {
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(endTagRange)
+                        .textAttributes(key);
+                }
+            }
         }
-        TextRange endTagRange = XmlTagUtil.getEndTagRange(tag);
-        if (endTagRange != null) {
-          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(endTagRange)
-            .textAttributes(key);
-        }
-      }
     }
-  }
 }

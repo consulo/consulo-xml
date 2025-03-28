@@ -32,21 +32,22 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlClosingTagErrorFilter extends HighlightErrorFilter {
-
-  public boolean shouldHighlightErrorElement(@Nonnull final PsiErrorElement element) {
-    final PsiFile psiFile = element.getContainingFile();
-    if (psiFile == null || (psiFile.getViewProvider().getBaseLanguage() != HTMLLanguage.INSTANCE
-                            && HTMLLanguage.INSTANCE != element.getLanguage())) return true;
-
-    final PsiElement[] children = element.getChildren();
-    if (children.length > 0) {
-      if (children[0] instanceof XmlToken && XmlTokenType.XML_END_TAG_START == ((XmlToken)children[0]).getTokenType()) {
-        if (XmlErrorLocalize.xmlParsingClosingTagMatchesNothing().get().equals(element.getErrorDescription())) {
-          return false;
-        }
+    public boolean shouldHighlightErrorElement(@Nonnull final PsiErrorElement element) {
+        final PsiFile psiFile = element.getContainingFile();
+      if (psiFile == null || (psiFile.getViewProvider().getBaseLanguage() != HTMLLanguage.INSTANCE
+          && HTMLLanguage.INSTANCE != element.getLanguage())) {
+        return true;
       }
-    }
 
-    return true;
-  }
+        final PsiElement[] children = element.getChildren();
+        if (children.length > 0) {
+            if (children[0] instanceof XmlToken && XmlTokenType.XML_END_TAG_START == ((XmlToken)children[0]).getTokenType()) {
+                if (XmlErrorLocalize.xmlParsingClosingTagMatchesNothing().get().equals(element.getErrorDescription())) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

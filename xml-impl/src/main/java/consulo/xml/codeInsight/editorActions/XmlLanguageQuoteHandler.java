@@ -13,9 +13,9 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlLanguageQuoteHandler extends XmlBasedQuoteHandler implements LanguageQuoteHandler {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

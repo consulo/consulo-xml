@@ -28,21 +28,22 @@ import java.awt.*;
  * @author Dmitry Avdeev
  */
 public class XmlNSRenderer extends ColoredListCellRenderer {
+    public static final XmlNSRenderer INSTANCE = new XmlNSRenderer();
 
-  public static final XmlNSRenderer INSTANCE = new XmlNSRenderer();
+    public XmlNSRenderer() {
+        EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
+        setFont(new Font(scheme.getEditorFontName(), Font.PLAIN, scheme.getEditorFontSize()));
+    }
 
-  public XmlNSRenderer() {
-    EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-    setFont(new Font(scheme.getEditorFontName(), Font.PLAIN, scheme.getEditorFontSize()));
-  }
-
-  protected void customizeCellRenderer(final JList list,
-                                       final Object value,
-                                       final int index,
-                                       final boolean selected,
-                                       final boolean hasFocus) {
-    append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
-    setIcon(AllIcons.Nodes.Static);
-    setPaintFocusBorder(false);
-  }
+    protected void customizeCellRenderer(
+        final JList list,
+        final Object value,
+        final int index,
+        final boolean selected,
+        final boolean hasFocus
+    ) {
+        append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
+        setIcon(AllIcons.Nodes.Static);
+        setPaintFocusBorder(false);
+    }
 }

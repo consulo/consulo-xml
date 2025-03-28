@@ -23,7 +23,7 @@ import consulo.language.psi.PsiElement;
 
 @ExtensionImpl
 public class XmlElementSelectioner extends ExtendWordSelectionHandlerBase {
-  public boolean canSelect(PsiElement e) {
-    return e instanceof XmlAttribute || e instanceof XmlAttributeValue;
-  }
+    public boolean canSelect(PsiElement e) {
+        return e instanceof XmlAttribute || e instanceof XmlAttributeValue;
+    }
 }

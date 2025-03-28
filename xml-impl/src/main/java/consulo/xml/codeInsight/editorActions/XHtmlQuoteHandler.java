@@ -11,12 +11,10 @@ import jakarta.annotation.Nonnull;
  * @since 02-Aug-22
  */
 @ExtensionImpl
-public class XHtmlQuoteHandler extends HtmlQuoteHandler
-{
-	@Nonnull
-	@Override
-	public FileType getFileType()
-	{
-		return XHtmlFileType.INSTANCE;
-	}
+public class XHtmlQuoteHandler extends HtmlQuoteHandler {
+    @Nonnull
+    @Override
+    public FileType getFileType() {
+        return XHtmlFileType.INSTANCE;
+    }
 }

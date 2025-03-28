@@ -38,79 +38,79 @@ import java.util.List;
 
 /**
  * @author cdr
-*/
+ */
 public class XmlEncodingReference implements PsiReference, EmptyResolveMessageProvider, Comparable<XmlEncodingReference> {
-  private final XmlAttributeValue myValue;
+    private final XmlAttributeValue myValue;
 
-  private final String myCharsetName;
-  private final TextRange myRangeInElement;
-  private final int myPriority;
+    private final String myCharsetName;
+    private final TextRange myRangeInElement;
+    private final int myPriority;
 
-  public XmlEncodingReference(XmlAttributeValue value, final String charsetName, final TextRange rangeInElement, int priority) {
-    myValue = value;
-    myCharsetName = charsetName;
-    myRangeInElement = rangeInElement;
-    myPriority = priority;
-  }
-
-  @RequiredReadAction
-  public PsiElement getElement() {
-    return myValue;
-  }
-
-  @RequiredReadAction
-  public TextRange getRangeInElement() {
-    return myRangeInElement;
-  }
-
-  @RequiredReadAction
-  @Nullable
-  public PsiElement resolve() {
-    return CharsetToolkit.forName(myCharsetName) == null ? null : myValue;
-    //if (ApplicationManager.getApplication().isUnitTestMode()) return myValue; // tests do not have full JDK
-    //String fqn = charset.getClass().getName();
-    //return myValue.getManager().findClass(fqn, GlobalSearchScope.allScope(myValue.getProject()));
-  }
-
-  @Nonnull
-  @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
-    return XmlErrorLocalize.unknownEncoding0(referenceText);
-  }
-
-  @RequiredReadAction
-  @Nonnull
-  public String getCanonicalText() {
-    return myCharsetName;
-  }
-
-  @RequiredWriteAction
-  public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
-    return null;
-  }
-
-  @RequiredWriteAction
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
-    return null;
-  }
-
-  @RequiredReadAction
-  public boolean isReferenceTo(PsiElement element) {
-    return false;
-  }
-
-  @RequiredReadAction
-  @Nonnull
-  public Object[] getVariants() {
-    Charset[] charsets = CharsetToolkit.getAvailableCharsets();
-    List<LookupElement> suggestions = new ArrayList<LookupElement>(charsets.length);
-    for (Charset charset : charsets) {
-      suggestions.add(LookupElementBuilder.create(charset.name()).withCaseSensitivity(false));
+    public XmlEncodingReference(XmlAttributeValue value, final String charsetName, final TextRange rangeInElement, int priority) {
+        myValue = value;
+        myCharsetName = charsetName;
+        myRangeInElement = rangeInElement;
+        myPriority = priority;
     }
-    return suggestions.toArray(new LookupElement[suggestions.size()]);
-  }
 
-  public int compareTo(XmlEncodingReference ref) {
-    return myPriority - ref.myPriority;
-  }
+    @RequiredReadAction
+    public PsiElement getElement() {
+        return myValue;
+    }
+
+    @RequiredReadAction
+    public TextRange getRangeInElement() {
+        return myRangeInElement;
+    }
+
+    @RequiredReadAction
+    @Nullable
+    public PsiElement resolve() {
+        return CharsetToolkit.forName(myCharsetName) == null ? null : myValue;
+        //if (ApplicationManager.getApplication().isUnitTestMode()) return myValue; // tests do not have full JDK
+        //String fqn = charset.getClass().getName();
+        //return myValue.getManager().findClass(fqn, GlobalSearchScope.allScope(myValue.getProject()));
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+        return XmlErrorLocalize.unknownEncoding0(referenceText);
+    }
+
+    @RequiredReadAction
+    @Nonnull
+    public String getCanonicalText() {
+        return myCharsetName;
+    }
+
+    @RequiredWriteAction
+    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+        return null;
+    }
+
+    @RequiredWriteAction
+    public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+        return null;
+    }
+
+    @RequiredReadAction
+    public boolean isReferenceTo(PsiElement element) {
+        return false;
+    }
+
+    @RequiredReadAction
+    @Nonnull
+    public Object[] getVariants() {
+        Charset[] charsets = CharsetToolkit.getAvailableCharsets();
+        List<LookupElement> suggestions = new ArrayList<LookupElement>(charsets.length);
+        for (Charset charset : charsets) {
+            suggestions.add(LookupElementBuilder.create(charset.name()).withCaseSensitivity(false));
+        }
+        return suggestions.toArray(new LookupElement[suggestions.size()]);
+    }
+
+    public int compareTo(XmlEncodingReference ref) {
+        return myPriority - ref.myPriority;
+    }
 }

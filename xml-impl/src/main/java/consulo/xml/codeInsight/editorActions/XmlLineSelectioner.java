@@ -31,12 +31,12 @@ import java.util.List;
  */
 @ExtensionImpl
 public class XmlLineSelectioner extends ExtendWordSelectionHandlerBase {
-  public boolean canSelect(final PsiElement e) {
-    return e instanceof XmlToken && ((XmlToken)e).getTokenType() == XmlTokenType.XML_DATA_CHARACTERS;
-  }
+    public boolean canSelect(final PsiElement e) {
+        return e instanceof XmlToken && ((XmlToken)e).getTokenType() == XmlTokenType.XML_DATA_CHARACTERS;
+    }
 
-  @Override
-  public List<TextRange> select(final PsiElement e, final CharSequence editorText, final int cursorOffset, final Editor editor) {
-    return PlainTextLineSelectioner.selectPlainTextLine(e, editorText, cursorOffset);
-  }
+    @Override
+    public List<TextRange> select(final PsiElement e, final CharSequence editorText, final int cursorOffset, final Editor editor) {
+        return PlainTextLineSelectioner.selectPlainTextLine(e, editorText, cursorOffset);
+    }
 }

@@ -18,7 +18,6 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 /**
  * @author Eugene.Kudelevsky
  */
-public interface XmlHighlightingAwareElementDescriptor
-{
-	boolean shouldCheckRequiredAttributes();
+public interface XmlHighlightingAwareElementDescriptor {
+    boolean shouldCheckRequiredAttributes();
 }

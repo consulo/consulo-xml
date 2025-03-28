@@ -13,9 +13,9 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlFileQuoteHandler extends XmlBasedQuoteHandler implements FileQuoteHandler {
-  @Nonnull
-  @Override
-  public FileType getFileType() {
-    return XmlFileType.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public FileType getFileType() {
+        return XmlFileType.INSTANCE;
+    }
 }

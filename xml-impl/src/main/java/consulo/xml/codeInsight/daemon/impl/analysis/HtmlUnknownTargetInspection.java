@@ -29,45 +29,38 @@ import jakarta.annotation.Nullable;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection
-{
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspections.unknown.target");
-	}
+public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return XmlBundle.message("html.inspections.unknown.target");
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return "HTML";
-	}
+    @Nonnull
+    @Override
+    public String getGroupDisplayName() {
+        return "HTML";
+    }
 
-	@Nonnull
-	@Override
-	public String getShortName()
-	{
-		return "HtmlUnknownTarget";
-	}
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "HtmlUnknownTarget";
+    }
 
-	@Override
-	protected boolean isForHtml()
-	{
-		return true;
-	}
+    @Override
+    protected boolean isForHtml() {
+        return true;
+    }
 
-	@Override
-	protected boolean needToCheckRef(PsiReference reference)
-	{
-		return !(reference instanceof AnchorReferenceImpl);
-	}
+    @Override
+    protected boolean needToCheckRef(PsiReference reference) {
+        return !(reference instanceof AnchorReferenceImpl);
+    }
 }

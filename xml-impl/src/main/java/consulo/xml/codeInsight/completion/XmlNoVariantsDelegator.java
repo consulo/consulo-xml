@@ -31,29 +31,24 @@ import jakarta.annotation.Nonnull;
  * Date: 12/19/11
  */
 @ExtensionImpl(order = "before xmlNonFirst")
-public class XmlNoVariantsDelegator extends CompletionContributor
-{
-	@RequiredReadAction
-	@Override
-	public void fillCompletionVariants(final CompletionParameters parameters, final CompletionResultSet result)
-	{
-		final boolean empty = result.runRemainingContributors(parameters, true).isEmpty();
+public class XmlNoVariantsDelegator extends CompletionContributor {
+    @RequiredReadAction
+    @Override
+    public void fillCompletionVariants(final CompletionParameters parameters, final CompletionResultSet result) {
+        final boolean empty = result.runRemainingContributors(parameters, true).isEmpty();
 
-		if(!empty && parameters.getInvocationCount() == 0)
-		{
-			result.restartCompletionWhenNothingMatches();
-		}
+        if (!empty && parameters.getInvocationCount() == 0) {
+            result.restartCompletionWhenNothingMatches();
+        }
 
-		if(empty && parameters.getCompletionType() == CompletionType.BASIC)
-		{
-			XmlCompletionContributor.completeTagName(parameters, result);
-		}
-	}
+        if (empty && parameters.getCompletionType() == CompletionType.BASIC) {
+            XmlCompletionContributor.completeTagName(parameters, result);
+        }
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

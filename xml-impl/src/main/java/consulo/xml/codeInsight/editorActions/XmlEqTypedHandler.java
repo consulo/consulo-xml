@@ -29,33 +29,35 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlEq", order = "after xmlSlash")
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
-  private boolean needToInsertQuotes = false;
+    private boolean needToInsertQuotes = false;
 
-  @Override
-  public Result beforeCharTyped(char c,
-                                Project project,
-                                Editor editor,
-                                PsiFile file,
-                                FileType fileType) {
-    boolean inXml = file.getLanguage() instanceof XMLLanguage || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;
-    if (c == '=' && inXml) {
-      int offset = editor.getCaretModel().getOffset();
-      PsiElement at = file.findElementAt(offset - 1);
-      PsiElement atParent = at != null ? at.getParent() : null;
-      needToInsertQuotes = atParent instanceof XmlAttribute && ((XmlAttribute)atParent).getValueElement() == null;
+    @Override
+    public Result beforeCharTyped(
+        char c,
+        Project project,
+        Editor editor,
+        PsiFile file,
+        FileType fileType
+    ) {
+        boolean inXml = file.getLanguage() instanceof XMLLanguage || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;
+        if (c == '=' && inXml) {
+            int offset = editor.getCaretModel().getOffset();
+            PsiElement at = file.findElementAt(offset - 1);
+            PsiElement atParent = at != null ? at.getParent() : null;
+            needToInsertQuotes = atParent instanceof XmlAttribute && ((XmlAttribute)atParent).getValueElement() == null;
+        }
+
+        return super.beforeCharTyped(c, project, editor, file, fileType);
     }
 
-    return super.beforeCharTyped(c, project, editor, file, fileType);
-  }
-
-  @Override
-  public Result charTyped(char c, Project project, Editor editor, @Nonnull PsiFile file) {
-    if (needToInsertQuotes) {
-      int offset = editor.getCaretModel().getOffset();
-      editor.getDocument().insertString(offset, "\"\"");
-      editor.getCaretModel().moveToOffset(offset + 1);
+    @Override
+    public Result charTyped(char c, Project project, Editor editor, @Nonnull PsiFile file) {
+        if (needToInsertQuotes) {
+            int offset = editor.getCaretModel().getOffset();
+            editor.getDocument().insertString(offset, "\"\"");
+            editor.getCaretModel().moveToOffset(offset + 1);
+        }
+        needToInsertQuotes = false;
+        return super.charTyped(c, project, editor, file);
     }
-    needToInsertQuotes = false;
-    return super.charTyped(c, project, editor, file);
-  }
 }
