@@ -35,13 +35,13 @@ public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
 
     @Override
     @RequiredReadAction
-    public void registerErrorQuickFix(final PsiErrorElement element, final HighlightInfo.Builder builder) {
+    public void registerErrorQuickFix(PsiErrorElement element, HighlightInfo.Builder builder) {
         if (PsiTreeUtil.getParentOfType(element, XmlTag.class) != null) {
             registerXmlErrorQuickFix(element, builder);
         }
     }
 
-    private static void registerXmlErrorQuickFix(final PsiErrorElement element, final HighlightInfo.Builder builder) {
+    private static void registerXmlErrorQuickFix(PsiErrorElement element, HighlightInfo.Builder builder) {
         LocalizeValue errorText = element.getErrorDescriptionValue();
 
         if (errorText.getKey().isPresent() && errorText.getKey().get().equals(unescapedAmpersandKey.get())) {

@@ -20,7 +20,7 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.access.RequiredWriteAction;
-import consulo.application.ApplicationManager;
+import consulo.application.Application;
 import consulo.codeEditor.Editor;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.FileModificationService;
@@ -32,198 +32,162 @@ import consulo.language.editor.template.*;
 import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.undoRedo.CommandProcessor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * User: anna
- * Date: 18-Nov-2005
+ * @author anna
+ * @since 2005-11-18
  */
-public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionOnPsiElement implements HighPriorityAction
-{
-	private final String myAttrName;
-	private final String[] myValues;
-	@NonNls
-	private static final String NAME_TEMPLATE_VARIABLE = "name";
+public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionOnPsiElement implements HighPriorityAction {
+    private final String myAttrName;
+    private final String[] myValues;
+    private static final String NAME_TEMPLATE_VARIABLE = "name";
 
-	public InsertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values)
-	{
-		super(tag);
-		myAttrName = attrName;
-		myValues = values;
-	}
+    public InsertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values) {
+        super(tag);
+        myAttrName = attrName;
+        myValues = values;
+    }
 
-	@Override
-	@Nonnull
-	public String getText()
-	{
-		return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName).get();
-	}
+    @Override
+    @Nonnull
+    public String getText() {
+        return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName).get();
+    }
 
-	@Override
-	@Nonnull
-	public String getFamilyName()
-	{
-		return XmlErrorLocalize.insertRequiredAttributeQuickfixFamily().get();
-	}
+    @Override
+    @Nonnull
+    public String getFamilyName() {
+        return XmlErrorLocalize.insertRequiredAttributeQuickfixFamily().get();
+    }
 
-	@Override
-	public void invoke(@Nonnull final Project project,
-			@Nonnull PsiFile file,
-			@Nullable final Editor editor,
-			@Nonnull PsiElement startElement,
-			@Nonnull PsiElement endElement)
-	{
-		if(!FileModificationService.getInstance().prepareFileForWrite(file))
-		{
-			return;
-		}
-		XmlTag myTag = (XmlTag) startElement;
-		ASTNode treeElement = SourceTreeToPsiMap.psiElementToTree(myTag);
+    @Override
+    public void invoke(
+        @Nonnull Project project,
+        @Nonnull PsiFile file,
+        @Nullable Editor editor,
+        @Nonnull PsiElement startElement,
+        @Nonnull PsiElement endElement
+    ) {
+        if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
+            return;
+        }
+        XmlTag myTag = (XmlTag)startElement;
+        ASTNode treeElement = SourceTreeToPsiMap.psiElementToTree(myTag);
 
-		final XmlElementDescriptor descriptor = myTag.getDescriptor();
-		if(descriptor == null)
-		{
-			return;
-		}
-		final XmlAttributeDescriptor attrDescriptor = descriptor.getAttributeDescriptor(myAttrName, myTag);
-		final boolean indirectSyntax = XmlExtension.getExtension(myTag.getContainingFile()).isIndirectSyntax(attrDescriptor);
-		boolean insertShorthand = myTag instanceof HtmlTag && attrDescriptor != null && HtmlUtil.isBooleanAttribute(attrDescriptor, myTag);
+        XmlElementDescriptor descriptor = myTag.getDescriptor();
+        if (descriptor == null) {
+            return;
+        }
+        XmlAttributeDescriptor attrDescriptor = descriptor.getAttributeDescriptor(myAttrName, myTag);
+        boolean indirectSyntax = XmlExtension.getExtension(myTag.getContainingFile()).isIndirectSyntax(attrDescriptor);
+        boolean insertShorthand = myTag instanceof HtmlTag && attrDescriptor != null && HtmlUtil.isBooleanAttribute(attrDescriptor, myTag);
 
-		PsiElement anchor = SourceTreeToPsiMap.treeElementToPsi(XmlChildRole.EMPTY_TAG_END_FINDER.findChild(treeElement));
+        PsiElement anchor = SourceTreeToPsiMap.treeElementToPsi(XmlChildRole.EMPTY_TAG_END_FINDER.findChild(treeElement));
 
-		final boolean anchorIsEmptyTag = anchor != null;
+        boolean anchorIsEmptyTag = anchor != null;
 
-		if(anchor == null)
-		{
-			anchor = SourceTreeToPsiMap.treeElementToPsi(XmlChildRole.START_TAG_END_FINDER.findChild(treeElement));
-		}
+        if (anchor == null) {
+            anchor = SourceTreeToPsiMap.treeElementToPsi(XmlChildRole.START_TAG_END_FINDER.findChild(treeElement));
+        }
 
-		if(anchor == null)
-		{
-			return;
-		}
+        if (anchor == null) {
+            return;
+        }
 
-		final Template template = TemplateManager.getInstance(project).createTemplate("", "");
-		if(indirectSyntax)
-		{
-			if(anchorIsEmptyTag)
-			{
-				template.addTextSegment(">");
-			}
-			template.addTextSegment("<jsp:attribute name=\"" + myAttrName + "\">");
-		}
-		else
-		{
-			template.addTextSegment(" " + myAttrName + (!insertShorthand ? "=\"" : ""));
-		}
+        Template template = TemplateManager.getInstance(project).createTemplate("", "");
+        if (indirectSyntax) {
+            if (anchorIsEmptyTag) {
+                template.addTextSegment(">");
+            }
+            template.addTextSegment("<jsp:attribute name=\"" + myAttrName + "\">");
+        }
+        else {
+            template.addTextSegment(" " + myAttrName + (!insertShorthand ? "=\"" : ""));
+        }
 
-		Expression expression = new Expression()
-		{
-			final TextResult result = new TextResult("");
+        Expression expression = new Expression() {
+            TextResult result = new TextResult("");
 
-			@Override
-			public Result calculateResult(ExpressionContext context)
-			{
-				return result;
-			}
+            @Override
+            public Result calculateResult(ExpressionContext context) {
+                return result;
+            }
 
-			@Override
-			public Result calculateQuickResult(ExpressionContext context)
-			{
-				return null;
-			}
+            @Override
+            public Result calculateQuickResult(ExpressionContext context) {
+                return null;
+            }
 
-			@Override
-			public LookupElement[] calculateLookupItems(ExpressionContext context)
-			{
-				final LookupElement[] items = new LookupElement[myValues.length];
+            @Override
+            public LookupElement[] calculateLookupItems(ExpressionContext context) {
+                LookupElement[] items = new LookupElement[myValues.length];
 
-				for(int i = 0; i < items.length; i++)
-				{
-					items[i] = LookupElementBuilder.create(myValues[i]);
-				}
-				return items;
-			}
-		};
-		if(!insertShorthand)
-		{
-			template.addVariable(NAME_TEMPLATE_VARIABLE, expression, expression, true);
-		}
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = LookupElementBuilder.create(myValues[i]);
+                }
+                return items;
+            }
+        };
+        if (!insertShorthand) {
+            template.addVariable(NAME_TEMPLATE_VARIABLE, expression, expression, true);
+        }
 
-		if(indirectSyntax)
-		{
-			template.addTextSegment("</jsp:attribute>");
-			template.addEndVariable();
-			if(anchorIsEmptyTag)
-			{
-				template.addTextSegment("</" + myTag.getName() + ">");
-			}
-		}
-		else if(!insertShorthand)
-		{
-			template.addTextSegment("\"");
-		}
+        if (indirectSyntax) {
+            template.addTextSegment("</jsp:attribute>");
+            template.addEndVariable();
+            if (anchorIsEmptyTag) {
+                template.addTextSegment("</" + myTag.getName() + ">");
+            }
+        }
+        else if (!insertShorthand) {
+            template.addTextSegment("\"");
+        }
 
-		final PsiElement anchor1 = anchor;
+        PsiElement anchor1 = anchor;
 
-		final Runnable runnable = new Runnable()
-		{
-			@Override
-			@RequiredWriteAction
-			public void run()
-			{
-				ApplicationManager.getApplication().runWriteAction(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						int textOffset = anchor1.getTextOffset();
-						if(!anchorIsEmptyTag && indirectSyntax)
-						{
-							++textOffset;
-						}
-						editor.getCaretModel().moveToOffset(textOffset);
-						if(anchorIsEmptyTag && indirectSyntax)
-						{
-							editor.getDocument().deleteString(textOffset, textOffset + 2);
-						}
-						TemplateManager.getInstance(project).startTemplate(editor, template);
-					}
-				});
-			}
-		};
+        Runnable runnable = new Runnable() {
+            @Override
+            @RequiredWriteAction
+            public void run() {
+                Application.get().runWriteAction(() -> {
+                    int textOffset = anchor1.getTextOffset();
+                    if (!anchorIsEmptyTag && indirectSyntax) {
+                        ++textOffset;
+                    }
+                    editor.getCaretModel().moveToOffset(textOffset);
+                    if (anchorIsEmptyTag && indirectSyntax) {
+                        editor.getDocument().deleteString(textOffset, textOffset + 2);
+                    }
+                    TemplateManager.getInstance(project).startTemplate(editor, template);
+                });
+            }
+        };
 
-		if(!ApplicationManager.getApplication().isUnitTestMode())
-		{
-			Runnable commandRunnable = new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					CommandProcessor.getInstance().executeCommand(project, runnable, getText(), getFamilyName());
-				}
-			};
+        if (!Application.get().isUnitTestMode()) {
+            CommandProcessor.getInstance().newCommand()
+                .project(project)
+                .name(LocalizeValue.ofNullable(getText()))
+                .groupId(getFamilyName())
+                .inLater()
+                .run(runnable);
+        }
+        else {
+            runnable.run();
+        }
+    }
 
-			ApplicationManager.getApplication().invokeLater(commandRunnable);
-		}
-		else
-		{
-			runnable.run();
-		}
-	}
-
-	@Override
-	public boolean startInWriteAction()
-	{
-		return true;
-	}
+    @Override
+    public boolean startInWriteAction() {
+        return true;
+    }
 }

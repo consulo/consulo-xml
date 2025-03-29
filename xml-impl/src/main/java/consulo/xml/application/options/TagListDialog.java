@@ -15,15 +15,17 @@
  */
 package consulo.xml.application.options;
 
-import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.awt.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagListDialog extends DialogWrapper {
     private final JPanel myPanel;
-    private final JList myList = new JBList(new DefaultListModel());
+    private final JList<String> myList = new JBList<>(new DefaultListModel<>());
     private ArrayList<String> myData;
 
     public TagListDialog(String title) {
@@ -31,8 +33,8 @@ public class TagListDialog extends DialogWrapper {
         myPanel = ToolbarDecorator.createDecorator(myList)
             .setAddAction(button -> {
                 final String tagName = Messages.showInputDialog(
-                    ApplicationBundle.message("editbox.enter.tag.name"),
-                    ApplicationBundle.message("title.tag.name"),
+                    ApplicationLocalize.editboxEnterTagName().get(),
+                    ApplicationLocalize.titleTagName().get(),
                     UIUtil.getQuestionIcon()
                 );
                 if (tagName != null) {
@@ -72,21 +74,24 @@ public class TagListDialog extends DialogWrapper {
     }
 
     private void updateData() {
-        final DefaultListModel model = ((DefaultListModel)myList.getModel());
+        DefaultListModel<String> model = (DefaultListModel<String>)myList.getModel();
         model.clear();
         for (String data : myData) {
             model.addElement(data);
         }
     }
 
-    public ArrayList<String> getData() {
+    public List<String> getData() {
         return myData;
     }
 
+    @Override
     protected JComponent createCenterPanel() {
         return myPanel;
     }
 
+    @Override
+    @RequiredUIAccess
     public JComponent getPreferredFocusedComponent() {
         return myList;
     }

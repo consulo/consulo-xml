@@ -17,6 +17,7 @@ package consulo.xml.application.options;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.configurable.Configurable;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
@@ -31,12 +32,15 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class HtmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
     @Nonnull
+    @Override
     public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
-        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.html")) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleHtml().get()) {
+            @Override
             protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
                 return new HtmlCodeStyleMainPanel(settings, originalSettings);
             }
 
+            @Override
             public String getHelpTopic() {
                 return "reference.settingsdialog.IDE.globalcodestyle.html";
             }
@@ -45,6 +49,6 @@ public class HtmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
 
     @Override
     public String getConfigurableDisplayName() {
-        return ApplicationBundle.message("title.html");
+        return ApplicationLocalize.titleHtml().get();
     }
 }

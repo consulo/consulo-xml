@@ -25,38 +25,33 @@ import jakarta.annotation.Nonnull;
 /**
  * @author Eugene.Kudelevsky
  */
-public class XmlTagTreeHighlightingColors
-{
-	private static EditorColorKey[] ourColorKeys = null;
+public class XmlTagTreeHighlightingColors {
+    private static EditorColorKey[] ourColorKeys = null;
 
-	private static final ColorValue[] DEFAULT_COLORS = {
-			StandardColors.RED,
-			StandardColors.YELLOW,
-			StandardColors.GREEN,
-			StandardColors.CYAN,
-			StandardColors.BLUE,
-			StandardColors.MAGENTA
-	};
+    private static final ColorValue[] DEFAULT_COLORS = {
+        StandardColors.RED,
+        StandardColors.YELLOW,
+        StandardColors.GREEN,
+        StandardColors.CYAN,
+        StandardColors.BLUE,
+        StandardColors.MAGENTA
+    };
 
-	private XmlTagTreeHighlightingColors()
-	{
-	}
+    private XmlTagTreeHighlightingColors() {
+    }
 
-	@Nonnull
-	public static EditorColorKey[] getColorKeys()
-	{
-		final int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();
+    @Nonnull
+    public static EditorColorKey[] getColorKeys() {
+        int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();
 
-		if(ourColorKeys == null || ourColorKeys.length != levelCount)
-		{
-			ourColorKeys = new EditorColorKey[levelCount];
+        if (ourColorKeys == null || ourColorKeys.length != levelCount) {
+            ourColorKeys = new EditorColorKey[levelCount];
 
-			for(int i = 0; i < ourColorKeys.length; i++)
-			{
-				ourColorKeys[i] = EditorColorKey.createColorKey("HTML_TAG_TREE_LEVEL" + i, DEFAULT_COLORS[i % DEFAULT_COLORS.length]);
-			}
-		}
+            for (int i = 0; i < ourColorKeys.length; i++) {
+                ourColorKeys[i] = EditorColorKey.createColorKey("HTML_TAG_TREE_LEVEL" + i, DEFAULT_COLORS[i % DEFAULT_COLORS.length]);
+            }
+        }
 
-		return ourColorKeys;
-	}
+        return ourColorKeys;
+    }
 }

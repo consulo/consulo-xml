@@ -15,15 +15,14 @@
  */
 package consulo.xml.codeInsight.template;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
 import consulo.xml.lang.xml.XMLLanguage;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -31,18 +30,19 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlContextType extends BaseTemplateContextType {
-  public XmlContextType() {
-    super("XML", CodeInsightLocalize.dialogEditTemplateCheckboxXml());
-  }
+    public XmlContextType() {
+        super("XML", CodeInsightLocalize.dialogEditTemplateCheckboxXml());
+    }
 
-  @Override
-  public boolean isInContext(@Nonnull PsiFile file, int offset) {
-    return file.getLanguage().isKindOf(XMLLanguage.INSTANCE) && !isEmbeddedContent(file, offset) &&
-           !HtmlContextType.isMyLanguage(PsiUtilCore.getLanguageAtOffset(file, offset));
-  }
+    @Override
+    @RequiredReadAction
+    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+        return file.getLanguage().isKindOf(XMLLanguage.INSTANCE) && !isEmbeddedContent(file, offset)
+            && !HtmlContextType.isMyLanguage(PsiUtilCore.getLanguageAtOffset(file, offset));
+    }
 
-  public static boolean isEmbeddedContent(@Nonnull final PsiFile file, final int offset) {
-    Language languageAtOffset = PsiUtilCore.getLanguageAtOffset(file, offset);
-    return !(languageAtOffset.isKindOf(XMLLanguage.INSTANCE) || languageAtOffset instanceof XMLLanguage);
-  }
+    public static boolean isEmbeddedContent(@Nonnull PsiFile file, int offset) {
+        Language languageAtOffset = PsiUtilCore.getLanguageAtOffset(file, offset);
+        return !(languageAtOffset.isKindOf(XMLLanguage.INSTANCE) || languageAtOffset instanceof XMLLanguage);
+    }
 }

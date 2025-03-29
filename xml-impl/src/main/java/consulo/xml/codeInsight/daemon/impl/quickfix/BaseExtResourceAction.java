@@ -15,100 +15,89 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import com.intellij.xml.XmlBundle;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.XmlFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
  * @author mike
  */
-abstract class BaseExtResourceAction implements SyntheticIntentionAction
-{
-	public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
-	{
-		if(!(file instanceof XmlFile))
-		{
-			return false;
-		}
+abstract class BaseExtResourceAction implements SyntheticIntentionAction {
+    @Override
+    @RequiredReadAction
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        if (!(file instanceof XmlFile)) {
+            return false;
+        }
 
-		int offset = editor.getCaretModel().getOffset();
-		String uri = findUri(file, offset);
-		if(uri == null || !isAcceptableUri(uri))
-		{
-			return false;
-		}
+        int offset = editor.getCaretModel().getOffset();
+        String uri = findUri(file, offset);
+        return uri != null && isAcceptableUri(uri);
+    }
 
-		return true;
-	}
+    protected boolean isAcceptableUri(String uri) {
+        return true;
+    }
 
-	protected boolean isAcceptableUri(final String uri)
-	{
-		return true;
-	}
+    protected abstract @Nonnull LocalizeValue getQuickFixName();
 
-	protected abstract String getQuickFixKeyId();
+    @Nonnull
+    @Override
+    public String getText() {
+        return getQuickFixName().get();
+    }
 
-	@Nonnull
-	@Override
-	public String getText()
-	{
-		return XmlBundle.message(getQuickFixKeyId());
-	}
+    @Nonnull
+    public String getFamilyName() {
+        return getQuickFixName().get();
+    }
 
-	@Nonnull
-	public String getFamilyName()
-	{
-		return XmlBundle.message(getQuickFixKeyId());
-	}
+    @Override
+    @RequiredUIAccess
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        int offset = editor.getCaretModel().getOffset();
 
-	public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException
-	{
-		int offset = editor.getCaretModel().getOffset();
+        PsiDocumentManager.getInstance(project).commitAllDocuments();
 
-		PsiDocumentManager.getInstance(project).commitAllDocuments();
+        String uri = findUri(file, offset);
+        if (uri == null) {
+            return;
+        }
 
-		final String uri = findUri(file, offset);
-		if(uri == null)
-		{
-			return;
-		}
+        doInvoke(file, offset, uri, editor);
+    }
 
-		doInvoke(file, offset, uri, editor);
-	}
+    @RequiredUIAccess
+    protected abstract void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
+        throws IncorrectOperationException;
 
-	protected abstract void doInvoke(final @Nonnull PsiFile file, final int offset, final @Nonnull String uri, final Editor editor)
-			throws IncorrectOperationException;
+    @Nullable
+    @RequiredReadAction
+    public static String findUri(PsiFile file, int offset) {
+        PsiReference currentRef = file.getViewProvider().findReferenceAt(offset, file.getLanguage());
+        if (currentRef == null) {
+            currentRef = file.getViewProvider().findReferenceAt(offset);
+        }
+        if (currentRef instanceof URLReference || currentRef instanceof DependentNSReference) {
+            return currentRef.getCanonicalText();
+        }
+        return null;
+    }
 
-	@Nullable
-	public static String findUri(PsiFile file, int offset)
-	{
-		PsiReference currentRef = file.getViewProvider().findReferenceAt(offset, file.getLanguage());
-		if(currentRef == null)
-		{
-			currentRef = file.getViewProvider().findReferenceAt(offset);
-		}
-		if(currentRef instanceof URLReference ||
-				currentRef instanceof DependentNSReference)
-		{
-			return currentRef.getCanonicalText();
-		}
-		return null;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		return obj instanceof ManuallySetupExtResourceAction;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ManuallySetupExtResourceAction;
+    }
 }

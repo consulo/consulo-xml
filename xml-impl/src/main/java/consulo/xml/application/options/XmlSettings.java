@@ -18,6 +18,7 @@ package consulo.xml.application.options;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
@@ -36,7 +37,7 @@ public class XmlSettings implements PersistentStateComponent<XmlSettings> {
     public boolean SHOW_XML_ADD_IMPORT_HINTS = true;
 
     public static XmlSettings getInstance() {
-        return ServiceManager.getService(XmlSettings.class);
+        return Application.get().getInstance(XmlSettings.class);
     }
 
     public void setShowXmlImportHints(boolean value) {

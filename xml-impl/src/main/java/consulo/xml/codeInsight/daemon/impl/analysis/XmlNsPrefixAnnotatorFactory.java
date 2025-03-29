@@ -11,22 +11,19 @@ import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL
- * @since 02-Aug-22
+ * @since 2022-08-02
  */
 @ExtensionImpl
-public class XmlNsPrefixAnnotatorFactory implements AnnotatorFactory
-{
-	@Nullable
-	@Override
-	public Annotator createAnnotator()
-	{
-		return new XmlNsPrefixAnnotator();
-	}
+public class XmlNsPrefixAnnotatorFactory implements AnnotatorFactory {
+    @Nullable
+    @Override
+    public Annotator createAnnotator() {
+        return new XmlNsPrefixAnnotator();
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

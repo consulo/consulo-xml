@@ -25,67 +25,67 @@ import consulo.xml.psi.xml.XmlTag;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.StringTokenizer;
 
 /**
  * @author yole
  */
 @ExtensionImpl
-public class XmlElementSignatureProvider extends AbstractElementSignatureProvider
-{
-  private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
+public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
+    private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 
-  public String getSignature(@Nonnull PsiElement element) {
-    if (element instanceof XmlTag) {
-      XmlTag tag = (XmlTag)element;
-      PsiElement parent = tag.getParent();
+    @Override
+    public String getSignature(@Nonnull PsiElement element) {
+        if (element instanceof XmlTag tag) {
+            PsiElement parent = tag.getParent();
 
-      StringBuilder buffer = new StringBuilder();
-      buffer.append("tag").append(ELEMENT_TOKENS_SEPARATOR);
-      String name = tag.getName();
-      buffer.append(name.length() == 0 ? "<unnamed>" : name);
+            StringBuilder sb = new StringBuilder();
+            sb.append("tag").append(ELEMENT_TOKENS_SEPARATOR);
+            String name = tag.getName();
+            sb.append(name.length() == 0 ? "<unnamed>" : name);
 
-      buffer.append(ELEMENT_TOKENS_SEPARATOR);
-      buffer.append(getChildIndex(tag, parent, name, XmlTag.class));
+            sb.append(ELEMENT_TOKENS_SEPARATOR);
+            sb.append(getChildIndex(tag, parent, name, XmlTag.class));
 
-      if (parent instanceof XmlTag) {
-        String parentSignature = getSignature(parent);
-        buffer.append(";");
-        buffer.append(parentSignature);
-      }
+            if (parent instanceof XmlTag) {
+                sb.append(";");
+                sb.append(getSignature(parent));
+            }
 
-      return buffer.toString();
-    }
-    return null;
-  }
-
-  @Override
-  protected PsiElement restoreBySignatureTokens(@Nonnull PsiFile file,
-                                                @Nonnull PsiElement parent,
-                                                @Nonnull String type,
-                                                @Nonnull StringTokenizer tokenizer,
-                                                @Nullable StringBuilder processingInfoStorage)
-  {
-    if (type.equals("tag")) {
-      String name = tokenizer.nextToken();
-
-      if (parent instanceof XmlFile) {
-        parent = ((XmlFile)parent).getDocument();
-        if (parent == null) {
-          return null;
+            return sb.toString();
         }
-      }
-
-      try {
-        int index = Integer.parseInt(tokenizer.nextToken());
-
-        return restoreElementInternal(parent, name, index, XmlTag.class);
-      }
-      catch (NumberFormatException e) {
-        LOG.error(e);
         return null;
-      }
     }
-    return null;
-  }
+
+    @Override
+    protected PsiElement restoreBySignatureTokens(
+        @Nonnull PsiFile file,
+        @Nonnull PsiElement parent,
+        @Nonnull String type,
+        @Nonnull StringTokenizer tokenizer,
+        @Nullable StringBuilder processingInfoStorage
+    ) {
+        if ("tag".equals(type)) {
+            String name = tokenizer.nextToken();
+
+            if (parent instanceof XmlFile xmlFile) {
+                parent = xmlFile.getDocument();
+                if (parent == null) {
+                    return null;
+                }
+            }
+
+            try {
+                int index = Integer.parseInt(tokenizer.nextToken());
+
+                return restoreElementInternal(parent, name, index, XmlTag.class);
+            }
+            catch (NumberFormatException e) {
+                LOG.error(e);
+                return null;
+            }
+        }
+        return null;
+    }
 }

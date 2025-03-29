@@ -23,28 +23,28 @@ import consulo.ui.image.Image;
  * @author Dmitry Avdeev
  */
 public class DomGotoRelatedItem extends GotoRelatedItem {
-  private final DomElement myElement;
+    private final DomElement myElement;
 
-  public DomGotoRelatedItem(DomElement element) {
-    this(element, "XML");
-  }
+    public DomGotoRelatedItem(DomElement element) {
+        this(element, "XML");
+    }
 
-  public DomGotoRelatedItem(DomElement element, String group) {
-    this(element, group, -1);
-  }
+    public DomGotoRelatedItem(DomElement element, String group) {
+        this(element, group, -1);
+    }
 
-  public DomGotoRelatedItem(DomElement element, String group, int mnemonic) {
-    super(element.getXmlElement(), group, mnemonic);
-    myElement = element;
-  }
+    public DomGotoRelatedItem(DomElement element, String group, int mnemonic) {
+        super(element.getXmlElement(), group, mnemonic);
+        myElement = element;
+    }
 
-  @Override
-  public String getCustomName() {
-    return myElement.getPresentation().getElementName();
-  }
+    @Override
+    public String getCustomName() {
+        return myElement.getPresentation().getElementName();
+    }
 
-  @Override
-  public Image getCustomIcon() {
-    return myElement.getPresentation().getIcon();
-  }
+    @Override
+    public Image getCustomIcon() {
+        return myElement.getPresentation().getIcon();
+    }
 }

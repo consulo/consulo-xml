@@ -15,11 +15,12 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.SimpleTextAttributes;
-import consulo.application.AllIcons;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
+import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,21 +29,17 @@ import java.awt.*;
  * @author Dmitry Avdeev
  */
 public class XmlNSRenderer extends ColoredListCellRenderer {
+    public static final XmlNSRenderer INSTANCE = new XmlNSRenderer();
 
-  public static final XmlNSRenderer INSTANCE = new XmlNSRenderer();
+    public XmlNSRenderer() {
+        EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
+        setFont(new Font(scheme.getEditorFontName(), Font.PLAIN, scheme.getEditorFontSize()));
+    }
 
-  public XmlNSRenderer() {
-    EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-    setFont(new Font(scheme.getEditorFontName(), Font.PLAIN, scheme.getEditorFontSize()));
-  }
-
-  protected void customizeCellRenderer(final JList list,
-                                       final Object value,
-                                       final int index,
-                                       final boolean selected,
-                                       final boolean hasFocus) {
-    append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
-    setIcon(AllIcons.Nodes.Static);
-    setPaintFocusBorder(false);
-  }
+    @Override
+    protected void customizeCellRenderer(@Nonnull JList list, Object value, int index, boolean selected, boolean hasFocus) {
+        append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
+        setIcon(PlatformIconGroup.nodesStatic());
+        setPaintFocusBorder(false);
+    }
 }

@@ -32,9 +32,9 @@ import jakarta.annotation.Nullable;
  * @author VISTALL
  */
 public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable, ApplicationConfigurable {
-    @RequiredUIAccess
     @Nonnull
     @Override
+    @RequiredUIAccess
     protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 

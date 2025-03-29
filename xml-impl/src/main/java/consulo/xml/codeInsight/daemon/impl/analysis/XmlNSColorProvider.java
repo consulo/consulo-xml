@@ -25,13 +25,12 @@ import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 17.10.13
+ * Date: 2013-10-17
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
-public interface XmlNSColorProvider
-{
-	ExtensionPointName<XmlNSColorProvider> EP_NAME = ExtensionPointName.create(XmlNSColorProvider.class);
+public interface XmlNSColorProvider {
+    ExtensionPointName<XmlNSColorProvider> EP_NAME = ExtensionPointName.create(XmlNSColorProvider.class);
 
-	@Nullable
-	TextAttributesKey getKeyForNamespace(String namespace, XmlElement context);
+    @Nullable
+    TextAttributesKey getKeyForNamespace(String namespace, XmlElement context);
 }

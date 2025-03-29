@@ -10,27 +10,27 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 25/03/2023
+ * @since 2023-03-25
  */
 @ExtensionImpl
 public class XmlHighlightVisitorFactory implements HighlightVisitorFactory {
-  @Override
-  public boolean suitableForFile(@Nonnull PsiFile file) {
-    if (file instanceof XmlFile) {
-      return true;
+    @Override
+    public boolean suitableForFile(@Nonnull PsiFile file) {
+        if (file instanceof XmlFile) {
+            return true;
+        }
+
+        for (PsiFile psiFile : file.getViewProvider().getAllFiles()) {
+            if (psiFile instanceof XmlFile) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    for (PsiFile psiFile : file.getViewProvider().getAllFiles()) {
-      if (psiFile instanceof XmlFile) {
-        return true;
-      }
+    @Nonnull
+    @Override
+    public HighlightVisitor createVisitor() {
+        return new XmlHighlightVisitor();
     }
-    return false;
-  }
-
-  @Nonnull
-  @Override
-  public HighlightVisitor createVisitor() {
-    return new XmlHighlightVisitor();
-  }
 }

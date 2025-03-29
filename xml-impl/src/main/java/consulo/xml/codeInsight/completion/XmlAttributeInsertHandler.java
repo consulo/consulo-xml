@@ -15,6 +15,8 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.access.RequiredWriteAction;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlFile;
@@ -39,6 +41,7 @@ import consulo.util.lang.StringUtil;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.Collections;
 
 /**
@@ -60,16 +63,18 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
     }
 
     @Override
-    public void handleInsert(final InsertionContext context, final LookupElement item) {
-        final Editor editor = context.getEditor();
+    @RequiredUIAccess
+    @RequiredWriteAction
+    public void handleInsert(InsertionContext context, LookupElement item) {
+        Editor editor = context.getEditor();
 
-        final Document document = editor.getDocument();
-        final int caretOffset = editor.getCaretModel().getOffset();
-        final PsiFile file = context.getFile();
+        Document document = editor.getDocument();
+        int caretOffset = editor.getCaretModel().getOffset();
+        PsiFile file = context.getFile();
 
-        final CharSequence chars = document.getCharsSequence();
-        final boolean insertQuotes = XmlEditorOptions.getInstance().isInsertQuotesForAttributeValue();
-        final boolean hasQuotes = CharArrayUtil.regionMatches(chars, caretOffset, "=\"");
+        CharSequence chars = document.getCharsSequence();
+        boolean insertQuotes = XmlEditorOptions.getInstance().isInsertQuotesForAttributeValue();
+        boolean hasQuotes = CharArrayUtil.regionMatches(chars, caretOffset, "=\"");
         if (!hasQuotes && !CharArrayUtil.regionMatches(chars, caretOffset, "='")) {
             PsiElement fileContext = file.getContext();
             String toInsert = "=\"\"";
@@ -100,18 +105,18 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
         AutoPopupController.getInstance(editor.getProject()).scheduleAutoPopup(editor);
 
         if (myNamespaceToInsert != null && file instanceof XmlFile) {
-            final PsiElement element = file.findElementAt(context.getStartOffset());
-            final XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
+            PsiElement element = file.findElementAt(context.getStartOffset());
+            XmlTag tag = element != null ? PsiTreeUtil.getParentOfType(element, XmlTag.class) : null;
 
             if (tag != null) {
                 String prefix = ExtendedTagInsertHandler.suggestPrefix((XmlFile)file, myNamespaceToInsert);
 
                 if (prefix != null) {
                     prefix = makePrefixUnique(prefix, tag);
-                    final XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
+                    XmlNamespaceHelper helper = XmlNamespaceHelper.getHelper(context.getFile());
 
                     if (helper != null) {
-                        final Project project = context.getProject();
+                        Project project = context.getProject();
                         PsiDocumentManager.getInstance(project).commitDocument(document);
                         qualifyWithPrefix(prefix, element);
                         helper.insertNamespaceDeclaration((XmlFile)file, editor, Collections.singleton(myNamespaceToInsert), prefix, null);
@@ -121,15 +126,16 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
         }
     }
 
+    @RequiredWriteAction
     private static void qualifyWithPrefix(@Nonnull String namespacePrefix, @Nonnull PsiElement context) {
-        final PsiElement parent = context.getParent();
+        PsiElement parent = context.getParent();
 
         if (parent instanceof XmlAttribute) {
-            final XmlAttribute attribute = (XmlAttribute)parent;
-            final String prefix = attribute.getNamespacePrefix();
+            XmlAttribute attribute = (XmlAttribute)parent;
+            String prefix = attribute.getNamespacePrefix();
 
             if (!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix)) {
-                final String name = namespacePrefix + ":" + attribute.getLocalName();
+                String name = namespacePrefix + ":" + attribute.getLocalName();
                 try {
                     attribute.setName(name);
                 }

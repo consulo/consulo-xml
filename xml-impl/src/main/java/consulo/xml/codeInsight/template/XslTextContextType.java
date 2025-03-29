@@ -12,15 +12,14 @@
  */
 package consulo.xml.codeInsight.template;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.io.FileUtil;
 import consulo.xml.ide.highlighter.XmlFileType;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -29,21 +28,23 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionImpl
 public class XslTextContextType extends BaseTemplateContextType {
-  public XslTextContextType() {
-    super("XSL_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxXslText(), XmlContextType.class);
-  }
-
-  @Override
-  public boolean isInContext(@Nonnull PsiFile file, int offset) {
-    if (isXslOrXsltFile(file)) {
-      PsiElement element = file.findElementAt(offset);
-      return element == null || HtmlTextContextType.isInContext(element);
+    public XslTextContextType() {
+        super("XSL_TEXT", CodeInsightLocalize.dialogEditTemplateCheckboxXslText(), XmlContextType.class);
     }
-    return false;
-  }
 
-  public static boolean isXslOrXsltFile(@Nullable PsiFile file) {
-    return file != null && file.getFileType() == XmlFileType.INSTANCE
-        && (FileUtil.extensionEquals(file.getName(), "xsl") || FileUtil.extensionEquals(file.getName(), "xslt"));
-  }
+    @Override
+    @RequiredReadAction
+    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+        if (isXslOrXsltFile(file)) {
+            PsiElement element = file.findElementAt(offset);
+            return element == null || HtmlTextContextType.isInContext(element);
+        }
+        return false;
+    }
+
+    @RequiredReadAction
+    public static boolean isXslOrXsltFile(@Nullable PsiFile file) {
+        return file != null && file.getFileType() == XmlFileType.INSTANCE
+            && (FileUtil.extensionEquals(file.getName(), "xsl") || FileUtil.extensionEquals(file.getName(), "xslt"));
+    }
 }

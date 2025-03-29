@@ -29,16 +29,15 @@ import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class XmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
-    @RequiredUIAccess
     @Nonnull
     @Override
-    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
+    @RequiredUIAccess
+    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 
         XmlFoldingSettings settings = XmlFoldingSettings.getInstance();

@@ -29,27 +29,18 @@ import jakarta.annotation.Nonnull;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory
-{
-  @Override
-  public void register(@Nonnull Registrar registrar) {
-    registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
-  }
-
-  @Override
-  public TextEditorHighlightingPass createHighlightingPass(@Nonnull final PsiFile file, @Nonnull final Editor editor) {
-    if (editor.isOneLineMode()) {
-      return null;
+public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory {
+    @Override
+    public void register(@Nonnull Registrar registrar) {
+        registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
     }
 
-    if (!XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)) {
-      return null;
+    @Override
+    public TextEditorHighlightingPass createHighlightingPass(@Nonnull PsiFile file, @Nonnull Editor editor) {
+        return !editor.isOneLineMode()
+            && XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)
+            && editor instanceof EditorEx editorEx
+            ? new XmlTagTreeHighlightingPass(file, editorEx)
+            : null;
     }
-    if (!(editor instanceof EditorEx)) {
-      return null;
-    }
-
-    return new XmlTagTreeHighlightingPass(file, (EditorEx) editor);
-  }
 }
-

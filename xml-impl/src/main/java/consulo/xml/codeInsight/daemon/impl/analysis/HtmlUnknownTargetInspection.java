@@ -15,13 +15,12 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiReference;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -29,45 +28,38 @@ import jakarta.annotation.Nullable;
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
-public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection
-{
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return XmlBundle.message("html.inspections.unknown.target");
-	}
+public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+        return XmlLocalize.htmlInspectionsUnknownTarget().get();
+    }
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return "HTML";
-	}
+    @Nonnull
+    @Override
+    public String getGroupDisplayName() {
+        return "HTML";
+    }
 
-	@Nonnull
-	@Override
-	public String getShortName()
-	{
-		return "HtmlUnknownTarget";
-	}
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "HtmlUnknownTarget";
+    }
 
-	@Override
-	protected boolean isForHtml()
-	{
-		return true;
-	}
+    @Override
+    protected boolean isForHtml() {
+        return true;
+    }
 
-	@Override
-	protected boolean needToCheckRef(PsiReference reference)
-	{
-		return !(reference instanceof AnchorReferenceImpl);
-	}
+    @Override
+    protected boolean needToCheckRef(PsiReference reference) {
+        return !(reference instanceof AnchorReferenceImpl);
+    }
 }

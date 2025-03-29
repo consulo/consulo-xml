@@ -20,6 +20,7 @@
  */
 package consulo.xml.codeInsight.hint;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.ImplementationTextSelectioner;
@@ -34,24 +35,30 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
-  private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
+    private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
 
-  public int getTextStartOffset(@Nonnull final PsiElement parent) {
-    return parent.getTextRange().getStartOffset();
-  }
-
-  public int getTextEndOffset(@Nonnull PsiElement element) {
-    if (element instanceof XmlAttributeValue) {
-      final XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
-      if (xmlTag != null) return xmlTag.getTextRange().getEndOffset();
-      LOG.assertTrue(false);
+    @Override
+    @RequiredReadAction
+    public int getTextStartOffset(@Nonnull PsiElement parent) {
+        return parent.getTextRange().getStartOffset();
     }
-    return element.getTextRange().getEndOffset();
-  }
 
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
+    @Override
+    @RequiredReadAction
+    public int getTextEndOffset(@Nonnull PsiElement element) {
+        if (element instanceof XmlAttributeValue) {
+            XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
+            if (xmlTag != null) {
+                return xmlTag.getTextRange().getEndOffset();
+            }
+            LOG.assertTrue(false);
+        }
+        return element.getTextRange().getEndOffset();
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

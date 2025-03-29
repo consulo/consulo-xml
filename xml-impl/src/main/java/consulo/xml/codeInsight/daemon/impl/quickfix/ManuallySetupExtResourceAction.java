@@ -16,14 +16,16 @@
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.ApplicationManager;
+import consulo.application.Application;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.MapExternalResourceDialog;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -32,26 +34,28 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.manually.setup.external.resource", fileExtensions = "xml", categories = "XML")
 public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
-
-  protected String getQuickFixKeyId() {
-    return "manually.setup.external.resource";
-  }
-
-  protected void doInvoke(@Nonnull final PsiFile file, final int offset, @Nonnull final String uri, final Editor editor) throws IncorrectOperationException {
-    final MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, file.getProject(), file, null);
-    dialog.show();
-    if (dialog.isOK()) {
-      ApplicationManager.getApplication().runWriteAction(new Runnable() {
-        @Override
-        public void run() {
-          String location = dialog.getResourceLocation();
-          ExternalResourceManager.getInstance().addResource(dialog.getUri(), location);
-        }
-      });
+    @Nonnull
+    @Override
+    protected LocalizeValue getQuickFixName() {
+        return XmlLocalize.manuallySetupExternalResource();
     }
-  }
 
-  public boolean startInWriteAction() {
-    return false;
-  }
+    @Override
+    @RequiredUIAccess
+    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
+        throws IncorrectOperationException {
+        MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, file.getProject(), file, null);
+        dialog.show();
+        if (dialog.isOK()) {
+            Application.get().runWriteAction(() -> {
+                String location = dialog.getResourceLocation();
+                ExternalResourceManager.getInstance().addResource(dialog.getUri(), location);
+            });
+        }
+    }
+
+    @Override
+    public boolean startInWriteAction() {
+        return false;
+    }
 }

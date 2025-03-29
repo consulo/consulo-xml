@@ -16,7 +16,7 @@
 package consulo.xml.application.options;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.configurable.Configurable;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.CustomCodeStyleSettings;
@@ -24,7 +24,6 @@ import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractConfigurable;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -32,15 +31,16 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
-    public static final String CONFIGURABLE_DISPLAY_NAME = ApplicationBundle.message("title.xml");
-
     @Nonnull
-    public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
-        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationBundle.message("title.xml")) {
+    @Override
+    public Configurable createSettingsPage(CodeStyleSettings settings, CodeStyleSettings originalSettings) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleXml().get()) {
+            @Override
             protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
                 return new XmlCodeStyleMainPanel(getCurrentSettings(), settings);
             }
 
+            @Override
             public String getHelpTopic() {
                 return "reference.settingsdialog.IDE.globalcodestyle.xml";
             }
@@ -49,7 +49,7 @@ public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
 
     @Override
     public String getConfigurableDisplayName() {
-        return CONFIGURABLE_DISPLAY_NAME;
+        return ApplicationLocalize.titleXml().get();
     }
 
     @Override

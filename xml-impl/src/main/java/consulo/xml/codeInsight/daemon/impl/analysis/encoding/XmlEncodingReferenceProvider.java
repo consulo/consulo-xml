@@ -15,53 +15,58 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis.encoding;
 
-import jakarta.annotation.Nonnull;
-
+import consulo.annotation.access.RequiredReadAction;
+import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
 import consulo.logging.Logger;
-import consulo.document.util.TextRange;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiReference;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlChildRole;
-import org.jetbrains.annotations.NonNls;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author cdr
  */
 public class XmlEncodingReferenceProvider extends PsiReferenceProvider {
-  private static final Logger LOG = Logger.getInstance(XmlEncodingReferenceProvider.class);
-  @NonNls private static final String CHARSET_PREFIX = "charset=";
+    private static final Logger LOG = Logger.getInstance(XmlEncodingReferenceProvider.class);
+    private static final String CHARSET_PREFIX = "charset=";
 
-  @Nonnull
-  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
-    LOG.assertTrue(element instanceof XmlAttributeValue);
-    XmlAttributeValue value = (XmlAttributeValue)element;
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+        LOG.assertTrue(element instanceof XmlAttributeValue);
+        XmlAttributeValue value = (XmlAttributeValue)element;
 
-    return new PsiReference[]{new XmlEncodingReference(value, value.getValue(), xmlAttributeValueRange(value), 0)};
-  }
-
-  protected static TextRange xmlAttributeValueRange(final XmlAttributeValue xmlAttributeValue) {
-    ASTNode valueNode = XmlChildRole.ATTRIBUTE_VALUE_VALUE_FINDER.findChild(xmlAttributeValue.getNode());
-    PsiElement toHighlight = valueNode == null ? xmlAttributeValue : valueNode.getPsi();
-    TextRange childRange = toHighlight.getTextRange();
-    TextRange range = xmlAttributeValue.getTextRange();
-    return childRange.shiftRight(-range.getStartOffset());
-  }
-
-  public static PsiReference[] extractFromContentAttribute(final XmlAttributeValue value) {
-    String text = value.getValue();
-    int start = text.indexOf(CHARSET_PREFIX);
-    if (start != -1) {
-      start += CHARSET_PREFIX.length();
-      int end = text.indexOf(';', start);
-      if (end == -1) end = text.length();
-      String charsetName = text.substring(start, end);
-      TextRange textRange = new TextRange(start, end).shiftRight(xmlAttributeValueRange(value).getStartOffset());
-      return new PsiReference[]{new XmlEncodingReference(value, charsetName, textRange, 0)};
+        return new PsiReference[]{new XmlEncodingReference(value, value.getValue(), xmlAttributeValueRange(value), 0)};
     }
-    return PsiReference.EMPTY_ARRAY;
-  }
+
+    @RequiredReadAction
+    protected static TextRange xmlAttributeValueRange(XmlAttributeValue xmlAttributeValue) {
+        ASTNode valueNode = XmlChildRole.ATTRIBUTE_VALUE_VALUE_FINDER.findChild(xmlAttributeValue.getNode());
+        PsiElement toHighlight = valueNode == null ? xmlAttributeValue : valueNode.getPsi();
+        TextRange childRange = toHighlight.getTextRange();
+        TextRange range = xmlAttributeValue.getTextRange();
+        return childRange.shiftRight(-range.getStartOffset());
+    }
+
+    @RequiredReadAction
+    public static PsiReference[] extractFromContentAttribute(XmlAttributeValue value) {
+        String text = value.getValue();
+        int start = text.indexOf(CHARSET_PREFIX);
+        if (start != -1) {
+            start += CHARSET_PREFIX.length();
+            int end = text.indexOf(';', start);
+            if (end == -1) {
+                end = text.length();
+            }
+            String charsetName = text.substring(start, end);
+            TextRange textRange = new TextRange(start, end).shiftRight(xmlAttributeValueRange(value).getStartOffset());
+            return new PsiReference[]{new XmlEncodingReference(value, charsetName, textRange, 0)};
+        }
+        return PsiReference.EMPTY_ARRAY;
+    }
 }

@@ -9,13 +9,13 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 05-Jul-22
+ * @since 2022-07-05
  */
 @ExtensionImpl
 public class XmlLanguageQuoteHandler extends XmlBasedQuoteHandler implements LanguageQuoteHandler {
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XMLLanguage.INSTANCE;
-  }
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

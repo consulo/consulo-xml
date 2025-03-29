@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.navigation;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.moveUpDown.MethodNavigationOffsetProvider;
 import consulo.language.editor.moveUpDown.MethodUpDownUtil;
@@ -31,35 +32,39 @@ import java.util.ArrayList;
  */
 @ExtensionImpl(id = "xml")
 public class XmlMethodNavigationOffsetProvider implements MethodNavigationOffsetProvider {
-  @Override
-  public int[] getMethodNavigationOffsets(final PsiFile file, final int caretOffset) {
-    if (file instanceof XmlFile) {
-      PsiElement element = file;
-      PsiElement elementAt = file.findElementAt(caretOffset);
-      elementAt = PsiTreeUtil.getParentOfType(elementAt, XmlTag.class);
-      if (elementAt != null) element = elementAt;
+    @Override
+    @RequiredReadAction
+    public int[] getMethodNavigationOffsets(PsiFile file, int caretOffset) {
+        if (file instanceof XmlFile) {
+            PsiElement element = file;
+            PsiElement elementAt = file.findElementAt(caretOffset);
+            elementAt = PsiTreeUtil.getParentOfType(elementAt, XmlTag.class);
+            if (elementAt != null) {
+                element = elementAt;
+            }
 
-      ArrayList<PsiElement> array = new ArrayList<PsiElement>();
-      addNavigationElements(array, element);
-      return MethodUpDownUtil.offsetsFromElements(array);
-    }
-    return null;
-  }
-
-  private static void addNavigationElements(ArrayList<PsiElement> array, PsiElement element) {
-    PsiElement parent = element instanceof XmlFile ? element : element.getParent();
-
-    if (parent != null) {
-      PsiElement[] children = parent.getChildren();
-      for (PsiElement child : children) {
-        if (child instanceof XmlTag) {
-          array.add(child);
+            ArrayList<PsiElement> array = new ArrayList<>();
+            addNavigationElements(array, element);
+            return MethodUpDownUtil.offsetsFromElements(array);
         }
-      }
+        return null;
     }
-    final PsiElement parentElement = element.getParent();
-    if (parentElement != null) {
-      addNavigationElements(array, parentElement);
+
+    @RequiredReadAction
+    private static void addNavigationElements(ArrayList<PsiElement> array, PsiElement element) {
+        PsiElement parent = element instanceof XmlFile ? element : element.getParent();
+
+        if (parent != null) {
+            PsiElement[] children = parent.getChildren();
+            for (PsiElement child : children) {
+                if (child instanceof XmlTag) {
+                    array.add(child);
+                }
+            }
+        }
+        PsiElement parentElement = element.getParent();
+        if (parentElement != null) {
+            addNavigationElements(array, parentElement);
+        }
     }
-  }
 }

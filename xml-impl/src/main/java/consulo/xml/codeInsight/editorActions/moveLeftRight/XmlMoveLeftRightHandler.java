@@ -22,28 +22,20 @@ import consulo.language.editor.moveLeftRight.MoveElementLeftRightHandler;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
-public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler
-{
-	@RequiredReadAction
-	@Nonnull
-	@Override
-	public PsiElement[] getMovableSubElements(@Nonnull PsiElement element)
-	{
-		if(element instanceof XmlTag)
-		{
-			return ((XmlTag) element).getAttributes();
-		}
-		return PsiElement.EMPTY_ARRAY;
-	}
+public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler {
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public PsiElement[] getMovableSubElements(@Nonnull PsiElement element) {
+        return element instanceof XmlTag tag ? tag.getAttributes() : PsiElement.EMPTY_ARRAY;
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

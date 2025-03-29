@@ -24,6 +24,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.completion.lookup.CharFilter;
@@ -41,6 +42,7 @@ import consulo.xml.psi.xml.XmlText;
 
 @ExtensionImpl(id = "xml")
 public class XmlCharFilter extends CharFilter {
+    @RequiredReadAction
     public static boolean isInXmlContext(Lookup lookup) {
         if (!lookup.isCompletion()) {
             return false;
@@ -59,7 +61,7 @@ public class XmlCharFilter extends CharFilter {
                     elementToTest = elementToTest.getParent(); // JSPX has whitespace with language Java
                 }
 
-                final Language language = elementToTest.getLanguage();
+                Language language = elementToTest.getLanguage();
                 if (!(language instanceof XMLLanguage)) {
                     return false;
                 }
@@ -69,10 +71,11 @@ public class XmlCharFilter extends CharFilter {
         return false;
     }
 
+    @RequiredReadAction
     public static boolean isWithinTag(Lookup lookup) {
         if (isInXmlContext(lookup)) {
             PsiElement psiElement = lookup.getPsiElement();
-            final PsiElement parentElement = psiElement != null ? psiElement.getParent() : null;
+            PsiElement parentElement = psiElement != null ? psiElement.getParent() : null;
             if (parentElement instanceof XmlTag) {
                 return true;
             }
@@ -87,7 +90,8 @@ public class XmlCharFilter extends CharFilter {
     }
 
     @Override
-    public Result acceptChar(char c, final int prefixLength, final Lookup lookup) {
+    @RequiredReadAction
+    public Result acceptChar(char c, int prefixLength, Lookup lookup) {
         if (!isInXmlContext(lookup)) {
             return null;
         }

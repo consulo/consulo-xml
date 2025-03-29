@@ -35,9 +35,9 @@ import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
-    @RequiredUIAccess
     @Nonnull
     @Override
+    @RequiredUIAccess
     protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 

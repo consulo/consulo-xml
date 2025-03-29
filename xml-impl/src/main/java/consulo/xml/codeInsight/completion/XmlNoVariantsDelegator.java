@@ -28,32 +28,27 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- * Date: 12/19/11
+ * @since 2011-12-19
  */
 @ExtensionImpl(order = "before xmlNonFirst")
-public class XmlNoVariantsDelegator extends CompletionContributor
-{
-	@RequiredReadAction
-	@Override
-	public void fillCompletionVariants(final CompletionParameters parameters, final CompletionResultSet result)
-	{
-		final boolean empty = result.runRemainingContributors(parameters, true).isEmpty();
+public class XmlNoVariantsDelegator extends CompletionContributor {
+    @Override
+    @RequiredReadAction
+    public void fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
+        boolean empty = result.runRemainingContributors(parameters, true).isEmpty();
 
-		if(!empty && parameters.getInvocationCount() == 0)
-		{
-			result.restartCompletionWhenNothingMatches();
-		}
+        if (!empty && parameters.getInvocationCount() == 0) {
+            result.restartCompletionWhenNothingMatches();
+        }
 
-		if(empty && parameters.getCompletionType() == CompletionType.BASIC)
-		{
-			XmlCompletionContributor.completeTagName(parameters, result);
-		}
-	}
+        if (empty && parameters.getCompletionType() == CompletionType.BASIC) {
+            XmlCompletionContributor.completeTagName(parameters, result);
+        }
+    }
 
-	@Nonnull
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

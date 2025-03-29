@@ -29,63 +29,40 @@ import jakarta.annotation.Nonnull;
  * @author peter
  */
 @ExtensionImpl
-public class HtmlQuoteHandler implements FileQuoteHandler
-{
-	private QuoteHandler myBaseQuoteHandler;
+public class HtmlQuoteHandler implements FileQuoteHandler {
+    private QuoteHandler myBaseQuoteHandler;
 
-	public HtmlQuoteHandler()
-	{
-		this(new XmlBasedQuoteHandler());
-	}
+    public HtmlQuoteHandler() {
+        this(new XmlBasedQuoteHandler());
+    }
 
-	public HtmlQuoteHandler(QuoteHandler _baseHandler)
-	{
-		myBaseQuoteHandler = _baseHandler;
-	}
+    public HtmlQuoteHandler(QuoteHandler _baseHandler) {
+        myBaseQuoteHandler = _baseHandler;
+    }
 
-	public boolean isClosingQuote(HighlighterIterator iterator, int offset)
-	{
-		if(myBaseQuoteHandler.isClosingQuote(iterator, offset))
-		{
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean isClosingQuote(HighlighterIterator iterator, int offset) {
+        return myBaseQuoteHandler.isClosingQuote(iterator, offset);
+    }
 
-	public boolean isOpeningQuote(HighlighterIterator iterator, int offset)
-	{
-		if(myBaseQuoteHandler.isOpeningQuote(iterator, offset))
-		{
-			return true;
-		}
+    @Override
+    public boolean isOpeningQuote(HighlighterIterator iterator, int offset) {
+        return myBaseQuoteHandler.isOpeningQuote(iterator, offset);
+    }
 
-		return false;
-	}
+    @Override
+    public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset) {
+        return myBaseQuoteHandler.hasNonClosedLiteral(editor, iterator, offset);
+    }
 
-	public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset)
-	{
-		if(myBaseQuoteHandler.hasNonClosedLiteral(editor, iterator, offset))
-		{
-			return true;
-		}
+    @Override
+    public boolean isInsideLiteral(HighlighterIterator iterator) {
+        return myBaseQuoteHandler.isInsideLiteral(iterator);
+    }
 
-		return false;
-	}
-
-	public boolean isInsideLiteral(HighlighterIterator iterator)
-	{
-		if(myBaseQuoteHandler.isInsideLiteral(iterator))
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	@Nonnull
-	@Override
-	public FileType getFileType()
-	{
-		return HtmlFileType.INSTANCE;
-	}
+    @Nonnull
+    @Override
+    public FileType getFileType() {
+        return HtmlFileType.INSTANCE;
+    }
 }

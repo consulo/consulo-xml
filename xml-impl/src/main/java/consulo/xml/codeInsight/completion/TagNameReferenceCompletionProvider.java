@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.impl.source.xml.TagNameReference;
 import consulo.xml.psi.xml.XmlTag;
@@ -30,6 +31,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
 
 import jakarta.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -38,7 +40,7 @@ import java.util.function.Consumer;
  * @author yole
  */
 public class TagNameReferenceCompletionProvider implements CompletionProvider {
-    public static LookupElement[] getTagNameVariants(final @Nonnull XmlTag tag, final String prefix) {
+    public static LookupElement[] getTagNameVariants(@Nonnull XmlTag tag, String prefix) {
         List<LookupElement> elements = new ArrayList<>();
         for (XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensionList()) {
             tagNameProvider.addTagNameVariants(elements, tag, prefix);
@@ -47,11 +49,8 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider {
     }
 
     @Override
-    public void addCompletions(
-        @Nonnull CompletionParameters parameters,
-        ProcessingContext context,
-        @Nonnull final CompletionResultSet result
-    ) {
+    @RequiredReadAction
+    public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result) {
         LegacyCompletionContributor.processReferences(
             parameters,
             result,

@@ -15,15 +15,14 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
-import consulo.codeEditor.EditorEx;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.codeEditor.action.EditorActionHandler;
 import consulo.dataContext.DataContext;
 import consulo.language.ast.IElementType;
-import consulo.language.editor.CommonDataKeys;
 import consulo.language.editor.action.EnterHandlerDelegateAdapter;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
@@ -33,65 +32,83 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlEnter")
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {
-  public Result preprocessEnter(@Nonnull final PsiFile file, @Nonnull final Editor editor, @Nonnull final Ref<Integer> caretOffset, @Nonnull final Ref<Integer> caretAdvance,
-                                @Nonnull final DataContext dataContext, final EditorActionHandler originalHandler) {
-    final Project project = dataContext.getData(CommonDataKeys.PROJECT);
+    @Override
+    @RequiredReadAction
+    public Result preprocessEnter(
+        @Nonnull PsiFile file,
+        @Nonnull Editor editor,
+        @Nonnull Ref<Integer> caretOffset,
+        @Nonnull Ref<Integer> caretAdvance,
+        @Nonnull DataContext dataContext,
+        EditorActionHandler originalHandler
+    ) {
+        Project project = dataContext.getData(Project.KEY);
 
-    if (file instanceof XmlFile && isBetweenXmlTags(project, editor, file, caretOffset.get().intValue())) {
-      originalHandler.execute(editor, dataContext);
-      return Result.DefaultForceIndent;
-    }
-    return Result.Continue;
-  }
-
-  private static boolean isBetweenXmlTags(Project project, Editor editor, PsiFile file, int offset) {
-    if (offset == 0) return false;
-    CharSequence chars = editor.getDocument().getCharsSequence();
-    if (chars.charAt(offset - 1) != '>') return false;
-
-    EditorHighlighter highlighter = ((EditorEx) editor).getHighlighter();
-    HighlighterIterator iterator = highlighter.createIterator(offset - 1);
-    if (iterator.getTokenType() != XmlTokenType.XML_TAG_END) return false;
-
-    if (isAtTheEndOfEmptyTag(project, editor, file, iterator)) {
-      return false;
+        if (file instanceof XmlFile && isBetweenXmlTags(project, editor, file, caretOffset.get())) {
+            originalHandler.execute(editor, dataContext);
+            return Result.DefaultForceIndent;
+        }
+        return Result.Continue;
     }
 
-    iterator.retreat();
+    @RequiredReadAction
+    private static boolean isBetweenXmlTags(Project project, Editor editor, PsiFile file, int offset) {
+        if (offset == 0) {
+            return false;
+        }
+        CharSequence chars = editor.getDocument().getCharsSequence();
+        if (chars.charAt(offset - 1) != '>') {
+            return false;
+        }
 
-    int retrieveCount = 1;
-    while (!iterator.atEnd()) {
-      final IElementType tokenType = (IElementType) iterator.getTokenType();
-      if (tokenType == XmlTokenType.XML_END_TAG_START) return false;
-      if (tokenType == XmlTokenType.XML_START_TAG_START) break;
-      ++retrieveCount;
-      iterator.retreat();
+        EditorHighlighter highlighter = editor.getHighlighter();
+        HighlighterIterator iterator = highlighter.createIterator(offset - 1);
+        if (iterator.getTokenType() != XmlTokenType.XML_TAG_END) {
+            return false;
+        }
+
+        if (isAtTheEndOfEmptyTag(project, editor, file, iterator)) {
+            return false;
+        }
+
+        iterator.retreat();
+
+        int retrieveCount = 1;
+        while (!iterator.atEnd()) {
+            IElementType tokenType = (IElementType)iterator.getTokenType();
+            if (tokenType == XmlTokenType.XML_END_TAG_START) {
+                return false;
+            }
+            if (tokenType == XmlTokenType.XML_START_TAG_START) {
+                break;
+            }
+            ++retrieveCount;
+            iterator.retreat();
+        }
+
+        for (int i = 0; i < retrieveCount; ++i) iterator.advance();
+        iterator.advance();
+        return !iterator.atEnd() && iterator.getTokenType() == XmlTokenType.XML_END_TAG_START;
     }
 
-    for (int i = 0; i < retrieveCount; ++i) iterator.advance();
-    iterator.advance();
-    return !iterator.atEnd() && iterator.getTokenType() == XmlTokenType.XML_END_TAG_START;
-  }
+    @RequiredReadAction
+    private static boolean isAtTheEndOfEmptyTag(Project project, Editor editor, PsiFile file, HighlighterIterator iterator) {
+        if (iterator.getTokenType() != XmlTokenType.XML_TAG_END) {
+            return false;
+        }
 
-  private static boolean isAtTheEndOfEmptyTag(Project project, Editor editor, PsiFile file, HighlighterIterator iterator) {
-    if (iterator.getTokenType() != XmlTokenType.XML_TAG_END) {
-      return false;
+        PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
+        PsiElement element = file.findElementAt(iterator.getStart());
+
+        if (element == null) {
+            return false;
+        }
+
+        PsiElement parent = element.getParent();
+        return parent instanceof XmlTag && parent.getTextRange().getEndOffset() == iterator.getEnd();
     }
-
-    PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
-    final PsiElement element = file.findElementAt(iterator.getStart());
-
-    if (element == null) {
-      return false;
-    }
-
-    final PsiElement parent = element.getParent();
-    return parent instanceof XmlTag &&
-        parent.getTextRange().getEndOffset() == iterator.getEnd();
-  }
 }

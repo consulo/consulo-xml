@@ -22,21 +22,25 @@ import consulo.language.editor.action.QuoteHandler;
 
 /**
  * @author peter
-*/
+ */
 public class XmlBasedQuoteHandler implements QuoteHandler {
-  public boolean isClosingQuote(HighlighterIterator iterator, int offset) {
-    return iterator.getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER;
-  }
+    @Override
+    public boolean isClosingQuote(HighlighterIterator iterator, int offset) {
+        return iterator.getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER;
+    }
 
-  public boolean isOpeningQuote(HighlighterIterator iterator, int offset) {
-    return iterator.getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER;
-  }
+    @Override
+    public boolean isOpeningQuote(HighlighterIterator iterator, int offset) {
+        return iterator.getTokenType() == XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER;
+    }
 
-  public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset) {
-    return true;
-  }
+    @Override
+    public boolean hasNonClosedLiteral(Editor editor, HighlighterIterator iterator, int offset) {
+        return true;
+    }
 
-  public boolean isInsideLiteral(HighlighterIterator iterator) {
-    return false;
-  }
+    @Override
+    public boolean isInsideLiteral(HighlighterIterator iterator) {
+        return false;
+    }
 }

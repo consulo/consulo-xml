@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlAttributeDescriptorImpl;
 import consulo.xml.psi.impl.source.xml.XmlAttributeImpl;
@@ -49,10 +50,11 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
     private static final Logger LOG = Logger.getInstance(XmlAttributeReferenceCompletionProvider.class);
 
     @Override
+    @RequiredReadAction
     public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result) {
         PsiReference reference = parameters.getPosition().getContainingFile().findReferenceAt(parameters.getOffset());
-        if (reference instanceof XmlAttributeReference) {
-            addAttributeReferenceCompletionVariants((XmlAttributeReference)reference, result, null);
+        if (reference instanceof XmlAttributeReference xmlAttributeReference) {
+            addAttributeReferenceCompletionVariants(xmlAttributeReference, result, null);
         }
     }
 
@@ -61,11 +63,11 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
         CompletionResultSet result,
         @Nullable InsertHandler<LookupElement> replacementInsertHandler
     ) {
-        final XmlTag declarationTag = reference.getElement().getParent();
+        XmlTag declarationTag = reference.getElement().getParent();
         LOG.assertTrue(declarationTag.isValid());
-        final XmlElementDescriptor parentDescriptor = declarationTag.getDescriptor();
+        XmlElementDescriptor parentDescriptor = declarationTag.getDescriptor();
         if (parentDescriptor != null) {
-            final XmlAttribute[] attributes = declarationTag.getAttributes();
+            XmlAttribute[] attributes = declarationTag.getAttributes();
             XmlAttributeDescriptor[] descriptors = parentDescriptor.getAttributesDescriptors(declarationTag);
 
             descriptors = HtmlUtil.appendHtmlSpecificAttributeCompletions(declarationTag, descriptors, reference.getElement());
@@ -75,16 +77,16 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
     }
 
     private static void addVariants(
-        final CompletionResultSet result,
-        final XmlAttribute[] attributes,
-        final XmlAttributeDescriptor[] descriptors,
+        CompletionResultSet result,
+        XmlAttribute[] attributes,
+        XmlAttributeDescriptor[] descriptors,
         XmlAttribute attribute,
         @Nullable InsertHandler<LookupElement> replacementInsertHandler
     ) {
-        final XmlTag tag = attribute.getParent();
-        final PsiFile file = tag.getContainingFile();
-        final XmlExtension extension = XmlExtension.getExtension(file);
-        final String prefix = attribute.getName().contains(":")
+        XmlTag tag = attribute.getParent();
+        PsiFile file = tag.getContainingFile();
+        XmlExtension extension = XmlExtension.getExtension(file);
+        String prefix = attribute.getName().contains(":")
             && ((XmlAttributeImpl)attribute).getRealLocalName().length() > 0
             ? attribute.getNamespacePrefix() + ":"
             : null;
@@ -103,8 +105,8 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
                 if (replacementInsertHandler != null) {
                     insertHandler = replacementInsertHandler;
                 }
-                else if (descriptor instanceof NamespaceAwareXmlAttributeDescriptor) {
-                    final String namespace = ((NamespaceAwareXmlAttributeDescriptor)descriptor).getNamespace(tag);
+                else if (descriptor instanceof NamespaceAwareXmlAttributeDescriptor namespaceAwareXmlAttributeDescriptor) {
+                    String namespace = namespaceAwareXmlAttributeDescriptor.getNamespace(tag);
 
                     if (file instanceof XmlFile && namespace != null && namespace.length() > 0
                         && !name.contains(":") && tag.getPrefixByNamespace(namespace) == null) {
@@ -119,12 +121,12 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
                     if (descriptor instanceof PsiPresentableMetaData presentableMetaData) {
                         element = element.withIcon(presentableMetaData.getIcon());
                     }
-                    final int separator = name.indexOf(':');
+                    int separator = name.indexOf(':');
                     if (separator > 0) {
                         element = element.withLookupString(name.substring(separator + 1));
                     }
-                    element =
-                        element.withCaseSensitivity(!(descriptor instanceof HtmlAttributeDescriptorImpl)).withInsertHandler(insertHandler);
+                    element = element.withCaseSensitivity(!(descriptor instanceof HtmlAttributeDescriptorImpl))
+                        .withInsertHandler(insertHandler);
                     result.addElement(
                         descriptor.isRequired()
                             ? PrioritizedLookupElement.withPriority(element.appendTailText("(required)", true), 100)
@@ -140,8 +142,8 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
     private static boolean isValidVariant(
         XmlAttribute attribute,
         @Nonnull XmlAttributeDescriptor descriptor,
-        final XmlAttribute[] attributes,
-        final XmlExtension extension
+        XmlAttribute[] attributes,
+        XmlExtension extension
     ) {
         if (extension.isIndirectSyntax(descriptor)) {
             return false;
@@ -151,7 +153,7 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
             LOG.error("Null descriptor name for " + descriptor + " " + descriptor.getClass() + " ");
             return false;
         }
-        for (final XmlAttribute otherAttr : attributes) {
+        for (XmlAttribute otherAttr : attributes) {
             if (otherAttr != attribute && otherAttr.getName().equals(descriptorName)) {
                 return false;
             }
