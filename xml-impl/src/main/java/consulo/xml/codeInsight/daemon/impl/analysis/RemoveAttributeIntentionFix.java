@@ -15,12 +15,14 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
 
@@ -33,22 +35,25 @@ import jakarta.annotation.Nullable;
 public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {
     private final String myLocalName;
 
-    public RemoveAttributeIntentionFix(final String localName, final @Nonnull XmlAttribute attribute) {
+    public RemoveAttributeIntentionFix(String localName, @Nonnull XmlAttribute attribute) {
         super(attribute);
         myLocalName = localName;
     }
 
     @Nonnull
+    @Override
     public String getText() {
         return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName).get();
     }
 
     @Nonnull
+    @Override
     public String getFamilyName() {
         return XmlErrorLocalize.removeAttributeQuickfixFamily().get();
     }
 
     @Override
+    @RequiredUIAccess
     public void invoke(
         @Nonnull Project project,
         @Nonnull PsiFile file,
@@ -68,7 +73,8 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
     }
 
     @Nullable
-    private static PsiElement findNextAttribute(final XmlAttribute attribute) {
+    @RequiredReadAction
+    private static PsiElement findNextAttribute(XmlAttribute attribute) {
         PsiElement nextSibling = attribute.getNextSibling();
         while (nextSibling != null) {
             if (nextSibling instanceof XmlAttribute) {
@@ -79,6 +85,7 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
         return null;
     }
 
+    @Override
     public boolean startInWriteAction() {
         return true;
     }

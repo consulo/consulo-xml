@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.actions;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.action.CodeInsightActionHandler;
 import consulo.language.editor.impl.action.BaseCodeInsightAction;
@@ -27,6 +28,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
@@ -35,44 +37,41 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlProlog;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 22.05.2003
- * Time: 13:46:54
+ * @author ik
+ * @since 2023-05-22
  */
 public class GenerateDTDAction extends BaseCodeInsightAction {
     private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
 
     @Nonnull
+    @Override
     protected CodeInsightActionHandler getHandler() {
         return new CodeInsightActionHandler() {
+            @Override
+            @RequiredUIAccess
             public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
-                final XmlDocument document = findSuitableXmlDocument(file);
+                XmlDocument document = findSuitableXmlDocument(file);
                 if (document != null) {
-                    final @NonNls StringBuffer buffer = new StringBuffer();
-                    buffer.append("<!DOCTYPE " + document.getRootTag().getName() + " [\n");
-                    buffer.append(XmlUtil.generateDocumentDTD(document, true));
-                    buffer.append("]>\n");
-                    XmlFile tempFile;
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("<!DOCTYPE ").append(document.getRootTag().getName()).append(" [\n");
+                    sb.append(XmlUtil.generateDocumentDTD(document, true));
+                    sb.append("]>\n");
                     try {
-                        final XmlProlog prolog = document.getProlog();
-                        final PsiElement childOfType = PsiTreeUtil.getChildOfType(prolog, XmlProcessingInstruction.class);
+                        XmlProlog prolog = document.getProlog();
+                        PsiElement childOfType = PsiTreeUtil.getChildOfType(prolog, XmlProcessingInstruction.class);
                         if (childOfType != null) {
-                            final String text = childOfType.getText();
-                            buffer.insert(0, text);
-                            final PsiElement nextSibling = childOfType.getNextSibling();
-                            if (nextSibling instanceof PsiWhiteSpace) {
-                                buffer.insert(text.length(), nextSibling.getText());
+                            String text = childOfType.getText();
+                            sb.insert(0, text);
+                            if (childOfType.getNextSibling() instanceof PsiWhiteSpace whiteSpace) {
+                                sb.insert(text.length(), whiteSpace.getText());
                             }
                         }
-                        tempFile =
-                            (XmlFile)PsiFileFactory.getInstance(file.getProject()).createFileFromText("dummy.xml", buffer.toString());
+                        XmlFile tempFile = (XmlFile)PsiFileFactory.getInstance(file.getProject())
+                            .createFileFromText("dummy.xml", sb.toString());
                         prolog.replace(tempFile.getDocument().getProlog());
                     }
                     catch (IncorrectOperationException e) {
@@ -81,6 +80,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
                 }
             }
 
+            @Override
             public boolean startInWriteAction() {
                 return true;
             }
@@ -89,8 +89,8 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
 
     @Nullable
     private static XmlDocument findSuitableXmlDocument(@Nullable PsiFile psiFile) {
-        if (psiFile instanceof XmlFile) {
-            final XmlDocument document = ((XmlFile)psiFile).getDocument();
+        if (psiFile instanceof XmlFile xmlFile) {
+            XmlDocument document = xmlFile.getDocument();
             if (document != null && document.getRootTag() != null) {
                 return document;
             }
@@ -98,6 +98,8 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
         return null;
     }
 
+    @Override
+    @RequiredUIAccess
     public void update(AnActionEvent event) {
         super.update(event);
         if (ActionPlaces.isPopupPlace(event.getPlace())) {
@@ -106,6 +108,8 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
         }
     }
 
+    @Override
+    @RequiredReadAction
     protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
         return file.getLanguage() == XMLLanguage.INSTANCE && findSuitableXmlDocument(file) != null;
     }

@@ -18,16 +18,14 @@ package consulo.xml.application.options.editor;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
-import consulo.application.ApplicationManager;
+import consulo.application.Application;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
-import consulo.ide.ServiceManager;
 import consulo.util.xml.serializer.XmlSerializerUtil;
-import jakarta.inject.Singleton;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Singleton;
 
 /**
  * @author spleaner
@@ -51,11 +49,11 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
 
     @Nonnull
     public static XmlEditorOptions getInstance() {
-        return ServiceManager.getService(XmlEditorOptions.class);
+        return Application.get().getInstance(XmlEditorOptions.class);
     }
 
     public XmlEditorOptions() {
-        setTagTreeHighlightingEnabled(!ApplicationManager.getApplication().isUnitTestMode());
+        setTagTreeHighlightingEnabled(!Application.get().isUnitTestMode());
     }
 
     public boolean isAutomaticallyInsertClosingTag() {
@@ -131,6 +129,7 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
     }
 
     @Nullable
+    @Override
     public Object clone() {
         try {
             return super.clone();
@@ -140,10 +139,12 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
         }
     }
 
+    @Override
     public XmlEditorOptions getState() {
         return this;
     }
 
+    @Override
     public void loadState(final XmlEditorOptions state) {
         XmlSerializerUtil.copyBean(state, this);
     }

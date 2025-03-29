@@ -15,11 +15,10 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiReference;
-
+import consulo.xml.impl.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 /**
@@ -36,7 +35,7 @@ public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspectio
     @Nonnull
     @Override
     public String getDisplayName() {
-        return XmlBundle.message("html.inspections.unknown.anchor");
+        return XmlLocalize.htmlInspectionsUnknownAnchor().get();
     }
 
     @Nonnull

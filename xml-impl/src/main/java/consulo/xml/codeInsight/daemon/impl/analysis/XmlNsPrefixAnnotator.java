@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
@@ -32,10 +33,11 @@ import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- * Date: 25.10.13
+ * @since 2013-10-25
  */
 public class XmlNsPrefixAnnotator implements Annotator {
     @Override
+    @RequiredReadAction
     public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
         if (element instanceof XmlTag || element instanceof XmlAttribute) {
             List<SchemaPrefixReference> references = ContainerUtil.findAll(element.getReferences(), SchemaPrefixReference.class);

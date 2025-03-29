@@ -15,11 +15,13 @@
  */
 package consulo.xml.codeInsight.navigation;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
 import consulo.language.navigation.GotoRelatedItem;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
@@ -34,45 +36,44 @@ import java.util.function.Function;
 
 /**
  * @author VISTALL
- * @since 23:22/09.10.13
+ * @since 2013-10-09
  */
 public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuilder<T> {
-    public static final Function<DomElement, Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR =
-        new Function<DomElement, Collection<? extends PsiElement>>() {
-            @Nonnull
-            public Collection<? extends PsiElement> apply(final DomElement o) {
-                return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
+    public static final Function<DomElement, Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR = new Function<>() {
+        @Nonnull
+        @Override
+        public Collection<? extends PsiElement> apply(DomElement o) {
+            return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
+        }
+    };
+    public static final Function<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER = new Function<>() {
+        @Nonnull
+        @Override
+        public Collection<? extends GotoRelatedItem> apply(DomElement dom) {
+            if (dom.getXmlElement() != null) {
+                return Collections.singletonList(new DomGotoRelatedItem(dom));
             }
-        };
-    public static final Function<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER =
-        new Function<DomElement, Collection<? extends GotoRelatedItem>>() {
-            @Nonnull
-            @Override
-            public Collection<? extends GotoRelatedItem> apply(DomElement dom) {
-                if (dom.getXmlElement() != null) {
-                    return Collections.singletonList(new DomGotoRelatedItem(dom));
-                }
-                return Collections.emptyList();
-            }
-        };
+            return Collections.emptyList();
+        }
+    };
 
-    public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull final Image icon) {
+    public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull Image icon) {
         return create(icon, DEFAULT_PSI_CONVERTOR, PSI_GOTO_RELATED_ITEM_PROVIDER);
     }
 
     public static <T> DomNavigationGutterIconBuilder<T> create(
-        @Nonnull final Image icon,
+        @Nonnull Image icon,
         @Nonnull Function<T, Collection<? extends PsiElement>> converter
     ) {
         return create(icon, converter, null);
     }
 
     public static <T> DomNavigationGutterIconBuilder<T> create(
-        @Nonnull final Image icon,
+        @Nonnull Image icon,
         @Nonnull Function<T, Collection<? extends PsiElement>> converter,
-        final @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
+        @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
     ) {
-        return new DomNavigationGutterIconBuilder<T>(icon, converter, gotoRelatedItemProvider);
+        return new DomNavigationGutterIconBuilder<>(icon, converter, gotoRelatedItemProvider);
     }
 
     protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
@@ -88,12 +89,13 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
     }
 
     @Nullable
+    @RequiredReadAction
     public Annotation install(@Nonnull DomElementAnnotationHolder holder, @Nullable DomElement element) {
         if (!myLazy && myTargets.get().isEmpty() || element == null) {
             return null;
         }
         return doInstall(
-            holder.createAnnotation(element, HighlightSeverity.INFORMATION, null),
+            holder.createAnnotation(element, HighlightSeverity.INFORMATION, LocalizeValue.empty()),
             element.getManager().getProject()
         );
     }

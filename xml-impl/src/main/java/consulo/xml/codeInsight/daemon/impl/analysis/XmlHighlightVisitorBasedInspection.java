@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.editor.inspection.*;
@@ -44,12 +45,13 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
     }
 
     @Override
+    @RequiredReadAction
     public void checkFile(
-        @Nonnull final PsiFile file,
-        @Nonnull final InspectionManager manager,
+        @Nonnull PsiFile file,
+        @Nonnull InspectionManager manager,
         @Nonnull ProblemsHolder problemsHolder,
-        @Nonnull final GlobalInspectionContext globalContext,
-        @Nonnull final ProblemDescriptionsProcessor problemDescriptionsProcessor,
+        @Nonnull GlobalInspectionContext globalContext,
+        @Nonnull ProblemDescriptionsProcessor problemDescriptionsProcessor,
         @Nonnull Object state
     ) {
         HighlightInfoHolder myHolder = new HighlightInfoHolder(file, List.of()) {
@@ -69,20 +71,24 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
                 return true;
             }
         };
-        final XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
-        highlightVisitor.analyze(file, true, myHolder, new Runnable() {
-            @Override
-            public void run() {
-                file.accept(new XmlRecursiveElementVisitor() {
-                    @Override
-                    public void visitElement(PsiElement element) {
-                        highlightVisitor.visit(element);
-                        super.visitElement(element);
-                    }
-                });
+        XmlHighlightVisitor highlightVisitor = new XmlHighlightVisitor();
+        highlightVisitor.analyze(
+            file,
+            true,
+            myHolder,
+            new Runnable() {
+                @Override
+                public void run() {
+                    file.accept(new XmlRecursiveElementVisitor() {
+                        @Override
+                        public void visitElement(PsiElement element) {
+                            highlightVisitor.visit(element);
+                            super.visitElement(element);
+                        }
+                    });
+                }
             }
-        });
-
+        );
     }
 
     @Override

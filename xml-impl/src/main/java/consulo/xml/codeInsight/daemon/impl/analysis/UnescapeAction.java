@@ -35,7 +35,7 @@ class UnescapeAction implements SyntheticIntentionAction {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }
-        final int textOffset = myElement.getTextOffset();
+        int textOffset = myElement.getTextOffset();
         editor.getDocument().replaceString(textOffset, textOffset + 1, AMP_ENTITY);
     }
 

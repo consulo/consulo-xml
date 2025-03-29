@@ -16,23 +16,23 @@
 package consulo.xml.codeInsight.completion;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.language.editor.completion.*;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.CompletionType;
 import consulo.language.editor.completion.lookup.InsertHandler;
-import consulo.language.editor.completion.lookup.InsertionContext;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.language.util.ProcessingContext;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.XmlEntityDecl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTokenType;
-
 import jakarta.annotation.Nonnull;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
@@ -64,19 +64,16 @@ public class DtdCompletionContributor extends CompletionContributor {
         "PUBLIC"
     };
 
-    private static final InsertHandler<LookupElement> INSERT_HANDLER = new InsertHandler<LookupElement>() {
-        @Override
-        public void handleInsert(InsertionContext context, LookupElement item) {
-            if (item.getObject().toString().startsWith("<!")) {
-                context.commitDocument();
+    private static final InsertHandler<LookupElement> INSERT_HANDLER = (context, item) -> {
+        if (item.getObject().toString().startsWith("<!")) {
+            context.commitDocument();
 
-                int caretOffset = context.getEditor().getCaretModel().getOffset();
-                PsiElement tag = PsiTreeUtil.getParentOfType(context.getFile().findElementAt(caretOffset), PsiNamedElement.class);
+            int caretOffset = context.getEditor().getCaretModel().getOffset();
+            PsiElement tag = PsiTreeUtil.getParentOfType(context.getFile().findElementAt(caretOffset), PsiNamedElement.class);
 
-                if (tag == null) {
-                    context.getEditor().getDocument().insertString(caretOffset, " >");
-                    context.getEditor().getCaretModel().moveToOffset(caretOffset + 1);
-                }
+            if (tag == null) {
+                context.getEditor().getDocument().insertString(caretOffset, " >");
+                context.getEditor().getCaretModel().moveToOffset(caretOffset + 1);
             }
         }
     };
@@ -99,12 +96,13 @@ public class DtdCompletionContributor extends CompletionContributor {
     }
 
     @Nonnull
+    @RequiredReadAction
     private static String keywordPrefix(@Nonnull PsiElement position, @Nonnull String prefix) {
-        final PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
-        final PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
+        PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
+        PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
 
         if (prevLeaf != null) {
-            final String prevLeafText = prevLeaf.getText();
+            String prevLeafText = prevLeaf.getText();
 
             if ("#".equals(prevLeafText)) {
                 prefix = "#" + prefix;
@@ -124,14 +122,12 @@ public class DtdCompletionContributor extends CompletionContributor {
         }
     }
 
-    private static void addEntityCompletions(@Nonnull final CompletionResultSet result, PsiElement position) {
-        final PsiElementProcessor processor = element -> {
-            if (element instanceof XmlEntityDecl xmlEntityDecl) {
-                String name = xmlEntityDecl.getName();
-                if (name != null && xmlEntityDecl.isInternalReference()) {
-                    result.addElement(
-                        LookupElementBuilder.create(name).withInsertHandler(XmlCompletionContributor.ENTITY_INSERT_HANDLER)
-                    );
+    private static void addEntityCompletions(@Nonnull CompletionResultSet result, PsiElement position) {
+        PsiElementProcessor processor = element -> {
+            if (element instanceof XmlEntityDecl entityDecl) {
+                String name = entityDecl.getName();
+                if (name != null && entityDecl.isInternalReference()) {
+                    result.addElement(LookupElementBuilder.create(name).withInsertHandler(XmlCompletionContributor.ENTITY_INSERT_HANDLER));
                 }
             }
             return true;

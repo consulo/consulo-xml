@@ -15,6 +15,8 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
@@ -25,6 +27,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
@@ -36,6 +39,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Konstantin Bulenkov
@@ -50,15 +54,16 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
     }
 
     @Override
+    @RequiredUIAccess
     public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
-        final XmlAttribute xmlns = getXmlnsDeclaration(element);
+        XmlAttribute xmlns = getXmlnsDeclaration(element);
         if (xmlns == null) {
             return;
         }
         SchemaPrefixReference prefixRef = null;
         for (PsiReference ref : xmlns.getReferences()) {
-            if (ref instanceof SchemaPrefixReference) {
-                prefixRef = (SchemaPrefixReference)ref;
+            if (ref instanceof SchemaPrefixReference schemaPrefixReference) {
+                prefixRef = schemaPrefixReference;
                 break;
             }
         }
@@ -66,10 +71,10 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
             return;
         }
 
-        final SchemaPrefix prefix = prefixRef.resolve();
-        final String ns = prefixRef.getNamespacePrefix();
-        final ArrayList<XmlTag> tags = new ArrayList<XmlTag>();
-        final ArrayList<XmlAttribute> attrs = new ArrayList<XmlAttribute>();
+        SchemaPrefix prefix = prefixRef.resolve();
+        String ns = prefixRef.getNamespacePrefix();
+        List<XmlTag> tags = new ArrayList<>();
+        List<XmlAttribute> attrs = new ArrayList<>();
         xmlns.getParent().accept(new XmlRecursiveElementVisitor() {
             @Override
             public void visitXmlTag(XmlTag tag) {
@@ -80,6 +85,7 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
             }
 
             @Override
+            @RequiredReadAction
             public void visitXmlAttributeValue(XmlAttributeValue value) {
                 if (value.getValue().startsWith(ns + ":")) {
                     for (PsiReference ref : value.getReferences()) {
@@ -90,13 +96,18 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
                 }
             }
         });
-        new WriteCommandAction(project, "Convert namespace prefix to default", xmlns.getContainingFile()) {
+        new WriteCommandAction(
+            project,
+            "Convert namespace prefix to default",
+            xmlns.getContainingFile()
+        ) {
             @Override
+            @RequiredWriteAction
             protected void run(Result result) throws Throwable {
-                final int index = ns.length() + 1;
+                int index = ns.length() + 1;
                 for (XmlTag tag : tags) {
-                    final String s = tag.getName().substring(index);
-                    if (s.length() > 0) {
+                    String s = tag.getName().substring(index);
+                    if (!s.isEmpty()) {
                         tag.setName(s);
                     }
                 }
@@ -110,27 +121,26 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
     }
 
     @Override
+    @RequiredReadAction
     public boolean isAvailable(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) {
         return getXmlnsDeclaration(element) != null;
     }
 
     @Nullable
+    @RequiredReadAction
     private static XmlAttribute getXmlnsDeclaration(PsiElement element) {
-        final PsiElement parent = element.getParent();
+        PsiElement parent = element.getParent();
         if (parent == null) {
             return null;
         }
         for (PsiReference ref : parent.getReferences()) {
-            if (ref instanceof SchemaPrefixReference) {
-                final PsiElement elem = ref.resolve();
-                if (elem != null) {
-                    final PsiElement attr = elem.getParent();
-                    if (attr instanceof XmlAttribute) {
-                        final PsiElement tag = attr.getParent();
-                        if (tag instanceof XmlTag && ((XmlTag)tag).getAttribute("xmlns") == null) {
-                            return (XmlAttribute)attr;
-                        }
-                    }
+            if (ref instanceof SchemaPrefixReference schemaPrefixReference) {
+                PsiElement elem = schemaPrefixReference.resolve();
+                if (elem != null
+                    && elem.getParent() instanceof XmlAttribute attr
+                    && attr.getParent() instanceof XmlTag xmlTag
+                    && xmlTag.getAttribute("xmlns") == null) {
+                    return attr;
                 }
             }
         }

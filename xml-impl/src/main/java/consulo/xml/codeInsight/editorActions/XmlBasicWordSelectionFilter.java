@@ -26,7 +26,8 @@ import consulo.xml.psi.xml.XmlToken;
  */
 @ExtensionImpl
 public class XmlBasicWordSelectionFilter implements WordSelectionerFilter {
-    public boolean canSelect(final PsiElement e) {
+    @Override
+    public boolean canSelect(PsiElement e) {
         return !(e instanceof XmlToken) && !(e instanceof XmlElement);
     }
 }

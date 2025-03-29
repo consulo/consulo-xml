@@ -15,12 +15,12 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.Language;
@@ -34,12 +34,11 @@ import consulo.language.psi.*;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -58,44 +57,42 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
 
     @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
-
             private Boolean isXml;
 
             private boolean isXmlFile(XmlElement element) {
                 if (isXml == null) {
-                    final PsiFile file = element.getContainingFile();
+                    PsiFile file = element.getContainingFile();
                     isXml = file instanceof XmlFile && !InjectedLanguageManager.getInstance(element.getProject()).isInjectedFragment(file);
                 }
-                return isXml.booleanValue();
+                return isXml;
             }
 
             @Override
-            public void visitXmlToken(final XmlToken token) {
+            @RequiredReadAction
+            public void visitXmlToken(XmlToken token) {
                 if (isXmlFile(token) && token.getTokenType() == XmlTokenType.XML_NAME) {
                     PsiElement element = token.getPrevSibling();
-                    while (element instanceof PsiWhiteSpace) {
-                        element = element.getPrevSibling();
+                    while (element instanceof PsiWhiteSpace whiteSpace) {
+                        element = whiteSpace.getPrevSibling();
                     }
 
-                    if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_START_TAG_START) {
-                        PsiElement parent = element.getParent();
-
-                        if (parent instanceof XmlTag && !(token.getNextSibling() instanceof OuterLanguageElement)) {
-                            XmlTag tag = (XmlTag)parent;
-                            checkUnboundNamespacePrefix(tag, tag, tag.getNamespacePrefix(), token, holder, isOnTheFly);
-                        }
+                    if (element instanceof XmlToken xmlToken
+                        && xmlToken.getTokenType() == XmlTokenType.XML_START_TAG_START
+                        && element.getParent() instanceof XmlTag tag
+                        && !(token.getNextSibling() instanceof OuterLanguageElement)) {
+                        checkUnboundNamespacePrefix(tag, tag, tag.getNamespacePrefix(), token, holder, isOnTheFly);
                     }
                 }
             }
 
             @Override
-            public void visitXmlAttribute(final XmlAttribute attribute) {
+            public void visitXmlAttribute(XmlAttribute attribute) {
                 if (!isXmlFile(attribute)) {
                     return;
                 }
-                final String namespace = attribute.getNamespace();
+                String namespace = attribute.getNamespace();
                 if (attribute.isNamespaceDeclaration() || XmlUtil.XML_SCHEMA_INSTANCE_URI.equals(namespace)) {
                     return;
                 }
@@ -106,24 +103,22 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
                     return;
                 }
 
-
-                final String name = attribute.getName();
+                String name = attribute.getName();
 
                 checkUnboundNamespacePrefix(attribute, tag, XmlUtil.findPrefixByQualifiedName(name), null, holder, isOnTheFly);
             }
 
             @Override
+            @RequiredReadAction
             public void visitXmlAttributeValue(XmlAttributeValue value) {
                 PsiReference[] references = value.getReferences();
                 for (PsiReference reference : references) {
-                    if (reference instanceof SchemaPrefixReference schemaPrefixReference) {
-                        if (!XML.equals(schemaPrefixReference.getNamespacePrefix()) && reference.resolve() == null) {
-                            holder.registerProblem(
-                                reference,
-                                XmlErrorLocalize.unboundNamespace(schemaPrefixReference.getNamespacePrefix()).get(),
-                                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL
-                            );
-                        }
+                    if (reference instanceof SchemaPrefixReference schemaPrefixReference
+                        && !XML.equals(schemaPrefixReference.getNamespacePrefix()) && reference.resolve() == null) {
+                        holder.newProblem(XmlErrorLocalize.unboundNamespace(schemaPrefixReference.getNamespacePrefix()))
+                            .range(reference)
+                            .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                            .create();
                     }
                 }
             }
@@ -131,46 +126,42 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
     }
 
     private static void checkUnboundNamespacePrefix(
-        final XmlElement element,
-        final XmlTag context,
+        XmlElement element,
+        XmlTag context,
         String namespacePrefix,
-        final XmlToken token,
-        final ProblemsHolder holder,
+        XmlToken token,
+        ProblemsHolder holder,
         boolean isOnTheFly
     ) {
-        if (namespacePrefix.length() == 0 && (!(element instanceof XmlTag) || !(element.getParent() instanceof XmlDocument))
+        if (namespacePrefix.isEmpty() && (!(element instanceof XmlTag) || !(element.getParent() instanceof XmlDocument))
             || XML.equals(namespacePrefix)) {
             return;
         }
 
-        final String namespaceByPrefix = context.getNamespaceByPrefix(namespacePrefix);
+        String namespaceByPrefix = context.getNamespaceByPrefix(namespacePrefix);
         if (namespaceByPrefix.length() != 0) {
             return;
         }
         PsiFile psiFile = context.getContainingFile();
-        if (!(psiFile instanceof XmlFile)) {
-            return;
-        }
-        final XmlFile containingFile = (XmlFile)psiFile;
-        if (!HighlightLevelUtil.shouldInspect(containingFile)) {
+        if (!(psiFile instanceof XmlFile containingFile) || !HighlightLevelUtil.shouldInspect(containingFile)) {
             return;
         }
 
-        final XmlExtension extension = XmlExtension.getExtension(containingFile);
+        XmlExtension extension = XmlExtension.getExtension(containingFile);
         if (extension.getPrefixDeclaration(context, namespacePrefix) != null) {
             return;
         }
 
-        final LocalizeValue localizedMessage = isOnTheFly
+        LocalizeValue message = isOnTheFly
             ? XmlErrorLocalize.unboundNamespace(namespacePrefix)
             : XmlErrorLocalize.unboundNamespaceNoParam();
 
         if (namespacePrefix.length() == 0) {
-            final XmlTag tag = (XmlTag)element;
+            XmlTag tag = (XmlTag)element;
             if (!XmlUtil.JSP_URI.equals(tag.getNamespace())) {
                 reportTagProblem(
                     tag,
-                    localizedMessage.get(),
+                    message,
                     null,
                     ProblemHighlightType.INFORMATION,
                     isOnTheFly ? new CreateNSDeclarationIntentionFix(context, namespacePrefix, token) : null,
@@ -180,60 +171,76 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
             return;
         }
 
-        final int prefixLength = namespacePrefix.length();
-        final TextRange range = new TextRange(0, prefixLength);
-        final HighlightInfoType infoType = extension.getHighlightInfoType(containingFile);
-        final ProblemHighlightType highlightType =
+        int prefixLength = namespacePrefix.length();
+        TextRange range = new TextRange(0, prefixLength);
+        HighlightInfoType infoType = extension.getHighlightInfoType(containingFile);
+        ProblemHighlightType highlightType =
             infoType == HighlightInfoType.ERROR ? ProblemHighlightType.ERROR : ProblemHighlightType.LIKE_UNKNOWN_SYMBOL;
-        if (element instanceof XmlTag) {
-            final CreateNSDeclarationIntentionFix fix =
+        if (element instanceof XmlTag tag) {
+            CreateNSDeclarationIntentionFix fix =
                 isOnTheFly ? new CreateNSDeclarationIntentionFix(context, namespacePrefix, token) : null;
-            reportTagProblem(element, localizedMessage.get(), range, highlightType, fix, holder);
+            reportTagProblem(tag, message, range, highlightType, fix, holder);
         }
         else {
-            holder.registerProblem(element, localizedMessage.get(), highlightType, range);
+            holder.newProblem(message)
+                .range(element, range)
+                .withFixes()
+                .highlightType(highlightType)
+                .create();
         }
     }
 
     private static void reportTagProblem(
-        final XmlElement element,
-        final String localizedMessage,
-        final TextRange range,
-        final ProblemHighlightType highlightType,
-        final CreateNSDeclarationIntentionFix fix,
-        final ProblemsHolder holder
+        XmlTag element,
+        @Nonnull LocalizeValue message,
+        TextRange range,
+        ProblemHighlightType highlightType,
+        CreateNSDeclarationIntentionFix fix,
+        ProblemsHolder holder
     ) {
-        XmlToken nameToken = XmlTagUtil.getStartTagNameElement((XmlTag)element);
+        XmlToken nameToken = XmlTagUtil.getStartTagNameElement(element);
         if (nameToken != null) {
-            holder.registerProblem(nameToken, localizedMessage, highlightType, range, fix);
+            holder.newProblem(message)
+                .range(nameToken, range)
+                .withFixes(fix)
+                .highlightType(highlightType)
+                .create();
         }
-        nameToken = XmlTagUtil.getEndTagNameElement((XmlTag)element);
+        nameToken = XmlTagUtil.getEndTagNameElement(element);
         if (nameToken != null) {
-            holder.registerProblem(nameToken, localizedMessage, highlightType, range, fix);
+            holder.newProblem(message)
+                .range(nameToken, range)
+                .withFixes(fix)
+                .highlightType(highlightType)
+                .create();
         }
     }
 
     @Nonnull
+    @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
     }
 
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
 
     @Nonnull
+    @Override
     public String getGroupDisplayName() {
-        return XmlBundle.message("xml.inspections.group.name");
+        return XmlLocalize.xmlInspectionsGroupName().get();
     }
 
     @Nonnull
+    @Override
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.unbound.prefix");
+        return XmlLocalize.xmlInspectionsUnboundPrefix().get();
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return "XmlUnboundNsPrefix";
     }

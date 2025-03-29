@@ -45,18 +45,19 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.undoRedo.ProjectUndoManager;
 import consulo.undoRedo.UndoManager;
 import consulo.util.lang.StringUtil;
-import consulo.util.lang.ref.Ref;
+import consulo.util.lang.ref.SimpleReference;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.codeInsight.editorActions.XmlTagNameSynchronizer;
-import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
 import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
+import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-
 import jakarta.annotation.Nullable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
     public static final XmlTagInsertHandler INSTANCE = new XmlTagInsertHandler();
@@ -68,7 +69,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         Editor editor = context.getEditor();
         Document document = EditorWindow.getTopLevelEditor(editor).getDocument();
         int startOffset = context.getStartOffset();
-        Ref<PsiElement> currentElementRef = Ref.create();
+        SimpleReference<PsiElement> currentElementRef = SimpleReference.create();
 
         // Need to insert " " to prevent creating tags like <tagThis is my text
         PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
@@ -76,7 +77,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         XmlTagNameSynchronizer.runWithoutCancellingSyncTagsEditing(
             document,
             () -> {
-                final int offset = editor.getCaretModel().getOffset();
+                int offset = editor.getCaretModel().getOffset();
                 editor.getDocument().insertString(offset, " ");
                 PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
                 currentElementRef.set(context.getFile().findElementAt(startOffset));
@@ -84,7 +85,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
             }
         );
 
-        final XmlTag tag = PsiTreeUtil.getContextOfType(currentElementRef.get(), XmlTag.class, true);
+        XmlTag tag = PsiTreeUtil.getContextOfType(currentElementRef.get(), XmlTag.class, true);
 
         if (tag == null) {
             return;
@@ -94,7 +95,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
             context.setAddCompletionChar(false);
         }
 
-        final XmlElementDescriptor descriptor = tag.getDescriptor();
+        XmlElementDescriptor descriptor = tag.getDescriptor();
 
         if (XmlUtil.getTokenOfType(tag, XmlTokenType.XML_TAG_END) == null
             && XmlUtil.getTokenOfType(tag, XmlTokenType.XML_EMPTY_ELEMENT_END) == null) {
@@ -136,13 +137,13 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
             return;
         }
 
-        final TailType tailType = LookupItem.handleCompletionChar(editor, item, context.getCompletionChar());
+        TailType tailType = LookupItem.handleCompletionChar(editor, item, context.getCompletionChar());
         tailType.processTail(editor, editor.getCaretModel().getOffset());
     }
 
-    public static void insertIncompleteTag(char completionChar, final Editor editor, XmlTag tag) {
+    public static void insertIncompleteTag(char completionChar, Editor editor, XmlTag tag) {
         XmlElementDescriptor descriptor = tag.getDescriptor();
-        final Project project = editor.getProject();
+        Project project = editor.getProject();
         TemplateManager templateManager = TemplateManager.getInstance(project);
         Template template = templateManager.createTemplate("", "");
 
@@ -154,7 +155,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         template.setToReformat(!htmlCode);
 
         StringBuilder indirectRequiredAttrs = addRequiredAttributes(descriptor, tag, template, containingFile);
-        final boolean chooseAttributeName = addTail(completionChar, descriptor, htmlCode, tag, template, indirectRequiredAttrs);
+        boolean chooseAttributeName = addTail(completionChar, descriptor, htmlCode, tag, template, indirectRequiredAttrs);
 
         templateManager.startTemplate(editor, template, new TemplateEditingAdapter() {
             private RangeMarker myAttrValueMarker;
@@ -166,8 +167,9 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
             }
 
             @Override
-            public void templateFinished(final Template template, boolean brokenOff) {
-                final int offset = editor.getCaretModel().getOffset();
+            @RequiredUIAccess
+            public void templateFinished(Template template, boolean brokenOff) {
+                int offset = editor.getCaretModel().getOffset();
 
                 if (chooseAttributeName && offset > 0) {
                     char c = editor.getDocument().getCharsSequence().charAt(offset - 1);
@@ -183,19 +185,20 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
             }
 
             @Override
-            public void templateCancelled(final Template template) {
+            @RequiredUIAccess
+            public void templateCancelled(Template template) {
                 if (myAttrValueMarker == null) {
                     return;
                 }
 
-                final UndoManager manager = ProjectUndoManager.getInstance(project);
+                UndoManager manager = ProjectUndoManager.getInstance(project);
                 if (manager.isUndoInProgress() || manager.isRedoInProgress()) {
                     return;
                 }
 
                 if (chooseAttributeName && myAttrValueMarker.isValid()) {
-                    final int startOffset = myAttrValueMarker.getStartOffset();
-                    final int endOffset = myAttrValueMarker.getEndOffset();
+                    int startOffset = myAttrValueMarker.getStartOffset();
+                    int endOffset = myAttrValueMarker.getEndOffset();
                     new WriteCommandAction.Simple(project) {
                         @Override
                         protected void run() throws Throwable {
@@ -219,7 +222,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         Set<String> notRequiredAttributes = Collections.emptySet();
 
         if (tag instanceof HtmlTag) {
-            final InspectionProfile profile = InspectionProjectProfileManager.getInstance(tag.getProject()).getInspectionProfile();
+            InspectionProfile profile = InspectionProjectProfileManager.getInstance(tag.getProject()).getInspectionProfile();
             BaseXmlEntitiesInspectionState state = profile.getToolState(XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME, tag);
 
             if (state != null) {
@@ -231,7 +234,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         StringBuilder indirectRequiredAttrs = null;
 
         if (XmlEditorOptions.getInstance().isAutomaticallyInsertRequiredAttributes()) {
-            final XmlExtension extension = XmlExtension.getExtension(containingFile);
+            XmlExtension extension = XmlExtension.getExtension(containingFile);
 
             for (XmlAttributeDescriptor attributeDecl : attributes) {
                 String attributeName = attributeDecl.getName(tag);
@@ -267,18 +270,14 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         Template template,
         StringBuilder indirectRequiredAttrs
     ) {
-
         if (completionChar == '>' || (completionChar == '/' && indirectRequiredAttrs != null)) {
             template.addTextSegment(">");
             boolean toInsertCDataEnd = false;
 
-            if (descriptor instanceof XmlElementDescriptorWithCDataContent) {
-                final XmlElementDescriptorWithCDataContent cDataContainer = (XmlElementDescriptorWithCDataContent)descriptor;
-
-                if (cDataContainer.requiresCdataBracesInContext(tag)) {
-                    template.addTextSegment("<![CDATA[\n");
-                    toInsertCDataEnd = true;
-                }
+            if (descriptor instanceof XmlElementDescriptorWithCDataContent cDataContainer
+                && cDataContainer.requiresCdataBracesInContext(tag)) {
+                template.addTextSegment("<![CDATA[\n");
+                toInsertCDataEnd = true;
             }
 
             if (indirectRequiredAttrs != null) {
@@ -292,7 +291,7 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
 
             if ((!(tag instanceof HtmlTag) || !HtmlUtil.isSingleHtmlTag(tag.getName())) && tag.getAttributes().length == 0) {
                 if (XmlEditorOptions.getInstance().isAutomaticallyInsertClosingTag()) {
-                    final String name = descriptor.getName(tag);
+                    String name = descriptor.getName(tag);
                     if (name != null) {
                         template.addTextSegment("</");
                         template.addTextSegment(name);
@@ -352,7 +351,6 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
     }
 
     private static boolean addRequiredSubTags(Template template, XmlElementDescriptor descriptor, PsiFile file, XmlTag context) {
-
         if (!XmlEditorOptions.getInstance().isAutomaticallyInsertRequiredSubTags()) {
             return false;
         }
@@ -368,10 +366,10 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
                 continue;
             }
             String qname = subTag.getName();
-            if (subTag instanceof XmlElementDescriptorImpl) {
-                String prefixByNamespace = context.getPrefixByNamespace(((XmlElementDescriptorImpl)subTag).getNamespace());
+            if (subTag instanceof XmlElementDescriptorImpl elementDescriptor) {
+                String prefixByNamespace = context.getPrefixByNamespace(elementDescriptor.getNamespace());
                 if (StringUtil.isNotEmpty(prefixByNamespace)) {
-                    qname = prefixByNamespace + ":" + subTag.getName();
+                    qname = prefixByNamespace + ":" + elementDescriptor.getName();
                 }
             }
             template.addTextSegment("<" + qname);
@@ -428,8 +426,8 @@ public class XmlTagInsertHandler implements InsertHandler<LookupElement> {
         template.addTextSegment("</" + descriptor.getName(context) + ">");
     }
 
-    private static boolean isTagFromHtml(final XmlTag tag) {
-        final String ns = tag.getNamespace();
+    private static boolean isTagFromHtml(XmlTag tag) {
+        String ns = tag.getNamespace();
         return XmlUtil.XHTML_URI.equals(ns) || XmlUtil.HTML_URI.equals(ns);
     }
 }

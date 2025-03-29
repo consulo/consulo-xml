@@ -3,9 +3,9 @@ package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
-import consulo.application.ApplicationManager;
 import consulo.codeEditor.*;
 import consulo.codeEditor.event.EditorFactoryEvent;
 import consulo.codeEditor.event.EditorFactoryListener;
@@ -31,6 +31,7 @@ import consulo.language.template.TemplateLanguage;
 import consulo.logging.Logger;
 import consulo.logging.attachment.AttachmentFactory;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.undoRedo.ProjectUndoManager;
 import consulo.undoRedo.event.CommandEvent;
 import consulo.undoRedo.event.CommandListener;
@@ -56,8 +57,11 @@ import java.util.Set;
 public final class XmlTagNameSynchronizer implements CommandListener, EditorFactoryListener {
     private static final Key<Boolean> SKIP_COMMAND = Key.create("tag.name.synchronizer.skip.command");
     private static final Logger LOG = Logger.getInstance(XmlTagNameSynchronizer.class);
-    private static final Set<Language> SUPPORTED_LANGUAGES =
-        Set.of(HTMLLanguage.INSTANCE, XMLLanguage.INSTANCE, XHTMLLanguage.INSTANCE);
+    private static final Set<Language> SUPPORTED_LANGUAGES = Set.of(
+        HTMLLanguage.INSTANCE,
+        XMLLanguage.INSTANCE,
+        XHTMLLanguage.INSTANCE
+    );
 
     private static final Key<TagNameSynchronizer> SYNCHRONIZER_KEY = Key.create("tag_name_synchronizer");
 
@@ -67,6 +71,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
     }
 
     @Override
+    @RequiredUIAccess
     public void editorCreated(@Nonnull EditorFactoryEvent event) {
         Editor editor = event.getEditor();
         Project project = editor.getProject();
@@ -82,8 +87,9 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
         }
     }
 
+    @RequiredReadAction
     private static Language findXmlLikeLanguage(Project project, VirtualFile file) {
-        final PsiFile psiFile = file != null && file.isValid() ? PsiManager.getInstance(project).findFile(file) : null;
+        PsiFile psiFile = file != null && file.isValid() ? PsiManager.getInstance(project).findFile(file) : null;
         if (psiFile != null) {
             for (Language language : psiFile.getViewProvider().getLanguages()) {
                 if ((ContainerUtil.find(SUPPORTED_LANGUAGES, language::isKindOf) != null || HtmlUtil.supportsXmlTypedHandlers(psiFile))
@@ -96,18 +102,19 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
     }
 
     @Nonnull
-    private static TagNameSynchronizer[] findSynchronizers(final Document document) {
+    private static TagNameSynchronizer[] findSynchronizers(Document document) {
         if (!XmlEditorOptions.getInstance().isSyncTagEditing() || document == null) {
             return TagNameSynchronizer.EMPTY;
         }
-        final Editor[] editors = EditorFactory.getInstance().getEditors(document);
+        Editor[] editors = EditorFactory.getInstance().getEditors(document);
 
         return ContainerUtil.mapNotNull(editors, editor -> editor.getUserData(SYNCHRONIZER_KEY), TagNameSynchronizer.EMPTY);
     }
 
     @Override
+    @RequiredUIAccess
     public void beforeCommandFinished(@Nonnull CommandEvent event) {
-        final TagNameSynchronizer[] synchronizers = findSynchronizers(event.getDocument());
+        TagNameSynchronizer[] synchronizers = findSynchronizers(event.getDocument());
         for (TagNameSynchronizer synchronizer : synchronizers) {
             synchronizer.beforeCommandFinished();
         }
@@ -140,29 +147,30 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
         }
 
         private void listenForDocumentChanges() {
-            final Disposable disposable = myEditor.getDisposable();
-            final Document document = myEditor.getDocument();
+            Disposable disposable = myEditor.getDisposable();
+            Document document = myEditor.getDocument();
             document.addDocumentListener(this, disposable);
             myEditor.putUserData(SYNCHRONIZER_KEY, this);
         }
 
         @Override
+        @RequiredReadAction
         public void beforeDocumentChange(@Nonnull DocumentEvent event) {
             if (!XmlEditorOptions.getInstance().isSyncTagEditing()) {
                 return;
             }
 
-            final Document document = event.getDocument();
+            Document document = event.getDocument();
             Project project = Objects.requireNonNull(myEditor.getProject());
             if (myApplying || project.isDefault() || ProjectUndoManager.getInstance(project).isUndoInProgress() ||
                 !myPomModel.isAllowPsiModification() || document.isInBulkUpdate()) {
                 return;
             }
 
-            final int offset = event.getOffset();
-            final int oldLength = event.getOldLength();
-            final CharSequence fragment = event.getNewFragment();
-            final int newLength = event.getNewLength();
+            int offset = event.getOffset();
+            int oldLength = event.getOldLength();
+            CharSequence fragment = event.getNewFragment();
+            int newLength = event.getNewLength();
 
             if (document.getUserData(SKIP_COMMAND) == Boolean.TRUE) {
                 // xml completion inserts extra space after tag name to ensure correct parsing
@@ -186,12 +194,12 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
                 markers = null;
             }
             if (markers == null) {
-                final PsiFile file = myDocumentManager.getPsiFile(document);
+                PsiFile file = myDocumentManager.getPsiFile(document);
                 if (file == null || myDocumentManager.isUnderSynchronization(document)) {
                     return;
                 }
 
-                final RangeMarker leader = createTagNameMarker(caret);
+                RangeMarker leader = createTagNameMarker(caret);
                 if (leader == null) {
                     return;
                 }
@@ -202,7 +210,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
                     myDocumentManager.commitDocument(document);
                 }
 
-                final RangeMarker support = findSupport(leader, file, document);
+                RangeMarker support = findSupport(leader, file, document);
                 if (support == null) {
                     return;
                 }
@@ -231,14 +239,14 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
         }
 
         private RangeMarker createTagNameMarker(Caret caret) {
-            final int offset = caret.getOffset();
-            final Document document = myEditor.getDocument();
-            final CharSequence sequence = document.getCharsSequence();
+            int offset = caret.getOffset();
+            Document document = myEditor.getDocument();
+            CharSequence sequence = document.getCharsSequence();
             int start = -1;
             boolean seenColon = false;
             for (int i = offset - 1; i >= Math.max(0, offset - 50); i--) {
                 try {
-                    final char c = sequence.charAt(i);
+                    char c = sequence.charAt(i);
                     if (c == '<' || c == '/' && i > 0 && sequence.charAt(i - 1) == '<') {
                         start = i + 1;
                         break;
@@ -261,7 +269,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
             }
             int end = -1;
             for (int i = offset; i < Math.min(document.getTextLength(), offset + 50); i++) {
-                final char c = sequence.charAt(i);
+                char c = sequence.charAt(i);
                 if (!XmlUtil.isValidTagNameChar(c) || seenColon && c == ':') {
                     end = i;
                     break;
@@ -274,27 +282,29 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
             return document.createRangeMarker(start, end, true);
         }
 
+        @RequiredUIAccess
         void beforeCommandFinished() {
+            @RequiredUIAccess
             CaretAction action = caret -> {
                 Couple<RangeMarker> markers = caret.getUserData(MARKERS_KEY);
                 if (markers == null || !markers.first.isValid() || !markers.second.isValid()) {
                     return;
                 }
-                final Document document = myEditor.getDocument();
-                final Runnable apply = () -> {
-                    final RangeMarker leader = markers.first;
-                    final RangeMarker support = markers.second;
+                Document document = myEditor.getDocument();
+                Runnable apply = () -> {
+                    RangeMarker leader = markers.first;
+                    RangeMarker support = markers.second;
                     if (document.getTextLength() < leader.getEndOffset()) {
                         return;
                     }
-                    final String name = document.getText(new TextRange(leader.getStartOffset(), leader.getEndOffset()));
+                    String name = document.getText(new TextRange(leader.getStartOffset(), leader.getEndOffset()));
                     if (document.getTextLength() >= support.getEndOffset() &&
                         !name.equals(document.getText(new TextRange(support.getStartOffset(), support.getEndOffset())))) {
                         document.replaceString(support.getStartOffset(), support.getEndOffset(), name);
                     }
                 };
-                ApplicationManager.getApplication().runWriteAction(() -> {
-                    final LookupEx lookup = LookupManager.getActiveLookup(myEditor);
+                Application.get().runWriteAction(() -> {
+                    LookupEx lookup = LookupManager.getActiveLookup(myEditor);
                     if (lookup != null) {
                         lookup.performGuardedChange(apply);
                     }
@@ -317,8 +327,9 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
             }
         }
 
+        @RequiredReadAction
         private RangeMarker findSupport(RangeMarker leader, PsiFile file, Document document) {
-            final int offset = leader.getStartOffset();
+            int offset = leader.getStartOffset();
             PsiElement element = InjectedLanguageManager.getInstance(file.getProject()).findElementAtNoCommit(file, offset);
             PsiElement support = findSupportElement(element);
             if (support == null && file.getViewProvider() instanceof MultiplePsiFilesPerDocumentFileViewProvider) {
@@ -330,11 +341,12 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
                 return findSupportForTagList(leader, element, document);
             }
 
-            final TextRange range = support.getTextRange();
+            TextRange range = support.getTextRange();
             TextRange realRange = InjectedLanguageManager.getInstance(file.getProject()).injectedToHost(element.getContainingFile(), range);
             return document.createRangeMarker(realRange.getStartOffset(), realRange.getEndOffset(), true);
         }
 
+        @RequiredReadAction
         private static RangeMarker findSupportForTagList(RangeMarker leader, PsiElement element, Document document) {
             if (leader.getStartOffset() != leader.getEndOffset() || element == null) {
                 return null;
@@ -360,12 +372,15 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
             return null;
         }
 
+        @RequiredReadAction
         private static PsiElement findSupportElement(PsiElement element) {
             if (element == null || TreeUtil.findSibling(element.getNode(), XmlTokenType.XML_TAG_END) == null) {
                 return null;
             }
             PsiElement support = RenameTagBeginOrEndIntentionAction.findOtherSide(element, false);
-            support = support == null || element == support ? RenameTagBeginOrEndIntentionAction.findOtherSide(element, true) : support;
+            support = support == null || element == support
+                ? RenameTagBeginOrEndIntentionAction.findOtherSide(element, true)
+                : support;
             return support != null && StringUtil.equals(element.getText(), support.getText()) ? support : null;
         }
     }

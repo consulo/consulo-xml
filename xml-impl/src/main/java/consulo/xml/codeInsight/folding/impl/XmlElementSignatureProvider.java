@@ -35,26 +35,25 @@ import java.util.StringTokenizer;
 public class XmlElementSignatureProvider extends AbstractElementSignatureProvider {
     private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 
+    @Override
     public String getSignature(@Nonnull PsiElement element) {
-        if (element instanceof XmlTag) {
-            XmlTag tag = (XmlTag)element;
+        if (element instanceof XmlTag tag) {
             PsiElement parent = tag.getParent();
 
-            StringBuilder buffer = new StringBuilder();
-            buffer.append("tag").append(ELEMENT_TOKENS_SEPARATOR);
+            StringBuilder sb = new StringBuilder();
+            sb.append("tag").append(ELEMENT_TOKENS_SEPARATOR);
             String name = tag.getName();
-            buffer.append(name.length() == 0 ? "<unnamed>" : name);
+            sb.append(name.length() == 0 ? "<unnamed>" : name);
 
-            buffer.append(ELEMENT_TOKENS_SEPARATOR);
-            buffer.append(getChildIndex(tag, parent, name, XmlTag.class));
+            sb.append(ELEMENT_TOKENS_SEPARATOR);
+            sb.append(getChildIndex(tag, parent, name, XmlTag.class));
 
             if (parent instanceof XmlTag) {
-                String parentSignature = getSignature(parent);
-                buffer.append(";");
-                buffer.append(parentSignature);
+                sb.append(";");
+                sb.append(getSignature(parent));
             }
 
-            return buffer.toString();
+            return sb.toString();
         }
         return null;
     }
@@ -67,11 +66,11 @@ public class XmlElementSignatureProvider extends AbstractElementSignatureProvide
         @Nonnull StringTokenizer tokenizer,
         @Nullable StringBuilder processingInfoStorage
     ) {
-        if (type.equals("tag")) {
+        if ("tag".equals(type)) {
             String name = tokenizer.nextToken();
 
-            if (parent instanceof XmlFile) {
-                parent = ((XmlFile)parent).getDocument();
+            if (parent instanceof XmlFile xmlFile) {
+                parent = xmlFile.getDocument();
                 if (parent == null) {
                     return null;
                 }

@@ -426,3 +426,21 @@ html5.outline.mode:
   text: HTML5 Outline
 read.win.registry:
   text: Retrieve settings from &Windows registry
+xml.inspections.unused.schema:
+  text: Unused XML schema declaration
+xml.inspections.unused.schema.declaration:
+  text: Namespace declaration is never used
+xml.inspections.unused.schema.declaration.remove:
+  text: Remove unused namespace declaration
+xml.inspections.unused.schema.location:
+  text: Namespace location is never used
+xml.inspections.unused.schema.location.remove:
+  text: Remove unused namespace location
+xml.inspections.path.resolve:
+  text: File path resolving in XML
+settings.enable.html.xml.tag.tree.highlighting:
+  text: Enable HTML/XML tag tree highlighting
+settings.levels.to.highlight:
+  text: "Levels to highlight:"
+settings.opacity:
+  text: "Opacity (%):"

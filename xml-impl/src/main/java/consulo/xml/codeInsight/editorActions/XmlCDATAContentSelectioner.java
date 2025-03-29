@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.impl.psi.CompositePsiElement;
 import consulo.language.psi.PsiElement;
@@ -29,11 +30,14 @@ import java.util.List;
 
 @ExtensionImpl
 public class XmlCDATAContentSelectioner extends ExtendWordSelectionHandlerBase {
+    @Override
     public boolean canSelect(PsiElement e) {
-        return e instanceof CompositePsiElement
-            && ((CompositePsiElement)e).getElementType() == XmlElementType.XML_CDATA;
+        return e instanceof CompositePsiElement compositePsiElement
+            && compositePsiElement.getElementType() == XmlElementType.XML_CDATA;
     }
 
+    @Override
+    @RequiredReadAction
     public List<TextRange> select(PsiElement e, CharSequence editorText, int cursorOffset, Editor editor) {
         List<TextRange> result = super.select(e, editorText, cursorOffset, editor);
         PsiElement[] children = e.getChildren();

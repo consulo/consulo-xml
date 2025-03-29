@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
@@ -34,10 +35,12 @@ import jakarta.annotation.Nonnull;
 public class HtmlTextCompletionConfidence extends CompletionConfidence {
     @Nonnull
     @Override
+    @RequiredReadAction
     public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset) {
         return shouldSkipAutopopupInHtml(contextElement, offset) ? ThreeState.YES : ThreeState.UNSURE;
     }
 
+    @RequiredReadAction
     public static boolean shouldSkipAutopopupInHtml(@Nonnull PsiElement contextElement, int offset) {
         ASTNode node = contextElement.getNode();
         if (node != null && node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) {

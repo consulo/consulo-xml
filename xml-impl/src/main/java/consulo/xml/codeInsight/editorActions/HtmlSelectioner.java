@@ -25,6 +25,7 @@
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.HtmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorHighlighter;
@@ -47,30 +48,30 @@ import java.util.List;
 
 @ExtensionImpl
 public class HtmlSelectioner extends AbstractWordSelectioner {
+    @Override
     public boolean canSelect(PsiElement e) {
         return canSelectElement(e);
     }
 
-    static boolean canSelectElement(final PsiElement e) {
-        if (e instanceof XmlToken) {
-            return HtmlUtil.hasHtml(e.getContainingFile());
-        }
-        return false;
+    static boolean canSelectElement(PsiElement e) {
+        return e instanceof XmlToken && HtmlUtil.hasHtml(e.getContainingFile());
     }
 
+    @Override
+    @RequiredReadAction
     public List<TextRange> select(PsiElement e, CharSequence editorText, int cursorOffset, Editor editor) {
         List<TextRange> result;
 
-        if (!(e instanceof XmlToken)
-            || XmlTokenSelectioner.shouldSelectToken((XmlToken)e)
-            || ((XmlToken)e).getTokenType() == XmlTokenType.XML_DATA_CHARACTERS) {
-            result = super.select(e, editorText, cursorOffset, editor);
-        }
-        else {
+        if (e instanceof XmlToken token
+            && !XmlTokenSelectioner.shouldSelectToken(token)
+            && token.getTokenType() != XmlTokenType.XML_DATA_CHARACTERS) {
             result = new ArrayList<>();
         }
+        else {
+            result = super.select(e, editorText, cursorOffset, editor);
+        }
 
-        final PsiElement parent = e.getParent();
+        PsiElement parent = e.getParent();
         if (parent instanceof XmlComment) {
             result.addAll(expandToWholeLine(editorText, parent.getTextRange(), true));
         }
@@ -79,9 +80,9 @@ public class HtmlSelectioner extends AbstractWordSelectioner {
         FileType fileType = psiFile.getVirtualFile().getFileType();
 
         addAttributeSelection(result, e);
-        final FileViewProvider fileViewProvider = psiFile.getViewProvider();
+        FileViewProvider fileViewProvider = psiFile.getViewProvider();
         for (Language lang : fileViewProvider.getLanguages()) {
-            final PsiFile langFile = fileViewProvider.getPsi(lang);
+            PsiFile langFile = fileViewProvider.getPsi(lang);
             if (langFile != psiFile) {
                 addAttributeSelection(result, fileViewProvider.findElementAt(cursorOffset, lang));
             }
@@ -124,10 +125,10 @@ public class HtmlSelectioner extends AbstractWordSelectioner {
             }
 
             start = i.getStart();
-            final boolean matched = BraceMatchingUtil.matchBrace(editorText, fileType, i, true);
+            boolean matched = BraceMatchingUtil.matchBrace(editorText, fileType, i, true);
 
             if (matched) {
-                final int tagEnd = i.getEnd();
+                int tagEnd = i.getEnd();
                 result.add(new TextRange(start, tagEnd));
 
                 HighlighterIterator j = highlighter.createIterator(start);
@@ -149,15 +150,16 @@ public class HtmlSelectioner extends AbstractWordSelectioner {
         }
     }
 
+    @RequiredReadAction
     private static void addAttributeSelection(List<TextRange> result, PsiElement e) {
-        final XmlAttribute attribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
+        XmlAttribute attribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
 
         if (attribute != null) {
             result.add(attribute.getTextRange());
-            final XmlAttributeValue value = attribute.getValueElement();
+            XmlAttributeValue value = attribute.getValueElement();
 
             if (value != null) {
-                final TextRange range = value.getTextRange();
+                TextRange range = value.getTextRange();
                 result.add(range);
                 if (value.getFirstChild() != null
                     && value.getFirstChild().getNode().getElementType() == XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER) {

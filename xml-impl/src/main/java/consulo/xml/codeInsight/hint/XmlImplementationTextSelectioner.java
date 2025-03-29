@@ -20,6 +20,7 @@
  */
 package consulo.xml.codeInsight.hint;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.ImplementationTextSelectioner;
@@ -36,13 +37,17 @@ import jakarta.annotation.Nonnull;
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
     private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);
 
-    public int getTextStartOffset(@Nonnull final PsiElement parent) {
+    @Override
+    @RequiredReadAction
+    public int getTextStartOffset(@Nonnull PsiElement parent) {
         return parent.getTextRange().getStartOffset();
     }
 
+    @Override
+    @RequiredReadAction
     public int getTextEndOffset(@Nonnull PsiElement element) {
         if (element instanceof XmlAttributeValue) {
-            final XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
+            XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
             if (xmlTag != null) {
                 return xmlTag.getTextRange().getEndOffset();
             }

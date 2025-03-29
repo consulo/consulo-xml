@@ -15,13 +15,12 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiReference;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -33,7 +32,7 @@ public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
     @Nonnull
     @Override
     public String getDisplayName() {
-        return XmlBundle.message("html.inspections.unknown.target");
+        return XmlLocalize.htmlInspectionsUnknownTarget().get();
     }
 
     @Nullable

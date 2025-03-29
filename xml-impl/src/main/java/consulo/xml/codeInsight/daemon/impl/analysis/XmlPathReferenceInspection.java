@@ -26,36 +26,39 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- * Date: 9/3/12
+ * @since 2012-09-03
  */
 @ExtensionImpl
 public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
     @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
+            @RequiredReadAction
             public void visitXmlAttributeValue(XmlAttributeValue value) {
                 checkRefs(value, holder, isOnTheFly);
             }
 
             @Override
+            @RequiredReadAction
             public void visitXmlDoctype(XmlDoctype xmlDoctype) {
                 checkRefs(xmlDoctype, holder, isOnTheFly);
             }
 
             @Override
+            @RequiredReadAction
             public void visitXmlTag(XmlTag tag) {
                 checkRefs(tag, holder, isOnTheFly);
             }
@@ -98,13 +101,13 @@ public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
     @Nonnull
     @Override
     public String getGroupDisplayName() {
-        return "XML";
+        return XmlLocalize.xmlInspectionsGroupName().get();
     }
 
     @Nonnull
     @Override
     public String getDisplayName() {
-        return "File path resolving in XML";
+        return XmlLocalize.xmlInspectionsPathResolve().get();
     }
 
     @Nonnull

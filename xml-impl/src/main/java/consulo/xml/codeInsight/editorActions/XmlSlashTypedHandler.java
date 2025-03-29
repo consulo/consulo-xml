@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
@@ -34,27 +35,31 @@ import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlSlash")
 public class XmlSlashTypedHandler extends TypedHandlerDelegate {
+    @Nonnull
+    @Override
+    @RequiredReadAction
     public Result beforeCharTyped(
-        final char c,
-        final Project project,
-        final Editor editor,
-        final PsiFile editedFile,
-        final FileType fileType
+        char c,
+        @Nonnull Project project,
+        @Nonnull Editor editor,
+        PsiFile editedFile,
+        @Nonnull FileType fileType
     ) {
         if ((editedFile.getLanguage() instanceof XMLLanguage || editedFile.getViewProvider().getBaseLanguage() instanceof XMLLanguage)
             && c == '/') {
             PsiDocumentManager.getInstance(project).commitAllDocuments();
 
             PsiFile file = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
-            final int offset = editor.getCaretModel().getOffset();
+            int offset = editor.getCaretModel().getOffset();
             FileViewProvider provider = file.getViewProvider();
             PsiElement element = provider.findElementAt(offset, XMLLanguage.class);
 
-            if (element instanceof XmlToken) {
-                final IElementType tokenType = ((XmlToken)element).getTokenType();
+            if (element instanceof XmlToken token) {
+                IElementType tokenType = token.getTokenType();
 
                 if (tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END && offset == element.getTextOffset()) {
                     editor.getCaretModel().moveToOffset(offset + 1);
@@ -62,8 +67,8 @@ public class XmlSlashTypedHandler extends TypedHandlerDelegate {
                     return Result.STOP;
                 }
                 else if (tokenType == XmlTokenType.XML_TAG_END && offset == element.getTextOffset()) {
-                    final ASTNode parentNode = element.getParent().getNode();
-                    final ASTNode child = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(parentNode);
+                    ASTNode parentNode = element.getParent().getNode();
+                    ASTNode child = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(parentNode);
 
                     if (child != null && offset + 1 == child.getTextRange().getStartOffset()) {
                         editor.getDocument().replaceString(offset + 1, parentNode.getTextRange().getEndOffset(), "");
@@ -74,14 +79,17 @@ public class XmlSlashTypedHandler extends TypedHandlerDelegate {
         return Result.CONTINUE;
     }
 
-    public Result charTyped(final char c, final Project project, final Editor editor, final PsiFile editedFile) {
-        if ((editedFile.getLanguage() instanceof XMLLanguage || editedFile.getViewProvider()
-            .getBaseLanguage() instanceof XMLLanguage) && c == '/') {
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public Result charTyped(char c, @Nonnull Project project, @Nonnull Editor editor, PsiFile editedFile) {
+        if ((editedFile.getLanguage() instanceof XMLLanguage
+            || editedFile.getViewProvider().getBaseLanguage() instanceof XMLLanguage) && c == '/') {
             PsiDocumentManager.getInstance(project).commitAllDocuments();
 
             PsiFile file = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
             FileViewProvider provider = file.getViewProvider();
-            final int offset = editor.getCaretModel().getOffset();
+            int offset = editor.getCaretModel().getOffset();
             PsiElement element = provider.findElementAt(offset - 1, XMLLanguage.class);
             if (element == null) {
                 return Result.CONTINUE;
@@ -91,7 +99,7 @@ public class XmlSlashTypedHandler extends TypedHandlerDelegate {
             }
 
             ASTNode prevLeaf = element.getNode();
-            final String prevLeafText = prevLeaf != null ? prevLeaf.getText() : null;
+            String prevLeafText = prevLeaf != null ? prevLeaf.getText() : null;
             if (prevLeaf != null && !"/".equals(prevLeafText)) {
                 if (!"/".equals(prevLeafText.trim())) {
                     return Result.CONTINUE;
@@ -116,7 +124,7 @@ public class XmlSlashTypedHandler extends TypedHandlerDelegate {
                 }
             }
 
-            final XmlToken startToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_START_TAG_START);
+            XmlToken startToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_START_TAG_START);
             if (startToken == null || !startToken.getText().equals("<")) {
                 return Result.CONTINUE;
             }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * @author VISTALL
- * @since 14-Jul-22
+ * @since 2022-07-14
  */
 public class FetchExResourceWatchedRootsProvider implements WatchedRootsProvider {
     private static final Logger LOG = Logger.getInstance(FetchExResourceWatchedRootsProvider.class);
@@ -19,7 +19,7 @@ public class FetchExResourceWatchedRootsProvider implements WatchedRootsProvider
     @Nonnull
     @Override
     public Set<String> getRootsToWatch() {
-        final File path = new File(FetchExtResourceAction.getExternalResourcesPath());
+        File path = new File(FetchExtResourceAction.getExternalResourcesPath());
         if (!path.exists() && !path.mkdirs()) {
             LOG.warn("Unable to create: " + path);
         }

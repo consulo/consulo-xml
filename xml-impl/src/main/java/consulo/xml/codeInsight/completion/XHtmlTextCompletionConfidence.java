@@ -8,7 +8,7 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 31-Jul-22
+ * @since 2022-07-31
  */
 @ExtensionImpl(id = "xhtmlText")
 public class XHtmlTextCompletionConfidence extends HtmlTextCompletionConfidence {

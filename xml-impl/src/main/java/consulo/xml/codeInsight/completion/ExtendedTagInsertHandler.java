@@ -20,6 +20,7 @@ import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.document.RangeMarker;
@@ -35,7 +36,6 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nullable;
 
 import java.util.Collections;
@@ -53,7 +53,7 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler {
     @Nullable
     protected final String myNamespacePrefix;
 
-    public ExtendedTagInsertHandler(final String elementName, @Nullable final String namespace, @Nullable final String namespacePrefix) {
+    public ExtendedTagInsertHandler(String elementName, @Nullable String namespace, @Nullable String namespacePrefix) {
         myElementName = elementName;
         myNamespace = namespace;
         myNamespacePrefix = namespacePrefix;
@@ -61,31 +61,31 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler {
 
     @RequiredUIAccess
     @Override
-    public void handleInsert(final InsertionContext context, final LookupElement item) {
-        final XmlFile contextFile = (XmlFile)context.getFile();
-        final XmlExtension extension = XmlExtension.getExtension(contextFile);
-        final XmlFile file = extension.getContainingFile(contextFile);
-        final Project project = context.getProject();
+    public void handleInsert(InsertionContext context, LookupElement item) {
+        XmlFile contextFile = (XmlFile)context.getFile();
+        XmlExtension extension = XmlExtension.getExtension(contextFile);
+        XmlFile file = extension.getContainingFile(contextFile);
+        Project project = context.getProject();
 
         assert file != null;
-        final PsiElement psiElement = file.findElementAt(context.getStartOffset());
+        PsiElement psiElement = file.findElementAt(context.getStartOffset());
         assert psiElement != null;
         if (isNamespaceBound(psiElement)) {
             doDefault(context, item);
             return;
         }
 
-        final Editor editor = context.getEditor();
-        final Document document = editor.getDocument();
+        Editor editor = context.getEditor();
+        Document document = editor.getDocument();
         PsiDocumentManager.getInstance(project).commitDocument(document);
 
-        final int caretOffset = editor.getCaretModel().getOffset();
-        final RangeMarker caretMarker = document.createRangeMarker(caretOffset, caretOffset);
+        int caretOffset = editor.getCaretModel().getOffset();
+        RangeMarker caretMarker = document.createRangeMarker(caretOffset, caretOffset);
         caretMarker.setGreedyToRight(true);
 
-        final XmlNamespaceHelper.Runner<String, IncorrectOperationException> runAfter = namespacePrefix -> {
+        XmlNamespaceHelper.Runner<String, IncorrectOperationException> runAfter = namespacePrefix -> {
             PsiDocumentManager.getInstance(project).commitDocument(document);
-            final PsiElement element = file.findElementAt(context.getStartOffset());
+            PsiElement element = file.findElementAt(context.getStartOffset());
             if (element != null) {
                 qualifyWithPrefix(namespacePrefix, element, document);
                 PsiDocumentManager.getInstance(project).commitDocument(document);
@@ -96,9 +96,9 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler {
         };
 
         try {
-            final String prefixByNamespace = getPrefixByNamespace(file, myNamespace);
+            String prefixByNamespace = getPrefixByNamespace(file, myNamespace);
             if (myNamespacePrefix != null || StringUtil.isEmpty(prefixByNamespace)) {
-                final String nsPrefix = myNamespacePrefix == null ? suggestPrefix(file, myNamespace) : myNamespacePrefix;
+                String nsPrefix = myNamespacePrefix == null ? suggestPrefix(file, myNamespace) : myNamespacePrefix;
                 XmlNamespaceHelper.getHelper(file)
                     .insertNamespaceDeclaration(file, editor, Collections.singleton(myNamespace), nsPrefix, runAfter);
                 FeatureUsageTracker.getInstance().triggerFeatureUsed(XmlCompletionContributor.TAG_NAME_COMPLETION_FEATURE);
@@ -112,25 +112,24 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler {
         }
     }
 
-    protected void doDefault(final InsertionContext context, final LookupElement item) {
+    @RequiredUIAccess
+    protected void doDefault(InsertionContext context, LookupElement item) {
         ExtendedTagInsertHandler.super.handleInsert(context, item);
     }
 
     protected boolean isNamespaceBound(PsiElement psiElement) {
-        PsiElement parent = psiElement.getParent();
-        if (!(parent instanceof XmlTag)) {
-            return false;
+        if (psiElement.getParent() instanceof XmlTag tag) {
+            XmlElementDescriptor tagDescriptor = tag.getDescriptor();
+            String tagNamespace = tag.getNamespace();
+            assert myNamespace != null;
+            return tagDescriptor != null && !(tagDescriptor instanceof AnyXmlElementDescriptor) && myNamespace.equals(tagNamespace);
         }
-        final XmlTag tag = (XmlTag)parent;
-        final XmlElementDescriptor tagDescriptor = tag.getDescriptor();
-        final String tagNamespace = tag.getNamespace();
-        assert myNamespace != null;
-        return tagDescriptor != null && !(tagDescriptor instanceof AnyXmlElementDescriptor) && myNamespace.equals(tagNamespace);
+        return false;
     }
 
     @Nullable
-    public static String getPrefixByNamespace(XmlFile file, final String namespace) {
-        final XmlTag tag = file.getRootTag();
+    public static String getPrefixByNamespace(XmlFile file, String namespace) {
+        XmlTag tag = file.getRootTag();
         return tag == null ? null : tag.getPrefixByNamespace(namespace);
     }
 
@@ -148,19 +147,21 @@ public class ExtendedTagInsertHandler extends XmlTagInsertHandler {
         return null;
     }
 
-    protected Set<String> getNamespaces(final XmlFile file) {
+    protected Set<String> getNamespaces(XmlFile file) {
         return XmlNamespaceHelper.getHelper(file).getNamespacesByTagName(myElementName, file);
     }
 
-    protected void qualifyWithPrefix(final String namespacePrefix, final PsiElement element, final Document document) {
+    @RequiredWriteAction
+    protected void qualifyWithPrefix(String namespacePrefix, PsiElement element, Document document) {
         qualifyWithPrefix(namespacePrefix, element);
     }
 
-    public static void qualifyWithPrefix(final String namespacePrefix, final PsiElement element) {
+    @RequiredWriteAction
+    public static void qualifyWithPrefix(String namespacePrefix, PsiElement element) {
         if (element.getParent() instanceof XmlTag tag) {
-            final String prefix = tag.getNamespacePrefix();
+            String prefix = tag.getNamespacePrefix();
             if (!prefix.equals(namespacePrefix) && StringUtil.isNotEmpty(namespacePrefix)) {
-                final String name = namespacePrefix + ":" + tag.getLocalName();
+                String name = namespacePrefix + ":" + tag.getLocalName();
                 try {
                     tag.setName(name);
                 }

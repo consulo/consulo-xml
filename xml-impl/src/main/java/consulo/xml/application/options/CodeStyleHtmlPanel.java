@@ -15,7 +15,6 @@
  */
 package consulo.xml.application.options;
 
-import consulo.application.AllIcons;
 import consulo.application.localize.ApplicationLocalize;
 import consulo.codeEditor.EditorHighlighter;
 import consulo.colorScheme.EditorColorsScheme;
@@ -23,6 +22,7 @@ import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.awt.JBScrollPane;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
@@ -91,7 +91,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
     }
 
     @Override
-    protected EditorHighlighter createHighlighter(final EditorColorsScheme scheme) {
+    protected EditorHighlighter createHighlighter(EditorColorsScheme scheme) {
         return XmlHighlighterFactory.createXMLHighlighter(scheme);
     }
 
@@ -105,14 +105,14 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         };
     }
 
-    private static void customizeField(@Nonnull final LocalizeValue title, final TextFieldWithBrowseButton uiField) {
+    private static void customizeField(@Nonnull LocalizeValue title, TextFieldWithBrowseButton uiField) {
         uiField.getTextField().setEditable(false);
-        uiField.setButtonIcon(AllIcons.Actions.ShowViewer);
+        uiField.setButtonIcon(PlatformIconGroup.actionsShow());
         uiField.addActionListener(new ActionListener() {
             @Override
             @RequiredUIAccess
             public void actionPerformed(ActionEvent e) {
-                final TagListDialog tagListDialog = new TagListDialog(title.get());
+                TagListDialog tagListDialog = new TagListDialog(title.get());
                 tagListDialog.setData(createCollectionOn(uiField.getText()));
                 tagListDialog.show();
                 if (tagListDialog.isOK()) {
@@ -120,11 +120,11 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
                 }
             }
 
-            private String createStringOn(final ArrayList<String> data) {
+            private String createStringOn(java.util.List<String> data) {
                 return StringUtil.join(ArrayUtil.toStringArray(data), ",");
             }
 
-            private ArrayList<String> createCollectionOn(final String data) {
+            private ArrayList<String> createCollectionOn(String data) {
                 if (data == null) {
                     return new ArrayList<>();
                 }
@@ -171,7 +171,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
     }
 
     @Override
-    protected void resetImpl(final CodeStyleSettings settings) {
+    protected void resetImpl(CodeStyleSettings settings) {
         myKeepBlankLines.setText(String.valueOf(settings.HTML_KEEP_BLANK_LINES));
         myWrapAttributes.setSelectedIndex(getIndexForWrapping(settings.HTML_ATTRIBUTE_WRAP));
         myWrapText.setSelected(settings.HTML_TEXT_WRAP != CodeStyleSettings.DO_NOT_WRAP);
@@ -232,7 +232,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
     }
 
     @Override
-    protected void prepareForReformat(final PsiFile psiFile) {
+    protected void prepareForReformat(PsiFile psiFile) {
         //psiFile.putUserData(PsiUtil.FILE_LANGUAGE_LEVEL_KEY, LanguageLevel.HIGHEST);
     }
 }

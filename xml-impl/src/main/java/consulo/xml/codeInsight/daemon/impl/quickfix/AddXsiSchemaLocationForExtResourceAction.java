@@ -16,6 +16,7 @@
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
@@ -26,17 +27,19 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,87 +50,77 @@ import java.util.List;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.add.xsi.schema.location.for.external.resource", fileExtensions = "xml", categories = "XML")
 public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAction {
-    @NonNls
     private static final String XMLNS_XSI_ATTR_NAME = "xmlns:xsi";
-    @NonNls
     private static final String XSI_SCHEMA_LOCATION_ATTR_NAME = "xsi:schemaLocation";
-    public static final String KEY = "add.xsi.schema.location.for.external.resource";
 
-    protected String getQuickFixKeyId() {
-        return KEY;
+    @Override
+    protected @Nonnull LocalizeValue getQuickFixName() {
+        return XmlLocalize.addXsiSchemaLocationForExternalResource();
     }
 
-    protected void doInvoke(
-        @Nonnull final PsiFile file,
-        final int offset,
-        @Nonnull final String uri,
-        final Editor editor
-    ) throws IncorrectOperationException {
-        final XmlTag tag = PsiTreeUtil.getParentOfType(file.findElementAt(offset), XmlTag.class);
+    @Override
+    @RequiredUIAccess
+    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor) throws IncorrectOperationException {
+        XmlTag tag = PsiTreeUtil.getParentOfType(file.findElementAt(offset), XmlTag.class);
         if (tag == null) {
             return;
         }
-        final List<String> schemaLocations = new ArrayList<String>();
+        List<String> schemaLocations = new ArrayList<>();
 
         CreateNSDeclarationIntentionFix.processExternalUris(
             new CreateNSDeclarationIntentionFix.TagMetaHandler(tag.getLocalName()),
             file,
-            new CreateNSDeclarationIntentionFix.ExternalUriProcessor() {
-                public void process(@Nonnull final String currentUri, final String url) {
-                    if (currentUri.equals(uri) && url != null) {
-                        schemaLocations.add(url);
-                    }
+            (currentUri, url) -> {
+                if (currentUri.equals(uri) && url != null) {
+                    schemaLocations.add(url);
                 }
-
             },
             true
         );
 
         CreateNSDeclarationIntentionFix.runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
-            ArrayUtil.toStringArray(schemaLocations), file.getProject(), new CreateNSDeclarationIntentionFix.StringToAttributeProcessor() {
-                public void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull final String attrName) throws IncorrectOperationException {
-                    doIt(file, editor, uri, tag, attrName);
-                }
-            }, XmlErrorLocalize.selectNamespaceLocationTitle().get(), this, editor);
+            ArrayUtil.toStringArray(schemaLocations),
+            file.getProject(),
+            attrName -> doIt(file, editor, uri, tag, attrName),
+            XmlErrorLocalize.selectNamespaceLocationTitle().get(),
+            this,
+            editor
+        );
     }
 
-    private static void doIt(
-        final PsiFile file,
-        final Editor editor,
-        final String uri,
-        final XmlTag tag,
-        final String s
-    ) throws IncorrectOperationException {
+    @RequiredUIAccess
+    private static void doIt(PsiFile file, Editor editor, String uri, XmlTag tag, String s) throws IncorrectOperationException {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }
-        final XmlElementFactory elementFactory = XmlElementFactory.getInstance(file.getProject());
+        XmlElementFactory elementFactory = XmlElementFactory.getInstance(file.getProject());
 
         if (tag.getAttributeValue(XMLNS_XSI_ATTR_NAME) == null) {
             tag.add(elementFactory.createXmlAttribute(XMLNS_XSI_ATTR_NAME, XmlUtil.XML_SCHEMA_INSTANCE_URI));
         }
 
-        final XmlAttribute locationAttribute = tag.getAttribute(XSI_SCHEMA_LOCATION_ATTR_NAME);
-        final String toInsert = uri + " " + s;
+        XmlAttribute locationAttribute = tag.getAttribute(XSI_SCHEMA_LOCATION_ATTR_NAME);
+        String toInsert = uri + " " + s;
         int offset = s.length();
 
         if (locationAttribute == null) {
             tag.add(elementFactory.createXmlAttribute(XSI_SCHEMA_LOCATION_ATTR_NAME, toInsert));
         }
         else {
-            final String newValue = locationAttribute.getValue() + "\n" + toInsert;
+            String newValue = locationAttribute.getValue() + "\n" + toInsert;
             locationAttribute.setValue(newValue);
         }
 
         CodeStyleManager.getInstance(file.getProject()).reformat(tag);
 
-        @SuppressWarnings("ConstantConditions") final TextRange range =
+        @SuppressWarnings("ConstantConditions") TextRange range =
             tag.getAttribute(XSI_SCHEMA_LOCATION_ATTR_NAME).getValueElement().getTextRange();
-        final TextRange textRange = new TextRange(range.getEndOffset() - offset - 1, range.getEndOffset() - 1);
+        TextRange textRange = new TextRange(range.getEndOffset() - offset - 1, range.getEndOffset() - 1);
         editor.getCaretModel().moveToOffset(textRange.getStartOffset());
     }
 
     @Override
+    @RequiredReadAction
     public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
         if (!(file instanceof XmlFile)) {
             return false;
@@ -139,9 +132,6 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
             return false;
         }
         XmlAttribute attribute = PsiTreeUtil.getParentOfType(value, XmlAttribute.class);
-        if (attribute != null && attribute.isNamespaceDeclaration()) {
-            return true;
-        }
-        return false;
+        return attribute != null && attribute.isNamespaceDeclaration();
     }
 }

@@ -15,18 +15,19 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import com.intellij.xml.XmlBundle;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.XmlFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -34,6 +35,8 @@ import jakarta.annotation.Nullable;
  * @author mike
  */
 abstract class BaseExtResourceAction implements SyntheticIntentionAction {
+    @Override
+    @RequiredReadAction
     public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
         if (!(file instanceof XmlFile)) {
             return false;
@@ -41,36 +44,34 @@ abstract class BaseExtResourceAction implements SyntheticIntentionAction {
 
         int offset = editor.getCaretModel().getOffset();
         String uri = findUri(file, offset);
-        if (uri == null || !isAcceptableUri(uri)) {
-            return false;
-        }
+        return uri != null && isAcceptableUri(uri);
+    }
 
+    protected boolean isAcceptableUri(String uri) {
         return true;
     }
 
-    protected boolean isAcceptableUri(final String uri) {
-        return true;
-    }
-
-    protected abstract String getQuickFixKeyId();
+    protected abstract @Nonnull LocalizeValue getQuickFixName();
 
     @Nonnull
     @Override
     public String getText() {
-        return XmlBundle.message(getQuickFixKeyId());
+        return getQuickFixName().get();
     }
 
     @Nonnull
     public String getFamilyName() {
-        return XmlBundle.message(getQuickFixKeyId());
+        return getQuickFixName().get();
     }
 
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
+    @Override
+    @RequiredUIAccess
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         int offset = editor.getCaretModel().getOffset();
 
         PsiDocumentManager.getInstance(project).commitAllDocuments();
 
-        final String uri = findUri(file, offset);
+        String uri = findUri(file, offset);
         if (uri == null) {
             return;
         }
@@ -78,10 +79,12 @@ abstract class BaseExtResourceAction implements SyntheticIntentionAction {
         doInvoke(file, offset, uri, editor);
     }
 
-    protected abstract void doInvoke(final @Nonnull PsiFile file, final int offset, final @Nonnull String uri, final Editor editor)
+    @RequiredUIAccess
+    protected abstract void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
         throws IncorrectOperationException;
 
     @Nullable
+    @RequiredReadAction
     public static String findUri(PsiFile file, int offset) {
         PsiReference currentRef = file.getViewProvider().findReferenceAt(offset, file.getLanguage());
         if (currentRef == null) {

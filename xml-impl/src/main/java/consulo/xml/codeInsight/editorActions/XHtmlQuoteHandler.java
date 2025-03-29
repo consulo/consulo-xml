@@ -8,7 +8,7 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 02-Aug-22
+ * @since 2022-08-02
  */
 @ExtensionImpl
 public class XHtmlQuoteHandler extends HtmlQuoteHandler {

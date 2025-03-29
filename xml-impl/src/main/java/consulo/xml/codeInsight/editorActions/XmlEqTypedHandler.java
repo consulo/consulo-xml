@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.editorActions;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.action.TypedHandlerDelegate;
@@ -31,27 +32,30 @@ import jakarta.annotation.Nonnull;
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
     private boolean needToInsertQuotes = false;
 
+    @Nonnull
     @Override
+    @RequiredReadAction
     public Result beforeCharTyped(
         char c,
-        Project project,
-        Editor editor,
+        @Nonnull Project project,
+        @Nonnull Editor editor,
         PsiFile file,
-        FileType fileType
+        @Nonnull FileType fileType
     ) {
         boolean inXml = file.getLanguage() instanceof XMLLanguage || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;
         if (c == '=' && inXml) {
             int offset = editor.getCaretModel().getOffset();
             PsiElement at = file.findElementAt(offset - 1);
             PsiElement atParent = at != null ? at.getParent() : null;
-            needToInsertQuotes = atParent instanceof XmlAttribute && ((XmlAttribute)atParent).getValueElement() == null;
+            needToInsertQuotes = atParent instanceof XmlAttribute attribute && attribute.getValueElement() == null;
         }
 
         return super.beforeCharTyped(c, project, editor, file, fileType);
     }
 
+    @Nonnull
     @Override
-    public Result charTyped(char c, Project project, Editor editor, @Nonnull PsiFile file) {
+    public Result charTyped(char c, @Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
         if (needToInsertQuotes) {
             int offset = editor.getCaretModel().getOffset();
             editor.getDocument().insertString(offset, "\"\"");

@@ -15,11 +15,12 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.SimpleTextAttributes;
-import consulo.application.AllIcons;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
+import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,15 +36,10 @@ public class XmlNSRenderer extends ColoredListCellRenderer {
         setFont(new Font(scheme.getEditorFontName(), Font.PLAIN, scheme.getEditorFontSize()));
     }
 
-    protected void customizeCellRenderer(
-        final JList list,
-        final Object value,
-        final int index,
-        final boolean selected,
-        final boolean hasFocus
-    ) {
+    @Override
+    protected void customizeCellRenderer(@Nonnull JList list, Object value, int index, boolean selected, boolean hasFocus) {
         append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
-        setIcon(AllIcons.Nodes.Static);
+        setIcon(PlatformIconGroup.nodesStatic());
         setPaintFocusBorder(false);
     }
 }

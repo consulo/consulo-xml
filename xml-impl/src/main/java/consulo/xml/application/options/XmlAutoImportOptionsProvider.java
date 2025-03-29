@@ -33,10 +33,10 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionImpl
 public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements ApplicationConfigurable {
-    @RequiredUIAccess
     @Nonnull
     @Override
-    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
+    @RequiredUIAccess
+    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 
         XmlSettings settings = XmlSettings.getInstance();

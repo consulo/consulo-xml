@@ -15,7 +15,6 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.XmlNamespaceHelper;
 import consulo.codeEditor.Editor;
 import consulo.document.RangeMarker;
@@ -24,11 +23,10 @@ import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.hint.QuestionAction;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
-import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
 import consulo.ui.ex.awt.JBList;
 import consulo.ui.ex.popup.JBPopup;
-
+import consulo.xml.psi.xml.XmlFile;
 import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
@@ -46,8 +44,7 @@ public class ImportNSAction implements QuestionAction {
     private final Editor myEditor;
     private final String myTitle;
 
-    public ImportNSAction(final Set<String> namespaces, XmlFile file, @Nonnull PsiElement element, Editor editor, final String title) {
-
+    public ImportNSAction(Set<String> namespaces, XmlFile file, @Nonnull PsiElement element, Editor editor, String title) {
         myNamespaces = namespaces;
         myFile = file;
         myElement = element;
@@ -55,54 +52,49 @@ public class ImportNSAction implements QuestionAction {
         myTitle = title;
     }
 
+    @Override
     public boolean execute() {
-        final Object[] objects = myNamespaces.toArray();
+        Object[] objects = myNamespaces.toArray();
         Arrays.sort(objects);
-        final JList list = new JBList(objects);
+        JList list = new JBList(objects);
         list.setCellRenderer(XmlNSRenderer.INSTANCE);
         list.setSelectedIndex(0);
-        final int offset = myElement.getTextOffset();
-        final RangeMarker marker = myEditor.getDocument().createRangeMarker(offset, offset);
-        final Runnable runnable = new Runnable() {
-
-            public void run() {
-                final String namespace = (String)list.getSelectedValue();
-                if (namespace != null) {
-                    final Project project = myFile.getProject();
-                    new WriteCommandAction.Simple(project, myFile) {
-
-                        protected void run() throws Throwable {
-                            final XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(myFile);
-                            final String prefix = extension.getNamespacePrefix(myElement);
-                            extension.insertNamespaceDeclaration(
-                                myFile,
-                                myEditor,
-                                Collections.singleton(namespace),
-                                prefix,
-                                new XmlNamespaceHelper.Runner<String, consulo.language.util.IncorrectOperationException>() {
-                                    public void run(final String s) throws IncorrectOperationException {
-                                        PsiDocumentManager.getInstance(myFile.getProject())
-                                            .doPostponedOperationsAndUnblockDocument(myEditor.getDocument());
-                                        PsiElement element = myFile.findElementAt(marker.getStartOffset());
-                                        if (element != null) {
-                                            extension.qualifyWithPrefix(s, element, myEditor.getDocument());
-                                        }
-                                    }
+        int offset = myElement.getTextOffset();
+        RangeMarker marker = myEditor.getDocument().createRangeMarker(offset, offset);
+        Runnable runnable = () -> {
+            String namespace = (String)list.getSelectedValue();
+            if (namespace != null) {
+                Project project = myFile.getProject();
+                new WriteCommandAction.Simple(project, myFile) {
+                    protected void run() throws Throwable {
+                        XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(myFile);
+                        String prefix = extension.getNamespacePrefix(myElement);
+                        extension.insertNamespaceDeclaration(
+                            myFile,
+                            myEditor,
+                            Collections.singleton(namespace),
+                            prefix,
+                            s -> {
+                                PsiDocumentManager.getInstance(myFile.getProject())
+                                    .doPostponedOperationsAndUnblockDocument(myEditor.getDocument());
+                                PsiElement element = myFile.findElementAt(marker.getStartOffset());
+                                if (element != null) {
+                                    extension.qualifyWithPrefix(s, element, myEditor.getDocument());
                                 }
-                            );
-                        }
-                    }.execute();
-                }
+                            }
+                        );
+                    }
+                }.execute();
             }
         };
         if (list.getModel().getSize() == 1) {
             runnable.run();
         }
         else {
-            JBPopup popup = new PopupChooserBuilder(list).
-                setTitle(myTitle).
-                setItemChoosenCallback(runnable).
-                createPopup();
+            JBPopup popup = new PopupChooserBuilder(list)
+                .setTitle(myTitle)
+                .setItemChoosenCallback(runnable)
+                .createPopup();
 
             myEditor.showPopupInBestPositionFor(popup);
         }

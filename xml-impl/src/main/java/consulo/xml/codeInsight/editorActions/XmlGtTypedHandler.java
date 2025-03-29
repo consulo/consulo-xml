@@ -8,7 +8,6 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
-import consulo.codeEditor.EditorEx;
 import consulo.codeEditor.HighlighterIterator;
 import consulo.codeEditor.ScrollType;
 import consulo.codeEditor.util.EditorModificationUtil;
@@ -33,7 +32,6 @@ import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import consulo.xml.psi.xml.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;
 
@@ -45,13 +43,13 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
     @Override
     @RequiredReadAction
     public Result beforeCharTyped(
-        final char c,
-        @Nonnull final Project project,
+        char c,
+        @Nonnull Project project,
         @Nonnull Editor editor,
         @Nonnull PsiFile editedFile,
-        @Nonnull final FileType fileType
+        @Nonnull FileType fileType
     ) {
-        final XmlEditorOptions xmlEditorOptions = XmlEditorOptions.getInstance();
+        XmlEditorOptions xmlEditorOptions = XmlEditorOptions.getInstance();
         if (c == '>' && xmlEditorOptions.isAutomaticallyInsertClosingTag() && fileContainsXmlLanguage(editedFile)) {
             PsiDocumentManager.getInstance(project).commitAllDocuments();
 
@@ -72,15 +70,15 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
                 if (!(element instanceof PsiWhiteSpace)) {
                     boolean nonAcceptableDelimiter = true;
 
-                    if (element instanceof XmlToken) {
-                        IElementType tokenType = ((XmlToken)element).getTokenType();
+                    if (element instanceof XmlToken token) {
+                        IElementType tokenType = token.getTokenType();
 
                         if (tokenType == XmlTokenType.XML_START_TAG_START || tokenType == XmlTokenType.XML_END_TAG_START) {
                             if (offset > 0) {
                                 PsiElement previousElement = provider.findElementAt(offset - 1, XMLLanguage.class);
 
-                                if (previousElement instanceof XmlToken) {
-                                    tokenType = ((XmlToken)previousElement).getTokenType();
+                                if (previousElement instanceof XmlToken prevToken) {
+                                    tokenType = prevToken.getTokenType();
                                     element = previousElement;
                                     nonAcceptableDelimiter = false;
                                 }
@@ -106,8 +104,8 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
                 else {
                     // check if right after empty end
                     PsiElement previousElement = provider.findElementAt(offset - 1, XMLLanguage.class);
-                    if (previousElement instanceof XmlToken) {
-                        final IElementType tokenType = ((XmlToken)previousElement).getTokenType();
+                    if (previousElement instanceof XmlToken prevToken) {
+                        IElementType tokenType = prevToken.getTokenType();
 
                         if (tokenType == XmlTokenType.XML_EMPTY_ELEMENT_END) {
                             return Result.STOP;
@@ -116,22 +114,22 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
                 }
 
                 PsiElement parent = element.getParent();
-                if (parent instanceof XmlText) {
-                    final String text = parent.getText();
+                if (parent instanceof XmlText xmlText) {
+                    String text = xmlText.getText();
                     // check /
-                    final int index = offset - parent.getTextOffset() - 1;
+                    int index = offset - xmlText.getTextOffset() - 1;
 
                     if (index >= 0 && text.charAt(index) == '/') {
                         return Result.CONTINUE; // already seen /
                     }
-                    element = parent.getPrevSibling();
+                    element = xmlText.getPrevSibling();
                 }
-                else if (parent instanceof XmlTag && !(element.getPrevSibling() instanceof XmlTag)
+                else if (parent instanceof XmlTag tag && !(element.getPrevSibling() instanceof XmlTag)
                     && !(element.getPrevSibling() instanceof OuterLanguageElement)) {
-                    element = parent;
+                    element = tag;
                 }
-                else if (parent instanceof XmlAttributeValue) {
-                    element = parent;
+                else if (parent instanceof XmlAttributeValue attributeValue) {
+                    element = attributeValue;
                 }
             }
             else {
@@ -149,15 +147,15 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
                 }
             }
 
-            if (element instanceof XmlAttributeValue) {
-                element = element.getParent().getParent();
+            if (element instanceof XmlAttributeValue attributeValue) {
+                element = attributeValue.getParent().getParent();
             }
 
             while (element instanceof PsiWhiteSpace || element instanceof OuterLanguageElement) {
                 element = element.getPrevSibling();
             }
-            if (element instanceof XmlDocument) {   // hack for closing tags in RHTML
-                element = element.getLastChild();
+            if (element instanceof XmlDocument document) {   // hack for closing tags in RHTML
+                element = document.getLastChild();
             }
             if (element == null) {
                 return Result.CONTINUE;
@@ -179,15 +177,15 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
             if (XmlUtil.getTokenOfType(tag, XmlTokenType.XML_EMPTY_ELEMENT_END) != null) {
                 return Result.CONTINUE;
             }
-            final XmlToken startToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_START_TAG_START);
+            XmlToken startToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_START_TAG_START);
             if (startToken == null || !startToken.getText().equals("<")) {
                 return Result.CONTINUE;
             }
 
             String name = tag.getName();
-            if (elementAtCaret instanceof XmlToken
-                && (((XmlToken)elementAtCaret).getTokenType() == XmlTokenType.XML_NAME
-                || ((XmlToken)elementAtCaret).getTokenType() == XmlTokenType.XML_TAG_NAME)) {
+            if (elementAtCaret instanceof XmlToken tokenAtCaret
+                && (tokenAtCaret.getTokenType() == XmlTokenType.XML_NAME
+                || tokenAtCaret.getTokenType() == XmlTokenType.XML_TAG_NAME)) {
                 name = name.substring(0, offset - elementAtCaret.getTextOffset());
             }
             if (tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag, true)) {
@@ -199,32 +197,32 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
 
             int tagOffset = tag.getTextRange().getStartOffset();
 
-            final XmlToken nameToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_NAME);
+            XmlToken nameToken = XmlUtil.getTokenOfType(tag, XmlTokenType.XML_NAME);
             if (nameToken != null && nameToken.getTextRange().getStartOffset() > offset) {
                 return Result.CONTINUE;
             }
 
-            HighlighterIterator iterator = ((EditorEx)editor).getHighlighter().createIterator(tagOffset);
+            HighlighterIterator iterator = editor.getHighlighter().createIterator(tagOffset);
             if (BraceMatchingUtil.matchBrace(editor.getDocument().getCharsSequence(), editedFile.getFileType(), iterator, true, true)) {
                 PsiElement parent = tag.getParent();
                 boolean hasBalance = true;
                 loop:
-                while (parent instanceof XmlTag) {
-                    if (name.equals(((XmlTag)parent).getName())) {
+                while (parent instanceof XmlTag parentTag) {
+                    if (name.equals(parentTag.getName())) {
                         hasBalance = false;
-                        ASTNode astNode = XmlChildRole.CLOSING_TAG_NAME_FINDER.findChild(parent.getNode());
+                        ASTNode astNode = XmlChildRole.CLOSING_TAG_NAME_FINDER.findChild(parentTag.getNode());
                         if (astNode == null) {
                             hasBalance = true;
                             break;
                         }
-                        for (PsiElement el = parent.getNextSibling(); el != null; el = el.getNextSibling()) {
+                        for (PsiElement el = parentTag.getNextSibling(); el != null; el = el.getNextSibling()) {
                             if (el instanceof PsiErrorElement && el.getText().startsWith("</" + name)) {
                                 hasBalance = true;
                                 break loop;
                             }
                         }
                     }
-                    parent = parent.getParent();
+                    parent = parentTag.getParent();
                 }
                 if (hasBalance) {
                     return Result.CONTINUE;
@@ -232,17 +230,15 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
             }
 
             Collection<TextRange> cdataReformatRanges = null;
-            final XmlElementDescriptor descriptor = tag.getDescriptor();
+            XmlElementDescriptor descriptor = tag.getDescriptor();
 
             EditorModificationUtil.insertStringAtCaret(editor, "</" + name + ">", false, 0);
 
-            if (descriptor instanceof XmlElementDescriptorWithCDataContent) {
-                final XmlElementDescriptorWithCDataContent cDataContainer = (XmlElementDescriptorWithCDataContent)descriptor;
-
+            if (descriptor instanceof XmlElementDescriptorWithCDataContent cDataContainer) {
                 cdataReformatRanges = new SmartList<>();
                 if (cDataContainer.requiresCdataBracesInContext(tag)) {
-                    @NonNls final String cDataStart = "><![CDATA[";
-                    final String inserted = cDataStart + "\n]]>";
+                    String cDataStart = "><![CDATA[";
+                    String inserted = cDataStart + "\n]]>";
                     EditorModificationUtil.insertStringAtCaret(editor, inserted, false, cDataStart.length());
                     int caretOffset = editor.getCaretModel().getOffset();
                     if (caretOffset >= cDataStart.length()) {
@@ -276,11 +272,9 @@ public class XmlGtTypedHandler extends TypedHandlerDelegate {
         if (HtmlUtil.supportsXmlTypedHandlers(editedFile)) {
             return true;
         }
-        final FileViewProvider provider = editedFile.getViewProvider();
-        if (provider.getBaseLanguage() instanceof XMLLanguage) {
-            return true;
-        }
-        return provider instanceof TemplateLanguageFileViewProvider
-            && ((TemplateLanguageFileViewProvider)provider).getTemplateDataLanguage() instanceof XMLLanguage;
+        FileViewProvider provider = editedFile.getViewProvider();
+        return provider.getBaseLanguage() instanceof XMLLanguage
+            || provider instanceof TemplateLanguageFileViewProvider templateLanguageFileViewProvider
+            && templateLanguageFileViewProvider.getTemplateDataLanguage() instanceof XMLLanguage;
     }
 }

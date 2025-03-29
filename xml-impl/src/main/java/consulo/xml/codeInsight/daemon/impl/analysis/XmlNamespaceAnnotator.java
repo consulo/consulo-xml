@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlTagUtil;
@@ -28,13 +29,13 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- * Date: 17.10.13
+ * @since 2013-10-17
  */
 public class XmlNamespaceAnnotator implements Annotator {
     @Override
+    @RequiredReadAction
     public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
-        if (element instanceof XmlTag) {
-            XmlTag tag = (XmlTag)element;
+        if (element instanceof XmlTag tag) {
             String namespace = tag.getNamespace();
 
             TextAttributesKey key = XmlNSColorProvider.EP_NAME.computeSafeIfAny(it -> it.getKeyForNamespace(namespace, tag));

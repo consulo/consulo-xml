@@ -15,6 +15,7 @@
  */
 package consulo.xml.codeInsight.template;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.editor.template.context.BaseTemplateContextType;
@@ -39,6 +40,7 @@ public class HtmlTextContextType extends BaseTemplateContextType {
     }
 
     @Override
+    @RequiredReadAction
     public boolean isInContext(@Nonnull PsiFile file, int offset) {
         if (!HtmlContextType.isMyLanguage(file.getLanguage())) {
             return false;

@@ -42,7 +42,7 @@ public class XmlTagTreeHighlightingColors {
 
     @Nonnull
     public static EditorColorKey[] getColorKeys() {
-        final int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();
+        int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();
 
         if (ourColorKeys == null || ourColorKeys.length != levelCount) {
             ourColorKeys = new EditorColorKey[levelCount];

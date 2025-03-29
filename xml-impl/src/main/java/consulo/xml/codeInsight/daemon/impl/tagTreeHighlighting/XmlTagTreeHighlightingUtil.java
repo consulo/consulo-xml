@@ -15,18 +15,17 @@
  */
 package consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting;
 
-import consulo.xml.application.options.editor.XmlEditorOptions;
+import consulo.application.Application;
 import consulo.colorScheme.EditorColorKey;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.application.ApplicationManager;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import consulo.ui.color.ColorValue;
 import consulo.ui.color.RGBColor;
-
+import consulo.xml.application.options.editor.XmlEditorOptions;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 
 import java.util.HashSet;
@@ -40,11 +39,11 @@ class XmlTagTreeHighlightingUtil {
     }
 
     static boolean containsTagsWithSameName(PsiElement[] elements) {
-        final Set<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<>();
 
         for (PsiElement element : elements) {
-            if (element instanceof XmlTag) {
-                final String name = ((XmlTag)element).getName();
+            if (element instanceof XmlTag tag) {
+                String name = tag.getName();
                 if (!names.add(name)) {
                     return true;
                 }
@@ -55,18 +54,11 @@ class XmlTagTreeHighlightingUtil {
     }
 
     static boolean isTagTreeHighlightingActive(PsiFile file) {
-        if (ApplicationManager.getApplication().isUnitTestMode()) {
+        if (Application.get().isUnitTestMode()) {
             return false;
         }
 
-        if (!hasXmlViewProvider(file)) {
-            return false;
-        }
-
-        if (!XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled()) {
-            return false;
-        }
-        return true;
+        return hasXmlViewProvider(file) && XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled();
     }
 
     private static boolean hasXmlViewProvider(@Nonnull PsiFile file) {
@@ -89,7 +81,7 @@ class XmlTagTreeHighlightingUtil {
     }
 
     private static int makeTransparent(double transparency, int channel, int backgroundChannel) {
-        final int result = (int)(backgroundChannel * (1 - transparency) + channel * transparency);
+        int result = (int)(backgroundChannel * (1 - transparency) + channel * transparency);
         if (result < 0) {
             return 0;
         }
@@ -100,10 +92,10 @@ class XmlTagTreeHighlightingUtil {
     }
 
     static ColorValue[] getBaseColors() {
-        final EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
-        final ColorValue[] colors = new ColorValue[colorKeys.length];
+        EditorColorKey[] colorKeys = XmlTagTreeHighlightingColors.getColorKeys();
+        ColorValue[] colors = new ColorValue[colorKeys.length];
 
-        final EditorColorsScheme colorsScheme = EditorColorsManager.getInstance().getGlobalScheme();
+        EditorColorsScheme colorsScheme = EditorColorsManager.getInstance().getGlobalScheme();
 
         for (int i = 0; i < colors.length; i++) {
             colors[i] = colorsScheme.getColor(colorKeys[i]);
