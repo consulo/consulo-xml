@@ -20,10 +20,10 @@
 package consulo.xml.lang.html;
 
 import com.intellij.xml.util.HtmlUtil;
-import consulo.ide.impl.psi.impl.source.codeStyle.IndentHelperExtension;
 import consulo.language.ast.CustomParsingType;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.ILazyParseableElementType;
+import consulo.language.codeStyle.IndentHelperExtension;
 import consulo.language.editor.completion.CompletionUtilCore;
 import consulo.language.parser.PsiBuilder;
 import consulo.localize.LocalizeValue;
@@ -32,27 +32,19 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 public class HtmlParsing {
-  @NonNls
   private static final String TR_TAG = "tr";
-  @NonNls
   private static final String TD_TAG = "td";
-  @NonNls
   private static final String DD_TAG = "dd";
-  @NonNls
   private static final String DT_TAG = "dt";
-  @NonNls
   private static final String TABLE_TAG = "table";
 
   private final PsiBuilder myBuilder;
-  private final Stack<String> myTagNamesStack = new Stack<String>();
-  private final Stack<PsiBuilder.Marker> myTagMarkersStack = new Stack<PsiBuilder.Marker>();
-  @NonNls
+  private final Stack<String> myTagNamesStack = new Stack<>();
+  private final Stack<PsiBuilder.Marker> myTagMarkersStack = new Stack<>();
   private static final String COMPLETION_NAME = CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED.toLowerCase();
 
   public HtmlParsing(final PsiBuilder builder) {
