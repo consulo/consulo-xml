@@ -26,8 +26,6 @@ import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorColors;
 import consulo.codeEditor.markup.RangeHighlighter;
-import consulo.colorScheme.EditorColorsManager;
-import consulo.colorScheme.TextAttributes;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.highlight.HighlightManager;
@@ -39,12 +37,11 @@ import consulo.project.Project;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.collection.Stack;
 import consulo.util.lang.Pair;
-import consulo.util.lang.function.PairProcessor;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
+import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,19 +182,15 @@ public class XmlTagInplaceRenamer {
     }
 
     private static void addHighlights(List<TextRange> ranges, Editor editor, ArrayList<RangeHighlighter> highlighters) {
-        EditorColorsManager colorsManager = EditorColorsManager.getInstance();
-        final TextAttributes attributes = colorsManager.getGlobalScheme().getAttributes(EditorColors.WRITE_SEARCH_RESULT_ATTRIBUTES);
-
         final HighlightManager highlightManager = HighlightManager.getInstance(editor.getProject());
         for (final TextRange range : ranges) {
             highlightManager.addOccurrenceHighlight(
                 editor,
                 range.getStartOffset(),
                 range.getEndOffset(),
-                attributes,
+                EditorColors.WRITE_SEARCH_RESULT_ATTRIBUTES,
                 0,
-                highlighters,
-                null
+                highlighters
             );
         }
 
