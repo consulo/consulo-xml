@@ -23,6 +23,7 @@ import consulo.language.codeStyle.CustomCodeStyleSettings;
 import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractConfigurable;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
+import consulo.localize.LocalizeValue;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
 import jakarta.annotation.Nonnull;
 
@@ -47,9 +48,10 @@ public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
         };
     }
 
+    @Nonnull
     @Override
-    public String getConfigurableDisplayName() {
-        return ApplicationLocalize.titleXml().get();
+    public LocalizeValue getConfigurableDisplayName() {
+        return ApplicationLocalize.titleXml();
     }
 
     @Override
