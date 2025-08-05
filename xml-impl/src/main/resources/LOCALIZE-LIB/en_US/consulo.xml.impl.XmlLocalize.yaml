@@ -1,3 +1,7 @@
+action.escape.entities.description:
+    text: Escape XML/HTML special characters with entities
+action.escape.entities.text:
+    text: Encode XML/HTML Special Characters
 add.custom.html.attribute:
     text: Add {0} to custom html attributes
 add.custom.html.tag:
