@@ -22,12 +22,6 @@
 			<add-to-group group-id="ToolsMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
 		</group>
 
-		<action id="EscapeEntities" class="com.intellij.xml.actions.EscapeEntitiesAction"
-				text="Encode XML/HTML Special Characters"
-				description="Escape XML/HTML special characters with entities">
-			<add-to-group group-id="EditMenu" anchor="last"/>
-		</action>
-
 		<action id="ConvertSchemaAction" class="org.intellij.plugins.relaxNG.convert.ConvertSchemaAction"
 				text="Convert Schema..."
 				description="Converts the selected Schema document (RNG, RNC, XSD, DTD) into another format">
