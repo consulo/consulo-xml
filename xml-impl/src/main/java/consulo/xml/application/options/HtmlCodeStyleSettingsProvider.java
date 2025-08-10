@@ -33,7 +33,7 @@ public class HtmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
     @Nonnull
     @Override
     public Configurable createSettingsPage(final CodeStyleSettings settings, final CodeStyleSettings originalSettings) {
-        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleHtml().get()) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleHtml()) {
             @Override
             protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
                 return new HtmlCodeStyleMainPanel(settings, originalSettings);

@@ -15,6 +15,7 @@
  */
 package consulo.xml.application.options.editor;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.Configurable;
 import consulo.configurable.SimpleConfigurableByProperties;
@@ -31,6 +32,7 @@ import jakarta.annotation.Nullable;
 /**
  * @author VISTALL
  */
+@ExtensionImpl
 public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties implements Configurable, ApplicationConfigurable {
     @Nonnull
     @Override
@@ -86,7 +88,7 @@ public class XmlEditorOptionsProvider extends SimpleConfigurableByProperties imp
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return "XML/HTML";
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("XML/HTML");
     }
 }

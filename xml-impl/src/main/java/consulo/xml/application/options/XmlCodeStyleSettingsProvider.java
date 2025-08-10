@@ -35,7 +35,7 @@ public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
     @Nonnull
     @Override
     public Configurable createSettingsPage(CodeStyleSettings settings, CodeStyleSettings originalSettings) {
-        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleXml().get()) {
+        return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleXml()) {
             @Override
             protected CodeStyleAbstractPanel createPanel(final CodeStyleSettings settings) {
                 return new XmlCodeStyleMainPanel(getCurrentSettings(), settings);

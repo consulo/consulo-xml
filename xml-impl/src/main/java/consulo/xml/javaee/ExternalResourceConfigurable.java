@@ -23,6 +23,7 @@ import consulo.configurable.Configurable;
 import consulo.configurable.ProjectConfigurable;
 import consulo.configurable.StandardConfigurableIds;
 import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.JBColor;
@@ -39,6 +40,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.VirtualFileSystem;
 import consulo.virtualFileSystem.archive.ArchiveFileSystem;
+import consulo.xml.impl.localize.XmlLocalize;
 import jakarta.inject.Inject;
 
 import jakarta.annotation.Nonnull;
@@ -88,9 +90,10 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
         return StandardConfigurableIds.EDITOR_GROUP;
     }
 
+    @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlBundle.message("display.name.edit.external.resource");
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.displayNameEditExternalResource();
     }
 
     @Override

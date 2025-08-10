@@ -16,7 +16,6 @@
 package consulo.xml.javaee;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.configurable.Configurable;
 import consulo.configurable.ConfigurationException;
 import consulo.configurable.ProjectConfigurable;
 import consulo.disposer.Disposable;
@@ -29,111 +28,97 @@ import consulo.ui.ex.FileChooserTextBoxBuilder;
 import consulo.ui.layout.VerticalLayout;
 import consulo.ui.util.LabeledBuilder;
 import consulo.util.lang.StringUtil;
-import jakarta.inject.Inject;
-import org.jetbrains.annotations.Nls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
+import org.jetbrains.annotations.Nls;
 
 /**
  * @author Dmitry Avdeev
  * Date: 7/20/12
  */
 @ExtensionImpl
-public class XMLCatalogConfigurable implements ProjectConfigurable, Configurable.HoldPreferredFocusedComponent
-{
-	private final Project myProject;
+public class XMLCatalogConfigurable implements ProjectConfigurable {
+    private final Project myProject;
 
-	private VerticalLayout myLayout;
-	private FileChooserTextBoxBuilder.Controller myCatalogFileBox;
+    private VerticalLayout myLayout;
+    private FileChooserTextBoxBuilder.Controller myCatalogFileBox;
 
-	@Inject
-	public XMLCatalogConfigurable(@Nonnull Project project)
-	{
-		myProject = project;
-	}
+    @Inject
+    public XMLCatalogConfigurable(@Nonnull Project project) {
+        myProject = project;
+    }
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "xml.catalog";
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return "xml.catalog";
+    }
 
-	@Nullable
-	@Override
-	public String getParentId()
-	{
-		return "preferences.externalResources";
-	}
+    @Nullable
+    @Override
+    public String getParentId() {
+        return "preferences.externalResources";
+    }
 
-	@Nonnull
-	@Nls
-	@Override
-	public String getDisplayName()
-	{
-		return "XML Catalog";
-	}
+    @Nonnull
+    @Nls
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("XML Catalog");
+    }
 
-	@Override
-	public String getHelpTopic()
-	{
-		return "XML.Catalog.Dialog";
-	}
+    @Override
+    public String getHelpTopic() {
+        return "XML.Catalog.Dialog";
+    }
 
-	@RequiredUIAccess
-	@Nullable
-	@Override
-	public Component createUIComponent(@Nonnull Disposable parentDisposable)
-	{
-		if(myLayout == null)
-		{
-			FileChooserTextBoxBuilder builder = FileChooserTextBoxBuilder.create(myProject);
-			builder.fileChooserDescriptor(new FileChooserDescriptor(true, false, false, false, false, false));
-			builder.dialogTitle(LocalizeValue.localizeTODO("XML Catalog Properties File"));
+    @RequiredUIAccess
+    @Nullable
+    @Override
+    public Component createUIComponent(@Nonnull Disposable parentDisposable) {
+        if (myLayout == null) {
+            FileChooserTextBoxBuilder builder = FileChooserTextBoxBuilder.create(myProject);
+            builder.fileChooserDescriptor(new FileChooserDescriptor(true, false, false, false, false, false));
+            builder.dialogTitle(LocalizeValue.localizeTODO("XML Catalog Properties File"));
 
-			myCatalogFileBox = builder.build();
+            myCatalogFileBox = builder.build();
 
-			myLayout = VerticalLayout.create();
-			myLayout.add(LabeledBuilder.filled(LocalizeValue.localizeTODO("Catalog property file:"), myCatalogFileBox.getComponent()));
-		}
-		return myLayout;
-	}
+            myLayout = VerticalLayout.create();
+            myLayout.add(LabeledBuilder.filled(LocalizeValue.localizeTODO("Catalog property file:"), myCatalogFileBox.getComponent()));
+        }
+        return myLayout;
+    }
 
-	@RequiredUIAccess
-	@Nullable
-	@Override
-	public Component getPreferredFocusedUIComponent()
-	{
-		return myCatalogFileBox.getComponent();
-	}
+    @RequiredUIAccess
+    @Nullable
+    @Override
+    public Component getPreferredFocusedUIComponent() {
+        return myCatalogFileBox.getComponent();
+    }
 
-	@RequiredUIAccess
-	@Override
-	public void disposeUIResources()
-	{
-		myCatalogFileBox = null;
-		myLayout = null;
-	}
+    @RequiredUIAccess
+    @Override
+    public void disposeUIResources() {
+        myCatalogFileBox = null;
+        myLayout = null;
+    }
 
-	@RequiredUIAccess
-	@Override
-	public void apply() throws ConfigurationException
-	{
-		ExternalResourceManagerEx.getInstanceEx().setCatalogPropertiesFile(myCatalogFileBox.getValue());
-	}
+    @RequiredUIAccess
+    @Override
+    public void apply() throws ConfigurationException {
+        ExternalResourceManagerEx.getInstanceEx().setCatalogPropertiesFile(myCatalogFileBox.getValue());
+    }
 
-	@RequiredUIAccess
-	@Override
-	public void reset()
-	{
-		myCatalogFileBox.setValue(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile());
-	}
+    @RequiredUIAccess
+    @Override
+    public void reset() {
+        myCatalogFileBox.setValue(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile());
+    }
 
-	@RequiredUIAccess
-	@Override
-	public boolean isModified()
-	{
-		return !StringUtil.notNullize(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile()).equals(myCatalogFileBox.getValue());
-	}
+    @RequiredUIAccess
+    @Override
+    public boolean isModified() {
+        return !StringUtil.notNullize(ExternalResourceManagerEx.getInstanceEx().getCatalogPropertiesFile()).equals(myCatalogFileBox.getValue());
+    }
 }

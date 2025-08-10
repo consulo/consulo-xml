@@ -20,6 +20,7 @@ import consulo.application.localize.ApplicationLocalize;
 import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.SimpleConfigurableByProperties;
 import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
@@ -62,7 +63,7 @@ public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return "XML";
+    public LocalizeValue getDisplayName() {
+        return ApplicationLocalize.titleXml();
     }
 }

@@ -17,6 +17,7 @@ package consulo.xml.options.colors.pages;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.colorScheme.EditorColorKey;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.colorScheme.setting.AttributesDescriptor;
@@ -24,12 +25,13 @@ import consulo.colorScheme.setting.ColorDescriptor;
 import consulo.configurable.OptionsBundle;
 import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
 import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.HtmlFileHighlighter;
+import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 @ExtensionImpl
@@ -55,8 +57,8 @@ public class HTMLColorsPage implements ColorSettingsPage {
   }
 
   @Nonnull
-  public String getDisplayName() {
-    return OptionsBundle.message("options.html.display.name");
+  public LocalizeValue getDisplayName() {
+    return ApplicationLocalize.titleHtml();
   }
 
   @Nonnull

@@ -17,18 +17,16 @@ package consulo.xml.options.colors.pages;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
-import consulo.colorScheme.TextAttributesKey;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.colorScheme.setting.AttributesDescriptor;
-import consulo.colorScheme.setting.ColorDescriptor;
 import consulo.configurable.OptionsBundle;
 import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
 import consulo.language.editor.highlight.SyntaxHighlighter;
+import consulo.localize.LocalizeValue;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.XmlFileHighlighter;
-import jakarta.inject.Inject;
-
 import jakarta.annotation.Nonnull;
-import java.util.Map;
+import jakarta.inject.Inject;
 
 @ExtensionImpl
 public class XMLColorsPage implements ColorSettingsPage {
@@ -51,18 +49,13 @@ public class XMLColorsPage implements ColorSettingsPage {
   }
 
   @Nonnull
-  public String getDisplayName() {
-    return OptionsBundle.message("options.xml.display.name");
+  public LocalizeValue getDisplayName() {
+    return ApplicationLocalize.titleXml();
   }
 
   @Nonnull
   public AttributesDescriptor[] getAttributeDescriptors() {
     return ATTRS;
-  }
-
-  @Nonnull
-  public ColorDescriptor[] getColorDescriptors() {
-    return ColorDescriptor.EMPTY_ARRAY;                       
   }
 
   @Nonnull
@@ -83,9 +76,5 @@ public class XMLColorsPage implements ColorSettingsPage {
            "   <indexitem text=\"usage search\" target=\"find.findUsages\"/>\n&amp; &#x00B7;" +
            "   <indexitem text=\"project\" target=\"project.management\"/>\n" +
            "</index>";
-  }
-
-  public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
-    return null;
   }
 }
