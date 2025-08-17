@@ -45,16 +45,18 @@ import java.util.Map;
 public class DomResolveConverter<T extends DomElement> extends ResolvingConverter<T>{
   private static final Map<Class<? extends DomElement>,DomResolveConverter> ourCache = ConcurrentFactoryMap.createMap(DomResolveConverter::new);
   private final boolean myAttribute;
-  private final SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>> myResolveCache = new SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>>() {
+  private final SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>> myResolveCache = new SoftFactoryMap<>() {
+    @Override
     @Nonnull
     protected CachedValue<Map<String, DomElement>> create(final DomElement scope) {
       final DomManager domManager = scope.getManager();
       final Project project = domManager.getProject();
       return CachedValuesManager.getManager(project).createCachedValue(new CachedValueProvider<Map<String, DomElement>>() {
+        @Override
         public Result<Map<String, DomElement>> compute() {
-          final Map<String, DomElement> map = new HashMap<String, DomElement>();
+          final Map<String, DomElement> map = new HashMap<>();
           visitDomElement(scope, map);
-          return new Result<Map<String, DomElement>>(map, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+          return new Result<>(map, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
         }
 
         private void visitDomElement(DomElement element, final Map<String, DomElement> map) {
@@ -82,10 +84,13 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
     myAttribute = GenericAttributeValue.class.isAssignableFrom(myClass);
   }
 
+  @SuppressWarnings("unchecked")
   public static <T extends DomElement> DomResolveConverter<T> createConverter(Class<T> aClass) {
     return ourCache.get(aClass);
   }
 
+  @Override
+  @SuppressWarnings("unchecked")
   public final T fromString(final String s, final ConvertContext context) {
     if (s == null) return null;
     return (T) myResolveCache.get(getResolvingScope(context)).getValue().get(s);
@@ -108,22 +113,28 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
     return invocationElement.getManager().getResolvingScope((GenericDomValue)invocationElement);
   }
 
+  @Nonnull
+  @Override
   public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
-    return CodeInsightLocalize.errorCannotResolve01(TypePresentationService.getInstance().getTypeName(myClass), s);
+    return CodeInsightLocalize.errorCannotResolve01(TypePresentationService.getInstance().getTypeNameOrStub(myClass), s);
   }
 
+  @Override
   public final String toString(final T t, final ConvertContext context) {
     if (t == null) return null;
     return ElementPresentationManager.getElementName(t);
   }
 
+  @Override
   @Nonnull
+  @SuppressWarnings("unchecked")
   public Collection<? extends T> getVariants(final ConvertContext context) {
     final DomElement reference = context.getInvocationElement();
     final DomElement scope = reference.getManager().getResolvingScope((GenericDomValue)reference);
     return (Collection<T>)myResolveCache.get(scope).getValue().values();
   }
 
+  @Override
   public LocalQuickFix[] getQuickFixes(final ConvertContext context) {
     final DomElement element = context.getInvocationElement();
     final GenericDomValue value = ((GenericDomValue)element).createStableCopy();

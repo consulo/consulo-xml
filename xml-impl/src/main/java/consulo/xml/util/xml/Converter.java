@@ -15,16 +15,14 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.ide.IdeBundle;
 import consulo.ide.localize.IdeLocalize;
-import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.localize.LocalizeValue;
+import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.converters.values.NumberValueConverter;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * Base DOM class to convert objects of a definite type into {@link String} and back. Most often used with
@@ -50,7 +48,7 @@ public abstract class Converter<T> {
    */
   @Nonnull
   public LocalizeValue buildUnresolvedMessage(@Nullable String s, final ConvertContext context) {
-    return CodeInsightLocalize.errorCannotConvertDefaultMessage(s);
+    return CodeInsightLocalize.errorCannotConvertDefaultMessage(StringUtil.notNullize(s));
   }
 
 
@@ -58,7 +56,8 @@ public abstract class Converter<T> {
    * @deprecated {@link NumberValueConverter}
    */
   @Deprecated
-  public static final Converter<Integer> INTEGER_CONVERTER = new Converter<Integer>() {
+  public static final Converter<Integer> INTEGER_CONVERTER = new Converter<>() {
+    @Override
     public Integer fromString(final String s, final ConvertContext context) {
       if (s == null) return null;
       try {
@@ -69,25 +68,28 @@ public abstract class Converter<T> {
       }
     }
 
+    @Override
     public String toString(final Integer t, final ConvertContext context) {
       return t == null? null: t.toString();
     }
 
+    @Nonnull
+    @Override
     public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
       return IdeLocalize.valueShouldBeInteger();
     }
   };
 
   @Deprecated
-  public static final Converter<String> EMPTY_CONVERTER = new Converter<String>() {
+  public static final Converter<String> EMPTY_CONVERTER = new Converter<>() {
+    @Override
     public String fromString(final String s, final ConvertContext context) {
       return s;
     }
 
+    @Override
     public String toString(final String t, final ConvertContext context) {
       return t;
     }
-
   };
-
 }

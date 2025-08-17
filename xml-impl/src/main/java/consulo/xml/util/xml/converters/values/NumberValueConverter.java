@@ -40,6 +40,7 @@ public class NumberValueConverter extends ResolvingConverter<String> {
     myAllowEmpty = allowEmpty;
   }
 
+  @Override
   public String fromString(@Nullable @NonNls final String s, final ConvertContext context) {
     if (s == null) return null;
 
@@ -48,10 +49,12 @@ public class NumberValueConverter extends ResolvingConverter<String> {
     return parseNumber(s, myNumberClass) == null ? null : s;
   }
 
+  @Override
   public String toString(@Nullable final String s, final ConvertContext context) {
     return null;
   }
 
+  @Override
   @Nonnull
   public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
     if (s == null) return super.buildUnresolvedMessage(s, context);
