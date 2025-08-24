@@ -173,5 +173,6 @@ open module com.intellij.xml
     exports org.intellij.plugins.relaxNG.xml.dom.impl;
     exports org.intellij.plugins.relaxNG.xml.dom.names;
 
+    
     //opens consulo.xml.psi.impl.source.xml to consulo.util.concurrent;
 }

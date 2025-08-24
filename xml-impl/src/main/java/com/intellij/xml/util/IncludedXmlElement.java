@@ -16,7 +16,7 @@
 package com.intellij.xml.util;
 
 import consulo.language.impl.psi.LightElement;
-import consulo.language.impl.psi.PsiAnchor;
+import consulo.language.psi.PsiAnchor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiInvalidElementAccessException;
@@ -26,7 +26,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

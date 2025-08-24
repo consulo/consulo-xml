@@ -37,7 +37,7 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.intention.HintAction;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.intention.IntentionMetaData;
-import consulo.language.impl.psi.PsiAnchor;
+import consulo.language.psi.PsiAnchor;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
