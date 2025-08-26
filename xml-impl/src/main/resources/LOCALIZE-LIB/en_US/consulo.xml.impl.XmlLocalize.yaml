@@ -246,6 +246,12 @@ new.html.file.action:
     text: HTML File
 new.html.file.action.description:
     text: Creates new HTML file
+new.html.file.kind:
+    text: HTML File
+new.html4.file.kind:
+    text: HTML4 File
+new.xhtml.file.kind:
+    text: XHTML File
 no.class.in.selected.text.editor.error.message:
     text: No class in selected text editor
 no.external.resources:

@@ -15,15 +15,17 @@
  */
 package consulo.xml.ide.actions;
 
-import com.intellij.xml.XmlBundle;
 import consulo.application.dumb.DumbAware;
 import consulo.fileTemplate.FileTemplateManager;
 import consulo.ide.action.CreateFileFromTemplateAction;
 import consulo.ide.action.CreateFileFromTemplateDialog;
 import consulo.language.psi.PsiDirectory;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xml.impl.localize.XmlLocalize;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -33,7 +35,7 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   private static final String DEFAULT_HTML_TEMPLATE_PROPERTY = "DefaultHtmlFileTemplate";
 
   public CreateHtmlFileAction() {
-    super(XmlBundle.message("new.html.file.action"), XmlBundle.message("new.html.file.action.description"), HtmlFileType.INSTANCE.getIcon());
+    super(XmlLocalize.newHtmlFileAction(), XmlLocalize.newHtmlFileActionDescription(), HtmlFileType.INSTANCE.getIcon());
   }
 
   @Override
@@ -44,15 +46,16 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
   @Override
   protected void buildDialog(Project project, PsiDirectory directory, CreateFileFromTemplateDialog.Builder builder) {
     builder
-      .setTitle(XmlBundle.message("new.html.file.action"))
-      .addKind("HTML file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
-      .addKind("HTML4 file", HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
-      .addKind("XHTML file", XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
+      .setTitle(XmlLocalize.newHtmlFileAction())
+      .addKind(XmlLocalize.newHtmlFileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
+      .addKind(XmlLocalize.newHtml4FileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
+      .addKind(XmlLocalize.newXhtmlFileKind(), XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
   }
 
+  @Nonnull
   @Override
-  protected String getActionName(PsiDirectory directory, String newName, String templateName) {
-    return XmlBundle.message("new.html.file.action");
+  protected LocalizeValue getActionName(PsiDirectory directory, String newName, String templateName) {
+    return XmlLocalize.newHtmlFileAction();
   }
 
   @Override
