@@ -2,6 +2,10 @@ action.escape.entities.description:
     text: Escape XML/HTML special characters with entities
 action.escape.entities.text:
     text: Encode XML/HTML Special Characters
+action.new.html.file.description:
+    text: Creates new HTML file
+action.new.html.file.text:
+    text: HTML File
 add.custom.html.attribute:
     text: Add {0} to custom html attributes
 add.custom.html.tag:
@@ -114,6 +118,8 @@ generate.schema.from.instance.xml.document.lvcslabel:
     text: Generate Schema From Instance Xml Document
 global.elements.local.types.option.name:
     text: global elements/local types
+group.new.xml.descriptor.text:
+    text: XML Configuration File
 html.add.table.column.after.action:
     text: Add a new column to the table after the current one
 html.add.table.column.before.action:
@@ -242,10 +248,6 @@ namespace.alias:
     text: namespace
 negative.number.validation.problem:
     text: Negative number
-new.html.file.action:
-    text: HTML File
-new.html.file.action.description:
-    text: Creates new HTML file
 new.html.file.kind:
     text: HTML File
 new.html4.file.kind:

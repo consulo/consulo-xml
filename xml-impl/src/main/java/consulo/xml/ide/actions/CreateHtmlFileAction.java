@@ -15,6 +15,7 @@
  */
 package consulo.xml.ide.actions;
 
+import consulo.annotation.component.ActionImpl;
 import consulo.application.dumb.DumbAware;
 import consulo.fileTemplate.FileTemplateManager;
 import consulo.ide.action.CreateFileFromTemplateAction;
@@ -30,41 +31,41 @@ import jakarta.annotation.Nonnull;
 /**
  * @author Eugene.Kudelevsky
  */
+@ActionImpl(id = "NewHtmlFile")
 public class CreateHtmlFileAction extends CreateFileFromTemplateAction implements DumbAware {
+    private static final String DEFAULT_HTML_TEMPLATE_PROPERTY = "DefaultHtmlFileTemplate";
 
-  private static final String DEFAULT_HTML_TEMPLATE_PROPERTY = "DefaultHtmlFileTemplate";
+    public CreateHtmlFileAction() {
+        super(XmlLocalize.actionNewHtmlFileText(), XmlLocalize.actionNewHtmlFileDescription(), HtmlFileType.INSTANCE.getIcon());
+    }
 
-  public CreateHtmlFileAction() {
-    super(XmlLocalize.newHtmlFileAction(), XmlLocalize.newHtmlFileActionDescription(), HtmlFileType.INSTANCE.getIcon());
-  }
+    @Override
+    protected String getDefaultTemplateProperty() {
+        return DEFAULT_HTML_TEMPLATE_PROPERTY;
+    }
 
-  @Override
-  protected String getDefaultTemplateProperty() {
-    return DEFAULT_HTML_TEMPLATE_PROPERTY;
-  }
+    @Override
+    protected void buildDialog(Project project, PsiDirectory directory, CreateFileFromTemplateDialog.Builder builder) {
+        builder
+            .setTitle(XmlLocalize.actionNewHtmlFileText())
+            .addKind(XmlLocalize.newHtmlFileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
+            .addKind(XmlLocalize.newHtml4FileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
+            .addKind(XmlLocalize.newXhtmlFileKind(), XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
+    }
 
-  @Override
-  protected void buildDialog(Project project, PsiDirectory directory, CreateFileFromTemplateDialog.Builder builder) {
-    builder
-      .setTitle(XmlLocalize.newHtmlFileAction())
-      .addKind(XmlLocalize.newHtmlFileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME)
-      .addKind(XmlLocalize.newHtml4FileKind(), HtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME)
-      .addKind(XmlLocalize.newXhtmlFileKind(), XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
-  }
+    @Nonnull
+    @Override
+    protected LocalizeValue getActionName(PsiDirectory directory, String newName, String templateName) {
+        return XmlLocalize.actionNewHtmlFileText();
+    }
 
-  @Nonnull
-  @Override
-  protected LocalizeValue getActionName(PsiDirectory directory, String newName, String templateName) {
-    return XmlLocalize.newHtmlFileAction();
-  }
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 
-  @Override
-  public int hashCode() {
-    return 0;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    return obj instanceof CreateHtmlFileAction;
-  }
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof CreateHtmlFileAction;
+    }
 }
