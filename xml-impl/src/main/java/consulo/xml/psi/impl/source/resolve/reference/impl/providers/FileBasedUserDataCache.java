@@ -25,9 +25,8 @@ import consulo.util.dataholder.Key;
 
 /**
  * @author Maxim.Mossienko
-*         Date: 30.12.2008
-*         Time: 21:03:42
-*/
+ * @since 2008-12-30
+ */
 public abstract class FileBasedUserDataCache<T> extends UserDataCache<CachedValue<T>, PsiFile, Object> {
   protected CachedValue<T> compute(final PsiFile xmlFile, final Object o) {
     return CachedValuesManager.getManager(xmlFile.getProject()).createCachedValue(new CachedValueProvider<T>() {

@@ -16,9 +16,9 @@
 package consulo.xml.javaee;
 
 /**
-* @author Dmitry Avdeev
-*         Date: 7/18/12
-*/
+ * @author Dmitry Avdeev
+ * @since 2012-07-18
+ */
 public class NameLocationPair implements Comparable {
   String myName;
   String myLocation;

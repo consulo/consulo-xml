@@ -26,7 +26,7 @@ import java.io.IOException;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/3/12
+ * @since 2012-08-03
  */
 public class AttributeStubSerializer implements ObjectStubSerializer<AttributeStub, ElementStub> {
   @Nonnull

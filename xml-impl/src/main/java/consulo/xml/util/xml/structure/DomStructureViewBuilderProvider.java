@@ -30,7 +30,7 @@ import java.util.function.Function;
  * This SHOULD NOT be subclassed!
  *
  * @author Dmitry Avdeev
- *         Date: 6/7/12
+ * @since 2012-06-07
  */
 @ExtensionImpl(order = "last")
 public final class DomStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {

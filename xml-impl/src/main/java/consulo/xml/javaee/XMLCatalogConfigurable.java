@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nls;
 
 /**
  * @author Dmitry Avdeev
- * Date: 7/20/12
+ * @since 2012-07-20
  */
 @ExtensionImpl
 public class XMLCatalogConfigurable implements ProjectConfigurable {

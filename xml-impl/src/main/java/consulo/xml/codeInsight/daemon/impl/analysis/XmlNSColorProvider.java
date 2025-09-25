@@ -25,7 +25,7 @@ import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- * Date: 2013-10-17
+ * @since 2013-10-17
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlNSColorProvider {

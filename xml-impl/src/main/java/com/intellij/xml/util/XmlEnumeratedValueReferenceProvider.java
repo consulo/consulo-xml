@@ -33,7 +33,7 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- * Date: 15.08.13
+ * @since 2013-08-15
  */
 public class XmlEnumeratedValueReferenceProvider<T extends PsiElement> extends PsiReferenceProvider {
     public final static Key<Boolean> SUPPRESS = Key.create("suppress attribute value references");

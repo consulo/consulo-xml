@@ -41,8 +41,7 @@ import java.util.List;
 
 /**
  * @author Maxim.Mossienko
- * Date: Apr 15, 2008
- * Time: 4:27:25 PM
+ * @since 2008-04-15
  */
 public abstract class XmlBaseBraceMatcher implements XmlAwareBraceMatcher, VirtualFileBraceMatcher {
     private static final int XML_TAG_TOKEN_GROUP = 1;

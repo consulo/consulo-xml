@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/2/12
+ * @since 2012-08-02
  */
 public class ElementStub extends DomStub
 {

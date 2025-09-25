@@ -12,7 +12,7 @@ import consulo.util.lang.StringUtil;
 
 /**
  * @author Dmitry Avdeev
- * Date: 22.08.13
+ * @since 2013-08-22
  */
 public abstract class XmlEnumerationDescriptor<T extends XmlElement> {
     public abstract boolean isFixed();

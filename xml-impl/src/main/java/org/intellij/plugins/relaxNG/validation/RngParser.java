@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.validation;
 
 import com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl;
@@ -73,10 +72,9 @@ import javax.xml.transform.sax.SAXSource;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentMap;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.07.2007
+/**
+ * @author sweinreuter
+ * @since 2007-07-19
  */
 public class RngParser {
     private static final Logger LOG = Logger.getInstance("#RngParser");

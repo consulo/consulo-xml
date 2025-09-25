@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.validation;
 
 import com.intellij.xml.util.XmlUtil;
@@ -35,10 +34,9 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 30.07.2007
-*/
+ * @author sweinreuter
+ * @since 2007-07-30
+ */
 class Psi2SaxAdapter extends XmlElementVisitor implements PsiElementProcessor<PsiElement> {
   private final ContentHandler myHandler;
 

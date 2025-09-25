@@ -34,7 +34,7 @@ import com.intellij.xml.util.XmlUtil;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/2/12
+ * @since 2012-08-02
  */
 public abstract class DomStub extends ObjectStubBase<DomStub>
 {

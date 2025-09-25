@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.references;
 
 import consulo.language.pattern.PsiFilePattern;
@@ -33,9 +32,8 @@ import java.util.function.Function;
 import static consulo.xml.patterns.XmlPatterns.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 29.08.2007
+ * @author sweinreuter
+ * @since 2007-08-29
  */
 public class FileReferenceUtil {
 

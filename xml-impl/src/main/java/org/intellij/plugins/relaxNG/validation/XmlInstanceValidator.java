@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.validation;
 
 import consulo.xml.psi.xml.XmlDocument;
@@ -38,9 +37,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 30.07.2007
+ * @author sweinreuter
+ * @since 2007-07-30
  */
 public class XmlInstanceValidator {
   private static final Logger LOG = Logger.getInstance("XmlInstanceValidator");

@@ -29,9 +29,8 @@ import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**
- * User: Eugene.Kudelevsky
- * Date: 3/29/11
- * Time: 4:21 PM
+ * @author Eugene.Kudelevsky
+ * @since 2011-03-29
  */
 @ExtensionImpl
 public class HtmlGotoRelatedProvider extends GotoRelatedProvider {

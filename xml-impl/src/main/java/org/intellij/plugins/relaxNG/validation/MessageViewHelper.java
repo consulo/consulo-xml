@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.validation;
 
 import consulo.application.Application;
@@ -46,9 +45,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.11.2007
+ * @author sweinreuter
+ * @since 2007-11-19
  */
 public class MessageViewHelper {
   private static final Logger LOG = Logger.getInstance(MessageViewHelper.class);

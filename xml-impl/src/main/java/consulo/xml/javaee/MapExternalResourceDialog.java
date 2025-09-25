@@ -64,7 +64,7 @@ import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
- * Date: 7/17/12
+ * @since 2012-07-17
  */
 public class MapExternalResourceDialog extends DialogWrapper {
 

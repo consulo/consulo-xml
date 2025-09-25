@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 /**
  * @author Eugene Zhuravlev
- *         Date: Jun 23, 2010
+ * @since 2010-07-23
  */
 public abstract class AbstractDomDeclarationSearcher extends PomDeclarationSearcher {
 
