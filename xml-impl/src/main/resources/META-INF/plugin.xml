@@ -44,17 +44,6 @@
 			<add-to-group group-id="EditorTabPopupMenuEx" anchor="last"/>
 		</reference>
 
-
-		<group id="NewXml" text="XML">
-			<action id="NewHtmlFile" class="consulo.xml.ide.actions.CreateHtmlFileAction"/>
-			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
-		</group>
-
-		<group id="NewXmlDescriptor" class="consulo.ui.ex.action.NonEmptyActionGroup" text="XML Configuration File" popup="true"
-			   icon="consulo.platform.base.PlatformIconGroup@filetypes.xml">
-			<add-to-group group-id="NewGroup" anchor="last"/>
-		</group>
-
 		<action id="GenerateXmlTag" class="com.intellij.xml.actions.GenerateXmlTagAction"
 				text="XML Tag..."
 				description="Generate a new XML tag according to schema information">
