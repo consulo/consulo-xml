@@ -26,9 +26,9 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
-import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
 

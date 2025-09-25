@@ -32,7 +32,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.XmlFile;

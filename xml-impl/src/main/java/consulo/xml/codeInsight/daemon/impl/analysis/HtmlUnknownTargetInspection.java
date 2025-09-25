@@ -19,8 +19,8 @@ import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiReference;
-import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
