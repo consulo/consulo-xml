@@ -38,8 +38,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: Sergey.Vasiliev
- * Date: Nov 17, 2005
+ * @author Sergey.Vasiliev
+ * @since 2005-11-17
  */
 public abstract class BasicDomElementComponent<T extends DomElement> extends AbstractDomElementComponent<T> {
   private static final Logger LOG = Logger.getInstance("#com.intellij.util.xml.ui.editors.BasicDomElementComponent");

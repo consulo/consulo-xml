@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui;
 
 import consulo.util.collection.ArrayUtil;
@@ -23,7 +22,7 @@ import org.jetbrains.annotations.NonNls;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class TooltipUtils {
   @NonNls private static final String MESSAGE_DELIMITER = "<hr size=1 noshade>";

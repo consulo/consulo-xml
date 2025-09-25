@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.inspections;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -25,9 +24,8 @@ import org.jetbrains.annotations.NonNls;
 import jakarta.annotation.Nonnull;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 03.10.2007
+ * @author sweinreuter
+ * @since 2007-10-03
  */
 @ExtensionImpl
 public class RngDomInspection extends BasicDomElementsInspection<RngDomElement, Object> {

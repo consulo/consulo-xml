@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: Sergey.Vasiliev
- * Date: Nov 13, 2006
- * Time: 4:37:22 PM
- */
 package consulo.xml.util.xml.converters;
 
 import consulo.document.util.TextRange;
@@ -43,8 +36,11 @@ import jakarta.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * @author Sergey.Vasiliev
+ * @since 2006-11-13
+ */
 public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<T>> implements CustomReferenceConverter<List<T>> {
-
   protected final static Object[] EMPTY_ARRAY = ArrayUtil.EMPTY_OBJECT_ARRAY;
 
   private final String myDelimiters;

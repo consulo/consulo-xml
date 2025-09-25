@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import consulo.project.Project;
@@ -23,11 +22,10 @@ import consulo.util.dataholder.Key;
 import org.intellij.plugins.relaxNG.validation.MessageViewHelper;
 import org.xml.sax.SAXParseException;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 16.11.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-11-16
+ */
 public class IdeaErrorHandler extends ErrorHandlerImpl {
   private static final String CONTENT_NAME = "Convert Schema";
   private static final Key<NewErrorTreeViewPanel> KEY = Key.create("CONVERSION_ERRORS");

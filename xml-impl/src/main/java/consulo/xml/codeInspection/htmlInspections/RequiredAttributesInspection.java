@@ -25,8 +25,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * User: anna
- * Date: 18-Nov-2005
+ * @author anna
+ * @since 2005-11-18
  */
 @ExtensionImpl
 public class RequiredAttributesInspection extends RequiredAttributesInspectionBase implements UnfairLocalInspectionTool {

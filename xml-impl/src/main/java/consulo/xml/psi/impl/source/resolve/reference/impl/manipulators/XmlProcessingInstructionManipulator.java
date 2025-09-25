@@ -25,8 +25,8 @@ import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.annotation.Nonnull;
 
 /**
- * User: anna
- * Date: 2/20/13
+ * @author anna
+ * @since 2013-02-20
  */
 @ExtensionImpl
 public class XmlProcessingInstructionManipulator extends AbstractElementManipulator<XmlProcessingInstruction>

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui.actions;
 
 import consulo.application.ApplicationBundle;
@@ -43,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public abstract class AddDomElementAction extends AnAction {
 

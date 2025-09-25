@@ -25,11 +25,8 @@ import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 24.11.2003
- * Time: 14:17:59
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-11-24
  */
 public class XmlAttributeValueGetter
 {

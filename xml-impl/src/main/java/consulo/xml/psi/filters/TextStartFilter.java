@@ -18,11 +18,8 @@ package consulo.xml.psi.filters;
 import consulo.language.psi.PsiElement;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 27.08.2003
- * Time: 18:18:38
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-08-27
  */
 public class TextStartFilter extends XmlTextFilter{
   public TextStartFilter(String[] values){

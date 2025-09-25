@@ -22,11 +22,8 @@ import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.language.psi.PsiElement;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 07.05.2003
- * Time: 4:13:57
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-05-07
  */
 public class TargetNamespaceFilter extends XmlTextFilter
 {

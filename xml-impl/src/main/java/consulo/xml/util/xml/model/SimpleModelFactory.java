@@ -23,7 +23,7 @@ import jakarta.annotation.Nullable;
 import java.util.Set;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public interface SimpleModelFactory<T extends DomElement, M extends DomModel<T>> {
 

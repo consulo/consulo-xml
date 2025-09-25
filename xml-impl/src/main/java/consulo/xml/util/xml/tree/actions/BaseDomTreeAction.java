@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.ui.ex.action.AnAction;
@@ -21,7 +20,7 @@ import consulo.ui.ex.action.AnActionEvent;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 abstract public class BaseDomTreeAction extends AnAction {
   private DomModelTreeView myTreeView;

@@ -24,7 +24,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public interface CachedDomModelFactory <T extends DomElement, M extends DomModel<T>, Scope extends UserDataHolder> {
   @Nonnull

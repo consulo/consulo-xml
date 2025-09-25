@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.application.presentation.TypePresentationService;
@@ -30,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class DomElementsToggleAction extends ToggleAction {
   private final DomModelTreeView myTreeView;
