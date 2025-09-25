@@ -15,31 +15,29 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.xml.XmlBundle;
-import consulo.application.ApplicationManager;
-import consulo.application.util.function.Computable;
+import consulo.annotation.component.ActionImpl;
+import consulo.application.Application;
 import consulo.document.FileDocumentManager;
 import consulo.fileEditor.FileEditorManager;
-import consulo.ide.impl.idea.openapi.util.io.FileUtil;
-import consulo.language.editor.CommonDataKeys;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.awt.Messages;
 import consulo.util.collection.ArrayUtil;
+import consulo.util.io.FileUtil;
 import consulo.util.lang.ExceptionUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ApplicationExternalResourceManager;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,63 +45,68 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author Konstantin Bulenkov
  */
+@ActionImpl(id = "Document2XSD")
 public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
+    public GenerateInstanceDocumentFromSchemaAction() {
+        super(XmlLocalize.actionDocumentToXsdText());
+    }
+
     @Override
     public void update(AnActionEvent e) {
-        final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-        final boolean enabled = isAcceptableFile(file);
+        VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+        boolean enabled = isAcceptableFile(file);
         e.getPresentation().setEnabled(enabled);
         if (ActionPlaces.isPopupPlace(e.getPlace())) {
             e.getPresentation().setVisible(enabled);
         }
     }
 
+    @Override
+    @RequiredUIAccess
     public void actionPerformed(AnActionEvent e) {
-        final Project project = e.getData(CommonDataKeys.PROJECT);
-        final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+        Project project = e.getData(Project.KEY);
+        VirtualFile file = e.getRequiredData(VirtualFile.KEY);
 
-        final GenerateInstanceDocumentFromSchemaDialog dialog = new GenerateInstanceDocumentFromSchemaDialog(project, file);
-        dialog.setOkAction(new Runnable() {
-            public void run() {
-                doAction(project, dialog);
-            }
-        });
+        GenerateInstanceDocumentFromSchemaDialog dialog = new GenerateInstanceDocumentFromSchemaDialog(project, file);
+        dialog.setOkAction(() -> doAction(project, dialog));
 
         dialog.show();
     }
 
-    private void doAction(final Project project, final GenerateInstanceDocumentFromSchemaDialog dialog) {
+    @RequiredUIAccess
+    private void doAction(Project project, GenerateInstanceDocumentFromSchemaDialog dialog) {
         FileDocumentManager.getInstance().saveAllDocuments();
 
-        @NonNls List<String> parameters = new LinkedList<String>();
+        List<String> parameters = new LinkedList<>();
 
-        final String url = dialog.getUrl().getText();
-        final VirtualFile relativeFile =
-            VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
-        final PsiFile file = PsiManager.getInstance(project).findFile(relativeFile);
+        String url = dialog.getUrl().getText();
+        VirtualFile relativeFile =
+            VirtualFileUtil.findRelativeFile(ApplicationExternalResourceManager.getInstance().getResourceLocation(url), null);
+        PsiFile file = PsiManager.getInstance(project).findFile(relativeFile);
         if (!(file instanceof XmlFile)) {
             Messages.showErrorDialog(
                 project,
-                "This is not XmlFile" + file == null ? "" : " (" + file.getFileType().getName() + ")",
-                XmlBundle.message("error")
+                "This is not XmlFile" + (file == null ? "" : " (" + file.getFileType().getName() + ")"),
+                XmlLocalize.error().get()
             );
             return;
         }
 
         VirtualFile relativeFileDir;
         if (relativeFile == null) {
-            Messages.showErrorDialog(project, XmlBundle.message("file.doesnt.exist", url), XmlBundle.message("error"));
+            Messages.showErrorDialog(project, XmlLocalize.fileDoesntExist(url).get(), XmlLocalize.error().get());
             return;
         }
         else {
             relativeFileDir = relativeFile.getParent();
         }
         if (relativeFileDir == null) {
-            Messages.showErrorDialog(project, XmlBundle.message("file.doesnt.exist", url), XmlBundle.message("error"));
+            Messages.showErrorDialog(project, XmlLocalize.fileDoesntExist(url).get(), XmlLocalize.error().get());
             return;
         }
 
@@ -115,20 +118,19 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
             parameters.add("-noupa");
         }
 
-
         String pathToUse;
 
         try {
-            final File tempDir = FileUtil.createTempFile("xsd2inst", "");
+            File tempDir = FileUtil.createTempFile("xsd2inst", "");
             tempDir.delete();
             tempDir.mkdir();
 
             pathToUse = tempDir.getPath() + File.separatorChar + Xsd2InstanceUtils.processAndSaveAllSchemas(
-                (XmlFile)file,
+                (XmlFile) file,
                 new HashMap<>(),
                 (schemaFileName, schemaContent) -> {
                     try {
-                        final String fullFileName = tempDir.getPath() + File.separatorChar + schemaFileName;
+                        String fullFileName = tempDir.getPath() + File.separatorChar + schemaFileName;
                         FileUtils.saveStreamContentAsFile(
                             fullFileName,
                             new ByteArrayInputStream(schemaContent)
@@ -154,12 +156,11 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
             xml = Xsd2InstanceUtils.generate(ArrayUtil.toStringArray(parameters));
         }
         catch (IllegalArgumentException e) {
-            Messages.showErrorDialog(project, ExceptionUtil.getMessage(e), XmlBundle.message("error"));
+            Messages.showErrorDialog(project, ExceptionUtil.getMessage(e), XmlLocalize.error().get());
             return;
         }
 
-
-        final VirtualFile baseDirForCreatedInstanceDocument1 = relativeFileDir;
+        VirtualFile baseDirForCreatedInstanceDocument1 = relativeFileDir;
         String xmlFileName = baseDirForCreatedInstanceDocument1.getPath() + File.separatorChar + dialog.getOutputFileName();
 
         FileOutputStream fileOutputStream;
@@ -173,20 +174,17 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
                 fileOutputStream.close();
             }
 
-            final File xmlFile = new File(xmlFileName);
-            VirtualFile virtualFile = ApplicationManager.getApplication().runWriteAction(new Computable<VirtualFile>() {
-                @Nullable
-                public VirtualFile compute() {
-                    return LocalFileSystem.getInstance().refreshAndFindFileByIoFile(xmlFile);
-                }
-            });
+            File xmlFile = new File(xmlFileName);
+            VirtualFile virtualFile = Application.get().runWriteAction(
+                (Supplier<VirtualFile>) () -> LocalFileSystem.getInstance().refreshAndFindFileByIoFile(xmlFile)
+            );
             FileEditorManager.getInstance(project).openFile(virtualFile, true);
         }
         catch (IOException e) {
             Messages.showErrorDialog(
                 project,
                 "Could not save generated XML document: " + ExceptionUtil.getMessage(e),
-                XmlBundle.message("error")
+                XmlLocalize.error().get()
             );
         }
     }

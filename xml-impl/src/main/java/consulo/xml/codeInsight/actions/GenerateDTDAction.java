@@ -17,6 +17,7 @@ package consulo.xml.codeInsight.actions;
 
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.component.ActionImpl;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.action.CodeInsightActionHandler;
 import consulo.language.editor.impl.action.BaseCodeInsightAction;
@@ -26,6 +27,7 @@ import consulo.language.psi.PsiFileFactory;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
@@ -33,6 +35,7 @@ import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlProcessingInstruction;
@@ -44,8 +47,13 @@ import jakarta.annotation.Nullable;
  * @author ik
  * @since 2023-05-22
  */
+@ActionImpl(id = "GenerateDTD")
 public class GenerateDTDAction extends BaseCodeInsightAction {
     private static final Logger LOG = Logger.getInstance(GenerateDTDAction.class);
+
+    public GenerateDTDAction() {
+        super(XmlLocalize.actionGenerateDtdText(), LocalizeValue.empty());
+    }
 
     @Nonnull
     @Override
@@ -70,7 +78,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
                                 sb.insert(text.length(), whiteSpace.getText());
                             }
                         }
-                        XmlFile tempFile = (XmlFile)PsiFileFactory.getInstance(file.getProject())
+                        XmlFile tempFile = (XmlFile) PsiFileFactory.getInstance(file.getProject())
                             .createFileFromText("dummy.xml", sb.toString());
                         prolog.replace(tempFile.getDocument().getProlog());
                     }
@@ -99,8 +107,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
     }
 
     @Override
-    @RequiredUIAccess
-    public void update(AnActionEvent event) {
+    public void update(@Nonnull AnActionEvent event) {
         super.update(event);
         if (ActionPlaces.isPopupPlace(event.getPlace())) {
             Presentation presentation = event.getPresentation();

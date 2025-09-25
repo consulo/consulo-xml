@@ -21,6 +21,10 @@ import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
+import consulo.annotation.component.ActionImpl;
+import consulo.annotation.component.ActionParentRef;
+import consulo.annotation.component.ActionRef;
+import consulo.annotation.component.ActionRefAnchor;
 import consulo.codeEditor.Editor;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
@@ -29,7 +33,7 @@ import consulo.document.Document;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.CodeInsightUtilCore;
-import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.FileModificationService;
 import consulo.language.editor.action.SimpleCodeInsightAction;
 import consulo.language.editor.hint.HintManager;
 import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
@@ -50,9 +54,12 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.action.IdeActions;
 import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.popup.JBPopup;
 import consulo.ui.ex.popup.JBPopupFactory;
+import consulo.undoRedo.CommandProcessor;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
 import consulo.xml.psi.xml.*;
@@ -67,26 +74,35 @@ import java.util.*;
 /**
  * @author Dmitry Avdeev
  */
+@ActionImpl(
+    id = "GenerateXmlTag",
+    parents = @ActionParentRef(value = @ActionRef(id = IdeActions.GROUP_GENERATE), anchor = ActionRefAnchor.FIRST)
+)
 public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     private final static Logger LOG = Logger.getInstance(GenerateXmlTagAction.class);
 
-    @RequiredUIAccess
+    public GenerateXmlTagAction() {
+        getTemplatePresentation().setTextValue(XmlLocalize.actionGenerateXmlTagText());
+        getTemplatePresentation().setDescriptionValue(XmlLocalize.actionGenerateXmlTagDescription());
+    }
+
     @Override
-    public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
+    @RequiredUIAccess
+    public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
         if (!LanguageEditorUtil.checkModificationAllowed(editor)) {
             return;
         }
         try {
-            final XmlTag contextTag = getContextTag(editor, file);
+            XmlTag contextTag = getContextTag(editor, (XmlFile) file);
             if (contextTag == null) {
                 throw new CommonRefactoringUtil.RefactoringErrorHintException("Caret should be positioned inside a tag");
             }
             XmlElementDescriptor currentTagDescriptor = contextTag.getDescriptor();
-            final XmlElementDescriptor[] descriptors = currentTagDescriptor.getElementsDescriptors(contextTag);
-            Arrays.sort(descriptors, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+            XmlElementDescriptor[] descriptors = currentTagDescriptor.getElementsDescriptors(contextTag);
+            Arrays.sort(descriptors, Comparator.comparing(PsiMetaData::getName));
 
             JBPopup popup = JBPopupFactory.getInstance().createPopupChooserBuilder(List.of(descriptors))
-                .setTitle("Choose Tag Name")
+                .setTitle(XmlLocalize.popupTitleChooseTagName().get())
                 .setRenderer(new ColoredListCellRenderer<XmlElementDescriptor>() {
                     @Override
                     protected void customizeCellRenderer(
@@ -112,10 +128,15 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                         return;
                     }
 
-                    new WriteCommandAction.Simple(project, "Generate XML Tag", file) {
-                        @Override
-                        @RequiredWriteAction
-                        protected void run() {
+                    if (!FileModificationService.getInstance().preparePsiElementsForWrite(file)) {
+                        return;
+                    }
+
+                    CommandProcessor.getInstance().newCommand()
+                        .project(project)
+                        .name(XmlLocalize.commandNameGenerateXmlTag())
+                        .inWriteAction()
+                        .run(() -> {
                             XmlTag newTag = createTag(contextTag, selected);
 
                             PsiElement anchor = getAnchor(contextTag, editor, selected);
@@ -127,11 +148,10 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                                 newTag = PsiTreeUtil.getParentOfType(file.findElementAt(offset + 1), XmlTag.class, false);
                             }
                             else {
-                                newTag = (XmlTag)contextTag.addAfter(newTag, anchor);
+                                newTag = (XmlTag) contextTag.addAfter(newTag, anchor);
                             }
                             generateTag(newTag);
-                        }
-                    }.execute();
+                        });
                 })
                 .setNamerForFiltering(PsiMetaData::getName)
                 .createPopup();
@@ -168,10 +188,10 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         return previousPositionIsPossible ? null : anchor;
     }
 
-    @RequiredReadAction
+    @RequiredWriteAction
     public static void generateTag(XmlTag newTag) {
         generateRaw(newTag);
-        final XmlTag restored = CodeInsightUtilCore.forcePsiPostprocessAndRestoreElement(newTag);
+        XmlTag restored = CodeInsightUtilCore.forcePsiPostprocessAndRestoreElement(newTag);
         if (restored == null) {
             LOG.error("Could not restore tag: " + newTag.getText());
         }
@@ -180,8 +200,8 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         builder.run();
     }
 
-    @RequiredReadAction
-    private static void generateRaw(final XmlTag newTag) {
+    @RequiredWriteAction
+    private static void generateRaw(XmlTag newTag) {
         XmlElementDescriptor selected = newTag.getDescriptor();
         if (selected == null) {
             return;
@@ -255,7 +275,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
         }
     }
 
-    @RequiredReadAction
+    @RequiredWriteAction
     private static XmlTag createTag(@Nonnull XmlTag contextTag, @Nonnull XmlElementDescriptor descriptor) {
         String namespace = getNamespace(descriptor);
         XmlTag tag = contextTag.createChildTag(descriptor.getName(), namespace, null, false);
@@ -266,25 +286,24 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     }
 
     private static String getNamespace(XmlElementDescriptor descriptor) {
-        return descriptor instanceof XmlElementDescriptorImpl ? ((XmlElementDescriptorImpl)descriptor).getNamespace() : "";
+        return descriptor instanceof XmlElementDescriptorImpl descriptorImpl ? descriptorImpl.getNamespace() : "";
     }
 
-    @RequiredReadAction
     @Nullable
-    private static XmlTag getContextTag(Editor editor, PsiFile file) {
+    @RequiredReadAction
+    private static XmlTag getContextTag(Editor editor, XmlFile file) {
         PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
         XmlTag tag = null;
         if (element != null) {
             tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
         }
         if (tag == null) {
-            tag = ((XmlFile)file).getRootTag();
+            tag = file.getRootTag();
         }
         return tag;
     }
 
     private static List<XmlElementDescriptor> computeRequiredSubTags(XmlElementsGroup group) {
-
         if (group.getMinOccurs() < 1) {
             return Collections.emptyList();
         }
@@ -293,7 +312,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                 XmlElementDescriptor descriptor = group.getLeafDescriptor();
                 return descriptor == null ? Collections.<XmlElementDescriptor>emptyList() : Collections.singletonList(descriptor);
             case CHOICE:
-                LinkedHashSet<XmlElementDescriptor> set = null;
+                Set<XmlElementDescriptor> set = null;
                 for (XmlElementsGroup subGroup : group.getSubGroups()) {
                     List<XmlElementDescriptor> descriptors = computeRequiredSubTags(subGroup);
                     if (set == null) {
@@ -309,7 +328,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                 return new ArrayList<>(set);
 
             default:
-                ArrayList<XmlElementDescriptor> list = new ArrayList<>();
+                List<XmlElementDescriptor> list = new ArrayList<>();
                 for (XmlElementsGroup subGroup : group.getSubGroups()) {
                     list.addAll(computeRequiredSubTags(subGroup));
                 }
@@ -320,10 +339,10 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     @Override
     @RequiredReadAction
     protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
-        if (!(file instanceof XmlFile)) {
+        if (!(file instanceof XmlFile xmlFile)) {
             return false;
         }
-        XmlTag contextTag = getContextTag(editor, file);
+        XmlTag contextTag = getContextTag(editor, xmlFile);
         return contextTag != null && contextTag.getDescriptor() != null;
     }
 
