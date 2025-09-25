@@ -31,23 +31,12 @@
 			<add-to-group group-id="EditorTabPopupMenuEx" anchor="last"/>
 		</reference>
 
-		<action id="DomElementsTreeView.GotoDomElementDeclarationAction"
-				class="consulo.xml.util.xml.tree.actions.GotoDomElementDeclarationAction"
-				text="Goto Element"
-				use-shortcut-of="EditSource"/>
-
-		<action id="DomElementsTreeView.AddElement" class="consulo.xml.util.xml.tree.actions.AddElementInCollectionAction"
-				text="Insert element">
+		<reference id="DomElementsTreeView.AddElement">
 			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
-		</action>
-		<action id="DomElementsTreeView.DeleteElement" class="consulo.xml.util.xml.tree.actions.DeleteDomElement"
-				text="Delete element" use-shortcut-of="$Delete"/>
-
-		<group id="DomElementsTreeView.AddElementGroup" class="consulo.xml.util.xml.tree.actions.AddDomElementActionGroup"/>
+		</reference>
 
 		<group id="DomElementsTreeView.TreePopup">
 			<reference ref="DomElementsTreeView.GotoDomElementDeclarationAction"/>
-
 			<separator/>
 			<reference ref="DomElementsTreeView.AddElementGroup"/>
 			<reference ref="DomElementsTreeView.DeleteElement"/>

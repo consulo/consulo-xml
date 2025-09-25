@@ -15,49 +15,60 @@
  */
 package consulo.xml.util.xml.tree.actions;
 
+import consulo.localize.LocalizeValue;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.xml.util.xml.tree.DomModelTreeView;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Sergey.Vasiliev
  */
 abstract public class BaseDomTreeAction extends AnAction {
-  private DomModelTreeView myTreeView;
+    private DomModelTreeView myTreeView;
 
-  protected BaseDomTreeAction() {
-  }
-
-  protected BaseDomTreeAction(DomModelTreeView treeView) {
-    myTreeView = treeView;
-  }
-
-  final public void update(AnActionEvent e) {
-    final DomModelTreeView treeView = getTreeView(e);
-
-    if (treeView != null) {
-      update(e, treeView);
+    protected BaseDomTreeAction(@Nonnull LocalizeValue text) {
+        super(text);
     }
-    else {
-      e.getPresentation().setEnabled(false);
+
+    protected BaseDomTreeAction(@Nonnull LocalizeValue text, DomModelTreeView treeView) {
+        super(text);
+        myTreeView = treeView;
     }
-  }
 
-  protected DomModelTreeView getTreeView(AnActionEvent e) {
-    if (myTreeView != null) return myTreeView;
+    @Override
+    final public void update(@Nonnull AnActionEvent e) {
+        DomModelTreeView treeView = getTreeView(e);
 
-    return e.getData(DomModelTreeView.DATA_KEY);
-  }
-
-  final public void actionPerformed(AnActionEvent e) {
-    final DomModelTreeView treeView = getTreeView(e);
-    if (treeView != null) {
-      actionPerformed(e, treeView);
+        if (treeView != null) {
+            update(e, treeView);
+        }
+        else {
+            e.getPresentation().setEnabled(false);
+        }
     }
-  }
 
-  public abstract void actionPerformed(AnActionEvent e, DomModelTreeView treeView);
+    protected DomModelTreeView getTreeView(AnActionEvent e) {
+        if (myTreeView != null) {
+            return myTreeView;
+        }
 
-  public abstract void update(AnActionEvent e, DomModelTreeView treeView);
+        return e.getData(DomModelTreeView.DATA_KEY);
+    }
+
+    @Override
+    @RequiredUIAccess
+    final public void actionPerformed(@Nonnull AnActionEvent e) {
+        DomModelTreeView treeView = getTreeView(e);
+        if (treeView != null) {
+            actionPerformed(e, treeView);
+        }
+    }
+
+    @RequiredUIAccess
+    public abstract void actionPerformed(AnActionEvent e, DomModelTreeView treeView);
+
+    public abstract void update(AnActionEvent e, DomModelTreeView treeView);
 }
 

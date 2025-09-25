@@ -15,12 +15,18 @@
  */
 package consulo.xml.util.xml.tree.actions;
 
-import consulo.application.AllIcons;
-import consulo.ui.ex.action.AnActionEvent;
-import consulo.application.ApplicationBundle;
+import consulo.annotation.component.ActionImpl;
+import consulo.annotation.component.ActionRef;
 import consulo.application.Result;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.language.editor.WriteCommandAction;
+import consulo.localize.LocalizeValue;
+import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.IdeActions;
 import consulo.ui.ex.awt.Messages;
+import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
@@ -29,77 +35,81 @@ import consulo.xml.util.xml.ElementPresentation;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.tree.DomFileElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
+import jakarta.inject.Inject;
 
 /**
  * @author Sergey.Vasiliev
  */
+@ActionImpl(id = "DomElementsTreeView.DeleteElement", shortcutFrom = @ActionRef(id = IdeActions.ACTION_DELETE))
 public class DeleteDomElement extends BaseDomTreeAction {
+    @Inject
+    public DeleteDomElement() {
+        super(LocalizeValue.localizeTODO("Delete element"));
+    }
 
-  public DeleteDomElement() {
-  }
+    public DeleteDomElement(DomModelTreeView treeView) {
+        super(LocalizeValue.localizeTODO("Delete element"), treeView);
+    }
 
-  public DeleteDomElement(final DomModelTreeView treeView) {
-    super(treeView);
-  }
+    @Override
+    @RequiredUIAccess
+    public void actionPerformed(AnActionEvent e, DomModelTreeView treeView) {
+        if (treeView.getTree().getSelectedNode() instanceof BaseDomElementNode baseDomNode) {
+            if (baseDomNode instanceof DomFileElementNode) {
+                e.getPresentation().setVisible(false);
+                return;
+            }
 
-  public void actionPerformed(AnActionEvent e, DomModelTreeView treeView) {
-    final SimpleNode selectedNode = treeView.getTree().getSelectedNode();
+            final DomElement domElement = baseDomNode.getDomElement();
 
-    if (selectedNode instanceof BaseDomElementNode) {
-
-      if (selectedNode instanceof DomFileElementNode) {
-        e.getPresentation().setVisible(false);
-        return;
-      }
-      
-      final DomElement domElement = ((BaseDomElementNode)selectedNode).getDomElement();
-
-      final int ret = Messages.showOkCancelDialog(getPresentationText(selectedNode) + "?", ApplicationBundle.message("action.remove"),
-                                                  Messages.getQuestionIcon());
-      if (ret == 0) {
-      new WriteCommandAction(domElement.getManager().getProject(), DomUtil.getFile(domElement)) {
-        protected void run(final Result result) throws Throwable {
-          domElement.undefine();
+            int ret = Messages.showOkCancelDialog(
+                getPresentationText(baseDomNode) + "?",
+                ApplicationLocalize.actionRemove().get(),
+                UIUtil.getQuestionIcon()
+            );
+            if (ret == 0) {
+                new WriteCommandAction(domElement.getManager().getProject(), DomUtil.getFile(domElement)) {
+                    @Override
+                    protected void run(Result result) throws Throwable {
+                        domElement.undefine();
+                    }
+                }.execute();
+            }
         }
-      }.execute();
-      }
-    }
-  }
-
-  public void update(AnActionEvent e, DomModelTreeView treeView) {
-    final SimpleNode selectedNode = treeView.getTree().getSelectedNode();
-
-    if (selectedNode instanceof DomFileElementNode) {
-      e.getPresentation().setVisible(false);
-      return;
     }
 
-    boolean enabled = false;
-    if (selectedNode instanceof BaseDomElementNode) {
-      final DomElement domElement = ((BaseDomElementNode)selectedNode).getDomElement();
-      if (domElement.isValid() && DomUtil.hasXml(domElement) && !(domElement.getParent() instanceof DomFileElement)) {
-        enabled = true;
-      }
+    @Override
+    public void update(AnActionEvent e, DomModelTreeView treeView) {
+        SimpleNode selectedNode = treeView.getTree().getSelectedNode();
+
+        if (selectedNode instanceof DomFileElementNode) {
+            e.getPresentation().setVisible(false);
+            return;
+        }
+
+        boolean enabled = false;
+        if (selectedNode instanceof BaseDomElementNode baseDomNode) {
+            DomElement domElement = baseDomNode.getDomElement();
+            if (domElement.isValid() && DomUtil.hasXml(domElement) && !(domElement.getParent() instanceof DomFileElement)) {
+                enabled = true;
+                e.getPresentation().setTextValue(getPresentationText(baseDomNode));
+            }
+        }
+
+        e.getPresentation().setEnabled(enabled);
+        if (!enabled) {
+            e.getPresentation().setTextValue(ApplicationLocalize.actionRemove());
+        }
+        e.getPresentation().setIcon(PlatformIconGroup.generalRemove());
     }
 
-    e.getPresentation().setEnabled(enabled);
-
-
-    if (enabled) {
-      e.getPresentation().setText(getPresentationText(selectedNode));
+    private static LocalizeValue getPresentationText(BaseDomElementNode selectedNode) {
+        String removeString = ApplicationLocalize.actionRemove().get();
+        ElementPresentation presentation = selectedNode.getDomElement().getPresentation();
+        removeString += " " + presentation.getTypeName() +
+            (presentation.getElementName() == null || presentation.getElementName()
+                .trim()
+                .length() == 0 ? "" : ": " + presentation.getElementName());
+        return LocalizeValue.localizeTODO(removeString);
     }
-    else {
-      e.getPresentation().setText(ApplicationBundle.message("action.remove"));
-    }
-
-    e.getPresentation().setIcon(AllIcons.General.Remove);
-  }
-
-  private static String getPresentationText(final SimpleNode selectedNode) {
-    String removeString = ApplicationBundle.message("action.remove");
-    final ElementPresentation presentation = ((BaseDomElementNode)selectedNode).getDomElement().getPresentation();
-    removeString += " " + presentation.getTypeName() +
-                                (presentation.getElementName() == null || presentation.getElementName().trim().length() == 0? "" : ": " + presentation.getElementName());
-    return removeString;
-  }
 }
