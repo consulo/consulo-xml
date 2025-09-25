@@ -9,12 +9,6 @@
 	</tags>
 
 	<actions>
-		<action id="ConvertSchemaAction" class="org.intellij.plugins.relaxNG.convert.ConvertSchemaAction"
-				text="Convert Schema..."
-				description="Converts the selected Schema document (RNG, RNC, XSD, DTD) into another format">
-			<add-to-group group-id="ToolsXmlGroup" anchor="after" relative-to-action="GenerateDTD"/>
-		</action>
-
 		<group id="XmlGenerateToolsGroup">
 			<separator/>
 			<reference ref="GenerateDTD"/>

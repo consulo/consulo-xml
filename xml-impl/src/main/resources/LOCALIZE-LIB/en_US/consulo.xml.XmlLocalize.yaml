@@ -20,8 +20,6 @@ action.validate.xml.text:
     text: _Validate
 action.xsd.to.document.text:
     text: Generate XSD Schema from XML File...
-group.tools.text:
-    text: XML Actions
 add.custom.html.attribute:
     text: Add {0} to custom html attributes
 add.custom.html.tag:
@@ -146,6 +144,8 @@ global.elements.local.types.option.name:
     text: global elements/local types
 group.new.xml.descriptor.text:
     text: XML Configuration File
+group.tools.text:
+    text: XML Actions
 html.add.table.column.after.action:
     text: Add a new column to the table after the current one
 html.add.table.column.before.action:
