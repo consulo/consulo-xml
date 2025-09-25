@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.11.2007
+ * @author sweinreuter
+ * @since 2007-11-17
  */
 public enum SchemaType {
   RNG, RNC, DTD,

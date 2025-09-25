@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.application.AllIcons;
@@ -32,7 +31,7 @@ import consulo.xml.util.xml.tree.DomFileElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class DeleteDomElement extends BaseDomTreeAction {
 

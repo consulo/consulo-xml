@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui;
 
 import consulo.ui.ex.awt.util.Alarm;
@@ -25,7 +24,7 @@ import consulo.disposer.Disposable;
 import consulo.ide.ServiceManager;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class CommitablePanelUserActivityListener implements UserActivityListener, Disposable
 {

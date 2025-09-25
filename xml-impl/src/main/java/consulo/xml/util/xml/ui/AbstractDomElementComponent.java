@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui;
 
 import consulo.ui.ex.awt.UIUtil;
@@ -21,10 +20,9 @@ import consulo.xml.util.xml.DomElement;
 
 import java.awt.*;
 
-
 /**
- * User: Sergey.Vasiliev
- * Date: Nov 18, 2005
+ * @author Sergey.Vasiliev
+ * @since 2005-11-18
  */
 public abstract class AbstractDomElementComponent<T extends DomElement> extends CompositeCommittable implements CommittablePanel {
   protected T myDomElement;

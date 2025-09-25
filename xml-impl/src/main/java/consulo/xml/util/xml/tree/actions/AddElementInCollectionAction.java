@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.application.ApplicationBundle;
@@ -45,7 +44,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class AddElementInCollectionAction extends AddDomElementAction {
   private DomModelTreeView myTreeView;

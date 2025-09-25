@@ -23,11 +23,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 30.01.2003
- * Time: 13:57:35
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-01-30
  */
 public class XmlTextFilter implements ElementFilter {
   protected String[] myValue;

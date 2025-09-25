@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui.actions;
 
 import java.lang.reflect.Type;
@@ -39,8 +38,8 @@ import consulo.ui.image.Image;
 import consulo.language.util.IncorrectOperationException;
 
 /**
- * User: Sergey.Vasiliev
- * Date: Mar 1, 2006
+ * @author Sergey.Vasiliev
+ * @since 2006-03-01
  */
 public abstract class DefaultAddAction<T extends DomElement> extends AnAction {
 

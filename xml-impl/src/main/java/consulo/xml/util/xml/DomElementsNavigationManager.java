@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml;
 
 import consulo.annotation.component.ComponentScope;
@@ -24,7 +23,7 @@ import consulo.project.Project;
 import java.util.Set;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 @ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomElementsNavigationManager {

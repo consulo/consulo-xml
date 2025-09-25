@@ -3,8 +3,8 @@ package consulo.xml.codeInspection.htmlInspections;
 import org.jetbrains.annotations.NonNls;
 
 /**
- * User: anna
- * Date: 16-Dec-2005
+ * @author anna
+ * @since 2005-12-16
  */
 @Deprecated
 public interface XmlEntitiesInspection {

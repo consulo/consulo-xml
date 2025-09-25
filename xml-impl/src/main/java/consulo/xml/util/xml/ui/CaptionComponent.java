@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui;
 
 import consulo.disposer.Disposer;
@@ -23,7 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class CaptionComponent extends JPanel implements Committable, Highlightable {
   private JPanel myRootPanel;

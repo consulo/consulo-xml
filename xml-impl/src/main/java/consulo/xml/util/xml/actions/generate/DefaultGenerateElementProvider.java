@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.actions.generate;
 
 import consulo.codeEditor.Editor;
@@ -37,7 +36,7 @@ import java.util.List;
 import jakarta.annotation.Nullable;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public abstract class DefaultGenerateElementProvider<T extends DomElement> extends GenerateDomElementProvider<T> {
   private final Class<T> myChildElementClass;

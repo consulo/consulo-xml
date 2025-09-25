@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.inspections;
 
 import consulo.document.Document;
@@ -40,9 +39,8 @@ import jakarta.annotation.Nullable;
 import java.util.function.Function;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 25.11.2007
+ * @author sweinreuter
+ * @since 2007-11-25
  */
 public abstract class BaseInspection extends XmlSuppressableInspectionTool {
   @Override

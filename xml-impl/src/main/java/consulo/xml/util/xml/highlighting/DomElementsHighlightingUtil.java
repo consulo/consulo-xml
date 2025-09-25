@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.highlighting;
 
 import consulo.codeEditor.CodeInsightColors;
@@ -35,7 +34,7 @@ import jakarta.annotation.Nullable;
 import java.util.function.Function;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class DomElementsHighlightingUtil {
   private DomElementsHighlightingUtil() {

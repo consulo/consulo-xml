@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: Sergey.Vasiliev
- * Date: Nov 13, 2006
- * Time: 4:37:22 PM
- */
 package consulo.xml.util.xml.converters;
 
 import consulo.language.psi.ElementManipulator;
@@ -41,6 +34,10 @@ import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * @author Sergey.Vasiliev
+ * @since 2006-11-13
+ */
 public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> implements CustomReferenceConverter<T> {
 
   public static final char[] QUOTE_SIGNS = new char[] {'\'', '\"', '`'};

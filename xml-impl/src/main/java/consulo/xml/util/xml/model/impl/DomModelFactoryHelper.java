@@ -24,7 +24,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class DomModelFactoryHelper<T extends DomElement> {
   protected final Class<T> myClass;

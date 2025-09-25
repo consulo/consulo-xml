@@ -32,8 +32,8 @@ import jakarta.annotation.Nonnull;
 import javax.swing.*;
 
 /**
- * User: anna
- * Date: 10/27/10
+ * @author anna
+ * @since 2010-10-27
  */
 public abstract class UpdateXmlBasedCopyrightsProvider extends UpdateCopyrightsProvider {
   private static final String[] LOCATIONS_IN_FILE = new String[]{"Before Doctype", "Before Root Tag"};
