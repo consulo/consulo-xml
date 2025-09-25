@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model;
 
 import consulo.language.psi.PsiElement;
@@ -21,9 +20,8 @@ import consulo.language.psi.PsiElement;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.09.2007
+ * @author sweinreuter
+ * @since 2007-09-17
  */
 public interface CommonElement<E extends PsiElement> {
   void accept(Visitor visitor);

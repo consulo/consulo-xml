@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Sep 30, 2002
- * Time: 9:46:52 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.PsiElement;
@@ -29,6 +20,10 @@ import consulo.xml.psi.xml.XmlElement;
 import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.util.collection.ArrayUtil;
 
+/**
+ * @author mike
+ * @since 2002-09-30
+ */
 public class AnyXmlAttributeDescriptor implements XmlAttributeDescriptor {
     private final String myAttributeName;
     private final ComplexTypeDescriptor.CanContainAttributeType myCanContainAttributeType;

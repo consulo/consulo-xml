@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.language.editor.completion.lookup.LookupValueFactory;
@@ -42,9 +41,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 18.08.2007
+ * @author sweinreuter
+ * @since 2007-08-18
  */
 public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue>
         implements LocalQuickFixProvider,

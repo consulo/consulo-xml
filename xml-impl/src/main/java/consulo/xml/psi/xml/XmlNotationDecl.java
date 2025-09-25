@@ -16,11 +16,8 @@
 package consulo.xml.psi.xml;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 13.11.2003
- * Time: 17:48:06
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-11-13
  */
 public interface XmlNotationDecl extends XmlElement{
   XmlElement getNameElement();

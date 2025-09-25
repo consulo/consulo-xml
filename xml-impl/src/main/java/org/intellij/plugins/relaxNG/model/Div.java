@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model;
 
 import consulo.language.psi.PsiElement;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.09.2007
+ * @author sweinreuter
+ * @since 2007-09-17
  */
 public interface Div<E extends PsiElement> extends CommonElement<E> {
 }

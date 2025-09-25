@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.resolve;
 
 import consulo.xml.psi.xml.XmlFile;
@@ -26,9 +25,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 24.11.2007
+ * @author sweinreuter
+ * @since 2007-11-24
  */
 public class GrammarFactory {
   @Nullable

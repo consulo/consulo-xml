@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.descriptors;
 
 import consulo.xml.javaee.ExternalResourceManager;
@@ -52,9 +51,8 @@ import javax.xml.namespace.QName;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 18.07.2007
+ * @author sweinreuter
+ * @since 2007-08-17
  */
 public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   private final Map<QName, CachedValue<XmlElementDescriptor>> myDescriptorsMap =

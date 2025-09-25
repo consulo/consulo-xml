@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import jakarta.annotation.Nonnull;
@@ -36,11 +35,11 @@ import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.07.2007
+ * XXX: the tests rely on this still being an intention action
+ *
+ * @author sweinreuter
+ * @since 2007-07-17
  */
-// XXX: the tests rely on this still being an intention action
 class CreatePatternFix implements IntentionAction, LocalQuickFix {
   private final PsiReference myReference;
 

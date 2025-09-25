@@ -16,11 +16,8 @@
 package consulo.xml.ide.highlighter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: zajac
- * Date: 15.04.11
- * Time: 14:57
- * To change this template use File | Settings | File Templates.
+ * @author zajac
+ * @since 2011-04-15
  */
 public interface DomSupportEnabled {
 }

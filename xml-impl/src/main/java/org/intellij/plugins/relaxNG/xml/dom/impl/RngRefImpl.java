@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -25,9 +24,8 @@ import org.intellij.plugins.relaxNG.xml.dom.RngRef;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 05.09.2007
+ * @author sweinreuter
+ * @since 2007-09-05
  */
 public abstract class RngRefImpl extends RngDomElementBase implements RngRef {
   @Override

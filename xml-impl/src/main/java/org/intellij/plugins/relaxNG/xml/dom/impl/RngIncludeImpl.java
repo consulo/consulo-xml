@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.xml.util.xml.DomUtil;
@@ -25,9 +24,8 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.08.2007
+ * @author sweinreuter
+ * @since 2007-08-19
  */
 public abstract class RngIncludeImpl extends RngDomElementBase implements RngInclude {
   @Override
