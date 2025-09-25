@@ -24,7 +24,9 @@ import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.VirtualFile;
 
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -67,10 +69,10 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
     private static final List<String> simpleContentTypes = Arrays.asList(STRING_TYPE, SMART_TYPE);
     private Runnable myOkAction;
 
-    public GenerateSchemaFromInstanceDocumentDialog(Project project, VirtualFile file) {
+    public GenerateSchemaFromInstanceDocumentDialog(Project project, @Nonnull VirtualFile file) {
         super(project, true);
 
-        setTitle(XmlBundle.message("generate.schema.from.instance.document.dialog.title"));
+        setTitle(XmlLocalize.generateSchemaFromInstanceDocumentDialogTitle());
 
         doInitFor(designTypeText, designType);
         configureComboBox(designType, designTypes);
@@ -82,12 +84,11 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
         doInitFor(detectEnumerationsLimitText, detectEnumerationsLimit);
         detectEnumerationsLimit.setText("10");
 
-
         UIUtils.configureBrowseButton(
             project,
             generateFromUrl,
             new String[]{"xml"},
-            XmlBundle.message("select.xml.document.dialog.title"),
+            XmlLocalize.selectXmlDocumentDialogTitle().get(),
             false
         );
         doInitFor(generateFromUrlText, generateFromUrl.getTextField());
@@ -136,14 +137,17 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
 
         if (component instanceof JTextField jTextField) {
             jTextField.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
                 public void insertUpdate(DocumentEvent e) {
                     validateData();
                 }
 
+                @Override
                 public void removeUpdate(DocumentEvent e) {
                     validateData();
                 }
 
+                @Override
                 public void changedUpdate(DocumentEvent e) {
                     validateData();
                 }
@@ -154,6 +158,7 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
 
             if (jComboBox.isEditable()) {
                 jComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+                    @Override
                     public void keyTyped(KeyEvent e) {
                         validateData();
                     }
@@ -178,16 +183,17 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
         return status;
     }
 
+    @Override
     protected JComponent createCenterPanel() {
         return panel;
     }
 
     String getDesignType() {
-        return (String)designType.getSelectedItem();
+        return (String) designType.getSelectedItem();
     }
 
     String getSimpleContentType() {
-        return (String)detectSimpleContentTypes.getSelectedItem();
+        return (String) detectSimpleContentTypes.getSelectedItem();
     }
 
     String getEnumerationsLimit() {
@@ -200,24 +206,27 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
 
     protected String doValidateWithData() {
         if (!new File(generateFromUrl.getText()).exists()) {
-            return XmlBundle.message("instance.document.file.is.not.exist");
+            return XmlLocalize.instanceDocumentFileIsNotExist().get();
         }
 
         try {
             int i = Integer.parseInt(getEnumerationsLimit());
-            if (i < 0) return XmlBundle.message("negative.number.validation.problem");
+            if (i < 0) {
+                return XmlLocalize.negativeNumberValidationProblem().get();
+            }
         }
         catch (NumberFormatException ex) {
-            return XmlBundle.message("invalid.number.validation.problem");
+            return XmlLocalize.invalidNumberValidationProblem().get();
         }
 
         if (getTargetSchemaName() == null || getTargetSchemaName().length() == 0) {
-            return XmlBundle.message("result.schema.file.name.is.empty.validation.problem");
+            return XmlLocalize.resultSchemaFileNameIsEmptyValidationProblem().get();
         }
         return null;
     }
 
     @Nonnull
+    @Override
     protected String getHelpId() {
         return "webservices.GenerateSchemaFromInstanceDocument";
     }

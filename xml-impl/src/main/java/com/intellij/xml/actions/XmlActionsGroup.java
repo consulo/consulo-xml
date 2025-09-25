@@ -15,14 +15,40 @@
  */
 package com.intellij.xml.actions;
 
+import com.intellij.xml.actions.validate.ValidateXmlAction;
+import com.intellij.xml.actions.xmlbeans.GenerateInstanceDocumentFromSchemaAction;
+import com.intellij.xml.actions.xmlbeans.GenerateSchemaFromInstanceDocumentAction;
+import consulo.annotation.component.ActionImpl;
+import consulo.annotation.component.ActionParentRef;
+import consulo.annotation.component.ActionRef;
+import consulo.annotation.component.ActionRefAnchor;
+import consulo.application.dumb.DumbAware;
+import consulo.ui.ex.action.AnSeparator;
 import consulo.ui.ex.action.DefaultActionGroup;
+import consulo.ui.ex.action.IdeActions;
+import consulo.xml.codeInsight.actions.GenerateDTDAction;
+import consulo.xml.localize.XmlLocalize;
 
 /**
  * @author Konstantin Bulenkov
  */
-public class XmlActionsGroup extends DefaultActionGroup {
+@ActionImpl(
+    id = "ToolsXmlGroup",
+    children = {
+        @ActionRef(type = ValidateXmlAction.class),
+        @ActionRef(type = GenerateDTDAction.class),
+        @ActionRef(type = GenerateSchemaFromInstanceDocumentAction.class),
+        @ActionRef(type = GenerateInstanceDocumentFromSchemaAction.class),
+        @ActionRef(type = AnSeparator.class)
+    },
+    parents = @ActionParentRef(
+            value = @ActionRef(id = IdeActions.TOOLS_MENU),
+        anchor = ActionRefAnchor.BEFORE,
+        relatedToAction = @ActionRef(id = IdeActions.GROUP_EXTERNAL_TOOLS)
+    )
+)
+public class XmlActionsGroup extends DefaultActionGroup implements DumbAware {
     public XmlActionsGroup() {
-        super();
-        getTemplatePresentation().setText("XML Actions");
+        super(XmlLocalize.groupToolsText(), true);
     }
 }

@@ -1,11 +1,27 @@
+action.document.to.xsd.text:
+    text: Generate XML Document from XSD Schema...
 action.escape.entities.description:
     text: Escape XML/HTML special characters with entities
 action.escape.entities.text:
     text: Encode XML/HTML Special Characters
+action.generate.dtd.text:
+    text: Generate DTD from _XML File
+action.generate.xml.tag.description:
+    text: Generate a new XML tag according to schema information
+action.generate.xml.tag.text:
+    text: XML Tag...
 action.new.html.file.description:
     text: Creates new HTML file
 action.new.html.file.text:
     text: HTML File
+action.validate.xml.description:
+    text: Validate the current XML file
+action.validate.xml.text:
+    text: _Validate
+action.xsd.to.document.text:
+    text: Generate XSD Schema from XML File...
+group.tools.text:
+    text: XML Actions
 add.custom.html.attribute:
     text: Add {0} to custom html attributes
 add.custom.html.tag:
@@ -72,6 +88,8 @@ column.name.edit.external.resource.location:
     text: Location
 column.name.edit.external.resource.uri:
     text: URI
+command.name.generate.xml.tag:
+    text: Generate XML Tag
 custom.html.tag:
     text: Custom Html Tag
 dialog.title.external.resource:
@@ -272,6 +290,8 @@ open_in.list.popup.title:
     text: Preview file in...
 open_in.list.prefix:
     text: Preview file in
+popup.title.choose.tag.name:
+    text: Choose Tag Name
 read.win.registry:
     text: Retrieve settings from &Windows registry
 rename.current.tag:
