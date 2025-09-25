@@ -18,7 +18,7 @@ package com.intellij.xml;
 import consulo.annotation.DeprecationInfo;
 import consulo.annotation.internal.MigratedExtensionsTo;
 import consulo.component.util.localize.AbstractBundle;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import org.jetbrains.annotations.PropertyKey;
 
 /**

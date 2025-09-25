@@ -25,7 +25,7 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 /**

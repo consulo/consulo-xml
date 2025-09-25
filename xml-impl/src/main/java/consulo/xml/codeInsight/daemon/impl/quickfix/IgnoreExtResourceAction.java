@@ -18,7 +18,7 @@ package consulo.xml.codeInsight.daemon.impl.quickfix;
 import consulo.application.Application;
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 import consulo.xml.javaee.ExternalResourceManagerEx;

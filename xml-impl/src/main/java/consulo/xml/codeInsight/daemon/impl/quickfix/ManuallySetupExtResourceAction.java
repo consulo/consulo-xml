@@ -23,9 +23,9 @@ import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.MapExternalResourceDialog;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 /**

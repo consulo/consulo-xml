@@ -12,8 +12,7 @@ import consulo.ui.layout.VerticalLayout;
 import consulo.ui.util.Indenter;
 import consulo.ui.util.LabeledBuilder;
 import consulo.xml.application.options.editor.XmlEditorOptions;
-
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 import java.util.function.Consumer;
