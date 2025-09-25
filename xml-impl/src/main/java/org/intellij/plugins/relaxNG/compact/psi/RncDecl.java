@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import consulo.language.psi.PsiNamedElement;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 16.08.2007
+ * @author sweinreuter
+ * @since 2007-08-16
  */
 public interface RncDecl extends RncElement, PsiNamedElement {
   String getPrefix();

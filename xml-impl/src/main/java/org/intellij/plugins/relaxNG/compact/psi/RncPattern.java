@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import org.intellij.plugins.relaxNG.model.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 05.09.2007
+ * @author sweinreuter
+ * @since 2007-09-05
  */
 public interface RncPattern extends RncElement, Pattern<RncElement> {
 }

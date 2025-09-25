@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.parser;
 
 import consulo.language.parser.PsiParser;
@@ -25,10 +24,9 @@ import consulo.language.parser.PsiBuilder;
 import consulo.language.ast.IElementType;
 
 /**
- * Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 07.08.2007
-*/
+ * @author sweinreuter
+ * @since 2007-08-07
+ */
 public class RncParser implements PsiParser {
 
   @Override

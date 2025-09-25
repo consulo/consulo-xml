@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact;
 
 import consulo.application.AllIcons;
@@ -25,9 +24,9 @@ import consulo.virtualFileSystem.fileType.FileType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-/*
- * User: sweinreuter
- * Date: 01.08.2007
+/**
+ * @author sweinreuter
+ * @since 2007-08-01
  */
 public class RncFileType extends LanguageFileType
 {

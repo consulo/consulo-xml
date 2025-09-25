@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact;
 
 import consulo.language.ast.IElementType;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 import org.intellij.plugins.relaxNG.compact.psi.impl.*;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 01.08.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-08-01
+ */
 public class RncElementTypes {
 
   public static final IElementType DOCUMENT = new RncElementTypeEx<>("DOCUMENT", RncDocument::new);

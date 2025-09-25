@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -35,9 +34,8 @@ import org.intellij.plugins.relaxNG.compact.psi.impl.RncFileImpl;
 import jakarta.annotation.Nonnull;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 10.08.2007
+ * @author sweinreuter
+ * @since 2007-08-10
  */
 @ExtensionImpl
 public class RncParserDefinition implements ParserDefinition

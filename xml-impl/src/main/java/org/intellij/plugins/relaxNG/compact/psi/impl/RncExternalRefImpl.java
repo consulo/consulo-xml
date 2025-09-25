@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import jakarta.annotation.Nonnull;
@@ -23,9 +22,8 @@ import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncExternalRef;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 10.08.2007
+ * @author sweinreuter
+ * @since 2007-08-10
  */
 public class RncExternalRefImpl extends RncFileReferenceImpl implements RncExternalRef {
   public RncExternalRefImpl(ASTNode node) {

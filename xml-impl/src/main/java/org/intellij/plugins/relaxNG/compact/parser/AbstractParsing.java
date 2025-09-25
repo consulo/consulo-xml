@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.parser;
 
 import consulo.language.parser.PsiBuilder;
@@ -24,9 +23,8 @@ import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 09.08.2007
+ * @author sweinreuter
+ * @since 2007-08-09
  */
 public abstract class AbstractParsing {
   protected static final TokenSet LA_INCLUDE_CONTENT = TokenSet.orSet(TokenSet.create(
