@@ -1,0 +1,6 @@
+action.convert.schema.description:
+    text: Converts the selected Schema document (RNG, RNC, XSD, DTD) into another format
+action.convert.schema.text:
+    text: Convert Schema...
+action.convert.schema.from.xml.files.text:
+    text: Generate Schema from XML {0, choice, 1#File|2#Files}...
