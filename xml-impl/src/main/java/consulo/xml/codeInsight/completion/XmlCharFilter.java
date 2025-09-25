@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Jul 23, 2002
- * Time: 3:15:07 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package consulo.xml.codeInsight.completion;
 
 import consulo.annotation.access.RequiredReadAction;
@@ -40,6 +31,10 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
+/**
+ * @author mike
+ * @since 2002-07-23
+ */
 @ExtensionImpl(id = "xml")
 public class XmlCharFilter extends CharFilter {
     @RequiredReadAction

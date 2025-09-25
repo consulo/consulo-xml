@@ -35,7 +35,7 @@ import consulo.xml.util.xml.stubs.ElementStub;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/7/12
+ * @since 2012-08-07
  */
 class DomStubBuilderVisitor
 {

@@ -30,7 +30,7 @@ import consulo.xml.util.xml.impl.VirtualDomParentStrategy;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/9/12
+ * @since 2012-08-09
  */
 public class StubParentStrategy implements DomParentStrategy
 {

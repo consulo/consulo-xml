@@ -10,7 +10,7 @@ import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- * Date: 24.10.13
+ * @since 2013-10-24
  */
 @ExtensionImpl
 public class HtmlXmlExtension extends DefaultXmlExtension {

@@ -42,7 +42,7 @@ import java.util.function.Predicate;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 11/7/11
+ * @since 2011-07-11
  */
 @ExtensionImpl(id = "xml")
 public class XmlImportOptimizer implements ImportOptimizer {

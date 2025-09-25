@@ -17,7 +17,7 @@ package consulo.xml.util.xml.stubs;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/2/12
+ * @since 2012-08-02
  */
 public interface DomElementTypeHolder
 {

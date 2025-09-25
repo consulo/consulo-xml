@@ -32,7 +32,7 @@ import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev
- * Date: 16.08.13
+ * @since 2013-08-16
  */
 public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> implements EmptyResolveMessageProvider {
     private final XmlEnumerationDescriptor myDescriptor;

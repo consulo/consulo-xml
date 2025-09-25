@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 8/8/12
+ * @since 2012-08-08
  */
 public class FileStub extends ElementStub
 {

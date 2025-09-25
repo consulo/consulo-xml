@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: Maxim.Mossienko
- * Date: Oct 18, 2006
- * Time: 3:50:51 PM
- */
 package consulo.xml.psi.impl.source.xml;
 
 import consulo.language.impl.ast.Factory;
@@ -32,6 +25,10 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTokenType;
 
+/**
+ * @author Maxim.Mossienko
+ * @since 2006-10-18
+ */
 public class XmlElementChangeUtil {
   private XmlElementChangeUtil() {}
 

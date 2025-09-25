@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.inspections;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -55,8 +54,8 @@ import org.jetbrains.annotations.NonNls;
 import jakarta.annotation.Nonnull;
 
 /**
- * User: sweinreuter
- * Date: 26.07.2007
+ * @author sweinreuter
+ * @since 2007-07-26
  */
 @ExtensionImpl
 public class UnusedDefineInspection extends BaseInspection
