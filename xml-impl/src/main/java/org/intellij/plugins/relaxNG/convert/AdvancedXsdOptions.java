@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import consulo.ui.ex.awt.ComboBox;
@@ -24,9 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 18.11.2007
+ * @author sweinreuter
+ * @since 2007-11-18
  */
 public class AdvancedXsdOptions implements AdvancedOptions {
   @NonNls

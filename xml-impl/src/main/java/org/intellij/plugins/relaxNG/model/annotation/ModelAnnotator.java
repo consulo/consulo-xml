@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.annotation;
 
 import consulo.codeEditor.markup.GutterIconRenderer;
@@ -44,10 +43,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 04.12.2007
+/**
+ * @author sweinreuter
+ * @since 2007-12-04
  */
 public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 

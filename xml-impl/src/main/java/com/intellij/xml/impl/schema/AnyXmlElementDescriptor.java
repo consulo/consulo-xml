@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Sep 30, 2002
- * Time: 8:55:08 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.PsiElement;
@@ -33,6 +24,10 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import com.intellij.xml.XmlNSDescriptor;
 
+/**
+ * @author mike
+ * @since 2002-09-30
+ */
 public class AnyXmlElementDescriptor implements XmlElementDescriptor {
     private final XmlElementDescriptor myParentDescriptor;
     private final XmlNSDescriptor myXmlNSDescriptor;

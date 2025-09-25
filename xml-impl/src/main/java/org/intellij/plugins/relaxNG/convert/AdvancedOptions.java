@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import javax.swing.*;
 import java.util.Map;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 19.11.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-11-19
+ */
 public interface AdvancedOptions {
   JComponent getRoot();
 

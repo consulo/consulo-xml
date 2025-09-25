@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: spleaner
- * Date: Aug 9, 2007
- * Time: 4:45:40 PM
- */
 package com.intellij.xml.refactoring;
 
 import java.awt.event.ActionEvent;
@@ -28,6 +21,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import jakarta.annotation.Nonnull;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -61,6 +55,10 @@ import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.usage.UsageViewUtil;
 import consulo.util.lang.StringUtil;
 
+/**
+ * @author spleaner
+ * @since 2007-08-09
+ */
 public class XmlTagRenameDialog extends RefactoringDialog {
     private static final Logger LOG = Logger.getInstance(XmlTagRenameDialog.class);
     private static final String REFACTORING_NAME = RefactoringBundle.message("rename.title");

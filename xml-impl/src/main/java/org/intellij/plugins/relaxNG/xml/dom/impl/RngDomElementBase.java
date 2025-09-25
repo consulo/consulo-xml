@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.xml.psi.xml.XmlElement;
@@ -28,9 +27,8 @@ import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 31.08.2007
+ * @author sweinreuter
+ * @since 2007-08-31
  */
 public abstract class RngDomElementBase implements RngDomElement, Pattern<XmlElement> {
   @Override

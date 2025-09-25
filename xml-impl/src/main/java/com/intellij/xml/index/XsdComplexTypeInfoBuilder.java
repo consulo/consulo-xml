@@ -28,10 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Irina.Chernushina
- * Date: 7/4/12
- * Time: 6:37 PM
+ * @author Irina.Chernushina
+ * @since 2012-07-04
  */
 public class XsdComplexTypeInfoBuilder extends NanoXmlUtil.IXMLBuilderAdapter {
     private final static String SIGN = "";

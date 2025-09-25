@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Aug 27, 2002
- * Time: 9:55:06 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package com.intellij.xml.impl;
 
 import com.intellij.xml.XmlAttributeDescriptor;
@@ -30,6 +21,10 @@ import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlElement;
 import jakarta.annotation.Nullable;
 
+/**
+ * @author mike
+ * @since 2002-08-27
+ */
 public abstract class BasicXmlAttributeDescriptor extends XmlEnumerationDescriptor implements XmlAttributeDescriptor {
     public String validateValue(XmlElement context, String value) {
         return null;

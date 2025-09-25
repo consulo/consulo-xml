@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.08.2007
+ * @author sweinreuter
+ * @since 2007-09-19
  */
 public abstract class RngGrammarImpl extends RngDomElementBase implements RngGrammar {
   @Override

@@ -24,10 +24,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Irina.Chernushina
- * Date: 7/5/12
- * Time: 8:27 PM
+ * @author Irina.Chernushina
+ * @since 2012-07-05
  */
 @ExtensionImpl
 public class GotoXmlSchemaTypeRendererProvider implements GotoTargetRendererProvider {

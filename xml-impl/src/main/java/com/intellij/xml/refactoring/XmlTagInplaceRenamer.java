@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: spleaner
- * Date: Aug 8, 2007
- * Time: 2:20:33 PM
- */
 package com.intellij.xml.refactoring;
 
 import consulo.application.ApplicationManager;
@@ -45,6 +38,10 @@ import org.jetbrains.annotations.NonNls;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author spleaner
+ * @since 2007-08-08
+ */
 public class XmlTagInplaceRenamer {
     @NonNls
     private static final String PRIMARY_VARIABLE_NAME = "PrimaryVariable";

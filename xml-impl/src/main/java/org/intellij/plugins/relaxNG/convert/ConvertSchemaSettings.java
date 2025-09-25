@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import jakarta.annotation.Nonnull;
@@ -21,9 +20,8 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.11.2007
+ * @author sweinreuter
+ * @since 2007-11-17
  */
 public interface ConvertSchemaSettings {
   @Nonnull

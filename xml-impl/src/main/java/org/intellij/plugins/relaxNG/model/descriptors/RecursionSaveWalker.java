@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.descriptors;
 
 import consulo.util.collection.ContainerUtil;
@@ -21,10 +20,9 @@ import org.kohsuke.rngom.digested.*;
 
 import java.util.Set;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.07.2007
+/**
+ * @author sweinreuter
+ * @since 2007-07-19
  */
 public class RecursionSaveWalker extends DPatternWalker
 {

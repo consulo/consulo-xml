@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.ui.ex.action.AnActionEvent;
@@ -26,7 +25,7 @@ import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.ui.ex.action.ActionsBundle;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class GotoDomElementDeclarationAction extends BaseDomTreeAction {
 
