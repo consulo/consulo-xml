@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import consulo.language.ast.ASTNode;
@@ -21,11 +20,10 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDiv;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import jakarta.annotation.Nonnull;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 24.08.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-08-24
+ */
 public class RncDivImpl extends RncElementImpl implements RncDiv {
   public RncDivImpl(ASTNode node) {
     super(node);

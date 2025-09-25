@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.parser;
 
 import consulo.language.ast.IElementType;
@@ -26,12 +25,10 @@ import java.util.Map;
 import static org.intellij.plugins.relaxNG.compact.RncTokenTypes.*;
 
 /**
- * Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 09.08.2007
-*/
+ * @author sweinreuter
+ * @since 2007-08-09
+ */
 public class PatternParsing extends DeclarationParsing {
-
   @SuppressWarnings({"unchecked"})
   protected static final Map<IElementType, IElementType> TOKEN_MAP = new IdentityHashMap<>();
 

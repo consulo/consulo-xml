@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import consulo.document.util.TextRange;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 29.08.2007
+ * @author sweinreuter
+ * @since 2007-08-29
  */
 public interface RncFileReference extends RncElement {
   @Nullable

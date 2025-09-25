@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import consulo.xml.psi.xml.XmlDocument;
@@ -39,11 +38,10 @@ import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 
 import jakarta.annotation.Nonnull;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 01.08.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-08-01
+ */
 public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   private static final TokenSet DECLS = TokenSet.create(RncElementTypes.NS_DECL, RncElementTypes.DATATYPES_DECL);
 

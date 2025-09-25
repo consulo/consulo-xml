@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import jakarta.annotation.Nonnull;
@@ -28,9 +27,8 @@ import org.intellij.plugins.relaxNG.compact.psi.RncRef;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 11.08.2007
+ * @author sweinreuter
+ * @since 2007-08-11
  */
 public class RncRefImpl extends RncElementImpl implements RncRef {
   public RncRefImpl(ASTNode node) {

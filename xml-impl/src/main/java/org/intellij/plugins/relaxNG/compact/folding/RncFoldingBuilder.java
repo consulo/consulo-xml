@@ -38,9 +38,8 @@ import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 10.08.2007
+ * @author sweinreuter
+ * @since 2007-08-10
  */
 public class RncFoldingBuilder implements FoldingBuilder
 {

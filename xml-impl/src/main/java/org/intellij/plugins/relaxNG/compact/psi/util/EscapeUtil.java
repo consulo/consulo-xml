@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.util;
 
 import consulo.language.ast.ASTNode;
@@ -22,9 +21,8 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import jakarta.annotation.Nonnull;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 13.08.2007
+ * @author sweinreuter
+ * @since 2007-08-13
  */
 public class EscapeUtil {
   @SuppressWarnings({ "SSBasedInspection" })

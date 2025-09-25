@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -46,10 +45,9 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.Collections;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 24.10.2007
+/**
+ * @author sweinreuter
+ * @since 2007-10-24
  */
 @ExtensionImpl
 public class RelaxNGGotoSymbolContributor implements GotoSymbolContributor {

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.lexer;
 
 import consulo.util.collection.primitive.ints.IntIntMap;
@@ -28,10 +27,9 @@ import java.io.Reader;
 /**
  * A reader that deals with escape sequences in RNC files (\x{xx}) and keeps track of their positions to build correct
  * token ranges in the lexer.
- * <p/>
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 05.08.2007
+ *
+ * @author sweinreuter
+ * @since 2007-08-05
  */
 class EscapePreprocessor extends FilterReader {
   private final IntList myQueuedChars;

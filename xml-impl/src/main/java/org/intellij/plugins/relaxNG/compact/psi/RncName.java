@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 14.08.2007
+ * @author sweinreuter
+ * @since 2007-08-14
  */
 public interface RncName extends RncElement {
   @Nullable

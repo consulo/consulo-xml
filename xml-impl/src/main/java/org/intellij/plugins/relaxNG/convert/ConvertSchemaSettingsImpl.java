@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import consulo.xml.ide.highlighter.DTDFileType;
@@ -46,11 +45,10 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.*;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 16.11.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-11-16
+ */
 public class ConvertSchemaSettingsImpl implements ConvertSchemaSettings {
   static final String OUTPUT_TYPE = "output-type";
   static final String OUTPUT_PATH = "output-path";

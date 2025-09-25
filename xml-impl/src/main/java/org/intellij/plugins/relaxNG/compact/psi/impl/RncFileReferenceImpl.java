@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import jakarta.annotation.Nonnull;
@@ -36,9 +35,8 @@ import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 29.08.2007
+ * @author sweinreuter
+ * @since 2007-08-29
  */
 abstract class RncFileReferenceImpl extends RncElementImpl implements RncFileReference {
   public RncFileReferenceImpl(ASTNode node) {

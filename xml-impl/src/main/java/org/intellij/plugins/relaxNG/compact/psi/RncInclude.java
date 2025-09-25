@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import jakarta.annotation.Nonnull;
@@ -21,9 +20,8 @@ import jakarta.annotation.Nonnull;
 import org.intellij.plugins.relaxNG.model.Include;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 11.08.2007
+ * @author sweinreuter
+ * @since 2007-08-11
  */
 public interface RncInclude extends RncFileReference, Include<RncElement, RncDefine> {
   @Override
