@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * @author max
- */
 package consulo.xml.psi.impl.source.parsing.xml;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.parser.ParserDefinition;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiBuilderFactory;
@@ -27,20 +24,24 @@ import consulo.language.version.LanguageVersionUtil;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.html.HtmlParsing;
 
+/**
+ * @author max
+ */
 public class HtmlBuilderDriver extends XmlBuilderDriver {
-  public HtmlBuilderDriver(final CharSequence text) {
-    super(text);
-  }
+    public HtmlBuilderDriver(CharSequence text) {
+        super(text);
+    }
 
-  @Override
-  protected PsiBuilder createBuilderAndParse() {
-    final ParserDefinition htmlParserDef = ParserDefinition.forLanguage(HTMLLanguage.INSTANCE);
-    assert htmlParserDef != null;
+    @Override
+    @RequiredReadAction
+    protected PsiBuilder createBuilderAndParse() {
+        ParserDefinition htmlParserDef = ParserDefinition.forLanguage(HTMLLanguage.INSTANCE);
+        assert htmlParserDef != null;
 
-    LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE);
-    PsiBuilder b = PsiBuilderFactory.getInstance()
-      .createBuilder(htmlParserDef, htmlParserDef.createLexer(defaultVersion), defaultVersion, getText());
-    new HtmlParsing(b).parseDocument();
-    return b;
-  }
+        LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE);
+        PsiBuilder b = PsiBuilderFactory.getInstance()
+            .createBuilder(htmlParserDef, htmlParserDef.createLexer(defaultVersion), defaultVersion, getText());
+        new HtmlParsing(b).parseDocument();
+        return b;
+    }
 }

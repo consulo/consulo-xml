@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.actions;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
@@ -47,19 +49,15 @@ public class XmlSplitTagAction implements IntentionAction {
     }
 
     @Override
-    public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
-        if (file instanceof XmlFile) {
-            if (editor != null) {
-                final int offset = editor.getCaretModel().getOffset();
-                final PsiElement psiElement = file.findElementAt(offset);
-                if (psiElement != null) {
-                    final PsiElement parent = psiElement.getParent();
-                    if (parent != null && parent instanceof XmlText && parent.getText().trim().length() > 0) {
-                        final PsiElement grandParent = parent.getParent();
-                        if (grandParent != null && !isInsideUnsplittableElement(grandParent)) {
-                            return true;
-                        }
-                    }
+    @RequiredReadAction
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        if (file instanceof XmlFile xmlFile && editor != null) {
+            int offset = editor.getCaretModel().getOffset();
+            PsiElement psiElement = xmlFile.findElementAt(offset);
+            if (psiElement != null && psiElement.getParent() instanceof XmlText xmlText && xmlText.getText().trim().length() > 0) {
+                PsiElement grandParent = xmlText.getParent();
+                if (grandParent != null && !isInsideUnsplittableElement(grandParent)) {
+                    return true;
                 }
             }
         }
@@ -67,65 +65,61 @@ public class XmlSplitTagAction implements IntentionAction {
         return false;
     }
 
-    private static boolean isInsideUnsplittableElement(final PsiElement grandParent) {
+    @RequiredReadAction
+    private static boolean isInsideUnsplittableElement(PsiElement grandParent) {
         if (!(grandParent instanceof HtmlTag) && grandParent.getContainingFile().getLanguage() != XHTMLLanguage.INSTANCE) {
             return false;
         }
 
-        final String name = ((XmlTag)grandParent).getName();
+        String name = ((XmlTag) grandParent).getName();
         return "html".equals(name) || "body".equals(name) || "title".equals(name);
     }
 
     @Override
-    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
-      if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
-        return;
-      }
+    @RequiredWriteAction
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
+            return;
+        }
 
         if (editor != null) {
-            final int offset = editor.getCaretModel().getOffset();
-            final PsiElement psiElement = file.findElementAt(offset);
+            int offset = editor.getCaretModel().getOffset();
+            PsiElement psiElement = file.findElementAt(offset);
             if (psiElement != null) {
-                final PsiElement xmlText = psiElement.getParent();
-                final TextRange textRange = xmlText.getTextRange();
-                final int offsetInElement = offset - textRange.getStartOffset();
+                PsiElement xmlText = psiElement.getParent();
+                TextRange textRange = xmlText.getTextRange();
+                int offsetInElement = offset - textRange.getStartOffset();
 
-                final PsiElement containingTag = xmlText.getParent();
-                if (containingTag instanceof XmlTag) {
-                    final XmlTag xmlTag = (XmlTag)containingTag;
-
-                    final String s = xmlText.getText();
+                if (xmlText.getParent() instanceof XmlTag containingTag) {
+                    String s = xmlText.getText();
                     String first = s.substring(0, offsetInElement);
                     String second = s.substring(offsetInElement);
 
-                    if (xmlText instanceof XmlTagChild) {
-                        XmlTagChild prev = ((XmlTagChild)xmlText).getPrevSiblingInTag();
+                    if (xmlText instanceof XmlTagChild xmlTagChild) {
+                        XmlTagChild prev = xmlTagChild.getPrevSiblingInTag();
                         while (prev != null) {
                             first = prev.getText() + first;
                             prev = prev.getPrevSiblingInTag();
                         }
 
-                        XmlTagChild next = ((XmlTagChild)xmlText).getNextSiblingInTag();
+                        XmlTagChild next = xmlTagChild.getNextSiblingInTag();
                         while (next != null) {
                             second += next.getText();
                             next = next.getNextSiblingInTag();
                         }
                     }
 
-                    final String filetext = buildNewText(xmlTag, first, second);
+                    String filetext = buildNewText(containingTag, first, second);
 
-                    final XmlFile xmlFile =
-                        (XmlFile)PsiFileFactory.getInstance(project).createFileFromText("dummy.xml", XMLLanguage.INSTANCE,
-                            filetext
-                        );
-                    final PsiElement parent2 = containingTag.getParent();
-                    final XmlTag tag = xmlFile.getDocument().getRootTag();
+                    XmlFile xmlFile = (XmlFile) PsiFileFactory.getInstance(project)
+                        .createFileFromText("dummy.xml", XMLLanguage.INSTANCE, filetext);
+                    PsiElement parent2 = containingTag.getParent();
+                    XmlTag tag = xmlFile.getDocument().getRootTag();
                     XmlTag last = null;
-                    final PsiElement[] children = tag.getChildren();
+                    PsiElement[] children = tag.getChildren();
                     for (int i = children.length - 1; i >= 0; i--) {
-                        PsiElement element = children[i];
-                        if (element instanceof XmlTag) {
-                            final XmlTag tag1 = (XmlTag)parent2.addAfter(element, containingTag);
+                        if (children[i] instanceof XmlTag element) {
+                            XmlTag tag1 = (XmlTag) parent2.addAfter(element, containingTag);
 
                             if (last == null) {
                                 last = tag1;
@@ -140,9 +134,9 @@ public class XmlSplitTagAction implements IntentionAction {
         }
     }
 
-    private static String buildNewText(final XmlTag xmlTag, final String first, final String second) {
-        final StringBuilder attrs = new StringBuilder();
-        final StringBuilder attrsWoId = new StringBuilder();
+    private static String buildNewText(XmlTag xmlTag, String first, String second) {
+        StringBuilder attrs = new StringBuilder();
+        StringBuilder attrsWoId = new StringBuilder();
         for (XmlAttribute attribute : xmlTag.getAttributes()) {
             if (!"id".equals(attribute.getName())) {
                 attrs.append(attribute.getName()).append("=\"").append(attribute.getValue()).append("\" ");
@@ -153,8 +147,8 @@ public class XmlSplitTagAction implements IntentionAction {
             }
         }
 
-        final StringBuilder sb = new StringBuilder();
-        final String name = xmlTag.getName();
+        StringBuilder sb = new StringBuilder();
+        String name = xmlTag.getName();
         sb.append("<root><").append(name);
         if (attrs.length() > 0) {
             sb.append(' ').append(attrs);

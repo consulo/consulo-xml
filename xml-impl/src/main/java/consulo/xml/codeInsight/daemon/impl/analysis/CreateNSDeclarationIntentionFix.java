@@ -21,6 +21,7 @@ import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.Application;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
@@ -84,15 +85,18 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     @Nullable
+    @RequiredReadAction
     public static CreateNSDeclarationIntentionFix createFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
         PsiFile file = element.getContainingFile();
         return file instanceof XmlFile ? new CreateNSDeclarationIntentionFix(element, namespacePrefix) : null;
     }
 
+    @RequiredReadAction
     protected CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
         this(element, namespacePrefix, null);
     }
 
+    @RequiredReadAction
     public CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, String namespacePrefix, @Nullable XmlToken token) {
         myNamespacePrefix = namespacePrefix;
         myElement = PsiAnchor.create(element);
@@ -141,6 +145,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     @Override
+    @RequiredReadAction
     public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
         PsiElement element = myElement.retrieve();
         return element != null && element.isValid();

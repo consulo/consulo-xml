@@ -16,16 +16,15 @@
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
-import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -53,7 +52,7 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
     }
 
     @Override
-    @RequiredUIAccess
+    @RequiredWriteAction
     public void invoke(
         @Nonnull Project project,
         @Nonnull PsiFile file,

@@ -58,14 +58,14 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
         myValues = values;
     }
 
-    @Override
     @Nonnull
+    @Override
     public String getText() {
         return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName).get();
     }
 
-    @Override
     @Nonnull
+    @Override
     public String getFamilyName() {
         return XmlErrorLocalize.insertRequiredAttributeQuickfixFamily().get();
     }
