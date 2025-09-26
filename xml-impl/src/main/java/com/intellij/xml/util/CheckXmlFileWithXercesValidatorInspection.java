@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.ExternalDocumentValidator;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
@@ -25,10 +23,10 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
-import org.jetbrains.annotations.NonNls;
-
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim Mossienko
@@ -62,7 +60,7 @@ public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableIn
 
     @Nonnull
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.check.file.with.xerces");
+        return XmlLocalize.xmlInspectionsCheckFileWithXerces().get();
     }
 
     @Nonnull

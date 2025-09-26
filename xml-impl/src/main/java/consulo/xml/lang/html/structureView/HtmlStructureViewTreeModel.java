@@ -15,26 +15,21 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.fileEditor.structureView.tree.*;
+import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
+import consulo.ide.localize.IdeLocalize;
+import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.ui.ex.PlaceHolder;
+import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
+import consulo.xml.psi.xml.XmlFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import consulo.codeEditor.Editor;
-import consulo.fileEditor.structureView.tree.NodeProvider;
-import consulo.ide.IdeBundle;
-import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import consulo.fileEditor.structureView.tree.ActionPresentation;
-import consulo.fileEditor.structureView.tree.ActionPresentationData;
-import consulo.fileEditor.structureView.tree.Sorter;
-import consulo.fileEditor.structureView.tree.SorterUtil;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.application.AllIcons;
-import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
-import consulo.ui.ex.PlaceHolder;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 
 class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements PlaceHolder<String>
 {
@@ -93,8 +88,11 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 		@Nonnull
 		public ActionPresentation getPresentation()
 		{
-			return new ActionPresentationData(IdeBundle.message("action.sort.alphabetically"), IdeBundle.message("action.sort.alphabetically"),
-					AllIcons.ObjectBrowser.Sorted);
+			return new ActionPresentationData(
+				IdeLocalize.actionSortAlphabetically().get(),
+				IdeLocalize.actionSortAlphabetically().get(),
+				PlatformIconGroup.objectbrowserSorted()
+			);
 		}
 
 		@Override

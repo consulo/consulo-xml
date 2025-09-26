@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.document.Document;
@@ -37,14 +35,14 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim Mossienko
@@ -67,12 +65,10 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
                         final ASTNode node = child.getTreeNext();
 
                         if (node != null && node.getElementType() == XmlTokenType.XML_END_TAG_START) {
-                            final LocalQuickFix localQuickFix = new ReplaceEmptyTagBodyByEmptyEndFix();
-                            holder.registerProblem(
-                                tag,
-                                XmlBundle.message("xml.inspections.tag.empty.body"),
-                                isCollapsableTag(tag) ? localQuickFix : null
-                            );
+                            holder.newProblem(XmlLocalize.xmlInspectionsTagEmptyBody())
+                                .range(tag)
+                                .withFixes(isCollapsableTag(tag) ? new ReplaceEmptyTagBodyByEmptyEndFix() : null)
+                                .create();
                         }
                     }
                 }
@@ -95,7 +91,7 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
 
     @Nonnull
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.check.tag.empty.body");
+        return XmlLocalize.xmlInspectionsCheckTagEmptyBody().get();
     }
 
     @Nullable
@@ -119,7 +115,7 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
     private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
         @Nonnull
         public String getName() {
-            return XmlBundle.message("xml.inspections.replace.tag.empty.body.with.empty.end");
+            return XmlLocalize.xmlInspectionsReplaceTagEmptyBodyWithEmptyEnd().get();
         }
 
         @Nonnull

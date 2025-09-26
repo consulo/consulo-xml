@@ -15,36 +15,30 @@
  */
 package consulo.xml.util.xml.ui.actions;
 
-import java.lang.reflect.Type;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 import consulo.application.Result;
-import consulo.ui.ex.action.AnAction;
-import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.psi.SmartPointerManager;
 import consulo.language.psi.SmartPsiElementPointer;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.StableElement;
-import consulo.xml.util.xml.TypeChooser;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.language.util.IncorrectOperationException;
+import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.image.Image;
-import consulo.language.util.IncorrectOperationException;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.*;
+import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
+import java.lang.reflect.Type;
 
 /**
  * @author Sergey.Vasiliev
  * @since 2006-03-01
  */
 public abstract class DefaultAddAction<T extends DomElement> extends AnAction {
-
   public DefaultAddAction() {
-    super(ApplicationBundle.message("action.add"));
+    super(ApplicationLocalize.actionAdd());
   }
 
   public DefaultAddAction(String text) {

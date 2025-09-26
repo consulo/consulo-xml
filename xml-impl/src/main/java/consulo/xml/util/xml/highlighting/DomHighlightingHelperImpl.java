@@ -15,9 +15,8 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
-import consulo.ide.IdeBundle;
+import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -34,6 +33,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
@@ -42,9 +42,9 @@ import consulo.xml.util.xml.impl.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -73,13 +73,13 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         if (required.value()) {
           final String xmlElementName = element.getXmlElementName();
           if (element instanceof GenericAttributeValue) {
-            return Arrays.asList(holder.createProblem(element, IdeBundle.message("attribute.0.should.be.defined", xmlElementName)));
+            return Arrays.asList(holder.createProblem(element, IdeLocalize.attribute0ShouldBeDefined(xmlElementName).get()));
           }
           return Arrays.asList(
             holder.createProblem(
               element,
               HighlightSeverity.ERROR,
-              IdeBundle.message("child.tag.0.should.be.defined", xmlElementName),
+              IdeLocalize.childTag0ShouldBeDefined(xmlElementName).get(),
               new AddRequiredSubtagFix(xmlElementName, element.getXmlElementNamespace(), element.getParent().getXmlTag())
             )
           );
@@ -97,7 +97,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
           final DomCollectionChildDescription childDescription = (DomCollectionChildDescription)description;
           final Required annotation = description.getAnnotation(Required.class);
           if (annotation != null && annotation.value()) {
-            list.add(holder.createProblem(element, childDescription, IdeBundle.message("child.tag.0.should.be.defined", ((DomCollectionChildDescription)description).getXmlElementName())));
+            list.add(holder.createProblem(element, childDescription, IdeLocalize.childTag0ShouldBeDefined(childDescription.getXmlElementName()).get()));
           }
         }
       }
@@ -162,9 +162,8 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         final GenericDomValue genericDomValue = domElement.getGenericInfo().getNameDomElement(element);
         if (genericDomValue != null) {
           return Arrays.asList(holder.createProblem(genericDomValue, DomUtil.getFile(domElement).equals(DomUtil.getFile(element))
-                                                                     ? IdeBundle.message("model.highlighting.identity", typeName)
-                                                                     : IdeBundle.message("model.highlighting.identity.in.other.file", typeName,
-                                                                                         domElement.getXmlTag().getContainingFile().getName())));
+                                                                     ? IdeLocalize.modelHighlightingIdentity(typeName).get()
+                                                                     : IdeLocalize.modelHighlightingIdentityInOtherFile(typeName, domElement.getXmlTag().getContainingFile().getName()).get()));
         }
       }
     }
@@ -194,10 +193,10 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
     if (stringValue == null) return null;
 
     if (required.nonEmpty() && isEmpty(child, stringValue)) {
-      return annotator.createProblem(child, IdeBundle.message("value.must.not.be.empty"));
+      return annotator.createProblem(child, IdeLocalize.valueMustNotBeEmpty().get());
     }
     if (required.identifier() && !isIdentifier(stringValue)) {
-      return annotator.createProblem(child, IdeBundle.message("value.must.be.identifier"));
+      return annotator.createProblem(child, IdeLocalize.valueMustBeIdentifier().get());
     }
     return null;
   }
@@ -242,7 +241,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
 
     @Nonnull
     public String getName() {
-      return XmlBundle.message("insert.required.tag.fix", tagName);
+      return XmlLocalize.insertRequiredTagFix(tagName).get();
     }
 
     @Nonnull

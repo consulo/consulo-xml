@@ -24,10 +24,10 @@ import consulo.language.editor.TargetElementUtil;
 import consulo.language.editor.TargetElementUtilExtender;
 import consulo.language.psi.PsiElement;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.versionControlSystem.VcsBundle;
 import consulo.versionControlSystem.action.VcsContext;
 import consulo.versionControlSystem.history.VcsSelection;
 import consulo.versionControlSystem.history.VcsSelectionProvider;
+import consulo.versionControlSystem.localize.VcsLocalize;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
@@ -54,9 +54,9 @@ public class XmlVcsSelectionProvider implements VcsSelectionProvider
     final String actionName;
 
     if (psiElement instanceof XmlTag) {
-      actionName = VcsBundle.message("action.name.show.history.for.tag");
+      actionName = VcsLocalize.actionNameShowHistoryForTag().get();
     } else if (psiElement instanceof XmlText) {
-      actionName = VcsBundle.message("action.name.show.history.for.text");
+      actionName = VcsLocalize.actionNameShowHistoryForText().get();
     } else {
       return null;
     }

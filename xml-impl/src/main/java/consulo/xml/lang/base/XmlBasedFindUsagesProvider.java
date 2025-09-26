@@ -15,16 +15,15 @@
  */
 package consulo.xml.lang.base;
 
-import consulo.language.LangBundle;
 import consulo.language.cacheBuilder.WordsScanner;
 import consulo.language.findUsage.DescriptiveNameUtil;
 import consulo.language.findUsage.FindUsagesProvider;
+import consulo.language.localize.LanguageLocalize;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.xml.psi.xml.*;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -50,31 +49,31 @@ public abstract class XmlBasedFindUsagesProvider implements FindUsagesProvider
 			{
 				return ((XmlTag) metaData.getDeclaration()).getName();
 			}
-			return LangBundle.message("xml.terms.xml.tag");
+			return LanguageLocalize.xmlTermsXmlTag().get();
 		}
 		if(element instanceof XmlElementDecl)
 		{
-			return LangBundle.message("xml.terms.tag");
+			return LanguageLocalize.xmlTermsTag().get();
 		}
 		else if(element instanceof XmlAttributeDecl)
 		{
-			return LangBundle.message("xml.terms.attribute");
+			return LanguageLocalize.xmlTermsAttribute().get();
 		}
 		else if(element instanceof XmlAttributeValue)
 		{
-			return LangBundle.message("xml.terms.attribute.value");
+			return LanguageLocalize.xmlTermsAttributeValue().get();
 		}
 		else if(element instanceof XmlEntityDecl)
 		{
-			return LangBundle.message("xml.terms.entity");
+			return LanguageLocalize.xmlTermsEntity().get();
 		}
 		else if(element instanceof XmlAttribute)
 		{
-			return LangBundle.message("xml.terms.attribute");
+			return LanguageLocalize.xmlTermsAttribute().get();
 		}
 		else if(element instanceof XmlComment)
 		{
-			return LangBundle.message("xml.terms.variable");
+			return LanguageLocalize.xmlTermsVariable().get();
 		}
 		throw new IllegalArgumentException("Cannot get type for " + element);
 	}

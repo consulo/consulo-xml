@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-import com.intellij.xml.XmlBundle;
 import consulo.application.util.SystemInfo;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.fileChooser.IdeaFileChooser;
@@ -25,6 +24,7 @@ import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.localize.XmlLocalize;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +45,7 @@ public class UIUtils {
         final String selectFileDialogTitle,
         final boolean multipleFileSelection
     ) {
-        wsdlUrl.getButton().setToolTipText(XmlBundle.message("browse.button.tooltip"));
+        wsdlUrl.getButton().setToolTipText(XmlLocalize.browseButtonTooltip().get());
         wsdlUrl.getButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 final FileChooserDescriptor fileChooserDescriptor =

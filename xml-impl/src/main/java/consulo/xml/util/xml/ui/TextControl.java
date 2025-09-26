@@ -24,10 +24,10 @@ import consulo.language.plain.PlainTextLanguage;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFileFactory;
 import consulo.project.Project;
-import consulo.ui.ex.UIBundle;
 import consulo.ui.ex.awt.DialogBuilder;
-
+import consulo.ui.ex.localize.UILocalize;
 import jakarta.annotation.Nonnull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -115,7 +115,7 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 					builder.setDimensionServiceKey("TextControl");
 					builder.setCenterPanel(textArea);
 					builder.setPreferredFocusComponent(textArea);
-					builder.setTitle(UIBundle.message("big.text.control.window.title"));
+					builder.setTitle(UILocalize.bigTextControlWindowTitle());
 					builder.addCloseButton();
 					builder.show();
 				}

@@ -16,7 +16,6 @@
 package com.intellij.xml.util.documentation;
 
 import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
@@ -32,13 +31,14 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.xml.lang.documentation.DocumentationUtil;
 import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.xml.*;
 import consulo.xml.util.ColorSampleLookupValue;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
@@ -202,13 +202,13 @@ public class HtmlDocumentationProvider implements LanguageDocumentationProvider 
         final boolean istag = descriptor instanceof HtmlTagDescriptor;
 
         if (istag) {
-            DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.tag.name.message"), descriptor.getName(), buf);
+            DocumentationUtil.formatEntityName(XmlLocalize.xmlJavadocTagNameMessage().get(), descriptor.getName(), buf);
         }
         else {
-            DocumentationUtil.formatEntityName(XmlBundle.message("xml.javadoc.attribute.name.message"), descriptor.getName(), buf);
+            DocumentationUtil.formatEntityName(XmlLocalize.xmlJavadocAttributeNameMessage().get(), descriptor.getName(), buf);
         }
 
-        buf.append(XmlBundle.message("xml.javadoc.description.message")).append(NBSP).append(descriptor.getDescription()).append(BR);
+        buf.append(XmlLocalize.xmlJavadocDescriptionMessage()).append(NBSP).append(descriptor.getDescription()).append(BR);
 
         if (istag) {
             final HtmlTagDescriptor tagDescriptor = (HtmlTagDescriptor)descriptor;
@@ -216,40 +216,40 @@ public class HtmlDocumentationProvider implements LanguageDocumentationProvider 
             if (!ommitHtmlSpecifics) {
                 boolean hasStartTag = tagDescriptor.isHasStartTag();
                 if (!hasStartTag) {
-                    buf.append(XmlBundle.message("xml.javadoc.start.tag.could.be.omitted.message")).append(BR);
+                    buf.append(XmlLocalize.xmlJavadocStartTagCouldBeOmittedMessage()).append(BR);
                 }
                 if (!tagDescriptor.isEmpty() && !tagDescriptor.isHasEndTag()) {
-                    buf.append(XmlBundle.message("xml.javadoc.end.tag.could.be.omitted.message")).append(BR);
+                    buf.append(XmlLocalize.xmlJavadocEndTagCouldBeOmittedMessage()).append(BR);
                 }
             }
 
             if (tagDescriptor.isEmpty()) {
-                buf.append(XmlBundle.message("xml.javadoc.is.empty.message")).append(BR);
+                buf.append(XmlLocalize.xmlJavadocIsEmptyMessage()).append(BR);
             }
         }
         else {
             final HtmlAttributeDescriptor attributeDescriptor = (HtmlAttributeDescriptor)descriptor;
 
-            buf.append(XmlBundle.message("xml.javadoc.attr.type.message", attributeDescriptor.getType())).append(BR);
+            buf.append(XmlLocalize.xmlJavadocAttrTypeMessage(attributeDescriptor.getType())).append(BR);
             if (!attributeDescriptor.isHasDefaultValue()) {
-                buf.append(XmlBundle.message("xml.javadoc.attr.default.required.message")).append(BR);
+                buf.append(XmlLocalize.xmlJavadocAttrDefaultRequiredMessage()).append(BR);
             }
         }
 
         char dtdId = descriptor.getDtd();
         boolean deprecated = dtdId == HtmlTagDescriptor.LOOSE_DTD;
         if (deprecated) {
-            buf.append(XmlBundle.message("xml.javadoc.deprecated.message", deprecated)).append(BR);
+            buf.append(XmlLocalize.xmlJavadocDeprecatedMessage(deprecated)).append(BR);
         }
 
         if (dtdId == HtmlTagDescriptor.LOOSE_DTD) {
-            buf.append(XmlBundle.message("xml.javadoc.defined.in.loose.dtd.message"));
+            buf.append(XmlLocalize.xmlJavadocDefinedInLooseDtdMessage());
         }
         else if (dtdId == HtmlTagDescriptor.FRAME_DTD) {
-            buf.append(XmlBundle.message("xml.javadoc.defined.in.frameset.dtd.message"));
+            buf.append(XmlLocalize.xmlJavadocDefinedInFramesetDtdMessage());
         }
         else {
-            buf.append(XmlBundle.message("xml.javadoc.defined.in.any.dtd.message"));
+            buf.append(XmlLocalize.xmlJavadocDefinedInAnyDtdMessage());
         }
 
         if (!istag) {

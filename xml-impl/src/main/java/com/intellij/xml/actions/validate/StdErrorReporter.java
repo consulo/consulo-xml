@@ -40,9 +40,10 @@ import consulo.ui.ex.errorTreeView.NewErrorTreeViewPanelFactory;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.localize.XmlLocalize;
+import jakarta.annotation.Nonnull;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nonnull;
 import java.util.concurrent.Future;
 
 public class StdErrorReporter extends ErrorReporter {
@@ -89,7 +90,7 @@ public class StdErrorReporter extends ErrorReporter {
                 ContentManagerUtilHack.cleanupContents(content, myProject, myContentName);
                 messageView.getContentManager().addContentManagerListener(new MyContentDisposer(content, messageView));
             },
-            XmlBundle.message("validate.xml.open.message.view.command.name"),
+            XmlLocalize.validateXmlOpenMessageViewCommandName().get(),
             null
         );
     }
@@ -178,8 +179,8 @@ public class StdErrorReporter extends ErrorReporter {
             if (event.getContent() == myContent) {
                 if (!myErrorsView.isProcessStopped()) {
                     int result = Messages.showYesNoDialog(
-                        XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.text"),
-                        XmlBundle.message("xml.validate.validation.is.running.terminate.confirmation.title"),
+                        XmlLocalize.xmlValidateValidationIsRunningTerminateConfirmationText().get(),
+                        XmlLocalize.xmlValidateValidationIsRunningTerminateConfirmationTitle().get(),
                         UIUtil.getQuestionIcon()
                     );
                     if (result != Messages.YES) {

@@ -15,19 +15,19 @@
  */
 package consulo.xml.lang.xml;
 
-import consulo.language.editor.refactoring.unwrap.Unwrapper;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
-import consulo.language.util.IncorrectOperationException;
 import consulo.language.ast.ASTNode;
+import consulo.language.editor.refactoring.unwrap.Unwrapper;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.IncorrectOperationException;
+import consulo.xml.localize.XmlLocalize;
+import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.psi.xml.XmlTag;
 
-import java.util.Set;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class XmlEnclosingTagUnwrapper implements Unwrapper {
   public boolean isApplicableTo(PsiElement e) {
@@ -38,7 +38,7 @@ public class XmlEnclosingTagUnwrapper implements Unwrapper {
   }
 
   public String getDescription(PsiElement e) {
-    return XmlBundle.message("unwrap.enclosing.tag.name.action.name", ((XmlTag)e).getName());
+    return XmlLocalize.unwrapEnclosingTagNameActionName(((XmlTag)e).getName()).get();
   }
 
   public PsiElement collectAffectedElements(PsiElement e, List<PsiElement> toExtract) {

@@ -16,7 +16,6 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
@@ -25,20 +24,18 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
+import org.jetbrains.annotations.NonNls;
 
 public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
   @Override
-  @Nls
   @Nonnull
   public String getDisplayName() {
-    return XmlBundle.message("html.inspections.unknown.attribute");
+    return XmlLocalize.htmlInspectionsUnknownAttribute().get();
   }
 
   @Override
@@ -50,7 +47,7 @@ public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElem
 
   @Override
   protected LocalizeValue getCheckboxTitle() {
-    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.attribute.checkbox.title"));
+    return XmlLocalize.htmlInspectionsUnknownTagAttributeCheckboxTitle();
   }
 
   @Override
@@ -77,7 +74,8 @@ public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElem
           LocalQuickFix[] quickfixes = new LocalQuickFix[maySwitchToHtml5 ? 3 : 2];
           quickfixes[0] = new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME,
                                                                   name,
-                                                                  XmlBundle.message("add.custom.html.attribute", name));
+                                                                  XmlLocalize.addCustomHtmlAttribute(name).get()
+          );
           quickfixes[1] = new RemoveAttributeIntentionAction(name);
           if (maySwitchToHtml5) {
             quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();

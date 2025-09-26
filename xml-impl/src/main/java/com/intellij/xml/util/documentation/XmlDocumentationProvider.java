@@ -324,13 +324,13 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         }
         StringBuilder buf = new StringBuilder(str.length() + 20);
 
-        DocumentationUtil.formatEntityName(typeName == null ? XmlBundle.message("xml.javadoc.tag.name.message") : typeName, name, buf);
+        DocumentationUtil.formatEntityName(typeName == null ? XmlLocalize.xmlJavadocTagNameMessage().get() : typeName, name, buf);
 
         final String indent = "  ";
-        final StringBuilder builder = buf.append(XmlBundle.message("xml.javadoc.description.message")).append(indent).
+        final StringBuilder builder = buf.append(XmlLocalize.xmlJavadocDescriptionMessage()).append(indent).
             append(HtmlDocumentationProvider.NBSP).append(str);
         if (version != null) {
-            builder.append(HtmlDocumentationProvider.BR).append(XmlBundle.message("xml.javadoc.version.message")).append(indent)
+            builder.append(HtmlDocumentationProvider.BR).append(XmlLocalize.xmlJavadocVersionMessage()).append(indent)
                 .append(HtmlDocumentationProvider.NBSP).append(version);
         }
         return builder.toString();

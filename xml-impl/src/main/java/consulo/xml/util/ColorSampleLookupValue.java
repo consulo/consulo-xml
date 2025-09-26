@@ -15,30 +15,25 @@
  */
 package consulo.xml.util;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 import consulo.component.util.Iconable;
-import consulo.language.LangBundle;
 import consulo.language.editor.completion.lookup.DeferredUserLookupValue;
 import consulo.language.editor.completion.lookup.LookupItem;
 import consulo.language.editor.completion.lookup.LookupValueWithPriority;
 import consulo.language.editor.completion.lookup.LookupValueWithUIHint;
-import consulo.ui.ex.awt.util.ColorUtil;
-import consulo.util.lang.StringUtil;
-import org.jetbrains.annotations.NonNls;
+import consulo.language.localize.LanguageLocalize;
 import consulo.project.Project;
+import consulo.ui.ex.awt.util.ColorUtil;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.ui.image.Image;
 import consulo.ui.image.ImageEffects;
+import consulo.util.lang.StringUtil;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author maxim
@@ -482,11 +477,11 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		final String colorName = getColorNameForHexCode(code);
 		if(colorName != null)
 		{
-			buf.append(LangBundle.message("color.name", colorName)).append(BR);
+			buf.append(LanguageLocalize.colorName(colorName)).append(BR);
 		}
 
 		String colorBox = "<div style=\"border: 1px solid #000000; width: 50px; height: 20px; background-color:" + code + "\"></div>";
-		buf.append(LangBundle.message("color.preview", colorBox)).append(BR);
+		buf.append(LanguageLocalize.colorPreview(colorBox)).append(BR);
 	}
 
 	public static Color getColor(String text)

@@ -27,20 +27,19 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection {
   @Override
-  @Nls
   @Nonnull
   public String getDisplayName() {
-    return XmlBundle.message("html.inspections.unknown.boolean.attribute");
+    return XmlLocalize.htmlInspectionsUnknownBooleanAttribute().get();
   }
 
   @Override
@@ -52,7 +51,7 @@ public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnkn
 
   @Override
   protected LocalizeValue getCheckboxTitle() {
-    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.boolean.attribute.checkbox.title"));
+    return XmlLocalize.htmlInspectionsUnknownTagBooleanAttributeCheckboxTitle();
   }
 
   @Override

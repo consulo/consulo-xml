@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlExtension;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
@@ -32,11 +31,12 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -236,11 +236,9 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
     @Override
     public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
         final XmlFile xmlFile = getFile();
-        return LocalizeValue.localizeTODO(
-            xmlFile == null
-                ? XmlBundle.message("cannot.resolve.anchor", myAnchor)
-                : XmlBundle.message("cannot.resolve.anchor.in.file", myAnchor, xmlFile.getName())
-        );
+        return xmlFile == null
+            ? XmlLocalize.cannotResolveAnchor(myAnchor)
+            : XmlLocalize.cannotResolveAnchorInFile(myAnchor, xmlFile.getName());
     }
 
     // separate static class to avoid memory leak via this$0
