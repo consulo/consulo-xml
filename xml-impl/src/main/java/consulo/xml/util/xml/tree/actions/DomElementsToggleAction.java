@@ -17,6 +17,7 @@ package consulo.xml.util.xml.tree.actions;
 
 import consulo.application.presentation.TypePresentationService;
 import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.ToggleAction;
 import consulo.ui.image.Image;
@@ -24,6 +25,7 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
+import jakarta.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,48 +34,57 @@ import java.util.Map;
  * @author Sergey.Vasiliev
  */
 public class DomElementsToggleAction extends ToggleAction {
-  private final DomModelTreeView myTreeView;
-  private final Class myClass;
-  private final Image myIcon;
-  private final String myText;
+    private final DomModelTreeView myTreeView;
+    private final Class myClass;
+    private final Image myIcon;
+    private final String myText;
 
-  public DomElementsToggleAction(final DomModelTreeView treeView, final Class aClass) {
-    myTreeView = treeView;
-    myClass = aClass;
+    public DomElementsToggleAction(DomModelTreeView treeView, Class aClass) {
+        myTreeView = treeView;
+        myClass = aClass;
 
-    Image icon = ElementPresentationManager.getIcon(myClass);
-    if (icon == null) {
-      icon = PlatformIconGroup.nodesProperty();
+        Image icon = ElementPresentationManager.getIcon(myClass);
+        if (icon == null) {
+            icon = PlatformIconGroup.nodesProperty();
+        }
+        myIcon = icon;
+
+        myText = TypePresentationService.getInstance().getTypeNameOrStub(myClass);
+
+        if (getHiders() == null) {
+            DomUtil.getFile(myTreeView.getRootElement())
+                .putUserData(BaseDomElementNode.TREE_NODES_HIDERS_KEY, new HashMap<>());
+        }
+
+        if (getHiders().get(myClass) == null) {
+            getHiders().put(myClass, true);
+        }
     }
-    myIcon = icon;
 
-    myText = TypePresentationService.getInstance().getTypeNameOrStub(myClass);
+    @Override
+    public void update(@Nonnull AnActionEvent e) {
+        super.update(e);
 
-    if(getHiders() == null) DomUtil.getFile(myTreeView.getRootElement()).putUserData(BaseDomElementNode.TREE_NODES_HIDERS_KEY, new HashMap<Class, Boolean>());
+        e.getPresentation().setIcon(myIcon);
+        e.getPresentation().setText((getHiders().get(myClass) ? "Hide " : "Show ") + myText);
 
-    if(getHiders().get(myClass) == null) getHiders().put(myClass, true);
-  }
+        e.getPresentation().setEnabled(getHiders() != null && getHiders().get(myClass) != null);
+    }
 
-  public void update(final AnActionEvent e) {
-    super.update(e);
+    @Override
+    public boolean isSelected(@Nonnull AnActionEvent e) {
+        return getHiders().get(myClass);
+    }
 
-    e.getPresentation().setIcon(myIcon);
-    e.getPresentation().setText((getHiders().get(myClass) ? "Hide ":"Show ")+myText);
+    private Map<Class, Boolean> getHiders() {
+        return DomUtil.getFile(myTreeView.getRootElement()).getUserData(BaseDomElementNode.TREE_NODES_HIDERS_KEY);
+    }
 
-    e.getPresentation().setEnabled(getHiders() != null && getHiders().get(myClass)!=null);
-  }
-
-  public boolean isSelected(AnActionEvent e) {
-    return getHiders().get(myClass);
-  }
-
-  private Map<Class, Boolean> getHiders() {
-    return DomUtil.getFile(myTreeView.getRootElement()).getUserData(BaseDomElementNode.TREE_NODES_HIDERS_KEY);
-  }
-
-  public void setSelected(AnActionEvent e, boolean state) {
-    getHiders().put(myClass, state);
-    myTreeView.getBuilder().updateFromRoot();
-  }
+    @Override
+    @RequiredUIAccess
+    public void setSelected(@Nonnull AnActionEvent e, boolean state) {
+        getHiders().put(myClass, state);
+        myTreeView.getBuilder().updateFromRoot();
+    }
 }
 
