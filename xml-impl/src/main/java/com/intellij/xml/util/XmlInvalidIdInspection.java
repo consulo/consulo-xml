@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
@@ -24,11 +23,11 @@ import consulo.language.file.FileViewProvider;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -39,7 +38,7 @@ public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements
     @Nonnull
     @Override
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.invalid.id");
+        return XmlLocalize.xmlInspectionsInvalidId().get();
     }
 
     protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {

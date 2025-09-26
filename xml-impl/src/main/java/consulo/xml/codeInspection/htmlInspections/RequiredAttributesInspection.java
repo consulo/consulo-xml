@@ -15,12 +15,11 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
-
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -39,6 +38,6 @@ public class RequiredAttributesInspection extends RequiredAttributesInspectionBa
   @Nonnull
   @Override
   public String getDisplayName() {
-    return XmlBundle.message("inspection.required.attributes.display.name");
+    return XmlLocalize.inspectionRequiredAttributesDisplayName().get();
   }
 }

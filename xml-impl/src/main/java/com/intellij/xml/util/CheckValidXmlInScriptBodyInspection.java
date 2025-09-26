@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
@@ -42,15 +41,15 @@ import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.lexer.XmlLexer;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim.Mossienko
@@ -117,16 +116,11 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
                                         final TextRange elementRange = psiElement.getTextRange();
 
                                         final int offsetInElement = offset - elementRange.getStartOffset();
-                                        holder.registerProblem(
-                                            psiElement,
-                                            XmlBundle.message("unescaped.xml.character"),
-                                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                            new InsertQuotedCharacterQuickFix(
-                                                psiFile,
-                                                psiElement,
-                                                offsetInElement
-                                            )
-                                        );
+                                        holder.newProblem(XmlLocalize.unescapedXmlCharacter())
+                                            .range(psiElement)
+                                            .withFixes(new InsertQuotedCharacterQuickFix(psiFile, psiElement, offsetInElement))
+                                            .highlightType(ProblemHighlightType.GENERIC_ERROR_OR_WARNING)
+                                            .create();
 
                                         int endOfElementInScriptTag = elementRange.getEndOffset() - valueStart;
                                         while (myXmlLexer.getTokenEnd() < endOfElementInScriptTag) {
@@ -153,7 +147,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
 
     @Nonnull
     public String getDisplayName() {
-        return XmlBundle.message("html.inspections.check.valid.script.tag");
+        return XmlLocalize.htmlInspectionsCheckValidScriptTag().get();
     }
 
     @Nonnull
@@ -177,12 +171,9 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
         public String getName() {
             final String character = getXmlCharacter();
 
-            return XmlBundle.message(
-                "unescaped.xml.character.fix.message",
-                character.equals("&") ?
-                    XmlBundle.message("unescaped.xml.character.fix.message.parameter") :
-                    character
-            );
+            return XmlLocalize.unescapedXmlCharacterFixMessage(
+                character.equals("&") ? XmlLocalize.unescapedXmlCharacterFixMessageParameter().get() : character
+            ).get();
         }
 
         @Nonnull

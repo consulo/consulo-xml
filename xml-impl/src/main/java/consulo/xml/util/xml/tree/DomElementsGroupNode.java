@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.annotation.Nonnull;
-
+import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.tree.SimpleNode;
+import consulo.ui.image.Image;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ElementPresentationManager;
@@ -32,8 +28,10 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import consulo.ide.IdeBundle;
-import consulo.ui.image.Image;
+import jakarta.annotation.Nonnull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DomElementsGroupNode extends AbstractDomElementNode {
   private final DomElement myParentElement;
@@ -80,7 +78,7 @@ public class DomElementsGroupNode extends AbstractDomElementNode {
         showErrors ? getWavedAttributes(SimpleTextAttributes.STYLE_BOLD) :  new SimpleTextAttributes(SimpleTextAttributes.STYLE_BOLD, SimpleTextAttributes.REGULAR_ATTRIBUTES.getFgColor());
 
       addColoredFragment(getNodeName(), textAttributes);
-      addColoredFragment(" (" + childrenCount + ')', showErrors ? IdeBundle.message("dom.elements.tree.childs.contain.errors") : null,
+      addColoredFragment(" (" + childrenCount + ')', showErrors ? IdeLocalize.domElementsTreeChildsContainErrors().get() : null,
                          SimpleTextAttributes.GRAY_ITALIC_ATTRIBUTES);
     }
     else {

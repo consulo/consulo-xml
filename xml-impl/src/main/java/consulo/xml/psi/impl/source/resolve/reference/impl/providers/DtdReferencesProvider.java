@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.util.AddDtdDeclarationFix;
@@ -37,10 +36,10 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,7 +155,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
     @Nonnull
     @Override
     public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
-      return LocalizeValue.localizeTODO(XmlBundle.message("xml.dtd.unresolved.element.reference", referenceText));
+      return XmlLocalize.xmlDtdUnresolvedElementReference(referenceText);
     }
   }
 

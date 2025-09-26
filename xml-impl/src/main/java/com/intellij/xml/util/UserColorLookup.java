@@ -15,28 +15,28 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.completion.lookup.*;
 import consulo.language.psi.PsiElement;
 import consulo.project.ui.wm.WindowManager;
 import consulo.ui.ex.awt.ColorChooser;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.util.ColorSampleLookupValue;
-
 import jakarta.annotation.Nullable;
+
 import java.awt.*;
 
 /**
  * @author maxim
  */
 public class UserColorLookup extends LookupElementDecorator<LookupElement> {
-    private static final String COLOR_STRING = XmlBundle.message("choose.color.in.color.lookup");
-
     public UserColorLookup() {
-        super(PrioritizedLookupElement.withPriority(LookupElementBuilder.create(COLOR_STRING)
-            .withInsertHandler((context, item) -> handleUserSelection(context)), LookupValueWithPriority.HIGH));
+        super(
+            PrioritizedLookupElement.withPriority(LookupElementBuilder.create(XmlLocalize.chooseColorInColorLookup().get())
+                .withInsertHandler((context, item) -> handleUserSelection(context)), LookupValueWithPriority.HIGH)
+        );
     }
 
     private static void handleUserSelection(InsertionContext context) {
@@ -53,7 +53,7 @@ public class UserColorLookup extends LookupElementDecorator<LookupElement> {
 
         ColorChooser.chooseColor(
             TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())),
-            XmlBundle.message("choose.color.dialog.title"),
+            XmlLocalize.chooseColorDialogTitle().get(),
             myColorAtCaret,
             true,
             true,

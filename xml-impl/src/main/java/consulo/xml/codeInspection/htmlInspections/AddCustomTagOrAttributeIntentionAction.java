@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import consulo.language.editor.inspection.LocalInspectionTool;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -24,7 +22,7 @@ import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
-
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 /**
@@ -51,7 +49,7 @@ public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
   @Override
   @Nonnull
   public String getFamilyName() {
-    return XmlBundle.message("fix.html.family");
+    return XmlLocalize.fixHtmlFamily().get();
   }
 
   @Override

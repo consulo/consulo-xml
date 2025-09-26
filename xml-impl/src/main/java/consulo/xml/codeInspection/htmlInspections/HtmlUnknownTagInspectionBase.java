@@ -15,7 +15,6 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
@@ -37,11 +36,10 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +55,6 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
   }
 
   @Override
-  @Nls
   @Nonnull
   public String getDisplayName() {
     return XmlLocalize.htmlInspectionsUnknownTag().get();
@@ -72,7 +69,7 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
 
   @Override
   protected LocalizeValue getCheckboxTitle() {
-    return LocalizeValue.localizeTODO(XmlLocalize.htmlInspectionsUnknownTagCheckboxTitle().get());
+    return XmlLocalize.htmlInspectionsUnknownTagCheckboxTitle();
   }
 
   @Override
@@ -98,8 +95,8 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
       if (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name)) {
         final AddCustomHtmlElementIntentionAction action = new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.TAG_SHORT_NAME,
                                                                                                    name,
-                                                                                                   XmlBundle.message("add.custom.html.tag",
-                                                                                                                     name));
+                                                                                                   XmlLocalize.addCustomHtmlTag(name).get()
+        );
 
         // todo: support "element is not allowed" message for html5
         // some tags in html5 cannot be found in xhtml5.xsd if they are located in incorrect context, so they get any-element descriptor (ex. "canvas: tag)

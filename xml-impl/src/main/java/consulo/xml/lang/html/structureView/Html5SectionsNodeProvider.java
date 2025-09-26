@@ -15,7 +15,6 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import com.intellij.xml.XmlBundle;
 import consulo.fileEditor.structureView.tree.ActionPresentation;
 import consulo.fileEditor.structureView.tree.ActionPresentationData;
 import consulo.fileEditor.structureView.tree.FileStructureNodeProvider;
@@ -24,12 +23,13 @@ import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.ui.ex.action.Shortcut;
 import consulo.ui.ex.keymap.KeymapManager;
 import consulo.xml.icon.XmlIconGroup;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,11 +47,11 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
 
   @Nonnull
   public ActionPresentation getPresentation() {
-    return new ActionPresentationData(XmlBundle.message("html5.outline.mode"), null, XmlIconGroup.html5());
+    return new ActionPresentationData(XmlLocalize.html5OutlineMode().get(), null, XmlIconGroup.html5());
   }
 
   public String getCheckBoxText() {
-    return XmlBundle.message("html5.outline.mode");
+    return XmlLocalize.html5OutlineMode().get();
   }
 
   public Shortcut[] getShortcut() {

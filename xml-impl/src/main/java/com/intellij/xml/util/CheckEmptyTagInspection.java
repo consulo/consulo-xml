@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
@@ -35,14 +33,15 @@ import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -75,16 +74,15 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
                     return;
                 }
 
-                final LocalQuickFix fix = new MyLocalQuickFix();
-
-                holder.registerProblem(
-                    tag,
-                    XmlBundle.message("html.inspections.check.empty.script.message"),
-                    tag.getContainingFile().getContext() != null ?
-                        ProblemHighlightType.INFORMATION :
-                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                    fix
-                );
+                holder.newProblem(XmlLocalize.htmlInspectionsCheckEmptyScriptMessage())
+                    .range(tag)
+                    .withFixes(new MyLocalQuickFix())
+                    .highlightType(
+                        tag.getContainingFile().getContext() != null
+                            ? ProblemHighlightType.INFORMATION
+                            : ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                    )
+                    .create();
             }
         };
     }
@@ -107,7 +105,7 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
 
     @Nonnull
     public String getDisplayName() {
-        return XmlBundle.message("html.inspections.check.empty.tag");
+        return XmlLocalize.htmlInspectionsCheckEmptyTag().get();
     }
 
     @Nonnull
@@ -131,7 +129,7 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
     private static class MyLocalQuickFix implements LocalQuickFix {
         @Nonnull
         public String getName() {
-            return XmlBundle.message("html.inspections.check.empty.script.tag.fix.message");
+            return XmlLocalize.htmlInspectionsCheckEmptyScriptTagFixMessage().get();
         }
 
         public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {

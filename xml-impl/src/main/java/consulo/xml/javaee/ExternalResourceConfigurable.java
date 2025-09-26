@@ -15,7 +15,6 @@
  */
 package consulo.xml.javaee;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.ApplicationManager;
 import consulo.configurable.BaseConfigurable;
@@ -31,7 +30,6 @@ import consulo.ui.ex.awt.AddEditRemovePanel;
 import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.table.JBTable;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
-import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
@@ -105,7 +103,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
             }
         };
 
-        myExtPanel = new AddEditRemovePanel<>(new ExtUrlsTableModel(), myPairs, XmlBundle.message("label.edit.external.resource.configure.external.resources")) {
+        myExtPanel = new AddEditRemovePanel<>(new ExtUrlsTableModel(), myPairs, XmlLocalize.labelEditExternalResourceConfigureExternalResources().get()) {
             @Override
             protected NameLocationPair addItem() {
                 return addExtLocation();
@@ -138,7 +136,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
                 setModified(true);
             }
         });
-        myIgnorePanel = new AddEditRemovePanel<>(new IgnoredUrlsModel(), myIgnoredUrls, XmlBundle.message("label.edit.external.resource.configure.ignored.resources")) {
+        myIgnorePanel = new AddEditRemovePanel<>(new IgnoredUrlsModel(), myIgnoredUrls, XmlLocalize.labelEditExternalResourceConfigureIgnoredResources().get()) {
             @Override
             protected String addItem() {
                 return addIgnoreLocation();
@@ -177,8 +175,8 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
         myExtPanel.setData(myPairs);
         myIgnorePanel.setData(myIgnoredUrls);
 
-        myExtPanel.getEmptyText().setText(XmlBundle.message("no.external.resources"));
-        myIgnorePanel.getEmptyText().setText(XmlBundle.message("no.ignored.resources"));
+        myExtPanel.getEmptyText().setText(XmlLocalize.noExternalResources());
+        myIgnorePanel.getEmptyText().setText(XmlLocalize.noIgnoredResources());
 
         return myPanel;
     }
@@ -360,7 +358,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
     }
 
     private static class IgnoredUrlsModel extends AddEditRemovePanel.TableModel<String> {
-        private final String[] myNames = {XmlBundle.message("column.name.edit.external.resource.uri")};
+        private final LocalizeValue[] myNames = {XmlLocalize.columnNameEditExternalResourceUri()};
 
         @Override
         public int getColumnCount() {
@@ -384,26 +382,25 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
 
         @Override
         public void setValue(Object aValue, String data, int columnIndex) {
-
         }
 
         @Override
         public String getColumnName(int column) {
-            return myNames[column];
+            return myNames[column].get();
         }
     }
 
     private class ExtUrlsTableModel extends AddEditRemovePanel.TableModel<NameLocationPair> {
-        final String[] myNames;
+        final LocalizeValue[] myNames;
 
         {
-            List<String> names = new ArrayList<>();
-            names.add(XmlBundle.message("column.name.edit.external.resource.uri"));
-            names.add(XmlBundle.message("column.name.edit.external.resource.location"));
+            List<LocalizeValue> names = new ArrayList<>();
+            names.add(XmlLocalize.columnNameEditExternalResourceUri());
+            names.add(XmlLocalize.columnNameEditExternalResourceLocation());
             if (myProject != null) {
-                names.add("Project");
+                names.add(LocalizeValue.localizeTODO("Project"));
             }
-            myNames = ArrayUtil.toStringArray(names);
+            myNames = names.toArray(new LocalizeValue[0]);
         }
 
         @Override
@@ -442,7 +439,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
 
         @Override
         public String getColumnName(int column) {
-            return myNames[column];
+            return myNames[column].get();
         }
     }
 }

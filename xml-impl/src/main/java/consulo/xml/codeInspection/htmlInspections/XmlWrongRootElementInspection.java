@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
@@ -36,13 +34,13 @@ import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author spleaner
@@ -66,11 +64,10 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool
 	}
 
 	@Override
-	@Nls
 	@Nonnull
 	public String getDisplayName()
 	{
-		return XmlBundle.message("xml.inspection.wrong.root.element");
+		return XmlLocalize.xmlInspectionWrongRootElement().get();
 	}
 
 	@Override
@@ -180,7 +177,7 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool
 		@Nonnull
 		public String getName()
 		{
-			return XmlBundle.message("change.root.element.to", myText);
+			return XmlLocalize.changeRootElementTo(myText).get();
 		}
 
 		@Override

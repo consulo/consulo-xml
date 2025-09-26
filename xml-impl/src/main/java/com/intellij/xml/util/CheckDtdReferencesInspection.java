@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.language.editor.inspection.ProblemsHolder;
@@ -27,11 +25,12 @@ import consulo.language.psi.PsiReference;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
+import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,7 +119,7 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
 
     @Nonnull
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.check.dtd.references");
+        return XmlLocalize.xmlInspectionsCheckDtdReferences().get();
     }
 
     @Nonnull

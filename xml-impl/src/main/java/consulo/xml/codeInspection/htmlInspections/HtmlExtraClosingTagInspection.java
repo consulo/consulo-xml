@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import consulo.annotation.component.ExtensionImpl;
@@ -26,14 +24,13 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author spleaner
@@ -47,10 +44,9 @@ public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
   }
 
   @Override
-  @Nls
   @Nonnull
   public String getDisplayName() {
-    return XmlBundle.message("html.inspection.extra.closing.tag");
+    return XmlLocalize.htmlInspectionExtraClosingTag().get();
   }
 
   @Override

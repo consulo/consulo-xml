@@ -15,19 +15,17 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import consulo.language.editor.inspection.InspectionToolState;
-import consulo.language.editor.inspection.InspectionsBundle;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.language.editor.inspection.localize.InspectionLocalize;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import org.jetbrains.annotations.NonNls;
-
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
+import org.jetbrains.annotations.NonNls;
 
 public abstract class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
   protected static final Logger LOG = Logger.getInstance(RequiredAttributesInspectionBase.class);
@@ -47,7 +45,7 @@ public abstract class RequiredAttributesInspectionBase extends XmlSuppressableIn
   @Override
   @Nonnull
   public String getDisplayName() {
-    return InspectionsBundle.message("inspection.required.attributes.display.name");
+    return InspectionLocalize.inspectionRequiredAttributesDisplayName().get();
   }
 
   @Override
@@ -65,13 +63,13 @@ public abstract class RequiredAttributesInspectionBase extends XmlSuppressableIn
   @Nonnull
   @Override
   public InspectionToolState<?> createStateProvider() {
-    return new XmlEntitiesInspectionState(LocalizeValue.localizeTODO(InspectionsBundle.message(
-      "inspection.javadoc.html.not.required.label.text")));
+    return new XmlEntitiesInspectionState(InspectionLocalize.inspectionJavadocHtmlNotRequiredLabelText());
   }
 
   public static IntentionAction getIntentionAction(String name) {
     return new AddHtmlTagOrAttributeToCustomsIntention(XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME,
                                                        name,
-                                                       XmlBundle.message("add.optional.html.attribute", name));
+                                                       XmlLocalize.addOptionalHtmlAttribute(name).get()
+    );
   }
 }

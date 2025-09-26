@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -26,12 +25,12 @@ import consulo.language.psi.*;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -54,13 +53,13 @@ public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool imp
     @Nonnull
     @Override
     public String getGroupDisplayName() {
-        return XmlBundle.message("xml.inspections.group.name");
+        return XmlLocalize.xmlInspectionsGroupName().get();
     }
 
     @Nonnull
     @Override
     public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.duplicate.id");
+        return XmlLocalize.xmlInspectionsDuplicateId().get();
     }
 
     @Nonnull

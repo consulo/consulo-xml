@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection;
 
-import consulo.language.editor.inspection.*;
+import consulo.language.editor.inspection.BatchSuppressableTool;
+import consulo.language.editor.inspection.LocalInspectionTool;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.editor.inspection.localize.InspectionLocalize;
 import consulo.language.editor.rawHighlight.HighlightDisplayKey;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NonNls;
 
 public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool implements BatchSuppressableTool {
   @NonNls
@@ -68,7 +70,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     @Nonnull
     @Override
     public String getName() {
-      return InspectionsBundle.message("xml.suppressable.for.tag.title");
+      return InspectionLocalize.xmlSuppressableForTagTitle().get();
     }
 
     @Override
@@ -102,7 +104,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     @Nonnull
     @Override
     public String getName() {
-      return InspectionsBundle.message("xml.suppressable.for.file.title");
+      return InspectionLocalize.xmlSuppressableForFileTitle().get();
     }
 
     @Override
@@ -134,7 +136,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     @Nonnull
     @Override
     public String getName() {
-      return InspectionsBundle.message("xml.suppressable.all.for.file.title");
+      return InspectionLocalize.xmlSuppressableAllForFileTitle().get();
     }
   }
 }
