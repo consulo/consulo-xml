@@ -39,9 +39,9 @@ duplicate.id.reference:
 invalid.id.reference:
   text: Invalid id reference
 uri.is.not.registered:
-  text: URI is not registered (Settings | Project Settings | Schemas and DTDs)
+  text: URI is not registered (Settings | Editor | Schemas and DTDs)
 registered.resource.is.not.recognized:
-  text: Resource registered by this uri is not recognized (Settings | Project Settings | Schemas and DTDs)
+  text: Resource registered by this uri is not recognized (Settings | Editor | Schemas and DTDs)
 should.have.fixed.value:
   text: '{0} should have fixed value {1}'
 insert.required.attribute.quickfix.text:
