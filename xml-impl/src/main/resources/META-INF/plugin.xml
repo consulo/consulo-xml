@@ -9,39 +9,12 @@
 	</tags>
 
 	<actions>
-		<group id="XmlGenerateToolsGroup">
-			<separator/>
-			<reference ref="GenerateDTD"/>
-			<reference ref="XSD2Document"/>
-			<reference ref="Document2XSD"/>
-			<separator/>
-			<add-to-group group-id="EditorPopupMenu" anchor="last"/>
-			<add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-		</group>
-
-		<reference ref="ValidateXml">
-			<add-to-group group-id="EditorPopupMenu.Run" anchor="last"/>
-			<add-to-group group-id="ProjectViewPopupMenuRefactoringGroup" anchor="last"/>
-			<add-to-group group-id="EditorTabPopupMenuEx" anchor="last"/>
-		</reference>
-
-		<reference id="DomElementsTreeView.AddElement">
+		<reference ref="DomElementsTreeView.AddElement">
 			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
 		</reference>
 
-		<group id="DomElementsTreeView.TreePopup">
-			<reference ref="DomElementsTreeView.GotoDomElementDeclarationAction"/>
-			<separator/>
-			<reference ref="DomElementsTreeView.AddElementGroup"/>
-			<reference ref="DomElementsTreeView.DeleteElement"/>
-		</group>
-
-		<group id="DomCollectionControl">
-			<action id="DomCollectionControl.Add" class="consulo.xml.util.xml.ui.DomCollectionControl$AddAction" text="Add">
-				<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
-			</action>
-			<action id="DomCollectionControl.Edit" class="consulo.xml.util.xml.ui.DomCollectionControl$EditAction" text="Edit" use-shortcut-of="EditSource"/>
-			<action id="DomCollectionControl.Remove" class="consulo.xml.util.xml.ui.DomCollectionControl$RemoveAction" text="Remove" use-shortcut-of="$Delete"/>
-		</group>
+		<reference ref="DomCollectionControl.Add">
+			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
+		</reference>
 	</actions>
 </consulo-plugin>

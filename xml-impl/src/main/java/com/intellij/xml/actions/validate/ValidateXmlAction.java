@@ -2,6 +2,8 @@
 package com.intellij.xml.actions.validate;
 
 import consulo.annotation.component.ActionImpl;
+import consulo.annotation.component.ActionParentRef;
+import consulo.annotation.component.ActionRef;
 import consulo.application.Application;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
@@ -24,7 +26,14 @@ import jakarta.inject.Inject;
 /**
  * @author mike
  */
-@ActionImpl(id = "ValidateXml")
+@ActionImpl(
+    id = "ValidateXml",
+    parents = {
+        @ActionParentRef(@ActionRef(id = "EditorPopupMenu.Run")),
+        @ActionParentRef(@ActionRef(id = "ProjectViewPopupMenuRefactoringGroup")),
+        @ActionParentRef(@ActionRef(id = "EditorTabPopupMenuEx"))
+    }
+)
 public class ValidateXmlAction extends AnAction {
     private static final Key<String> runningValidationKey = Key.create("xml.running.validation.indicator");
 
