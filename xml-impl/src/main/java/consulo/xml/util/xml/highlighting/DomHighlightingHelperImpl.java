@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.FileModificationService;
@@ -53,232 +54,277 @@ import java.util.List;
  * @author peter
  */
 public class DomHighlightingHelperImpl extends DomHighlightingHelper {
-  public static final DomHighlightingHelperImpl INSTANCE = new DomHighlightingHelperImpl();
-  private final GenericValueReferenceProvider myProvider = new GenericValueReferenceProvider();
-  private final DomApplicationComponent myDomApplicationComponent = DomApplicationComponent.getInstance();
+    public static final DomHighlightingHelperImpl INSTANCE = new DomHighlightingHelperImpl();
+    private final GenericValueReferenceProvider myProvider = new GenericValueReferenceProvider();
+    private final DomApplicationComponent myDomApplicationComponent = DomApplicationComponent.getInstance();
 
-  public void runAnnotators(DomElement element, DomElementAnnotationHolder holder, Class<? extends DomElement> rootClass) {
-    final DomElementsAnnotator annotator = myDomApplicationComponent.getAnnotator(rootClass);
-    if (annotator != null) {
-      annotator.annotate(element, holder);
-    }
-  }
-
-  @Nonnull
-  public List<DomElementProblemDescriptor> checkRequired(final DomElement element, final DomElementAnnotationHolder holder) {
-    final Required required = element.getAnnotation(Required.class);
-    if (required != null) {
-      final XmlElement xmlElement = element.getXmlElement();
-      if (xmlElement == null) {
-        if (required.value()) {
-          final String xmlElementName = element.getXmlElementName();
-          if (element instanceof GenericAttributeValue) {
-            return Arrays.asList(holder.createProblem(element, IdeLocalize.attribute0ShouldBeDefined(xmlElementName).get()));
-          }
-          return Arrays.asList(
-            holder.createProblem(
-              element,
-              HighlightSeverity.ERROR,
-              IdeLocalize.childTag0ShouldBeDefined(xmlElementName).get(),
-              new AddRequiredSubtagFix(xmlElementName, element.getXmlElementNamespace(), element.getParent().getXmlTag())
-            )
-          );
+    @Override
+    public void runAnnotators(DomElement element, DomElementAnnotationHolder holder, Class<? extends DomElement> rootClass) {
+        DomElementsAnnotator annotator = myDomApplicationComponent.getAnnotator(rootClass);
+        if (annotator != null) {
+            annotator.annotate(element, holder);
         }
-      }
-      else if (element instanceof GenericDomValue) {
-        return ContainerUtil.createMaybeSingletonList(checkRequiredGenericValue((GenericDomValue)element, required, holder));
-      }
-    }
-    if (DomUtil.hasXml(element)) {
-      final SmartList<DomElementProblemDescriptor> list = new SmartList<DomElementProblemDescriptor>();
-      final DomGenericInfo info = element.getGenericInfo();
-      for (final AbstractDomChildrenDescription description : info.getChildrenDescriptions()) {
-        if (description instanceof DomCollectionChildDescription && description.getValues(element).isEmpty()) {
-          final DomCollectionChildDescription childDescription = (DomCollectionChildDescription)description;
-          final Required annotation = description.getAnnotation(Required.class);
-          if (annotation != null && annotation.value()) {
-            list.add(holder.createProblem(element, childDescription, IdeLocalize.childTag0ShouldBeDefined(childDescription.getXmlElementName()).get()));
-          }
-        }
-      }
-      return list;
-    }
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  public List<DomElementProblemDescriptor> checkResolveProblems(GenericDomValue element, final DomElementAnnotationHolder holder) {
-    if (StringUtil.isEmpty(element.getStringValue())) {
-      final Required required = element.getAnnotation(Required.class);
-      if (required != null && !required.nonEmpty()) return Collections.emptyList();
-    }
-
-    final XmlElement valueElement = DomUtil.getValueElement(element);
-    if (valueElement != null && !isSoftReference(element)) {
-      final SmartList<DomElementProblemDescriptor> list = new SmartList<DomElementProblemDescriptor>();
-      final PsiReference[] psiReferences = myProvider.getReferencesByElement(valueElement, new ProcessingContext());
-      GenericDomValueReference domReference = ContainerUtil.findInstance(psiReferences, GenericDomValueReference.class);
-      final Converter converter = WrappingConverter.getDeepestConverter(element.getConverter(), element);
-      boolean hasBadResolve = false;
-      if (domReference == null || !isDomResolveOK(element, domReference, converter)) {
-        for (final PsiReference reference : psiReferences) {
-          if (reference != domReference && hasBadResolve(reference)) {
-            hasBadResolve = true;
-            list.add(holder.createResolveProblem(element, reference));
-          }
-        }
-        final boolean isResolvingConverter = converter instanceof ResolvingConverter;
-        if (!hasBadResolve &&
-            (domReference != null || isResolvingConverter &&
-                                     hasBadResolve(domReference = new GenericDomValueReference(element)))) {
-          hasBadResolve = true;
-          list.add(holder.createResolveProblem(element, domReference));
-        }
-      }
-      if (!hasBadResolve && psiReferences.length == 0 && element.getValue() == null && !PsiTreeUtil.hasErrorElements(valueElement)) {
-        final LocalizeValue errorMessage = converter
-          .buildUnresolvedMessage(element.getStringValue(), ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element)));
-        if (errorMessage != LocalizeValue.of()) {
-          list.add(holder.createProblem(element, errorMessage.get()));
-        }
-      }
-      return list;
-    }
-    return Collections.emptyList();
-  }
-
-  private static boolean isDomResolveOK(GenericDomValue element, GenericDomValueReference domReference, Converter converter) {
-    return !hasBadResolve(domReference) ||
-           converter instanceof ResolvingConverter && ((ResolvingConverter)converter).getAdditionalVariants(domReference.getConvertContext()).contains(element.getStringValue());
-  }
-
-  @Nonnull
-  public List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, final DomElementAnnotationHolder holder) {
-    final String elementName = ElementPresentationManager.getElementName(element);
-    if (StringUtil.isNotEmpty(elementName)) {
-      final DomElement domElement = DomUtil.findDuplicateNamedValue(element, elementName);
-      if (domElement != null) {
-        final String typeName = ElementPresentationManager.getTypeNameForObject(element);
-        final GenericDomValue genericDomValue = domElement.getGenericInfo().getNameDomElement(element);
-        if (genericDomValue != null) {
-          return Arrays.asList(holder.createProblem(genericDomValue, DomUtil.getFile(domElement).equals(DomUtil.getFile(element))
-                                                                     ? IdeLocalize.modelHighlightingIdentity(typeName).get()
-                                                                     : IdeLocalize.modelHighlightingIdentityInOtherFile(typeName, domElement.getXmlTag().getContainingFile().getName()).get()));
-        }
-      }
-    }
-    return Collections.emptyList();
-  }
-
-  private static boolean hasBadResolve(PsiReference reference) {
-    return XmlHighlightVisitor.hasBadResolve(reference, true);
-  }
-
-  private static boolean isSoftReference(GenericDomValue value) {
-    final Resolve resolve = value.getAnnotation(Resolve.class);
-    if (resolve != null && resolve.soft()) return true;
-
-    final Convert convert = value.getAnnotation(Convert.class);
-    if (convert != null && convert.soft()) return true;
-
-    final Referencing referencing = value.getAnnotation(Referencing.class);
-    return referencing != null && referencing.soft();
-
-  }
-
-  @Nullable
-  private static DomElementProblemDescriptor checkRequiredGenericValue(final GenericDomValue child, final Required required,
-                                                                       final DomElementAnnotationHolder annotator) {
-    final String stringValue = child.getStringValue();
-    if (stringValue == null) return null;
-
-    if (required.nonEmpty() && isEmpty(child, stringValue)) {
-      return annotator.createProblem(child, IdeLocalize.valueMustNotBeEmpty().get());
-    }
-    if (required.identifier() && !isIdentifier(stringValue)) {
-      return annotator.createProblem(child, IdeLocalize.valueMustBeIdentifier().get());
-    }
-    return null;
-  }
-
-  private static boolean isIdentifier(final String s) {
-    if (StringUtil.isEmptyOrSpaces(s)) return false;
-
-    if (!Character.isJavaIdentifierStart(s.charAt(0))) return false;
-
-    for (int i = 1; i < s.length(); i++) {
-      if (!Character.isJavaIdentifierPart(s.charAt(i))) return false;
-    }
-
-    return true;
-  }
-
-  private static boolean isEmpty(final GenericDomValue child, final String stringValue) {
-    if (stringValue.trim().length() != 0) {
-      return false;
-    }
-    if (child instanceof GenericAttributeValue) {
-      final XmlAttributeValue value = ((GenericAttributeValue)child).getXmlAttributeValue();
-      if (value != null && value.getTextRange().isEmpty()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-
-  private static class AddRequiredSubtagFix implements LocalQuickFix, SyntheticIntentionAction
-  {
-    private final String tagName;
-    private final String tagNamespace;
-    private final XmlTag parentTag;
-
-    public AddRequiredSubtagFix(@Nonnull String _tagName, @Nonnull String _tagNamespace, @Nonnull XmlTag _parentTag) {
-      tagName = _tagName;
-      tagNamespace = _tagNamespace;
-      parentTag = _parentTag;
     }
 
     @Nonnull
-    public String getName() {
-      return XmlLocalize.insertRequiredTagFix(tagName).get();
+    @Override
+    @RequiredReadAction
+    public List<DomElementProblemDescriptor> checkRequired(DomElement element, DomElementAnnotationHolder holder) {
+        Required required = element.getAnnotation(Required.class);
+        if (required != null) {
+            XmlElement xmlElement = element.getXmlElement();
+            if (xmlElement == null) {
+                if (required.value()) {
+                    String xmlElementName = element.getXmlElementName();
+                    if (element instanceof GenericAttributeValue) {
+                        return Arrays.asList(holder.createProblem(element, IdeLocalize.attribute0ShouldBeDefined(xmlElementName).get()));
+                    }
+                    return Arrays.asList(
+                        holder.createProblem(
+                            element,
+                            HighlightSeverity.ERROR,
+                            IdeLocalize.childTag0ShouldBeDefined(xmlElementName).get(),
+                            new AddRequiredSubtagFix(xmlElementName, element.getXmlElementNamespace(), element.getParent().getXmlTag())
+                        )
+                    );
+                }
+            }
+            else if (element instanceof GenericDomValue) {
+                return ContainerUtil.createMaybeSingletonList(checkRequiredGenericValue((GenericDomValue) element, required, holder));
+            }
+        }
+        if (DomUtil.hasXml(element)) {
+            List<DomElementProblemDescriptor> list = new SmartList<>();
+            DomGenericInfo info = element.getGenericInfo();
+            for (AbstractDomChildrenDescription description : info.getChildrenDescriptions()) {
+                if (description instanceof DomCollectionChildDescription childDescription && description.getValues(element).isEmpty()) {
+                    Required annotation = description.getAnnotation(Required.class);
+                    if (annotation != null && annotation.value()) {
+                        list.add(holder.createProblem(
+                            element,
+                            childDescription,
+                            IdeLocalize.childTag0ShouldBeDefined(childDescription.getXmlElementName()).get()
+                        ));
+                    }
+                }
+            }
+            return list;
+        }
+        return Collections.emptyList();
     }
 
     @Nonnull
-    public String getText() {
-      return getName();
+    @Override
+    @RequiredReadAction
+    public List<DomElementProblemDescriptor> checkResolveProblems(GenericDomValue element, DomElementAnnotationHolder holder) {
+        if (StringUtil.isEmpty(element.getStringValue())) {
+            Required required = element.getAnnotation(Required.class);
+            if (required != null && !required.nonEmpty()) {
+                return Collections.emptyList();
+            }
+        }
+
+        XmlElement valueElement = DomUtil.getValueElement(element);
+        if (valueElement != null && !isSoftReference(element)) {
+            List<DomElementProblemDescriptor> list = new SmartList<>();
+            PsiReference[] psiReferences = myProvider.getReferencesByElement(valueElement, new ProcessingContext());
+            GenericDomValueReference domReference = ContainerUtil.findInstance(psiReferences, GenericDomValueReference.class);
+            Converter converter = WrappingConverter.getDeepestConverter(element.getConverter(), element);
+            boolean hasBadResolve = false;
+            if (domReference == null || !isDomResolveOK(element, domReference, converter)) {
+                for (PsiReference reference : psiReferences) {
+                    if (reference != domReference && hasBadResolve(reference)) {
+                        hasBadResolve = true;
+                        list.add(holder.createResolveProblem(element, reference));
+                    }
+                }
+                boolean isResolvingConverter = converter instanceof ResolvingConverter;
+                if (!hasBadResolve
+                    && (domReference != null
+                    || isResolvingConverter && hasBadResolve(domReference = new GenericDomValueReference(element)))) {
+                    hasBadResolve = true;
+                    list.add(holder.createResolveProblem(element, domReference));
+                }
+            }
+            if (!hasBadResolve && psiReferences.length == 0 && element.getValue() == null && !PsiTreeUtil.hasErrorElements(valueElement)) {
+                LocalizeValue errorMessage = converter.buildUnresolvedMessage(
+                    element.getStringValue(),
+                    ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element))
+                );
+                if (errorMessage != LocalizeValue.of()) {
+                    list.add(holder.createProblem(element, errorMessage.get()));
+                }
+            }
+            return list;
+        }
+        return Collections.emptyList();
+    }
+
+    @RequiredReadAction
+    private static boolean isDomResolveOK(GenericDomValue element, GenericDomValueReference domReference, Converter converter) {
+        return !hasBadResolve(domReference)
+            || converter instanceof ResolvingConverter resolvingConverter
+            && resolvingConverter.getAdditionalVariants(domReference.getConvertContext()).contains(element.getStringValue());
     }
 
     @Nonnull
-    public String getFamilyName() {
-      return getName();
+    @Override
+    public List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, DomElementAnnotationHolder holder) {
+        String elementName = ElementPresentationManager.getElementName(element);
+        if (StringUtil.isNotEmpty(elementName)) {
+            DomElement domElement = DomUtil.findDuplicateNamedValue(element, elementName);
+            if (domElement != null) {
+                String typeName = ElementPresentationManager.getTypeNameForObject(element);
+                GenericDomValue genericDomValue = domElement.getGenericInfo().getNameDomElement(element);
+                if (genericDomValue != null) {
+                    return Arrays.asList(holder.createProblem(
+                        genericDomValue,
+                        DomUtil.getFile(domElement).equals(DomUtil.getFile(element))
+                            ? IdeLocalize.modelHighlightingIdentity(typeName).get()
+                            : IdeLocalize.modelHighlightingIdentityInOtherFile(
+                                typeName,
+                                domElement.getXmlTag().getContainingFile().getName()
+                            ).get()
+                    ));
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 
-    public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
-      return true;
+    @RequiredReadAction
+    private static boolean hasBadResolve(PsiReference reference) {
+        return XmlHighlightVisitor.hasBadResolve(reference, true);
     }
 
-    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws consulo.language.util.IncorrectOperationException {
-      doFix();
+    private static boolean isSoftReference(GenericDomValue value) {
+        Resolve resolve = value.getAnnotation(Resolve.class);
+        if (resolve != null && resolve.soft()) {
+            return true;
+        }
+
+        Convert convert = value.getAnnotation(Convert.class);
+        if (convert != null && convert.soft()) {
+            return true;
+        }
+
+        Referencing referencing = value.getAnnotation(Referencing.class);
+        return referencing != null && referencing.soft();
     }
 
-    public boolean startInWriteAction() {
-      return true;
+    @Nullable
+    @RequiredReadAction
+    private static DomElementProblemDescriptor checkRequiredGenericValue(
+        GenericDomValue child,
+        Required required,
+        DomElementAnnotationHolder annotator
+    ) {
+        String stringValue = child.getStringValue();
+        if (stringValue == null) {
+            return null;
+        }
+
+        if (required.nonEmpty() && isEmpty(child, stringValue)) {
+            return annotator.createProblem(child, IdeLocalize.valueMustNotBeEmpty().get());
+        }
+        if (required.identifier() && !isIdentifier(stringValue)) {
+            return annotator.createProblem(child, IdeLocalize.valueMustBeIdentifier().get());
+        }
+        return null;
     }
 
-    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-      doFix();
+    private static boolean isIdentifier(String s) {
+        if (StringUtil.isEmptyOrSpaces(s)) {
+            return false;
+        }
+
+        if (!Character.isJavaIdentifierStart(s.charAt(0))) {
+            return false;
+        }
+
+        for (int i = 1; i < s.length(); i++) {
+            if (!Character.isJavaIdentifierPart(s.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    private void doFix() {
-      if (!FileModificationService.getInstance().prepareFileForWrite(parentTag.getContainingFile())) return;
-
-      try {
-        parentTag.add(parentTag.createChildTag(tagName, tagNamespace, null, false));
-      }
-      catch (IncorrectOperationException e) {
-        throw new RuntimeException(e);
-      }
+    @RequiredReadAction
+    private static boolean isEmpty(GenericDomValue child, String stringValue) {
+        if (stringValue.trim().length() != 0) {
+            return false;
+        }
+        if (child instanceof GenericAttributeValue genericAttributeValue) {
+            XmlAttributeValue value = genericAttributeValue.getXmlAttributeValue();
+            if (value != null && value.getTextRange().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
-  }
+
+    private static class AddRequiredSubtagFix implements LocalQuickFix, SyntheticIntentionAction {
+        private final String tagName;
+        private final String tagNamespace;
+        private final XmlTag parentTag;
+
+        public AddRequiredSubtagFix(@Nonnull String _tagName, @Nonnull String _tagNamespace, @Nonnull XmlTag _parentTag) {
+            tagName = _tagName;
+            tagNamespace = _tagNamespace;
+            parentTag = _parentTag;
+        }
+
+        @Nonnull
+        @Override
+        public String getName() {
+            return XmlLocalize.insertRequiredTagFix(tagName).get();
+        }
+
+        @Nonnull
+        @Override
+        public String getText() {
+            return getName();
+        }
+
+        @Nonnull
+        @Override
+        public String getFamilyName() {
+            return getName();
+        }
+
+        @Override
+        public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+            return true;
+        }
+
+        @Override
+        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
+            doFix();
+        }
+
+        @Override
+        public boolean startInWriteAction() {
+            return true;
+        }
+
+        @Override
+        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+            doFix();
+        }
+
+        private void doFix() {
+            if (!FileModificationService.getInstance().prepareFileForWrite(parentTag.getContainingFile())) {
+                return;
+            }
+
+            try {
+                parentTag.add(parentTag.createChildTag(tagName, tagNamespace, null, false));
+            }
+            catch (IncorrectOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
