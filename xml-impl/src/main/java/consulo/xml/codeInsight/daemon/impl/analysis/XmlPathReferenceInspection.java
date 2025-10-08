@@ -25,6 +25,7 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
@@ -100,14 +101,14 @@ public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
 
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return XmlLocalize.xmlInspectionsGroupName().get();
+    public LocalizeValue getGroupDisplayName() {
+        return XmlLocalize.xmlInspectionsGroupName();
     }
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsPathResolve().get();
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsPathResolve();
     }
 
     @Nonnull

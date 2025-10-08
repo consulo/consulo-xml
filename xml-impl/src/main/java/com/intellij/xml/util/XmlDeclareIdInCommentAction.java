@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.Result;
 import consulo.language.Commenter;
 import consulo.language.Language;
@@ -26,12 +27,12 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.logging.Logger;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -39,33 +40,28 @@ import jakarta.annotation.Nullable;
  * @author spleaner
  */
 public class XmlDeclareIdInCommentAction implements LocalQuickFix {
-    private static final Logger LOG = Logger.getInstance(XmlDeclareIdInCommentAction.class);
-
     private final String myId;
 
-    public XmlDeclareIdInCommentAction(@Nonnull final String id) {
+    public XmlDeclareIdInCommentAction(@Nonnull String id) {
         myId = id;
     }
 
     @Nonnull
-    public String getName() {
-        return XmlErrorLocalize.declareIdInCommentQuickfix().get();
-    }
-
-    @Nonnull
-    public String getFamilyName() {
-        return getName();
+    @Override
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.declareIdInCommentQuickfix();
     }
 
     @Nullable
-    public static String getImplicitlyDeclaredId(@Nonnull final PsiComment comment) {
-        final String text = getUncommentedText(comment);
+    @RequiredReadAction
+    public static String getImplicitlyDeclaredId(@Nonnull PsiComment comment) {
+        String text = getUncommentedText(comment);
         if (text == null) {
             return null;
         }
 
         if (text.startsWith("@declare id=\"")) {
-            final String result = text.substring("@declare id=\"".length() - 1);
+            String result = text.substring("@declare id=\"".length() - 1);
             return StringUtil.unquoteString(result);
         }
 
@@ -73,17 +69,18 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
     }
 
     @Nullable
-    private static String getUncommentedText(@Nonnull final PsiComment comment) {
-        final PsiFile psiFile = comment.getContainingFile();
-        final Language language = psiFile.getViewProvider().getBaseLanguage();
-        final Commenter commenter = Commenter.forLanguage(language);
+    @RequiredReadAction
+    private static String getUncommentedText(@Nonnull PsiComment comment) {
+        PsiFile psiFile = comment.getContainingFile();
+        Language language = psiFile.getViewProvider().getBaseLanguage();
+        Commenter commenter = Commenter.forLanguage(language);
         if (commenter != null) {
             String text = comment.getText();
 
-            final String prefix = commenter.getBlockCommentPrefix();
+            String prefix = commenter.getBlockCommentPrefix();
             if (prefix != null && text.startsWith(prefix)) {
                 text = text.substring(prefix.length());
-                final String suffix = commenter.getBlockCommentSuffix();
+                String suffix = commenter.getBlockCommentSuffix();
                 if (suffix != null && text.length() > suffix.length()) {
                     return text.substring(0, text.length() - suffix.length()).trim();
                 }
@@ -93,24 +90,27 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
         return null;
     }
 
-    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
         final PsiElement psiElement = descriptor.getPsiElement();
         final PsiFile psiFile = psiElement.getContainingFile();
 
         new WriteCommandAction(project, psiFile) {
-            protected void run(final Result result) throws Throwable {
-                final XmlTag tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
+            @Override
+            protected void run(Result result) throws Throwable {
+                XmlTag tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
                 if (tag == null) {
                     return;
                 }
 
-                final Language language = psiFile.getViewProvider().getBaseLanguage();
-                final Commenter commenter = Commenter.forLanguage(language);
+                Language language = psiFile.getViewProvider().getBaseLanguage();
+                Commenter commenter = Commenter.forLanguage(language);
                 if (commenter == null) {
                     return;
                 }
 
-                final PsiFile tempFile = PsiFileFactory.getInstance(project).createFileFromText(
+                PsiFile tempFile = PsiFileFactory.getInstance(project).createFileFromText(
                     "dummy",
                     language.getAssociatedFileType(),
                     commenter.getBlockCommentPrefix() +
@@ -118,11 +118,11 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
                         commenter.getBlockCommentSuffix() + "\n"
                 );
 
-                final XmlTag parent = tag.getParentTag();
+                XmlTag parent = tag.getParentTag();
                 if (parent != null && parent.isValid()) {
-                    final XmlTag[] tags = parent.getSubTags();
+                    XmlTag[] tags = parent.getSubTags();
                     if (tags.length > 0) {
-                        final PsiFile psi = tempFile.getViewProvider().getPsi(language);
+                        PsiFile psi = tempFile.getViewProvider().getPsi(language);
                         if (psi != null && psi.findElementAt(1) instanceof PsiComment comment) {
                             parent.getNode().addChild(comment.getNode(), tags[0].getNode());
                         }

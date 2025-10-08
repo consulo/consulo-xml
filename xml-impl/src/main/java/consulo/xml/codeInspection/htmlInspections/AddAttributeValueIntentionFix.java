@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.AutoPopupController;
@@ -25,72 +25,61 @@ import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiEl
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement
-{
-	public AddAttributeValueIntentionFix(@Nullable PsiElement element)
-	{
-		super(element);
-	}
+public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {
+    public AddAttributeValueIntentionFix(@Nullable PsiElement element) {
+        super(element);
+    }
 
-	@Nonnull
-	@Override
-	public String getText()
-	{
-		return XmlErrorLocalize.addAttributeValueQuickfixText().get();
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getText() {
+        return XmlErrorLocalize.addAttributeValueQuickfixText();
+    }
 
-	@Override
-	@Nonnull
-	public String getFamilyName()
-	{
-		return getName();
-	}
+    @Override
+    @RequiredUIAccess
+    public void invoke(
+        @Nonnull Project project,
+        @Nonnull PsiFile file,
+        @Nullable final Editor editor,
+        @Nonnull PsiElement startElement,
+        @Nonnull PsiElement endElement
+    ) {
+        final XmlAttribute attribute = PsiTreeUtil.getNonStrictParentOfType(startElement, XmlAttribute.class);
+        if (attribute == null || attribute.getValue() != null) {
+            return;
+        }
 
-	@Override
-	public void invoke(@Nonnull Project project,
-			@Nonnull PsiFile file,
-			@Nullable final Editor editor,
-			@Nonnull PsiElement startElement,
-			@Nonnull PsiElement endElement)
-	{
-		final XmlAttribute attribute = PsiTreeUtil.getNonStrictParentOfType(startElement, XmlAttribute.class);
-		if(attribute == null || attribute.getValue() != null)
-		{
-			return;
-		}
+        if (!FileModificationService.getInstance().prepareFileForWrite(attribute.getContainingFile())) {
+            return;
+        }
 
-		if(!FileModificationService.getInstance().prepareFileForWrite(attribute.getContainingFile()))
-		{
-			return;
-		}
+        new WriteCommandAction(project) {
+            @Override
+            @RequiredWriteAction
+            protected void run(@Nonnull Result result) {
+                XmlAttribute attributeWithValue =
+                    XmlElementFactory.getInstance(getProject()).createXmlAttribute(attribute.getName(), "");
+                PsiElement newAttribute = attribute.replace(attributeWithValue);
 
-		new WriteCommandAction(project)
-		{
-			@Override
-			protected void run(@Nonnull final Result result)
-			{
-				final XmlAttribute attributeWithValue = XmlElementFactory.getInstance(getProject()).createXmlAttribute(attribute.getName(), "");
-				final PsiElement newAttribute = attribute.replace(attributeWithValue);
-
-				if(editor != null && newAttribute != null && newAttribute instanceof XmlAttribute && newAttribute.isValid())
-				{
-					final XmlAttributeValue valueElement = ((XmlAttribute) newAttribute).getValueElement();
-					if(valueElement != null)
-					{
-						editor.getCaretModel().moveToOffset(valueElement.getTextOffset());
-						AutoPopupController.getInstance(newAttribute.getProject()).scheduleAutoPopup(editor);
-					}
-				}
-			}
-		}.execute();
-	}
+                if (editor != null && newAttribute instanceof XmlAttribute newAttribute1 && newAttribute1.isValid()) {
+                    XmlAttributeValue valueElement = newAttribute1.getValueElement();
+                    if (valueElement != null) {
+                        editor.getCaretModel().moveToOffset(valueElement.getTextOffset());
+                        AutoPopupController.getInstance(newAttribute1.getProject()).scheduleAutoPopup(editor);
+                    }
+                }
+            }
+        }.execute();
+    }
 }

@@ -20,13 +20,13 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim Mossienko
@@ -34,10 +34,9 @@ import org.jetbrains.annotations.NonNls;
  */
 @ExtensionImpl
 public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
-    public static final
-    @NonNls
-    String SHORT_NAME = "CheckXmlFileWithXercesValidator";
+    public static final String SHORT_NAME = "CheckXmlFileWithXercesValidator";
 
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
@@ -49,22 +48,25 @@ public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableIn
     }
 
     @Nonnull
+    @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
     @Nonnull
-    public String getGroupDisplayName() {
+    @Override
+    public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsCheckFileWithXerces().get();
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsCheckFileWithXerces();
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return SHORT_NAME;
     }

@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.document.Document;
@@ -30,7 +31,9 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
@@ -42,27 +45,29 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Maxim Mossienko
  */
 @ExtensionImpl
 public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
 
     @Nonnull
+    @Override
     public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlTag(final XmlTag tag) {
+            @RequiredReadAction
+            public void visitXmlTag(XmlTag tag) {
                 if (!CheckEmptyTagInspection.isTagWithEmptyEndNotAllowed(tag)) {
-                    final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+                    ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
 
                     if (child != null) {
-                        final ASTNode node = child.getTreeNext();
+                        ASTNode node = child.getTreeNext();
 
                         if (node != null && node.getElementType() == XmlTokenType.XML_END_TAG_START) {
                             holder.newProblem(XmlLocalize.xmlInspectionsTagEmptyBody())
@@ -76,22 +81,25 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
         };
     }
 
+    @RequiredReadAction
     @SuppressWarnings({"HardCodedStringLiteral"})
-    private static boolean isCollapsableTag(final XmlTag tag) {
-        final String name = tag.getName().toLowerCase();
+    private static boolean isCollapsableTag(XmlTag tag) {
+        String name = tag.getName().toLowerCase();
         return tag.getLanguage() == XMLLanguage.INSTANCE
             || "link".equals(name) || "br".equals(name) || "meta".equals(name)
             || "img".equals(name) || "input".equals(name) || "hr".equals(name);
     }
 
     @Nonnull
-    public String getGroupDisplayName() {
+    @Override
+    public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsCheckTagEmptyBody().get();
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsCheckTagEmptyBody();
     }
 
     @Nullable
@@ -101,7 +109,7 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return "CheckTagEmptyBody";
     }
@@ -114,16 +122,14 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
 
     private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
         @Nonnull
-        public String getName() {
-            return XmlLocalize.xmlInspectionsReplaceTagEmptyBodyWithEmptyEnd().get();
+        @Override
+        public LocalizeValue getName() {
+            return XmlLocalize.xmlInspectionsReplaceTagEmptyBodyWithEmptyEnd();
         }
 
-        @Nonnull
-        public String getFamilyName() {
-            return getName();
-        }
-
-        public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+        @Override
+        @RequiredUIAccess
+        public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
             final PsiElement tag = descriptor.getPsiElement();
             if (!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile())) {
                 return;
@@ -131,7 +137,7 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
 
             PsiDocumentManager.getInstance(project).commitAllDocuments();
 
-            final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
+            ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(tag.getNode());
             if (child == null) {
                 return;
             }

@@ -103,26 +103,20 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         myToken = token == null ? null : PsiAnchor.create(token);
     }
 
-    @Override
     @Nonnull
-    public String getText() {
+    @Override
+    public LocalizeValue getText() {
         String alias = StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()));
-        return XmlErrorLocalize.createNamespaceDeclarationQuickfix(alias).get();
+        return XmlErrorLocalize.createNamespaceDeclarationQuickfix(alias);
     }
 
     private XmlNamespaceHelper getXmlExtension() {
         return XmlNamespaceHelper.getHelper(getFile());
     }
 
-    @Override
     @Nonnull
-    public String getName() {
-        return getFamilyName();
-    }
-
     @Override
-    @Nonnull
-    public String getFamilyName() {
+    public LocalizeValue getName() {
         return getText();
     }
 
@@ -310,13 +304,13 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     @RequiredUIAccess
     public static void runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
         @Nonnull String[] namespacesToChooseFrom,
-        Project project,
+        @Nonnull Project project,
         @RequiredUIAccess StringToAttributeProcessor onSelection,
         String title,
         IntentionAction requestor,
         Editor editor
     ) throws IncorrectOperationException {
-        if (namespacesToChooseFrom.length > 1 && !Application.get().isUnitTestMode()) {
+        if (namespacesToChooseFrom.length > 1 && !project.getApplication().isUnitTestMode()) {
             JList list = new JBList(namespacesToChooseFrom);
             list.setCellRenderer(XmlNSRenderer.INSTANCE);
             Runnable runnable = () -> {
@@ -328,7 +322,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
                 CommandProcessor.getInstance().newCommand()
                     .project(project)
-                    .name(LocalizeValue.ofNullable(requestor.getText()))
+                    .name(requestor.getText())
                     .groupId(requestor.getText())
                     .inWriteAction()
                     .run(() -> {
@@ -360,7 +354,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         ExternalUriProcessor processor,
         boolean showProgress
     ) {
-        if (!showProgress || Application.get().isUnitTestMode()) {
+        if (!showProgress || file.getApplication().isUnitTestMode()) {
             processExternalUrisImpl(metaHandler, file, processor);
         }
         else {

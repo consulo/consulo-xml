@@ -19,6 +19,7 @@ import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
@@ -31,8 +32,8 @@ import jakarta.annotation.Nullable;
 public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.htmlInspectionsUnknownTarget().get();
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.htmlInspectionsUnknownTarget();
     }
 
     @Nullable
@@ -43,8 +44,8 @@ public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
 
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return "HTML";
+    public LocalizeValue getGroupDisplayName() {
+        return XmlLocalize.htmlInspectionsGroupName();
     }
 
     @Nonnull

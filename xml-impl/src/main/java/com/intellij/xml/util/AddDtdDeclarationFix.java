@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.FileEditorManager;
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -26,48 +26,55 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.PropertyKey;
-
 import jakarta.annotation.Nonnull;
 
+import java.util.function.Function;
+
 public class AddDtdDeclarationFix implements LocalQuickFix {
-    private final String myMessageKey;
+    @Nonnull
+    private final Function<Object, LocalizeValue> myNameTemplate;
+    @Nonnull
     private final String myElementDeclarationName;
+    @Nonnull
     private final String myReference;
 
+    @RequiredReadAction
     public AddDtdDeclarationFix(
-        @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
+        @Nonnull Function<Object, LocalizeValue> nameTemplate,
         @Nonnull String elementDeclarationName,
         @Nonnull PsiReference reference
     ) {
-        myMessageKey = messageKey;
+        myNameTemplate = nameTemplate;
         myElementDeclarationName = elementDeclarationName;
         myReference = reference.getCanonicalText();
     }
 
-    @Override
     @Nonnull
-    public String getFamilyName() {
-        return XmlBundle.message(myMessageKey, myReference);
+    @Override
+    public LocalizeValue getName() {
+        return myNameTemplate.apply(myReference);
     }
 
     @Override
-    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-        final PsiElement element = descriptor.getPsiElement();
-        final PsiFile containingFile = element.getContainingFile();
+    @RequiredUIAccess
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        PsiElement element = descriptor.getPsiElement();
+        PsiFile containingFile = element.getContainingFile();
 
-        @NonNls String prefixToInsert = "";
-        @NonNls String suffixToInsert = "";
+        String prefixToInsert = "";
+        String suffixToInsert = "";
 
-        final int UNDEFINED_OFFSET = -1;
+        int UNDEFINED_OFFSET = -1;
         int anchorOffset = UNDEFINED_OFFSET;
-        PsiElement anchor = PsiTreeUtil.getParentOfType(element,
+        PsiElement anchor = PsiTreeUtil.getParentOfType(
+            element,
             XmlElementDecl.class,
             XmlAttlistDecl.class,
             XmlEntityDecl.class,
@@ -78,12 +85,12 @@ public class AddDtdDeclarationFix implements LocalQuickFix {
         }
 
         if (anchorOffset == UNDEFINED_OFFSET && containingFile.getLanguage() == XMLLanguage.INSTANCE) {
-            XmlFile file = (XmlFile)containingFile;
-            final XmlProlog prolog = file.getDocument().getProlog();
+            XmlFile file = (XmlFile) containingFile;
+            XmlProlog prolog = file.getDocument().getProlog();
             assert prolog != null;
 
-            final XmlDoctype doctype = prolog.getDoctype();
-            final XmlMarkupDecl markupDecl;
+            XmlDoctype doctype = prolog.getDoctype();
+            XmlMarkupDecl markupDecl;
 
             if (doctype != null) {
                 markupDecl = doctype.getMarkupDecl();
@@ -93,8 +100,8 @@ public class AddDtdDeclarationFix implements LocalQuickFix {
             }
 
             if (doctype == null) {
-                final XmlTag rootTag = file.getDocument().getRootTag();
-                prefixToInsert = "<!DOCTYPE " + ((rootTag != null) ? rootTag.getName() : "null");
+                XmlTag rootTag = file.getDocument().getRootTag();
+                prefixToInsert = "<!DOCTYPE " + (rootTag != null ? rootTag.getName() : "null");
                 suffixToInsert = ">\n";
             }
             if (markupDecl == null) {
@@ -116,9 +123,9 @@ public class AddDtdDeclarationFix implements LocalQuickFix {
 
         OpenFileDescriptor openDescriptor =
             OpenFileDescriptorFactory.getInstance(project).builder(containingFile.getVirtualFile()).offset(anchorOffset).build();
-        final Editor editor = FileEditorManager.getInstance(project).openTextEditor(openDescriptor, true);
-        final TemplateManager templateManager = TemplateManager.getInstance(project);
-        final Template t = templateManager.createTemplate("", "");
+        Editor editor = FileEditorManager.getInstance(project).openTextEditor(openDescriptor, true);
+        TemplateManager templateManager = TemplateManager.getInstance(project);
+        Template t = templateManager.createTemplate("", "");
 
         if (!prefixToInsert.isEmpty()) {
             t.addTextSegment(prefixToInsert);

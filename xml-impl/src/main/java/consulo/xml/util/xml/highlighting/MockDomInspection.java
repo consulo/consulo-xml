@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -25,26 +26,25 @@ import jakarta.annotation.Nonnull;
  * @author peter
  */
 public class MockDomInspection<T extends DomElement, State> extends BasicDomElementsInspection<T, State> {
+    public MockDomInspection(Class<T> domClass) {
+        super(domClass);
+    }
 
-  public MockDomInspection(final Class<T> domClass) {
-    super(domClass);
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        throw new UnsupportedOperationException("Method getGroupDisplayName is not yet implemented in " + getClass().getName());
+    }
 
-  @Nls
-  @Nonnull
-  public String getGroupDisplayName() {
-    throw new UnsupportedOperationException("Method getGroupDisplayName is not yet implemented in " + getClass().getName());
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        throw new UnsupportedOperationException("Method getDisplayName is not yet implemented in " + getClass().getName());
+    }
 
-  @Nls
-  @Nonnull
-  public String getDisplayName() {
-    throw new UnsupportedOperationException("Method getDisplayName is not yet implemented in " + getClass().getName());
-  }
-
-  @NonNls
-  @Nonnull
-  public String getShortName() {
-    throw new UnsupportedOperationException("Method getShortName is not yet implemented in " + getClass().getName());
-  }
+    @Nonnull
+    @Override
+    public String getShortName() {
+        throw new UnsupportedOperationException("Method getShortName is not yet implemented in " + getClass().getName());
+    }
 }

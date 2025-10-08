@@ -16,12 +16,12 @@
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.Application;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
+import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.MapExternalResourceDialog;
@@ -36,7 +36,7 @@ import jakarta.annotation.Nonnull;
 public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
     @Nonnull
     @Override
-    protected LocalizeValue getQuickFixName() {
+    public LocalizeValue getText() {
         return XmlLocalize.manuallySetupExternalResource();
     }
 
@@ -44,10 +44,11 @@ public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
     @RequiredUIAccess
     protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
         throws IncorrectOperationException {
-        MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, file.getProject(), file, null);
+        Project project = file.getProject();
+        MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, project, file, null);
         dialog.show();
         if (dialog.isOK()) {
-            Application.get().runWriteAction(() -> {
+            project.getApplication().runWriteAction(() -> {
                 String location = dialog.getResourceLocation();
                 ExternalResourceManager.getInstance().addResource(dialog.getUri(), location);
             });

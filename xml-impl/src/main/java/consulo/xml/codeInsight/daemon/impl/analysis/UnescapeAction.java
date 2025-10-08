@@ -5,6 +5,7 @@ import consulo.language.editor.FileModificationService;
 import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 
@@ -19,10 +20,10 @@ class UnescapeAction implements SyntheticIntentionAction {
         myElement = element;
     }
 
-    @Override
     @Nonnull
-    public String getText() {
-        return XmlErrorLocalize.escapeAmpersandQuickfix().get();
+    @Override
+    public LocalizeValue getText() {
+        return XmlErrorLocalize.escapeAmpersandQuickfix();
     }
 
     @Override

@@ -25,9 +25,8 @@ import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.editor.rawHighlight.HighlightInfoHolder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
-import org.jetbrains.annotations.Nls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -96,18 +95,16 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
         return true;
     }
 
-    @Nls
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return "General";
+    public LocalizeValue getGroupDisplayName() {
+        return LocalizeValue.localizeTODO("General");
     }
 
-    @Nls
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return "XML highlighting";
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("XML highlighting");
     }
 
     @Nonnull

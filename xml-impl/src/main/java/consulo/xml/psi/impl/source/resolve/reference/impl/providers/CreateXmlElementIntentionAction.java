@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
 import consulo.codeEditor.Editor;
@@ -27,37 +26,37 @@ import consulo.language.editor.template.TemplateManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.PropertyKey;
+
+import java.util.function.Function;
 
 class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
-    private final String myMessageKey;
+    private final Function<String, LocalizeValue> myTextPattern;
     protected final TypeOrElementOrAttributeReference myRef;
     private boolean myIsAvailableEvaluated;
     private XmlFile myTargetFile;
     private final String myDeclarationTagName;
 
     CreateXmlElementIntentionAction(
-        @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String messageKey,
-        @NonNls @Nonnull String declarationTagName,
+        @Nonnull Function<String, LocalizeValue> textPattern,
+        @Nonnull String declarationTagName,
         TypeOrElementOrAttributeReference ref
     ) {
-
-        myMessageKey = messageKey;
+        myTextPattern = textPattern;
         myRef = ref;
         myDeclarationTagName = declarationTagName;
     }
 
-    @Override
     @Nonnull
-    public String getText() {
-        return XmlBundle.message(myMessageKey, XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
+    @Override
+    public LocalizeValue getText() {
+        return myTextPattern.apply(XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
     }
 
     @Override

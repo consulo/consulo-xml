@@ -27,13 +27,14 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.util.lang.StringUtil;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -42,10 +43,10 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.split.current.tag", fileExtensions = "html", categories = "XML")
 public class XmlSplitTagAction implements IntentionAction {
-    @Override
     @Nonnull
-    public String getText() {
-        return XmlLocalize.xmlSplitTagIntentionAction().get();
+    @Override
+    public LocalizeValue getText() {
+        return XmlLocalize.xmlSplitTagIntentionAction();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class XmlSplitTagAction implements IntentionAction {
         if (file instanceof XmlFile xmlFile && editor != null) {
             int offset = editor.getCaretModel().getOffset();
             PsiElement psiElement = xmlFile.findElementAt(offset);
-            if (psiElement != null && psiElement.getParent() instanceof XmlText xmlText && xmlText.getText().trim().length() > 0) {
+            if (psiElement != null && psiElement.getParent() instanceof XmlText xmlText && !StringUtil.isEmptyOrSpaces(xmlText.getText())) {
                 PsiElement grandParent = xmlText.getParent();
                 if (grandParent != null && !isInsideUnsplittableElement(grandParent)) {
                     return true;

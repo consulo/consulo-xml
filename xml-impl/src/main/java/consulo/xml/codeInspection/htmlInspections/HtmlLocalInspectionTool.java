@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
 import consulo.annotation.access.RequiredReadAction;
@@ -23,6 +22,7 @@ import consulo.language.psi.OuterLanguageElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiWhiteSpace;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.psi.XmlElementVisitor;
@@ -30,67 +30,62 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.Nls;
-
 import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public abstract class HtmlLocalInspectionTool extends XmlSuppressableInspectionTool {
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return XmlInspectionGroupNames.HTML_INSPECTIONS;
+    }
 
-  @Override
-  @Nls
-  @Nonnull
-  public String getGroupDisplayName() {
-    return XmlInspectionGroupNames.HTML_INSPECTIONS;
-  }
+    @Override
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-  @Override
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        // should be overridden
+    }
 
-  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly, Object state) {
-    // should be overridden
-  }
+    protected void checkAttribute(@Nonnull XmlAttribute attribute, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        // should be overridden
+    }
 
-  protected void checkAttribute(@Nonnull final XmlAttribute attribute,
-                                @Nonnull final ProblemsHolder holder,
-                                final boolean isOnTheFly,
-                                Object state) {
-    // should be overridden
-  }
+    @Nonnull
+    @Override
+    public PsiElementVisitor buildVisitor(
+        @Nonnull ProblemsHolder holder,
+        boolean isOnTheFly,
+        @Nonnull LocalInspectionToolSession session,
+        @Nonnull Object state
+    ) {
+        return new XmlElementVisitor() {
+            @Override
+            @RequiredReadAction
+            public void visitXmlToken(XmlToken token) {
+                if (token.getTokenType() == XmlTokenType.XML_NAME) {
+                    PsiElement prevElem = token.getPrevSibling();
+                    while (prevElem instanceof PsiWhiteSpace prevSpace) {
+                        prevElem = prevSpace.getPrevSibling();
+                    }
 
-  @Nonnull
-  @Override
-  public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder,
-                                        boolean isOnTheFly,
-                                        @Nonnull LocalInspectionToolSession session,
-                                        @Nonnull Object state) {
-    return new XmlElementVisitor() {
-      @Override
-      @RequiredReadAction
-      public void visitXmlToken(final XmlToken token) {
-        if (token.getTokenType() == XmlTokenType.XML_NAME) {
-          PsiElement element = token.getPrevSibling();
-          while (element instanceof PsiWhiteSpace) element = element.getPrevSibling();
-
-          if (element instanceof XmlToken && ((XmlToken)element).getTokenType() == XmlTokenType.XML_START_TAG_START) {
-            PsiElement parent = element.getParent();
-
-            if (parent instanceof XmlTag && !(token.getNextSibling() instanceof OuterLanguageElement)) {
-              XmlTag tag = (XmlTag)parent;
-              checkTag(tag, holder, isOnTheFly, state);
+                    if (prevElem instanceof XmlToken prevToken
+                        && prevToken.getTokenType() == XmlTokenType.XML_START_TAG_START
+                        && prevToken.getParent() instanceof XmlTag tag
+                        && !(token.getNextSibling() instanceof OuterLanguageElement)) {
+                        checkTag(tag, holder, isOnTheFly, state);
+                    }
+                }
             }
-          }
-        }
-      }
 
-      @Override
-      public void visitXmlAttribute(final XmlAttribute attribute) {
-        checkAttribute(attribute, holder, isOnTheFly, state);
-      }
-    };
-  }
+            @Override
+            public void visitXmlAttribute(XmlAttribute attribute) {
+                checkAttribute(attribute, holder, isOnTheFly, state);
+            }
+        };
+    }
 }

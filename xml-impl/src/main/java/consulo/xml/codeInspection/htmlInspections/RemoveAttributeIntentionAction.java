@@ -16,6 +16,7 @@
 
 package consulo.xml.codeInspection.htmlInspections;
 
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.application.Result;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.WriteCommandAction;
@@ -23,7 +24,9 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
 
@@ -33,39 +36,37 @@ import jakarta.annotation.Nonnull;
  * @author spleaner
  */
 public class RemoveAttributeIntentionAction implements LocalQuickFix {
-  private final String myLocalName;
+    private final String myLocalName;
 
-  public RemoveAttributeIntentionAction(final String localName) {
-    myLocalName = localName;
-  }
-
-  @Override
-  @Nonnull
-  public String getName() {
-    return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName).get();
-  }
-
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlErrorLocalize.removeAttributeQuickfixFamily().get();
-  }
-
-  @Override
-  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-    PsiElement e = descriptor.getPsiElement();
-    final XmlAttribute myAttribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
-    if (myAttribute == null) return;
-
-    if (!FileModificationService.getInstance().prepareFileForWrite(myAttribute.getContainingFile())) {
-      return;
+    public RemoveAttributeIntentionAction(String localName) {
+        myLocalName = localName;
     }
 
-    new WriteCommandAction(project) {
-      @Override
-      protected void run(final Result result) throws Throwable {
-        myAttribute.delete();
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName);
+    }
+
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+        PsiElement e = descriptor.getPsiElement();
+        final XmlAttribute myAttribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
+      if (myAttribute == null) {
+        return;
       }
-    }.execute();
-  }
+
+        if (!FileModificationService.getInstance().prepareFileForWrite(myAttribute.getContainingFile())) {
+            return;
+        }
+
+        new WriteCommandAction(project) {
+            @Override
+            @RequiredWriteAction
+            protected void run(Result result) throws Throwable {
+                myAttribute.delete();
+            }
+        }.execute();
+    }
 }

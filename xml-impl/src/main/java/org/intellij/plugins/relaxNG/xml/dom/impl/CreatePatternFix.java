@@ -17,6 +17,7 @@ package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -52,20 +53,14 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
     @Nonnull
     @Override
     @RequiredReadAction
-    public String getText() {
-        return "Create Pattern '" + myReference.getCanonicalText() + "'";
-    }
-
-    @Override
-    @Nonnull
-    public String getFamilyName() {
-        return "Create Pattern";
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Create Pattern '" + myReference.getCanonicalText() + "'");
     }
 
     @Nonnull
     @Override
     @RequiredReadAction
-    public String getName() {
+    public LocalizeValue getName() {
         return getText();
     }
 

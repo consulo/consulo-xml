@@ -15,16 +15,14 @@
  */
 package consulo.xml.codeInsight.daemon.impl.quickfix;
 
-import consulo.application.Application;
+import consulo.codeEditor.Editor;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
-
-import consulo.xml.javaee.ExternalResourceManagerEx;
-import consulo.codeEditor.Editor;
-import consulo.language.util.IncorrectOperationException;
-import consulo.language.psi.PsiFile;
 
 /**
  * @author mike
@@ -32,7 +30,7 @@ import consulo.language.psi.PsiFile;
 public class IgnoreExtResourceAction extends BaseExtResourceAction {
     @Nonnull
     @Override
-    protected LocalizeValue getQuickFixName() {
+    public LocalizeValue getText() {
         return XmlLocalize.ignoreExternalResourceText();
     }
 
@@ -40,6 +38,6 @@ public class IgnoreExtResourceAction extends BaseExtResourceAction {
     @RequiredUIAccess
     protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
         throws IncorrectOperationException {
-        Application.get().runWriteAction(() -> ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri));
+        file.getApplication().runWriteAction(() -> ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri));
     }
 }

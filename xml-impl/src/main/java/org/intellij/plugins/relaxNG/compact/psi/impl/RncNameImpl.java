@@ -15,6 +15,8 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
 import consulo.fileEditor.FileEditorManager;
@@ -54,255 +56,269 @@ import jakarta.annotation.Nullable;
  * @author sweinreuter
  * @since 2007-08-14
  */
-public class RncNameImpl extends RncElementImpl implements RncName, PsiReference,
-    EmptyResolveMessageProvider, LocalQuickFixProvider {
-
-  private enum Kind {
-    NAMESPACE, DATATYPES
-  }
-
-  public RncNameImpl(ASTNode node) {
-    super(node);
-  }
-
-  @Override
-  @Nullable
-  public String getPrefix() {
-    final String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
-    return parts.length == 2 ? parts[0] : null;
-  }
-
-  @Override
-  @Nonnull
-  public String getLocalPart() {
-    final String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
-    return parts.length == 1 ? parts[0] : parts[1];
-  }
-
-  @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
-    visitor.visitName(this);
-  }
-
-  @Override
-  public PsiReference getReference() {
-    return getPrefix() == null ? null : this;
-  }
-
-  @Override
-  public PsiElement getElement() {
-    return this;
-  }
-
-  @Override
-  public TextRange getRangeInElement() {
-    return TextRange.from(0, getText().indexOf(':'));
-  }
-
-  @Override
-  @Nullable
-  public PsiElement resolve() {
-    final MyResolver resolver = new MyResolver(getPrefix(), getKind());
-    getContainingFile().processDeclarations(resolver, ResolveState.initial(), this, this);
-    return resolver.getResult();
-  }
-
-  private Kind getKind() {
-    final IElementType parent = getNode().getTreeParent().getElementType();
-    if (parent == RncElementTypes.DATATYPE_PATTERN) {
-      return Kind.DATATYPES;
-    } else {
-      return Kind.NAMESPACE;
+public class RncNameImpl extends RncElementImpl implements RncName, PsiReference, EmptyResolveMessageProvider, LocalQuickFixProvider {
+    private enum Kind {
+        NAMESPACE,
+        DATATYPES
     }
-  }
 
-  @Override
-  @Nonnull
-  public String getCanonicalText() {
-    return getRangeInElement().substring(getText());
-  }
-
-  @Override
-  public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
-    final ASTNode node = getNode();
-    final ASTNode child = RenameUtil.createPrefixedNode(getManager(), newElementName, getLocalPart());
-    node.getTreeParent().replaceChild(node, child);
-    return child.getPsi();
-  }
-
-  @Override
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean isReferenceTo(PsiElement element) {
-    return element instanceof RncElement && Comparing.equal(resolve(), element);
-  }
-
-  @Override
-  @Nonnull
-  public Object[] getVariants() {
-    return ArrayUtil.EMPTY_OBJECT_ARRAY;
-  }
-
-  @Override
-  public boolean isSoft() {
-    final String prefix = getPrefix();
-    return "xsd".equals(prefix) || "xml".equals(prefix);
-  }
-
-  @Nonnull
-  @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
-    return LocalizeValue.localizeTODO("Unresolved namespace prefix '" + s + "'");
-  }
-
-  @Nullable
-  @Override
-  public LocalQuickFix[] getQuickFixes() {
-    if (getPrefix() != null) {
-      return new LocalQuickFix[] { new CreateDeclFix(this) };
-    }
-    return LocalQuickFix.EMPTY_ARRAY;
-  }
-
-  private static class MyResolver implements PsiScopeProcessor {
-    private final String myPrefix;
-    private final Kind myKind;
-    private PsiElement myResult;
-
-    public MyResolver(String prefix, Kind kind) {
-      myPrefix = prefix;
-      myKind = kind;
+    public RncNameImpl(ASTNode node) {
+        super(node);
     }
 
     @Override
-    public boolean execute(@Nonnull PsiElement element, @Nonnull ResolveState substitutor) {
-      final ASTNode node = element.getNode();
-      if (node == null) return true;
-
-      if (!(element instanceof RncDecl)) {
-        return false;
-      }
-
-      final IElementType type = node.getElementType();
-      if (myKind == Kind.NAMESPACE && type == RncElementTypes.NS_DECL) {
-        if (checkDecl(element)) return false;
-      } else if (myKind == Kind.DATATYPES && type == RncElementTypes.DATATYPES_DECL) {
-        if (checkDecl(element)) return false;
-      }
-
-      return true;
+    @Nullable
+    public String getPrefix() {
+        String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
+        return parts.length == 2 ? parts[0] : null;
     }
 
-    private boolean checkDecl(PsiElement element) {
-      if (myPrefix.equals(((RncDecl)element).getPrefix())) {
-        myResult = element;
-        return true;
-      }
-      return false;
+    @Nonnull
+    @Override
+    public String getLocalPart() {
+        String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
+        return parts.length == 1 ? parts[0] : parts[1];
     }
 
-    public PsiElement getResult() {
-      return myResult;
+    @Override
+    public void accept(@Nonnull RncElementVisitor visitor) {
+        visitor.visitName(this);
     }
-  }
 
-  public static class CreateDeclFix implements LocalQuickFix {
-    private final RncNameImpl myReference;
+    @Override
+    public PsiReference getReference() {
+        return getPrefix() == null ? null : this;
+    }
 
-    public CreateDeclFix(RncNameImpl reference) {
-      myReference = reference;
+    @Override
+    @RequiredReadAction
+    public PsiElement getElement() {
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public TextRange getRangeInElement() {
+        return TextRange.from(0, getText().indexOf(':'));
+    }
+
+    @Override
+    @Nullable
+    @RequiredReadAction
+    public PsiElement resolve() {
+        MyResolver resolver = new MyResolver(getPrefix(), getKind());
+        getContainingFile().processDeclarations(resolver, ResolveState.initial(), this, this);
+        return resolver.getResult();
+    }
+
+    private Kind getKind() {
+        IElementType parent = getNode().getTreeParent().getElementType();
+        if (parent == RncElementTypes.DATATYPE_PATTERN) {
+            return Kind.DATATYPES;
+        }
+        else {
+            return Kind.NAMESPACE;
+        }
     }
 
     @Override
     @Nonnull
-    public String getName() {
-      return getFamilyName() + " '" + myReference.getPrefix() + "'";
+    @RequiredReadAction
+    public String getCanonicalText() {
+        return getRangeInElement().substring(getText());
+    }
+
+    @Override
+    @RequiredWriteAction
+    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+        ASTNode node = getNode();
+        ASTNode child = RenameUtil.createPrefixedNode(getManager(), newElementName, getLocalPart());
+        node.getTreeParent().replaceChild(node, child);
+        return child.getPsi();
+    }
+
+    @Override
+    @RequiredWriteAction
+    public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @RequiredReadAction
+    public boolean isReferenceTo(PsiElement element) {
+        return element instanceof RncElement && Comparing.equal(resolve(), element);
     }
 
     @Override
     @Nonnull
-      public String getFamilyName() {
-      return "Create " + myReference.getKind().name().toLowerCase() + " declaration";
+    @RequiredReadAction
+    public Object[] getVariants() {
+        return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }
 
     @Override
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-      final String prefix = myReference.getPrefix();
-      final PsiFileFactory factory = PsiFileFactory.getInstance(myReference.getProject());
-      final RncFile psiFile = (RncFile)factory.createFileFromText("dummy.rnc",
-                                                                  RncFileType.getInstance(),
-                                                                   myReference.getKind().name().toLowerCase() + " " + prefix + " = \"###\"");
-      final RncFile rncFile = (RncFile)myReference.getContainingFile();
-      final RncDecl[] declarations = rncFile.getDeclarations();
-      final RncDecl decl = psiFile.getDeclarations()[0];
-      final RncDecl e;
-      if (declarations.length > 0) {
-        e = (RncDecl)rncFile.addAfter(decl, declarations[declarations.length - 1]);
-      } else {
-        final RncGrammar rncGrammar = rncFile.getGrammar();
-        if (rncGrammar != null) {
-          e = (RncDecl)rncFile.addBefore(decl, rncGrammar);
-        } else {
-          e = (RncDecl)rncFile.add(decl);
-        }
-      }
-
-      final ASTNode blockNode = e.getParent().getNode();
-      assert blockNode != null;
-
-      final ASTNode newNode = e.getNode();
-      assert newNode != null;
-
-      CodeStyleManager.getInstance(e.getManager().getProject()).reformatNewlyAddedElement(blockNode, newNode);
-
-      final PsiElement literal = e.getLastChild();
-      assert literal != null;
-
-      final ASTNode literalNode = literal.getNode();
-      assert literalNode != null;
-
-      assert literalNode.getElementType() == RncTokenTypes.LITERAL;
-
-      final int offset = literal.getTextRange().getStartOffset();
-
-      literal.delete();
-
-      VirtualFile virtualFile = myReference.getElement().getContainingFile().getVirtualFile();
-      if (virtualFile != null) {
-        Editor editor = FileEditorManager.getInstance(project).openTextEditor(OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build(), true);
-        if (editor != null) {
-          RncDecl rncDecl = CodeInsightUtilCore.forcePsiPostprocessAndRestoreElement(e);
-
-          final TemplateManager manager = TemplateManager.getInstance(project);
-          final Template t = manager.createTemplate("", "");
-          t.addTextSegment(" \"");
-          final Expression expression = new Expression() {
-            @Override
-            public Result calculateResult(ExpressionContext context) {
-              return new TextResult("");
-            }
-
-            @Override
-            public Result calculateQuickResult(ExpressionContext context) {
-              return calculateResult(context);
-            }
-
-            @Override
-            public LookupItem[] calculateLookupItems(ExpressionContext context) {
-              return LookupItem.EMPTY_ARRAY;
-            }
-          };
-          t.addVariable("uri", expression, expression, true);
-          t.addTextSegment("\"");
-          t.addEndVariable();
-
-          editor.getCaretModel().moveToOffset(rncDecl.getTextRange().getEndOffset());
-          manager.startTemplate(editor, t);
-        }
-      }
+    @RequiredReadAction
+    public boolean isSoft() {
+        String prefix = getPrefix();
+        return "xsd".equals(prefix) || "xml".equals(prefix);
     }
-  }
+
+    @Nonnull
+    @Override
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+        return LocalizeValue.localizeTODO("Unresolved namespace prefix '" + s + "'");
+    }
+
+    @Nullable
+    @Override
+    public LocalQuickFix[] getQuickFixes() {
+        if (getPrefix() != null) {
+            return new LocalQuickFix[]{new CreateDeclFix(this)};
+        }
+        return LocalQuickFix.EMPTY_ARRAY;
+    }
+
+    private static class MyResolver implements PsiScopeProcessor {
+        private final String myPrefix;
+        private final Kind myKind;
+        private PsiElement myResult;
+
+        public MyResolver(String prefix, Kind kind) {
+            myPrefix = prefix;
+            myKind = kind;
+        }
+
+        @Override
+        public boolean execute(@Nonnull PsiElement element, @Nonnull ResolveState substitutor) {
+            ASTNode node = element.getNode();
+            if (node == null) {
+                return true;
+            }
+
+            if (!(element instanceof RncDecl)) {
+                return false;
+            }
+
+            IElementType type = node.getElementType();
+            if (myKind == Kind.NAMESPACE && type == RncElementTypes.NS_DECL) {
+                if (checkDecl(element)) {
+                    return false;
+                }
+            }
+            else if (myKind == Kind.DATATYPES && type == RncElementTypes.DATATYPES_DECL) {
+                if (checkDecl(element)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private boolean checkDecl(PsiElement element) {
+            if (myPrefix.equals(((RncDecl) element).getPrefix())) {
+                myResult = element;
+                return true;
+            }
+            return false;
+        }
+
+        public PsiElement getResult() {
+            return myResult;
+        }
+    }
+
+    public static class CreateDeclFix implements LocalQuickFix {
+        private final RncNameImpl myReference;
+
+        public CreateDeclFix(RncNameImpl reference) {
+            myReference = reference;
+        }
+
+        @Nonnull
+        @Override
+        public LocalizeValue getName() {
+            return LocalizeValue.localizeTODO(
+                "Create " + myReference.getKind().name().toLowerCase() + " declaration '" + myReference.getPrefix() + "'"
+            );
+        }
+
+        @Override
+        @RequiredWriteAction
+        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+            String prefix = myReference.getPrefix();
+            PsiFileFactory factory = PsiFileFactory.getInstance(myReference.getProject());
+            RncFile psiFile = (RncFile) factory.createFileFromText(
+                "dummy.rnc",
+                RncFileType.getInstance(),
+                myReference.getKind().name().toLowerCase() + " " + prefix + " = \"###\""
+            );
+            RncFile rncFile = (RncFile) myReference.getContainingFile();
+            RncDecl[] declarations = rncFile.getDeclarations();
+            RncDecl decl = psiFile.getDeclarations()[0];
+            RncDecl e;
+            if (declarations.length > 0) {
+                e = (RncDecl) rncFile.addAfter(decl, declarations[declarations.length - 1]);
+            }
+            else {
+                RncGrammar rncGrammar = rncFile.getGrammar();
+                e = rncGrammar != null ? (RncDecl) rncFile.addBefore(decl, rncGrammar) : (RncDecl) rncFile.add(decl);
+            }
+
+            ASTNode blockNode = e.getParent().getNode();
+            assert blockNode != null;
+
+            ASTNode newNode = e.getNode();
+            assert newNode != null;
+
+            CodeStyleManager.getInstance(e.getManager().getProject()).reformatNewlyAddedElement(blockNode, newNode);
+
+            PsiElement literal = e.getLastChild();
+            assert literal != null;
+
+            ASTNode literalNode = literal.getNode();
+            assert literalNode != null;
+
+            assert literalNode.getElementType() == RncTokenTypes.LITERAL;
+
+            int offset = literal.getTextRange().getStartOffset();
+
+            literal.delete();
+
+            VirtualFile virtualFile = myReference.getElement().getContainingFile().getVirtualFile();
+            if (virtualFile != null) {
+                Editor editor = FileEditorManager.getInstance(project)
+                    .openTextEditor(OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build(), true);
+                if (editor != null) {
+                    RncDecl rncDecl = CodeInsightUtilCore.forcePsiPostprocessAndRestoreElement(e);
+
+                    TemplateManager manager = TemplateManager.getInstance(project);
+                    Template t = manager.createTemplate("", "");
+                    t.addTextSegment(" \"");
+                    Expression expression = new Expression() {
+                        @Override
+                        public Result calculateResult(ExpressionContext context) {
+                            return new TextResult("");
+                        }
+
+                        @Override
+                        public Result calculateQuickResult(ExpressionContext context) {
+                            return calculateResult(context);
+                        }
+
+                        @Override
+                        public LookupItem[] calculateLookupItems(ExpressionContext context) {
+                            return LookupItem.EMPTY_ARRAY;
+                        }
+                    };
+                    t.addVariable("uri", expression, expression, true);
+                    t.addTextSegment("\"");
+                    t.addEndVariable();
+
+                    editor.getCaretModel().moveToOffset(rncDecl.getTextRange().getEndOffset());
+                    manager.startTemplate(editor, t);
+                }
+            }
+        }
+    }
 }
