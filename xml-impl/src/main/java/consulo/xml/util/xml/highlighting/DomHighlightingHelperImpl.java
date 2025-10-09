@@ -30,6 +30,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.language.util.ProcessingContext;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
@@ -169,6 +170,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
 
     @Nonnull
     @Override
+    @RequiredReadAction
     public List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, DomElementAnnotationHolder holder) {
         String elementName = ElementPresentationManager.getElementName(element);
         if (StringUtil.isNotEmpty(elementName)) {
@@ -266,31 +268,25 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
     }
 
     private static class AddRequiredSubtagFix implements LocalQuickFix, SyntheticIntentionAction {
-        private final String tagName;
-        private final String tagNamespace;
-        private final XmlTag parentTag;
+        private final String myTagName;
+        private final String myTagNamespace;
+        private final XmlTag myParentTag;
 
-        public AddRequiredSubtagFix(@Nonnull String _tagName, @Nonnull String _tagNamespace, @Nonnull XmlTag _parentTag) {
-            tagName = _tagName;
-            tagNamespace = _tagNamespace;
-            parentTag = _parentTag;
+        public AddRequiredSubtagFix(@Nonnull String tagName, @Nonnull String tagNamespace, @Nonnull XmlTag parentTag) {
+            myTagName = tagName;
+            myTagNamespace = tagNamespace;
+            myParentTag = parentTag;
         }
 
         @Nonnull
         @Override
-        public String getName() {
-            return XmlLocalize.insertRequiredTagFix(tagName).get();
+        public LocalizeValue getName() {
+            return XmlLocalize.insertRequiredTagFix(myTagName);
         }
 
         @Nonnull
         @Override
-        public String getText() {
-            return getName();
-        }
-
-        @Nonnull
-        @Override
-        public String getFamilyName() {
+        public LocalizeValue getText() {
             return getName();
         }
 
@@ -300,7 +296,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         }
 
         @Override
-        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
+        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
             doFix();
         }
 
@@ -310,17 +306,18 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         }
 
         @Override
+        @RequiredUIAccess
         public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
             doFix();
         }
 
         private void doFix() {
-            if (!FileModificationService.getInstance().prepareFileForWrite(parentTag.getContainingFile())) {
+            if (!FileModificationService.getInstance().prepareFileForWrite(myParentTag.getContainingFile())) {
                 return;
             }
 
             try {
-                parentTag.add(parentTag.createChildTag(tagName, tagNamespace, null, false));
+                myParentTag.add(myParentTag.createChildTag(myTagName, myTagNamespace, null, false));
             }
             catch (IncorrectOperationException e) {
                 throw new RuntimeException(e);

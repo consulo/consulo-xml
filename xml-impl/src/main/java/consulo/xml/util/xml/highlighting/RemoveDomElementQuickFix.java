@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.highlighting;
 
+import consulo.localize.LocalizeValue;
+import consulo.ui.annotation.RequiredUIAccess;
 import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -31,41 +32,39 @@ import consulo.language.editor.inspection.LocalQuickFix;
  * @author Dmitry Avdeev
  */
 public class RemoveDomElementQuickFix implements LocalQuickFix {
+    private final boolean myIsTag;
+    private final String myName;
 
-  private final boolean myIsTag;
-  private final String myName;
-
-  public RemoveDomElementQuickFix(@Nonnull DomElement element) {
-    myIsTag = element.getXmlElement() instanceof XmlTag;
-    myName = element.getXmlElementName();
-  }
-
-  @Nonnull
-  public String getName() {
-    return myIsTag ?
-           DomBundle.message("remove.element.fix.name", myName) :
-           DomBundle.message("remove.attribute.fix.name", myName);
-  }
-
-  @Nonnull
-  public String getFamilyName() {
-    return DomBundle.message("quick.fixes.family");
-  }
-
-  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-    if (myIsTag) {
-      final XmlTag tag = (XmlTag)descriptor.getPsiElement();
-      final XmlTag parentTag = tag.getParentTag();
-      final DomElement domElement = DomManager.getDomManager(project).getDomElement(tag);
-      assert domElement != null;
-      domElement.undefine();
-      if (parentTag != null && parentTag.isValid()) {
-        parentTag.collapseIfEmpty();
-      }
-    } else {
-      final DomElement domElement = DomManager.getDomManager(project).getDomElement((XmlAttribute)descriptor.getPsiElement());
-      assert domElement != null;
-      domElement.undefine();
+    public RemoveDomElementQuickFix(@Nonnull DomElement element) {
+        myIsTag = element.getXmlElement() instanceof XmlTag;
+        myName = element.getXmlElementName();
     }
-  }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return myIsTag
+            ? LocalizeValue.localizeTODO(DomBundle.message("remove.element.fix.name", myName))
+            : LocalizeValue.localizeTODO(DomBundle.message("remove.attribute.fix.name", myName));
+    }
+
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        if (myIsTag) {
+            XmlTag tag = (XmlTag) descriptor.getPsiElement();
+            XmlTag parentTag = tag.getParentTag();
+            DomElement domElement = DomManager.getDomManager(project).getDomElement(tag);
+            assert domElement != null;
+            domElement.undefine();
+            if (parentTag != null && parentTag.isValid()) {
+                parentTag.collapseIfEmpty();
+            }
+        }
+        else {
+            DomElement domElement = DomManager.getDomManager(project).getDomElement((XmlAttribute) descriptor.getPsiElement());
+            assert domElement != null;
+            domElement.undefine();
+        }
+    }
 }

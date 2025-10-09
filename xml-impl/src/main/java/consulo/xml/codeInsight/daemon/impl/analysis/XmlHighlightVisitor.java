@@ -316,7 +316,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
         if (elementDescriptor instanceof Validator) {
             //noinspection unchecked
-            ((Validator<XmlTag>)elementDescriptor).validate(tag, this);
+            ((Validator<XmlTag>) elementDescriptor).validate(tag, this);
         }
     }
 
@@ -401,7 +401,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
                 isInjectedWithoutValidation(tag)
                     ? HighlightInfoType.INFORMATION
                     : SeverityRegistrar.getSeverityRegistrar(tag.getProject())
-                        .getHighlightInfoTypeBySeverity(profile.getErrorLevel(key, tag).getSeverity()),
+                    .getHighlightInfoTypeBySeverity(profile.getErrorLevel(key, tag).getSeverity()),
                 addAttributeFix,
                 basicIntention
             );
@@ -483,13 +483,11 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
                 if (highlightInfo != null) {
                     PsiFile file = tag.getContainingFile();
                     if (file != null) {
-                        for (XmlUndefinedElementFixProvider fixProvider : XmlUndefinedElementFixProvider.EP_NAME.getExtensionList()) {
-                            IntentionAction[] fixes = fixProvider.createFixes(attribute);
-                            if (fixes != null) {
-                                for (IntentionAction action : fixes) {
-                                    QuickFixAction.registerQuickFixAction(highlightInfo, action);
-                                }
-                                break;
+                        IntentionAction[] fixes = attribute.getApplication().getExtensionPoint(XmlUndefinedElementFixProvider.class)
+                            .computeSafeIfAny(fixProvider -> fixProvider.createFixes(attribute));
+                        if (fixes != null) {
+                            for (IntentionAction action : fixes) {
+                                highlightInfo.registerFix(action, null, LocalizeValue.of(), null, null);
                             }
                         }
                     }
@@ -574,7 +572,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
             PsiMetaData psiMetaData = document.getMetaData();
             if (psiMetaData instanceof Validator) {
                 //noinspection unchecked
-                ((Validator<XmlDocument>)psiMetaData).validate(document, this);
+                ((Validator<XmlDocument>) psiMetaData).validate(document, this);
             }
         }
     }
@@ -593,7 +591,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
             return;
         }
 
-        XmlAttribute attribute = (XmlAttribute)parent;
+        XmlAttribute attribute = (XmlAttribute) parent;
 
         XmlTag tag = attribute.getParent();
 
@@ -637,15 +635,18 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
             // logging for IDEADEV-29655
             if (referenceRange.getStartOffset() > referenceRange.getEndOffset()) {
-                LOG.error("Reference range start offset > end offset:  " + reference + ", start offset: " + referenceRange.getStartOffset() + ", end offset: " + referenceRange
-                    .getEndOffset());
+                LOG.error(
+                    "Reference range start offset > end offset: " + reference +
+                        ", start offset: " + referenceRange.getStartOffset() +
+                        ", end offset: " + referenceRange.getEndOffset()
+                );
             }
 
             HighlightInfoType type = getTagProblemInfoType(PsiTreeUtil.getParentOfType(value, XmlTag.class));
             if (value instanceof XmlAttributeValue) {
                 PsiElement parent = value.getParent();
                 if (parent instanceof XmlAttribute) {
-                    String name = ((XmlAttribute)parent).getName().toLowerCase();
+                    String name = ((XmlAttribute) parent).getName().toLowerCase();
                     if (type.getSeverity(null).compareTo(HighlightInfoType.WARNING.getSeverity(null)) > 0 && name.endsWith("stylename")) {
                         type = HighlightInfoType.WARNING;
                     }
@@ -653,8 +654,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
             }
             HighlightInfo info = HighlightInfo.newHighlightInfo(type)
                 .range(startOffset + referenceRange.getStartOffset(), startOffset + referenceRange.getEndOffset())
-                .descriptionAndTooltip
-                    (description)
+                .descriptionAndTooltip(description)
                 .create();
             addToResults(info);
             if (reference instanceof LocalQuickFixProvider localQuickFixProvider) {

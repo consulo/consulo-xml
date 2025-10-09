@@ -16,11 +16,13 @@
 package com.intellij.xml.util;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.component.extension.ExtensionPoint;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.file.FileViewProvider;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.localize.XmlLocalize;
@@ -37,12 +39,12 @@ import jakarta.annotation.Nonnull;
 public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements UnfairLocalInspectionTool {
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsInvalidId().get();
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsInvalidId();
     }
 
+    @Override
     protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
-
         String idRef = XmlHighlightVisitor.getUnquotedValue(value, tag);
 
         if (tag instanceof HtmlTag) {
@@ -56,23 +58,24 @@ public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements
             }
 
             if (!hasIdDeclaration) {
-                for (XmlIdContributor contributor : XmlIdContributor.EP_NAME.getExtensionList()) {
-                    if (contributor.suppressExistingIdValidation(file)) {
-                        return;
-                    }
+                ExtensionPoint<XmlIdContributor> extensionPoint = file.getApplication().getExtensionPoint(XmlIdContributor.class);
+                if (extensionPoint.anyMatchSafe(contributor -> contributor.suppressExistingIdValidation(file))) {
+                    return;
                 }
 
-                final FileViewProvider viewProvider = tag.getContainingFile().getViewProvider();
+                FileViewProvider viewProvider = tag.getContainingFile().getViewProvider();
                 if (viewProvider instanceof MultiplePsiFilesPerDocumentFileViewProvider) {
-                    holder.registerProblem(
-                        value,
-                        XmlErrorLocalize.invalidIdReference().get(),
-                        ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
-                        new XmlDeclareIdInCommentAction(idRef)
-                    );
+                    holder.newProblem(XmlErrorLocalize.invalidIdReference())
+                        .range(value)
+                        .withFix(new XmlDeclareIdInCommentAction(idRef))
+                        .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                        .create();
                 }
                 else {
-                    holder.registerProblem(value, XmlErrorLocalize.invalidIdReference().get(), ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+                    holder.newProblem(XmlErrorLocalize.invalidIdReference())
+                        .range(value)
+                        .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                        .create();
                 }
             }
         }

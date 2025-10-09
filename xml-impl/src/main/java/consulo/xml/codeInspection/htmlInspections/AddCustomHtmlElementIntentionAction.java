@@ -20,44 +20,41 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-import consulo.xml.localize.XmlLocalize;
+import consulo.ui.annotation.RequiredUIAccess;
 import jakarta.annotation.Nonnull;
 
-public class AddCustomHtmlElementIntentionAction implements LocalQuickFix
-{
-	private final String myName;
-	private final String myText;
-	@Nonnull
-	private String myInspectionKey;
+public class AddCustomHtmlElementIntentionAction implements LocalQuickFix {
+    @Nonnull
+    private final String myName;
+    @Nonnull
+    private final LocalizeValue myText;
+    @Nonnull
+    private String myInspectionKey;
 
-	public AddCustomHtmlElementIntentionAction(@Nonnull String inspectionKey, String name, String text)
-	{
-		myInspectionKey = inspectionKey;
-		myName = name;
-		myText = text;
-	}
+    public AddCustomHtmlElementIntentionAction(@Nonnull String inspectionKey, @Nonnull String name, @Nonnull LocalizeValue text) {
+        myInspectionKey = inspectionKey;
+        myName = name;
+        myText = text;
+    }
 
-	@Override
-	@Nonnull
-	public String getName()
-	{
-		return myText;
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return myText;
+    }
 
-	@Override
-	@Nonnull
-	public String getFamilyName()
-	{
-		return XmlLocalize.fixHtmlFamily().get();
-	}
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        PsiElement element = descriptor.getPsiElement();
 
-	@Override
-	public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
-	{
-		final PsiElement element = descriptor.getPsiElement();
-
-		InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-		profile.<HtmlUnknownElementInspection, BaseXmlEntitiesInspectionState>modifyToolSettings(myInspectionKey, element, (tool, state) -> state.addEntry(myName));
-	}
+        InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
+        profile.<HtmlUnknownElementInspection, BaseXmlEntitiesInspectionState>modifyToolSettings(
+            myInspectionKey,
+            element,
+            (tool, state) -> state.addEntry(myName)
+        );
+    }
 }

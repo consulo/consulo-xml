@@ -53,8 +53,9 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     private static final String XMLNS_XSI_ATTR_NAME = "xmlns:xsi";
     private static final String XSI_SCHEMA_LOCATION_ATTR_NAME = "xsi:schemaLocation";
 
+    @Nonnull
     @Override
-    protected @Nonnull LocalizeValue getQuickFixName() {
+    public LocalizeValue getText() {
         return XmlLocalize.addXsiSchemaLocationForExternalResource();
     }
 

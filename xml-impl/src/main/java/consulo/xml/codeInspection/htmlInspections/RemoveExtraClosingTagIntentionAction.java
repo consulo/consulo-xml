@@ -28,6 +28,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.undoRedo.CommandProcessor;
@@ -41,21 +42,15 @@ import jakarta.annotation.Nonnull;
  * @author spleaner
  */
 public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, SyntheticIntentionAction {
-    @Override
     @Nonnull
-    public String getFamilyName() {
-        return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
+    @Override
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.removeExtraClosingTagQuickfix();
     }
 
     @Nonnull
     @Override
-    public String getName() {
-        return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
-    }
-
-    @Nonnull
-    @Override
-    public String getText() {
+    public LocalizeValue getText() {
         return getName();
     }
 

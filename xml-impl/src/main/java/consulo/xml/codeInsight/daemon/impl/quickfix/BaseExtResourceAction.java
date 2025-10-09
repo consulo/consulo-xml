@@ -22,7 +22,6 @@ import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
-import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
@@ -49,19 +48,6 @@ abstract class BaseExtResourceAction implements SyntheticIntentionAction {
 
     protected boolean isAcceptableUri(String uri) {
         return true;
-    }
-
-    protected abstract @Nonnull LocalizeValue getQuickFixName();
-
-    @Nonnull
-    @Override
-    public String getText() {
-        return getQuickFixName().get();
-    }
-
-    @Nonnull
-    public String getFamilyName() {
-        return getQuickFixName().get();
     }
 
     @Override

@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressManager;
 import consulo.language.editor.inspection.ProblemsHolder;
@@ -22,6 +23,7 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
@@ -29,7 +31,6 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,25 +40,25 @@ import java.util.Map;
  */
 @ExtensionImpl
 public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool {
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
 
     @Nonnull
+    @Override
     public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
-
-            private Map<PsiFile, Boolean> myDoctypeMap = new HashMap<PsiFile, Boolean>();
+            private Map<PsiFile, Boolean> myDoctypeMap = new HashMap<>();
 
             @Override
-            public void visitXmlElement(final XmlElement element) {
+            @RequiredReadAction
+            public void visitXmlElement(XmlElement element) {
                 if (isHtml5Doctype(element)) {
                     return;
                 }
 
-                if (element instanceof XmlElementContentSpec ||
-                    element instanceof XmlEntityRef
-                ) {
+                if (element instanceof XmlElementContentSpec || element instanceof XmlEntityRef) {
                     doCheckRefs(element, holder);
                 }
             }
@@ -70,7 +71,7 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
                 PsiFile file = element.getContainingFile();
                 if (file instanceof XmlFile) {
                     if (!myDoctypeMap.containsKey(file)) {
-                        myDoctypeMap.put(file, computeHtml5Doctype((XmlFile)file));
+                        myDoctypeMap.put(file, computeHtml5Doctype((XmlFile) file));
                     }
                     return myDoctypeMap.get(file);
                 }
@@ -78,26 +79,21 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
             }
 
             private Boolean computeHtml5Doctype(XmlFile file) {
-                XmlDoctype doctype = null;
                 //Search for doctypes from providers
-                for (HtmlDoctypeProvider provider : HtmlDoctypeProvider.EP_NAME.getExtensionList()) {
-                    doctype = provider.getDoctype(file);
-                    if (doctype != null) {
-                        break;
-                    }
-                }
-
+                XmlDoctype doctype = file.getApplication().getExtensionPoint(HtmlDoctypeProvider.class)
+                    .computeSafeIfAny(provider -> provider.getDoctype(file));
                 return doctype != null && HtmlUtil.isHtml5Doctype(doctype);
             }
         };
     }
 
-    private static void doCheckRefs(final XmlElement element, final ProblemsHolder holder) {
+    @RequiredReadAction
+    private static void doCheckRefs(XmlElement element, ProblemsHolder holder) {
         for (PsiReference ref : element.getReferences()) {
             ProgressManager.checkCanceled();
             if (XmlHighlightVisitor.hasBadResolve(ref, true)) {
                 if (ref.getElement() instanceof XmlElementContentSpec) {
-                    final String image = ref.getCanonicalText();
+                    String image = ref.getCanonicalText();
                     if (image.equals("-") || image.equals("O")) {
                         continue;
                     }
@@ -108,22 +104,25 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
     }
 
     @Nonnull
+    @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
     @Nonnull
-    public String getGroupDisplayName() {
+    @Override
+    public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsCheckDtdReferences().get();
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsCheckDtdReferences();
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return "CheckDtdRefs";
     }

@@ -22,6 +22,7 @@ import consulo.language.editor.FileModificationService;
 import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -41,14 +42,8 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
 
     @Nonnull
     @Override
-    public String getText() {
-        return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName).get();
-    }
-
-    @Nonnull
-    @Override
-    public String getFamilyName() {
-        return XmlErrorLocalize.removeAttributeQuickfixFamily().get();
+    public LocalizeValue getText() {
+        return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName);
     }
 
     @Override

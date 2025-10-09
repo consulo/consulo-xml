@@ -27,9 +27,10 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.impl.localize.XmlErrorLocalize;
@@ -39,172 +40,133 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author spleaner
  */
 @ExtensionImpl
-public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool
-{
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 
-	@Override
-	@Nls
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return XmlInspectionGroupNames.XML_INSPECTIONS;
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return XmlInspectionGroupNames.XML_INSPECTIONS;
+    }
 
-	@Override
-	@Nonnull
-	public String getDisplayName()
-	{
-		return XmlLocalize.xmlInspectionWrongRootElement().get();
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionWrongRootElement();
+    }
 
-	@Override
-	@NonNls
-	@Nonnull
-	public String getShortName()
-	{
-		return "XmlWrongRootElement";
-	}
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "XmlWrongRootElement";
+    }
 
-	@Override
-	@Nonnull
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.ERROR;
-	}
+    @Override
+    @Nonnull
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.ERROR;
+    }
 
-	@Override
-	protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly, Object state)
-	{
-		if(!(tag.getParent() instanceof XmlTag))
-		{
-			final PsiFile psiFile = tag.getContainingFile();
-			if(!(psiFile instanceof XmlFile))
-			{
-				return;
-			}
+    @Override
+    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        if (!(tag.getParent() instanceof XmlTag)) {
+            if (!(tag.getContainingFile() instanceof XmlFile xmlFile)) {
+                return;
+            }
 
-			XmlFile xmlFile = (XmlFile) psiFile;
+            XmlDocument document = xmlFile.getDocument();
+            if (document == null) {
+                return;
+            }
 
-			final XmlDocument document = xmlFile.getDocument();
-			if(document == null)
-			{
-				return;
-			}
+            XmlProlog prolog = document.getProlog();
+            if (prolog == null || XmlHighlightVisitor.skipValidation(prolog)) {
+                return;
+            }
 
-			XmlProlog prolog = document.getProlog();
-			if(prolog == null || XmlHighlightVisitor.skipValidation(prolog))
-			{
-				return;
-			}
+            XmlDoctype doctype = prolog.getDoctype();
 
-			final XmlDoctype doctype = prolog.getDoctype();
+            if (doctype == null) {
+                return;
+            }
 
-			if(doctype == null)
-			{
-				return;
-			}
+            XmlElement nameElement = doctype.getNameElement();
 
-			XmlElement nameElement = doctype.getNameElement();
+            if (nameElement == null) {
+                return;
+            }
 
-			if(nameElement == null)
-			{
-				return;
-			}
+            String name = tag.getName();
+            String text = nameElement.getText();
+            if (tag instanceof HtmlTag) {
+                name = name.toLowerCase();
+                text = text.toLowerCase();
+            }
 
-			String name = tag.getName();
-			String text = nameElement.getText();
-			if(tag instanceof HtmlTag)
-			{
-				name = name.toLowerCase();
-				text = text.toLowerCase();
-			}
+            if (!name.equals(text)) {
+                name = XmlUtil.findLocalNameByQualifiedName(name);
+                if (!name.equals(text)) {
+                    if (tag instanceof HtmlTag) {
+                        return; // it is legal to have html / head / body omitted
+                    }
+                    LocalQuickFix localQuickFix = new MyLocalQuickFix(doctype.getNameElement().getText());
 
-			if(!name.equals(text))
-			{
-				name = XmlUtil.findLocalNameByQualifiedName(name);
+                    holder.newProblem(XmlErrorLocalize.wrongRootElement())
+                        .range(XmlChildRole.START_TAG_NAME_FINDER.findChild(tag.getNode()).getPsi())
+                        .withFix(localQuickFix)
+                        .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                        .create();
 
-				if(!name.equals(text))
-				{
-					if(tag instanceof HtmlTag)
-					{
-						return; // it is legal to have html / head / body omitted
-					}
-					final LocalQuickFix localQuickFix = new MyLocalQuickFix(doctype.getNameElement().getText());
+                    ASTNode astNode = XmlChildRole.CLOSING_TAG_NAME_FINDER.findChild(tag.getNode());
+                    if (astNode != null) {
+                        holder.newProblem(XmlErrorLocalize.wrongRootElement())
+                            .range(astNode.getPsi())
+                            .withFix(localQuickFix)
+                            .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                            .create();
+                    }
+                }
+            }
+        }
+    }
 
-					holder.registerProblem(
-						XmlChildRole.START_TAG_NAME_FINDER.findChild(tag.getNode()).getPsi(),
-						XmlErrorLocalize.wrongRootElement().get(),
-						ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
-					);
+    private static class MyLocalQuickFix implements LocalQuickFix {
+        private final String myText;
 
-					final ASTNode astNode = XmlChildRole.CLOSING_TAG_NAME_FINDER.findChild(tag.getNode());
-					if(astNode != null)
-					{
-						holder.registerProblem(
-							astNode.getPsi(),
-							XmlErrorLocalize.wrongRootElement().get(),
-							ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, localQuickFix
-						);
-					}
-				}
-			}
-		}
-	}
+        public MyLocalQuickFix(String text) {
+            myText = text;
+        }
 
-	private static class MyLocalQuickFix implements LocalQuickFix
-	{
-		private final String myText;
+        @Nonnull
+        @Override
+        public LocalizeValue getName() {
+            return XmlLocalize.changeRootElementTo(myText);
+        }
 
-		public MyLocalQuickFix(String text)
-		{
-			myText = text;
-		}
+        @Override
+        @RequiredUIAccess
+        public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+            final XmlTag myTag = PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), XmlTag.class);
 
-		@Override
-		@Nonnull
-		public String getName()
-		{
-			return XmlLocalize.changeRootElementTo(myText).get();
-		}
+            if (!FileModificationService.getInstance().prepareFileForWrite(myTag.getContainingFile())) {
+                return;
+            }
 
-		@Override
-		@Nonnull
-		public String getFamilyName()
-		{
-			return getName();
-		}
-
-		@Override
-		public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor)
-		{
-			final XmlTag myTag = PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), XmlTag.class);
-
-			if(!FileModificationService.getInstance().prepareFileForWrite(myTag.getContainingFile()))
-			{
-				return;
-			}
-
-			new WriteCommandAction(project)
-			{
-				@Override
-				protected void run(final Result result) throws Throwable
-				{
-					myTag.setName(myText);
-				}
-			}.execute();
-		}
-	}
+            new WriteCommandAction(project) {
+                @Override
+                protected void run(Result result) throws Throwable {
+                    myTag.setName(myText);
+                }
+            }.execute();
+        }
+    }
 }

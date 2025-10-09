@@ -18,6 +18,7 @@ package consulo.xml.codeInspection.htmlInspections;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.localize.LocalizeValue;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
@@ -37,7 +38,7 @@ public class RequiredAttributesInspection extends RequiredAttributesInspectionBa
 
   @Nonnull
   @Override
-  public String getDisplayName() {
-    return XmlLocalize.inspectionRequiredAttributesDisplayName().get();
+  public LocalizeValue getDisplayName() {
+    return XmlLocalize.inspectionRequiredAttributesDisplayName();
   }
 }

@@ -25,7 +25,5 @@ import consulo.component.extension.ExtensionPointName;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlIdContributor {
-    ExtensionPointName<XmlIdContributor> EP_NAME = ExtensionPointName.create(XmlIdContributor.class);
-
     boolean suppressExistingIdValidation(XmlFile file);
 }

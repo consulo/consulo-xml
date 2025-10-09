@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG;
 
 @Deprecated
-public class ApplicationLoader
-{
-	public static final String RNG_NAMESPACE = "http://relaxng.org/ns/structure/1.0";
+public class ApplicationLoader {
+    public static final String RNG_NAMESPACE = "http://relaxng.org/ns/structure/1.0";
 }

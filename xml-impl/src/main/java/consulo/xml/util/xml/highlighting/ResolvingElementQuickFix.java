@@ -26,7 +26,9 @@ import consulo.language.editor.intention.IntentionAction;
 import consulo.language.icon.IconDescriptorUpdaters;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.popup.BaseListPopupStep;
 import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.ui.ex.popup.PopupStep;
@@ -34,7 +36,6 @@ import consulo.ui.image.Image;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -72,20 +73,14 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
 
     @Nonnull
     @Override
-    public String getName() {
-        return DomBundle.message("create.new.element", myTypeName, myNewName);
+    public LocalizeValue getName() {
+        return LocalizeValue.localizeTODO(DomBundle.message("create.new.element", myTypeName, myNewName));
     }
 
     @Nonnull
     @Override
-    public String getText() {
+    public LocalizeValue getText() {
         return getName();
-    }
-
-    @Nonnull
-    @Override
-    public String getFamilyName() {
-        return DomBundle.message("quick.fixes.family");
     }
 
     @Override
@@ -94,6 +89,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
     }
 
     @Override
+    @RequiredUIAccess
     public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         applyFix();
     }
@@ -104,14 +100,17 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
     }
 
     @Override
+    @RequiredUIAccess
     public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
         applyFix();
     }
 
+    @RequiredUIAccess
     private void applyFix() {
         chooseParent(
             myParents,
             parent -> new WriteCommandAction.Simple(parent.getManager().getProject(), DomUtil.getFile(parent)) {
+                @Override
                 protected void run() throws Throwable {
                     doFix(parent, myChildDescription, myNewName);
                 }
@@ -127,7 +126,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
         return domElement;
     }
 
-    protected static void chooseParent(final List<DomElement> files, final Consumer<DomElement> onChoose) {
+    protected static void chooseParent(final List<DomElement> files, @RequiredUIAccess Consumer<DomElement> onChoose) {
         switch (files.size()) {
             case 0:
                 return;
@@ -152,9 +151,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
                     @Override
                     @RequiredReadAction
                     public String getTextFor(DomElement value) {
-                        String name = DomUtil.getFile(value).getName();
-                        assert name != null;
-                        return name;
+                        return DomUtil.getFile(value).getName();
                     }
                 }).showInBestPositionFor(DataManager.getInstance().getDataContext());
         }

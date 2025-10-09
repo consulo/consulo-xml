@@ -85,7 +85,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
 
     @Nonnull
     @Override
-    protected LocalizeValue getQuickFixName() {
+    public LocalizeValue getText() {
         return XmlLocalize.fetchExternalResource();
     }
 

@@ -20,6 +20,7 @@ import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.inspection.InspectionToolState;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -38,106 +39,119 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection {
-  @Nonnull
-  @Override
-  public InspectionToolState<?> createStateProvider() {
-    return new HtmlUnknownTagInspectionState(getCheckboxTitle());
-  }
-
-  private static boolean isAbstractDescriptor(XmlElementDescriptor descriptor) {
-    return descriptor == null || descriptor instanceof AnyXmlElementDescriptor;
-  }
-
-  @Override
-  @Nonnull
-  public String getDisplayName() {
-    return XmlLocalize.htmlInspectionsUnknownTag().get();
-  }
-
-  @Override
-  @NonNls
-  @Nonnull
-  public String getShortName() {
-    return XmlEntitiesInspection.TAG_SHORT_NAME;
-  }
-
-  @Override
-  protected LocalizeValue getCheckboxTitle() {
-    return XmlLocalize.htmlInspectionsUnknownTagCheckboxTitle();
-  }
-
-  @Override
-  protected void checkTag(@Nonnull final XmlTag tag, @Nonnull final ProblemsHolder holder, final boolean isOnTheFly, Object state) {
-    if (!(tag instanceof HtmlTag) || !XmlHighlightVisitor.shouldBeValidated(tag)) {
-      return;
+    @Nonnull
+    @Override
+    public InspectionToolState<?> createStateProvider() {
+        return new HtmlUnknownTagInspectionState(getCheckboxTitle());
     }
 
-    BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState)state;
-
-    XmlElementDescriptor descriptorFromContext = XmlUtil.getDescriptorFromContext(tag);
-
-    PsiElement parent = tag.getParent();
-    XmlElementDescriptor parentDescriptor = parent instanceof XmlTag ? ((XmlTag)parent).getDescriptor() : null;
-
-    XmlElementDescriptor ownDescriptor = isAbstractDescriptor(descriptorFromContext) ? tag.getDescriptor() : descriptorFromContext;
-
-    if (isAbstractDescriptor(ownDescriptor) || (parentDescriptor instanceof HtmlElementDescriptorImpl && ownDescriptor instanceof HtmlElementDescriptorImpl && isAbstractDescriptor
-      (descriptorFromContext))) {
-
-      final String name = tag.getName();
-
-      if (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name)) {
-        final AddCustomHtmlElementIntentionAction action = new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.TAG_SHORT_NAME,
-                                                                                                   name,
-                                                                                                   XmlLocalize.addCustomHtmlTag(name).get()
-        );
-
-        // todo: support "element is not allowed" message for html5
-        // some tags in html5 cannot be found in xhtml5.xsd if they are located in incorrect context, so they get any-element descriptor (ex. "canvas: tag)
-        final LocalizeValue message =
-          isAbstractDescriptor(ownDescriptor) ? XmlErrorLocalize.unknownHtmlTag(name) : XmlErrorLocalize.elementIsNotAllowedHere(name);
-
-        final PsiElement startTagName = XmlTagUtil.getStartTagNameElement(tag);
-        assert startTagName != null;
-        final PsiElement endTagName = XmlTagUtil.getEndTagNameElement(tag);
-
-        List<LocalQuickFix> quickfixes = new ArrayList<>();
-        quickfixes.add(action);
-        if (isOnTheFly) {
-          PsiFile file = startTagName.getContainingFile();
-          if (file instanceof XmlFile) {
-            quickfixes.add(XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(startTagName, "", null));
-          }
-
-          // People using non-HTML as their template data language (but having not changed this in the IDE)
-          // will most likely see 'unknown html tag' error, because HTML is usually the default.
-          // So if they check quick fixes for this error they'll discover Change Template Data Language feature.
-          ContainerUtil.addIfNotNull(quickfixes, createChangeTemplateDataFix(file));
-        }
-        if (HtmlUtil.isHtml5Tag(name) && !HtmlUtil.hasNonHtml5Doctype(tag)) {
-          quickfixes.add(new SwitchToHtml5WithHighPriorityAction());
-        }
-        ProblemHighlightType highlightType =
-          tag.getContainingFile().getContext() == null ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.INFORMATION;
-        if (startTagName.getTextLength() > 0) {
-          holder.registerProblem(startTagName, message.get(), highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
-        }
-
-        if (endTagName != null) {
-          holder.registerProblem(endTagName, message.get(), highlightType, quickfixes.toArray(new LocalQuickFix[quickfixes.size()]));
-        }
-      }
+    private static boolean isAbstractDescriptor(XmlElementDescriptor descriptor) {
+        return descriptor == null || descriptor instanceof AnyXmlElementDescriptor;
     }
-  }
 
-  @Nullable
-  protected LocalQuickFix createChangeTemplateDataFix(PsiFile file) {
-    return null;
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.htmlInspectionsUnknownTag();
+    }
+
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return XmlEntitiesInspection.TAG_SHORT_NAME;
+    }
+
+    @Override
+    protected LocalizeValue getCheckboxTitle() {
+        return XmlLocalize.htmlInspectionsUnknownTagCheckboxTitle();
+    }
+
+    @Override
+    @RequiredReadAction
+    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        if (!(tag instanceof HtmlTag) || !XmlHighlightVisitor.shouldBeValidated(tag)) {
+            return;
+        }
+
+        BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState) state;
+
+        XmlElementDescriptor descriptorFromContext = XmlUtil.getDescriptorFromContext(tag);
+
+        PsiElement parent = tag.getParent();
+        XmlElementDescriptor parentDescriptor = parent instanceof XmlTag parentTag ? parentTag.getDescriptor() : null;
+
+        XmlElementDescriptor ownDescriptor = isAbstractDescriptor(descriptorFromContext) ? tag.getDescriptor() : descriptorFromContext;
+
+        if (isAbstractDescriptor(ownDescriptor)
+            || (parentDescriptor instanceof HtmlElementDescriptorImpl
+            && ownDescriptor instanceof HtmlElementDescriptorImpl
+            && isAbstractDescriptor(descriptorFromContext))) {
+
+            String name = tag.getName();
+
+            if (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name)) {
+                AddCustomHtmlElementIntentionAction action = new AddCustomHtmlElementIntentionAction(
+                    XmlEntitiesInspection.TAG_SHORT_NAME,
+                    name,
+                    XmlLocalize.addCustomHtmlTag(name)
+                );
+
+                // todo: support "element is not allowed" message for html5
+                // some tags in html5 cannot be found in xhtml5.xsd if they are located in incorrect context,
+                // so they get any-element descriptor (ex. "canvas: tag)
+                LocalizeValue message = isAbstractDescriptor(ownDescriptor)
+                    ? XmlErrorLocalize.unknownHtmlTag(name)
+                    : XmlErrorLocalize.elementIsNotAllowedHere(name);
+
+                PsiElement startTagName = XmlTagUtil.getStartTagNameElement(tag);
+                assert startTagName != null;
+                PsiElement endTagName = XmlTagUtil.getEndTagNameElement(tag);
+
+                List<LocalQuickFix> quickfixes = new ArrayList<>();
+                quickfixes.add(action);
+                if (isOnTheFly) {
+                    PsiFile file = startTagName.getContainingFile();
+                    if (file instanceof XmlFile) {
+                        quickfixes.add(XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(startTagName, "", null));
+                    }
+
+                    // People using non-HTML as their template data language (but having not changed this in the IDE)
+                    // will most likely see 'unknown html tag' error, because HTML is usually the default.
+                    // So if they check quick fixes for this error they'll discover Change Template Data Language feature.
+                    ContainerUtil.addIfNotNull(quickfixes, createChangeTemplateDataFix(file));
+                }
+                if (HtmlUtil.isHtml5Tag(name) && !HtmlUtil.hasNonHtml5Doctype(tag)) {
+                    quickfixes.add(new SwitchToHtml5WithHighPriorityAction());
+                }
+                ProblemHighlightType highlightType = tag.getContainingFile().getContext() == null
+                    ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                    : ProblemHighlightType.INFORMATION;
+                if (startTagName.getTextLength() > 0) {
+                    holder.newProblem(LocalizeValue.of(message.get()))
+                        .range(startTagName)
+                        .withFixes(quickfixes.toArray(new LocalQuickFix[quickfixes.size()]))
+                        .highlightType(highlightType)
+                        .create();
+                }
+
+                if (endTagName != null) {
+                    holder.newProblem(LocalizeValue.of(message.get()))
+                        .range(endTagName)
+                        .withFixes(quickfixes.toArray(new LocalQuickFix[quickfixes.size()]))
+                        .highlightType(highlightType)
+                        .create();
+                }
+            }
+        }
+    }
+
+    @Nullable
+    protected LocalQuickFix createChangeTemplateDataFix(PsiFile file) {
+        return null;
+    }
 }

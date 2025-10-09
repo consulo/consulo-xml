@@ -15,51 +15,63 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.intention.QuickFixActionRegistrar;
 import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.PropertyKey;
-
+import consulo.localize.LocalizeValue;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
+
+import java.util.function.Function;
 
 /**
  * @author yole
  */
 @ExtensionImpl
 public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<TypeOrElementOrAttributeReference> {
-  @Override
-  public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar) {
-    if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference) {
-      registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.complex.type.intention.name", SchemaReferencesProvider.COMPLEX_TYPE_TAG_NAME, ref));
-      registrar.register(new CreateXmlElementIntentionAction("xml.schema.create.simple.type.intention.name", SchemaReferencesProvider.SIMPLE_TYPE_TAG_NAME, ref));
-    } else if (ref.getType() != null) {
-      @PropertyKey(resourceBundle = XmlBundle.PATH_TO_BUNDLE) String key = null;
-      @NonNls String declarationTagName = null;
+    @Override
+    public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+        if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference) {
+            registrar.register(new CreateXmlElementIntentionAction(
+                XmlLocalize::xmlSchemaCreateComplexTypeIntentionName,
+                SchemaReferencesProvider.COMPLEX_TYPE_TAG_NAME,
+                ref
+            ));
+            registrar.register(new CreateXmlElementIntentionAction(
+                XmlLocalize::xmlSchemaCreateSimpleTypeIntentionName,
+                SchemaReferencesProvider.SIMPLE_TYPE_TAG_NAME,
+                ref
+            ));
+        }
+        else if (ref.getType() != null) {
+            Function<String, LocalizeValue> textPattern = null;
+            String declarationTagName = null;
 
-      if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.ElementReference) {
-        declarationTagName = SchemaReferencesProvider.ELEMENT_TAG_NAME;
-        key = "xml.schema.create.element.intention.name";
-      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeReference) {
-        declarationTagName = SchemaReferencesProvider.ATTRIBUTE_TAG_NAME;
-        key = "xml.schema.create.attribute.intention.name";
-      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeGroupReference) {
-        declarationTagName = SchemaReferencesProvider.ATTRIBUTE_GROUP_TAG_NAME;
-        key = "xml.schema.create.attribute.group.intention.name";
-      } else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.GroupReference) {
-        declarationTagName = SchemaReferencesProvider.GROUP_TAG_NAME;
-        key = "xml.schema.create.group.intention.name";
-      }
+            if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.ElementReference) {
+                declarationTagName = SchemaReferencesProvider.ELEMENT_TAG_NAME;
+                textPattern = XmlLocalize::xmlSchemaCreateElementIntentionName;
+            }
+            else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeReference) {
+                declarationTagName = SchemaReferencesProvider.ATTRIBUTE_TAG_NAME;
+                textPattern = XmlLocalize::xmlSchemaCreateAttributeIntentionName;
+            }
+            else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.AttributeGroupReference) {
+                declarationTagName = SchemaReferencesProvider.ATTRIBUTE_GROUP_TAG_NAME;
+                textPattern = XmlLocalize::xmlSchemaCreateAttributeGroupIntentionName;
+            }
+            else if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.GroupReference) {
+                declarationTagName = SchemaReferencesProvider.GROUP_TAG_NAME;
+                textPattern = XmlLocalize::xmlSchemaCreateGroupIntentionName;
+            }
 
-      assert key != null;
-      registrar.register(new CreateXmlElementIntentionAction(key, declarationTagName, ref));
+            assert textPattern != null;
+            registrar.register(new CreateXmlElementIntentionAction(textPattern, declarationTagName, ref));
+        }
     }
-  }
 
-  @Nonnull
-  @Override
-  public Class<TypeOrElementOrAttributeReference> getReferenceClass() {
-    return TypeOrElementOrAttributeReference.class;
-  }
+    @Nonnull
+    @Override
+    public Class<TypeOrElementOrAttributeReference> getReferenceClass() {
+        return TypeOrElementOrAttributeReference.class;
+    }
 }

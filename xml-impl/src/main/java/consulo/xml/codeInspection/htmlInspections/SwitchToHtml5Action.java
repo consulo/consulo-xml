@@ -23,6 +23,7 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -35,19 +36,13 @@ import jakarta.annotation.Nonnull;
 public class SwitchToHtml5Action implements LocalQuickFix, IntentionAction {
     @Nonnull
     @Override
-    public String getName() {
-        return XmlErrorLocalize.switchToHtml5QuickfixText().get();
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.switchToHtml5QuickfixText();
     }
 
     @Nonnull
     @Override
-    public String getText() {
-        return getFamilyName();
-    }
-
-    @Nonnull
-    @Override
-    public String getFamilyName() {
+    public LocalizeValue getText() {
         return getName();
     }
 

@@ -28,8 +28,6 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface HtmlDoctypeProvider {
-    ExtensionPointName<HtmlDoctypeProvider> EP_NAME = ExtensionPointName.create(HtmlDoctypeProvider.class);
-
     @Nullable
     XmlDoctype getDoctype(XmlFile file);
 }

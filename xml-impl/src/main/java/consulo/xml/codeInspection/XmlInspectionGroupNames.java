@@ -15,12 +15,13 @@
  */
 package consulo.xml.codeInspection;
 
-import com.intellij.xml.XmlBundle;
+import consulo.localize.LocalizeValue;
+import consulo.xml.localize.XmlLocalize;
 
 /**
  * @author Dmitry Avdeev
  */
 public interface XmlInspectionGroupNames {
-  String HTML_INSPECTIONS = XmlBundle.message("html.inspections.group.name");
-  String XML_INSPECTIONS = XmlBundle.message("xml.inspections.group.name");
+    LocalizeValue HTML_INSPECTIONS = XmlLocalize.htmlInspectionsGroupName();
+    LocalizeValue XML_INSPECTIONS = XmlLocalize.xmlInspectionsGroupName();
 }

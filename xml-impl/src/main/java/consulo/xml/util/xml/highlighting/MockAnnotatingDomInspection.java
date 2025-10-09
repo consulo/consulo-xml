@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -25,32 +26,31 @@ import jakarta.annotation.Nonnull;
  * @author peter
  */
 public class MockAnnotatingDomInspection<T extends DomElement, State> extends BasicDomElementsInspection<T, State> {
-
-  public MockAnnotatingDomInspection(final Class<T> domClass) {
-    super(domClass);
-  }
-
-  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
-    for (final Class aClass : getDomClasses()) {
-      helper.runAnnotators(element, holder, aClass);
+    public MockAnnotatingDomInspection(Class<T> domClass) {
+        super(domClass);
     }
-  }
 
-  @Nls
-  @Nonnull
-  public String getGroupDisplayName() {
-    throw new UnsupportedOperationException("Method getGroupDisplayName is not yet implemented in " + getClass().getName());
-  }
+    protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
+        for (Class aClass : getDomClasses()) {
+            helper.runAnnotators(element, holder, aClass);
+        }
+    }
 
-  @Nls
-  @Nonnull
-  public String getDisplayName() {
-    throw new UnsupportedOperationException("Method getDisplayName is not yet implemented in " + getClass().getName());
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        throw new UnsupportedOperationException("Method getGroupDisplayName is not yet implemented in " + getClass().getName());
+    }
 
-  @NonNls
-  @Nonnull
-  public String getShortName() {
-    throw new UnsupportedOperationException("Method getShortName is not yet implemented in " + getClass().getName());
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        throw new UnsupportedOperationException("Method getDisplayName is not yet implemented in " + getClass().getName());
+    }
+
+    @Nonnull
+    @Override
+    public String getShortName() {
+        throw new UnsupportedOperationException("Method getShortName is not yet implemented in " + getClass().getName());
+    }
 }
