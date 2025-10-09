@@ -19,6 +19,7 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.editor.inspection.*;
+import consulo.language.editor.inspection.localize.InspectionLocalize;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.editor.rawHighlight.HighlightInfo;
@@ -98,7 +99,7 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
     @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
-        return LocalizeValue.localizeTODO("General");
+        return InspectionLocalize.inspectionGeneralToolsGroupName();
     }
 
     @Nonnull
