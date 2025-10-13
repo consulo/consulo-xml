@@ -31,6 +31,7 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.xml.XmlStringUtil;
 
+import consulo.xml.lang.xml.XMLLanguage;
 import jakarta.annotation.Nullable;
 import java.util.function.Function;
 
@@ -101,7 +102,9 @@ public class DomElementsHighlightingUtil {
                           range.getEndOffset(),
                           severity,
                           text == null ? LocalizeValue.of() : LocalizeValue.of(text),
-                          tooltip == null ? LocalizeValue.of() : LocalizeValue.of(tooltip));
+                          tooltip == null ? LocalizeValue.of() : LocalizeValue.of(tooltip),
+                          XMLLanguage.INSTANCE
+    );
   }
 
   @Nullable

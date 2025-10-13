@@ -37,6 +37,7 @@ import consulo.language.editor.highlight.TextEditorHighlightingPass;
 import consulo.language.editor.highlight.UpdateHighlightersUtil;
 import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.editor.rawHighlight.HighlightInfoType;
+import consulo.language.editor.rawHighlight.HighlightInfoTypeImpl;
 import consulo.language.file.FileViewProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
@@ -68,7 +69,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
 
     private static final TextAttributesKey TAG_TREE_HIGHLIGHTING_KEY = TextAttributesKey.of("TAG_TREE_HIGHLIGHTING_KEY");
     private static final HighlightInfoType TYPE =
-        new HighlightInfoType.HighlightInfoTypeImpl(HighlightSeverity.INFORMATION, TAG_TREE_HIGHLIGHTING_KEY);
+        new HighlightInfoTypeImpl(HighlightSeverity.INFORMATION, TAG_TREE_HIGHLIGHTING_KEY);
 
     private final PsiFile myFile;
     private final EditorEx myEditor;
