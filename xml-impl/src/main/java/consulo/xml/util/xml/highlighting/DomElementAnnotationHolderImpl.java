@@ -27,6 +27,7 @@ import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
+import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.ConvertContextFactory;
@@ -104,7 +105,7 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     final TextRange range = xmlElement.getTextRange();
     final int startOffset = range.getStartOffset();
     final int endOffset = message == LocalizeValue.of() ? startOffset : range.getEndOffset();
-    final Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of());
+    final Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of(), XMLLanguage.INSTANCE);
     myAnnotations.add(annotation);
     return annotation;
   }
