@@ -33,7 +33,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -53,8 +53,9 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     private static final String XMLNS_XSI_ATTR_NAME = "xmlns:xsi";
     private static final String XSI_SCHEMA_LOCATION_ATTR_NAME = "xsi:schemaLocation";
 
+    @Nonnull
     @Override
-    protected @Nonnull LocalizeValue getQuickFixName() {
+    public LocalizeValue getText() {
         return XmlLocalize.addXsiSchemaLocationForExternalResource();
     }
 

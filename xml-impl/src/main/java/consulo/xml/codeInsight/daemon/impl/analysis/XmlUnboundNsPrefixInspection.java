@@ -34,8 +34,8 @@ import consulo.language.psi.*;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.*;
@@ -88,6 +88,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
             }
 
             @Override
+            @RequiredReadAction
             public void visitXmlAttribute(XmlAttribute attribute) {
                 if (!isXmlFile(attribute)) {
                     return;
@@ -125,6 +126,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         };
     }
 
+    @RequiredReadAction
     private static void checkUnboundNamespacePrefix(
         XmlElement element,
         XmlTag context,
@@ -157,7 +159,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
             : XmlErrorLocalize.unboundNamespaceNoParam();
 
         if (namespacePrefix.length() == 0) {
-            XmlTag tag = (XmlTag)element;
+            XmlTag tag = (XmlTag) element;
             if (!XmlUtil.JSP_URI.equals(tag.getNamespace())) {
                 reportTagProblem(
                     tag,
@@ -184,7 +186,6 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         else {
             holder.newProblem(message)
                 .range(element, range)
-                .withFixes()
                 .highlightType(highlightType)
                 .create();
         }
@@ -202,7 +203,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         if (nameToken != null) {
             holder.newProblem(message)
                 .range(nameToken, range)
-                .withFixes(fix)
+                .withFix(fix)
                 .highlightType(highlightType)
                 .create();
         }
@@ -210,7 +211,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         if (nameToken != null) {
             holder.newProblem(message)
                 .range(nameToken, range)
-                .withFixes(fix)
+                .withFix(fix)
                 .highlightType(highlightType)
                 .create();
         }
@@ -229,14 +230,14 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
 
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return XmlLocalize.xmlInspectionsGroupName().get();
+    public LocalizeValue getGroupDisplayName() {
+        return XmlLocalize.xmlInspectionsGroupName();
     }
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsUnboundPrefix().get();
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsUnboundPrefix();
     }
 
     @Nonnull

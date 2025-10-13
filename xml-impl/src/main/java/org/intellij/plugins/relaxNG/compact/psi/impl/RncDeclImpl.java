@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import jakarta.annotation.Nonnull;
@@ -29,9 +28,8 @@ import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.jetbrains.annotations.NonNls;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 16.08.2007
+ * @author sweinreuter
+ * @since 2007-08-16
  */
 public class RncDeclImpl extends RncElementImpl implements RncDecl {
   public RncDeclImpl(ASTNode node) {

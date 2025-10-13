@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui;
 
 import consulo.xml.util.xml.DomElement;
@@ -23,7 +22,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public class DomUINavigationProvider extends DomElementNavigationProvider {
   public static String DOM_UI_NAVIGATION_PROVIDER_NAME = "DOM_UI_NAVIGATION_PROVIDER_NAME";

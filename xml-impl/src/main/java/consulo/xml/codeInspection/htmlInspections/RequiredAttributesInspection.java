@@ -15,18 +15,18 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
+import consulo.localize.LocalizeValue;
 import consulo.xml.lang.xml.XMLLanguage;
-
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * User: anna
- * Date: 18-Nov-2005
+ * @author anna
+ * @since 2005-11-18
  */
 @ExtensionImpl
 public class RequiredAttributesInspection extends RequiredAttributesInspectionBase implements UnfairLocalInspectionTool {
@@ -38,7 +38,7 @@ public class RequiredAttributesInspection extends RequiredAttributesInspectionBa
 
   @Nonnull
   @Override
-  public String getDisplayName() {
-    return XmlBundle.message("inspection.required.attributes.display.name");
+  public LocalizeValue getDisplayName() {
+    return XmlLocalize.inspectionRequiredAttributesDisplayName();
   }
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui.actions.generate;
 
 import jakarta.annotation.Nonnull;
@@ -28,7 +27,7 @@ import consulo.xml.util.xml.DomElementsNavigationManager;
 import consulo.project.Project;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public abstract class GenerateDomElementProvider<T extends DomElement> {
   private final String myDescription;

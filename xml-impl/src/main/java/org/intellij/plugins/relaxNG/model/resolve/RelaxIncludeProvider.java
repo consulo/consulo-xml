@@ -20,10 +20,10 @@ import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-/*
-* User: sweinreuter
-* Date: 09.06.2010
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-06-09
+ */
 @ExtensionImpl
 public class RelaxIncludeProvider extends FileIncludeProvider {
   @Nonnull

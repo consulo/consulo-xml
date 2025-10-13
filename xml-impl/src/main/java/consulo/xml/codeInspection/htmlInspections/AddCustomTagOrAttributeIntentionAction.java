@@ -13,52 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlBundle;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.inspection.LocalInspectionTool;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.scheme.InspectionProfile;
 import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-
 import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
-  private final String myName;
-  private final String myText;
-  @Nonnull
-  private final String myInspectionShortName;
+    @Nonnull
+    private final String myName;
+    @Nonnull
+    private final LocalizeValue myText;
+    @Nonnull
+    private final String myInspectionShortName;
 
-  public AddCustomTagOrAttributeIntentionAction(@Nonnull String inspectionShortName, String name, String text) {
-    myInspectionShortName = inspectionShortName;
-    myName = name;
-    myText = text;
-  }
+    public AddCustomTagOrAttributeIntentionAction(
+        @Nonnull String inspectionShortName,
+        @Nonnull String name,
+        @Nonnull LocalizeValue text
+    ) {
+        myInspectionShortName = inspectionShortName;
+        myName = name;
+        myText = text;
+    }
 
-  @Override
-  @Nonnull
-  public String getName() {
-    return myText;
-  }
+    @Override
+    @Nonnull
+    public LocalizeValue getName() {
+        return myText;
+    }
 
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlBundle.message("fix.html.family");
-  }
+    @Override
+    @RequiredReadAction
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        PsiElement element = descriptor.getPsiElement();
 
-  @Override
-  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-    final PsiElement element = descriptor.getPsiElement();
-
-    InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-    profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(myInspectionShortName, element, (tool, state) -> state.addEntry(myName));
-  }
+        InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
+        profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(
+            myInspectionShortName,
+            element,
+            (tool, state) -> state.addEntry(myName)
+        );
+    }
 }

@@ -15,8 +15,6 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
-
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
@@ -29,11 +27,12 @@ import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -72,7 +71,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
                 project,
                 generateFromUrl,
                 new String[]{"xsd"},
-                XmlBundle.message("select.xsd.schema.dialog.title"),
+                XmlLocalize.selectXsdSchemaDialogTitle().get(),
                 false
             );
 
@@ -82,7 +81,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
         generateFromUrl.setText(file.getPresentableUrl());
         updateFile();
 
-        setTitle(XmlBundle.message("generate.instance.document.from.schema.dialog.title"));
+        setTitle(XmlLocalize.generateInstanceDocumentFromSchemaDialogTitle());
 
         init();
 
@@ -219,7 +218,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
     protected String doValidateWithData() {
         String rootElementName = getElementName();
         if (rootElementName == null || rootElementName.length() == 0) {
-            return XmlBundle.message("schema2.instance.no.valid.root.element.name.validation.error");
+            return XmlLocalize.schema2InstanceNoValidRootElementNameValidationError().get();
         }
 
         final PsiFile psiFile = findFile(getUrl().getText());
@@ -229,14 +228,14 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
                 final XmlElementDescriptor descriptor = Xsd2InstanceUtils.getDescriptor(tag, rootElementName);
 
                 if (descriptor == null) {
-                    return XmlBundle.message("schema2.instance.no.valid.root.element.name.validation.error");
+                    return XmlLocalize.schema2InstanceNoValidRootElementNameValidationError().get();
                 }
             }
         }
 
         final String fileName = getOutputFileName();
         if (fileName == null || fileName.length() == 0) {
-            return XmlBundle.message("schema2.instance.output.file.name.is.empty.validation.problem");
+            return XmlLocalize.schema2InstanceOutputFileNameIsEmptyValidationProblem().get();
         }
         return null;
 

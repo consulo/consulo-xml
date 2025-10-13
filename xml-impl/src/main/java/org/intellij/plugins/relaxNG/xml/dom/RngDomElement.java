@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.psi.xml.XmlElement;
@@ -26,9 +25,8 @@ import org.intellij.plugins.relaxNG.model.CommonElement;
 import jakarta.annotation.Nonnull;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 16.08.2007
+ * @author sweinreuter
+ * @since 2007-08-16
  */
 @NameStrategy(JavaNameStrategy.class)
 public interface RngDomElement extends DomElement, CommonElement<XmlElement> {

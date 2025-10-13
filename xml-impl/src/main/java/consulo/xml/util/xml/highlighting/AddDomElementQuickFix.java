@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.highlighting;
 
+import consulo.localize.LocalizeValue;
+import consulo.ui.annotation.RequiredUIAccess;
 import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -29,37 +30,35 @@ import consulo.language.editor.inspection.LocalQuickFix;
  * @author Dmitry Avdeev
  */
 public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFix {
+    protected final T myElement;
+    @Nonnull
+    protected final LocalizeValue myName;
 
-  protected final T myElement;
-  protected final String myName;
+    @SuppressWarnings("unchecked")
+    public AddDomElementQuickFix(@Nonnull T element) {
+        myElement = (T) element.createStableCopy();
+        myName = computeName();
+    }
 
-  public AddDomElementQuickFix(@Nonnull T element) {
-    myElement = (T)element.createStableCopy();
-    myName = computeName();
-  }
+    @Nonnull
+    public LocalizeValue getName() {
+        return myName;
+    }
 
-  @Nonnull
-  public String getName() {
-    return myName;
-  }
+    private LocalizeValue computeName() {
+        String name = myElement.getXmlElementName();
+        return isTag()
+            ? LocalizeValue.localizeTODO(DomBundle.message("add.element.fix.name", name))
+            : LocalizeValue.localizeTODO(DomBundle.message("add.attribute.fix.name", name));
+    }
 
-  private String computeName() {
-    final String name = myElement.getXmlElementName();
-    return isTag() ?
-           DomBundle.message("add.element.fix.name", name) :
-           DomBundle.message("add.attribute.fix.name", name);
-  }
+    private boolean isTag() {
+        return myElement.getXmlElement() instanceof XmlTag;
+    }
 
-  private boolean isTag() {
-    return myElement.getXmlElement() instanceof XmlTag;
-  }
-
-  @Nonnull
-  public String getFamilyName() {
-    return DomBundle.message("quick.fixes.family");
-  }
-
-  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-    myElement.ensureXmlElementExists();
-  }
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        myElement.ensureXmlElementExists();
+    }
 }

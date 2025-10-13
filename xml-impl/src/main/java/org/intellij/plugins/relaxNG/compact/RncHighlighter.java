@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact;
 
 import java.util.HashMap;
@@ -30,9 +29,8 @@ import org.intellij.plugins.relaxNG.compact.lexer.CompactSyntaxLexerAdapter;
 import consulo.colorScheme.TextAttributesKey;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 04.08.2007
+ * @author sweinreuter
+ * @since 2007-08-04
  */
 public class RncHighlighter extends SyntaxHighlighterBase {
   @Override

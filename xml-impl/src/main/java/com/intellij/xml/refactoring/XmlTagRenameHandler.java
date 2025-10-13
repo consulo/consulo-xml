@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: spleaner
- * Date: Aug 7, 2007
- * Time: 2:44:37 PM
- */
 package com.intellij.xml.refactoring;
 
 import com.intellij.xml.XmlElementDescriptor;
@@ -48,6 +41,10 @@ import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
+/**
+ * @author spleaner
+ * @since 2007-08-07
+ */
 @ExtensionImpl(id = "xmlTagRenameHandler")
 public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
     private static final Logger LOG = Logger.getInstance(XmlTagRenameHandler.class);

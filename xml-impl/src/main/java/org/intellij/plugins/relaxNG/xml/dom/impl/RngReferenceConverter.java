@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.language.psi.PsiElement;
@@ -36,9 +35,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 18.08.2007
+ * @author sweinreuter
+ * @since 2007-08-18
  */
 public class RngReferenceConverter implements CustomReferenceConverter {
   @Override

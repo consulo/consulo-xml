@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.convert;
 
 import consulo.application.AllIcons;
@@ -40,9 +39,8 @@ import java.awt.event.ItemListener;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 18.11.2007
+ * @author sweinreuter
+ * @since 2007-11-18
  */
 public class AdvancedDtdOptions implements AdvancedOptions {
   @NonNls

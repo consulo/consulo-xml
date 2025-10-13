@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlBundle;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -23,15 +23,16 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.*;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -53,14 +54,14 @@ public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool imp
 
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return XmlBundle.message("xml.inspections.group.name");
+    public LocalizeValue getGroupDisplayName() {
+        return XmlLocalize.xmlInspectionsGroupName();
     }
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlBundle.message("xml.inspections.duplicate.id");
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsDuplicateId();
     }
 
     @Nonnull
@@ -76,14 +77,15 @@ public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool imp
 
     @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlAttributeValue(final XmlAttributeValue value) {
+            @RequiredReadAction
+            public void visitXmlAttributeValue(XmlAttributeValue value) {
                 if (value.getTextRange().isEmpty()) {
                     return;
                 }
-                final PsiFile file = value.getContainingFile();
+                PsiFile file = value.getContainingFile();
                 if (!(file instanceof XmlFile)) {
                     return;
                 }
@@ -91,34 +93,32 @@ public class XmlDuplicatedIdInspection extends XmlSuppressableInspectionTool imp
                 if (baseFile != file && !(baseFile instanceof XmlFile)) {
                     return;
                 }
-                final XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
+                XmlRefCountHolder refHolder = XmlRefCountHolder.getRefCountHolder(value);
                 if (refHolder == null) {
                     return;
                 }
 
-                final PsiElement parent = value.getParent();
+                PsiElement parent = value.getParent();
                 if (!(parent instanceof XmlAttribute)) {
                     return;
                 }
 
-                final XmlTag tag = (XmlTag)parent.getParent();
+                XmlTag tag = (XmlTag) parent.getParent();
                 if (tag == null) {
                     return;
                 }
 
-                checkValue(value, (XmlFile)file, refHolder, tag, holder);
+                checkValue(value, (XmlFile) file, refHolder, tag, holder);
             }
         };
     }
 
     protected void checkValue(XmlAttributeValue value, XmlFile file, XmlRefCountHolder refHolder, XmlTag tag, ProblemsHolder holder) {
         if (refHolder.isValidatable(tag.getParent()) && refHolder.isDuplicateIdAttributeValue(value)) {
-            holder.registerProblem(
-                value,
-                XmlErrorLocalize.duplicateIdReference().get(),
-                ProblemHighlightType.GENERIC_ERROR,
-                ElementManipulators.getValueTextRange(value)
-            );
+            holder.newProblem(XmlErrorLocalize.duplicateIdReference())
+                .range(value, ElementManipulators.getValueTextRange(value))
+                .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                .create();
         }
     }
 }

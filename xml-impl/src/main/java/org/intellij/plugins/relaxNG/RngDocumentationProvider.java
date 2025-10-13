@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG;
 
 import com.intellij.xml.XmlAttributeDescriptor;
@@ -41,10 +40,9 @@ import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Set;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.11.2007
+/**
+ * @author sweinreuter
+ * @since 2007-11-19
  */
 @ExtensionImpl(id = "rng")
 public class RngDocumentationProvider implements LanguageDocumentationProvider

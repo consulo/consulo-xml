@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.validation;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -52,8 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: sweinreuter
- * Date: 18.07.2007
+ * @author sweinreuter
+ * @since 2007-07-18
  */
 @ExtensionImpl
 public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyValidationMessageConsumer, RngSchemaValidator.MyValidationMessageConsumer>

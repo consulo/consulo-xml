@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public interface MultipleDomModelFactory<Scope extends UserDataHolder, T extends DomElement, M extends DomModel<T>> {
   @Nonnull

@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -36,109 +38,111 @@ import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 17.07.2007
+ * XXX: the tests rely on this still being an intention action
+ *
+ * @author sweinreuter
+ * @since 2007-07-17
  */
-// XXX: the tests rely on this still being an intention action
 class CreatePatternFix implements IntentionAction, LocalQuickFix {
-  private final PsiReference myReference;
+    private final PsiReference myReference;
 
-  public CreatePatternFix(PsiReference reference) {
-    myReference = reference;
-  }
-
-  @Override
-  @Nonnull
-  public String getText() {
-    return "Create Pattern '" + myReference.getCanonicalText() + "'";
-  }
-
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return "Create Pattern";
-  }
-
-  @Override
-  @Nonnull
-  public String getName() {
-    return getText();
-  }
-
-  @Override
-  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-    if (!isAvailable()) {
-      return;
+    public CreatePatternFix(PsiReference reference) {
+        myReference = reference;
     }
-    try {
-      doFix();
-    } catch (consulo.language.util.IncorrectOperationException e) {
-      Logger.getInstance(getClass().getName()).error(e);
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Create Pattern '" + myReference.getCanonicalText() + "'");
     }
-  }
 
-  @Override
-  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
-    return isAvailable();
-  }
-
-  private boolean isAvailable() {
-    if (!(myReference instanceof DefinitionReference) || !myReference.getElement().isValid()) {
-      return false;
-    } else {
-      final RngGrammar grammar = ((DefinitionReference)myReference).getScope();
-      if (grammar == null) {
-        return false;
-      } else if (grammar.getXmlTag() == null) {
-        return false;
-      }
-      return true;
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getName() {
+        return getText();
     }
-  }
 
-  @Override
-  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
-    doFix();
-  }
-
-  private void doFix() throws IncorrectOperationException {
-    final XmlTag tag = PsiTreeUtil.getParentOfType(myReference.getElement(), XmlTag.class);
-    assert tag != null;
-    final XmlTag defineTag = tag.createChildTag("define", ApplicationLoader.RNG_NAMESPACE, "\n \n", false);
-    defineTag.setAttribute("name", myReference.getCanonicalText());
-
-    final RngGrammar grammar = ((DefinitionReference)myReference).getScope();
-    if (grammar == null) return;
-    final XmlTag root = grammar.getXmlTag();
-    if (root == null) return;
-
-    final XmlTag[] tags = root.getSubTags();
-    for (XmlTag xmlTag : tags) {
-      if (PsiTreeUtil.isAncestor(xmlTag, tag, false)) {
-        final XmlElementFactory ef = XmlElementFactory.getInstance(tag.getProject());
-        final XmlText text = ef.createDisplayText(" ");
-        final PsiElement e = root.addAfter(text, xmlTag);
-
-        root.addAfter(defineTag, e);
-        return;
-      }
+    @Override
+    @RequiredWriteAction
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        if (!isAvailable()) {
+            return;
+        }
+        try {
+            doFix();
+        }
+        catch (consulo.language.util.IncorrectOperationException e) {
+            Logger.getInstance(getClass().getName()).error(e);
+        }
     }
-    root.add(defineTag);
-  }
 
-  @Override
-  public boolean startInWriteAction() {
-    return true;
-  }
+    @Override
+    @RequiredReadAction
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        return isAvailable();
+    }
 
-  public static XmlTag getAncestorTag(XmlTag tag, String name, String namespace) {
-    if (tag == null) {
-      return null;
+    @RequiredReadAction
+    private boolean isAvailable() {
+        if (!(myReference instanceof DefinitionReference) || !myReference.getElement().isValid()) {
+            return false;
+        }
+        else {
+            RngGrammar grammar = ((DefinitionReference) myReference).getScope();
+            return grammar != null && grammar.getXmlTag() != null;
+        }
     }
-    if (tag.getLocalName().equals(name) && tag.getNamespace().equals(namespace)) {
-      return tag;
+
+    @Override
+    @RequiredWriteAction
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
+        doFix();
     }
-    return getAncestorTag(tag.getParentTag(), name, namespace);
-  }
+
+    @RequiredWriteAction
+    private void doFix() throws IncorrectOperationException {
+        XmlTag tag = PsiTreeUtil.getParentOfType(myReference.getElement(), XmlTag.class);
+        assert tag != null;
+        XmlTag defineTag = tag.createChildTag("define", ApplicationLoader.RNG_NAMESPACE, "\n \n", false);
+        defineTag.setAttribute("name", myReference.getCanonicalText());
+
+        RngGrammar grammar = ((DefinitionReference) myReference).getScope();
+        if (grammar == null) {
+            return;
+        }
+        XmlTag root = grammar.getXmlTag();
+        if (root == null) {
+            return;
+        }
+
+        XmlTag[] tags = root.getSubTags();
+        for (XmlTag xmlTag : tags) {
+            if (PsiTreeUtil.isAncestor(xmlTag, tag, false)) {
+                XmlElementFactory ef = XmlElementFactory.getInstance(tag.getProject());
+                XmlText text = ef.createDisplayText(" ");
+                PsiElement e = root.addAfter(text, xmlTag);
+
+                root.addAfter(defineTag, e);
+                return;
+            }
+        }
+        root.add(defineTag);
+    }
+
+    @Override
+    public boolean startInWriteAction() {
+        return true;
+    }
+
+    public static XmlTag getAncestorTag(XmlTag tag, String name, String namespace) {
+        if (tag == null) {
+            return null;
+        }
+        if (tag.getLocalName().equals(name) && tag.getNamespace().equals(namespace)) {
+            return tag;
+        }
+        return getAncestorTag(tag.getParentTag(), name, namespace);
+    }
 }

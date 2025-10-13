@@ -16,15 +16,15 @@
 package consulo.xml.lang.html.structureView;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.ide.IdeBundle;
+import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.navigation.LocationPresentation;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +47,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
 
   public String getPresentableText() {
     final XmlTag tag = getElement();
-    if (tag == null) return IdeBundle.message("node.structureview.invalid");
+    if (tag == null) return IdeLocalize.nodeStructureviewInvalid().get();
 
     return getTagPresentation(tag);
   }

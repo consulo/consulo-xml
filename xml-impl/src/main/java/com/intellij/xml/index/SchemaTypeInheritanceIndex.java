@@ -39,12 +39,10 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Irina.Chernushina
- * Date: 7/4/12
- * Time: 6:29 PM
- * <p/>
  * map: tag name->file url
+ *
+ * @author Irina.Chernushina
+ * @since 2012-07-04
  */
 @ExtensionImpl
 public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {

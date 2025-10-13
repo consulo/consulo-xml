@@ -56,11 +56,10 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.*;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 09.06.2010
-*/
+/**
+ * @author sweinreuter
+ * @since 2010-06-09
+ */
 @ExtensionImpl
 public class RelaxSymbolIndex extends ScalarIndexExtension<String> {
   @NonNls

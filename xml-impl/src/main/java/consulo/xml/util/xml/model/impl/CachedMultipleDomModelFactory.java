@@ -36,7 +36,7 @@ import jakarta.annotation.Nullable;
 import java.util.*;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder, T extends DomElement, M extends DomModel<T>, C extends PsiElement>
     extends DomModelFactoryHelper<T>

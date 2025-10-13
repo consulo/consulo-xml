@@ -31,16 +31,13 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlUndefinedElementFixProvider {
-    public static final ExtensionPointName<XmlUndefinedElementFixProvider> EP_NAME =
-        ExtensionPointName.create(XmlUndefinedElementFixProvider.class);
-
     /**
      * @param tag
      * @return null if this provider doesn't know anything about this file; empty array if no fixes are available and no other
      * providers should be asked
      */
     @Nullable
-    public IntentionAction[] createFixes(final @Nonnull XmlAttribute attribute) {
+    public IntentionAction[] createFixes(@Nonnull XmlAttribute attribute) {
         return null;
     }
 
@@ -50,7 +47,7 @@ public abstract class XmlUndefinedElementFixProvider {
      * providers should be asked
      */
     @Nullable
-    public LocalQuickFix[] createFixes(final @Nonnull XmlTag tag) {
+    public LocalQuickFix[] createFixes(@Nonnull XmlTag tag) {
         return null;
     }
 }

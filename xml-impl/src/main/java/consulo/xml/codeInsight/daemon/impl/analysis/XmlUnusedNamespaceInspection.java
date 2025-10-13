@@ -19,6 +19,7 @@ import com.intellij.xml.DefaultXmlExtension;
 import com.intellij.xml.util.XmlRefCountHolder;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.Document;
 import consulo.document.util.TextRange;
@@ -31,12 +32,13 @@ import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.*;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.impl.localize.XmlLocalize;
 import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
@@ -45,7 +47,6 @@ import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.Nls;
 
 import java.util.Objects;
 
@@ -89,7 +90,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                     assert value != null;
                     holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaDeclaration())
                         .range(attribute)
-                        .withFixes(new RemoveNamespaceDeclarationFix(declaredPrefix, false))
+                        .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, false))
                         .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                         .create();
 
@@ -99,7 +100,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                         if (location != null) {
                             holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                                 .range(location)
-                                .withFixes(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
+                                .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
                                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                                 .create();
                         }
@@ -110,7 +111,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                                 holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                                     .range(reference)
                                     .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                                    .withFixes(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
+                                    .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
                                     .create();
                             }
                         }
@@ -120,7 +121,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         };
     }
 
-    @RequiredUIAccess
+    @RequiredWriteAction
     private static void removeReferencesOrAttribute(PsiReference[] references) {
         if (references.length == 0) {
             return;
@@ -165,7 +166,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                 }
                 holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                     .range(attribute)
-                    .withFixes(new RemoveNamespaceLocationFix(""))
+                    .withFix(new RemoveNamespaceLocationFix(""))
                     .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                     .create();
             }
@@ -184,7 +185,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                                 holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                                     .range(reference)
                                     .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                                    .withFixes(new RemoveNamespaceLocationFix(ns))
+                                    .withFix(new RemoveNamespaceLocationFix(ns))
                                     .create();
                             }
                             for (int j = i + 1; j < referencesLength; j++) {
@@ -196,7 +197,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                                     holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                                         .range(nextRef)
                                         .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                                        .withFixes(new RemoveNamespaceLocationFix(ns))
+                                        .withFix(new RemoveNamespaceLocationFix(ns))
                                         .create();
                                 }
                             }
@@ -262,18 +263,16 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         return true;
     }
 
-    @Nls
     @Nonnull
     @Override
-    public String getGroupDisplayName() {
-        return XmlLocalize.xmlInspectionsGroupName().get();
+    public LocalizeValue getGroupDisplayName() {
+        return XmlLocalize.xmlInspectionsGroupName();
     }
 
-    @Nls
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.xmlInspectionsUnusedSchema().get();
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.xmlInspectionsUnusedSchema();
     }
 
     @Nonnull
@@ -293,24 +292,18 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
 
         @Nonnull
         @Override
-        public String getName() {
-            return XmlLocalize.xmlInspectionsUnusedSchemaDeclarationRemove().get();
-        }
-
-        @Nonnull
-        @Override
-        public String getFamilyName() {
-            return XmlLocalize.xmlInspectionsGroupName().get();
+        public LocalizeValue getName() {
+            return XmlLocalize.xmlInspectionsUnusedSchemaDeclarationRemove();
         }
 
         @Override
-        @RequiredUIAccess
+        @RequiredWriteAction
         public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
             doFix(project, descriptor, true);
         }
 
         @Nullable
-        @RequiredUIAccess
+        @RequiredWriteAction
         public SmartPsiElementPointer<XmlTag> doFix(Project project, ProblemDescriptor descriptor, boolean reformat) {
             PsiElement element = descriptor.getPsiElement();
             if (element instanceof XmlAttributeValue attributeValue) {
@@ -349,7 +342,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
             XmlUtil.reformatTagStart(tag);
         }
 
-        @RequiredUIAccess
+        @RequiredWriteAction
         protected void doRemove(Project project, XmlAttribute attribute, XmlTag parent) {
             if (!attribute.isNamespaceDeclaration()) {
                 SchemaPrefix schemaPrefix = DefaultXmlExtension.DEFAULT_EXTENSION.getPrefixDeclaration(parent, myPrefix);
@@ -410,12 +403,12 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
 
         @Nonnull
         @Override
-        public String getName() {
-            return XmlLocalize.xmlInspectionsUnusedSchemaLocationRemove().get();
+        public LocalizeValue getName() {
+            return XmlLocalize.xmlInspectionsUnusedSchemaLocationRemove();
         }
 
         @Override
-        @RequiredUIAccess
+        @RequiredWriteAction
         protected void doRemove(Project project, XmlAttribute attribute, XmlTag parent) {
             if (myPrefix.isEmpty()) {
                 attribute.delete();

@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * User: anna
- * Date: 14-Feb-2008
- */
 package consulo.xml.application.options.editor;
 
 import consulo.annotation.component.ExtensionImpl;
@@ -33,6 +28,10 @@ import consulo.ui.layout.VerticalLayout;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
+/**
+ * @author anna
+ * @since 2008-02-14
+ */
 @ExtensionImpl
 public class XmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
     @Nonnull

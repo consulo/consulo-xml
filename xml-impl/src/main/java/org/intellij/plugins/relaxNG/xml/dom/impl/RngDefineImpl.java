@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
 import consulo.language.psi.PsiElement;
@@ -22,9 +21,8 @@ import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 19.08.2007
+ * @author sweinreuter
+ * @since 2007-08-19
  */
 public abstract class RngDefineImpl extends RngDomElementBase implements RngDefine {
   @Override

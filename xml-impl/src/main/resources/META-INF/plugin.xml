@@ -9,86 +9,12 @@
 	</tags>
 
 	<actions>
-
-		<group id="ToolsXmlGroup" popup="true" class="com.intellij.xml.actions.XmlActionsGroup">
-			<action id="ValidateXml" class="com.intellij.xml.actions.validate.ValidateXmlAction"/>
-			<action id="GenerateDTD" class="consulo.xml.codeInsight.actions.GenerateDTDAction"/>
-			<action id="XSD2Document" class="com.intellij.xml.actions.xmlbeans.GenerateSchemaFromInstanceDocumentAction"
-					text="Generate XSD Schema from XML File..."/>
-			<action id="Document2XSD" class="com.intellij.xml.actions.xmlbeans.GenerateInstanceDocumentFromSchemaAction"
-					text="Generate XML Document from XSD Schema..."/>
-			<separator/>
-
-			<add-to-group group-id="ToolsMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
-		</group>
-
-		<action id="ConvertSchemaAction" class="org.intellij.plugins.relaxNG.convert.ConvertSchemaAction"
-				text="Convert Schema..."
-				description="Converts the selected Schema document (RNG, RNC, XSD, DTD) into another format">
-			<add-to-group group-id="ToolsXmlGroup" anchor="after" relative-to-action="GenerateDTD"/>
-		</action>
-
-		<group id="XmlGenerateToolsGroup">
-			<separator/>
-			<reference ref="GenerateDTD"/>
-			<reference ref="XSD2Document"/>
-			<reference ref="Document2XSD"/>
-			<separator/>
-			<add-to-group group-id="EditorPopupMenu" anchor="last"/>
-			<add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-		</group>
-
-		<reference ref="ValidateXml">
-			<add-to-group group-id="EditorPopupMenu.Run" anchor="last"/>
-			<add-to-group group-id="ProjectViewPopupMenuRefactoringGroup" anchor="last"/>
-			<add-to-group group-id="EditorTabPopupMenuEx" anchor="last"/>
+		<reference ref="DomElementsTreeView.AddElement">
+			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
 		</reference>
 
-
-		<group id="NewXml" text="XML">
-			<action id="NewHtmlFile" class="consulo.xml.ide.actions.CreateHtmlFileAction"/>
-			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
-		</group>
-
-		<group id="NewXmlDescriptor" class="consulo.ui.ex.action.NonEmptyActionGroup" text="XML Configuration File" popup="true"
-			   icon="consulo.platform.base.PlatformIconGroup@filetypes.xml">
-			<add-to-group group-id="NewGroup" anchor="last"/>
-		</group>
-
-		<action id="GenerateXmlTag" class="com.intellij.xml.actions.GenerateXmlTagAction"
-				text="XML Tag..."
-				description="Generate a new XML tag according to schema information">
-			<add-to-group group-id="GenerateGroup" anchor="first"/>
-		</action>
-
-		<action id="DomElementsTreeView.GotoDomElementDeclarationAction"
-				class="consulo.xml.util.xml.tree.actions.GotoDomElementDeclarationAction"
-				text="Goto Element"
-				use-shortcut-of="EditSource"/>
-
-		<action id="DomElementsTreeView.AddElement" class="consulo.xml.util.xml.tree.actions.AddElementInCollectionAction"
-				text="Insert element">
+		<reference ref="DomCollectionControl.Add">
 			<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
-		</action>
-		<action id="DomElementsTreeView.DeleteElement" class="consulo.xml.util.xml.tree.actions.DeleteDomElement"
-				text="Delete element" use-shortcut-of="$Delete"/>
-
-		<group id="DomElementsTreeView.AddElementGroup" class="consulo.xml.util.xml.tree.actions.AddDomElementActionGroup"/>
-
-		<group id="DomElementsTreeView.TreePopup">
-			<reference ref="DomElementsTreeView.GotoDomElementDeclarationAction"/>
-
-			<separator/>
-			<reference ref="DomElementsTreeView.AddElementGroup"/>
-			<reference ref="DomElementsTreeView.DeleteElement"/>
-		</group>
-
-		<group id="DomCollectionControl">
-			<action id="DomCollectionControl.Add" class="consulo.xml.util.xml.ui.DomCollectionControl$AddAction" text="Add">
-				<keyboard-shortcut first-keystroke="INSERT" keymap="$default"/>
-			</action>
-			<action id="DomCollectionControl.Edit" class="consulo.xml.util.xml.ui.DomCollectionControl$EditAction" text="Edit" use-shortcut-of="EditSource"/>
-			<action id="DomCollectionControl.Remove" class="consulo.xml.util.xml.ui.DomCollectionControl$RemoveAction" text="Remove" use-shortcut-of="$Delete"/>
-		</group>
+		</reference>
 	</actions>
 </consulo-plugin>

@@ -15,13 +15,12 @@
  */
 package consulo.xml.featureStatistics;
 
-import com.intellij.xml.XmlBundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.externalService.statistic.FeatureDescriptor;
 import consulo.externalService.statistic.GroupDescriptor;
 import consulo.externalService.statistic.ProductivityFeaturesProvider;
 import consulo.xml.codeInsight.completion.XmlCompletionContributor;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.xml.localize.XmlLocalize;
 
 import java.util.Collections;
 

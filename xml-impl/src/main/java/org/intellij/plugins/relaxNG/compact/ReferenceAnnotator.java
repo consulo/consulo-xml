@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact;
 
 import consulo.annotation.access.RequiredReadAction;
@@ -32,10 +31,9 @@ import org.intellij.plugins.relaxNG.compact.psi.*;
 import jakarta.annotation.Nonnull;
 
 /**
- * Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 10.08.2007
-*/
+ * @author sweinreuter
+ * @since 2007-08-10
+ */
 public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
   private AnnotationHolder myHolder;
 

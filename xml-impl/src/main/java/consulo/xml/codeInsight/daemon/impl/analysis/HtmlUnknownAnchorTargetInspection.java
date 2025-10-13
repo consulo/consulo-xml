@@ -18,7 +18,8 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 import com.intellij.xml.util.AnchorReferenceImpl;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiReference;
-import consulo.xml.impl.localize.XmlLocalize;
+import consulo.localize.LocalizeValue;
+import consulo.xml.localize.XmlLocalize;
 import jakarta.annotation.Nonnull;
 
 /**
@@ -34,14 +35,8 @@ public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspectio
 
     @Nonnull
     @Override
-    public String getDisplayName() {
-        return XmlLocalize.htmlInspectionsUnknownAnchor().get();
-    }
-
-    @Nonnull
-    @Override
-    public String getGroupDisplayName() {
-        return "XML";
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.htmlInspectionsUnknownAnchor();
     }
 
     @Override

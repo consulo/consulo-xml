@@ -31,7 +31,7 @@ import java.util.PropertyResourceBundle;
 
 /**
  * @author Dmitry Avdeev
- *         Date: 7/20/12
+ * @since 2012-07-20
  */
 public class XMLCatalogManager {
 

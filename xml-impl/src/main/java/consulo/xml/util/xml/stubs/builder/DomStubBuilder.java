@@ -40,7 +40,7 @@ import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
- * Date: 8/2/12
+ * @since 2012-08-02
  */
 @ExtensionImpl
 public class DomStubBuilder implements BinaryFileStubBuilder {

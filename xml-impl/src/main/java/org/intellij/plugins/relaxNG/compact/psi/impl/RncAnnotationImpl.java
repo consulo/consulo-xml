@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import jakarta.annotation.Nonnull;
@@ -26,11 +25,10 @@ import org.intellij.plugins.relaxNG.compact.psi.RncName;
 
 import jakarta.annotation.Nullable;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 24.08.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-08-24
+ */
 public class RncAnnotationImpl extends RncElementImpl implements RncAnnotation {
   public RncAnnotationImpl(ASTNode node) {
     super(node);

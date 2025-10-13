@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.references;
 
 import consulo.document.util.TextRange;
@@ -40,10 +39,9 @@ import consulo.xml.psi.xml.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 24.07.2007
+/**
+ * @author sweinreuter
+ * @since 2007-07-24
  */
 public class PrefixReferenceProvider extends PsiReferenceProvider {
   private static final Logger LOG = Logger.getInstance("#PrefixReferenceProvider");

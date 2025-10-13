@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: spleaner
- * Date: Aug 8, 2007
- * Time: 2:20:33 PM
- */
 package com.intellij.xml.refactoring;
 
-import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorColors;
 import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.highlight.HighlightManager;
-import consulo.language.editor.refactoring.RefactoringBundle;
+import consulo.language.editor.refactoring.localize.RefactoringLocalize;
 import consulo.language.editor.refactoring.util.CommonRefactoringUtil;
 import consulo.language.editor.template.*;
 import consulo.language.editor.template.event.TemplateEditingAdapter;
@@ -45,6 +37,10 @@ import org.jetbrains.annotations.NonNls;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author spleaner
+ * @since 2007-08-08
+ */
 public class XmlTagInplaceRenamer {
     @NonNls
     private static final String PRIMARY_VARIABLE_NAME = "PrimaryVariable";
@@ -91,22 +87,26 @@ public class XmlTagInplaceRenamer {
 
             myHighlighters = new ArrayList<RangeHighlighter>();
 
-            CommandProcessor.getInstance().executeCommand(
-                project,
-                () -> ApplicationManager.getApplication().runWriteAction(() -> {
-                    final int offset = myEditor.getCaretModel().getOffset();
+            CommandProcessor.getInstance().newCommand()
+                .project(project)
+                .name(RefactoringLocalize.renameTitle())
+                .inWriteAction()
+                .run(() -> {
+                    int offset = myEditor.getCaretModel().getOffset();
                     myEditor.getCaretModel().moveToOffset(tag.getTextOffset());
 
-                    final Template t = buildTemplate(tag, pair);
+                    Template t = buildTemplate(tag, pair);
                     TemplateManager.getInstance(project).startTemplate(
                         myEditor,
                         t,
                         new TemplateEditingAdapter() {
-                            public void templateFinished(final Template template, boolean brokenOff) {
+                            @Override
+                            public void templateFinished(Template template, boolean brokenOff) {
                                 finish();
                             }
 
-                            public void templateCancelled(final Template template) {
+                            @Override
+                            public void templateCancelled(Template template) {
                                 finish();
                             }
                         },
@@ -117,10 +117,7 @@ public class XmlTagInplaceRenamer {
                     myEditor.getCaretModel().moveToOffset(offset);
 
                     addHighlights(highlightRanges, myEditor, myHighlighters);
-                }),
-                RefactoringBundle.message("rename.title"),
-                null
-            );
+                });
         }
     }
 

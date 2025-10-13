@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import jakarta.annotation.Nullable;
@@ -21,9 +20,8 @@ import jakarta.annotation.Nullable;
 import org.intellij.plugins.relaxNG.model.Grammar;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 13.08.2007
+ * @author sweinreuter
+ * @since 2007-08-13
  */
 public interface RncGrammar extends RncElement, Grammar<RncPattern, RncElement> {
   @Override

@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * User: anna
- * Date: 01-Feb-2008
- */
 package consulo.xml.codeInsight.hint;
 
 import consulo.annotation.access.RequiredReadAction;
@@ -33,6 +28,10 @@ import consulo.xml.psi.xml.XmlTag;
 
 import jakarta.annotation.Nonnull;
 
+/**
+ * @author anna
+ * @since 2008-02-01
+ */
 @ExtensionImpl
 public class XmlImplementationTextSelectioner implements ImplementationTextSelectioner {
     private static final Logger LOG = Logger.getInstance(XmlImplementationTextSelectioner.class);

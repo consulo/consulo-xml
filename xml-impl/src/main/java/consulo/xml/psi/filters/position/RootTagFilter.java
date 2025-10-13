@@ -22,11 +22,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.language.psi.filter.position.PositionElementFilter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 03.02.2003
- * Time: 18:29:13
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-02-03
  */
 public class RootTagFilter extends PositionElementFilter {
   public RootTagFilter(ElementFilter filter){

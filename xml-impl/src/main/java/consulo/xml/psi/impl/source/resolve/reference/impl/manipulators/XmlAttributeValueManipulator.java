@@ -35,9 +35,8 @@ import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.annotation.Nonnull;
 
 /**
- * User: ik
- * Date: 06.01.2004
- * Time: 20:00:23
+ * @author ik
+ * @since 2004-01-06
  */
 @ExtensionImpl
 public class XmlAttributeValueManipulator extends AbstractElementManipulator<XmlAttributeValue>

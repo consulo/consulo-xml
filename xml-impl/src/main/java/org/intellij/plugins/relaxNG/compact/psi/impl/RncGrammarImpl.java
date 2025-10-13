@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
@@ -27,9 +26,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 13.08.2007
+ * @author sweinreuter
+ * @since 2007-08-13
  */
 public class RncGrammarImpl extends RncElementImpl implements RncGrammar {
   public RncGrammarImpl(ASTNode node) {

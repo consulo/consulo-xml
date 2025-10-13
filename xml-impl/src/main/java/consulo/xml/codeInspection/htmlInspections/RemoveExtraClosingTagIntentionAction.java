@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
-import consulo.application.Result;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.FileModificationService;
-import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.intention.SyntheticIntentionAction;
@@ -30,92 +28,97 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.undoRedo.CommandProcessor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-
 import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, SyntheticIntentionAction {
-  @Override
-  @Nonnull
-  public String getFamilyName() {
-    return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
-  }
-
-  @Override
-  @Nonnull
-  public String getName() {
-    return XmlErrorLocalize.removeExtraClosingTagQuickfix().get();
-  }
-
-
-  @Override
-  @Nonnull
-  public String getText() {
-    return getName();
-  }
-
-  @Override
-  public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
-    return true;
-  }
-
-  @Override
-  public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
-    final int offset = editor.getCaretModel().getOffset();
-    final PsiElement psiElement = file.findElementAt(offset);
-    if (psiElement == null || !psiElement.isValid() || !(psiElement instanceof XmlToken)) {
-      return;
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.removeExtraClosingTagQuickfix();
     }
 
-    if (!FileModificationService.getInstance().prepareFileForWrite(file)) return;
-    doFix(psiElement);
-  }
-
-  @Override
-  public boolean startInWriteAction() {
-    return true;
-  }
-
-  private static void doFix(@Nonnull final PsiElement element) throws consulo.language.util.IncorrectOperationException {
-    final XmlToken endNameToken = (XmlToken)element;
-    final PsiElement tagElement = endNameToken.getParent();
-    if (!(tagElement instanceof XmlTag) && !(tagElement instanceof PsiErrorElement)) return;
-
-    if (tagElement instanceof PsiErrorElement) {
-      tagElement.delete();
+    @Nonnull
+    @Override
+    public LocalizeValue getText() {
+        return getName();
     }
-    else {
-      final ASTNode astNode = tagElement.getNode();
-      if (astNode != null) {
-        final ASTNode endTagStart = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(astNode);
-        if (endTagStart != null) {
-          final Document document = PsiDocumentManager.getInstance(element.getProject()).getDocument(tagElement.getContainingFile());
-          if (document != null) {
-            document.deleteString(endTagStart.getStartOffset(), tagElement.getLastChild().getTextRange().getEndOffset());
-          }
+
+    @Override
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        return true;
+    }
+
+    @Override
+    @RequiredWriteAction
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        int offset = editor.getCaretModel().getOffset();
+        PsiElement psiElement = file.findElementAt(offset);
+        if (psiElement == null || !psiElement.isValid() || !(psiElement instanceof XmlToken)) {
+            return;
         }
-      }
+
+        if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
+            return;
+        }
+        doFix(psiElement);
     }
-  }
 
-  @Override
-  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-    final PsiElement element = descriptor.getPsiElement();
-    if (!element.isValid() || !(element instanceof XmlToken)) return;
-    if (!FileModificationService.getInstance().prepareFileForWrite(element.getContainingFile())) return;
+    @Override
+    public boolean startInWriteAction() {
+        return true;
+    }
 
-    new WriteCommandAction(project) {
-      @Override
-      protected void run(final Result result) throws Throwable {
-        doFix(element);
-      }
-    }.execute();
-  }
+    @RequiredWriteAction
+    private static void doFix(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+        XmlToken endNameToken = (XmlToken) element;
+        PsiElement tagElement = endNameToken.getParent();
+        if (!(tagElement instanceof XmlTag) && !(tagElement instanceof PsiErrorElement)) {
+            return;
+        }
+
+        if (tagElement instanceof PsiErrorElement) {
+            tagElement.delete();
+        }
+        else {
+            ASTNode astNode = tagElement.getNode();
+            if (astNode != null) {
+                ASTNode endTagStart = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(astNode);
+                if (endTagStart != null) {
+                    Document document =
+                        PsiDocumentManager.getInstance(element.getProject()).getDocument(tagElement.getContainingFile());
+                    if (document != null) {
+                        document.deleteString(endTagStart.getStartOffset(), tagElement.getLastChild().getTextRange().getEndOffset());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    @RequiredUIAccess
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        PsiElement element = descriptor.getPsiElement();
+        if (!element.isValid() || !(element instanceof XmlToken)) {
+            return;
+        }
+        if (!FileModificationService.getInstance().prepareFileForWrite(element.getContainingFile())) {
+            return;
+        }
+
+        CommandProcessor.getInstance().newCommand()
+            .project(project)
+            .inWriteAction()
+            .run(() -> doFix(element));
+    }
 }

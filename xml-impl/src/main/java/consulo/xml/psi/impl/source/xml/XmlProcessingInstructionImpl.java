@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Jul 31, 2002
- * Time: 9:03:01 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package consulo.xml.psi.impl.source.xml;
 
 import consulo.language.psi.PsiElement;
@@ -36,6 +27,10 @@ import consulo.xml.psi.xml.XmlTagChild;
 
 import jakarta.annotation.Nonnull;
 
+/**
+ * @author mike
+ * @since 2002-07-31
+ */
 public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlProcessingInstruction {
   public XmlProcessingInstructionImpl() {
     super(XmlElementType.XML_PROCESSING_INSTRUCTION);

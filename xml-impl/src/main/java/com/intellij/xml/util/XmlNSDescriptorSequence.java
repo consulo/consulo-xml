@@ -30,11 +30,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 08.09.2003
- * Time: 17:27:43
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-09-08
  */
 public class XmlNSDescriptorSequence implements XmlNSDescriptor {
     final List<XmlNSDescriptor> sequence = new ArrayList<>();

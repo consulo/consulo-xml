@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model;
 
 import jakarta.annotation.Nullable;
@@ -21,9 +20,8 @@ import jakarta.annotation.Nullable;
 import consulo.language.psi.PsiElement;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 05.09.2007
+ * @author sweinreuter
+ * @since 2007-09-05
  */
 public interface Ref<D extends Define, E extends PsiElement> extends Pattern<E> {
   @Nullable

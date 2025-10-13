@@ -16,7 +16,6 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlBundle;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
@@ -25,72 +24,73 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
-  @Override
-  @Nls
-  @Nonnull
-  public String getDisplayName() {
-    return XmlBundle.message("html.inspections.unknown.attribute");
-  }
-
-  @Override
-  @NonNls
-  @Nonnull
-  public String getShortName() {
-    return XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME;
-  }
-
-  @Override
-  protected LocalizeValue getCheckboxTitle() {
-    return LocalizeValue.localizeTODO(XmlBundle.message("html.inspections.unknown.tag.attribute.checkbox.title"));
-  }
-
-  @Override
-  protected void checkAttribute(@Nonnull final XmlAttribute attribute,
-                                @Nonnull final ProblemsHolder holder,
-                                final boolean isOnTheFly,
-                                Object state) {
-    final XmlTag tag = attribute.getParent();
-
-    if (tag instanceof HtmlTag) {
-      XmlElementDescriptor elementDescriptor = tag.getDescriptor();
-      if (elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor) {
-        return;
-      }
-
-      BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState)state;
-
-      XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
-
-      if (attributeDescriptor == null && !attribute.isNamespaceDeclaration()) {
-        final String name = attribute.getName();
-        if (!XmlUtil.attributeFromTemplateFramework(name, tag) && (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name))) {
-          boolean maySwitchToHtml5 = HtmlUtil.isCustomHtml5Attribute(name) && !HtmlUtil.hasNonHtml5Doctype(tag);
-          LocalQuickFix[] quickfixes = new LocalQuickFix[maySwitchToHtml5 ? 3 : 2];
-          quickfixes[0] = new AddCustomHtmlElementIntentionAction(XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME,
-                                                                  name,
-                                                                  XmlBundle.message("add.custom.html.attribute", name));
-          quickfixes[1] = new RemoveAttributeIntentionAction(name);
-          if (maySwitchToHtml5) {
-            quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();
-          }
-
-          registerProblemOnAttributeName(
-            attribute,
-            XmlErrorLocalize.attributeIsNotAllowedHere(attribute.getName()).get(),
-            holder,
-            quickfixes
-          );
-        }
-      }
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return XmlLocalize.htmlInspectionsUnknownAttribute();
     }
-  }
+
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME;
+    }
+
+    @Override
+    protected LocalizeValue getCheckboxTitle() {
+        return XmlLocalize.htmlInspectionsUnknownTagAttributeCheckboxTitle();
+    }
+
+    @Override
+    protected void checkAttribute(
+        @Nonnull XmlAttribute attribute,
+        @Nonnull ProblemsHolder holder,
+        boolean isOnTheFly,
+        Object state
+    ) {
+        XmlTag tag = attribute.getParent();
+
+        if (tag instanceof HtmlTag) {
+            XmlElementDescriptor elementDescriptor = tag.getDescriptor();
+            if (elementDescriptor == null || elementDescriptor instanceof AnyXmlElementDescriptor) {
+                return;
+            }
+
+            BaseHtmlEntitiesInspectionState toolState = (BaseHtmlEntitiesInspectionState) state;
+
+            XmlAttributeDescriptor attributeDescriptor = elementDescriptor.getAttributeDescriptor(attribute);
+
+            if (attributeDescriptor == null && !attribute.isNamespaceDeclaration()) {
+                String name = attribute.getName();
+                if (!XmlUtil.attributeFromTemplateFramework(name, tag)
+                    && (!toolState.isCustomValuesEnabled() || !toolState.containsEntity(name))) {
+                    boolean maySwitchToHtml5 = HtmlUtil.isCustomHtml5Attribute(name) && !HtmlUtil.hasNonHtml5Doctype(tag);
+                    LocalQuickFix[] quickfixes = new LocalQuickFix[maySwitchToHtml5 ? 3 : 2];
+                    quickfixes[0] = new AddCustomHtmlElementIntentionAction(
+                        XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME,
+                        name,
+                        XmlLocalize.addCustomHtmlAttribute(name)
+                    );
+                    quickfixes[1] = new RemoveAttributeIntentionAction(name);
+                    if (maySwitchToHtml5) {
+                        quickfixes[2] = new SwitchToHtml5WithHighPriorityAction();
+                    }
+
+                    registerProblemOnAttributeName(
+                        attribute,
+                        XmlErrorLocalize.attributeIsNotAllowedHere(attribute.getName()).get(),
+                        holder,
+                        quickfixes
+                    );
+                }
+            }
+        }
+    }
 }

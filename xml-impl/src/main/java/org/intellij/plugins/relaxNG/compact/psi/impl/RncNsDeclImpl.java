@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import consulo.language.ast.ASTNode;
@@ -21,9 +20,8 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncNsDecl;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 14.08.2007
+ * @author sweinreuter
+ * @since 2007-08-14
  */
 public class RncNsDeclImpl extends RncDeclImpl implements RncNsDecl {
   public RncNsDeclImpl(ASTNode node) {

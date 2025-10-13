@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Aug 26, 2002
- * Time: 6:25:08 PM
- * To change template for new class use 
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package consulo.xml.psi.impl.source.xml;
 
 import consulo.xml.psi.xml.XmlElement;
@@ -43,6 +34,10 @@ import consulo.language.psi.scope.GlobalSearchScope;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
+/**
+ * @author mike
+ * @since 2002-08-26
+ */
 public abstract class XmlElementImpl extends CompositePsiElement implements XmlElement {
   public XmlElementImpl(IElementType type) {
     super(type);

@@ -16,12 +16,13 @@
 package com.intellij.xml.actions.xmlbeans;
 
 import com.intellij.xml.XmlBundle;
-import consulo.application.ApplicationManager;
+import consulo.annotation.component.ActionImpl;
+import consulo.application.Application;
 import consulo.document.FileDocumentManager;
 import consulo.fileEditor.FileEditorManager;
-import consulo.language.editor.CommonDataKeys;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
@@ -30,9 +31,9 @@ import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.javaee.ApplicationExternalResourceManager;
+import consulo.xml.localize.XmlLocalize;
 import org.apache.xmlbeans.impl.inst2xsd.Inst2Xsd;
-import org.jetbrains.annotations.NonNls;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import java.util.Map;
 /**
  * @author Konstantin Bulenkov
  */
+@ActionImpl(id = "XSD2Document")
 public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
     private static final Map<String, String> DESIGN_TYPES = new HashMap<>();
     private static final Map<String, String> CONTENT_TYPES = new HashMap<>();
@@ -56,48 +58,53 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
         CONTENT_TYPES.put(GenerateSchemaFromInstanceDocumentDialog.STRING_TYPE, "string");
     }
 
-    //private static final
+    public GenerateSchemaFromInstanceDocumentAction() {
+        super(XmlLocalize.actionXsdToDocumentText());
+    }
 
     @Override
     public void update(AnActionEvent e) {
-        final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-        final boolean enabled = isAcceptableFile(file);
+        VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+        boolean enabled = isAcceptableFile(file);
         e.getPresentation().setEnabled(enabled);
         if (ActionPlaces.isPopupPlace(e.getPlace())) {
             e.getPresentation().setVisible(enabled);
         }
     }
 
+    @Override
+    @RequiredUIAccess
     public void actionPerformed(AnActionEvent e) {
-        final Project project = e.getData(CommonDataKeys.PROJECT);
-        final VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+        Project project = e.getData(Project.KEY);
+        VirtualFile file = e.getRequiredData(VirtualFile.KEY);
 
-        final GenerateSchemaFromInstanceDocumentDialog dialog = new GenerateSchemaFromInstanceDocumentDialog(project, file);
+        GenerateSchemaFromInstanceDocumentDialog dialog = new GenerateSchemaFromInstanceDocumentDialog(project, file);
         dialog.setOkAction(() -> doAction(project, dialog));
 
         dialog.show();
     }
 
-    private static void doAction(final Project project, final GenerateSchemaFromInstanceDocumentDialog dialog) {
+    @RequiredUIAccess
+    private static void doAction(Project project, GenerateSchemaFromInstanceDocumentDialog dialog) {
         FileDocumentManager.getInstance().saveAllDocuments();
 
-        final String url = dialog.getUrl().getText();
-        final VirtualFile relativeFile =
-            VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance().getResourceLocation(url), null);
+        String url = dialog.getUrl().getText();
+        VirtualFile relativeFile =
+            VirtualFileUtil.findRelativeFile(ApplicationExternalResourceManager.getInstance().getResourceLocation(url), null);
         VirtualFile relativeFileDir;
         if (relativeFile == null) {
-            Messages.showErrorDialog(project, XmlBundle.message("file.doesnt.exist", url), XmlBundle.message("error"));
+            Messages.showErrorDialog(project, XmlLocalize.fileDoesntExist(url).get(), XmlLocalize.error().get());
             return;
         }
         else {
             relativeFileDir = relativeFile.getParent();
         }
         if (relativeFileDir == null) {
-            Messages.showErrorDialog(project, XmlBundle.message("file.doesnt.exist", url), XmlBundle.message("error"));
+            Messages.showErrorDialog(project, XmlLocalize.fileDoesntExist(url).get(), XmlLocalize.error().get());
             return;
         }
 
-        @NonNls List<String> parameters = new LinkedList<>();
+        List<String> parameters = new LinkedList<>();
         parameters.add("-design");
         parameters.add(DESIGN_TYPES.get(dialog.getDesignType()));
 
@@ -109,16 +116,16 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
         parameters.add("0".equals(enumLimit) ? "never" : enumLimit);
 
         parameters.add("-outDir");
-        final String dirPath = relativeFileDir.getPath();
+        String dirPath = relativeFileDir.getPath();
         parameters.add(dirPath);
 
-        final File expectedSchemaFile = new File(dirPath + File.separator + relativeFile.getName() + "0.xsd");
+        File expectedSchemaFile = new File(dirPath + File.separator + relativeFile.getName() + "0.xsd");
         if (expectedSchemaFile.exists()) {
             if (!expectedSchemaFile.delete()) {
                 Messages.showErrorDialog(
                     project,
                     XmlBundle.message("cant.delete.file", expectedSchemaFile.getPath()),
-                    XmlBundle.message("error")
+                    XmlLocalize.error().get()
                 );
                 return;
             }
@@ -129,27 +136,25 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
 
         parameters.add(url);
         File xsd = new File(dirPath + File.separator + dialog.getTargetSchemaName());
-        final VirtualFile xsdFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(xsd);
+        VirtualFile xsdFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(xsd);
         if (xsdFile != null) {
-            ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                public void run() {
-                    try {
-                        xsdFile.delete(null);
-                    }
-                    catch (IOException e) {//
-                    }
+            Application.get().runWriteAction(() -> {
+                try {
+                    xsdFile.delete(null);
+                }
+                catch (IOException e) {//
                 }
             });
         }
 
         Inst2Xsd.main(ArrayUtil.toStringArray(parameters));
         if (expectedSchemaFile.exists()) {
-            final boolean renamed = expectedSchemaFile.renameTo(xsd);
+            boolean renamed = expectedSchemaFile.renameTo(xsd);
             if (!renamed) {
                 Messages.showErrorDialog(
                     project,
                     XmlBundle.message("cant.rename.file", expectedSchemaFile.getPath(), xsd.getPath()),
-                    XmlBundle.message("error")
+                    XmlLocalize.error().get()
                 );
             }
         }
@@ -161,11 +166,10 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
         else {
             Messages.showErrorDialog(
                 project,
-                XmlBundle.message("xml2xsd.generator.error.message"),
-                XmlBundle.message("xml2xsd.generator.error")
+                XmlLocalize.xml2xsdGeneratorErrorMessage().get(),
+                XmlLocalize.xml2xsdGeneratorError().get()
             );
         }
-
     }
 
     public static boolean isAcceptableFile(VirtualFile file) {

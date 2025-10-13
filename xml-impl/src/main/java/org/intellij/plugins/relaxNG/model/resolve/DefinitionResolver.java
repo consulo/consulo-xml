@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.resolve;
 
 import consulo.application.util.CachedValuesManager;
@@ -37,11 +36,10 @@ import jakarta.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
-/*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 24.08.2007
-*/
+/**
+ * @author sweinreuter
+ * @since 2007-08-24
+ */
 public class DefinitionResolver extends CommonElement.Visitor implements CachedValueProvider<Map<String, Set<Define>>>, Supplier<Set<Define>> {
 
   private static final Key<CachedValue<Map<String, Set<Define>>>> KEY = Key.create("CACHED_DEFINES");

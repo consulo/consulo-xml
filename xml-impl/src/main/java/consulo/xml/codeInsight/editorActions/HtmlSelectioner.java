@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: Jul 18, 2002
- * Time: 10:30:17 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package consulo.xml.codeInsight.editorActions;
 
 import com.intellij.xml.util.HtmlUtil;
@@ -46,6 +37,10 @@ import consulo.xml.psi.xml.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author mike
+ * @since 2002-07-18
+ */
 @ExtensionImpl
 public class HtmlSelectioner extends AbstractWordSelectioner {
     @Override

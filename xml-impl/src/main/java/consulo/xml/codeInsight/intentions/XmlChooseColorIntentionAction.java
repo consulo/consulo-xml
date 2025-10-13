@@ -18,7 +18,6 @@ package consulo.xml.codeInsight.intentions;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Result;
 import consulo.codeEditor.Editor;
-import consulo.language.editor.CodeInsightBundle;
 import consulo.language.editor.FileModificationService;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.editor.intention.IntentionMetaData;
@@ -32,16 +31,15 @@ import consulo.project.Project;
 import consulo.ui.ex.JBColor;
 import consulo.ui.ex.awt.ColorChooser;
 import consulo.ui.ex.awt.util.ColorUtil;
-import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-
 import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @author Konstantin Bulenkov
@@ -50,7 +48,7 @@ import java.awt.*;
 @IntentionMetaData(ignoreId = "xml.choose.color", fileExtensions = "xml", categories = "XML")
 public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction {
     public XmlChooseColorIntentionAction() {
-        setText(CodeInsightLocalize.intentionColorChooserDialog().get());
+        setText(CodeInsightLocalize.intentionColorChooserDialog());
     }
 
     @Override
@@ -59,14 +57,9 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
         return parent instanceof XmlAttributeValue attrValue && ColorUtil.fromHex(attrValue.getValue(), null) != null;
     }
 
-    @Nonnull
-    public String getFamilyName() {
-        return getText();
-    }
-
     @Override
     public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
-        chooseColor(editor.getComponent(), element, getText());
+        chooseColor(editor.getComponent(), element, getText().get());
     }
 
     public static void chooseColor(JComponent editorComponent, PsiElement element, String caption) {
@@ -95,7 +88,7 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
                     return;
                 }
 
-                if (!Comparing.equal(color, temp)) {
+                if (!Objects.equals(color, temp)) {
                     if (!FileModificationService.getInstance().preparePsiElementForWrite(element)) {
                         return;
                     }

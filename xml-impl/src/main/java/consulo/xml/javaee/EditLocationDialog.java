@@ -15,14 +15,15 @@
  */
 package consulo.xml.javaee;
 
-import com.intellij.xml.XmlBundle;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.fileChooser.IdeaFileChooser;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awt.FixedSizeButton;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.localize.XmlLocalize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,18 +39,18 @@ public class EditLocationDialog extends DialogWrapper {
   private final Project myProject;
   private final boolean myShowPath;
 
-  private final String myTitle;
-  private final String myName;
-  private final String myLocation;
+  private final LocalizeValue myTitle;
+  private final LocalizeValue myName;
+  private final LocalizeValue myLocation;
   private boolean myTfShared = true;
 
   public EditLocationDialog(Project project, boolean showPath) {
     super(project, true);
     myProject = project;
     myShowPath = showPath;
-    myTitle = XmlBundle.message("dialog.title.external.resource");
-    myName = XmlBundle.message("label.edit.external.resource.uri");
-    myLocation = XmlBundle.message("label.edit.external.resource.path");
+    myTitle = XmlLocalize.dialogTitleExternalResource();
+    myName = XmlLocalize.labelEditExternalResourceUri();
+    myLocation = XmlLocalize.labelEditExternalResourcePath();
     init();
   }
 
@@ -57,9 +58,9 @@ public class EditLocationDialog extends DialogWrapper {
     super(project, true);
     myProject = project;
     myShowPath = showPath;
-    myTitle = title;
-    myName = name;
-    myLocation = location;
+    myTitle = LocalizeValue.ofNullable(title);
+    myName = LocalizeValue.ofNullable(name);
+    myLocation = LocalizeValue.ofNullable(location);
     init();
   }
 
@@ -67,7 +68,7 @@ public class EditLocationDialog extends DialogWrapper {
     JPanel panel = new JPanel(new GridBagLayout());
 
     panel.add(
-        new JLabel(myName),
+        new JLabel(myName.get()),
         new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 3, 5), 0, 0)
     );
     panel.add(
@@ -79,7 +80,7 @@ public class EditLocationDialog extends DialogWrapper {
 
   if (myShowPath) {
       panel.add(
-          new JLabel(myLocation),
+          new JLabel(myLocation.get()),
           new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 3, 5), 0, 0)
       );
       panel.add(

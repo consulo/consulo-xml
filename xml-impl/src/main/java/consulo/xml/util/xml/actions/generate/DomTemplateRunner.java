@@ -26,7 +26,7 @@ import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 @ServiceAPI(ComponentScope.PROJECT)
 public abstract class DomTemplateRunner {

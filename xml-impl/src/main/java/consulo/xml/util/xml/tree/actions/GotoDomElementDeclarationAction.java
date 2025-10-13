@@ -13,38 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
+import consulo.annotation.component.ActionImpl;
+import consulo.annotation.component.ActionRef;
+import consulo.platform.base.localize.ActionLocalize;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.IdeActions;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.DomElementsNavigationManager;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.ui.ex.awt.tree.SimpleNode;
-import consulo.ui.ex.action.ActionsBundle;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
+@ActionImpl(id = "DomElementsTreeView.GotoDomElementDeclarationAction", shortcutFrom = @ActionRef(id = IdeActions.ACTION_EDIT_SOURCE))
 public class GotoDomElementDeclarationAction extends BaseDomTreeAction {
-
-  public void actionPerformed(AnActionEvent e, DomModelTreeView treeView) {
-    final SimpleNode simpleNode = treeView.getTree().getSelectedNode();
-
-    if(simpleNode instanceof BaseDomElementNode) {
-      final DomElement domElement = ((BaseDomElementNode)simpleNode).getDomElement();
-      final DomElementNavigationProvider provider =
-        DomElementsNavigationManager.getManager(domElement.getManager().getProject()).getDomElementsNavigateProvider(DomElementsNavigationManager.DEFAULT_PROVIDER_NAME);
-
-      provider.navigate(domElement, true);
-
+    public GotoDomElementDeclarationAction() {
+        super(ActionLocalize.actionEditsourceText());
     }
-  }
 
-  public void update(AnActionEvent e, DomModelTreeView treeView) {
-    e.getPresentation().setVisible(treeView.getTree().getSelectedNode() instanceof BaseDomElementNode);
-    e.getPresentation().setText(ActionsBundle.message("action.EditSource.text"));
-  }
+    @Override
+    @RequiredUIAccess
+    public void actionPerformed(AnActionEvent e, DomModelTreeView treeView) {
+        if (treeView.getTree().getSelectedNode() instanceof BaseDomElementNode baseDomNode) {
+            DomElement domElement = baseDomNode.getDomElement();
+            DomElementNavigationProvider provider = DomElementsNavigationManager.getManager(domElement.getManager().getProject())
+                .getDomElementsNavigateProvider(DomElementsNavigationManager.DEFAULT_PROVIDER_NAME);
+
+            provider.navigate(domElement, true);
+        }
+    }
+
+    @Override
+    public void update(AnActionEvent e, DomModelTreeView treeView) {
+        e.getPresentation().setVisible(treeView.getTree().getSelectedNode() instanceof BaseDomElementNode);
+    }
 }

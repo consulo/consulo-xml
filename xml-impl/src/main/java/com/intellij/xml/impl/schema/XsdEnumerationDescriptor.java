@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * @author Dmitry Avdeev
- * Date: 22.08.13
+ * @since 2013-08-22
  */
 public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends XmlEnumerationDescriptor<T> {
     private boolean myExhaustiveEnum;

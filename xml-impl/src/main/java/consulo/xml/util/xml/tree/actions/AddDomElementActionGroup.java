@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.tree.actions;
 
+import consulo.annotation.component.ActionImpl;
 import jakarta.annotation.Nonnull;
 
 import consulo.ui.ex.action.ActionGroup;
@@ -27,22 +27,25 @@ import jakarta.annotation.Nullable;
 /**
  * @author Dmitry Avdeev
  */
+@ActionImpl(id = "DomElementsTreeView.AddElementGroup")
 public class AddDomElementActionGroup extends ActionGroup {
+    private final AddElementInCollectionAction myAction = new AddElementInCollectionAction() {
+        @Override
+        protected boolean showAsPopup() {
+            return false;
+        }
+    };
 
-  private final AddElementInCollectionAction myAction = new AddElementInCollectionAction() {
-    protected boolean showAsPopup() {
-      return false;
+    @Nonnull
+    @Override
+    public AnAction[] getChildren(@Nullable AnActionEvent e) {
+        return myAction.getChildren(e);
     }
-  };
 
-  @Nonnull
-  public AnAction[] getChildren(@Nullable AnActionEvent e) {
-    return myAction.getChildren(e);
-  }
-
-  public void update(AnActionEvent e) {
-//    myAction.getChildren(e).length
-    getTemplatePresentation().setText(myAction.getTemplatePresentation().getText());
-    super.update(e);
-  }
+    @Override
+    public void update(@Nonnull AnActionEvent e) {
+        //myAction.getChildren(e).length
+        getTemplatePresentation().setTextValue(myAction.getTemplatePresentation().getTextValue());
+        super.update(e);
+    }
 }

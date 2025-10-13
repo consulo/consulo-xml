@@ -20,7 +20,6 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.access.RequiredWriteAction;
-import consulo.application.Application;
 import consulo.codeEditor.Editor;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.FileModificationService;
@@ -39,7 +38,6 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -58,16 +56,10 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
         myValues = values;
     }
 
-    @Override
     @Nonnull
-    public String getText() {
-        return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName).get();
-    }
-
     @Override
-    @Nonnull
-    public String getFamilyName() {
-        return XmlErrorLocalize.insertRequiredAttributeQuickfixFamily().get();
+    public LocalizeValue getText() {
+        return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName);
     }
 
     @Override
@@ -159,7 +151,7 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
             @Override
             @RequiredWriteAction
             public void run() {
-                Application.get().runWriteAction(() -> {
+                project.getApplication().runWriteAction(() -> {
                     int textOffset = anchor1.getTextOffset();
                     if (!anchorIsEmptyTag && indirectSyntax) {
                         ++textOffset;
@@ -173,11 +165,11 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
             }
         };
 
-        if (!Application.get().isUnitTestMode()) {
+        if (!project.getApplication().isUnitTestMode()) {
             CommandProcessor.getInstance().newCommand()
                 .project(project)
-                .name(LocalizeValue.ofNullable(getText()))
-                .groupId(getFamilyName())
+                .name(getText())
+                .groupId(XmlErrorLocalize.insertRequiredAttributeQuickfixFamily())
                 .inLater()
                 .run(runnable);
         }

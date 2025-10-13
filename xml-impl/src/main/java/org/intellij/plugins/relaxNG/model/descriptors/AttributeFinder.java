@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.model.descriptors;
 
 import consulo.util.lang.Pair;
@@ -25,10 +24,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 30.07.2007
-*/
+ * @author sweinreuter
+ * @since 2007-07-30
+ */
 class AttributeFinder extends RecursionSaveWalker {
   private int depth;
   private int optional;

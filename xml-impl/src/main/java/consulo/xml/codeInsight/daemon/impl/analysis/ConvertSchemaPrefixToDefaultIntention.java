@@ -26,6 +26,7 @@ import consulo.language.editor.intention.PsiElementBaseIntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
@@ -50,7 +51,7 @@ public class ConvertSchemaPrefixToDefaultIntention extends PsiElementBaseIntenti
     public static final String NAME = "Set Namespace Prefix to Empty";
 
     public ConvertSchemaPrefixToDefaultIntention() {
-        setText(NAME);
+        setText(LocalizeValue.localizeTODO(NAME));
     }
 
     @Override

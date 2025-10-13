@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.codeInspection.htmlInspections;
 
 import consulo.codeEditor.Editor;
@@ -23,6 +22,7 @@ import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager
 import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 
 import jakarta.annotation.Nonnull;
@@ -30,45 +30,47 @@ import jakarta.annotation.Nonnull;
 /**
  * @author Maxim.Mossienko
  */
-public class AddHtmlTagOrAttributeToCustomsIntention implements SyntheticIntentionAction
-{
-	private final String myName;
-	private final String myText;
-	private final String myInspectionKey;
+public class AddHtmlTagOrAttributeToCustomsIntention implements SyntheticIntentionAction {
+    @Nonnull
+    private final String myName;
+    @Nonnull
+    private final LocalizeValue myText;
+    @Nonnull
+    private final String myInspectionKey;
 
-	public AddHtmlTagOrAttributeToCustomsIntention(String inspectionKey, String name, String text)
-	{
-		myInspectionKey = inspectionKey;
-		myName = name;
-		myText = text;
-	}
+    public AddHtmlTagOrAttributeToCustomsIntention(
+        @Nonnull String inspectionKey,
+        @Nonnull String name,
+        @Nonnull LocalizeValue text
+    ) {
+        myInspectionKey = inspectionKey;
+        myName = name;
+        myText = text;
+    }
 
-	@Override
-	@Nonnull
-	public String getText()
-	{
-		return myText;
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getText() {
+        return myText;
+    }
 
-	@Override
-	public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
-	{
-		return true;
-	}
+    @Override
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        return true;
+    }
 
-	@Override
-	public void invoke(@Nonnull Project project, Editor editor, final PsiFile file) throws IncorrectOperationException
-	{
-		InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
-		profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(myInspectionKey, file, (tool, state) ->
-		{
-			state.addEntry(myName);
-		});
-	}
+    @Override
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
+        profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(
+            myInspectionKey,
+            file,
+            (tool, state) -> state.addEntry(myName)
+        );
+    }
 
-	@Override
-	public boolean startInWriteAction()
-	{
-		return false;
-	}
+    @Override
+    public boolean startInWriteAction() {
+        return false;
+    }
 }

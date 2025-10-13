@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.ui.actions;
 
-import consulo.application.ApplicationBundle;
+import consulo.application.localize.ApplicationLocalize;
 import consulo.application.presentation.TypePresentationService;
 import consulo.dataContext.DataContext;
-import consulo.language.editor.CommonDataKeys;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.*;
 import consulo.ui.ex.awt.CommonActionsPanel;
 import consulo.ui.ex.popup.JBPopupFactory;
@@ -33,9 +33,9 @@ import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.TypeChooser;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.DomCollectionControl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Type;
@@ -43,155 +43,173 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 public abstract class AddDomElementAction extends AnAction {
-
-  public AddDomElementAction() {
-    super(ApplicationBundle.message("action.add"), null, DomCollectionControl.ADD_ICON);
-  }
-
-  public void update(AnActionEvent e) {
-    if (!isEnabled(e)) {
-      e.getPresentation().setEnabled(false);
-      return;
+    public AddDomElementAction() {
+        super(ApplicationLocalize.actionAdd(), LocalizeValue.empty(), DomCollectionControl.ADD_ICON);
     }
 
-    final AnAction[] actions = getChildren(e);
-    for (final AnAction action : actions) {
-      e.getPresentation().setEnabled(true);
-      action.update(e);
-      if (e.getPresentation().isEnabled()) {
-        break;
-      }
-    }
-    if (actions.length == 1) {
-      e.getPresentation().setText(actions[0].getTemplatePresentation().getText());
-    } else {
-      final String actionText = getActionText(e);
-      if (!actionText.endsWith("...")) {
-        e.getPresentation().setText(actionText + (actions.length > 1 ? "..." : ""));
-      }
-    }
-    e.getPresentation().setIcon(DomCollectionControl.ADD_ICON);
-
-    super.update(e);
-  }
-
-  public void actionPerformed(AnActionEvent e) {
-    final AnAction[] actions = getChildren(e);
-    if (actions.length > 1) {
-      final DefaultActionGroup group = new DefaultActionGroup();
-      for (final AnAction action : actions) {
-        group.add(action);
-      }
-
-      final DataContext dataContext = e.getDataContext();
-      final ListPopup groupPopup =
-        JBPopupFactory.getInstance().createActionGroupPopup(null,
-                                                            group, dataContext, JBPopupFactory.ActionSelectionAid.NUMBERING, true);
-
-      showPopup(groupPopup, e);
-    }
-    else if (actions.length == 1) {
-      actions[0].actionPerformed(e);
-    }
-  }
-
-  protected String getActionText(final AnActionEvent e) {
-    return e.getPresentation().getText();
-  }
-
-  protected boolean isEnabled(final AnActionEvent e) {
-    return true;
-  }
-
-  protected void showPopup(final ListPopup groupPopup, final AnActionEvent e) {
-    final Component component = e.getInputEvent().getComponent();
-
-    if (component instanceof ActionButtonComponent) {
-      groupPopup.showUnderneathOf(component);
-    } else {
-      groupPopup.showInBestPositionFor(e.getDataContext());
-    }
-  }
-
-  @Nonnull
-  public AnAction[] getChildren(@Nullable AnActionEvent e) {
-    Project project = e == null ? null : e.getData(CommonDataKeys.PROJECT);
-    if (project == null) return AnAction.EMPTY_ARRAY;
-
-    DomCollectionChildDescription[] descriptions = getDomCollectionChildDescriptions(e);
-    final List<AnAction> actions = new ArrayList<AnAction>();
-    for (DomCollectionChildDescription description : descriptions) {
-      final TypeChooser chooser = DomManager.getDomManager(project).getTypeChooserManager().getTypeChooser(description.getType());
-      for (Type type : chooser.getChooserTypes()) {
-
-        final Class<?> rawType = ReflectionUtil.getRawType(type);
-
-        String name = TypePresentationService.getInstance().getTypeNameOrStub(rawType);
-        Image icon = null;
-        if (!showAsPopup() || descriptions.length == 1) {
-//          if (descriptions.length > 1) {
-            icon = ElementPresentationManager.getIconForClass(rawType);
-//          }
+    @Override
+    public void update(@Nonnull AnActionEvent e) {
+        if (!isEnabled(e)) {
+            e.getPresentation().setEnabled(false);
+            return;
         }
-        actions.add(createAddingAction(e, ApplicationBundle.message("action.add") + " " + name, icon, type, description));
-      }
-    }
-    if (actions.size() > 1 && showAsPopup()) {
-      ActionGroup group = new ActionGroup() {
-        @Nonnull
-        public AnAction[] getChildren(@Nullable AnActionEvent e) {
-          return actions.toArray(new AnAction[actions.size()]);
+
+        AnAction[] actions = getChildren(e);
+        for (AnAction action : actions) {
+            e.getPresentation().setEnabled(true);
+            action.update(e);
+            if (e.getPresentation().isEnabled()) {
+                break;
+            }
         }
-      };
-      return new AnAction[]{new ShowPopupAction(group)};
-    }
-    else {
-      if (actions.size() > 1) {
-        actions.add(AnSeparator.getInstance());
-      } else if (actions.size() == 1) {
+        if (actions.length == 1) {
+            e.getPresentation().setTextValue(actions[0].getTemplatePresentation().getTextValue());
+        }
+        else {
+            String actionText = getActionText(e);
+            if (!actionText.endsWith("...")) {
+                e.getPresentation().setText(actionText + (actions.length > 1 ? "..." : ""));
+            }
+        }
+        e.getPresentation().setIcon(DomCollectionControl.ADD_ICON);
 
-      }
-    }
-    return actions.toArray(new AnAction[actions.size()]);
-  }
-
-  protected abstract AnAction createAddingAction(final AnActionEvent e,
-                                                 final String name,
-                                                 final Image icon,
-                                                 final Type type,
-                                                 final DomCollectionChildDescription description);
-
-  @Nonnull
-  protected abstract DomCollectionChildDescription[] getDomCollectionChildDescriptions(final AnActionEvent e);
-
-  @Nullable
-  protected abstract DomElement getParentDomElement(final AnActionEvent e);
-
-  protected abstract JComponent getComponent(AnActionEvent e);
-
-  protected boolean showAsPopup() {
-    return true;
-  }
-
-  protected class ShowPopupAction extends AnAction {
-
-    protected final ActionGroup myGroup;
-
-    protected ShowPopupAction(ActionGroup group) {
-      super(ApplicationBundle.message("action.add"), null, DomCollectionControl.ADD_ICON);
-      myGroup = group;
-      setShortcutSet(CommonActionsPanel.getCommonShortcut(CommonActionsPanel.Buttons.ADD));
+        super.update(e);
     }
 
-    public void actionPerformed(AnActionEvent e) {
-      final ListPopup groupPopup =
-        JBPopupFactory.getInstance().createActionGroupPopup(null,
-                                                            myGroup, e.getDataContext(), JBPopupFactory.ActionSelectionAid.NUMBERING, true);
+    @Override
+    @RequiredUIAccess
+    public void actionPerformed(@Nonnull AnActionEvent e) {
+        AnAction[] actions = getChildren(e);
+        if (actions.length > 1) {
+            DefaultActionGroup group = new DefaultActionGroup();
+            for (AnAction action : actions) {
+                group.add(action);
+            }
 
-      showPopup(groupPopup, e);
+            DataContext dataContext = e.getDataContext();
+            ListPopup groupPopup =
+                JBPopupFactory.getInstance().createActionGroupPopup(
+                    null,
+                    group,
+                    dataContext,
+                    JBPopupFactory.ActionSelectionAid.NUMBERING,
+                    true
+                );
+
+            showPopup(groupPopup, e);
+        }
+        else if (actions.length == 1) {
+            actions[0].actionPerformed(e);
+        }
     }
-  }
+
+    protected String getActionText(AnActionEvent e) {
+        return e.getPresentation().getText();
+    }
+
+    protected boolean isEnabled(AnActionEvent e) {
+        return true;
+    }
+
+    protected void showPopup(ListPopup groupPopup, AnActionEvent e) {
+        Component component = e.getInputEvent().getComponent();
+
+        if (component instanceof ActionButtonComponent) {
+            groupPopup.showUnderneathOf(component);
+        }
+        else {
+            groupPopup.showInBestPositionFor(e.getDataContext());
+        }
+    }
+
+    @Nonnull
+    public AnAction[] getChildren(@Nullable AnActionEvent e) {
+        Project project = e == null ? null : e.getData(Project.KEY);
+        if (project == null) {
+            return AnAction.EMPTY_ARRAY;
+        }
+
+        DomCollectionChildDescription[] descriptions = getDomCollectionChildDescriptions(e);
+        final List<AnAction> actions = new ArrayList<>();
+        for (DomCollectionChildDescription description : descriptions) {
+            TypeChooser chooser = DomManager.getDomManager(project).getTypeChooserManager().getTypeChooser(description.getType());
+            for (Type type : chooser.getChooserTypes()) {
+
+                Class<?> rawType = ReflectionUtil.getRawType(type);
+
+                String name = TypePresentationService.getInstance().getTypeNameOrStub(rawType);
+                Image icon = null;
+                if (!showAsPopup() || descriptions.length == 1) {
+                    //if (descriptions.length > 1) {
+                    icon = ElementPresentationManager.getIconForClass(rawType);
+                    //}
+                }
+                actions.add(createAddingAction(e, ApplicationLocalize.actionAdd() + " " + name, icon, type, description));
+            }
+        }
+        if (actions.size() > 1 && showAsPopup()) {
+            ActionGroup group = new ActionGroup() {
+                @Nonnull
+                @Override
+                public AnAction[] getChildren(@Nullable AnActionEvent e) {
+                    return actions.toArray(new AnAction[actions.size()]);
+                }
+            };
+            return new AnAction[]{new ShowPopupAction(group)};
+        }
+        else if (actions.size() > 1) {
+            actions.add(AnSeparator.getInstance());
+        }
+        else if (actions.size() == 1) {
+        }
+        return actions.toArray(new AnAction[actions.size()]);
+    }
+
+    protected abstract AnAction createAddingAction(
+        AnActionEvent e,
+        String name,
+        Image icon,
+        Type type,
+        DomCollectionChildDescription description
+    );
+
+    @Nonnull
+    protected abstract DomCollectionChildDescription[] getDomCollectionChildDescriptions(AnActionEvent e);
+
+    @Nullable
+    protected abstract DomElement getParentDomElement(AnActionEvent e);
+
+    protected abstract JComponent getComponent(AnActionEvent e);
+
+    protected boolean showAsPopup() {
+        return true;
+    }
+
+    protected class ShowPopupAction extends AnAction {
+
+        protected final ActionGroup myGroup;
+
+        protected ShowPopupAction(ActionGroup group) {
+            super(ApplicationLocalize.actionAdd(), LocalizeValue.empty(), DomCollectionControl.ADD_ICON);
+            myGroup = group;
+            setShortcutSet(CommonActionsPanel.getCommonShortcut(CommonActionsPanel.Buttons.ADD));
+        }
+
+        @Override
+        @RequiredUIAccess
+        public void actionPerformed(AnActionEvent e) {
+            ListPopup groupPopup = JBPopupFactory.getInstance().createActionGroupPopup(
+                null,
+                myGroup,
+                e.getDataContext(),
+                JBPopupFactory.ActionSelectionAid.NUMBERING,
+                true
+            );
+
+            showPopup(groupPopup, e);
+        }
+    }
 }

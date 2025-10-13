@@ -27,6 +27,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.InputValidator;
@@ -56,7 +57,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction {
     public static final String NAME = "Insert Namespace Prefix";
 
     public AddSchemaPrefixIntention() {
-        setText(NAME);
+        setText(LocalizeValue.localizeTODO(NAME));
     }
 
     @Override

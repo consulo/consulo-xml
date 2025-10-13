@@ -23,11 +23,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.filter.ElementFilter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ik
- * Date: 10.03.2003
- * Time: 12:10:08
- * To change this template use Options | File Templates.
+ * @author ik
+ * @since 2003-03-10
  */
 public class XmlTokenTypeFilter implements ElementFilter {
   private IElementType myType = null;

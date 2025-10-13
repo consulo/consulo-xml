@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
 import java.util.Map;
@@ -48,9 +47,8 @@ import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.ui.image.Image;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 13.08.2007
+ * @author sweinreuter
+ * @since 2007-08-13
  */
 public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaOwner {
   public RncDefineImpl(ASTNode node) {

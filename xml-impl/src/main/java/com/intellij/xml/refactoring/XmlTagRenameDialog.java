@@ -13,57 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: spleaner
- * Date: Aug 9, 2007
- * Time: 4:45:40 PM
- */
 package com.intellij.xml.refactoring;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import jakarta.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-
-import jakarta.annotation.Nullable;
-
-import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
-import consulo.application.ApplicationManager;
+import consulo.application.HelpManager;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.language.editor.completion.lookup.LookupManager;
+import consulo.language.editor.refactoring.localize.RefactoringLocalize;
 import consulo.language.editor.refactoring.ui.NameSuggestionsField;
 import consulo.language.editor.refactoring.ui.RefactoringDialog;
 import consulo.language.findUsage.DescriptiveNameUtil;
+import consulo.language.plain.PlainTextFileType;
+import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.undoRedo.CommandProcessor;
-import consulo.logging.Logger;
-import consulo.codeEditor.Editor;
-import consulo.language.plain.PlainTextFileType;
-import consulo.application.HelpManager;
-import consulo.language.psi.PsiElement;
-import consulo.xml.psi.impl.source.xml.TagNameReference;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.language.editor.refactoring.RefactoringBundle;
-import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlBundle;
-import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.usage.UsageViewUtil;
 import consulo.util.lang.StringUtil;
+import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
+import consulo.xml.localize.XmlLocalize;
+import consulo.xml.psi.impl.source.xml.TagNameReference;
+import consulo.xml.psi.xml.XmlTag;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
+import javax.swing.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
+/**
+ * @author spleaner
+ * @since 2007-08-09
+ */
 public class XmlTagRenameDialog extends RefactoringDialog {
     private static final Logger LOG = Logger.getInstance(XmlTagRenameDialog.class);
-    private static final String REFACTORING_NAME = RefactoringBundle.message("rename.title");
 
     private final PsiElement myElement;
     private final Editor myEditor;
@@ -80,12 +65,12 @@ public class XmlTagRenameDialog extends RefactoringDialog {
         myElement = element;
         myTag = tag;
 
-        setTitle(REFACTORING_NAME);
+        setTitle(RefactoringLocalize.renameTitle());
         createNewNameComponent();
 
         init();
 
-        myTitleLabel.setText(XmlBundle.message("rename.current.tag", getFullName(tag)));
+        myTitleLabel.setText(XmlLocalize.renameCurrentTag(getFullName(tag)).get());
 
         validateButtons();
     }
@@ -144,19 +129,18 @@ public class XmlTagRenameDialog extends RefactoringDialog {
     protected void doAction() {
         LOG.assertTrue(myElement.isValid());
 
-        CommandProcessor.getInstance().executeCommand(
-            myProject,
-            () -> ApplicationManager.getApplication().runWriteAction(() -> {
+        CommandProcessor.getInstance().newCommand()
+            .project(myProject)
+            .name(RefactoringLocalize.renameTitle())
+            .inWriteAction()
+            .run(() -> {
                 try {
                     myTag.setName(getNewName());
                 }
                 catch (IncorrectOperationException e) {
                     LOG.error(e);
                 }
-            }),
-            RefactoringBundle.message("rename.title"),
-            null
-        );
+            });
 
         close(DialogWrapper.OK_EXIT_CODE);
     }

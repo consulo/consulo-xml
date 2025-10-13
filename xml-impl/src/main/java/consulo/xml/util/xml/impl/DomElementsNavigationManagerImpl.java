@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 @Singleton
 @ServiceImpl

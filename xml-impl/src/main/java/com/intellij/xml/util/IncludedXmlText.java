@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.util;
 
+import consulo.annotation.access.RequiredReadAction;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -48,39 +49,48 @@ public class IncludedXmlText extends IncludedXmlElement<XmlText> implements XmlT
     }
 
     @Override
+    @RequiredReadAction
     public String getText() {
         return getOriginal().getText();
     }
 
+    @Override
     public String getValue() {
         return getOriginal().getValue();
     }
 
+    @Override
     public void setValue(String s) throws IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included elements");
     }
 
+    @Override
     public XmlElement insertAtOffset(XmlElement element, int displayOffset) throws consulo.language.util.IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included elements");
     }
 
+    @Override
     public void insertText(String text, int displayOffset) throws consulo.language.util.IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included elements");
     }
 
+    @Override
     public void removeText(int displayStart, int displayEnd) throws consulo.language.util.IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included elements");
     }
 
+    @Override
     public int physicalToDisplay(int offset) {
         return getOriginal().physicalToDisplay(offset);
     }
 
+    @Override
     public int displayToPhysical(int offset) {
         return getOriginal().displayToPhysical(offset);
     }
 
     @Nullable
+    @Override
     public XmlText split(int displayIndex) {
         throw new UnsupportedOperationException("Can't modify included elements");
     }

@@ -27,9 +27,8 @@ import java.lang.reflect.Field;
 import java.util.Locale;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 04.08.2007
+ * @author sweinreuter
+ * @since 2007-08-04
  */
 public class RncTokenTypes
 {

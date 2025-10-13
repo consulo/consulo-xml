@@ -23,6 +23,7 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -33,47 +34,40 @@ import jakarta.annotation.Nonnull;
  * @author Eugene.Kudelevsky
  */
 public class SwitchToHtml5Action implements LocalQuickFix, IntentionAction {
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return XmlErrorLocalize.switchToHtml5QuickfixText();
+    }
 
-  @Nonnull
-  @Override
-  public String getName() {
-    return XmlErrorLocalize.switchToHtml5QuickfixText().get();
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getText() {
+        return getName();
+    }
 
-  @Nonnull
-  @Override
-  public String getText() {
-    return getFamilyName();
-  }
+    @Override
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        return true;
+    }
 
-  @Nonnull
-  @Override
-  public String getFamilyName() {
-    return getName();
-  }
+    @Override
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        applyFix(project);
+    }
 
-  @Override
-  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
-    return true;
-  }
+    @Override
+    public boolean startInWriteAction() {
+        return true;
+    }
 
-  @Override
-  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-    applyFix(project);
-  }
+    @Override
+    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        applyFix(project);
+    }
 
-  @Override
-  public boolean startInWriteAction() {
-    return true;
-  }
-
-  @Override
-  public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
-    applyFix(project);
-  }
-
-  private static void applyFix(Project project) {
-    ExternalResourceManagerEx.getInstanceEx().setDefaultHtmlDoctype(Html5SchemaProvider.getHtml5SchemaLocation(), project);
-    DaemonCodeAnalyzer.getInstance(project).restart();
-  }
+    private static void applyFix(Project project) {
+        ExternalResourceManagerEx.getInstanceEx().setDefaultHtmlDoctype(Html5SchemaProvider.getHtml5SchemaLocation(), project);
+        DaemonCodeAnalyzer.getInstance(project).restart();
+    }
 }

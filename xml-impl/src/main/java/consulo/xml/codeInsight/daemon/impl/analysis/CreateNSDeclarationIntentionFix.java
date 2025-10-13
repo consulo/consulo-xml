@@ -21,6 +21,7 @@ import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.Application;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
@@ -84,41 +85,38 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     @Nullable
+    @RequiredReadAction
     public static CreateNSDeclarationIntentionFix createFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
         PsiFile file = element.getContainingFile();
         return file instanceof XmlFile ? new CreateNSDeclarationIntentionFix(element, namespacePrefix) : null;
     }
 
+    @RequiredReadAction
     protected CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
         this(element, namespacePrefix, null);
     }
 
+    @RequiredReadAction
     public CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, String namespacePrefix, @Nullable XmlToken token) {
         myNamespacePrefix = namespacePrefix;
         myElement = PsiAnchor.create(element);
         myToken = token == null ? null : PsiAnchor.create(token);
     }
 
-    @Override
     @Nonnull
-    public String getText() {
+    @Override
+    public LocalizeValue getText() {
         String alias = StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()));
-        return XmlErrorLocalize.createNamespaceDeclarationQuickfix(alias).get();
+        return XmlErrorLocalize.createNamespaceDeclarationQuickfix(alias);
     }
 
     private XmlNamespaceHelper getXmlExtension() {
         return XmlNamespaceHelper.getHelper(getFile());
     }
 
-    @Override
     @Nonnull
-    public String getName() {
-        return getFamilyName();
-    }
-
     @Override
-    @Nonnull
-    public String getFamilyName() {
+    public LocalizeValue getName() {
         return getText();
     }
 
@@ -141,6 +139,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     @Override
+    @RequiredReadAction
     public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
         PsiElement element = myElement.retrieve();
         return element != null && element.isValid();
@@ -305,13 +304,13 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     @RequiredUIAccess
     public static void runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
         @Nonnull String[] namespacesToChooseFrom,
-        Project project,
+        @Nonnull Project project,
         @RequiredUIAccess StringToAttributeProcessor onSelection,
         String title,
         IntentionAction requestor,
         Editor editor
     ) throws IncorrectOperationException {
-        if (namespacesToChooseFrom.length > 1 && !Application.get().isUnitTestMode()) {
+        if (namespacesToChooseFrom.length > 1 && !project.getApplication().isUnitTestMode()) {
             JList list = new JBList(namespacesToChooseFrom);
             list.setCellRenderer(XmlNSRenderer.INSTANCE);
             Runnable runnable = () -> {
@@ -323,7 +322,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
                 CommandProcessor.getInstance().newCommand()
                     .project(project)
-                    .name(LocalizeValue.ofNullable(requestor.getText()))
+                    .name(requestor.getText())
                     .groupId(requestor.getText())
                     .inWriteAction()
                     .run(() -> {
@@ -355,7 +354,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         ExternalUriProcessor processor,
         boolean showProgress
     ) {
-        if (!showProgress || Application.get().isUnitTestMode()) {
+        if (!showProgress || file.getApplication().isUnitTestMode()) {
             processExternalUrisImpl(metaHandler, file, processor);
         }
         else {
