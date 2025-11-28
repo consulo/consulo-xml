@@ -22,16 +22,16 @@ import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.localize.LocalizeKey;
-import consulo.localize.LocalizeValue;
 import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 
+import java.util.Optional;
+
 @ExtensionImpl
 public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
-    private static final LazyValue<LocalizeKey> unescapedAmpersandKey = LazyValue.notNull(() -> {
-        return XmlErrorLocalize.unescapedAmpersandOrNonterminatedCharacterEntityReference().getKey().get();
-    });
+    private static final LazyValue<LocalizeKey> UNESCAPED_AMPERSAND_KEY =
+        LazyValue.notNull(() -> XmlErrorLocalize.unescapedAmpersandOrNonterminatedCharacterEntityReference().getKey().get());
 
     @Override
     @RequiredReadAction
@@ -42,10 +42,9 @@ public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
     }
 
     private static void registerXmlErrorQuickFix(PsiErrorElement element, HighlightInfo.Builder builder) {
-        LocalizeValue errorText = element.getErrorDescriptionValue();
-
-        if (errorText.getKey().isPresent() && errorText.getKey().get().equals(unescapedAmpersandKey.get())) {
-            builder.registerFix(new UnescapeAction(element), null, null, null, null);
+        Optional<LocalizeKey> errorKey = element.getErrorDescriptionValue().getKey();
+        if (errorKey.isPresent() && errorKey.get().equals(UNESCAPED_AMPERSAND_KEY.get())) {
+            builder.registerFix(new UnescapeAction(element));
         }
     }
 }
