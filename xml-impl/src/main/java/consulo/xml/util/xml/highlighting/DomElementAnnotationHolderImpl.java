@@ -36,110 +36,162 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.List;
 
 public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemDescriptor> implements DomElementAnnotationHolder {
-  private static final Logger LOG = Logger.getInstance(DomElementAnnotationHolderImpl.class);
-  private final SmartList<Annotation> myAnnotations = new SmartList<Annotation>();
-  private final boolean myOnTheFly;
+    private static final Logger LOG = Logger.getInstance(DomElementAnnotationHolderImpl.class);
+    private final SmartList<Annotation> myAnnotations = new SmartList<>();
+    private final boolean myOnTheFly;
 
-  public DomElementAnnotationHolderImpl(boolean onTheFly) {
-    myOnTheFly = onTheFly;
-  }
-
-  @Override
-  public boolean isOnTheFly() {
-    return myOnTheFly;
-  }
-
-  @Nonnull
-  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
-    return createProblem(domElement, HighlightSeverity.ERROR, message, fixes);
-  }
-
-  @Nonnull
-  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement,
-                                                   DomCollectionChildDescription childDescription,
-                                                   @Nullable String message) {
-    return addProblem(new DomCollectionProblemDescriptorImpl(domElement, message, HighlightSeverity.ERROR, childDescription));
-  }
-
-  @Nonnull
-  public final DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message) {
-    return createProblem(domElement, highlightType, message, LocalQuickFix.EMPTY_ARRAY);
-  }
-
-  public DomElementProblemDescriptor createProblem(@Nonnull final DomElement domElement,
-                                                   final HighlightSeverity highlightType,
-                                                   final String message,
-                                                   final LocalQuickFix[] fixes) {
-    return createProblem(domElement, highlightType, message, null, fixes);
-  }
-
-  public DomElementProblemDescriptor createProblem(@Nonnull final DomElement domElement,
-                                                   final HighlightSeverity highlightType,
-                                                   final String message,
-                                                   final TextRange textRange,
-                                                   final LocalQuickFix... fixes) {
-    return addProblem(new DomElementProblemDescriptorImpl(domElement, message, highlightType, textRange, null, fixes));
-  }
-
-  public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement,
-                                                   ProblemHighlightType highlightType,
-                                                   String message,
-                                                   @Nullable TextRange textRange,
-                                                   LocalQuickFix... fixes) {
-    return addProblem(new DomElementProblemDescriptorImpl(domElement, message, HighlightSeverity.ERROR, textRange, highlightType, fixes));
-  }
-
-  @Nonnull
-  public DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference) {
-    return addProblem(new DomElementResolveProblemDescriptorImpl(element, reference, getQuickFixes(element, reference)));
-  }
-
-  @RequiredReadAction
-  @Nonnull
-  public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message) {
-    final XmlElement xmlElement = element.getXmlElement();
-    LOG.assertTrue(xmlElement != null, "No XML element for " + element);
-    final TextRange range = xmlElement.getTextRange();
-    final int startOffset = range.getStartOffset();
-    final int endOffset = message == LocalizeValue.of() ? startOffset : range.getEndOffset();
-    final Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of(), XMLLanguage.INSTANCE);
-    myAnnotations.add(annotation);
-    return annotation;
-  }
-
-  public final SmartList<Annotation> getAnnotations() {
-    return myAnnotations;
-  }
-
-  public int getSize() {
-    return size();
-  }
-
-  private LocalQuickFix[] getQuickFixes(final GenericDomValue element, PsiReference reference) {
-    if (!myOnTheFly) return LocalQuickFix.EMPTY_ARRAY;
-
-    final List<LocalQuickFix> result = new SmartList<LocalQuickFix>();
-    final Converter converter = WrappingConverter.getDeepestConverter(element.getConverter(), element);
-    if (converter instanceof ResolvingConverter) {
-      final ResolvingConverter resolvingConverter = (ResolvingConverter) converter;
-      ContainerUtil
-          .addAll(result, resolvingConverter.getQuickFixes(ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element))));
+    public DomElementAnnotationHolderImpl(boolean onTheFly) {
+        myOnTheFly = onTheFly;
     }
-    if (reference instanceof LocalQuickFixProvider) {
-      final LocalQuickFix[] localQuickFixes = ((LocalQuickFixProvider) reference).getQuickFixes();
-      if (localQuickFixes != null) {
-        ContainerUtil.addAll(result, localQuickFixes);
-      }
+
+    @Override
+    public boolean isOnTheFly() {
+        return myOnTheFly;
     }
-    return result.isEmpty() ? LocalQuickFix.EMPTY_ARRAY : result.toArray(new LocalQuickFix[result.size()]);
-  }
 
-  public <T extends DomElementProblemDescriptor> T addProblem(final T problemDescriptor) {
-    add(problemDescriptor);
-    return problemDescriptor;
-  }
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
+        return createProblem(domElement, HighlightSeverity.ERROR, message, fixes);
+    }
 
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        DomCollectionChildDescription childDescription,
+        String message
+    ) {
+        return addProblem(new DomCollectionProblemDescriptorImpl(
+            domElement,
+            LocalizeValue.ofNullable(message),
+            HighlightSeverity.ERROR,
+            childDescription
+        ));
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public final DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        HighlightSeverity highlightType,
+        String message
+    ) {
+        return createProblem(domElement, highlightType, message, LocalQuickFix.EMPTY_ARRAY);
+    }
+
+    @Override
+    @RequiredReadAction
+    public DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        HighlightSeverity highlightType,
+        String message,
+        LocalQuickFix[] fixes
+    ) {
+        return createProblem(domElement, highlightType, message, null, fixes);
+    }
+
+    @Override
+    @RequiredReadAction
+    public DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        HighlightSeverity highlightType,
+        String message,
+        TextRange textRange,
+        LocalQuickFix... fixes
+    ) {
+        return addProblem(new DomElementProblemDescriptorImpl(
+            domElement,
+            LocalizeValue.ofNullable(message),
+            highlightType,
+            textRange,
+            null,
+            fixes
+        ));
+    }
+
+    @Override
+    @RequiredReadAction
+    public DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        ProblemHighlightType highlightType,
+        String message,
+        @Nullable TextRange textRange,
+        LocalQuickFix... fixes
+    ) {
+        return addProblem(new DomElementProblemDescriptorImpl(
+            domElement,
+            LocalizeValue.ofNullable(message),
+            HighlightSeverity.ERROR,
+            textRange,
+            highlightType,
+            fixes
+        ));
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference) {
+        return addProblem(new DomElementResolveProblemDescriptorImpl(element, reference, getQuickFixes(element, reference)));
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message) {
+        XmlElement xmlElement = element.getXmlElement();
+        LOG.assertTrue(xmlElement != null, "No XML element for " + element);
+        TextRange range = xmlElement.getTextRange();
+        int startOffset = range.getStartOffset();
+        int endOffset = message == LocalizeValue.of() ? startOffset : range.getEndOffset();
+        Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of(), XMLLanguage.INSTANCE);
+        myAnnotations.add(annotation);
+        return annotation;
+    }
+
+    public final SmartList<Annotation> getAnnotations() {
+        return myAnnotations;
+    }
+
+    @Override
+    public int getSize() {
+        return size();
+    }
+
+    private LocalQuickFix[] getQuickFixes(GenericDomValue element, PsiReference reference) {
+        if (!myOnTheFly) {
+            return LocalQuickFix.EMPTY_ARRAY;
+        }
+
+        List<LocalQuickFix> result = new SmartList<>();
+        Converter converter = WrappingConverter.getDeepestConverter(element.getConverter(), element);
+        if (converter instanceof ResolvingConverter resolvingConverter) {
+            ContainerUtil.addAll(
+                result,
+                resolvingConverter.getQuickFixes(ConvertContextFactory.createConvertContext(
+                    DomManagerImpl.getDomInvocationHandler(element)
+                ))
+            );
+        }
+        if (reference instanceof LocalQuickFixProvider fixProvider) {
+            LocalQuickFix[] localQuickFixes = fixProvider.getQuickFixes();
+            if (localQuickFixes != null) {
+                ContainerUtil.addAll(result, localQuickFixes);
+            }
+        }
+        return result.isEmpty() ? LocalQuickFix.EMPTY_ARRAY : result.toArray(new LocalQuickFix[result.size()]);
+    }
+
+    public <T extends DomElementProblemDescriptor> T addProblem(T problemDescriptor) {
+        add(problemDescriptor);
+        return problemDescriptor;
+    }
 }

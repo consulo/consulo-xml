@@ -34,44 +34,55 @@ import jakarta.annotation.Nonnull;
  * @author peter
  */
 class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptorImpl implements DomElementResolveProblemDescriptor {
-  @Nonnull
-  private final PsiReference myReference;
+    @Nonnull
+    private final PsiReference myReference;
 
-  @RequiredReadAction
-  public DomElementResolveProblemDescriptorImpl(@Nonnull final GenericDomValue domElement,
-                                                @Nonnull final PsiReference reference,
-                                                LocalQuickFix... quickFixes) {
-    super(domElement,
-          reference instanceof FileReference ? ProblemsHolder.unresolvedReferenceMessage(reference).get()
-            : ProblemsHolder.unresolvedReferenceMessage(reference).get(),
-          HighlightSeverity.ERROR,
-          quickFixes);
-    myReference = reference;
-  }
-
-  @Nonnull
-  public PsiReference getPsiReference() {
-    return myReference;
-  }
-
-  @Nonnull
-  public GenericDomValue getDomElement() {
-    return (GenericDomValue)super.getDomElement();
-  }
-
-  @Nonnull
-  protected Pair<TextRange, PsiElement> computeProblemRange() {
-    final PsiReference reference = myReference;
-    PsiElement element = reference.getElement();
-    if (element instanceof XmlAttributeValue && element.getTextLength() == 0) return NO_PROBLEM;
-
-    final TextRange referenceRange = reference.getRangeInElement();
-    if (referenceRange.isEmpty()) {
-      int startOffset = referenceRange.getStartOffset();
-      return element instanceof XmlAttributeValue
-        ? Pair.create((TextRange)new UnfairTextRange(startOffset - 1, startOffset + 1), element)
-        : Pair.create(TextRange.from(startOffset, 1), element);
+    @RequiredReadAction
+    public DomElementResolveProblemDescriptorImpl(
+        @Nonnull GenericDomValue domElement,
+        @Nonnull PsiReference reference,
+        LocalQuickFix... quickFixes
+    ) {
+        super(
+            domElement,
+            reference instanceof FileReference
+                ? ProblemsHolder.unresolvedReferenceMessage(reference)
+                : ProblemsHolder.unresolvedReferenceMessage(reference),
+            HighlightSeverity.ERROR,
+            quickFixes
+        );
+        myReference = reference;
     }
-    return Pair.create(referenceRange, element);
-  }
+
+    @Nonnull
+    @Override
+    public PsiReference getPsiReference() {
+        return myReference;
+    }
+
+    @Nonnull
+    @Override
+    public GenericDomValue getDomElement() {
+        return (GenericDomValue) super.getDomElement();
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    protected Pair<TextRange, PsiElement> computeProblemRange() {
+        PsiReference reference = myReference;
+        PsiElement element = reference.getElement();
+        if (element instanceof XmlAttributeValue && element.getTextLength() == 0) {
+            return NO_PROBLEM;
+        }
+
+        TextRange referenceRange = reference.getRangeInElement();
+        if (referenceRange.isEmpty()) {
+            int startOffset = referenceRange.getStartOffset();
+            return element instanceof XmlAttributeValue
+                ? Pair.create((TextRange) new UnfairTextRange(startOffset - 1, startOffset + 1), element)
+                : Pair.create(TextRange.from(startOffset, 1), element);
+        }
+        return Pair.create(referenceRange, element);
+    }
 }

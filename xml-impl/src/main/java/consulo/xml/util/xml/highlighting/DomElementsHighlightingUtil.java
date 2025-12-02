@@ -15,6 +15,7 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.codeEditor.CodeInsightColors;
 import consulo.document.util.TextRange;
 import consulo.language.editor.annotation.Annotation;
@@ -27,91 +28,95 @@ import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
 import consulo.util.lang.Pair;
-import consulo.util.lang.StringUtil;
 import consulo.util.lang.xml.XmlStringUtil;
 
 import consulo.xml.lang.xml.XMLLanguage;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.function.Function;
 
 /**
  * @author Sergey.Vasiliev
  */
 public class DomElementsHighlightingUtil {
-  private DomElementsHighlightingUtil() {
-  }
-
-  @Nullable
-  public static ProblemDescriptor createProblemDescriptors(final InspectionManager manager,
-                                                           final DomElementProblemDescriptor problemDescriptor) {
-    final ProblemHighlightType type = getProblemHighlightType(problemDescriptor);
-    return createProblemDescriptors(problemDescriptor, new Function<Pair<TextRange, PsiElement>, ProblemDescriptor>() {
-      public ProblemDescriptor apply(final Pair<TextRange, PsiElement> s) {
-        return manager
-          .createProblemDescriptor(s.second, s.first, problemDescriptor.getDescriptionTemplate(), type, true, problemDescriptor.getFixes());
-      }
-    });
-  }
-
-  // TODO: move it to DomElementProblemDescriptorImpl
-  private static ProblemHighlightType getProblemHighlightType(final DomElementProblemDescriptor problemDescriptor) {
-    if (problemDescriptor.getHighlightType() != null) {
-      return problemDescriptor.getHighlightType();
+    private DomElementsHighlightingUtil() {
     }
-    if (problemDescriptor instanceof DomElementResolveProblemDescriptor) {
-      final TextRange range = ((DomElementResolveProblemDescriptor)problemDescriptor).getPsiReference().getRangeInElement();
-      if (range.getStartOffset() != range.getEndOffset()) {
-        return ProblemHighlightType.LIKE_UNKNOWN_SYMBOL;
-      }
+
+    @Nullable
+    @RequiredReadAction
+    public static ProblemDescriptor createProblemDescriptors(InspectionManager manager, DomElementProblemDescriptor problemDescriptor) {
+        ProblemHighlightType type = getProblemHighlightType(problemDescriptor);
+        return createProblemDescriptors(
+            problemDescriptor,
+            s -> manager.newProblemDescriptor(problemDescriptor.getDescriptionTemplate())
+                .range(s.second, s.first)
+                .highlightType(type)
+                .onTheFly(true)
+                .withFixes(problemDescriptor.getFixes())
+                .create()
+        );
     }
-    return ProblemHighlightType.GENERIC_ERROR_OR_WARNING;
-  }
 
-  @Nullable
-  public static Annotation createAnnotation(final DomElementProblemDescriptor problemDescriptor) {
-
-    return createProblemDescriptors(problemDescriptor, new Function<Pair<TextRange, PsiElement>, Annotation>() {
-      public Annotation apply(final Pair<TextRange, PsiElement> s) {
-        String text = problemDescriptor.getDescriptionTemplate();
-        if (StringUtil.isEmpty(text)) text = null;
-        final HighlightSeverity severity = problemDescriptor.getHighlightSeverity();
-
-        TextRange range = s.first;
-        if (text == null) range = TextRange.from(range.getStartOffset(), 0);
-        range = range.shiftRight(s.second.getTextRange().getStartOffset());
-        final Annotation annotation = createAnnotation(severity, range, text);
-
-        if (problemDescriptor instanceof DomElementResolveProblemDescriptor) {
-          annotation.setTextAttributes(CodeInsightColors.WRONG_REFERENCES_ATTRIBUTES);
+    // TODO: move it to DomElementProblemDescriptorImpl
+    @RequiredReadAction
+    private static ProblemHighlightType getProblemHighlightType(DomElementProblemDescriptor problemDescriptor) {
+        if (problemDescriptor.getHighlightType() != null) {
+            return problemDescriptor.getHighlightType();
         }
-
-        for (LocalQuickFix fix : problemDescriptor.getFixes()) {
-          if (fix instanceof IntentionAction) annotation.registerFix((IntentionAction)fix);
+        if (problemDescriptor instanceof DomElementResolveProblemDescriptor domProblemDescriptor) {
+            TextRange range = domProblemDescriptor.getPsiReference().getRangeInElement();
+            if (range.getStartOffset() != range.getEndOffset()) {
+                return ProblemHighlightType.LIKE_UNKNOWN_SYMBOL;
+            }
         }
-        return annotation;
-      }
-    });
-  }
+        return ProblemHighlightType.GENERIC_ERROR_OR_WARNING;
+    }
 
-  private static Annotation createAnnotation(final HighlightSeverity severity,
-                                             final TextRange range,
-                                             final String text) {
-    String tooltip = text == null ? null : "<html><body>" + XmlStringUtil.escapeString(text) + "</body></html>";
-    return new Annotation(range.getStartOffset(),
-                          range.getEndOffset(),
-                          severity,
-                          text == null ? LocalizeValue.of() : LocalizeValue.of(text),
-                          tooltip == null ? LocalizeValue.of() : LocalizeValue.of(tooltip),
-                          XMLLanguage.INSTANCE
-    );
-  }
+    @Nullable
+    @RequiredReadAction
+    public static Annotation createAnnotation(DomElementProblemDescriptor problemDescriptor) {
+        return createProblemDescriptors(
+            problemDescriptor,
+            s -> {
+                LocalizeValue text = problemDescriptor.getDescriptionTemplate();
+                HighlightSeverity severity = problemDescriptor.getHighlightSeverity();
 
-  @Nullable
-  private static <T> T createProblemDescriptors(final DomElementProblemDescriptor problemDescriptor,
-                                                final Function<Pair<TextRange, PsiElement>, T> creator) {
+                TextRange range = s.first;
+                if (text == LocalizeValue.empty()) {
+                    range = TextRange.from(range.getStartOffset(), 0);
+                }
+                range = range.shiftRight(s.second.getTextRange().getStartOffset());
+                Annotation annotation = createAnnotation(severity, range, text);
 
-    final Pair<TextRange, PsiElement> range = ((DomElementProblemDescriptorImpl)problemDescriptor).getProblemRange();
-    return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.apply(range);
-  }
+                if (problemDescriptor instanceof DomElementResolveProblemDescriptor) {
+                    annotation.setTextAttributes(CodeInsightColors.WRONG_REFERENCES_ATTRIBUTES);
+                }
 
+                for (LocalQuickFix fix : problemDescriptor.getFixes()) {
+                    if (fix instanceof IntentionAction action) {
+                        annotation.registerFix(action);
+                    }
+                }
+                return annotation;
+            }
+        );
+    }
+
+    private static Annotation createAnnotation(HighlightSeverity severity, TextRange range, @Nonnull LocalizeValue text) {
+        LocalizeValue tooltip = text == LocalizeValue.empty()
+            ? LocalizeValue.empty()
+            : text.map((localizeManager, string) -> "<html><body>" + XmlStringUtil.escapeString(string) + "</body></html>");
+        return new Annotation(range.getStartOffset(), range.getEndOffset(), severity, text, tooltip, XMLLanguage.INSTANCE);
+    }
+
+    @Nullable
+    @RequiredReadAction
+    private static <T> T createProblemDescriptors(
+        DomElementProblemDescriptor problemDescriptor,
+        @Nonnull @RequiredReadAction Function<Pair<TextRange, PsiElement>, T> creator
+    ) {
+        Pair<TextRange, PsiElement> range = ((DomElementProblemDescriptorImpl) problemDescriptor).getProblemRange();
+        return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.apply(range);
+    }
 }

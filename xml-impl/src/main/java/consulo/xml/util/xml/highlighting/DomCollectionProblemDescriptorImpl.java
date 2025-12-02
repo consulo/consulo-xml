@@ -15,39 +15,50 @@
  */
 package consulo.xml.util.xml.highlighting;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public class DomCollectionProblemDescriptorImpl extends DomElementProblemDescriptorImpl implements DomCollectionProblemDescriptor {
-  private final DomCollectionChildDescription myChildDescription;
+    private final DomCollectionChildDescription myChildDescription;
 
-  public DomCollectionProblemDescriptorImpl(final DomElement domElement,
-                                            final String message,
-                                            final HighlightSeverity type,
-                                            final DomCollectionChildDescription childDescription) {
-    super(domElement, message, type);
-    myChildDescription = childDescription;
-  }
+    @RequiredReadAction
+    public DomCollectionProblemDescriptorImpl(
+        DomElement domElement,
+        @Nonnull LocalizeValue message,
+        HighlightSeverity type,
+        DomCollectionChildDescription childDescription
+    ) {
+        super(domElement, message, type);
+        myChildDescription = childDescription;
+    }
 
-  public DomCollectionProblemDescriptorImpl(final DomElement domElement,
-                                            final String message,
-                                            final HighlightSeverity type,
-                                            final DomCollectionChildDescription childDescription,
-                                            final LocalQuickFix... fixes) {
-    super(domElement, message, type, fixes);
-    myChildDescription = childDescription;
-  }
+    @RequiredReadAction
+    public DomCollectionProblemDescriptorImpl(
+        DomElement domElement,
+        @Nonnull LocalizeValue message,
+        HighlightSeverity type,
+        DomCollectionChildDescription childDescription,
+        LocalQuickFix... fixes
+    ) {
+        super(domElement, message, type, fixes);
+        myChildDescription = childDescription;
+    }
 
-  public String toString() {
-    return super.toString() + "; " + myChildDescription;
-  }
+    @Override
+    public String toString() {
+        return super.toString() + "; " + myChildDescription;
+    }
 
-  public DomCollectionChildDescription getChildDescription() {
-    return myChildDescription;
-  }
+    @Override
+    public DomCollectionChildDescription getChildDescription() {
+        return myChildDescription;
+    }
 }

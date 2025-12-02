@@ -17,7 +17,6 @@ package consulo.xml.util.xml.ui;
 
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.List;
 
@@ -25,43 +24,46 @@ import java.util.List;
  * @author Sergey.Vasiliev
  */
 public class TooltipUtils {
-  @NonNls private static final String MESSAGE_DELIMITER = "<hr size=1 noshade>";
+    private static final String MESSAGE_DELIMITER = "<hr size=1 noshade>";
 
-  public static String getTooltipText(List<DomElementProblemDescriptor> annotations) {
-    if (annotations.size() == 0) return null;
+    public static String getTooltipText(List<DomElementProblemDescriptor> annotations) {
+        if (annotations.size() == 0) {
+            return null;
+        }
 
-    return getTooltipText(getMessages(annotations));
-  }
-  
-  public static String getTooltipText(List<DomElementProblemDescriptor> annotations, String[] messages) {
-    return getTooltipText(ArrayUtil.mergeArrays(getMessages(annotations), messages));
-  }
-
-  private static String[] getMessages(final List<DomElementProblemDescriptor> problems) {
-    String[] messages = new String[problems.size()];
-    for (int i = 0; i < problems.size(); i++) {
-      messages[i] = problems.get(i).getDescriptionTemplate();
+        return getTooltipText(getMessages(annotations));
     }
-    return messages;
-  }
 
-  public static String getTooltipText(String[] messages) {
-    if (messages.length == 0) return null;
-
-    StringBuilder text = new StringBuilder("<html><body><table><tr><td>&nbsp;</td><td>");
-    int len = messages.length > 10 ? 10 : messages.length;
-    for (int i = 0; i < len; i++) {
-      if (i != 0) {
-        text.append(MESSAGE_DELIMITER);
-      }
-      text.append(messages[i]);
+    public static String getTooltipText(List<DomElementProblemDescriptor> annotations, String[] messages) {
+        return getTooltipText(ArrayUtil.mergeArrays(getMessages(annotations), messages));
     }
-    if (messages.length > 10) {
-      text.append(MESSAGE_DELIMITER);
-      text.append("...");
-    }
-    text.append("</td><td>&nbsp;</td></tr></table></body></html>");
-    return  text.toString();
-  }
 
+    private static String[] getMessages(List<DomElementProblemDescriptor> problems) {
+        String[] messages = new String[problems.size()];
+        for (int i = 0; i < problems.size(); i++) {
+            messages[i] = problems.get(i).getDescriptionTemplate().get();
+        }
+        return messages;
+    }
+
+    public static String getTooltipText(String[] messages) {
+        if (messages.length == 0) {
+            return null;
+        }
+
+        StringBuilder text = new StringBuilder("<html><body><table><tr><td>&nbsp;</td><td>");
+        int len = messages.length > 10 ? 10 : messages.length;
+        for (int i = 0; i < len; i++) {
+            if (i != 0) {
+                text.append(MESSAGE_DELIMITER);
+            }
+            text.append(messages[i]);
+        }
+        if (messages.length > 10) {
+            text.append(MESSAGE_DELIMITER);
+            text.append("...");
+        }
+        text.append("</td><td>&nbsp;</td></tr></table></body></html>");
+        return text.toString();
+    }
 }
