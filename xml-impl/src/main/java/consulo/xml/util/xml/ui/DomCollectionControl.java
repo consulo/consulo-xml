@@ -268,7 +268,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
         for (DomElementProblemDescriptor descriptor : list) {
             if (descriptor instanceof DomCollectionProblemDescriptor domProblemDescriptor
                 && myChildDescription.equals(domProblemDescriptor.getChildDescription())) {
-                messages.add(descriptor.getDescriptionTemplate());
+                messages.add(descriptor.getDescriptionTemplate().get());
             }
         }
         myCollectionPanel.setErrorMessages(ArrayUtil.toStringArray(messages));

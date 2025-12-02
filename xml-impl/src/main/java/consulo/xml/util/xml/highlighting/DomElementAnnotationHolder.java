@@ -30,38 +30,59 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDescriptor>{
+public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDescriptor> {
+    boolean isOnTheFly();
 
-  boolean isOnTheFly();
+    @Nonnull
+    DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes);
 
-  @Nonnull
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes);
+    @Nonnull
+    DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        DomCollectionChildDescription childDescription,
+        @Nullable String message
+    );
 
-  @Nonnull
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, DomCollectionChildDescription childDescription, @Nullable String message);
+    @Nonnull
+    DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message);
 
-  @Nonnull
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message);
+    DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        HighlightSeverity highlightType,
+        String message,
+        LocalQuickFix... fixes
+    );
 
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message, LocalQuickFix... fixes);
+    DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        HighlightSeverity highlightType,
+        String message,
+        TextRange textRange,
+        LocalQuickFix... fixes
+    );
 
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message, TextRange textRange, LocalQuickFix... fixes);
+    DomElementProblemDescriptor createProblem(
+        @Nonnull DomElement domElement,
+        ProblemHighlightType highlightType,
+        String message,
+        @Nullable TextRange textRange,
+        LocalQuickFix... fixes
+    );
 
-  DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, ProblemHighlightType highlightType, String message, @Nullable TextRange textRange, LocalQuickFix... fixes);
+    @Nonnull
+    DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference);
 
-  @Nonnull
-  DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference);
+    /**
+     * Is useful only if called from {@link DomElementsAnnotator} instance
+     *
+     * @param element  element
+     * @param severity highlight severity
+     * @param message  description
+     * @return annotation
+     */
+    @Nonnull
+    @RequiredReadAction
+    Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message);
 
-  /**
-   * Is useful only if called from {@link DomElementsAnnotator} instance
-   * @param element element
-   * @param severity highlight severity
-   * @param message description
-   * @return annotation
-   */
-  @Nonnull
-  @RequiredReadAction
-  Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message);
-
-  int getSize();
+    int getSize();
 }
