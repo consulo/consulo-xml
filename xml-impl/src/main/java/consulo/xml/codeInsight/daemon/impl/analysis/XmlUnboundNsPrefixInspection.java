@@ -117,7 +117,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
                     if (reference instanceof SchemaPrefixReference schemaPrefixReference
                         && !XML.equals(schemaPrefixReference.getNamespacePrefix()) && reference.resolve() == null) {
                         holder.newProblem(XmlErrorLocalize.unboundNamespace(schemaPrefixReference.getNamespacePrefix()))
-                            .range(reference)
+                            .rangeByRef(reference)
                             .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
                             .create();
                     }

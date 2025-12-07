@@ -90,8 +90,8 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                     assert value != null;
                     holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaDeclaration())
                         .range(attribute)
-                        .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, false))
                         .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                        .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, false))
                         .create();
 
                     XmlTag parent = attribute.getParent();
@@ -100,8 +100,8 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                         if (location != null) {
                             holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
                                 .range(location)
-                                .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
                                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                                .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
                                 .create();
                         }
                     }
@@ -109,7 +109,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                         for (PsiReference reference : getLocationReferences(namespace, parent)) {
                             if (!XmlHighlightVisitor.hasBadResolve(reference, false)) {
                                 holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
-                                    .range(reference)
+                                    .rangeByRef(reference)
                                     .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                                     .withFix(new RemoveNamespaceDeclarationFix(declaredPrefix, true))
                                     .create();
@@ -183,7 +183,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                         if (ArrayUtil.indexOf(attribute.getParent().knownNamespaces(), ns) == -1 && !refCountHolder.isUsedNamespace(ns)) {
                             if (!XmlHighlightVisitor.hasBadResolve(reference, false)) {
                                 holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
-                                    .range(reference)
+                                    .rangeByRef(reference)
                                     .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                                     .withFix(new RemoveNamespaceLocationFix(ns))
                                     .create();
@@ -195,7 +195,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
                                 }
                                 if (!XmlHighlightVisitor.hasBadResolve(nextRef, false)) {
                                     holder.newProblem(XmlLocalize.xmlInspectionsUnusedSchemaLocation())
-                                        .range(nextRef)
+                                        .rangeByRef(nextRef)
                                         .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                                         .withFix(new RemoveNamespaceLocationFix(ns))
                                         .create();
