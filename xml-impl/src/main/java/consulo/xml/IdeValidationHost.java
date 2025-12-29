@@ -4,8 +4,14 @@ package consulo.xml;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 public interface IdeValidationHost extends Validator.ValidationHost {
-  void addMessageWithFixes(PsiElement context, String message, @Nonnull ErrorType type, @Nonnull IntentionAction... fixes);
+    void addMessageWithFixes(
+        PsiElement context,
+        @Nonnull LocalizeValue message,
+        @Nonnull ErrorType type,
+        @Nonnull IntentionAction... fixes
+    );
 }
