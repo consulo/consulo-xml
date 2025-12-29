@@ -33,6 +33,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.template.TemplateLanguageFileViewProvider;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.dataholder.Key;
@@ -85,16 +86,7 @@ public class ExternalDocumentValidator {
     @NonNls
     private static final String ATTRIBUTE_MESSAGE_PREFIX = "cvc-attribute.";
 
-    private static class ValidationInfo {
-        final PsiElement element;
-        final String message;
-        final Validator.ValidationHost.ErrorType type;
-
-        private ValidationInfo(PsiElement element, String message, Validator.ValidationHost.ErrorType type) {
-            this.element = element;
-            this.message = message;
-            this.type = type;
-        }
+    private record ValidationInfo(PsiElement element, @Nonnull LocalizeValue message, Validator.ValidationHost.ErrorType type) {
     }
 
     private WeakReference<List<ValidationInfo>> myInfos; // last jaxp validation result
@@ -124,12 +116,9 @@ public class ExternalDocumentValidator {
         }
         final List<ValidationInfo> results = new LinkedList<>();
 
-        myHost = new Validator.ValidationHost() {
-            @Override
-            public void addMessage(final PsiElement context, final String message, @Nonnull final ErrorType type) {
-                final ValidationInfo o = new ValidationInfo(context, message, type);
-                results.add(o);
-            }
+        myHost = (context, message, type) -> {
+            ValidationInfo o = new ValidationInfo(context, message, type);
+            results.add(o);
         };
 
         myHandler.setErrorReporter(new ErrorReporter(myHandler) {

@@ -57,7 +57,6 @@ import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -706,7 +705,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
     @Override
     @RequiredReadAction
-    public void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
+    public void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
         addMessageWithFixes(context, message, type);
     }
 
@@ -714,17 +713,17 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     @RequiredReadAction
     public void addMessageWithFixes(
         PsiElement context,
-        String message,
+        @Nonnull LocalizeValue message,
         @Nonnull ErrorType type,
         @Nonnull IntentionAction... fixes
     ) {
-        if (message != null && !message.isEmpty()) {
+        if (message != LocalizeValue.empty()) {
             PsiFile containingFile = context.getContainingFile();
             HighlightInfoType defaultInfoType =
                 type == ErrorType.ERROR ? HighlightInfoType.ERROR : type == ErrorType.WARNING ? HighlightInfoType.WARNING : HighlightInfoType.WEAK_WARNING;
 
             if (context instanceof XmlTag tag && XmlExtension.getExtension(containingFile).shouldBeHighlightedAsTag(tag)) {
-                addElementsForTagWithManyQuickFixes(tag, LocalizeValue.ofNullable(message), defaultInfoType, fixes);
+                addElementsForTagWithManyQuickFixes(tag, message, defaultInfoType, fixes);
             }
             else {
                 PsiElement contextOfFile =

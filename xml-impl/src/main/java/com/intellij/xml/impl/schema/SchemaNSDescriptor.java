@@ -67,7 +67,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
                         !REF_ATTR_NAME.equals(name)) {
                         host.addMessage(
                             attr.getNameElement(),
-                            XmlErrorLocalize.xmlSchemaValidationAttrNotAllowedWithRef(name).get(),
+                            XmlErrorLocalize.xmlSchemaValidationAttrNotAllowedWithRef(name),
                             ValidationHost.ErrorType.ERROR
                         );
                     }
@@ -84,7 +84,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
                     if (maxOccurs < minOccurs) {
                         host.addMessage(
                             tag.getAttribute(MAX_OCCURS_ATTR_VALUE, null).getValueElement(),
-                            XmlErrorLocalize.xmlSchemaValidationMaxOccursShouldBeNotLessThanMinOccurs().get(),
+                            XmlErrorLocalize.xmlSchemaValidationMaxOccursShouldBeNotLessThanMinOccurs(),
                             ValidationHost.ErrorType.ERROR
                         );
                     }
@@ -97,7 +97,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
             if (!hasRefAttribute && tag.getAttributeValue(NAME_ATTR_NAME) == null) {
                 host.addMessage(
                     tag,
-                    XmlErrorLocalize.xmlSchemaValidationNameOrRefShouldPresent().get(),
+                    XmlErrorLocalize.xmlSchemaValidationNameOrRefShouldPresent(),
                     ValidationHost.ErrorType.ERROR
                 );
             }
@@ -113,7 +113,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
             if (tag.getAttributeValue(REF_ATTR_NAME) == null && tag.getAttributeValue(NAME_ATTR_NAME) == null) {
                 host.addMessage(
                     tag,
-                    XmlErrorLocalize.xmlSchemaValidationNameOrRefShouldPresent().get(),
+                    XmlErrorLocalize.xmlSchemaValidationNameOrRefShouldPresent(),
                     ValidationHost.ErrorType.ERROR
                 );
             }
@@ -121,13 +121,13 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
             if (tag.getAttributeValue(DEFAULT_ATTR_NAME) != null && tag.getAttributeValue(FIXED_ATTR_NAME) != null) {
                 host.addMessage(
                     tag.getAttribute(DEFAULT_ATTR_NAME, null).getNameElement(),
-                    XmlErrorLocalize.xmlSchemaValidationDefaultOrFixedShouldBeSpecifiedButNotBoth().get(),
+                    XmlErrorLocalize.xmlSchemaValidationDefaultOrFixedShouldBeSpecifiedButNotBoth(),
                     ValidationHost.ErrorType.ERROR
                 );
 
                 host.addMessage(
                     tag.getAttribute(FIXED_ATTR_NAME, null).getNameElement(),
-                    XmlErrorLocalize.xmlSchemaValidationDefaultOrFixedShouldBeSpecifiedButNotBoth().get(),
+                    XmlErrorLocalize.xmlSchemaValidationDefaultOrFixedShouldBeSpecifiedButNotBoth(),
                     ValidationHost.ErrorType.ERROR
                 );
             }

@@ -15,21 +15,25 @@
  */
 package consulo.xml.lang.base;
 
-import consulo.language.editor.annotation.*;
+import com.intellij.xml.XmlNSDescriptor;
+import com.intellij.xml.util.XmlTagUtil;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.language.editor.annotation.AnnotationBuilder;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.ExternalAnnotator;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
+import consulo.xml.Validator;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import com.intellij.xml.XmlNSDescriptor;
-import com.intellij.xml.util.XmlTagUtil;
-import consulo.language.editor.intention.IntentionAction;
-import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
-import consulo.util.lang.Trinity;
-import consulo.xml.Validator;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,100 +41,117 @@ import java.util.List;
  * @author ven
  */
 public abstract class XMLBasedExternalAnnotator
-  extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
-  @Nullable
-  @Override
-  public MyHost collectInformation(@Nonnull PsiFile file) {
-    if (!(file instanceof XmlFile)) return null;
-    final XmlDocument document = ((XmlFile)file).getDocument();
-    if (document == null) return null;
-    XmlTag rootTag = document.getRootTag();
-    XmlNSDescriptor nsDescriptor = rootTag == null ? null : rootTag.getNSDescriptor(rootTag.getNamespace(), false);
+    extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
+    @Nullable
+    @Override
+    public MyHost collectInformation(@Nonnull PsiFile file) {
+        if (!(file instanceof XmlFile xmlFile)) {
+            return null;
+        }
+        XmlDocument document = xmlFile.getDocument();
+        if (document == null) {
+            return null;
+        }
+        XmlTag rootTag = document.getRootTag();
+        XmlNSDescriptor nsDescriptor = rootTag == null ? null : rootTag.getNSDescriptor(rootTag.getNamespace(), false);
 
-    if (nsDescriptor instanceof Validator) {
-      //noinspection unchecked
-      MyHost host = new MyHost();
-      ((Validator<XmlDocument>)nsDescriptor).validate(document, host);
-      return host;
+        if (nsDescriptor instanceof Validator validator) {
+            //noinspection unchecked
+            MyHost host = new MyHost();
+            ((Validator<XmlDocument>) validator).validate(document, host);
+            return host;
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Nullable
-  @Override
-  public MyHost doAnnotate(MyHost collectedInfo) {
-    return collectedInfo;
-  }
-
-  @Override
-  public void apply(@Nonnull PsiFile file, MyHost annotationResult, @Nonnull AnnotationHolder holder) {
-    annotationResult.apply(holder);
-  }
-
-  private static void appendFixes(final AnnotationBuilder builder, final IntentionAction... actions) {
-    if (actions != null) {
-      for (IntentionAction action : actions) builder.newFix(action);
+    @Nullable
+    @Override
+    public MyHost doAnnotate(MyHost collectedInfo) {
+        return collectedInfo;
     }
-  }
-
-  static class MyHost implements Validator.ValidationHost {
-    private final List<Trinity<PsiElement, String, ErrorType>> messages = new ArrayList<>();
 
     @Override
-    public void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
-      messages.add(Trinity.create(context, message, type));
+    @RequiredReadAction
+    public void apply(@Nonnull PsiFile file, MyHost annotationResult, @Nonnull AnnotationHolder holder) {
+        annotationResult.apply(holder);
     }
 
-    void apply (AnnotationHolder holder) {
-      for (Trinity<PsiElement, String, ErrorType> message : messages) {
-        addMessageWithFixes(message.first, message.second, message.third, holder);
-      }
+    private static void appendFixes(AnnotationBuilder builder, IntentionAction... actions) {
+        if (actions == null) {
+            return;
+        }
+        for (IntentionAction action : actions) {
+            builder.newFix(action);
+        }
     }
-  }
 
+    static class MyHost implements Validator.ValidationHost {
+        private record Message(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
+        }
 
-  public static void addMessageWithFixes(
-    final PsiElement context,
-    final String message,
-    @Nonnull final Validator.ValidationHost.ErrorType type,
-    AnnotationHolder myHolder,
-    @Nonnull final IntentionAction... fixes
-  ) {
-    if (message != null && !message.isEmpty()) {
-      if (context instanceof XmlTag) {
-        addMessagesForTag((XmlTag)context, message, type, myHolder, fixes);
-      }
-      else {
-        HighlightSeverity severity = type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
-        appendFixes(myHolder.newAnnotation(severity, message).range(context), fixes);
-      }
+        private final List<Message> messages = new ArrayList<>();
+
+        @Override
+        public void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
+            messages.add(new Message(context, message, type));
+        }
+
+        @RequiredReadAction
+        void apply(AnnotationHolder holder) {
+            for (Message message : messages) {
+                addMessageWithFixes(message.context(), message.message(), message.type(), holder);
+            }
+        }
     }
-  }
 
-  private static void addMessagesForTag(
-    XmlTag tag,
-    String message,
-    Validator.ValidationHost.ErrorType type,
-    AnnotationHolder myHolder,
-    IntentionAction... actions
-  ) {
-    XmlToken childByRole = XmlTagUtil.getStartTagNameElement(tag);
-
-    addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
-
-    childByRole = XmlTagUtil.getEndTagNameElement(tag);
-    addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
-  }
-
-  private static void addMessagesForTreeChild(
-    final XmlToken childByRole,
-    final Validator.ValidationHost.ErrorType type,
-    final String message,
-    AnnotationHolder myHolder, IntentionAction... actions
-  ) {
-    if (childByRole != null) {
-      HighlightSeverity severity = type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
-      appendFixes(myHolder.newAnnotation(severity, message).range(childByRole), actions);
+    @RequiredReadAction
+    public static void addMessageWithFixes(
+        PsiElement context,
+        @Nonnull LocalizeValue message,
+        @Nonnull Validator.ValidationHost.ErrorType type,
+        AnnotationHolder myHolder,
+        @Nonnull IntentionAction... fixes
+    ) {
+        if (message != LocalizeValue.empty()) {
+            if (context instanceof XmlTag tag) {
+                addMessagesForTag(tag, message, type, myHolder, fixes);
+            }
+            else {
+                HighlightSeverity severity =
+                    type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
+                appendFixes(myHolder.newOfSeverity(severity, message).range(context), fixes);
+            }
+        }
     }
-  }
+
+    @RequiredReadAction
+    private static void addMessagesForTag(
+        XmlTag tag,
+        @Nonnull LocalizeValue message,
+        Validator.ValidationHost.ErrorType type,
+        AnnotationHolder myHolder,
+        IntentionAction... actions
+    ) {
+        XmlToken childByRole = XmlTagUtil.getStartTagNameElement(tag);
+
+        addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
+
+        childByRole = XmlTagUtil.getEndTagNameElement(tag);
+        addMessagesForTreeChild(childByRole, type, message, myHolder, actions);
+    }
+
+    @RequiredReadAction
+    private static void addMessagesForTreeChild(
+        XmlToken childByRole,
+        Validator.ValidationHost.ErrorType type,
+        @Nonnull LocalizeValue message,
+        AnnotationHolder myHolder,
+        IntentionAction... actions
+    ) {
+        if (childByRole != null) {
+            HighlightSeverity severity =
+                type == Validator.ValidationHost.ErrorType.ERROR ? HighlightSeverity.ERROR : HighlightSeverity.WARNING;
+            appendFixes(myHolder.newOfSeverity(severity, message).range(childByRole), actions);
+        }
+    }
 }

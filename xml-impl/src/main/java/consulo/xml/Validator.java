@@ -13,29 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml;
 
 import consulo.language.psi.PsiElement;
 
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
  */
 public interface Validator<T extends PsiElement> {
-  interface ValidationHost {
-    int WARNING = 0;
-    int ERROR = 1;
-    int INFO = 2;
+    interface ValidationHost {
+        int WARNING = 0;
+        int ERROR = 1;
+        int INFO = 2;
 
-    enum ErrorType {
-      WARNING, ERROR, INFO
+        enum ErrorType {
+            WARNING,
+            ERROR,
+            INFO
+        }
+
+        default void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
+            addMessage(context, LocalizeValue.ofNullable(message), type);
+        }
+
+        void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type);
     }
 
-    void addMessage(PsiElement context, String message, @Nonnull ErrorType type);
-  }
-
-
-  void validate(@Nonnull T context, @Nonnull ValidationHost host);
+    void validate(@Nonnull T context, @Nonnull ValidationHost host);
 }
