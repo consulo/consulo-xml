@@ -56,7 +56,7 @@ class InclusionProvider implements CachedValueProvider<PsiElement[]> {
             true,
             () -> computeInclusion(myXincludeTag)
         );
-        return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+        return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.MODIFICATION_COUNT);
     }
 
     private static XmlTag[] extractXpointer(@Nonnull XmlTag rootTag, @Nullable final String xpointer) {

@@ -179,7 +179,7 @@ public class DomElementAnnotationsManagerImpl extends DomElementAnnotationsManag
           public Result<Boolean> compute() {
             return new Result<>(Boolean.FALSE,
 																element,
-																PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT,
+																PsiModificationTracker.MODIFICATION_COUNT,
 																myModificationTracker,
 																ProjectRootManager.getInstance(myProject));
           }

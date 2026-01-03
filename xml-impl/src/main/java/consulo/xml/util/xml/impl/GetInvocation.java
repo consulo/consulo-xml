@@ -50,7 +50,7 @@ public class GetInvocation implements Invocation
 				{
 					List<Pair<Converter, Object>> list = Lists.newLockFreeCopyOnWriteList();
 					return Result
-							.create(list, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT, domManager, ProjectRootManager.getInstance(project));
+							.create(list, PsiModificationTracker.MODIFICATION_COUNT, domManager, ProjectRootManager.getInstance(project));
 				}
 			}, false));
 		}

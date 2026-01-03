@@ -62,7 +62,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 
 	public DomManager(@Nonnull Project project)
 	{
-		super(PsiManager.getInstance(project).getModificationTracker().getOutOfCodeBlockModificationTracker());
+		super(PsiManager.getInstance(project).getModificationTracker());
 	}
 
 	public abstract Project getProject();

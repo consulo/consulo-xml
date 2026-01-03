@@ -72,7 +72,7 @@ import java.util.*;
 
 public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenceHost {
   private static final Logger LOG = Logger.getInstance(XmlTagImpl.class);
-  @NonNls
+
   private static final String XML_NS_PREFIX = "xml";
   private static final RecursionGuard<String> ourGuard = RecursionManager.createGuard("xmlTag");
   private static final Key<ParameterizedCachedValue<XmlTag[], XmlTagImpl>> SUBTAGS_KEY = Key.create("subtags");
@@ -85,7 +85,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
       final int s = result.size();
       XmlTag[] tags = s > 0 ? result.toArray(new XmlTag[s]) : EMPTY;
-      return CachedValueProvider.Result.create(tags, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT, tag.getContainingFile());
+      return CachedValueProvider.Result.create(tags, PsiModificationTracker.MODIFICATION_COUNT, tag.getContainingFile());
     }
   };
   private static final Comparator<TextRange> RANGE_COMPARATOR = (range1, range2) -> range1.getStartOffset() - range2.getStartOffset();
