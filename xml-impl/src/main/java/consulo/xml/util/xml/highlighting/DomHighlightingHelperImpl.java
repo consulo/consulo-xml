@@ -152,7 +152,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
                     element.getStringValue(),
                     ConvertContextFactory.createConvertContext(DomManagerImpl.getDomInvocationHandler(element))
                 );
-                if (errorMessage != LocalizeValue.of()) {
+                if (errorMessage.isNotEmpty()) {
                     list.add(holder.createProblem(element, errorMessage.get()));
                 }
             }

@@ -486,7 +486,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
                             .computeSafeIfAny(fixProvider -> fixProvider.createFixes(attribute));
                         if (fixes != null) {
                             for (IntentionAction action : fixes) {
-                                highlightInfo.registerFix(action, null, LocalizeValue.of(), null, null);
+                                highlightInfo.registerFix(action);
                             }
                         }
                     }
@@ -717,10 +717,14 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         @Nonnull ErrorType type,
         @Nonnull IntentionAction... fixes
     ) {
-        if (message != LocalizeValue.empty()) {
+        if (message.isNotEmpty()) {
             PsiFile containingFile = context.getContainingFile();
-            HighlightInfoType defaultInfoType =
-                type == ErrorType.ERROR ? HighlightInfoType.ERROR : type == ErrorType.WARNING ? HighlightInfoType.WARNING : HighlightInfoType.WEAK_WARNING;
+
+            HighlightInfoType defaultInfoType = switch (type) {
+                case ERROR -> HighlightInfoType.ERROR;
+                case WARNING -> HighlightInfoType.WARNING;
+                default -> HighlightInfoType.WEAK_WARNING;
+            };
 
             if (context instanceof XmlTag tag && XmlExtension.getExtension(containingFile).shouldBeHighlightedAsTag(tag)) {
                 addElementsForTagWithManyQuickFixes(tag, message, defaultInfoType, fixes);
@@ -736,8 +740,10 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
                     highlightInfo = HighlightInfo.newHighlightInfo(defaultInfoType).range(range).descriptionAndTooltip(message).create();
                 }
                 else {
-                    highlightInfo =
-                        HighlightInfo.newHighlightInfo(HighlightInfoType.WRONG_REF).range(context).descriptionAndTooltip(message).create();
+                    highlightInfo = HighlightInfo.newHighlightInfo(HighlightInfoType.WRONG_REF)
+                        .range(context)
+                        .descriptionAndTooltip(message)
+                        .create();
                 }
 
                 for (IntentionAction quickFixAction : fixes) {

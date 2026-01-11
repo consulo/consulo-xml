@@ -112,7 +112,7 @@ public abstract class XMLBasedExternalAnnotator
         AnnotationHolder myHolder,
         @Nonnull IntentionAction... fixes
     ) {
-        if (message != LocalizeValue.empty()) {
+        if (message.isNotEmpty()) {
             if (context instanceof XmlTag tag) {
                 addMessagesForTag(tag, message, type, myHolder, fixes);
             }

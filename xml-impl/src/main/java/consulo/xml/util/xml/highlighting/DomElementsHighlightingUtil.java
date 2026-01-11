@@ -83,7 +83,7 @@ public class DomElementsHighlightingUtil {
                 HighlightSeverity severity = problemDescriptor.getHighlightSeverity();
 
                 TextRange range = s.first;
-                if (text == LocalizeValue.empty()) {
+                if (text.isEmpty()) {
                     range = TextRange.from(range.getStartOffset(), 0);
                 }
                 range = range.shiftRight(s.second.getTextRange().getStartOffset());
@@ -104,9 +104,7 @@ public class DomElementsHighlightingUtil {
     }
 
     private static Annotation createAnnotation(HighlightSeverity severity, TextRange range, @Nonnull LocalizeValue text) {
-        LocalizeValue tooltip = text == LocalizeValue.empty()
-            ? LocalizeValue.empty()
-            : text.map((localizeManager, string) -> "<html><body>" + XmlStringUtil.escapeString(string) + "</body></html>");
+        LocalizeValue tooltip = text.map(string -> "<html><body>" + XmlStringUtil.escapeString(string) + "</body></html>");
         return new Annotation(range.getStartOffset(), range.getEndOffset(), severity, text, tooltip, XMLLanguage.INSTANCE);
     }
 

@@ -66,13 +66,13 @@ abstract class CommonAnnotationHolder<C> {
     @Override
     public Annotation createAnnotation(T element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message) {
       if (severity == HighlightSeverity.ERROR) {
-        return myHolder.createErrorAnnotation(element, message == LocalizeValue.of() ? null : message.get());
+        return myHolder.createErrorAnnotation(element, message.getNullIfEmpty());
       } else if (severity == HighlightSeverity.WARNING) {
-        return myHolder.createWarningAnnotation(element, message == LocalizeValue.of() ? null : message.get());
+        return myHolder.createWarningAnnotation(element, message.getNullIfEmpty());
       } else if (severity == HighlightSeverity.WEAK_WARNING) {
-        return myHolder.createWeakWarningAnnotation(element, message == LocalizeValue.of() ? null : message.get());
+        return myHolder.createWeakWarningAnnotation(element, message.getNullIfEmpty());
       } else {
-        return myHolder.createInfoAnnotation(element, message == LocalizeValue.of() ? null : message.get());
+        return myHolder.createInfoAnnotation(element, message.getNullIfEmpty());
       }
     }
   }

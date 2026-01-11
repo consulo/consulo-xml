@@ -32,7 +32,7 @@ public abstract class BaseXmlEntitiesInspectionState<E> implements InspectionToo
 
   // only for serialize
   public BaseXmlEntitiesInspectionState() {
-    myLabelText = LocalizeValue.of();
+    myLabelText = LocalizeValue.empty();
     myEntities = new String[0];
   }
 
