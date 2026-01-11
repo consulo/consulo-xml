@@ -101,7 +101,7 @@ public final class ModelAnnotator implements Annotator, DomElementsAnnotator {
 
         @SuppressWarnings({"unchecked"})
         private void createGutterAnnotation(CommonElement t, GutterIconRenderer renderer) {
-            final Annotation a = myHolder.createAnnotation((T)t, HighlightSeverity.INFORMATION, LocalizeValue.of());
+            final Annotation a = myHolder.createAnnotation((T) t, HighlightSeverity.INFORMATION, LocalizeValue.empty());
             a.setGutterIconRenderer(renderer);
         }
 

@@ -14,7 +14,7 @@ public class HtmlUnknownTagInspectionState extends BaseHtmlEntitiesInspectionSta
   private static final String[] ourDefaultValues = {"nobr", "noembed", "comment", "noscript", "embed", "script"};
 
   public HtmlUnknownTagInspectionState() {
-    super(LocalizeValue.of(), ourDefaultValues);
+    super(LocalizeValue.empty(), ourDefaultValues);
   }
 
   public HtmlUnknownTagInspectionState(@Nonnull LocalizeValue labelText) {

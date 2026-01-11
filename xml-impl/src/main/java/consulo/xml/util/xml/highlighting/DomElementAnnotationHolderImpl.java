@@ -151,8 +151,8 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
         LOG.assertTrue(xmlElement != null, "No XML element for " + element);
         TextRange range = xmlElement.getTextRange();
         int startOffset = range.getStartOffset();
-        int endOffset = message == LocalizeValue.of() ? startOffset : range.getEndOffset();
-        Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.of(), XMLLanguage.INSTANCE);
+        int endOffset = message.isEmpty() ? startOffset : range.getEndOffset();
+        Annotation annotation = new Annotation(startOffset, endOffset, severity, message, LocalizeValue.empty(), XMLLanguage.INSTANCE);
         myAnnotations.add(annotation);
         return annotation;
     }
