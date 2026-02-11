@@ -21,11 +21,16 @@ import consulo.language.editor.intention.ErrorQuickFixProvider;
 import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
+import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 
 @ExtensionImpl
 public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
+    private static final LazyValue<LocalizeValue> UNESCAPED_AMPERSAND_KEY =
+        LazyValue.notNull(XmlErrorLocalize::unescapedAmpersandOrNonterminatedCharacterEntityReference);
+
     @Override
     @RequiredReadAction
     public void registerErrorQuickFix(PsiErrorElement element, HighlightInfo.Builder builder) {
@@ -35,7 +40,7 @@ public class XmlErrorQuickFixProvider implements ErrorQuickFixProvider {
     }
 
     private static void registerXmlErrorQuickFix(PsiErrorElement element, HighlightInfo.Builder builder) {
-        if (XmlErrorLocalize.unescapedAmpersandOrNonterminatedCharacterEntityReference().equals(element.getErrorDescriptionValue())) {
+        if (UNESCAPED_AMPERSAND_KEY.get().equals(element.getErrorDescriptionValue())) {
             builder.registerFix(new UnescapeAction(element));
         }
     }
