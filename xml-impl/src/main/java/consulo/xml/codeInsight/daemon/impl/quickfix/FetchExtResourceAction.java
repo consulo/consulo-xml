@@ -495,7 +495,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
                 .connect(request -> {
                     FetchResult result = new FetchResult();
                     result.bytes = request.readBytes(indicator);
-                    result.contentType = request.getConnection().getContentType();
+                    result.contentType = request.getContentType();
                     return result;
                 });
         }
