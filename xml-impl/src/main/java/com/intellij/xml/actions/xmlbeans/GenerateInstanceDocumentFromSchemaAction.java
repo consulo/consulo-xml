@@ -91,7 +91,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
         if (!(file instanceof XmlFile)) {
             Messages.showErrorDialog(
                 project,
-                "This is not XmlFile" + (file == null ? "" : " (" + file.getFileType().getName() + ")"),
+                "This is not XmlFile" + (file == null ? "" : " (" + file.getFileType().getDisplayName() + ")"),
                 XmlLocalize.error().get()
             );
             return;
