@@ -157,11 +157,6 @@ public class DomUIFactoryImpl extends DomUIFactory {
                                                 .instantiateMainPasses(psiFile, document)
                                                 .toArray(HighlightingPass.EMPTY_ARRAY);
       }
-
-      @Nonnull
-      public HighlightingPass[] createPassesForVisibleArea() {
-        return createPassesForEditor();
-      }
     };
 
   }

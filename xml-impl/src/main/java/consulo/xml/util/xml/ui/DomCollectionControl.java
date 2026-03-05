@@ -18,7 +18,7 @@ package consulo.xml.util.xml.ui;
 import consulo.application.Application;
 import consulo.application.Result;
 import consulo.dataContext.DataSink;
-import consulo.dataContext.TypeSafeDataProvider;
+import consulo.dataContext.UiDataProvider;
 import consulo.language.editor.WriteCommandAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
@@ -53,7 +53,7 @@ import java.util.Set;
 /**
  * @author peter
  */
-public class DomCollectionControl<T extends DomElement> extends DomUIControl implements Highlightable, TypeSafeDataProvider {
+public class DomCollectionControl<T extends DomElement> extends DomUIControl implements Highlightable, UiDataProvider {
     private static final Key<DomCollectionControl> DOM_COLLECTION_CONTROL = Key.create("DomCollectionControl");
 
     private final EventDispatcher<CommitListener> myDispatcher = EventDispatcher.create(CommitListener.class);
@@ -146,10 +146,8 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
     }
 
     @Override
-    public void calcData(Key<?> key, DataSink sink) {
-        if (DOM_COLLECTION_CONTROL.equals(key)) {
-            sink.put(DOM_COLLECTION_CONTROL, this);
-        }
+    public void uiDataSnapshot(@Nonnull DataSink dataSink) {
+        dataSink.set(DOM_COLLECTION_CONTROL, this);
     }
 
     @Nullable
