@@ -29,8 +29,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Mike
@@ -243,7 +242,7 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 	}
 
 	@Override
-	public void accept(@Nonnull PsiElementVisitor visitor)
+	public void accept(PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -270,7 +269,6 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 	}
 
 	@Override
-	@Nonnull
 	public PsiReference[] getReferences()
 	{
 		final PsiElement dtdUrlElement = getDtdUrlElement();
@@ -291,7 +289,6 @@ public class XmlDoctypeImpl extends XmlElementImpl implements XmlDoctype
 		return new URLReference(XmlDoctypeImpl.this)
 		{
 			@Override
-			@Nonnull
 			public String getCanonicalText()
 			{
 				return extractValue(dtdUrlElement);

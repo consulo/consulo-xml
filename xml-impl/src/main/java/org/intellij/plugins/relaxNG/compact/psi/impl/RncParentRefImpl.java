@@ -23,8 +23,7 @@ import consulo.language.psi.PsiFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.RncParentRef;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -42,7 +41,7 @@ public class RncParentRefImpl extends RncRefImpl implements RncParentRef {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitParentRef(this);
   }
 

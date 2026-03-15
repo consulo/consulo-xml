@@ -24,7 +24,6 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author ven
@@ -32,15 +31,14 @@ import jakarta.annotation.Nonnull;
 public abstract class XmlBasedFindUsagesProvider implements FindUsagesProvider
 {
 	@Override
-	public boolean canFindUsagesFor(@Nonnull PsiElement element)
+	public boolean canFindUsagesFor(PsiElement element)
 	{
 		return element instanceof XmlElementDecl || element instanceof XmlAttributeDecl || element instanceof XmlEntityDecl || element instanceof XmlTag || element instanceof XmlAttributeValue ||
 				element instanceof PsiFile || element instanceof XmlComment;
 	}
 
 	@Override
-	@Nonnull
-	public String getType(@Nonnull PsiElement element)
+	public String getType(PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{
@@ -79,8 +77,7 @@ public abstract class XmlBasedFindUsagesProvider implements FindUsagesProvider
 	}
 
 	@Override
-	@Nonnull
-	public String getDescriptiveName(@Nonnull PsiElement element)
+	public String getDescriptiveName(PsiElement element)
 	{
 		if(element instanceof XmlTag)
 		{
@@ -100,8 +97,7 @@ public abstract class XmlBasedFindUsagesProvider implements FindUsagesProvider
 	}
 
 	@Override
-	@Nonnull
-	public String getNodeText(@Nonnull PsiElement element, boolean useFullName)
+	public String getNodeText(PsiElement element, boolean useFullName)
 	{
 		if(element instanceof XmlTag)
 		{

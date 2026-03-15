@@ -24,8 +24,7 @@ import consulo.language.impl.psi.template.TemplateDataElementType;
 import consulo.xml.psi.impl.source.tree.HtmlFileElement;
 import consulo.xml.psi.impl.source.tree.XmlFileElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static consulo.xml.psi.xml.XmlElementType.*;
 
@@ -35,7 +34,6 @@ import static consulo.xml.psi.xml.XmlElementType.*;
  */
 @ExtensionImpl
 public class XmlASTLazyFactory implements ASTLazyFactory {
-  @Nonnull
   @Override
   public LazyParseableElement createLazy(ILazyParseableElementType type, CharSequence text) {
     if (type == XML_FILE) {

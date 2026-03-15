@@ -8,7 +8,6 @@ import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -23,13 +22,11 @@ public class XHtmlSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighl
     myApplication = application;
   }
 
-  @Nonnull
   @Override
   protected SyntaxHighlighter createHighlighter() {
     return new XHtmlFileHighlighter(myApplication);
   }
 
-  @Nonnull
   @Override
   public Language getLanguage() {
     return XHTMLLanguage.INSTANCE;

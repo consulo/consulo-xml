@@ -25,10 +25,8 @@ import consulo.project.Project;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -49,8 +47,7 @@ public abstract class XmlElementFactory
 	 * @return the created element.
 	 * @throws IncorrectOperationException if the creation failed for some reason.
 	 */
-	@Nonnull
-	public abstract XmlText createDisplayText(@Nonnull @NonNls String s) throws IncorrectOperationException;
+	public abstract XmlText createDisplayText(String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XHTML tag with the specified text.
@@ -59,8 +56,7 @@ public abstract class XmlElementFactory
 	 * @return the created tag instance.
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 */
-	@Nonnull
-	public abstract XmlTag createXHTMLTagFromText(@Nonnull @NonNls String s) throws IncorrectOperationException;
+	public abstract XmlTag createXHTMLTagFromText(String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an HTML tag with the specified text.
@@ -69,8 +65,7 @@ public abstract class XmlElementFactory
 	 * @return the created tag instance.
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 */
-	@Nonnull
-	public abstract XmlTag createHTMLTagFromText(@Nonnull @NonNls String s) throws IncorrectOperationException;
+	public abstract XmlTag createHTMLTagFromText(String s) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XML tag with the specified text.
@@ -80,8 +75,7 @@ public abstract class XmlElementFactory
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence text, Language language)
 	 */
-	@Nonnull
-	public abstract XmlTag createTagFromText(@Nonnull @NonNls CharSequence text) throws IncorrectOperationException;
+	public abstract XmlTag createTagFromText(CharSequence text) throws IncorrectOperationException;
 
 	/**
 	 * Creates XML like tag with the specified text and language.
@@ -92,8 +86,7 @@ public abstract class XmlElementFactory
 	 * @throws IncorrectOperationException if the text does not specify a valid XML fragment.
 	 * @see #createTagFromText(CharSequence)
 	 */
-	@Nonnull
-	public abstract XmlTag createTagFromText(@Nonnull @NonNls CharSequence text, @Nonnull Language language) throws IncorrectOperationException;
+	public abstract XmlTag createTagFromText(CharSequence text, Language language) throws IncorrectOperationException;
 
 	/**
 	 * Creates an XML attribute with the specified name and value.
@@ -103,8 +96,7 @@ public abstract class XmlElementFactory
 	 * @return the created attribute instance.
 	 * @throws IncorrectOperationException if either {@code name} or {@code value} are not valid.
 	 */
-	@Nonnull
-	public abstract XmlAttribute createXmlAttribute(@Nonnull @NonNls String name, @Nonnull String value) throws consulo.language.util.IncorrectOperationException;
+	public abstract XmlAttribute createXmlAttribute(String name, String value) throws consulo.language.util.IncorrectOperationException;
 
 	/**
 	 * Creates an attribute with the specified name and value  with given context.
@@ -115,6 +107,5 @@ public abstract class XmlElementFactory
 	 * @return the created attribute instance.
 	 * @throws IncorrectOperationException if either {@code name} or {@code value} are not valid.
 	 */
-	@Nonnull
-	public abstract XmlAttribute createAttribute(@Nonnull @NonNls String name, @Nonnull String value, @Nullable PsiElement context) throws IncorrectOperationException;
+	public abstract XmlAttribute createAttribute(String name, String value, @Nullable PsiElement context) throws IncorrectOperationException;
 }

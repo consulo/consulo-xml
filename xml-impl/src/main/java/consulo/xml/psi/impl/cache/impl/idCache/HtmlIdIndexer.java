@@ -23,7 +23,6 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class HtmlIdIndexer extends LexerBasedIdIndexer {
@@ -35,7 +34,6 @@ public class HtmlIdIndexer extends LexerBasedIdIndexer {
     return new XHtmlFilterLexer(new HtmlHighlightingLexer(), consumer);
   }
 
-  @Nonnull
   @Override
   public FileType getFileType() {
     return HtmlFileType.INSTANCE;

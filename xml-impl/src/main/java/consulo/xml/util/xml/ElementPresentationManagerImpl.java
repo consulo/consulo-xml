@@ -21,7 +21,6 @@ import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +33,6 @@ import java.util.function.Function;
 @ServiceImpl
 public class ElementPresentationManagerImpl extends ElementPresentationManager {
 
-  @Nonnull
   public <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags) {
     List<Object> result = new ArrayList<Object>(elements.size());
     for (T element : elements) {

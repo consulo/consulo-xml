@@ -19,42 +19,39 @@ import consulo.component.util.ModificationTracker;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface ExternalResourceManager extends ModificationTracker
 {
 	@Deprecated
-	@Nonnull
 	public static ApplicationExternalResourceManager getInstance()
 	{
 		return ApplicationExternalResourceManager.getInstance();
 	}
 
-	void addResource(@Nonnull @NonNls String url, @NonNls String location);
+	void addResource(String url, String location);
 
-	void addResource(@Nonnull @NonNls String url, @NonNls @Nullable String version, @NonNls String location);
+	void addResource(String url, @Nullable String version, String location);
 
-	void removeResource(@Nonnull String url);
+	void removeResource(String url);
 
-	void removeResource(@Nonnull String url, @Nullable String version);
+	void removeResource(String url, @Nullable String version);
 
 	/**
 	 * @see #getResourceLocation(String, Project)
 	 */
 	@Deprecated
-	String getResourceLocation(@Nonnull @NonNls String url);
+	String getResourceLocation(String url);
 
-	String getResourceLocation(@Nonnull @NonNls String url, @Nullable String version);
+	String getResourceLocation(String url, @Nullable String version);
 
-	String getResourceLocation(@Nonnull @NonNls String url, @Nonnull Project project);
+	String getResourceLocation(String url, Project project);
 
 	@Nullable
-	PsiFile getResourceLocation(@Nonnull @NonNls String url, @Nonnull PsiFile baseFile, @Nullable String version);
+	PsiFile getResourceLocation(String url, PsiFile baseFile, @Nullable String version);
 
 	String[] getResourceUrls(@Nullable FileType fileType, boolean includeStandard);
 
-	String[] getResourceUrls(@Nullable FileType fileType, @NonNls @Nullable String version, boolean includeStandard);
+	String[] getResourceUrls(@Nullable FileType fileType, @Nullable String version, boolean includeStandard);
 }

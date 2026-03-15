@@ -34,8 +34,7 @@ import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -70,19 +69,17 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     private static final XmlUtil.DuplicationInfoProvider<XmlElementDecl> XML_ELEMENT_DECL_PROVIDER =
         new XmlUtil.DuplicationInfoProvider<>() {
             @Override
-            public String getName(@Nonnull final XmlElementDecl psiElement) {
+            public String getName(final XmlElementDecl psiElement) {
                 return psiElement.getName();
             }
 
             @Override
-            @Nonnull
-            public String getNameKey(@Nonnull final XmlElementDecl psiElement, @Nonnull final String name) {
+            public String getNameKey(final XmlElementDecl psiElement, final String name) {
                 return name;
             }
 
             @Override
-            @Nonnull
-            public PsiElement getNodeForMessage(@Nonnull final XmlElementDecl psiElement) {
+            public PsiElement getNodeForMessage(final XmlElementDecl psiElement) {
                 return psiElement.getNameElement();
             }
         };
@@ -135,13 +132,12 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     }
 
     @Override
-    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
         String name = tag.getName();
         return getElementDescriptor(name);
     }
 
     @Override
-    @Nonnull
     public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
         // Suggest more appropriate variant if DOCTYPE <element_name> exists
         final XmlProlog prolog = document != null ? document.getProlog() : null;
@@ -203,7 +199,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     }
 
     @Override
-    public void validate(@Nonnull XmlDocument document, @Nonnull ValidationHost host) {
+    public void validate(XmlDocument document, ValidationHost host) {
         if (document.getLanguage() == DTDLanguage.INSTANCE) {
             final List<XmlElementDecl> decls = new ArrayList<>(3);
 

@@ -23,7 +23,6 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:valueElemType interface.
@@ -35,7 +34,6 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the simple content.
    */
-  @Nonnull
   @Required
   String getValue();
 
@@ -44,7 +42,7 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @param value the new value to set
    */
-  void setValue(@Nonnull String value);
+  void setValue(String value);
 
 
   /**
@@ -52,6 +50,5 @@ public interface RngValue extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the type child.
    */
-  @Nonnull
   GenericAttributeValue<String> getType();
 }

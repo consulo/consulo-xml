@@ -28,8 +28,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ import java.util.List;
  */
 @ExtensionImpl
 public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTool {
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
@@ -47,12 +45,12 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
     @Override
     @RequiredReadAction
     public void checkFile(
-        @Nonnull PsiFile file,
-        @Nonnull InspectionManager manager,
-        @Nonnull ProblemsHolder problemsHolder,
-        @Nonnull GlobalInspectionContext globalContext,
-        @Nonnull ProblemDescriptionsProcessor problemDescriptionsProcessor,
-        @Nonnull Object state
+        PsiFile file,
+        InspectionManager manager,
+        ProblemsHolder problemsHolder,
+        GlobalInspectionContext globalContext,
+        ProblemDescriptionsProcessor problemDescriptionsProcessor,
+        Object state
     ) {
         HighlightInfoHolder myHolder = new HighlightInfoHolder(file, List.of()) {
             @Override
@@ -96,19 +94,16 @@ public class XmlHighlightVisitorBasedInspection extends GlobalSimpleInspectionTo
         return true;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return InspectionLocalize.inspectionGeneralToolsGroupName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return LocalizeValue.localizeTODO("XML highlighting");
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "XmlHighlighting";

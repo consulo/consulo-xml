@@ -25,18 +25,16 @@ import consulo.language.util.LanguageUtil;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 import java.util.Collection;
 
 public class HtmlScriptLanguageInjector implements MultiHostInjector {
-  @Nonnull
   @Override
   public Class<? extends PsiElement> getElementClass() {
     return XmlText.class;
   }
 
   @Override
-  public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host) {
+  public void injectLanguages(MultiHostRegistrar registrar, PsiElement host) {
     if (!(host instanceof XmlText)) {
       return;
     }

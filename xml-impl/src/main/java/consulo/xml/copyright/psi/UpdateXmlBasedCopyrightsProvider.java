@@ -28,7 +28,6 @@ import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 
 /**
@@ -42,7 +41,7 @@ public abstract class UpdateXmlBasedCopyrightsProvider extends UpdateCopyrightsP
   public static final int LOCATION_BEFORE_ROOTTAG = 2;
 
   public static class UpdateXmlFileCopyright extends UpdatePsiFileCopyright {
-    protected UpdateXmlFileCopyright(@Nonnull PsiFile psiFile, @Nonnull CopyrightProfile copyrightProfile) {
+    protected UpdateXmlFileCopyright(PsiFile psiFile, CopyrightProfile copyrightProfile) {
       super(psiFile, copyrightProfile);
     }
 
@@ -160,13 +159,11 @@ public abstract class UpdateXmlBasedCopyrightsProvider extends UpdateCopyrightsP
     private static final Logger logger = Logger.getInstance(UpdateXmlFileCopyright.class);
   }
 
-  @Nonnull
   @Override
-  public UpdatePsiFileCopyright createInstance(@Nonnull PsiFile file, @Nonnull CopyrightProfile copyrightProfile) {
+  public UpdatePsiFileCopyright createInstance(PsiFile file, CopyrightProfile copyrightProfile) {
     return new UpdateXmlFileCopyright(file, copyrightProfile);
   }
 
-  @Nonnull
   @Override
   public CopyrightFileConfig createDefaultOptions() {
     CopyrightFileConfig copyrightFileConfig = new CopyrightFileConfig();
@@ -174,12 +171,11 @@ public abstract class UpdateXmlBasedCopyrightsProvider extends UpdateCopyrightsP
     return copyrightFileConfig;
   }
 
-  @Nonnull
   @Override
-  public TemplateCommentPanel createConfigurable(@Nonnull Project project, @Nonnull TemplateCommentPanel parentPane, @Nonnull FileType fileType) {
+  public TemplateCommentPanel createConfigurable(Project project, TemplateCommentPanel parentPane, FileType fileType) {
     return new TemplateCommentPanel(fileType, parentPane, project) {
       @Override
-      public void addAdditionalComponents(@Nonnull JPanel additionalPanel) {
+      public void addAdditionalComponents(JPanel additionalPanel) {
         addLocationInFile(LOCATIONS_IN_FILE);
       }
     };

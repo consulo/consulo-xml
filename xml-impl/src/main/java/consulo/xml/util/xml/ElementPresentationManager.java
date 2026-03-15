@@ -29,8 +29,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -61,19 +60,16 @@ public abstract class ElementPresentationManager
 		return ServiceManager.getService(ElementPresentationManager.class);
 	}
 
-	@Nonnull
 	public <T> Object[] createVariants(Collection<T> elements)
 	{
 		return createVariants(elements, (Function<T, String>) DEFAULT_NAMER);
 	}
 
-	@Nonnull
 	public <T> Object[] createVariants(Collection<T> elements, int iconFlags)
 	{
 		return createVariants(elements, (Function<T, String>) DEFAULT_NAMER, iconFlags);
 	}
 
-	@Nonnull
 	public <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer)
 	{
 		return createVariants(elements, namer, 0);
@@ -85,7 +81,6 @@ public abstract class ElementPresentationManager
 	@Deprecated
 	public abstract Object createVariant(final Object variant, final String name, final PsiElement psiElement);
 
-	@Nonnull
 	public abstract <T> Object[] createVariants(Collection<T> elements, Function<T, String> namer, int iconFlags);
 
 	public static <T> Function<T, String> NAMER()
@@ -155,7 +150,7 @@ public abstract class ElementPresentationManager
 		return TypePresentationService.getDefaultTypeName(o.getClass());
 	}
 
-	public static Image getIcon(@Nonnull Object o)
+	public static Image getIcon(Object o)
 	{
 		if(o instanceof Iconable)
 		{

@@ -35,8 +35,7 @@ import consulo.xml.ide.highlighter.XmlLikeFileType;
 import consulo.xml.psi.tree.xml.IXmlLeafElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -180,7 +179,7 @@ public abstract class XmlBaseBraceMatcher implements XmlAwareBraceMatcher, Virtu
             tokenType == XmlTokenType.XML_TAG_END && isFileTypeWithSingleHtmlTags(fileType) && isEndOfSingleHtmlTag(text, iterator);
     }
 
-    public boolean isPairedBracesAllowedBeforeType(@Nonnull final IElementType lbraceType, @Nullable final IElementType contextType) {
+    public boolean isPairedBracesAllowedBeforeType(final IElementType lbraceType, @Nullable final IElementType contextType) {
         return true;
     }
 
@@ -292,7 +291,7 @@ public abstract class XmlBaseBraceMatcher implements XmlAwareBraceMatcher, Virtu
         return tokenType1 == TokenType.WHITE_SPACE;
     }
 
-    public IElementType getOppositeBraceTokenType(@Nonnull final IElementType type) {
+    public IElementType getOppositeBraceTokenType(final IElementType type) {
         PairedBraceMatcher matcher = PairedBraceMatcher.forLanguage(type.getLanguage());
         if (matcher != null) {
             BracePair[] pairs = matcher.getPairs();

@@ -25,14 +25,12 @@ import consulo.language.codeStyle.ui.setting.CodeStyleAbstractConfigurable;
 import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.localize.LocalizeValue;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
  */
 @ExtensionImpl
 public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
-    @Nonnull
     @Override
     public Configurable createSettingsPage(CodeStyleSettings settings, CodeStyleSettings originalSettings) {
         return new CodeStyleAbstractConfigurable(settings, originalSettings, ApplicationLocalize.titleXml()) {
@@ -48,7 +46,6 @@ public class XmlCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
         };
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getConfigurableDisplayName() {
         return ApplicationLocalize.titleXml();

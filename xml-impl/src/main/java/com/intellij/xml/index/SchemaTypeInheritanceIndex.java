@@ -30,7 +30,6 @@ import consulo.util.collection.MultiMap;
 import consulo.util.io.Readers;
 import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
-import jakarta.annotation.Nonnull;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -96,19 +95,16 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
         return 1;
     }
 
-    @Nonnull
     @Override
     public ID<String, Set<SchemaTypeInfo>> getName() {
         return NAME;
     }
 
-    @Nonnull
     @Override
     public DataIndexer<String, Set<SchemaTypeInfo>, FileContent> getIndexer() {
         return new DataIndexer<>() {
-            @Nonnull
             @Override
-            public Map<String, Set<SchemaTypeInfo>> map(@Nonnull FileContent inputData) {
+            public Map<String, Set<SchemaTypeInfo>> map(FileContent inputData) {
                 final Map<String, Set<SchemaTypeInfo>> map = new HashMap<>();
                 final MultiMap<SchemaTypeInfo, SchemaTypeInfo> multiMap =
                     XsdComplexTypeInfoBuilder.parse(Readers.readerFromCharSequence(inputData.getContentAsText()));
@@ -123,12 +119,11 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
         };
     }
 
-    @Nonnull
     @Override
     public DataExternalizer<Set<SchemaTypeInfo>> getValueExternalizer() {
         return new DataExternalizer<>() {
             @Override
-            public void save(@Nonnull DataOutput out, Set<SchemaTypeInfo> value) throws IOException {
+            public void save(DataOutput out, Set<SchemaTypeInfo> value) throws IOException {
                 DataInputOutputUtil.writeINT(out, value.size());
                 for (SchemaTypeInfo key : value) {
                     IOUtil.writeUTF(out, key.getNamespaceUri());
@@ -138,7 +133,7 @@ public class SchemaTypeInheritanceIndex extends XmlIndex<Set<SchemaTypeInfo>> {
             }
 
             @Override
-            public Set<SchemaTypeInfo> read(@Nonnull DataInput in) throws IOException {
+            public Set<SchemaTypeInfo> read(DataInput in) throws IOException {
                 final Set<SchemaTypeInfo> set = new HashSet<>();
                 final int size = DataInputOutputUtil.readINT(in);
                 for (int i = 0; i < size; i++) {

@@ -15,8 +15,7 @@
  */
 package consulo.xml.ide.structureView.impl.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
@@ -45,13 +44,12 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	};
 	private static final Sorter[] SORTERS = {Sorter.ALPHA_SORTER};
 
-	public XmlStructureViewTreeModel(@Nonnull XmlFile file, @Nullable Editor editor)
+	public XmlStructureViewTreeModel(XmlFile file, @Nullable Editor editor)
 	{
 		super(editor, file);
 	}
 
 	@Override
-	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		XmlFile myFile = getPsiFile();
@@ -75,7 +73,6 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	}
 
 	@Override
-	@Nonnull
 	protected Class[] getSuitableClasses()
 	{
 		return CLASSES;
@@ -100,7 +97,6 @@ public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 	}
 
 	@Override
-	@Nonnull
 	public Sorter[] getSorters()
 	{
 		return SORTERS;

@@ -15,14 +15,12 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public interface GenericDomValue<T> extends DomElement, MutableGenericValue<T>{
 
-  @Nonnull
   Converter<T> getConverter();
 
   @TagValue

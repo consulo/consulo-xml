@@ -20,7 +20,6 @@ import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.language.psi.stub.StubInputStream;
 import consulo.language.psi.stub.StubOutputStream;
 
-import jakarta.annotation.Nonnull;
 
 import java.io.IOException;
 
@@ -29,27 +28,25 @@ import java.io.IOException;
  * @since 2012-08-03
  */
 public class AttributeStubSerializer implements ObjectStubSerializer<AttributeStub, ElementStub> {
-  @Nonnull
   @Override
   public String getExternalId() {
     return "xml.AttributeStub";
   }
 
   @Override
-  public void serialize(@Nonnull AttributeStub stub, @Nonnull StubOutputStream dataStream) throws IOException {
+  public void serialize(AttributeStub stub, StubOutputStream dataStream) throws IOException {
     dataStream.writeName(stub.getName());
     dataStream.writeName(stub.getNamespaceKey());
     dataStream.writeUTFFast(stub.getValue() == null ? "" : stub.getValue());
   }
 
-  @Nonnull
   @Override
-  public AttributeStub deserialize(@Nonnull StubInputStream dataStream, ElementStub parentStub) throws IOException {
+  public AttributeStub deserialize(StubInputStream dataStream, ElementStub parentStub) throws IOException {
     return new AttributeStub(parentStub, dataStream.readName(), dataStream.readName(), dataStream.readUTFFast());
   }
 
   @Override
-  public void indexStub(@Nonnull AttributeStub stub, @Nonnull IndexSink sink) {
+  public void indexStub(AttributeStub stub, IndexSink sink) {
   }
 
   @Override

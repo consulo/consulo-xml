@@ -35,9 +35,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +45,7 @@ import java.util.Map;
  */
 public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef
 {
-	@NonNls
 	private static final String GT_ENTITY = "&gt;";
-	@NonNls
 	private static final String QUOT_ENTITY = "&quot;";
 
 	public XmlEntityRefImpl()
@@ -121,7 +117,7 @@ public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef
 				PsiElementProcessor processor = new PsiElementProcessor()
 				{
 					@Override
-					public boolean execute(@Nonnull PsiElement element)
+					public boolean execute(PsiElement element)
 					{
 						if(element instanceof XmlDoctype)
 						{
@@ -255,14 +251,13 @@ public class XmlEntityRefImpl extends XmlElementImpl implements XmlEntityRef
 	}
 
 	@Override
-	@Nonnull
 	public PsiReference[] getReferences()
 	{
 		return ReferenceProvidersRegistry.getReferencesFromProviders(this);
 	}
 
 	@Override
-	public void accept(@Nonnull PsiElementVisitor visitor)
+	public void accept(PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{

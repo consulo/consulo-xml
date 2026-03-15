@@ -20,7 +20,6 @@ import consulo.util.jdom.JDOMUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jetbrains.annotations.NonNls;
 
 import java.io.IOException;
 import java.util.*;
@@ -34,55 +33,38 @@ public class HtmlDescriptorsTable {
     private static final HashMap<String, HtmlTagDescriptor> ourTagTable = new HashMap<>();
     private static final HashMap<String, HtmlAttributeDescriptor> ourAttributeTable = new HashMap<>();
 
-    @NonNls
     public static final String HTMLTABLE_RESOURCE_NAME = "htmltable.xml";
 
-    @NonNls
     public static final String HTML5TABLE_RESOURCE_NAME = "html5table.xml";
 
-    @NonNls
     private static final String MATHML_RESOURCE_NAME = "mathmltable.xml";
 
-    @NonNls
     private static final String SVG_RESOURCE_NAME = "svgtable.xml";
 
-    @NonNls
     public static final String TAG_ELEMENT_NAME = "tag";
 
-    @NonNls
     public static final String BASE_HELP_REF_ATTR = "baseHelpRef";
 
-    @NonNls
     public static final String NAME_ATTR = "name";
 
-    @NonNls
     public static final String HELPREF_ATTR = "helpref";
 
-    @NonNls
     public static final String DESCRIPTION_ATTR = "description";
 
-    @NonNls
     public static final String STARTTAG_ATTR = "startTag";
 
-    @NonNls
     public static final String ENDTAG_ATTR = "endTag";
 
-    @NonNls
     public static final String EMPTY_ATTR = "empty";
 
-    @NonNls
     public static final String DTD_ATTR = "dtd";
 
-    @NonNls
     public static final String ATTRIBUTE_ELEMENT_NAME = "attribute";
 
-    @NonNls
     public static final String TYPE_ATTR = "type";
 
-    @NonNls
     public static final String DEFAULT_ATTR = "default";
 
-    @NonNls
     public static final String RELATED_TAGS_ATTR = "relatedTags";
 
     private HtmlDescriptorsTable() {

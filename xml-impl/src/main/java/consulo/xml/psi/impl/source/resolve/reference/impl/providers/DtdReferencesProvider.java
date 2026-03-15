@@ -36,8 +36,7 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +68,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return myElement;
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public TextRange getRangeInElement() {
@@ -84,7 +82,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return descriptor == null ? null : descriptor.getDeclaration();
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public String getCanonicalText() {
@@ -103,7 +100,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
 
         @Override
         @RequiredWriteAction
-        public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
+        public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException {
             return null;
         }
 
@@ -113,7 +110,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return myElement.getManager().areElementsEquivalent(element, resolve());
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public Object[] getVariants() {
@@ -147,9 +143,8 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             };
         }
 
-        @Nonnull
         @Override
-        public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+        public LocalizeValue buildUnresolvedMessage(String referenceText) {
             return XmlLocalize.xmlDtdUnresolvedElementReference(referenceText);
         }
     }
@@ -178,7 +173,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return myElement;
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public TextRange getRangeInElement() {
@@ -204,7 +198,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return xmlEntityDecl;
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public String getCanonicalText() {
@@ -220,7 +213,7 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
 
         @Override
         @RequiredWriteAction
-        public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+        public PsiElement bindToElement(PsiElement element) throws consulo.language.util.IncorrectOperationException {
             return null;
         }
 
@@ -230,7 +223,6 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             return myElement.getManager().areElementsEquivalent(resolve(), element);
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public Object[] getVariants() {
@@ -261,9 +253,8 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             };
         }
 
-        @Nonnull
         @Override
-        public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+        public LocalizeValue buildUnresolvedMessage(String referenceText) {
             return XmlLocalize.xmlDtdUnresolvedEntityReference(referenceText);
         }
     }
@@ -277,10 +268,9 @@ public class DtdReferencesProvider extends PsiReferenceProvider {
             && !(containingFile.getViewProvider() instanceof TemplateLanguageFileViewProvider);
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull ProcessingContext context) {
+    public PsiReference[] getReferencesByElement(final PsiElement element, ProcessingContext context) {
         XmlElement nameElement = null;
 
         if (element instanceof XmlDoctype doctype) {

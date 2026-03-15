@@ -22,10 +22,8 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -33,7 +31,7 @@ import jakarta.annotation.Nullable;
  */
 public class RngHrefConverter extends Converter<XmlFile> implements CustomReferenceConverter<XmlFile> {
   @Override
-  public XmlFile fromString(@Nullable @NonNls String s, ConvertContext context) {
+  public XmlFile fromString(@Nullable String s, ConvertContext context) {
     if (s != null) {
       final GenericAttributeValue<XmlFile> element = (GenericAttributeValue<XmlFile>) context.getInvocationElement();
       final PsiReference[] references = createReferences(element, element.getXmlAttributeValue(), context);
@@ -53,7 +51,6 @@ public class RngHrefConverter extends Converter<XmlFile> implements CustomRefere
   }
 
   @Override
-  @Nonnull
   public PsiReference[] createReferences(GenericDomValue<XmlFile> genericDomValue, PsiElement element, ConvertContext context) {
     final String s = genericDomValue.getStringValue();
     if (s == null || element == null) {

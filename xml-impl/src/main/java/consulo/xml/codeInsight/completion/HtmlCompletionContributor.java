@@ -33,8 +33,6 @@ import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
 
 import java.nio.charset.Charset;
 
@@ -69,16 +67,14 @@ public class HtmlCompletionContributor extends CompletionContributor {
         return xmlTag != null && xmlTag.getLanguage() == XHTMLLanguage.INSTANCE;
     }
 
-    @Nonnull
-    @NonNls
     protected static String[] addSpecificCompletions(final XmlAttribute attribute) {
-        @NonNls String name = attribute.getName();
+        String name = attribute.getName();
         final XmlTag tag = attribute.getParent();
         if (tag == null) {
             return ArrayUtil.EMPTY_STRING_ARRAY;
         }
 
-        @NonNls String tagName = tag.getName();
+        String tagName = tag.getName();
         if (tag.getDescriptor() instanceof HtmlElementDescriptorImpl) {
             name = name.toLowerCase();
             tagName = tagName.toLowerCase();
@@ -188,7 +184,6 @@ public class HtmlCompletionContributor extends CompletionContributor {
         return ArrayUtil.EMPTY_STRING_ARRAY;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return Language.ANY;

@@ -25,7 +25,6 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.patterns.XmlNamedElementPattern;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 
-import jakarta.annotation.Nonnull;
 
 import static consulo.xml.patterns.XmlPatterns.*;
 
@@ -43,7 +42,7 @@ public class RelaxNGReferenceContributor extends PsiReferenceContributor
 			RNG_TAG_PATTERN.withLocalName("element", "attribute"));
 
 	@Override
-	public void registerReferenceProviders(@Nonnull PsiReferenceRegistrar registrar)
+	public void registerReferenceProviders(PsiReferenceRegistrar registrar)
 	{
 		XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{
 				"name"
@@ -55,7 +54,6 @@ public class RelaxNGReferenceContributor extends PsiReferenceContributor
 
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

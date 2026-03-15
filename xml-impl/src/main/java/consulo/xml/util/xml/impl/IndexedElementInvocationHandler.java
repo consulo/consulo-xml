@@ -10,8 +10,7 @@ import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.stubs.ElementStub;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class IndexedElementInvocationHandler extends DomInvocationHandler<FixedC
     return super.hashCode() * 239 + myIndex;
   }
 
-  protected XmlElement recomputeXmlElement(@Nonnull final DomInvocationHandler parentHandler) {
+  protected XmlElement recomputeXmlElement(final DomInvocationHandler parentHandler) {
     final XmlTag tag = parentHandler.getXmlTag();
     if (tag == null) return null;
 

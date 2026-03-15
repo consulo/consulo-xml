@@ -3,7 +3,6 @@ package consulo.xml.codeInspection.htmlInspections;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.localize.LocalizeValue;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -17,7 +16,7 @@ public class HtmlUnknownTagInspectionState extends BaseHtmlEntitiesInspectionSta
     super(LocalizeValue.empty(), ourDefaultValues);
   }
 
-  public HtmlUnknownTagInspectionState(@Nonnull LocalizeValue labelText) {
+  public HtmlUnknownTagInspectionState(LocalizeValue labelText) {
     super(labelText, ourDefaultValues);
   }
 }

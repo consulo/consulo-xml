@@ -31,8 +31,6 @@ import consulo.util.collection.Stack;
 import consulo.util.lang.Pair;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +40,7 @@ import java.util.List;
  * @since 2007-08-08
  */
 public class XmlTagInplaceRenamer {
-    @NonNls
     private static final String PRIMARY_VARIABLE_NAME = "PrimaryVariable";
-    @NonNls
     private static final String OTHER_VARIABLE_NAME = "OtherVariable";
 
     private final Editor myEditor;
@@ -52,11 +48,11 @@ public class XmlTagInplaceRenamer {
     private final static Stack<XmlTagInplaceRenamer> ourRenamersStack = new Stack<XmlTagInplaceRenamer>();
     private ArrayList<RangeHighlighter> myHighlighters;
 
-    private XmlTagInplaceRenamer(@Nonnull final Editor editor) {
+    private XmlTagInplaceRenamer(final Editor editor) {
         myEditor = editor;
     }
 
-    public static void rename(final Editor editor, @Nonnull final XmlTag tag) {
+    public static void rename(final Editor editor, final XmlTag tag) {
         if (!ourRenamersStack.isEmpty()) {
             ourRenamersStack.peek().finish();
         }
@@ -66,7 +62,7 @@ public class XmlTagInplaceRenamer {
         renamer.rename(tag);
     }
 
-    private void rename(@Nonnull final XmlTag tag) {
+    private void rename(final XmlTag tag) {
         final Pair<ASTNode, ASTNode> pair = getNamePair(tag);
         if (pair == null) {
             return;
@@ -132,7 +128,7 @@ public class XmlTagInplaceRenamer {
         }
     }
 
-    private Pair<ASTNode, ASTNode> getNamePair(@Nonnull final XmlTag tag) {
+    private Pair<ASTNode, ASTNode> getNamePair(final XmlTag tag) {
         final int offset = myEditor.getCaretModel().getOffset();
 
         final ASTNode node = tag.getNode();
@@ -155,7 +151,7 @@ public class XmlTagInplaceRenamer {
         return new Pair<ASTNode, ASTNode>(selected, other);
     }
 
-    private static Template buildTemplate(@Nonnull final XmlTag tag, @Nonnull final Pair<ASTNode, ASTNode> pair) {
+    private static Template buildTemplate(final XmlTag tag, final Pair<ASTNode, ASTNode> pair) {
         final TemplateBuilder builder = TemplateBuilderFactory.getInstance().createTemplateBuilder(tag);
 
         final ASTNode selected = pair.first;

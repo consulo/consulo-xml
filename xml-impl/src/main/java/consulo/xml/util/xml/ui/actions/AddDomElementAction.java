@@ -33,8 +33,7 @@ import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.TypeChooser;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.DomCollectionControl;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +50,7 @@ public abstract class AddDomElementAction extends AnAction {
     }
 
     @Override
-    public void update(@Nonnull AnActionEvent e) {
+    public void update(AnActionEvent e) {
         if (!isEnabled(e)) {
             e.getPresentation().setEnabled(false);
             return;
@@ -81,7 +80,7 @@ public abstract class AddDomElementAction extends AnAction {
 
     @Override
     @RequiredUIAccess
-    public void actionPerformed(@Nonnull AnActionEvent e) {
+    public void actionPerformed(AnActionEvent e) {
         AnAction[] actions = getChildren(e);
         if (actions.length > 1) {
             DefaultActionGroup group = new DefaultActionGroup();
@@ -125,7 +124,6 @@ public abstract class AddDomElementAction extends AnAction {
         }
     }
 
-    @Nonnull
     public AnAction[] getChildren(@Nullable AnActionEvent e) {
         Project project = e == null ? null : e.getData(Project.KEY);
         if (project == null) {
@@ -152,7 +150,6 @@ public abstract class AddDomElementAction extends AnAction {
         }
         if (actions.size() > 1 && showAsPopup()) {
             ActionGroup group = new ActionGroup() {
-                @Nonnull
                 @Override
                 public AnAction[] getChildren(@Nullable AnActionEvent e) {
                     return actions.toArray(new AnAction[actions.size()]);
@@ -176,7 +173,6 @@ public abstract class AddDomElementAction extends AnAction {
         DomCollectionChildDescription description
     );
 
-    @Nonnull
     protected abstract DomCollectionChildDescription[] getDomCollectionChildDescriptions(AnActionEvent e);
 
     @Nullable

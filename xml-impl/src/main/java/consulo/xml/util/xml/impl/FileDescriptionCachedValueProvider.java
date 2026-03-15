@@ -32,8 +32,7 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.FileStub;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashSet;
@@ -85,7 +84,7 @@ class FileDescriptionCachedValueProvider<T extends DomElement> implements SemEle
   }
 
   @Nullable
-  private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents, @Nonnull final XmlFileHeader rootTagName, @Nullable StringBuilder sb) {
+  private DomFileElementImpl<T> _computeFileElement(final boolean fireEvents, final XmlFileHeader rootTagName, @Nullable StringBuilder sb) {
     if (sb != null) {
       sb.append(rootTagName).append("\n");
     }

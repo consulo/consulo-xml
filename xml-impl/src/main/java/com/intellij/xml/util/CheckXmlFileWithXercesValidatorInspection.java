@@ -25,8 +25,7 @@ import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Maxim Mossienko
@@ -47,25 +46,21 @@ public class CheckXmlFileWithXercesValidatorInspection extends XmlSuppressableIn
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsCheckFileWithXerces();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return SHORT_NAME;

@@ -22,7 +22,6 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -32,7 +31,7 @@ public abstract class XmlSuppressionProvider
 {
 	public static ExtensionPointName<XmlSuppressionProvider> EP_NAME = ExtensionPointName.create(XmlSuppressionProvider.class);
 
-	public static boolean isSuppressed(@Nonnull PsiElement element, @Nonnull String inspectionId)
+	public static boolean isSuppressed(PsiElement element, String inspectionId)
 	{
 		for(XmlSuppressionProvider provider : EP_NAME.getExtensionList())
 		{
@@ -44,7 +43,7 @@ public abstract class XmlSuppressionProvider
 		return false;
 	}
 
-	public static XmlSuppressionProvider getProvider(@Nonnull PsiFile file)
+	public static XmlSuppressionProvider getProvider(PsiFile file)
 	{
 		for(XmlSuppressionProvider provider : EP_NAME.getExtensionList())
 		{
@@ -56,12 +55,12 @@ public abstract class XmlSuppressionProvider
 		throw new RuntimeException("No providers found for " + file);
 	}
 
-	public abstract boolean isProviderAvailable(@Nonnull PsiFile file);
+	public abstract boolean isProviderAvailable(PsiFile file);
 
-	public abstract boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId);
+	public abstract boolean isSuppressedFor(PsiElement element, String inspectionId);
 
-	public abstract void suppressForFile(@Nonnull PsiElement element, @Nonnull String inspectionId);
+	public abstract void suppressForFile(PsiElement element, String inspectionId);
 
-	public abstract void suppressForTag(@Nonnull PsiElement element, @Nonnull String inspectionId);
+	public abstract void suppressForTag(PsiElement element, String inspectionId);
 
 }

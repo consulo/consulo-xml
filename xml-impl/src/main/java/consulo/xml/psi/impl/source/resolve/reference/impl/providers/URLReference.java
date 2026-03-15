@@ -34,9 +34,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Predicate;
 
@@ -44,7 +42,6 @@ import java.util.function.Predicate;
  * @author Dmitry Avdeev
  */
 public class URLReference implements PsiReference, EmptyResolveMessageProvider {
-  @NonNls
   public static final String TARGET_NAMESPACE_ATTR_NAME = "targetNamespace";
 
   private final PsiElement myElement;
@@ -170,7 +167,6 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
 
   @RequiredReadAction
   @Override
-  @Nonnull
   public String getCanonicalText() {
     final String text = myElement.getText();
     if (text.length() > 1) {
@@ -201,7 +197,7 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
 
   @RequiredWriteAction
   @Override
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException {
     assert element instanceof PsiFile;
 
     if (!XmlUtil.isUrlText(getCanonicalText(), element.getProject())) {
@@ -221,7 +217,6 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
 
   @RequiredReadAction
   @Override
-  @Nonnull
   public Object[] getVariants() {
     return EMPTY_ARRAY;
   }
@@ -236,9 +231,8 @@ public class URLReference implements PsiReference, EmptyResolveMessageProvider {
     return mySoft;
   }
 
-  @Nonnull
   @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+  public LocalizeValue buildUnresolvedMessage(String s) {
     return myIncorrectResourceMapped
       ? XmlErrorLocalize.registeredResourceIsNotRecognized()
       : XmlErrorLocalize.uriIsNotRegistered();

@@ -2,7 +2,6 @@ package consulo.xml.dom.util.proxy;
 
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import jakarta.annotation.Nonnull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -12,10 +11,8 @@ import java.lang.reflect.Method;
  */
 public interface InvocationHandlerOwner
 {
-	@Nonnull
 	static Method METHOD = ReflectionUtil.getMethod(InvocationHandlerOwner.class, "getInvocationHandler");
 
-	@Nonnull
 	static InvocationHandler getHandler(Object o)
 	{
 		if(o instanceof InvocationHandlerOwner)
@@ -26,6 +23,5 @@ public interface InvocationHandlerOwner
 		throw new IllegalArgumentException("Object " + o + " is not InvocationHandlerOwner");
 	}
 
-	@Nonnull
 	InvocationHandler getInvocationHandler();
 }

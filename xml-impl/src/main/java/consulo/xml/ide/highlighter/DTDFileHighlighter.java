@@ -10,7 +10,6 @@ import consulo.util.collection.MultiMap;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.lexer.DtdLexer;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -37,7 +36,6 @@ public class DTDFileHighlighter extends BaseXmlFileHighlighter {
     return CACHE_KEY;
   }
 
-  @Nonnull
   @Override
   public Lexer getHighlightingLexer() {
     return new DtdLexer(true);

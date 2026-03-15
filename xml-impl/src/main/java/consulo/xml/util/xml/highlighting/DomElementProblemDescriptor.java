@@ -23,20 +23,15 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.util.xml.DomElement;
 import consulo.language.editor.inspection.ProblemHighlightType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public interface DomElementProblemDescriptor extends CommonProblemDescriptor {
 
-  @Nonnull
   DomElement getDomElement();
-  @Nonnull
   HighlightSeverity getHighlightSeverity();
-  @Nonnull
   LocalQuickFix[] getFixes();
-  @Nonnull
   List<Annotation> getAnnotations();
 
   void highlightWholeElement();

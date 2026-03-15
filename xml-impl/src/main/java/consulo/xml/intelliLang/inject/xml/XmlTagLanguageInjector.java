@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
 /**
@@ -20,7 +19,6 @@ public class XmlTagLanguageInjector extends XmlLanguageInjector
 		super(project);
 	}
 
-	@Nonnull
 	@Override
 	public Class<? extends PsiElement> getElementClass()
 	{

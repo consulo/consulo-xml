@@ -26,8 +26,7 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Maxim.Mossienko
@@ -35,12 +34,11 @@ import jakarta.annotation.Nullable;
 public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {
     private final String myLocalName;
 
-    public RemoveAttributeIntentionFix(String localName, @Nonnull XmlAttribute attribute) {
+    public RemoveAttributeIntentionFix(String localName, XmlAttribute attribute) {
         super(attribute);
         myLocalName = localName;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName);
@@ -49,11 +47,11 @@ public class RemoveAttributeIntentionFix extends LocalQuickFixAndIntentionAction
     @Override
     @RequiredWriteAction
     public void invoke(
-        @Nonnull Project project,
-        @Nonnull PsiFile file,
+        Project project,
+        PsiFile file,
         @Nullable Editor editor,
-        @Nonnull PsiElement startElement,
-        @Nonnull PsiElement endElement
+        PsiElement startElement,
+        PsiElement endElement
     ) {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;

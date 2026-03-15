@@ -18,14 +18,12 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.ElementManipulators;
 import consulo.language.psi.PsiElement;
@@ -45,36 +43,22 @@ import com.intellij.xml.util.XmlUtil;
  */
 public class SchemaReferencesProvider extends PsiReferenceProvider
 {
-	@NonNls
 	private static final String VALUE_ATTR_NAME = "value";
-	@NonNls
 	static final String NAME_ATTR_NAME = "name";
 
-	@NonNls
 	static final String MEMBER_TYPES_ATTR_NAME = "memberTypes";
-	@NonNls
 	static final String ITEM_TYPE_ATTR_NAME = "itemType";
-	@NonNls
 	static final String BASE_ATTR_NAME = "base";
-	@NonNls
 	static final String GROUP_TAG_NAME = "group";
 
-	@NonNls
 	static final String ATTRIBUTE_GROUP_TAG_NAME = "attributeGroup";
-	@NonNls
 	static final String ATTRIBUTE_TAG_NAME = "attribute";
-	@NonNls
 	static final String ELEMENT_TAG_NAME = "element";
-	@NonNls
 	static final String SIMPLE_TYPE_TAG_NAME = "simpleType";
 
-	@NonNls
 	static final String COMPLEX_TYPE_TAG_NAME = "complexType";
-	@NonNls
 	static final String REF_ATTR_NAME = "ref";
-	@NonNls
 	static final String TYPE_ATTR_NAME = "type";
-	@NonNls
 	static final String SUBSTITUTION_GROUP_ATTR_NAME = "substitutionGroup";
 
 	public String[] getCandidateAttributeNamesForSchemaReferences()
@@ -120,7 +104,6 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@Nonnull
 		public String getCanonicalText()
 		{
 			String text = myElement.getText();
@@ -134,7 +117,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
+		public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException
 		{
 			return null;
 		}
@@ -146,7 +129,6 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 
 		@Override
-		@Nonnull
 		public Object[] getVariants()
 		{
 			return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -160,8 +142,7 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 	}
 
 	@Override
-	@Nonnull
-	public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context)
+	public PsiReference[] getReferencesByElement(PsiElement element, final ProcessingContext context)
 	{
 		final PsiElement parent = element.getParent();
 		if(!(parent instanceof XmlAttribute))
@@ -214,12 +195,12 @@ public class SchemaReferencesProvider extends PsiReferenceProvider
 		}
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(@Nonnull final PsiElement element)
+	public static PsiReference createTypeOrElementOrAttributeReference(final PsiElement element)
 	{
 		return createTypeOrElementOrAttributeReference(element, null);
 	}
 
-	public static PsiReference createTypeOrElementOrAttributeReference(@Nonnull final PsiElement element, String ns)
+	public static PsiReference createTypeOrElementOrAttributeReference(final PsiElement element, String ns)
 	{
 		final int length = element.getTextLength();
 		int offset = (element instanceof XmlAttributeValue) ? XmlUtil.findPrefixByQualifiedName(((XmlAttributeValue) element).getValue()).length() : 0;

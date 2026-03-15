@@ -21,16 +21,13 @@ import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
 import consulo.language.psi.PsiFile;
 import consulo.module.Module;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface ImplicitNamespaceDescriptorProvider {
-  @NonNls
   ExtensionPointName<ImplicitNamespaceDescriptorProvider> EP_NAME = ExtensionPointName.create(ImplicitNamespaceDescriptorProvider.class);
 
   @Nullable
-  XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, @Nonnull final String ns, @Nullable PsiFile file);
+  XmlNSDescriptor getNamespaceDescriptor(@Nullable Module module, final String ns, @Nullable PsiFile file);
 }

@@ -35,7 +35,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -60,7 +59,6 @@ public class XmlImportOptimizer implements ImportOptimizer {
     return file instanceof XmlFile;
   }
 
-  @Nonnull
   @Override
   public Runnable processFile(final PsiFile file) {
     return new Runnable() {
@@ -109,7 +107,6 @@ public class XmlImportOptimizer implements ImportOptimizer {
     };
   }
 
-  @Nonnull
   @Override
   public Language getLanguage() {
     return XMLLanguage.INSTANCE;

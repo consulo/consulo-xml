@@ -22,10 +22,8 @@ import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
 import consulo.util.dataholder.Key;
 import consulo.util.dataholder.UserDataHolder;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -35,13 +33,13 @@ public abstract class DomModelCache<T, H extends UserDataHolder> {
   private final Key<CachedValue<T>> myKey;
   private final Project myProject;
 
-  public DomModelCache(Project project, @NonNls String keyName) {
+  public DomModelCache(Project project, String keyName) {
     myProject = project;
     myKey = Key.create(keyName);
   }
 
   @Nullable
-  public T getCachedValue(final @Nonnull H dataHolder) {
+  public T getCachedValue(final H dataHolder) {
     CachedValue<T> cachedValue = dataHolder.getUserData(myKey);
     if (cachedValue == null) {
       final CachedValueProvider<T> myProvider = new CachedValueProvider<T>() {
@@ -57,6 +55,5 @@ public abstract class DomModelCache<T, H extends UserDataHolder> {
     return cachedValue.getValue();
   }
 
-  @Nonnull
-  protected abstract CachedValueProvider.Result<T> computeValue(@Nonnull H dataHolder);
+  protected abstract CachedValueProvider.Result<T> computeValue(H dataHolder);
 }

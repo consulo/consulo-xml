@@ -24,8 +24,7 @@ import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.Function;
 
 /**
@@ -37,8 +36,8 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
 
 	public DomStructureViewTreeModel(
-			@Nonnull XmlFile file,
-			@Nonnull Function<DomElement, DomService.StructureViewMode> descriptor,
+			XmlFile file,
+			Function<DomElement, DomService.StructureViewMode> descriptor,
 			@Nullable Editor editor)
 	{
 		this(file, DomElementsNavigationManager.getManager(file.getProject()).getDomElementsNavigateProvider(DomElementsNavigationManager
@@ -46,9 +45,9 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	}
 
 	public DomStructureViewTreeModel(
-			@Nonnull XmlFile file,
+			XmlFile file,
 			final DomElementNavigationProvider navigationProvider,
-			@Nonnull Function<DomElement, DomService.StructureViewMode> descriptor,
+			Function<DomElement, DomService.StructureViewMode> descriptor,
 			@Nullable Editor editor)
 	{
 		super(file, editor);
@@ -57,7 +56,6 @@ public class DomStructureViewTreeModel extends XmlStructureViewTreeModel impleme
 	}
 
 	@Override
-	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		XmlFile myFile = getPsiFile();

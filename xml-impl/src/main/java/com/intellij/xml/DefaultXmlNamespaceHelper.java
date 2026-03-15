@@ -31,10 +31,8 @@ import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -49,9 +47,9 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
     }
 
     public void insertNamespaceDeclaration(
-        @Nonnull final XmlFile file,
+        final XmlFile file,
         @Nullable final Editor editor,
-        @Nonnull final Set<String> possibleNamespaces,
+        final Set<String> possibleNamespaces,
         @Nullable String nsPrefix,
         @Nullable final Runner<String, IncorrectOperationException> runAfter
     ) throws IncorrectOperationException {
@@ -77,7 +75,7 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
             }
         }
 
-        @NonNls final String qname = "xmlns" + (prefix.length() > 0 ? ":" + prefix : "");
+        final String qname = "xmlns" + (prefix.length() > 0 ? ":" + prefix : "");
         final XmlAttribute attribute = elementFactory.createXmlAttribute(qname, namespace);
         if (anchor == null) {
             rootTag.add(attribute);
@@ -166,8 +164,7 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
         return location;
     }
 
-    @Nonnull
-    public Set<String> guessUnboundNamespaces(@Nonnull final PsiElement element, @Nonnull XmlFile file) {
+    public Set<String> guessUnboundNamespaces(final PsiElement element, XmlFile file) {
         if (!(element instanceof XmlTag)) {
             return Collections.emptySet();
         }
@@ -224,8 +221,7 @@ public class DefaultXmlNamespaceHelper extends XmlNamespaceHelper {
         return possibleUris;
     }
 
-    @Nonnull
-    public Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context) {
+    public Set<String> getNamespacesByTagName(final String tagName, final XmlFile context) {
         final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(context);
 
         HashSet<String> set = new HashSet<>();

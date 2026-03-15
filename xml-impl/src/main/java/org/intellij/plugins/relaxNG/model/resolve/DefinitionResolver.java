@@ -31,8 +31,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.*;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -186,7 +185,7 @@ public class DefinitionResolver extends CommonElement.Visitor implements CachedV
     }
 
     @Override
-    public boolean execute(@Nonnull XmlFile element) {
+    public boolean execute(XmlFile element) {
       final Grammar g = GrammarFactory.getGrammar(element);
       if (g != null) {
         g.acceptChildren(new CommonElement.Visitor() {

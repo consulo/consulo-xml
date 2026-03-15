@@ -29,7 +29,6 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 public class HtmlFileHighlighter extends SyntaxHighlighterBase {
   private static final ExtensionPointCacheKey<EmbeddedTokenHighlighter, MultiMap<IElementType, TextAttributesKey>> CACHE_KEY =
@@ -94,14 +93,12 @@ public class HtmlFileHighlighter extends SyntaxHighlighterBase {
   }
 
   @Override
-  @Nonnull
   public Lexer getHighlightingLexer() {
     return new HtmlHighlightingLexer();
   }
 
   @Override
-  @Nonnull
-  public TextAttributesKey[] getTokenHighlights(@Nonnull IElementType tokenType) {
+  public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
     MultiMap<IElementType, TextAttributesKey> map =
       myApplication.getExtensionPoint(EmbeddedTokenHighlighter.class).getOrBuildCache(CACHE_KEY);
 

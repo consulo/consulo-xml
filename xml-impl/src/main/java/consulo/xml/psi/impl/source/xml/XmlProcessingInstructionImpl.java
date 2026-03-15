@@ -25,7 +25,6 @@ import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagChild;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author mike
@@ -36,7 +35,7 @@ public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlP
     super(XmlElementType.XML_PROCESSING_INSTRUCTION);
   }
 
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlProcessingInstruction(this);
     } else {
@@ -62,7 +61,6 @@ public class XmlProcessingInstructionImpl extends XmlElementImpl implements XmlP
     return null;
   }
 
-  @Nonnull
   @Override
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlProcessingInstruction.class);

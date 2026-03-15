@@ -24,8 +24,7 @@ import consulo.language.psi.path.FileReferenceSet;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.virtualFileSystem.fileType.FileType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -107,7 +106,6 @@ public class FileReferenceUtil {
       return result;
     }
 
-    @Nonnull
     @Override
     public Object[] getVariants() {
       final Object[] variants = super.getVariants();

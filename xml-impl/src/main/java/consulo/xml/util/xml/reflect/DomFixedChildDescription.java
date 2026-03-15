@@ -19,7 +19,7 @@ import consulo.xml.util.xml.JavaMethod;
 
 import java.lang.annotation.Annotation;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter

@@ -2,8 +2,7 @@ package com.intellij.xml.config;
 
 import java.util.Set;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiManager;
 import consulo.module.Module;
@@ -20,10 +19,9 @@ public abstract class ConfigFileSearcher {
     private final MultiMap<VirtualFile, PsiFile> myVirtualFiles = new MultiMap<>();
     @Nullable
     private final Module myModule;
-    @Nonnull
     private final Project myProject;
 
-    public ConfigFileSearcher(@Nullable Module module, @Nonnull Project project) {
+    public ConfigFileSearcher(@Nullable Module module, Project project) {
         myModule = module;
         myProject = project;
     }
@@ -51,7 +49,7 @@ public abstract class ConfigFileSearcher {
         }
     }
 
-    public abstract Set<PsiFile> search(@Nullable Module module, @Nonnull Project project);
+    public abstract Set<PsiFile> search(@Nullable Module module, Project project);
 
     public MultiMap<Module, PsiFile> getFilesByModules() {
         return myFiles;

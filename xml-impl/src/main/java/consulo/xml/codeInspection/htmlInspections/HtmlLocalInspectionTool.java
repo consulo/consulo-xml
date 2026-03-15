@@ -30,13 +30,11 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public abstract class HtmlLocalInspectionTool extends XmlSuppressableInspectionTool {
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.HTML_INSPECTIONS;
@@ -47,21 +45,20 @@ public abstract class HtmlLocalInspectionTool extends XmlSuppressableInspectionT
         return true;
     }
 
-    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+    protected void checkTag(XmlTag tag, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         // should be overridden
     }
 
-    protected void checkAttribute(@Nonnull XmlAttribute attribute, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+    protected void checkAttribute(XmlAttribute attribute, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         // should be overridden
     }
 
-    @Nonnull
     @Override
     public PsiElementVisitor buildVisitor(
-        @Nonnull ProblemsHolder holder,
+        ProblemsHolder holder,
         boolean isOnTheFly,
-        @Nonnull LocalInspectionToolSession session,
-        @Nonnull Object state
+        LocalInspectionToolSession session,
+        Object state
     ) {
         return new XmlElementVisitor() {
             @Override

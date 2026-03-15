@@ -19,7 +19,6 @@ import consulo.language.ast.ASTNode;
 import consulo.language.codeStyle.Block;
 import consulo.language.codeStyle.Spacing;
 import consulo.language.codeStyle.AbstractBlock;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class ReadOnlyBlock extends AbstractBlock {
     super(node, null, null);
   }
 
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     return null;
   }
 

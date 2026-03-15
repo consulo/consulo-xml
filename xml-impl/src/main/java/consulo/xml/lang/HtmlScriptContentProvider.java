@@ -26,8 +26,7 @@ import consulo.language.extension.LanguageExtension;
 import consulo.language.extension.LanguageOneToOne;
 import consulo.language.lexer.Lexer;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface HtmlScriptContentProvider extends LanguageExtension
@@ -36,7 +35,7 @@ public interface HtmlScriptContentProvider extends LanguageExtension
 			LanguageOneToOne.build());
 
 	@Nullable
-	static HtmlScriptContentProvider forLanguage(@Nonnull Language language)
+	static HtmlScriptContentProvider forLanguage(Language language)
 	{
 		return Application.get().getExtensionPoint(HtmlScriptContentProvider.class).getOrBuildCache(KEY).get(language);
 	}

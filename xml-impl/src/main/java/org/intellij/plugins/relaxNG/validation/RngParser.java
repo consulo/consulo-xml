@@ -43,7 +43,6 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.UriUtil;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.kohsuke.rngom.ast.builder.BuildException;
@@ -80,7 +79,6 @@ public class RngParser {
     private static final Logger LOG = Logger.getInstance("#RngParser");
 
     private static final NotNullLazyValue<DatatypeLibraryFactory> DT_LIBRARY_FACTORY = new AtomicNotNullLazyValue<>() {
-        @Nonnull
         @Override
         protected DatatypeLibraryFactory compute() {
             // FIXME [VISTALL] make it more clear

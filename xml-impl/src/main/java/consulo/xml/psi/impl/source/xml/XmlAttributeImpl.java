@@ -34,10 +34,8 @@ import consulo.util.collection.primitive.ints.IntLists;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 
 import static consulo.language.editor.completion.CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED;
@@ -103,7 +101,6 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
   }
 
   @Override
-  @Nonnull
   public String getNamespace() {
     final String name = getName();
     final String prefixByQualifiedName = XmlUtil.findPrefixByQualifiedName(name);
@@ -115,8 +112,6 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
   }
 
   @Override
-  @NonNls
-  @Nonnull
   public String getNamespacePrefix() {
     return XmlUtil.findPrefixByQualifiedName(getName());
   }
@@ -128,13 +123,12 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
   }
 
   @Override
-  @Nonnull
   public String getLocalName() {
     return XmlUtil.findLocalNameByQualifiedName(getName());
   }
 
   @Override
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlAttribute(this);
     } else {
@@ -273,7 +267,6 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
     return displayIndex + shift;
   }
 
-  @Nonnull
   @Override
   public TextRange getValueTextRange() {
     getDisplayValue();
@@ -290,7 +283,6 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
   }
 
   @Override
-  @Nonnull
   public String getName() {
     XmlElement element = getNameElement();
     return element != null ? element.getText() : "";
@@ -298,12 +290,12 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
 
   @Override
   public boolean isNamespaceDeclaration() {
-    @NonNls final String name = getName();
+    final String name = getName();
     return name.startsWith("xmlns:") || name.equals("xmlns");
   }
 
   @Override
-  public PsiElement setName(@Nonnull final String nameText) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement setName(final String nameText) throws consulo.language.util.IncorrectOperationException {
     final ASTNode name = XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild(this);
     final XmlAttribute attribute = XmlElementFactory.getInstance(getProject()).createXmlAttribute(nameText, "");
     final ASTNode newName = XmlChildRole.ATTRIBUTE_NAME_FINDER.findChild((ASTNode) attribute);
@@ -321,7 +313,7 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
   }
 
   @Override
-  public boolean shouldAskParentForReferences(@Nonnull PsiReferenceService.Hints hints) {
+  public boolean shouldAskParentForReferences(PsiReferenceService.Hints hints) {
     return false;
   }
 
@@ -329,16 +321,14 @@ public class XmlAttributeImpl extends XmlElementImpl implements XmlAttribute, Hi
    * Use {@link #getReferences(PsiReferenceService.Hints)} instead of calling or overriding this method.
    */
   @Deprecated
-  @Nonnull
   @Override
   public final PsiReference[] getReferences() {
     return getReferences(PsiReferenceService.Hints.NO_HINTS);
   }
 
   @RequiredReadAction
-  @Nonnull
   @Override
-  public PsiReference[] getReferences(@Nonnull PsiReferenceService.Hints hints) {
+  public PsiReference[] getReferences(PsiReferenceService.Hints hints) {
     if (hints.offsetInElement != null) {
       XmlElement nameElement = getNameElement();
       if (nameElement == null || hints.offsetInElement > nameElement.getStartOffsetInParent() + nameElement.getTextLength()) {

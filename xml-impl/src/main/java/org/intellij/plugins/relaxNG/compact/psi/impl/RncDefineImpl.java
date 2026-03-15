@@ -18,8 +18,7 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.icon.IconDescriptorUpdaters;
@@ -40,7 +39,6 @@ import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.meta.PsiMetaOwner;
@@ -56,7 +54,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitDefine(this);
   }
 
@@ -76,7 +74,6 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
     return getNameNode().getPsi();
   }
 
-  @Nonnull
   public ASTNode getNameNode() {
     final ASTNode node = getNode().findChildByType(RncTokenTypes.IDENTIFIERS);
     assert node != null;
@@ -84,7 +81,7 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
   }
 
   @Override
-  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
+  public PsiElement setName(String name) throws IncorrectOperationException {
     final ASTNode node = getNameNode();
     node.getTreeParent().replaceChild(node, RenameUtil.createIdentifierNode(getManager(), name));
     return this;
@@ -107,7 +104,6 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
         }
 
         @Override
-        @Nonnull
         public Object[] getVariants() {
           final RncInclude parent = (RncInclude)getParent();
           final RncFile referencedFile = parent.getReferencedFile();
@@ -162,13 +158,11 @@ public class RncDefineImpl extends RncElementImpl implements RncDefine, PsiMetaO
     }
 
     @Override
-    @NonNls
     public String getName(PsiElement context) {
       return RncDefineImpl.this.getName();
     }
 
     @Override
-    @NonNls
     public String getName() {
       return RncDefineImpl.this.getName();
     }

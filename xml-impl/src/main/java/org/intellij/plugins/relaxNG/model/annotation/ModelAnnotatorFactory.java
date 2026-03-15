@@ -6,8 +6,7 @@ import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.annotation.AnnotatorFactory;
 import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -23,7 +22,6 @@ public class ModelAnnotatorFactory implements AnnotatorFactory
 		return new ModelAnnotator();
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

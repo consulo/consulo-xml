@@ -8,8 +8,7 @@ import consulo.language.psi.PsiFile;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -32,8 +31,7 @@ public interface XPathSupportProvider {
   public static final Object UNSUPPORTED = "UNSUPPORTED";
   public static final Object INVALID = "INVALID";
 
-  @Nonnull
   XPath createXPath(String expression) throws JaxenException;
 
-  void attachContext(@Nonnull PsiFile file);
+  void attachContext(PsiFile file);
 }

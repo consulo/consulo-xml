@@ -26,7 +26,6 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -39,7 +38,7 @@ public class XmlIconDescriptorUpdater implements IconDescriptorUpdater {
 
     @RequiredReadAction
     @Override
-    public void updateIcon(@Nonnull IconDescriptor iconDescriptor, @Nonnull PsiElement element, int flags) {
+    public void updateIcon(IconDescriptor iconDescriptor, PsiElement element, int flags) {
         if (element instanceof XmlFile file) {
             final VirtualFile vf = file.getVirtualFile();
             if (vf != null) {

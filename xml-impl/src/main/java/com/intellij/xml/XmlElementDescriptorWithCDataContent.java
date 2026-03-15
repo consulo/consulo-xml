@@ -15,10 +15,9 @@
  */
 package com.intellij.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlTag;
 
 public interface XmlElementDescriptorWithCDataContent {
-    boolean requiresCdataBracesInContext(@Nonnull XmlTag context);
+    boolean requiresCdataBracesInContext(XmlTag context);
 }

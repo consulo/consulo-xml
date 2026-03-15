@@ -32,11 +32,9 @@ import consulo.xml.psi.xml.XmlTag;
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngXmlAttributeDescriptor;
-import org.jetbrains.annotations.NonNls;
 import org.kohsuke.rngom.digested.DElementPattern;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.Set;
 
@@ -49,7 +47,6 @@ public class RngDocumentationProvider implements LanguageDocumentationProvider
 {
 	private static final Logger LOG = Logger.getInstance(RngDocumentationProvider.class);
 
-	@NonNls
 	private static final String COMPATIBILITY_ANNOTATIONS_1_0 = "http://relaxng.org/ns/compatibility/annotations/1.0";
 
 	@Override
@@ -164,7 +161,6 @@ public class RngDocumentationProvider implements LanguageDocumentationProvider
 		return null;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

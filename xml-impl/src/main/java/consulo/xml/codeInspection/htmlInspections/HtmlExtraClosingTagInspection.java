@@ -29,8 +29,7 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -43,26 +42,23 @@ public class HtmlExtraClosingTagInspection extends HtmlLocalInspectionTool {
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionExtraClosingTag();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "HtmlExtraClosingTag";
     }
 
     @Override
-    @Nonnull
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
     @Override
-    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+    protected void checkTag(XmlTag tag, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         XmlToken endTagName = XmlTagUtil.getEndTagNameElement(tag);
 
         if (endTagName != null && tag instanceof HtmlTag && HtmlUtil.isSingleHtmlTag(tag.getName())) {

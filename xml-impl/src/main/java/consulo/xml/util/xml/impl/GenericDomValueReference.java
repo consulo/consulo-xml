@@ -35,8 +35,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,14 +137,12 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return value == null ? null : resolveInner(value);
   }
 
-  @Nonnull
   public String getCanonicalText() {
     return StringUtil.notNullize(getStringValue());
   }
 
-  @Nonnull
   @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+  public LocalizeValue buildUnresolvedMessage(String s) {
     final ConvertContext context = getConvertContext();
     return getConverter().buildUnresolvedMessage(getStringValue(), context);
   }
@@ -163,7 +160,7 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return super.handleElementRename(newElementName);
   }
 
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement bindToElement(PsiElement element) throws consulo.language.util.IncorrectOperationException {
     final Converter<T> converter = getConverter();
     if (converter instanceof ResolvingConverter) {
       ((ResolvingConverter) converter).bindReference(myGenericValue, getConvertContext(), element);
@@ -182,7 +179,6 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
     return null;
   }
 
-  @Nonnull
   public Object[] getVariants() {
     final Converter<T> converter = getConverter();
     if (converter instanceof EnumConverter || converter == ResolvingConverter.BOOLEAN_CONVERTER) {

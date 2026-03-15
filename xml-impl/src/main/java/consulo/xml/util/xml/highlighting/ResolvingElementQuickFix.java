@@ -36,8 +36,7 @@ import consulo.ui.image.Image;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -71,26 +70,24 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
         myTypeName = typeName;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return LocalizeValue.localizeTODO(DomBundle.message("create.new.element", myTypeName, myNewName));
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return getName();
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         applyFix();
     }
 
@@ -101,7 +98,7 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         applyFix();
     }
 
@@ -147,7 +144,6 @@ public class ResolvingElementQuickFix implements LocalQuickFix, IntentionAction 
                         return IconDescriptorUpdaters.getIcon(DomUtil.getFile(aValue), 0);
                     }
 
-                    @Nonnull
                     @Override
                     @RequiredReadAction
                     public String getTextFor(DomElement value) {

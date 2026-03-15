@@ -20,7 +20,6 @@ import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.util.xml.DomElement;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * Register DOM extenders via dom.extender extension point. Specify 2 attributes:
@@ -32,12 +31,11 @@ import jakarta.annotation.Nonnull;
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class DomExtender<T extends DomElement>
 {
-	@Nonnull
 	public abstract Class<T> getElementClass();
 
 	/**
 	 * @param t         DOM element where new children may be added to
 	 * @param registrar a place to register your own DOM children descriptions
 	 */
-	public abstract void registerExtensions(@Nonnull T t, @Nonnull final DomExtensionsRegistrar registrar);
+	public abstract void registerExtensions(T t, final DomExtensionsRegistrar registrar);
 }

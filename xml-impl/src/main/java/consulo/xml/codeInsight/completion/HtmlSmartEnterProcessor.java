@@ -5,7 +5,6 @@ import consulo.language.Language;
 import consulo.xml.codeInsight.completion.base.XmlBasedSmartEnterProcessor;
 import consulo.xml.lang.html.HTMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlSmartEnterProcessor extends XmlBasedSmartEnterProcessor {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return HTMLLanguage.INSTANCE;

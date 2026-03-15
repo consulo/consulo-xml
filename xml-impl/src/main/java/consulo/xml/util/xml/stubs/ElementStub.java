@@ -20,8 +20,7 @@ import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class ElementStub extends DomStub
 	@Nullable
 	private final StringRef myElementClass;
 
-	public ElementStub(@Nullable ElementStub parent, @Nonnull StringRef name, @Nullable StringRef namespace, int index, boolean custom,
+	public ElementStub(@Nullable ElementStub parent, StringRef name, @Nullable StringRef namespace, int index, boolean custom,
 										 @Nullable StringRef elementClass)
 	{
 		super(parent, name, namespace);

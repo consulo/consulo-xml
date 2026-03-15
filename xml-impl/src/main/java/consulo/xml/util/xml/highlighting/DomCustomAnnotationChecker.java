@@ -20,7 +20,6 @@ import consulo.annotation.component.ExtensionAPI;
 import consulo.xml.util.xml.DomElement;
 import consulo.component.extension.ExtensionPointName;
 
-import jakarta.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -35,8 +34,7 @@ import java.util.List;
 public abstract class DomCustomAnnotationChecker<T extends Annotation> {
   public static final ExtensionPointName<DomCustomAnnotationChecker> EP_NAME = ExtensionPointName.create(DomCustomAnnotationChecker.class);
   
-  @Nonnull
   public abstract Class<T> getAnnotationClass();
 
-  public abstract List<DomElementProblemDescriptor> checkForProblems(@Nonnull T t, @Nonnull DomElement element, @Nonnull DomElementAnnotationHolder holder, @Nonnull DomHighlightingHelper helper);
+  public abstract List<DomElementProblemDescriptor> checkForProblems(T t, DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper);
 }

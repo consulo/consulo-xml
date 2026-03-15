@@ -26,21 +26,19 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlEq", order = "after xmlSlash")
 public class XmlEqTypedHandler extends TypedHandlerDelegate {
     private boolean needToInsertQuotes = false;
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public Result beforeCharTyped(
         char c,
-        @Nonnull Project project,
-        @Nonnull Editor editor,
+        Project project,
+        Editor editor,
         PsiFile file,
-        @Nonnull FileType fileType
+        FileType fileType
     ) {
         boolean inXml = file.getLanguage() instanceof XMLLanguage || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;
         if (c == '=' && inXml) {
@@ -53,9 +51,8 @@ public class XmlEqTypedHandler extends TypedHandlerDelegate {
         return super.beforeCharTyped(c, project, editor, file, fileType);
     }
 
-    @Nonnull
     @Override
-    public Result charTyped(char c, @Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    public Result charTyped(char c, Project project, Editor editor, PsiFile file) {
         if (needToInsertQuotes) {
             int offset = editor.getCaretModel().getOffset();
             editor.getDocument().insertString(offset, "\"\"");

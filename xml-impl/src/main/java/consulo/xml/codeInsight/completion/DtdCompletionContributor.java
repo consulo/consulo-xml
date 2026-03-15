@@ -33,7 +33,6 @@ import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.XmlEntityDecl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 
@@ -95,9 +94,8 @@ public class DtdCompletionContributor extends CompletionContributor {
         );
     }
 
-    @Nonnull
     @RequiredReadAction
-    private static String keywordPrefix(@Nonnull PsiElement position, @Nonnull String prefix) {
+    private static String keywordPrefix(PsiElement position, String prefix) {
         PsiElement prevLeaf = PsiTreeUtil.prevLeaf(position);
         PsiElement prevPrevLeaf = prevLeaf != null ? PsiTreeUtil.prevLeaf(prevLeaf) : null;
 
@@ -116,13 +114,13 @@ public class DtdCompletionContributor extends CompletionContributor {
 
     }
 
-    private static void addKeywordCompletions(@Nonnull CompletionResultSet result) {
+    private static void addKeywordCompletions(CompletionResultSet result) {
         for (String keyword : KEYWORDS) {
             result.addElement(LookupElementBuilder.create(keyword).withInsertHandler(INSERT_HANDLER));
         }
     }
 
-    private static void addEntityCompletions(@Nonnull CompletionResultSet result, PsiElement position) {
+    private static void addEntityCompletions(CompletionResultSet result, PsiElement position) {
         PsiElementProcessor processor = element -> {
             if (element instanceof XmlEntityDecl entityDecl) {
                 String name = entityDecl.getName();
@@ -135,13 +133,12 @@ public class DtdCompletionContributor extends CompletionContributor {
         XmlUtil.processXmlElements((XmlFile)position.getContainingFile().getOriginalFile(), processor, true);
     }
 
-    private static boolean hasDtdKeywordCompletion(@Nonnull PsiElement prev) {
+    private static boolean hasDtdKeywordCompletion(PsiElement prev) {
         return prev.textMatches("#") || prev.textMatches("!") || prev.textMatches("(")
             || prev.textMatches(",") || prev.textMatches("|") || prev.textMatches("[")
             || prev.getNode().getElementType() == XmlTokenType.XML_NAME;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return DTDLanguage.INSTANCE;

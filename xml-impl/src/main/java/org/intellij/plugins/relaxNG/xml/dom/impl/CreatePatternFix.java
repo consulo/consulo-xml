@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.xml.dom.impl;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
 import consulo.localize.LocalizeValue;
-import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.codeEditor.Editor;
@@ -50,14 +49,12 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
         myReference = reference;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public LocalizeValue getText() {
         return LocalizeValue.localizeTODO("Create Pattern '" + myReference.getCanonicalText() + "'");
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public LocalizeValue getName() {
@@ -66,7 +63,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
 
     @Override
     @RequiredWriteAction
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         if (!isAvailable()) {
             return;
         }
@@ -80,7 +77,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
 
     @Override
     @RequiredReadAction
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return isAvailable();
     }
 
@@ -97,7 +94,7 @@ class CreatePatternFix implements IntentionAction, LocalQuickFix {
 
     @Override
     @RequiredWriteAction
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws consulo.language.util.IncorrectOperationException {
         doFix();
     }
 

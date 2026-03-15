@@ -21,7 +21,6 @@ package org.intellij.plugins.relaxNG.xml.dom.names;
 
 import org.intellij.plugins.relaxNG.xml.dom.RngChoice;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -35,7 +34,6 @@ public interface OpenNameClasses extends RngDomElement {
    *
    * @return the value of the name child.
    */
-  @Nonnull
   Name getName();
 
   /**
@@ -43,7 +41,6 @@ public interface OpenNameClasses extends RngDomElement {
    *
    * @return the value of the anyName child.
    */
-  @Nonnull
   AnyName getAnyName();
 
 
@@ -52,7 +49,6 @@ public interface OpenNameClasses extends RngDomElement {
    *
    * @return the value of the nsName child.
    */
-  @Nonnull
   NsName getNsName();
 
 
@@ -69,7 +65,6 @@ public interface OpenNameClasses extends RngDomElement {
    *
    * @return the list of choice children.
    */
-  @Nonnull
   List<RngChoice> getChoices();
 
   /**

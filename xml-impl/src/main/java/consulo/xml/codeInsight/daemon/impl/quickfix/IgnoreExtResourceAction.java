@@ -22,13 +22,11 @@ import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author mike
  */
 public class IgnoreExtResourceAction extends BaseExtResourceAction {
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlLocalize.ignoreExternalResourceText();
@@ -36,7 +34,7 @@ public class IgnoreExtResourceAction extends BaseExtResourceAction {
 
     @Override
     @RequiredUIAccess
-    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
+    protected void doInvoke(PsiFile file, int offset, String uri, Editor editor)
         throws IncorrectOperationException {
         file.getApplication().runWriteAction(() -> ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(uri));
     }

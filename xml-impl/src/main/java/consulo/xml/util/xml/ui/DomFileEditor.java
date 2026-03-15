@@ -28,8 +28,7 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import java.util.function.Supplier;
 
@@ -88,7 +87,6 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     return myComponent;
   }
 
-  @Nonnull
   protected JComponent createCustomComponent() {
     MnemonicHelper.init(getComponent());
     myComponent = myComponentFactory.get();
@@ -102,7 +100,6 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     return myComponent.getComponent();
   }
 
-  @Nonnull
   public final String getName() {
     return myName;
   }

@@ -28,7 +28,6 @@ import consulo.xml.impl.internal.ExternalResource;
 import consulo.xml.impl.internal.StandardExternalResourceData;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -76,7 +75,6 @@ public class ExternalResourcesRootsProvider extends IndexableSetContributor
 		myApplication = application;
 	}
 
-	@Nonnull
 	@Override
 	public Set<VirtualFile> getAdditionalRootsToIndex()
 	{

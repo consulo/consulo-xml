@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -12,7 +11,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class HtmlBraceMatcher extends XmlBaseBraceMatcher {
-    @Nonnull
     @Override
     public FileType getFileType() {
         return HtmlFileType.INSTANCE;

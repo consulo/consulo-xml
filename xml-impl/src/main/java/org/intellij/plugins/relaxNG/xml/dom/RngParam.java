@@ -19,7 +19,6 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
@@ -34,7 +33,6 @@ public interface RngParam extends RngDomElement {
    *
    * @return the value of the simple content.
    */
-  @Nonnull
   @Required
   String getValue();
 
@@ -43,7 +41,7 @@ public interface RngParam extends RngDomElement {
    *
    * @param value the new value to set
    */
-  void setValue(@Nonnull String value);
+  void setValue(String value);
 
 
   /**
@@ -51,7 +49,6 @@ public interface RngParam extends RngDomElement {
    *
    * @return the value of the name child.
    */
-  @Nonnull
   @Required
   GenericAttributeValue<String> getName();
 

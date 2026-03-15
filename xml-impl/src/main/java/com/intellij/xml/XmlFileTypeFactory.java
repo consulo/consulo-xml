@@ -23,14 +23,13 @@ import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.virtualFileSystem.fileType.FileTypeFactory;
 import consulo.virtualFileSystem.fileType.FileTypeConsumer;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
  */
 @ExtensionImpl
 public class XmlFileTypeFactory extends FileTypeFactory {
-    public void createFileTypes(@Nonnull final FileTypeConsumer consumer) {
+    public void createFileTypes(final FileTypeConsumer consumer) {
         consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
         consumer.consume(XHtmlFileType.INSTANCE, "xhtml");
         consumer.consume(DTDFileType.INSTANCE, "dtd;ent;mod;elt");

@@ -20,8 +20,7 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
 import consulo.util.collection.ContainerUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +53,7 @@ class XmlContentDFAImpl extends XmlContentDFA {
     return new XmlContentDFAImpl(topGroup);
   }
 
-  private XmlContentDFAImpl(@Nonnull XmlElementsGroup group) {
+  private XmlContentDFAImpl(XmlElementsGroup group) {
     myGroup = group;
   }
 
@@ -98,7 +97,7 @@ class XmlContentDFAImpl extends XmlContentDFA {
     }
   }
 
-  private Result doTransition(@Nonnull XmlElementDescriptor element) {
+  private Result doTransition(XmlElementDescriptor element) {
     if (myGroup.getGroupType() == XmlElementsGroup.Type.LEAF) {
       if (element.equals(myGroup.getLeafDescriptor())) {
         return consume();

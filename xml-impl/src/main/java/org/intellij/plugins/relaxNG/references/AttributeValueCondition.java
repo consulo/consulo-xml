@@ -16,7 +16,6 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.pattern.PatternCondition;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -31,7 +30,7 @@ class AttributeValueCondition extends PatternCondition<XmlAttributeValue> {
   }
 
   @Override
-  public boolean accepts(@Nonnull XmlAttributeValue value, ProcessingContext context) {
+  public boolean accepts(XmlAttributeValue value, ProcessingContext context) {
     return myRef.equals(value.getValue());
   }
 }

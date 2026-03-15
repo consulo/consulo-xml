@@ -31,8 +31,7 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.xml.XmlStringUtil;
 
 import consulo.xml.lang.xml.XMLLanguage;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -103,7 +102,7 @@ public class DomElementsHighlightingUtil {
         );
     }
 
-    private static Annotation createAnnotation(HighlightSeverity severity, TextRange range, @Nonnull LocalizeValue text) {
+    private static Annotation createAnnotation(HighlightSeverity severity, TextRange range, LocalizeValue text) {
         LocalizeValue tooltip = text.map(string -> "<html><body>" + XmlStringUtil.escapeString(string) + "</body></html>");
         return new Annotation(range.getStartOffset(), range.getEndOffset(), severity, text, tooltip, XMLLanguage.INSTANCE);
     }
@@ -112,7 +111,7 @@ public class DomElementsHighlightingUtil {
     @RequiredReadAction
     private static <T> T createProblemDescriptors(
         DomElementProblemDescriptor problemDescriptor,
-        @Nonnull @RequiredReadAction Function<Pair<TextRange, PsiElement>, T> creator
+        @RequiredReadAction Function<Pair<TextRange, PsiElement>, T> creator
     ) {
         Pair<TextRange, PsiElement> range = ((DomElementProblemDescriptorImpl) problemDescriptor).getProblemRange();
         return range == DomElementProblemDescriptorImpl.NO_PROBLEM ? null : creator.apply(range);

@@ -23,7 +23,6 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -37,7 +36,6 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     super(tag);
   }
 
-  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     final XmlTag tag = getElement();
     if (tag == null || !tag.isValid()) return Collections.emptyList();
@@ -64,7 +62,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     return true;
   }
 
-  public static String getTagPresentation(final @Nonnull XmlTag tag) {
+  public static String getTagPresentation(final XmlTag tag) {
     final String id = XmlTagTreeElement.toCanonicalForm(tag.getAttributeValue("id"));
 
     final String classValue = tag.getAttributeValue("class");
@@ -83,8 +81,7 @@ class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationP
     return text.toString();
   }
 
-  @Nonnull
-  public static String normalizeSpacesAndShortenIfLong(final @Nonnull String text) {
+  public static String normalizeSpacesAndShortenIfLong(final String text) {
     return shortenTextIfLong(normalizeSpaces(text));
   }
 

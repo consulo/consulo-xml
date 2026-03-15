@@ -25,8 +25,7 @@ import consulo.xml.util.xml.DomNameStrategy;
 import consulo.xml.util.xml.ElementPresentationTemplate;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -34,17 +33,13 @@ import java.util.List;
  * @author peter
  */
 public interface AbstractDomChildrenDescription extends AnnotatedElement, PomTarget {
-  @Nonnull
-  List<? extends DomElement> getValues(@Nonnull DomElement parent);
+  List<? extends DomElement> getValues(DomElement parent);
 
-  @Nonnull
-  List<? extends DomElement> getStableValues(@Nonnull DomElement parent);
+  List<? extends DomElement> getStableValues(DomElement parent);
 
-  @Nonnull
   Type getType();
 
-  @Nonnull
-  DomNameStrategy getDomNameStrategy(@Nonnull DomElement parent);
+  DomNameStrategy getDomNameStrategy(DomElement parent);
 
   <T> T getUserData(Key<T> key);
 

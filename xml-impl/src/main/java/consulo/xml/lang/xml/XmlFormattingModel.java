@@ -33,9 +33,8 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlElementType;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class XmlFormattingModel extends PsiBasedFormattingModel {
   private static final Logger LOG = Logger.getInstance(XmlFormattingModel.class);
@@ -79,7 +78,7 @@ public class XmlFormattingModel extends PsiBasedFormattingModel {
         if (type == TokenType.WHITE_SPACE) {
           final String text = prevNode.getText();
 
-          final @NonNls String cdataStartMarker = "<![CDATA[";
+          final String cdataStartMarker = "<![CDATA[";
           final int cdataPos = text.indexOf(cdataStartMarker);
           if (cdataPos != -1 && whiteSpace.indexOf(cdataStartMarker) == -1) {
             whiteSpace = mergeWsWithCdataMarker(whiteSpace, text, cdataPos);
@@ -90,7 +89,7 @@ public class XmlFormattingModel extends PsiBasedFormattingModel {
           type = prevNode != null ? prevNode.getElementType() : null;
         }
 
-        final @NonNls String cdataEndMarker = "]]>";
+        final String cdataEndMarker = "]]>";
         if (type == XmlElementType.XML_CDATA_END && whiteSpace.indexOf(cdataEndMarker) == -1) {
           final ASTNode at = findElementAt(prevNode.getStartOffset());
 

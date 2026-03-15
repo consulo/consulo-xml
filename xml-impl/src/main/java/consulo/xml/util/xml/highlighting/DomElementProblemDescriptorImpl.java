@@ -33,8 +33,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.util.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +42,6 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
     private static final Logger LOG = Logger.getInstance("#DomElementProblemDescriptorImpl");
     private final DomElement myDomElement;
     private final HighlightSeverity mySeverity;
-    @Nonnull
     private final LocalizeValue myMessage;
     private final LocalQuickFix[] myFixes;
     private List<Annotation> myAnnotations;
@@ -52,14 +50,14 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
     private final ProblemHighlightType myHighlightType;
 
     @RequiredReadAction
-    public DomElementProblemDescriptorImpl(@Nonnull DomElement domElement, @Nonnull LocalizeValue message, HighlightSeverity type) {
+    public DomElementProblemDescriptorImpl(DomElement domElement, LocalizeValue message, HighlightSeverity type) {
         this(domElement, message, type, LocalQuickFix.EMPTY_ARRAY);
     }
 
     @RequiredReadAction
     public DomElementProblemDescriptorImpl(
-        @Nonnull DomElement domElement,
-        @Nonnull LocalizeValue message,
+        DomElement domElement,
+        LocalizeValue message,
         HighlightSeverity type,
         @Nullable TextRange textRange
     ) {
@@ -68,8 +66,8 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
 
     @RequiredReadAction
     public DomElementProblemDescriptorImpl(
-        @Nonnull DomElement domElement,
-        @Nonnull LocalizeValue message,
+        DomElement domElement,
+        LocalizeValue message,
         HighlightSeverity type,
         LocalQuickFix... fixes
     ) {
@@ -78,8 +76,8 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
 
     @RequiredReadAction
     public DomElementProblemDescriptorImpl(
-        @Nonnull DomElement domElement,
-        @Nonnull LocalizeValue message,
+        DomElement domElement,
+        LocalizeValue message,
         HighlightSeverity type,
         @Nullable TextRange textRange,
         ProblemHighlightType highlightType,
@@ -106,31 +104,26 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
         myHighlightType = highlightType;
     }
 
-    @Nonnull
     @Override
     public DomElement getDomElement() {
         return myDomElement;
     }
 
-    @Nonnull
     @Override
     public HighlightSeverity getHighlightSeverity() {
         return mySeverity;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDescriptionTemplate() {
         return myMessage;
     }
 
-    @Nonnull
     @Override
     public LocalQuickFix[] getFixes() {
         return myFixes;
     }
 
-    @Nonnull
     @Override
     public final List<Annotation> getAnnotations() {
         if (myAnnotations == null) {
@@ -167,7 +160,6 @@ public class DomElementProblemDescriptorImpl implements DomElementProblemDescrip
         return myPair;
     }
 
-    @Nonnull
     @RequiredReadAction
     protected Pair<TextRange, PsiElement> computeProblemRange() {
         PsiElement element = getPsiElement();

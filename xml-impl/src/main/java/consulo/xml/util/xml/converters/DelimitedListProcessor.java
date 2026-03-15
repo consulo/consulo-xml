@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.converters;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -28,7 +27,7 @@ public abstract class DelimitedListProcessor {
     myDelimiters = delimiters;
   }
 
-  public void processText(final @Nonnull String text) {
+  public void processText(final String text) {
     int start;
     int pos = 0;
 

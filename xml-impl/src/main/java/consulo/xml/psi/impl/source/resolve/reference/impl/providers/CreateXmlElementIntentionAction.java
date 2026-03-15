@@ -32,7 +32,6 @@ import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.function.Function;
 
@@ -44,8 +43,8 @@ class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
     private final String myDeclarationTagName;
 
     CreateXmlElementIntentionAction(
-        @Nonnull Function<String, LocalizeValue> textPattern,
-        @Nonnull String declarationTagName,
+        Function<String, LocalizeValue> textPattern,
+        String declarationTagName,
         TypeOrElementOrAttributeReference ref
     ) {
         myTextPattern = textPattern;
@@ -53,14 +52,13 @@ class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
         myDeclarationTagName = declarationTagName;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return myTextPattern.apply(XmlUtil.findLocalNameByQualifiedName(myRef.getCanonicalText()));
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         if (!myIsAvailableEvaluated) {
             XmlTag tag = PsiTreeUtil.getParentOfType(myRef.getElement(), XmlTag.class);
             if (tag != null) {
@@ -78,7 +76,7 @@ class CreateXmlElementIntentionAction implements SyntheticIntentionAction {
     }
 
     @Override
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }

@@ -37,8 +37,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.SmartList;
 import consulo.language.codeStyle.Wrap;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,6 @@ public class XmlBlock extends AbstractXmlBlock {
     myTextRange = textRange;
   }
 
-  @Nonnull
   public TextRange getTextRange() {
     if (myTextRange != null && !(isCDATAStart() || isCDATAEnd())) {
       return myTextRange;
@@ -242,7 +240,7 @@ public class XmlBlock extends AbstractXmlBlock {
     }
   }
 
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     if (!(child1 instanceof AbstractBlock) || !(child2 instanceof AbstractBlock)) {
       return null;
     }
@@ -320,7 +318,6 @@ public class XmlBlock extends AbstractXmlBlock {
   }
 
   @Override
-  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (myNode.getPsi() instanceof PsiFile) {
       return new ChildAttributes(Indent.getNoneIndent(), null);

@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.tree.xml;
 
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.language.ast.IElementType;
 
@@ -23,7 +22,7 @@ import consulo.language.ast.IElementType;
  * @author max
  */
 public class IXmlElementType extends IElementType {
-  public IXmlElementType(@NonNls String debugName) {
+  public IXmlElementType(String debugName) {
     super(debugName, XMLLanguage.INSTANCE);
   }
 }

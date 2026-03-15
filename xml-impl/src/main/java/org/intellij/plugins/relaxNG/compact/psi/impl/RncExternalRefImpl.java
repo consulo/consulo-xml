@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
@@ -31,7 +30,7 @@ public class RncExternalRefImpl extends RncFileReferenceImpl implements RncExter
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitExternalRef(this);
   }
 }

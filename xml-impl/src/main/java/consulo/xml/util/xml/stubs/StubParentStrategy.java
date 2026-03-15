@@ -17,8 +17,7 @@ package consulo.xml.util.xml.stubs;
 
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
@@ -35,7 +34,7 @@ import consulo.xml.util.xml.impl.VirtualDomParentStrategy;
 public class StubParentStrategy implements DomParentStrategy
 {
 
-	public static StubParentStrategy createAttributeStrategy(@Nullable AttributeStub stub, @Nonnull final DomStub parent)
+	public static StubParentStrategy createAttributeStrategy(@Nullable AttributeStub stub, final DomStub parent)
 	{
 		if(stub == null)
 		{
@@ -63,7 +62,7 @@ public class StubParentStrategy implements DomParentStrategy
 
 	protected final DomStub myStub;
 
-	public StubParentStrategy(@Nonnull DomStub stub)
+	public StubParentStrategy(DomStub stub)
 	{
 		myStub = stub;
 	}
@@ -110,21 +109,18 @@ public class StubParentStrategy implements DomParentStrategy
 		return null;
 	}
 
-	@Nonnull
 	@Override
 	public DomParentStrategy refreshStrategy(DomInvocationHandler handler)
 	{
 		return this;
 	}
 
-	@Nonnull
 	@Override
-	public DomParentStrategy setXmlElement(@Nonnull XmlElement element)
+	public DomParentStrategy setXmlElement(XmlElement element)
 	{
 		return new PhysicalDomParentStrategy(element, DomManagerImpl.getDomManager(element.getProject()));
 	}
 
-	@Nonnull
 	@Override
 	public DomParentStrategy clearXmlElement()
 	{

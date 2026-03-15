@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.*;
@@ -52,7 +51,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlAttributeValue(this);
     }
@@ -95,7 +94,6 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  @Nonnull
   public PsiReference[] getReferences() {
     PsiReference[] cachedReferences = myCachedReferences;
     final long curModCount = getManager().getModificationTracker().getModificationCount();
@@ -127,7 +125,7 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  public PsiLanguageInjectionHost updateText(@Nonnull String text) {
+  public PsiLanguageInjectionHost updateText(String text) {
     try {
       final String quoteChar = getTextLength() > 0 ? getText().substring(0, 1) : "";
       String contents = StringUtil.containsAnyChar(quoteChar, "'\"") ?
@@ -145,7 +143,6 @@ public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttribut
   }
 
   @Override
-  @Nonnull
   public LiteralTextEscaper<XmlAttributeValueImpl> createLiteralTextEscaper() {
     return new XmlAttributeLiteralEscaper(this);
   }

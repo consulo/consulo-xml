@@ -28,31 +28,28 @@ import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
 public class SwitchToHtml5Action implements LocalQuickFix, IntentionAction {
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return XmlErrorLocalize.switchToHtml5QuickfixText();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return getName();
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         applyFix(project);
     }
 
@@ -62,7 +59,7 @@ public class SwitchToHtml5Action implements LocalQuickFix, IntentionAction {
     }
 
     @Override
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         applyFix(project);
     }
 

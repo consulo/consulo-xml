@@ -23,8 +23,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlEntityRef;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -34,7 +33,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
   private XmlElement myElement;
   private final DomManagerImpl myDomManager;
 
-  public PhysicalDomParentStrategy(@Nonnull final XmlElement element, DomManagerImpl domManager) {
+  public PhysicalDomParentStrategy(final XmlElement element, DomManagerImpl domManager) {
     myElement = element;
     myDomManager = domManager;
   }
@@ -54,18 +53,15 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return parent instanceof XmlEntityRef ? parent.getParent() : parent;
   }
 
-  @Nonnull
   public final XmlElement getXmlElement() {
     return myElement;
   }
 
-  @Nonnull
   public DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     return this;
   }
 
-  @Nonnull
-  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
+  public DomParentStrategy setXmlElement(final XmlElement element) {
     myElement = element;
     return this;
   }
@@ -75,7 +71,6 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return "Physical:" + myElement;
   }
 
-  @Nonnull
   public DomParentStrategy clearXmlElement() {
     final DomInvocationHandler parent = getParentHandler();
     assert parent != null : "write operations should be performed on the DOM having a parent, your DOM may be not very fresh";
@@ -146,7 +141,7 @@ public class PhysicalDomParentStrategy implements DomParentStrategy {
     return cur;
   }
 
-  private static boolean xmlElementsEqual(@Nonnull final PsiElement fst, @Nonnull final PsiElement snd) {
+  private static boolean xmlElementsEqual(final PsiElement fst, final PsiElement snd) {
     if (fst.equals(snd)) return true;
 
     if (fst.isValid() && fst.isPhysical() || snd.isValid() && snd.isPhysical()) return false;

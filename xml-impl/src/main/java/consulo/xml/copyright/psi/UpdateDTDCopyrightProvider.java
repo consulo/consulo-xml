@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.DTDFileType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -12,7 +11,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class UpdateDTDCopyrightProvider extends UpdateXmlBasedCopyrightsProvider {
-  @Nonnull
   @Override
   public FileType getFileType() {
     return DTDFileType.INSTANCE;

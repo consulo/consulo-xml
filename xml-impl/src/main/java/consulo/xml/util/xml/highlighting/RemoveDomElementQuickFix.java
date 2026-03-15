@@ -17,7 +17,6 @@ package consulo.xml.util.xml.highlighting;
 
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
-import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;
@@ -35,12 +34,11 @@ public class RemoveDomElementQuickFix implements LocalQuickFix {
     private final boolean myIsTag;
     private final String myName;
 
-    public RemoveDomElementQuickFix(@Nonnull DomElement element) {
+    public RemoveDomElementQuickFix(DomElement element) {
         myIsTag = element.getXmlElement() instanceof XmlTag;
         myName = element.getXmlElementName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return myIsTag
@@ -50,7 +48,7 @@ public class RemoveDomElementQuickFix implements LocalQuickFix {
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         if (myIsTag) {
             XmlTag tag = (XmlTag) descriptor.getPsiElement();
             XmlTag parentTag = tag.getParentTag();

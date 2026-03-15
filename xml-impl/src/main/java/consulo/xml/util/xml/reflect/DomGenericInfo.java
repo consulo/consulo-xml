@@ -20,9 +20,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -34,33 +32,29 @@ public interface DomGenericInfo {
   @Nullable
   String getElementName(DomElement element);
 
-  @Nonnull
   List<? extends AbstractDomChildrenDescription> getChildrenDescriptions();
 
-  @Nonnull
   List<? extends DomFixedChildDescription> getFixedChildrenDescriptions();
 
-  @Nonnull
   List<? extends DomCollectionChildDescription> getCollectionChildrenDescriptions();
 
-  @Nonnull
   List<? extends DomAttributeChildDescription> getAttributeChildrenDescriptions();
 
   @Nullable
-  DomFixedChildDescription getFixedChildDescription(@NonNls String tagName);
+  DomFixedChildDescription getFixedChildDescription(String tagName);
 
-  @Nullable DomFixedChildDescription getFixedChildDescription(@NonNls String tagName, @NonNls String namespaceKey);
-
-  @Nullable
-  DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName);
-
-  @Nullable DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName, @NonNls String namespaceKey);
+  @Nullable DomFixedChildDescription getFixedChildDescription(String tagName, String namespaceKey);
 
   @Nullable
-  DomAttributeChildDescription getAttributeChildDescription(@NonNls String attributeName);
+  DomCollectionChildDescription getCollectionChildDescription(String tagName);
+
+  @Nullable DomCollectionChildDescription getCollectionChildDescription(String tagName, String namespaceKey);
 
   @Nullable
-  DomAttributeChildDescription getAttributeChildDescription(@NonNls String attributeName, @NonNls String namespaceKey);
+  DomAttributeChildDescription getAttributeChildDescription(String attributeName);
+
+  @Nullable
+  DomAttributeChildDescription getAttributeChildDescription(String attributeName, String namespaceKey);
 
   /**
    * @return true, if there's no children in the element, only tag value accessors
@@ -79,6 +73,5 @@ public interface DomGenericInfo {
   @Nullable
   GenericDomValue getNameDomElement(DomElement element);
 
-  @Nonnull
   List<? extends CustomDomChildrenDescription> getCustomNameChildrenDescription();
 }

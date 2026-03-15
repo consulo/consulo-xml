@@ -25,8 +25,7 @@ import consulo.util.xml.serializer.Converter;
 import consulo.util.xml.serializer.XmlSerializer;
 import consulo.util.xml.serializer.annotation.Attribute;
 import consulo.util.xml.serializer.annotation.Tag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jdom.Document;
 
 import java.io.InputStream;
@@ -96,13 +95,12 @@ public class HTMLControls {
     private static class TagStateConverter extends Converter<TagState> {
         @Nullable
         @Override
-        public TagState fromString(@Nonnull String value) {
+        public TagState fromString(String value) {
             return TagState.valueOf(value.toUpperCase(Locale.US));
         }
 
-        @Nonnull
         @Override
-        public String toString(@Nonnull TagState state) {
+        public String toString(TagState state) {
             return state.name().toLowerCase(Locale.US);
         }
     }
@@ -110,7 +108,7 @@ public class HTMLControls {
     private static class AutoCloseConverter extends Converter<Set<String>> {
         @Nullable
         @Override
-        public Set<String> fromString(@Nonnull String value) {
+        public Set<String> fromString(String value) {
             final Set<String> result = new HashSet<String>();
             for (String closingTag : StringUtil.split(value, ",")) {
                 result.add(closingTag.trim().toLowerCase(Locale.US));
@@ -118,9 +116,8 @@ public class HTMLControls {
             return result;
         }
 
-        @Nonnull
         @Override
-        public String toString(@Nonnull Set<String> o) {
+        public String toString(Set<String> o) {
             return StringUtil.join(o, ", ");
         }
     }

@@ -19,8 +19,7 @@ import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.ExternalResourceManagerExImpl;
 import consulo.xml.javaee.ResourceRegistrar;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -96,13 +95,11 @@ public class ResourceRegistrarImpl implements ResourceRegistrar
 		addStdResource(resource, version, ExternalResourceManagerEx.STANDARD_SCHEMAS + fileName);
 	}
 
-	@Nonnull
 	public Map<String, Map<String, ExternalResource>> getResources()
 	{
 		return myResources;
 	}
 
-	@Nonnull
 	public Set<String> getIgnored()
 	{
 		return myIgnored;

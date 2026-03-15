@@ -16,7 +16,6 @@
 package consulo.xml.lang.xml;
 
 import consulo.language.CompositeLanguage;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.Language;
 
 /**
@@ -32,12 +31,12 @@ public class XMLLanguage extends CompositeLanguage
 	}
 
 	@Deprecated
-	protected XMLLanguage(@NonNls String name, @NonNls String... mime)
+	protected XMLLanguage(String name, String... mime)
 	{
 		super(name, mime);
 	}
 
-	protected XMLLanguage(Language baseLanguage, @NonNls String name, @NonNls String... mime)
+	protected XMLLanguage(Language baseLanguage, String name, String... mime)
 	{
 		super(baseLanguage, name, mime);
 	}

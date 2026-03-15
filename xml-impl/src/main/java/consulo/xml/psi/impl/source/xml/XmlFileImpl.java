@@ -33,7 +33,6 @@ import consulo.language.psi.resolve.ResolveState;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.virtualFileSystem.fileType.FileType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike
@@ -69,7 +68,7 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile {
   }
 
   @Override
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlFile(this);
     } else {
@@ -82,7 +81,6 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile {
   }
 
   @Override
-  @Nonnull
   public FileType getFileType() {
     return getViewProvider().getFileType();
   }
@@ -101,11 +99,10 @@ public class XmlFileImpl extends PsiFileImpl implements XmlFile {
   }
 
   @Override
-  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState state, PsiElement lastParent, @Nonnull PsiElement place) {
+  public boolean processDeclarations(PsiScopeProcessor processor, ResolveState state, PsiElement lastParent, PsiElement place) {
     return super.processDeclarations(processor, state, lastParent, place) && (!isWebFileType() || ScriptSupportUtil.processDeclarations(this, processor, state, lastParent, place));
   }
 
-  @Nonnull
   @Override
   public GlobalSearchScope getFileResolveScope() {
     return GlobalSearchScope.allScope(getProject());

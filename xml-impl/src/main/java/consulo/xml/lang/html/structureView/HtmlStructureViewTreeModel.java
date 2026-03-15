@@ -24,8 +24,7 @@ import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.PlaceHolder;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,7 +38,6 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 
 	private static final Sorter HTML_ALPHA_SORTER = new Sorter()
 	{
-		@Nonnull
 		@Override
 		public Comparator getComparator()
 		{
@@ -85,7 +83,6 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 		}
 
 		@Override
-		@Nonnull
 		public ActionPresentation getPresentation()
 		{
 			return new ActionPresentationData(
@@ -96,7 +93,6 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 		}
 
 		@Override
-		@Nonnull
 		public String getName()
 		{
 			return ALPHA_SORTER_ID;
@@ -113,7 +109,7 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	public void setPlace(@Nonnull final String place)
+	public void setPlace(final String place)
 	{
 		myStructureViewPlace = place;
 	}
@@ -125,7 +121,6 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	@Nonnull
 	public Sorter[] getSorters()
 	{
 		if(TreeStructureUtil.isInStructureViewPopup(this))
@@ -137,14 +132,12 @@ class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements Pl
 	}
 
 	@Override
-	@Nonnull
 	public Collection<NodeProvider> getNodeProviders()
 	{
 		return myNodeProviders;
 	}
 
 	@Override
-	@Nonnull
 	public StructureViewTreeElement getRoot()
 	{
 		return new HtmlFileTreeElement(TreeStructureUtil.isInStructureViewPopup(this), (XmlFile) getPsiFile());

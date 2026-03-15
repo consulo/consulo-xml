@@ -25,8 +25,7 @@ import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
@@ -39,7 +38,6 @@ class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
     myInStructureViewPopup = inStructureViewPopup;
   }
 
-  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     if (isHtml5SectionsMode()) {
       return Collections.emptyList(); // Html5SectionsNodeProvider will return its structure

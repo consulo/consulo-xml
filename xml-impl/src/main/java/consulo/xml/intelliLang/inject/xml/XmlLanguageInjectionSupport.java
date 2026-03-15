@@ -44,10 +44,8 @@ import consulo.xml.intelliLang.inject.config.ui.configurables.XmlAttributeInject
 import consulo.xml.intelliLang.inject.config.ui.configurables.XmlTagInjectionConfigurable;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +59,6 @@ import java.util.function.Supplier;
 @ExtensionImpl
 public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSupport {
 
-    @NonNls
     public static final String XML_SUPPORT_ID = "xml";
 
     private static boolean isMine(final PsiLanguageInjectionHost host) {
@@ -79,12 +76,10 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
         return false;
     }
 
-    @Nonnull
     public String getId() {
         return XML_SUPPORT_ID;
     }
 
-    @Nonnull
     public Class[] getPatternClasses() {
         return new Class[]{XmlPatterns.class};
     }
@@ -96,7 +91,7 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
 
     @Nullable
     @Override
-    public BaseInjection findCommentInjection(@Nonnull PsiElement host, @Nullable Ref<PsiElement> commentRef) {
+    public BaseInjection findCommentInjection(PsiElement host, @Nullable Ref<PsiElement> commentRef) {
         if (host instanceof XmlAttributeValue) {
             return null;
         }

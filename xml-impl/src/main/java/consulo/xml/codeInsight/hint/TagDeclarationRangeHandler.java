@@ -25,20 +25,17 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class TagDeclarationRangeHandler implements DeclarationRangeHandler {
-    @Nonnull
     @Override
     public Class getElementClass() {
         return XmlTag.class;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public TextRange getDeclarationRange(@Nonnull PsiElement container) {
+    public TextRange getDeclarationRange(PsiElement container) {
         XmlTag xmlTag = (XmlTag)container;
         int endOffset = xmlTag.getTextRange().getStartOffset();
 

@@ -29,7 +29,6 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.tagTreeHighlighting.XmlTagTreeHighlightingColors;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.HtmlFileHighlighter;
-import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
 import java.util.Map;
@@ -56,17 +55,14 @@ public class HTMLColorsPage implements ColorSettingsPage {
     myApplication = application;
   }
 
-  @Nonnull
   public LocalizeValue getDisplayName() {
     return ApplicationLocalize.titleHtml();
   }
 
-  @Nonnull
   public AttributesDescriptor[] getAttributeDescriptors() {
     return ATTRS;
   }
 
-  @Nonnull
   public ColorDescriptor[] getColorDescriptors() {
     // todo: make preview for it
 
@@ -81,12 +77,10 @@ public class HTMLColorsPage implements ColorSettingsPage {
     return colorDescriptors;
   }
 
-  @Nonnull
   public SyntaxHighlighter getHighlighter() {
     return new HtmlFileHighlighter(myApplication);
   }
 
-  @Nonnull
   public String getDemoText() {
     return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n" +
       "<!--\n" +

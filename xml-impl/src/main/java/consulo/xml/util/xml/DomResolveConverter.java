@@ -30,8 +30,7 @@ import consulo.project.Project;
 import consulo.util.collection.SoftFactoryMap;
 import consulo.xml.util.xml.highlighting.ResolvingElementQuickFix;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +46,6 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
   private final boolean myAttribute;
   private final SoftFactoryMap<DomElement, CachedValue<Map<String, DomElement>>> myResolveCache = new SoftFactoryMap<>() {
     @Override
-    @Nonnull
     protected CachedValue<Map<String, DomElement>> create(final DomElement scope) {
       final DomManager domManager = scope.getManager();
       final Project project = domManager.getProject();
@@ -104,7 +102,7 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
   }
 
   @Override
-  public boolean isReferenceTo(@Nonnull PsiElement element, String stringValue, @Nullable T resolveResult, ConvertContext context) {
+  public boolean isReferenceTo(PsiElement element, String stringValue, @Nullable T resolveResult, ConvertContext context) {
     return resolveResult != null && element.getManager().areElementsEquivalent(element, resolveResult.getXmlElement());
   }
 
@@ -113,7 +111,6 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
     return invocationElement.getManager().getResolvingScope((GenericDomValue)invocationElement);
   }
 
-  @Nonnull
   @Override
   public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
     return CodeInsightLocalize.errorCannotResolve01(TypePresentationService.getInstance().getTypeNameOrStub(myClass), s);
@@ -126,7 +123,6 @@ public class DomResolveConverter<T extends DomElement> extends ResolvingConverte
   }
 
   @Override
-  @Nonnull
   @SuppressWarnings("unchecked")
   public Collection<? extends T> getVariants(final ConvertContext context) {
     final DomElement reference = context.getInvocationElement();

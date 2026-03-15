@@ -18,9 +18,8 @@ package com.intellij.xml;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Describes an XML tag.
@@ -30,7 +29,6 @@ import jakarta.annotation.Nullable;
 public interface XmlElementDescriptor extends PsiMetaData {
     XmlElementDescriptor[] EMPTY_ARRAY = new XmlElementDescriptor[0];
 
-    @NonNls
     String getQualifiedName();
 
     /**
@@ -39,7 +37,6 @@ public interface XmlElementDescriptor extends PsiMetaData {
      *
      * @return either simple or qualified name.
      */
-    @NonNls
     String getDefaultName();
 
     /**
@@ -56,7 +53,7 @@ public interface XmlElementDescriptor extends PsiMetaData {
     XmlAttributeDescriptor[] getAttributesDescriptors(final @Nullable XmlTag context);
 
     @Nullable
-    XmlAttributeDescriptor getAttributeDescriptor(@NonNls String attributeName, final @Nullable XmlTag context);
+    XmlAttributeDescriptor getAttributeDescriptor(String attributeName, final @Nullable XmlTag context);
 
     @Nullable
     XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute);

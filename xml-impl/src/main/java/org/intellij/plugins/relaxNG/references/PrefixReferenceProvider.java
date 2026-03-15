@@ -36,8 +36,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -47,8 +46,7 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
   private static final Logger LOG = Logger.getInstance("#PrefixReferenceProvider");
 
   @Override
-  @Nonnull
-  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+  public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
     final XmlAttributeValue value = (XmlAttributeValue)element;
 
     final String s = value.getValue();
@@ -107,9 +105,8 @@ public class PrefixReferenceProvider extends PsiReferenceProvider {
       return new LocalQuickFix[]{XmlQuickFixFactory.getInstance().createNSDeclarationIntentionFix(tag, getCanonicalText(), null)};
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
       return LocalizeValue.localizeTODO( "Undefined namespace prefix '" + s + "'");
     }
   }

@@ -47,7 +47,6 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 import java.util.*;
 
 @ExtensionImpl
@@ -56,7 +55,7 @@ public class DefaultXmlTagNameProvider implements XmlTagNameProvider
 	private static final Logger LOG = Logger.getInstance(DefaultXmlTagNameProvider.class);
 
 	@Override
-	public void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix)
+	public void addTagNameVariants(List<LookupElement> elements, XmlTag tag, String prefix)
 	{
 		final List<String> namespaces;
 		if(prefix.isEmpty())

@@ -34,7 +34,6 @@ import consulo.util.lang.ref.SimpleReference;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author max
@@ -55,7 +54,7 @@ public class XmlBuilderDriver {
         return myText;
     }
 
-    public void addImplicitBinding(@Nonnull String prefix, @Nonnull String namespace) {
+    public void addImplicitBinding(String prefix, String namespace) {
         myNamespacesStack.push(namespace);
         myPrefixesStack.push(prefix);
     }

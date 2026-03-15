@@ -39,7 +39,6 @@ import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.lexer.XHtmlHighlightingLexer;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +52,6 @@ public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
 
     private final DataIndexer<String, Void, FileContent> myIndexer = new DataIndexer<>() {
         @Override
-        @Nonnull
         public Map<String, Void> map(FileContent inputData) {
             CharSequence input = inputData.getContentAsText();
             Language language = ((LanguageFileType)inputData.getFileType()).getLanguage();
@@ -91,13 +89,11 @@ public class Html5CustomAttributesIndex extends ScalarIndexExtension<String> {
         return fileType == HtmlFileType.INSTANCE || fileType == XHtmlFileType.INSTANCE;
     };
 
-    @Nonnull
     @Override
     public ID<String, Void> getName() {
         return INDEX_ID;
     }
 
-    @Nonnull
     @Override
     public DataIndexer<String, Void, FileContent> getIndexer() {
         return myIndexer;

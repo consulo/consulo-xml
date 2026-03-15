@@ -15,14 +15,13 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
  */
 public class RootScopeProvider extends ScopeProvider{
 
-  public DomElement getScope(@Nonnull DomElement element) {
+  public DomElement getScope(DomElement element) {
     return DomUtil.getRoot(element);
   }
 }

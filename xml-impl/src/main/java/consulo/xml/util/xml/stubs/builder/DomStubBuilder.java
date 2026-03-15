@@ -36,7 +36,6 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.stubs.FileStub;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -48,7 +47,6 @@ public class DomStubBuilder implements BinaryFileStubBuilder {
   public final static Key<FileContent> CONTENT_FOR_DOM_STUBS = Key.create("dom stubs content");
   private final static Logger LOG = Logger.getInstance(DomStubBuilder.class);
 
-  @Nonnull
   @Override
   public FileType getFileType() {
     return XmlFileType.INSTANCE;

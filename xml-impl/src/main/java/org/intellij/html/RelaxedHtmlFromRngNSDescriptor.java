@@ -24,8 +24,7 @@ import consulo.logging.Logger;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.intellij.plugins.relaxNG.model.descriptors.RngNsDescriptor;
 
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class RelaxedHtmlFromRngNSDescriptor extends RngNsDescriptor implements R
     private static final Logger LOG = Logger.getInstance("#RelaxedHtmlFromRngNSDescriptor");
 
     @Override
-    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
         XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
         if (LOG.isDebugEnabled()) {
@@ -63,12 +62,11 @@ public class RelaxedHtmlFromRngNSDescriptor extends RngNsDescriptor implements R
     }
 
     @Override
-    protected XmlElementDescriptor initDescriptor(@Nonnull XmlElementDescriptor descriptor) {
+    protected XmlElementDescriptor initDescriptor(XmlElementDescriptor descriptor) {
         return new RelaxedHtmlFromRngElementDescriptor(descriptor);
     }
 
     @Override
-    @Nonnull
     public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
         final XmlElementDescriptor[] descriptors = super.getRootElementsDescriptors(doc);
         /**

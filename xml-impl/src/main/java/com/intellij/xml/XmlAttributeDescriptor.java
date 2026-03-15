@@ -20,8 +20,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.util.collection.ArrayFactory;
 import consulo.language.psi.meta.PsiMetaData;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Mike
@@ -29,7 +28,6 @@ import jakarta.annotation.Nullable;
 public interface XmlAttributeDescriptor extends PsiMetaData {
     XmlAttributeDescriptor[] EMPTY = new XmlAttributeDescriptor[0];
     ArrayFactory<XmlAttributeDescriptor> ARRAY_FACTORY = new ArrayFactory<>() {
-        @Nonnull
         @Override
         public XmlAttributeDescriptor[] create(int count) {
             return new XmlAttributeDescriptor[count];

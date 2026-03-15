@@ -40,8 +40,7 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlProlog;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author ik
@@ -55,13 +54,12 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
         super(XmlLocalize.actionGenerateDtdText(), LocalizeValue.empty());
     }
 
-    @Nonnull
     @Override
     protected CodeInsightActionHandler getHandler() {
         return new CodeInsightActionHandler() {
             @Override
             @RequiredUIAccess
-            public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+            public void invoke(Project project, Editor editor, PsiFile file) {
                 XmlDocument document = findSuitableXmlDocument(file);
                 if (document != null) {
                     StringBuilder sb = new StringBuilder();
@@ -107,7 +105,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
     }
 
     @Override
-    public void update(@Nonnull AnActionEvent event) {
+    public void update(AnActionEvent event) {
         super.update(event);
         if (ActionPlaces.isPopupPlace(event.getPlace())) {
             Presentation presentation = event.getPresentation();
@@ -117,7 +115,7 @@ public class GenerateDTDAction extends BaseCodeInsightAction {
 
     @Override
     @RequiredReadAction
-    protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    protected boolean isValidForFile(Project project, Editor editor, PsiFile file) {
         return file.getLanguage() == XMLLanguage.INSTANCE && findSuitableXmlDocument(file) != null;
     }
 }

@@ -27,27 +27,23 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @Singleton
 @ServiceImpl
 public class XmlQuickFixFactoryImpl extends XmlQuickFixFactory {
-  @Nonnull
   @Override
-  public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values) {
+  public LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(XmlTag tag, String attrName, String... values) {
     return new InsertRequiredAttributeFix(tag, attrName, values);
   }
 
-  @Nonnull
   @Override
-  public LocalQuickFix createNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix, @Nullable XmlToken token) {
+  public LocalQuickFix createNSDeclarationIntentionFix(PsiElement element, String namespacePrefix, @Nullable XmlToken token) {
     return new CreateNSDeclarationIntentionFix(element, namespacePrefix, token);
   }
 
-  @Nonnull
   @Override
-  public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute) {
+  public LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(XmlAttribute attribute) {
     return new AddAttributeValueIntentionFix(attribute);
   }
 }

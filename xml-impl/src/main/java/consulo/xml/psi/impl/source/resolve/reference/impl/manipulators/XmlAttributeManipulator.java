@@ -27,7 +27,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlChildRole;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Gregory.Shrago
@@ -90,7 +89,6 @@ public class XmlAttributeManipulator extends AbstractElementManipulator<XmlAttri
 		return range.shiftRight(value.getStartOffsetInParent());
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlAttribute> getElementClass()
 	{

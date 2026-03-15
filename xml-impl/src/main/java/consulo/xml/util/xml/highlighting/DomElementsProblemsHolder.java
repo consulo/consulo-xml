@@ -18,7 +18,6 @@ package consulo.xml.util.xml.highlighting;
 
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.xml.util.xml.DomElement;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public interface DomElementsProblemsHolder {
 
   List<DomElementProblemDescriptor> getAllProblems();
 
-  List<DomElementProblemDescriptor> getAllProblems(@Nonnull DomElementsInspection inspection);
+  List<DomElementProblemDescriptor> getAllProblems(DomElementsInspection inspection);
 
-  boolean isInspectionCompleted(@Nonnull DomElementsInspection inspection);
+  boolean isInspectionCompleted(DomElementsInspection inspection);
 }

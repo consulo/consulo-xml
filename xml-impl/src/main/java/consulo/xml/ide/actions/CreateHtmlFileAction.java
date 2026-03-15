@@ -26,7 +26,6 @@ import consulo.project.Project;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -53,7 +52,6 @@ public class CreateHtmlFileAction extends CreateFileFromTemplateAction implement
             .addKind(XmlLocalize.newXhtmlFileKind(), XHtmlFileType.INSTANCE.getIcon(), FileTemplateManager.INTERNAL_XHTML_TEMPLATE_NAME);
     }
 
-    @Nonnull
     @Override
     protected LocalizeValue getActionName(PsiDirectory directory, String newName, String templateName) {
         return XmlLocalize.actionNewHtmlFileText();

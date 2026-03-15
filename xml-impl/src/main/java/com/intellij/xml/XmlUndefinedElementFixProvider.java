@@ -23,8 +23,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -37,7 +36,7 @@ public abstract class XmlUndefinedElementFixProvider {
      * providers should be asked
      */
     @Nullable
-    public IntentionAction[] createFixes(@Nonnull XmlAttribute attribute) {
+    public IntentionAction[] createFixes(XmlAttribute attribute) {
         return null;
     }
 
@@ -47,7 +46,7 @@ public abstract class XmlUndefinedElementFixProvider {
      * providers should be asked
      */
     @Nullable
-    public LocalQuickFix[] createFixes(@Nonnull XmlTag tag) {
+    public LocalQuickFix[] createFixes(XmlTag tag) {
         return null;
     }
 }

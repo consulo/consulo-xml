@@ -19,7 +19,6 @@ import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.PlatformPatterns;
 import consulo.language.pattern.PsiNamePatternCondition;
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.psi.xml.XmlAttribute;
 
 /**
@@ -56,7 +55,7 @@ public class XmlPatterns extends PlatformPatterns
 		return XmlAttributeValuePattern.XML_ATTRIBUTE_VALUE_PATTERN;
 	}
 
-	public static XmlNamedElementPattern.XmlAttributePattern xmlAttribute(@NonNls String localName)
+	public static XmlNamedElementPattern.XmlAttributePattern xmlAttribute(String localName)
 	{
 		return xmlAttribute().withLocalName(localName);
 	}

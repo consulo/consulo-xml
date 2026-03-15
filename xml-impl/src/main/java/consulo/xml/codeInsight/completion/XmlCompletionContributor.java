@@ -55,8 +55,7 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -199,7 +198,7 @@ public class XmlCompletionContributor extends CompletionContributor {
 
     @Override
     @RequiredReadAction
-    public void fillCompletionVariants(@Nonnull CompletionParameters parameters, @Nonnull CompletionResultSet result) {
+    public void fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
         super.fillCompletionVariants(parameters, result);
         if (result.isStopped()) {
             return;
@@ -259,7 +258,7 @@ public class XmlCompletionContributor extends CompletionContributor {
     }
 
     @Override
-    public String advertise(@Nonnull CompletionParameters parameters) {
+    public String advertise(CompletionParameters parameters) {
         if (isXmlNameCompletion(parameters) && parameters.getCompletionType() == CompletionType.BASIC) {
             if (FeatureUsageTracker.getInstance()
                 .isToBeAdvertisedInLookup(TAG_NAME_COMPLETION_FEATURE, parameters.getPosition().getProject())) {
@@ -272,7 +271,7 @@ public class XmlCompletionContributor extends CompletionContributor {
 
     @Override
     @RequiredReadAction
-    public void beforeCompletion(@Nonnull CompletionInitializationContext context) {
+    public void beforeCompletion(CompletionInitializationContext context) {
         int offset = context.getStartOffset();
         PsiFile file = context.getFile();
         XmlAttributeValue attributeValue = PsiTreeUtil.findElementOfClassAtOffset(file, offset, XmlAttributeValue.class, true);
@@ -358,7 +357,7 @@ public class XmlCompletionContributor extends CompletionContributor {
     }
 
     @Nullable
-    private static LookupElementBuilder buildEntityLookupItem(@Nonnull XmlEntityDecl decl) {
+    private static LookupElementBuilder buildEntityLookupItem(XmlEntityDecl decl) {
         String name = decl.getName();
         if (name == null) {
             return null;
@@ -390,7 +389,6 @@ public class XmlCompletionContributor extends CompletionContributor {
         return result;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return Language.ANY;

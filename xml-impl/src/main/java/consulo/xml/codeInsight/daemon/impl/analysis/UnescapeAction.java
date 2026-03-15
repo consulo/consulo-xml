@@ -9,7 +9,6 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 
-import jakarta.annotation.Nonnull;
 
 class UnescapeAction implements SyntheticIntentionAction {
     private static final String AMP_ENTITY = "&amp;";
@@ -20,19 +19,18 @@ class UnescapeAction implements SyntheticIntentionAction {
         myElement = element;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlErrorLocalize.escapeAmpersandQuickfix();
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) {
+    public void invoke(Project project, Editor editor, PsiFile file) {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }

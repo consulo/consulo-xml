@@ -20,29 +20,23 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.component.util.ModificationTracker;
 import consulo.util.dataholder.UserDataHolder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
  */
 public interface DomFileElement<T extends DomElement> extends DomElement, UserDataHolder, ModificationTracker {
-  @Nonnull
   XmlFile getFile();
 
-  @Nonnull
   XmlFile getOriginalFile();
 
   @Nullable
   XmlTag getRootTag();
 
-  @Nonnull
   T getRootElement();
 
-  @Nonnull
   Class<T> getRootElementClass();
 
-  @Nonnull
   DomFileDescription<T> getFileDescription();
 
 }

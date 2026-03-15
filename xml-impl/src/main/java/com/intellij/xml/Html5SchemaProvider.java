@@ -7,7 +7,6 @@ import consulo.logging.Logger;
 import consulo.util.io.URLUtil;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ExternalResourceManagerEx;
-import jakarta.annotation.Nonnull;
 
 import java.net.URL;
 import java.util.List;
@@ -83,12 +82,9 @@ public abstract class Html5SchemaProvider {
         LOG.info("CHARS_DTD_LOCATION = " + getCharsDtdLocation());
     }
 
-    @Nonnull
     public abstract URL getHtmlSchemaLocation();
 
-    @Nonnull
     public abstract URL getXhtmlSchemaLocation();
 
-    @Nonnull
     public abstract URL getCharsLocation();
 }

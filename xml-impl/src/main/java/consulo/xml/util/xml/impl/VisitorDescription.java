@@ -17,7 +17,6 @@ package consulo.xml.util.xml.impl;
 
 import java.lang.reflect.Method;
 
-import org.jetbrains.annotations.NonNls;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.ide.impl.idea.util.containers.ConcurrentClassMap;
 import consulo.xml.util.xml.DomElement;
@@ -30,7 +29,7 @@ import consulo.xml.util.xml.DomReflectionUtil;
 public class VisitorDescription {
   private final Class<? extends DomElementVisitor> myVisitorClass;
   private final ConcurrentClassMap<Method> myMethods = new ConcurrentClassMap<Method>();
-  @NonNls private static final String VISIT = "visit";
+  private static final String VISIT = "visit";
 
   public VisitorDescription(final Class<? extends DomElementVisitor> visitorClass) {
     myVisitorClass = visitorClass;

@@ -22,7 +22,6 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.JavaNameStrategy;
 import consulo.xml.util.xml.NameStrategy;
 import org.intellij.plugins.relaxNG.model.CommonElement;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -35,7 +34,6 @@ public interface RngDomElement extends DomElement, CommonElement<XmlElement> {
    *
    * @return the value of the ns child.
    */
-  @Nonnull
   @Attribute("ns")
   GenericAttributeValue<String> getNamespace();
 
@@ -44,6 +42,5 @@ public interface RngDomElement extends DomElement, CommonElement<XmlElement> {
    *
    * @return the value of the datatypeLibrary child.
    */
-  @Nonnull
   GenericAttributeValue<String> getDatatypeLibrary();
 }

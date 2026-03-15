@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.events;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
@@ -29,7 +28,7 @@ public class DomEvent {
   private final DomElement myElement;
   private final boolean myDefined;
 
-  public DomEvent(@Nonnull final DomElement element, boolean defined) {
+  public DomEvent(final DomElement element, boolean defined) {
     myDefined = defined;
     myElement = DomUtil.getFileElement(element);
   }

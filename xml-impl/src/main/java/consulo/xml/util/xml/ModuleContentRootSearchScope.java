@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.content.ModuleRootManager;
@@ -40,7 +39,7 @@ public class ModuleContentRootSearchScope extends GlobalSearchScope {
     return 0;
   }
 
-  public boolean isSearchInModuleContent(@Nonnull final Module aModule) {
+  public boolean isSearchInModuleContent(final Module aModule) {
     return aModule == myModule;
   }
 

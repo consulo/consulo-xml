@@ -30,8 +30,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -39,15 +38,14 @@ import java.util.Collection;
 public class XmlGtTypedHandler extends TypedHandlerDelegate {
     private static final Logger LOG = Logger.getInstance(XmlGtTypedHandler.class);
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public Result beforeCharTyped(
         char c,
-        @Nonnull Project project,
-        @Nonnull Editor editor,
-        @Nonnull PsiFile editedFile,
-        @Nonnull FileType fileType
+        Project project,
+        Editor editor,
+        PsiFile editedFile,
+        FileType fileType
     ) {
         XmlEditorOptions xmlEditorOptions = XmlEditorOptions.getInstance();
         if (c == '>' && xmlEditorOptions.isAutomaticallyInsertClosingTag() && fileContainsXmlLanguage(editedFile)) {

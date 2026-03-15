@@ -16,7 +16,6 @@
 
 package consulo.xml.util.xml.highlighting;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.DomFileDescription;
 import consulo.xml.util.xml.NameValue;
@@ -32,7 +31,7 @@ import consulo.xml.util.xml.GenericDomValue;
 public abstract class BasicDomElementsInspection<T extends DomElement, State> extends DomElementsInspection<T, State> {
 
   @SafeVarargs
-  public BasicDomElementsInspection(@Nonnull Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
+  public BasicDomElementsInspection(Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
     super(domClass, additionalClasses);
   }
 

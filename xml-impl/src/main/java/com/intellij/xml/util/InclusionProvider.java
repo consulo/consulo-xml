@@ -24,8 +24,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.application.util.RecursionManager;
 import consulo.language.psi.PsiModificationTracker;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +44,6 @@ class InclusionProvider implements CachedValueProvider<PsiElement[]> {
         myXincludeTag = xincludeTag;
     }
 
-    @Nonnull
     public static PsiElement[] getIncludedTags(XmlTag xincludeTag) {
         return CachedValuesManager.getManager(xincludeTag.getProject()).getCachedValue(xincludeTag, new InclusionProvider(xincludeTag));
     }
@@ -59,7 +57,7 @@ class InclusionProvider implements CachedValueProvider<PsiElement[]> {
         return Result.create(result == null ? PsiElement.EMPTY_ARRAY : result, PsiModificationTracker.MODIFICATION_COUNT);
     }
 
-    private static XmlTag[] extractXpointer(@Nonnull XmlTag rootTag, @Nullable final String xpointer) {
+    private static XmlTag[] extractXpointer(XmlTag rootTag, @Nullable final String xpointer) {
         if (xpointer != null) {
             Matcher matcher = XPOINTER_PATTERN.matcher(xpointer);
             if (matcher.matches()) {

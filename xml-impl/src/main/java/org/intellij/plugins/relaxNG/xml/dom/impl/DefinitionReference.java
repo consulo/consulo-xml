@@ -34,8 +34,7 @@ import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngParentRef;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -64,7 +63,6 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  @Nonnull
   public ResolveResult[] multiResolve(boolean incompleteCode) {
     final RngGrammar scope = getScope();
     if (scope == null) {
@@ -97,7 +95,6 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
   }
 
   @Override
-  @Nonnull
   public Object[] getVariants() {
     final RngGrammar scope = getScope();
     if (scope == null) {
@@ -138,9 +135,8 @@ public class DefinitionReference extends PsiReferenceBase.Poly<XmlAttributeValue
     return LocalQuickFix.EMPTY_ARRAY;
   }
 
-  @Nonnull
   @Override
-  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+  public LocalizeValue buildUnresolvedMessage(String s) {
     return LocalizeValue.localizeTODO("Unresolved pattern reference ''" + s + "'");
   }
 }

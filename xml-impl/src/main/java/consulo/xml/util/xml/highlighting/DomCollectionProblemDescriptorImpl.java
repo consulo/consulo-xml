@@ -21,7 +21,6 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -32,7 +31,7 @@ public class DomCollectionProblemDescriptorImpl extends DomElementProblemDescrip
     @RequiredReadAction
     public DomCollectionProblemDescriptorImpl(
         DomElement domElement,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         HighlightSeverity type,
         DomCollectionChildDescription childDescription
     ) {
@@ -43,7 +42,7 @@ public class DomCollectionProblemDescriptorImpl extends DomElementProblemDescrip
     @RequiredReadAction
     public DomCollectionProblemDescriptorImpl(
         DomElement domElement,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         HighlightSeverity type,
         DomCollectionChildDescription childDescription,
         LocalQuickFix... fixes

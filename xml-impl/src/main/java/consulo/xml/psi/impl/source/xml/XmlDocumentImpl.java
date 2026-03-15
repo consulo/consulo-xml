@@ -51,9 +51,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +84,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument {
   }
 
   @Override
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlDocument(this);
     } else {
@@ -197,7 +195,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument {
     if (descriptorFile == null) {
       return false;
     }
-    @NonNls String otherName = XmlUtil.getContainingFile(this).getName() + ".dtd";
+    String otherName = XmlUtil.getContainingFile(this).getName() + ".dtd";
     return descriptorFile.getName().equals(otherName);
   }
 
@@ -297,7 +295,6 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument {
     });
   }
 
-  @Nonnull
   private static String getFilePathForLogging(@Nullable PsiFile file) {
     if (file == null) {
       return "NULL";
@@ -356,7 +353,6 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument {
     return descriptor;
   }
 
-  @Nonnull
   @Override
   public CompositePsiElement clone() {
     HashMap<String, CachedValue<XmlNSDescriptor>> cacheStrict = new HashMap<>(myDefaultDescriptorsCacheStrict);
@@ -409,9 +405,7 @@ public class XmlDocumentImpl extends XmlElementImpl implements XmlDocument {
     final ObjectIntMap<Object> map = ObjectMaps.newObjectIntHashMap();
 
     final PsiElementVisitor psiRecursiveElementVisitor = new XmlRecursiveElementVisitor() {
-      @NonNls
       private static final String TOKENS_KEY = "Tokens";
-      @NonNls
       private static final String ELEMENTS_KEY = "Elements";
 
       @Override

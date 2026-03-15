@@ -27,8 +27,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author mike
@@ -36,7 +35,7 @@ import jakarta.annotation.Nullable;
 abstract class BaseExtResourceAction implements SyntheticIntentionAction {
     @Override
     @RequiredReadAction
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         if (!(file instanceof XmlFile)) {
             return false;
         }
@@ -52,7 +51,7 @@ abstract class BaseExtResourceAction implements SyntheticIntentionAction {
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         int offset = editor.getCaretModel().getOffset();
 
         PsiDocumentManager.getInstance(project).commitAllDocuments();
@@ -66,7 +65,7 @@ abstract class BaseExtResourceAction implements SyntheticIntentionAction {
     }
 
     @RequiredUIAccess
-    protected abstract void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
+    protected abstract void doInvoke(PsiFile file, int offset, String uri, Editor editor)
         throws IncorrectOperationException;
 
     @Nullable

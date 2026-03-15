@@ -21,8 +21,7 @@ import consulo.language.Language;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 
@@ -34,7 +33,6 @@ public class HtmlUnknownAttributeInspection extends HtmlUnknownAttributeInspecti
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;

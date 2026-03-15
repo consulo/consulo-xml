@@ -16,8 +16,7 @@
 
 package consulo.xml.util.xml.converters;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.ConvertContext;
@@ -44,13 +43,11 @@ public class PathReferenceConverter extends Converter<PathReference> implements 
     return t == null ? null : t.getPath();
   }
 
-  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue genericDomValue, final PsiElement element, final ConvertContext context) {
     return createReferences(element, true);
   }
 
-  @Nonnull
-  public PsiReference[] createReferences(@Nonnull final PsiElement psiElement, final boolean soft) {
+  public PsiReference[] createReferences(final PsiElement psiElement, final boolean soft) {
     return PathReferenceManager.getInstance().createReferences(psiElement, soft);
   }
 }

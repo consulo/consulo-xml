@@ -24,7 +24,6 @@ import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.logging.Logger;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class XmlAttlistDeclImpl extends XmlElementImpl implements XmlAttlistDecl
   public XmlAttributeDecl[] getAttributeDecls() {
     final List<XmlAttributeDecl> result = new ArrayList<XmlAttributeDecl>();
     processElements(new FilterElementProcessor(new ClassFilter(XmlAttributeDecl.class), result) {
-      public boolean execute(@Nonnull final PsiElement element) {
+      public boolean execute(final PsiElement element) {
         if (element instanceof XmlAttributeDecl) {
           if (element.getNextSibling() == null && element.getChildren().length == 1) {
             return true;
@@ -68,7 +67,6 @@ public class XmlAttlistDeclImpl extends XmlElementImpl implements XmlAttlistDecl
     return result.toArray(new XmlAttributeDecl[result.size()]);
   }
 
-  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this,XmlAttlistDecl.class);
   }

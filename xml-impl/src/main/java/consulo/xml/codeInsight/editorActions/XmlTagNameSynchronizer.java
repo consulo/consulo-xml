@@ -48,7 +48,6 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 
 import java.util.Objects;
 import java.util.Set;
@@ -72,7 +71,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
 
     @Override
     @RequiredUIAccess
-    public void editorCreated(@Nonnull EditorFactoryEvent event) {
+    public void editorCreated(EditorFactoryEvent event) {
         Editor editor = event.getEditor();
         Project project = editor.getProject();
         if (project == null || !(editor instanceof RealEditor)) {
@@ -101,7 +100,6 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
         return null;
     }
 
-    @Nonnull
     private static TagNameSynchronizer[] findSynchronizers(Document document) {
         if (!XmlEditorOptions.getInstance().isSyncTagEditing() || document == null) {
             return TagNameSynchronizer.EMPTY;
@@ -113,14 +111,14 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
 
     @Override
     @RequiredUIAccess
-    public void beforeCommandFinished(@Nonnull CommandEvent event) {
+    public void beforeCommandFinished(CommandEvent event) {
         TagNameSynchronizer[] synchronizers = findSynchronizers(event.getDocument());
         for (TagNameSynchronizer synchronizer : synchronizers) {
             synchronizer.beforeCommandFinished();
         }
     }
 
-    public static void runWithoutCancellingSyncTagsEditing(@Nonnull Document document, @Nonnull Runnable runnable) {
+    public static void runWithoutCancellingSyncTagsEditing(Document document, Runnable runnable) {
         document.putUserData(SKIP_COMMAND, Boolean.TRUE);
         try {
             runnable.run();
@@ -155,7 +153,7 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
 
         @Override
         @RequiredReadAction
-        public void beforeDocumentChange(@Nonnull DocumentEvent event) {
+        public void beforeDocumentChange(DocumentEvent event) {
             if (!XmlEditorOptions.getInstance().isSyncTagEditing()) {
                 return;
             }

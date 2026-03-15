@@ -38,9 +38,7 @@ import consulo.util.lang.xml.XmlStringUtil;
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.util.dataholder.Key;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -68,8 +66,8 @@ public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDat
   private final Project myProject;
   private TableCellRenderer[][] myCachedRenderers;
   private EmptyPane myEmptyPane;
-  @NonNls private static final String TREE = "Tree";
-  @NonNls private static final String EMPTY_PANE = "EmptyPane";
+  private static final String TREE = "Tree";
+  private static final String EMPTY_PANE = "EmptyPane";
   private final EventDispatcher<ChangeListener> myDispatcher = EventDispatcher.create(ChangeListener.class);
   private final MyListTableModel myTableModel = new MyListTableModel();
 
@@ -277,7 +275,7 @@ public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDat
     myTable.repaint();
   }
 
-  protected abstract void wrapValueSetting(@Nonnull T t, Runnable valueSetter);
+  protected abstract void wrapValueSetting(T t, Runnable valueSetter);
 
   protected final void fireChanged() {
     myDispatcher.getMulticaster().changed();

@@ -25,7 +25,6 @@ import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
 import consulo.language.psi.PsiElement;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -34,7 +33,7 @@ import jakarta.annotation.Nonnull;
 public class XmlNamespaceAnnotator implements Annotator {
     @Override
     @RequiredReadAction
-    public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
+    public void annotate(PsiElement element, AnnotationHolder holder) {
         if (element instanceof XmlTag tag) {
             String namespace = tag.getNamespace();
 

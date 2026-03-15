@@ -32,8 +32,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.util.collection.ArrayUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class TagNameReference implements PsiReference
 {
@@ -128,7 +127,6 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	@Nonnull
 	public String getCanonicalText()
 	{
 		return getNameElement().getText();
@@ -171,7 +169,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException
 	{
 		PsiMetaData metaData = null;
 
@@ -212,7 +210,6 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Override
-	@Nonnull
 	public Object[] getVariants()
 	{
 		return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -225,7 +222,7 @@ public class TagNameReference implements PsiReference
 	}
 
 	@Nullable
-	static TagNameReference createTagNameReference(XmlElement element, @Nonnull ASTNode nameElement, boolean startTagFlag)
+	static TagNameReference createTagNameReference(XmlElement element, ASTNode nameElement, boolean startTagFlag)
 	{
 		final XmlExtension extension = XmlExtension.getExtensionByElement(element);
 		return extension == null ? null : extension.createTagNameReference(nameElement, startTagFlag);

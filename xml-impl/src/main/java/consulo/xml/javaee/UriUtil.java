@@ -23,8 +23,7 @@ import consulo.language.psi.PsiFileSystemItem;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class UriUtil
 {
@@ -43,15 +42,14 @@ public class UriUtil
 	}
 
 	@Nullable
-	public static VirtualFile findRelative(String uri, @Nonnull PsiFileSystemItem base)
+	public static VirtualFile findRelative(String uri, PsiFileSystemItem base)
 	{
 		String location = ExternalResourceManager.getInstance().getResourceLocation(uri, base.getProject());
 		return VirtualFileUtil.findRelativeFile(location, base.getVirtualFile());
 	}
 
 	// cannot use UriUtil.SLASH_MATCHER.trimFrom - we don't depend on guava
-	@Nonnull
-	public static String trimSlashFrom(@Nonnull String path)
+	public static String trimSlashFrom(String path)
 	{
 		return StringUtil.trimStart(StringUtil.trimEnd(path, "/"), "/");
 	}

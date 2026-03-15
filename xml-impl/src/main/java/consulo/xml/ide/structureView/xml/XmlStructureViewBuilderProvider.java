@@ -21,13 +21,12 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface XmlStructureViewBuilderProvider {
   ExtensionPointName<XmlStructureViewBuilderProvider> EP_NAME = ExtensionPointName.create(XmlStructureViewBuilderProvider.class);
 
   @Nullable
-  StructureViewBuilder createStructureViewBuilder(@Nonnull XmlFile file);
+  StructureViewBuilder createStructureViewBuilder(XmlFile file);
 }

@@ -28,10 +28,8 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.Required;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.table.TableCellEditor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -47,12 +45,10 @@ public abstract class DomUIFactory {
   public static Method GET_STRING_METHOD = ReflectionUtil.getMethod(GenericDomValue.class, "getStringValue");
   public static Method SET_STRING_METHOD = findMethod(GenericDomValue.class, "setStringValue");
 
-  @Nonnull
   public static DomUIControl<GenericDomValue> createControl(GenericDomValue element) {
     return createControl(element, false);
   }
 
-  @Nonnull
   public static DomUIControl<GenericDomValue> createControl(GenericDomValue element, boolean commitOnEveryChange) {
     return createGenericValueControl(DomUtil.getGenericValueParameter(element.getDomElementType()), element, commitOnEveryChange);
   }
@@ -65,7 +61,6 @@ public abstract class DomUIFactory {
     return getDomUIFactory().createTextControl(new DomCollectionWrapper<String>(parent, parent.getGenericInfo().getCollectionChildDescription("description")), commitOnEveryChange);
   }
 
-  @Nonnull
   private static BaseControl createGenericValueControl(final Type type, final GenericDomValue<?> element, boolean commitOnEveryChange) {
     final DomStringWrapper stringWrapper = new DomStringWrapper(element);
     final Class rawType = ReflectionUtil.getRawType(type);
@@ -96,7 +91,7 @@ public abstract class DomUIFactory {
   }
 
   @Nullable
-  public static Method findMethod(Class clazz, @NonNls String methodName) {
+  public static Method findMethod(Class clazz, String methodName) {
     for (Method method : clazz.getMethods()) {
       if (methodName.equals(method.getName())) {
         return method;

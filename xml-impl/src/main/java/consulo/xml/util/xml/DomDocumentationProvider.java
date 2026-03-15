@@ -24,7 +24,6 @@ import consulo.language.pom.PomTargetPsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -70,7 +69,6 @@ public class DomDocumentationProvider implements LanguageDocumentationProvider
 		return null;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

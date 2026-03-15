@@ -44,7 +44,6 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
-import jakarta.annotation.Nonnull;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
@@ -64,27 +63,23 @@ public class UnusedDefineInspection extends BaseInspection {
         return false;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return LocalizeValue.localizeTODO("Unused Define");
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "UnusedDefine";
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
     }
 
     @Override
-    @Nonnull
-    public RncElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
+    public RncElementVisitor buildVisitor(ProblemsHolder holder, boolean isOnTheFly) {
         return new MyElementVisitor(holder);
     }
 
@@ -243,7 +238,6 @@ public class UnusedDefineInspection extends BaseInspection {
                 myTag = tag;
             }
 
-            @Nonnull
             @Override
             public LocalizeValue getName() {
                 return LocalizeValue.localizeTODO("Remove define");
@@ -251,7 +245,7 @@ public class UnusedDefineInspection extends BaseInspection {
 
             @Override
             @RequiredWriteAction
-            public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+            public void applyFix(Project project, ProblemDescriptor descriptor) {
                 try {
                     if (myTag.isValid()) {
                         myTag.delete();

@@ -22,15 +22,13 @@ import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
 public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsUnknownTarget();
@@ -42,13 +40,11 @@ public class HtmlUnknownTargetInspection extends XmlPathReferenceInspection {
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlLocalize.htmlInspectionsGroupName();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "HtmlUnknownTarget";

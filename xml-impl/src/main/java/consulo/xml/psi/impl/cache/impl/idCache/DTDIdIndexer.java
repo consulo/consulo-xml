@@ -8,7 +8,6 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.lexer.XmlLexer;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -24,7 +23,6 @@ public class DTDIdIndexer extends LexerBasedIdIndexer {
     return new XmlFilterLexer(new XmlLexer(), consumer);
   }
 
-  @Nonnull
   @Override
   public FileType getFileType() {
     return DTDFileType.INSTANCE;

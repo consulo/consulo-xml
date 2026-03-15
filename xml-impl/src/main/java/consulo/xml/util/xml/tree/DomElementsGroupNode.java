@@ -28,7 +28,6 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,6 @@ public class DomElementsGroupNode extends AbstractDomElementNode {
     return simpleNodes.toArray(new SimpleNode[simpleNodes.size()]);
   }
 
-  @Nonnull
   public Object[] getEqualityObjects() {
     return new Object[]{myParentElement, myChildrenTagName};
   }

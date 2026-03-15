@@ -30,14 +30,12 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
 public class XmlInvalidIdInspection extends XmlDuplicatedIdInspection implements UnfairLocalInspectionTool {
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsInvalidId();

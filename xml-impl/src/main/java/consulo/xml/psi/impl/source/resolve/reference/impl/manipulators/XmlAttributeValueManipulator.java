@@ -32,7 +32,6 @@ import consulo.logging.Logger;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author ik
@@ -100,7 +99,6 @@ public class XmlAttributeValueManipulator extends AbstractElementManipulator<Xml
 		}
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlAttributeValue> getElementClass()
 	{

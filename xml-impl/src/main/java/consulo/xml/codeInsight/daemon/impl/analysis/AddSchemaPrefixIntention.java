@@ -41,8 +41,7 @@ import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction {
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiElement element) throws IncorrectOperationException {
         XmlAttribute xmlns = getXmlnsDeclaration(element);
         if (xmlns == null) {
             return;
@@ -151,7 +150,7 @@ public class AddSchemaPrefixIntention extends PsiElementBaseIntentionAction {
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) {
+    public boolean isAvailable(Project project, Editor editor, PsiElement element) {
         return getXmlnsDeclaration(element) != null;
     }
 

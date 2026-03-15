@@ -34,8 +34,7 @@ import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.ide.highlighter.XmlFileType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 
 import java.util.function.Function;
@@ -45,7 +44,6 @@ import java.util.function.Function;
  * @since 2007-11-25
  */
 public abstract class BaseInspection extends XmlSuppressableInspectionTool {
-    @Nonnull
     @Override
     public final LocalizeValue getGroupDisplayName() {
         return getRngGroupDisplayName();
@@ -58,7 +56,7 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
     @Override
     @RequiredReadAction
     @SuppressWarnings({"SSBasedInspection"})
-    public boolean isSuppressedFor(@Nonnull PsiElement element) {
+    public boolean isSuppressedFor(PsiElement element) {
         if (element.getContainingFile() instanceof RncFile) {
             RncDefine define = PsiTreeUtil.getParentOfType(element, RncDefine.class, false);
             if (define != null && isSuppressedAt(define)) {
@@ -89,7 +87,6 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
         return false;
     }
 
-    @Nonnull
     @Override
     public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element) {
         if (element.getContainingFile() instanceof RncFile) {
@@ -123,7 +120,6 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
         return ContainerUtil.map(
             super.getBatchSuppressActions(element),
             action -> new SuppressQuickFix() {
-                @Nonnull
                 @Override
                 public LocalizeValue getName() {
                     return action.getName();
@@ -131,13 +127,13 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
 
                 @Override
                 @RequiredReadAction
-                public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+                public boolean isAvailable(Project project, PsiElement context) {
                     return context.isValid();
                 }
 
                 @Override
                 @RequiredUIAccess
-                public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+                public void applyFix(Project project, ProblemDescriptor descriptor) {
                     PsiElement element1 = descriptor.getPsiElement();
                     PsiFile file = element1 == null ? null : element1.getContainingFile();
                     if (file == null || file.getFileType() != XmlFileType.INSTANCE) {
@@ -151,13 +147,13 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
     }
 
     @RequiredWriteAction
-    private void suppress(PsiFile file, @Nonnull PsiElement location) {
+    private void suppress(PsiFile file, PsiElement location) {
         suppress(file, location, "#suppress " + getID(), text -> text + ", " + getID());
     }
 
     @RequiredWriteAction
     @SuppressWarnings({"SSBasedInspection"})
-    private static void suppress(PsiFile file, @Nonnull PsiElement location, String suppressComment, Function<String, String> replace) {
+    private static void suppress(PsiFile file, PsiElement location, String suppressComment, Function<String, String> replace) {
         Project project = file.getProject();
         VirtualFile vfile = file.getVirtualFile();
         if (vfile == null || ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(vfile).hasReadonlyFiles()) {
@@ -190,8 +186,7 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
     }
 
     @Override
-    @Nonnull
-    public abstract RncElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly);
+    public abstract RncElementVisitor buildVisitor(ProblemsHolder holder, boolean isOnTheFly);
 
     private abstract class SuppressAction implements SuppressQuickFix {
         private final String myLocation;
@@ -200,7 +195,6 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
             myLocation = location;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return LocalizeValue.localizeTODO("Suppress for " + myLocation);
@@ -208,13 +202,13 @@ public abstract class BaseInspection extends XmlSuppressableInspectionTool {
 
         @Override
         @RequiredReadAction
-        public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+        public boolean isAvailable(Project project, PsiElement context) {
             return context.isValid();
         }
 
         @Override
         @RequiredWriteAction
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             PsiElement element = descriptor.getPsiElement();
             PsiElement target = getTarget(element);
             if (target == null) {

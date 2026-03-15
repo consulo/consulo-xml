@@ -26,8 +26,7 @@ import consulo.language.extension.LanguageExtension;
 import consulo.language.extension.LanguageOneToOne;
 import consulo.virtualFileSystem.fileType.FileType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface HtmlInlineScriptTokenTypesProvider extends LanguageExtension
@@ -35,7 +34,7 @@ public interface HtmlInlineScriptTokenTypesProvider extends LanguageExtension
 	ExtensionPointCacheKey<HtmlInlineScriptTokenTypesProvider, ByLanguageValue<HtmlInlineScriptTokenTypesProvider>> KEY = ExtensionPointCacheKey.create("HtmlInlineScriptTokenTypesProvider", LanguageOneToOne.build());
 
 	@Nullable
-	static HtmlInlineScriptTokenTypesProvider forLanguage(@Nonnull Language language)
+	static HtmlInlineScriptTokenTypesProvider forLanguage(Language language)
 	{
 		return Application.get().getExtensionPoint(HtmlInlineScriptTokenTypesProvider.class).getOrBuildCache(KEY).get(language);
 	}

@@ -19,7 +19,7 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.XmlElement;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author mike

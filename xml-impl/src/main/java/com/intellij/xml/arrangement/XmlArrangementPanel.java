@@ -6,13 +6,12 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
 public class XmlArrangementPanel extends ArrangementSettingsPanel {
-    public XmlArrangementPanel(@Nonnull CodeStyleSettings settings) {
+    public XmlArrangementPanel(CodeStyleSettings settings) {
         super(settings, XMLLanguage.INSTANCE);
     }
 
@@ -21,7 +20,6 @@ public class XmlArrangementPanel extends ArrangementSettingsPanel {
         return 80;
     }
 
-    @Nonnull
     @Override
     protected FileType getFileType() {
         return XmlFileType.INSTANCE;

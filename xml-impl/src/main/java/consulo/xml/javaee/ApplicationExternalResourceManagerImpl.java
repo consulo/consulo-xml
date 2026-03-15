@@ -10,7 +10,6 @@ import consulo.xml.impl.internal.StandardExternalResourceData;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -32,7 +31,6 @@ public class ApplicationExternalResourceManagerImpl extends ExternalResourceMana
 		myApplication = application;
 	}
 
-	@Nonnull
 	@Override
 	protected StandardExternalResourceData getData()
 	{

@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ElementManipulators;
@@ -45,7 +44,6 @@ public abstract class XmlValueReference implements PsiReference {
     return myRange;
   }
 
-  @Nonnull
   public String getCanonicalText() {
     return myRange.substring(myTag.getText());
   }

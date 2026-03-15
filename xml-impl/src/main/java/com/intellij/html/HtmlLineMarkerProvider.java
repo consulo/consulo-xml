@@ -11,7 +11,6 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -21,7 +20,7 @@ import java.util.*;
 public class HtmlLineMarkerProvider implements LineMarkerProvider {
     @RequiredReadAction
     @Override
-    public LineMarkerInfo<?> getLineMarkerInfo(final @Nonnull PsiElement element) {
+    public LineMarkerInfo<?> getLineMarkerInfo(final PsiElement element) {
         if (element instanceof PsiWhiteSpace) {
             return null;
         }
@@ -44,7 +43,7 @@ public class HtmlLineMarkerProvider implements LineMarkerProvider {
 
     @RequiredReadAction
     @Override
-    public void collectSlowLineMarkers(final @Nonnull List<PsiElement> elements, final @Nonnull Collection<LineMarkerInfo> result) {
+    public void collectSlowLineMarkers(final List<PsiElement> elements, final Collection<LineMarkerInfo> result) {
         Map<LineMarkerProvider, List<PsiElement>> embeddedLineMarkersWorkItems = null;
 
         for (PsiElement element : elements) {
@@ -74,7 +73,6 @@ public class HtmlLineMarkerProvider implements LineMarkerProvider {
         }
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return HTMLLanguage.INSTANCE;

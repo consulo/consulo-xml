@@ -36,32 +36,29 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, SyntheticIntentionAction {
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return XmlErrorLocalize.removeExtraClosingTagQuickfix();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return getName();
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
     @RequiredWriteAction
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         int offset = editor.getCaretModel().getOffset();
         PsiElement psiElement = file.findElementAt(offset);
         if (psiElement == null || !psiElement.isValid() || !(psiElement instanceof XmlToken)) {
@@ -80,7 +77,7 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Synt
     }
 
     @RequiredWriteAction
-    private static void doFix(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+    private static void doFix(PsiElement element) throws consulo.language.util.IncorrectOperationException {
         XmlToken endNameToken = (XmlToken) element;
         PsiElement tagElement = endNameToken.getParent();
         if (!(tagElement instanceof XmlTag) && !(tagElement instanceof PsiErrorElement)) {
@@ -107,7 +104,7 @@ public class RemoveExtraClosingTagIntentionAction implements LocalQuickFix, Synt
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         PsiElement element = descriptor.getPsiElement();
         if (!element.isValid() || !(element instanceof XmlToken)) {
             return;

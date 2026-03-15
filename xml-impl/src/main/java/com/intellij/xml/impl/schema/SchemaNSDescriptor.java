@@ -22,35 +22,25 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiElement;
 import consulo.xml.Validator;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 
 /**
  * @author Maxim.Mossienko
  */
 public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
-    @NonNls
     private static final String MIN_OCCURS_ATTR_NAME = "minOccurs";
-    @NonNls
     private static final String MAX_OCCURS_ATTR_VALUE = "maxOccurs";
-    @NonNls
     private static final String MAX_OCCURS_ATTR_NAME = MAX_OCCURS_ATTR_VALUE;
-    @NonNls
     private static final String ID_ATTR_NAME = "id";
-    @NonNls
     private static final String REF_ATTR_NAME = "ref";
-    @NonNls
     private static final String DEFAULT_ATTR_NAME = "default";
-    @NonNls
     private static final String FIXED_ATTR_NAME = "fixed";
 
-    @NonNls
     private static final String NAME_ATTR_NAME = "name";
 
     private static final Validator<XmlTag> ELEMENT_VALIDATOR = new Validator<XmlTag>() {
-        public void validate(@Nonnull final XmlTag tag, @Nonnull Validator.ValidationHost host) {
+        public void validate(final XmlTag tag, Validator.ValidationHost host) {
             if (!isFromSchemaNs(tag)) {
                 return;
             }
@@ -105,7 +95,7 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
     };
 
     private static final Validator<XmlTag> ATTRIBUTE_VALIDATOR = new Validator<XmlTag>() {
-        public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
+        public void validate(final XmlTag tag, ValidationHost host) {
             if (!isFromSchemaNs(tag)) {
                 return;
             }
@@ -136,23 +126,21 @@ public class SchemaNSDescriptor extends XmlNSDescriptorImpl {
 
     private static final XmlUtil.DuplicationInfoProvider<XmlTag> SCHEMA_ATTR_DUP_INFO_PROVIDER =
         new XmlUtil.DuplicationInfoProvider<XmlTag>() {
-            public String getName(@Nonnull final XmlTag t) {
+            public String getName(final XmlTag t) {
                 return t.getAttributeValue(NAME_ATTR_NAME);
             }
 
-            @Nonnull
-            public String getNameKey(@Nonnull final XmlTag t, @Nonnull String name) {
+            public String getNameKey(final XmlTag t, String name) {
                 return name;
             }
 
-            @Nonnull
-            public PsiElement getNodeForMessage(@Nonnull final XmlTag t) {
+            public PsiElement getNodeForMessage(final XmlTag t) {
                 return t.getAttribute(NAME_ATTR_NAME, null).getValueElement();
             }
         };
 
     private static final Validator<XmlTag> ELEMENT_AND_ATTR_VALIDATOR = new Validator<XmlTag>() {
-        public void validate(@Nonnull final XmlTag tag, @Nonnull ValidationHost host) {
+        public void validate(final XmlTag tag, ValidationHost host) {
             if (!isFromSchemaNs(tag)) {
                 return;
             }

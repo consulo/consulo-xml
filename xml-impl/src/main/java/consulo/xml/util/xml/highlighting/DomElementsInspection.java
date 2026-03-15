@@ -32,8 +32,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +49,7 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
   private final Set<Class<? extends T>> myDomClasses;
 
   @SafeVarargs
-  public DomElementsInspection(Class<? extends T> domClass, @Nonnull Class<? extends T>... additionalClasses) {
+  public DomElementsInspection(Class<? extends T> domClass, Class<? extends T>... additionalClasses) {
     Set<Class<? extends T>> domClasses = new HashSet<>(Set.of(additionalClasses));
     domClasses.add(domClass);
     myDomClasses = Set.copyOf(domClasses);
@@ -109,11 +108,10 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
     return myDomClasses;
   }
 
-  @Nonnull
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder,
+  public PsiElementVisitor buildVisitor(final ProblemsHolder holder,
                                         final boolean isOnTheFly,
-                                        @Nonnull LocalInspectionToolSession session,
-                                        @Nonnull Object state) {
+                                        LocalInspectionToolSession session,
+                                        Object state) {
     return new PsiElementVisitor() {
       @Override
       @SuppressWarnings("unchecked")
@@ -133,7 +131,7 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
   }
 
   @Override
-  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
+  public ProblemDescriptor[] checkFile(PsiFile file, InspectionManager manager, boolean isOnTheFly) {
     throw new UnsupportedOperationException();
   }
 
@@ -144,7 +142,7 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
    */
   @Nullable
   @SuppressWarnings("unchecked")
-  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly, State state) {
+  public ProblemDescriptor[] checkFile(PsiFile file, InspectionManager manager, boolean isOnTheFly, State state) {
     if (file instanceof XmlFile && file.isPhysical()) {
       for (Class<? extends T> domClass : myDomClasses) {
         final DomFileElement<? extends T> fileElement = DomManager.getDomManager(file.getProject()).getFileElement((XmlFile)file, domClass);
@@ -156,7 +154,6 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
     return null;
   }
 
-  @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
   }
@@ -169,10 +166,10 @@ public abstract class DomElementsInspection<T extends DomElement, State> extends
    * not intended to be overridden or called by implementors
    */
   @Nullable
-  protected ProblemDescriptor[] checkDomFile(@Nonnull final DomFileElement<T> domFileElement,
-                                             @Nonnull final InspectionManager manager,
+  protected ProblemDescriptor[] checkDomFile(final DomFileElement<T> domFileElement,
+                                             final InspectionManager manager,
                                              final boolean isOnTheFly,
-                                             @Nonnull State state) {
+                                             State state) {
     final DomElementAnnotationsManager annotationsManager = DomElementAnnotationsManager.getInstance(manager.getProject());
 
     final List<DomElementProblemDescriptor> list = annotationsManager.checkFileElement(domFileElement, this, isOnTheFly, state);

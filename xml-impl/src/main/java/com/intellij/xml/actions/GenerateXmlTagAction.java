@@ -63,8 +63,7 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,7 +87,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    public void invoke(Project project, Editor editor, PsiFile file) {
         if (!LanguageEditorUtil.checkModificationAllowed(editor)) {
             return;
         }
@@ -106,7 +105,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                 .setRenderer(new ColoredListCellRenderer<XmlElementDescriptor>() {
                     @Override
                     protected void customizeCellRenderer(
-                        @Nonnull JList<? extends XmlElementDescriptor> list,
+                        JList<? extends XmlElementDescriptor> list,
                         XmlElementDescriptor value,
                         int index,
                         boolean selected,
@@ -164,7 +163,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     }
 
     @Nullable
-    private static XmlTag getAnchor(@Nonnull XmlTag contextTag, Editor editor, XmlElementDescriptor selected) {
+    private static XmlTag getAnchor(XmlTag contextTag, Editor editor, XmlElementDescriptor selected) {
         XmlContentDFA contentDFA = XmlContentDFA.getContentDFA(contextTag);
         int offset = editor.getCaretModel().getOffset();
         if (contentDFA == null) {
@@ -276,7 +275,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     }
 
     @RequiredWriteAction
-    private static XmlTag createTag(@Nonnull XmlTag contextTag, @Nonnull XmlElementDescriptor descriptor) {
+    private static XmlTag createTag(XmlTag contextTag, XmlElementDescriptor descriptor) {
         String namespace = getNamespace(descriptor);
         XmlTag tag = contextTag.createChildTag(descriptor.getName(), namespace, null, false);
         PsiElement lastChild = tag.getLastChild();
@@ -338,7 +337,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
 
     @Override
     @RequiredReadAction
-    protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    protected boolean isValidForFile(Project project, Editor editor, PsiFile file) {
         if (!(file instanceof XmlFile xmlFile)) {
             return false;
         }

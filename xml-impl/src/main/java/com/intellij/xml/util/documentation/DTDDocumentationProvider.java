@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.dtd.DTDLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -12,7 +11,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class DTDDocumentationProvider extends XmlDocumentationProvider {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return DTDLanguage.INSTANCE;

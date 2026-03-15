@@ -23,8 +23,7 @@ import consulo.language.codeStyle.Indent;
 import consulo.language.codeStyle.inject.InjectedLanguageBlockWrapper;
 import consulo.language.codeStyle.Spacing;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -62,17 +61,15 @@ public class AnotherLanguageBlockWrapper extends AbstractXmlBlock{
     return myInjectedBlock.getSubBlocks();
   }
 
-  @Nonnull
   public TextRange getTextRange() {
     return myInjectedBlock.getTextRange();
   }
 
   @Nullable
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     return myInjectedBlock.getSpacing(child1,  child2);
   }
 
-  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     return myInjectedBlock.getChildAttributes(newChildIndex);
   }

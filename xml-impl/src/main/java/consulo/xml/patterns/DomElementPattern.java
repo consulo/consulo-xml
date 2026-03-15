@@ -24,8 +24,6 @@ import consulo.language.pattern.InitialPatternCondition;
 import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.TreeElementPattern;
 import consulo.language.util.ProcessingContext;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +36,15 @@ public class DomElementPattern<T extends DomElement,Self extends DomElementPatte
     super(aClass);
   }
 
-  protected DomElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
+  protected DomElementPattern(final InitialPatternCondition<T> condition) {
     super(condition);
   }
 
-  protected DomElement getParent(@Nonnull DomElement t) {
+  protected DomElement getParent(DomElement t) {
     return t.getParent();
   }
 
-  protected DomElement[] getChildren(@Nonnull final DomElement domElement) {
+  protected DomElement[] getChildren(final DomElement domElement) {
     final List<DomElement> children = new ArrayList<DomElement>();
     domElement.acceptChildren(new DomElementVisitor() {
       public void visitDomElement(final DomElement element) {
@@ -63,9 +61,9 @@ public class DomElementPattern<T extends DomElement,Self extends DomElementPatte
 
   }
 
-  public Self withChild(@NonNls @Nonnull final String localName, final ElementPattern pattern) {
+  public Self withChild(final String localName, final ElementPattern pattern) {
     return with(new PatternCondition<T>("withChild") {
-      public boolean accepts(@Nonnull final T t, final ProcessingContext context) {
+      public boolean accepts(final T t, final ProcessingContext context) {
         for (final AbstractDomChildrenDescription description : t.getGenericInfo().getChildrenDescriptions()) {
           if (!(description instanceof DomChildrenDescription) || localName.equals(((DomChildrenDescription)description).getXmlElementName())) {
             for (final DomElement element : description.getValues(t)) {

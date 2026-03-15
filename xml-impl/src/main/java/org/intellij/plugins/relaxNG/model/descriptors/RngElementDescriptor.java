@@ -39,13 +39,12 @@ import consulo.virtualFileSystem.VirtualFile;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.validation.RngSchemaValidator;
-import org.jetbrains.annotations.NonNls;
 import org.kohsuke.rngom.digested.*;
 import org.kohsuke.rngom.nc.NameClass;
 import org.kohsuke.rngom.nc.NameClassVisitor;
 import org.xml.sax.Locator;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
 
@@ -303,7 +302,6 @@ public class RngElementDescriptor implements XmlElementDescriptor {
   }
 
   @Override
-  @NonNls
   public String getName(PsiElement context) {
     final QName qName = getQName();
     if (qName == null) {
@@ -315,7 +313,6 @@ public class RngElementDescriptor implements XmlElementDescriptor {
   }
 
   @Override
-  @NonNls
   public String getName() {
     final QName qName = getQName();
     if (qName == null) {

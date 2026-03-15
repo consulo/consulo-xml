@@ -20,8 +20,7 @@ import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -31,7 +30,7 @@ import jakarta.annotation.Nullable;
 @ServiceImpl
 public class CommittableUtil {
 
-  public void commit(@Nonnull Committable committable) {
+  public void commit(Committable committable) {
     committable.commit();
   }
 

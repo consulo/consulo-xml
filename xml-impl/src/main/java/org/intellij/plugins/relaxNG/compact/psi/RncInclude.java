@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import jakarta.annotation.Nonnull;
 
 import org.intellij.plugins.relaxNG.model.Include;
 
@@ -25,6 +24,5 @@ import org.intellij.plugins.relaxNG.model.Include;
  */
 public interface RncInclude extends RncFileReference, Include<RncElement, RncDefine> {
   @Override
-  @Nonnull
   RncDefine[] getOverrides();
 }

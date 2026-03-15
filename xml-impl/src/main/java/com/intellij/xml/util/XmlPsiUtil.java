@@ -25,14 +25,12 @@ import consulo.util.dataholder.Key;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class XmlPsiUtil {
     private static final Key<CachedValue<PsiElement>> PARSED_DECL_KEY = Key.create("PARSED_DECL_KEY");
-    @NonNls
     public static final String XINCLUDE_URI = "http://www.w3.org/2001/XInclude";
 
     public static boolean processXmlElements(XmlElement element, PsiElementProcessor processor, boolean deepFlag) {

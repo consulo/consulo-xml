@@ -7,7 +7,6 @@ import consulo.colorScheme.TextAttributesKey;
 import consulo.language.ast.IElementType;
 import consulo.util.collection.MultiMap;
 import consulo.xml.lang.xml.XMLLanguage;
-import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenHighlighter {
@@ -15,6 +14,5 @@ public interface EmbeddedTokenHighlighter {
      * @param language can be XMLLanguage, HTMLLanguage, XHTMLLanguage, DTDLanguage
      * @return a map of text attributes to be used for highlighting specific non-XML token types that can occur inside XML/HTML
      */
-    @Nonnull
-    MultiMap<IElementType, TextAttributesKey> getEmbeddedTokenAttributes(@Nonnull XMLLanguage language);
+    MultiMap<IElementType, TextAttributesKey> getEmbeddedTokenAttributes(XMLLanguage language);
 }

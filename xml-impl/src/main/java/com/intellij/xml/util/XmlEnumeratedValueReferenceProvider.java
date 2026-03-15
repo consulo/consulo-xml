@@ -29,7 +29,6 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -38,9 +37,8 @@ import jakarta.annotation.Nonnull;
 public class XmlEnumeratedValueReferenceProvider<T extends PsiElement> extends PsiReferenceProvider {
     public final static Key<Boolean> SUPPRESS = Key.create("suppress attribute value references");
 
-    @Nonnull
     @Override
-    public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+    public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
         if (XmlSchemaTagsProcessor.PROCESSING_FLAG.get() != null || context.get(SUPPRESS) != null) {
             return PsiReference.EMPTY_ARRAY;
         }

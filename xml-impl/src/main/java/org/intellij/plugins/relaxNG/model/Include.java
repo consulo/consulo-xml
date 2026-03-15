@@ -18,8 +18,7 @@ package org.intellij.plugins.relaxNG.model;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -29,6 +28,5 @@ public interface Include<E extends PsiElement, D extends Define> extends CommonE
   @Nullable
   PsiFile getInclude();
 
-  @Nonnull
   D[] getOverrides();
 }

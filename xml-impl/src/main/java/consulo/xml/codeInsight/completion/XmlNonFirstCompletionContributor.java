@@ -26,7 +26,6 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElementType;
-import jakarta.annotation.Nonnull;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.xml.codeInsight.completion.XmlCompletionContributor.hasEnumerationReference;
@@ -68,7 +67,6 @@ public class XmlNonFirstCompletionContributor extends CompletionContributor {
         );
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return Language.ANY;

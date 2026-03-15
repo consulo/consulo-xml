@@ -24,8 +24,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomElementNavigationProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,12 +57,11 @@ public abstract class AbstractDomGenerateProvider<T extends DomElement> extends 
 
   protected Map<String, String> getPredefinedVars(@Nullable DomElement parentDomElement,
                                                   @Nullable T t,
-                                                  @Nonnull Editor editor,
-                                                  @Nonnull PsiFile file) {
+                                                  Editor editor,
+                                                  PsiFile file) {
     return createNamespacePrefixMap(parentDomElement);
   }
 
-  @Nonnull
   public static Map<String, String> createNamespacePrefixMap(@Nullable DomElement domElement) {
     Map<String, String> vars = new HashMap<String, String>();
 
@@ -72,7 +70,7 @@ public abstract class AbstractDomGenerateProvider<T extends DomElement> extends 
     return vars;
   }
 
-  public static void addNamespacePrefix(@Nullable DomElement domElement, @Nonnull Map<String, String> vars) {
+  public static void addNamespacePrefix(@Nullable DomElement domElement, Map<String, String> vars) {
     if (domElement != null) {
       XmlTag tag = domElement.getXmlTag();
       if (tag != null) {

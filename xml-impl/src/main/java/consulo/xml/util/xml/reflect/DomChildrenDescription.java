@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.reflect;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomNameStrategy;
@@ -27,16 +26,12 @@ import consulo.language.pom.PomNamedTarget;
  */
 public interface DomChildrenDescription extends AbstractDomChildrenDescription, PomNamedTarget {
 
-  @Nonnull
   XmlName getXmlName();
 
-  @Nonnull
   String getXmlElementName();
 
-  @Nonnull
-  String getCommonPresentableName(@Nonnull DomNameStrategy strategy);
+  String getCommonPresentableName(DomNameStrategy strategy);
 
-  @Nonnull
-  String getCommonPresentableName(@Nonnull DomElement parent);
+  String getCommonPresentableName(DomElement parent);
 
 }

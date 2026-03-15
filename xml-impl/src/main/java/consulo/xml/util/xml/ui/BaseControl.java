@@ -23,7 +23,7 @@ import consulo.application.Result;
 import consulo.language.editor.WriteCommandAction;
 import consulo.project.Project;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;

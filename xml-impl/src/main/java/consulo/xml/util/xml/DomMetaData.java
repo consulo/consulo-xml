@@ -22,8 +22,7 @@ import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.ui.image.Image;
 import consulo.language.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -41,12 +40,10 @@ public class DomMetaData<T extends DomElement> implements PsiWritableMetaData, P
     return myElement;
   }
 
-  @NonNls
   public String getName(PsiElement context) {
     return getName();
   }
 
-  @NonNls
   public final String getName() {
     final String s = ElementPresentationManager.getElementName(myElement);
     if (s != null) return s;

@@ -23,7 +23,6 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.stubs.index.DomElementClassIndex;
 import consulo.xml.util.xml.stubs.index.DomNamespaceKeyIndex;
 
-import jakarta.annotation.Nonnull;
 import java.io.IOException;
 
 /**
@@ -33,7 +32,7 @@ import java.io.IOException;
 public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, ElementStub>
 {
 	@Override
-	public void serialize(@Nonnull ElementStub stub, @Nonnull StubOutputStream dataStream) throws IOException
+	public void serialize(ElementStub stub, StubOutputStream dataStream) throws IOException
 	{
 		dataStream.writeName(stub.getName());
 		dataStream.writeName(stub.getNamespaceKey());
@@ -42,16 +41,15 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 		dataStream.writeName(stub.getElementClass());
 	}
 
-	@Nonnull
 	@Override
-	public ElementStub deserialize(@Nonnull StubInputStream dataStream, ElementStub parentStub) throws IOException
+	public ElementStub deserialize(StubInputStream dataStream, ElementStub parentStub) throws IOException
 	{
 		return new ElementStub(parentStub, dataStream.readName(), dataStream.readName(), dataStream.readVarInt(), dataStream.readBoolean(),
 				dataStream.readName());
 	}
 
 	@Override
-	public void indexStub(@Nonnull ElementStub stub, @Nonnull IndexSink sink)
+	public void indexStub(ElementStub stub, IndexSink sink)
 	{
 		final String namespaceKey = stub.getNamespaceKey();
 		if(StringUtil.isNotEmpty(namespaceKey))
@@ -66,7 +64,6 @@ public class ElementStubSerializer implements ObjectStubSerializer<ElementStub, 
 		}
 	}
 
-	@Nonnull
 	@Override
 	public String getExternalId()
 	{

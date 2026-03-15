@@ -23,7 +23,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomService;
 
-import jakarta.annotation.Nonnull;
 import java.util.function.Function;
 
 /**
@@ -36,7 +35,7 @@ import java.util.function.Function;
 public final class DomStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {
 
   @Override
-  public StructureViewBuilder createStructureViewBuilder(@Nonnull XmlFile file) {
+  public StructureViewBuilder createStructureViewBuilder(XmlFile file) {
     if (DomManager.getDomManager(file.getProject()).getDomFileDescription(file) != null) {
       return new DomStructureViewBuilder(file, DESCRIPTOR);
     }

@@ -23,8 +23,7 @@ import consulo.logging.Logger;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.StringTokenizer;
 
@@ -36,7 +35,7 @@ public class XmlElementSignatureProvider extends AbstractElementSignatureProvide
     private static final Logger LOG = Logger.getInstance(XmlElementSignatureProvider.class);
 
     @Override
-    public String getSignature(@Nonnull PsiElement element) {
+    public String getSignature(PsiElement element) {
         if (element instanceof XmlTag tag) {
             PsiElement parent = tag.getParent();
 
@@ -60,10 +59,10 @@ public class XmlElementSignatureProvider extends AbstractElementSignatureProvide
 
     @Override
     protected PsiElement restoreBySignatureTokens(
-        @Nonnull PsiFile file,
-        @Nonnull PsiElement parent,
-        @Nonnull String type,
-        @Nonnull StringTokenizer tokenizer,
+        PsiFile file,
+        PsiElement parent,
+        String type,
+        StringTokenizer tokenizer,
         @Nullable StringBuilder processingInfoStorage
     ) {
         if ("tag".equals(type)) {

@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.ui;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.FileEditorPolicy;
@@ -26,21 +25,18 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.disposer.Disposer;
 import consulo.fileEditor.WeighedFileEditorProvider;
 import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
  */
 public abstract class PerspectiveFileEditorProvider extends WeighedFileEditorProvider {
-  @Nonnull
-  public abstract PerspectiveFileEditor createEditor(@Nonnull Project project, @Nonnull VirtualFile file);
+  public abstract PerspectiveFileEditor createEditor(Project project, VirtualFile file);
 
-  public void disposeEditor(@Nonnull FileEditor editor) {
+  public void disposeEditor(FileEditor editor) {
     Disposer.dispose(editor);
   }
 
-  @Nonnull
-  public FileEditorState readState(@Nonnull Element sourceElement, @Nonnull Project project, @Nonnull VirtualFile file) {
+  public FileEditorState readState(Element sourceElement, Project project, VirtualFile file) {
     return new FileEditorState() {
       public boolean canBeMergedWith(FileEditorState otherState, FileEditorStateLevel level) {
         return true;
@@ -48,21 +44,17 @@ public abstract class PerspectiveFileEditorProvider extends WeighedFileEditorPro
     };
   }
 
-  public void writeState(@Nonnull FileEditorState state, @Nonnull Project project, @Nonnull Element targetElement) {
+  public void writeState(FileEditorState state, Project project, Element targetElement) {
   }
 
-  @Nonnull
-  @NonNls
   public final String getEditorTypeId() {
     return getComponentName();
   }
 
-  @Nonnull
   public final FileEditorPolicy getPolicy() {
     return FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR;
   }
 
-  @NonNls
   public final String getComponentName() {
     return getClass().getName();
   }

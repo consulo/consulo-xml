@@ -25,7 +25,6 @@ import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlProlog;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike
@@ -40,7 +39,7 @@ public class XmlPrologImpl extends XmlElementImpl implements XmlProlog, XmlEleme
 	}
 
 	@Override
-	public void accept(@Nonnull PsiElementVisitor visitor)
+	public void accept(PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{

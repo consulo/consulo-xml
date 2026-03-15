@@ -25,8 +25,7 @@ import consulo.language.psi.path.FileReference;
 import consulo.language.psi.path.PathReference;
 import consulo.language.psi.path.PathReferenceProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -35,8 +34,8 @@ import java.util.List;
 @ExtensionImpl
 public class AnchorPathReferenceProvider implements PathReferenceProvider {
     public boolean createReferences(
-        @Nonnull final PsiElement psiElement,
-        final @Nonnull List<PsiReference> references,
+        final PsiElement psiElement,
+        final List<PsiReference> references,
         final boolean soft
     ) {
 
@@ -98,7 +97,7 @@ public class AnchorPathReferenceProvider implements PathReferenceProvider {
         return fileReference;
     }
 
-    public PathReference getPathReference(@Nonnull final String path, @Nonnull final PsiElement element) {
+    public PathReference getPathReference(final String path, final PsiElement element) {
         return null;
     }
 

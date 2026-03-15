@@ -21,17 +21,15 @@ import consulo.util.collection.ArrayUtil;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomBundle;
 import consulo.xml.util.xml.ResolvingConverter;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 public class BooleanValueConverter extends ResolvingConverter<String> {
-  @NonNls private static final String BOOLEAN = "boolean";
+  private static final String BOOLEAN = "boolean";
 
-  @NonNls private static final String[] VARIANTS = {"false", "true"};
+  private static final String[] VARIANTS = {"false", "true"};
 
   private final boolean myAllowEmpty;
 
@@ -47,7 +45,6 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     myAllowEmpty = allowEmpty;
   }
 
-  @NonNls
   public String[] getAllValues() {
     final String[] strings = ArrayUtil.mergeArrays(getTrueValues(), getFalseValues());
 
@@ -56,12 +53,10 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     return strings;
   }
 
-  @NonNls
   public String[] getTrueValues() {
     return new String[] {"true"};
   }
 
-  @NonNls
   public String[] getFalseValues() {
     return new String[] {"false"};
   }
@@ -70,7 +65,7 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     return Arrays.binarySearch(getTrueValues(), s) >= 0;
   }
 
-  public String fromString(@Nullable @NonNls final String stringValue, final ConvertContext context) {
+  public String fromString(@Nullable final String stringValue, final ConvertContext context) {
     if (stringValue != null && ((myAllowEmpty && stringValue.trim().length() == 0) || Arrays.binarySearch(getAllValues(), stringValue) >= 0)) {
       return stringValue;
     }
@@ -81,7 +76,6 @@ public class BooleanValueConverter extends ResolvingConverter<String> {
     return s;
   }
 
-  @Nonnull
   public Collection<? extends String> getVariants(final ConvertContext context) {
     return Arrays.asList(VARIANTS);
   }

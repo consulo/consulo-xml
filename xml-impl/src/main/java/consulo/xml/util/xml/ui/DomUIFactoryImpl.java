@@ -40,8 +40,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManagerImpl;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
@@ -141,7 +140,6 @@ public class DomUIFactoryImpl extends DomUIFactory {
                                                           final PerspectiveFileEditor editor,
                                                           final DomElement element) {
     return new BackgroundEditorHighlighter() {
-      @Nonnull
       public HighlightingPass[] createPassesForEditor() {
         if (!element.isValid()) return HighlightingPass.EMPTY_ARRAY;
 
@@ -158,7 +156,6 @@ public class DomUIFactoryImpl extends DomUIFactory {
                                                 .toArray(HighlightingPass.EMPTY_ARRAY);
       }
 
-      @Nonnull
       public HighlightingPass[] createPassesForVisibleArea() {
         return createPassesForEditor();
       }

@@ -26,10 +26,8 @@ import consulo.module.Module;
 import consulo.project.DumbService;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +40,7 @@ public abstract class XmlSchemaProvider {
     public static final ExtensionPointName<XmlSchemaProvider> EP_NAME = ExtensionPointName.create(XmlSchemaProvider.class);
 
     @Nullable
-    public static XmlFile findSchema(@Nonnull @NonNls String namespace, @Nullable Module module, @Nonnull PsiFile file) {
+    public static XmlFile findSchema(String namespace, @Nullable Module module, PsiFile file) {
       if (file.getProject().isDefault()) {
         return null;
       }
@@ -64,7 +62,7 @@ public abstract class XmlSchemaProvider {
     }
 
     @Nullable
-    public static XmlFile findSchema(@Nonnull String namespace, @Nonnull PsiFile baseFile) {
+    public static XmlFile findSchema(String namespace, PsiFile baseFile) {
         final PsiDirectory directory = baseFile.getParent();
         final Module module = ModuleUtilCore.findModuleForPsiElement(directory == null ? baseFile : directory);
         return findSchema(namespace, module, baseFile);
@@ -75,7 +73,7 @@ public abstract class XmlSchemaProvider {
      */
     @Deprecated
     @Nullable
-    public static XmlSchemaProvider getAvailableProvider(@Nonnull final XmlFile file) {
+    public static XmlSchemaProvider getAvailableProvider(final XmlFile file) {
         for (XmlSchemaProvider provider : EP_NAME.getExtensionList()) {
             if (provider.isAvailable(file)) {
                 return provider;
@@ -84,15 +82,15 @@ public abstract class XmlSchemaProvider {
         return null;
     }
 
-    public static List<XmlSchemaProvider> getAvailableProviders(@Nonnull final XmlFile file) {
+    public static List<XmlSchemaProvider> getAvailableProviders(final XmlFile file) {
         return ContainerUtil.findAll(EP_NAME.getExtensionList(), it -> it.isAvailable(file));
     }
 
     @Nullable
-    public abstract XmlFile getSchema(@Nonnull @NonNls String url, @Nullable Module module, @Nonnull final PsiFile baseFile);
+    public abstract XmlFile getSchema(String url, @Nullable Module module, final PsiFile baseFile);
 
 
-    public boolean isAvailable(@Nonnull final XmlFile file) {
+    public boolean isAvailable(final XmlFile file) {
         return false;
     }
 
@@ -103,18 +101,17 @@ public abstract class XmlSchemaProvider {
      * @param tagName optional
      * @return available namespace uris, or <code>null</code> if the provider did not recognize the file.
      */
-    @Nonnull
-    public Set<String> getAvailableNamespaces(@Nonnull final XmlFile file, @Nullable final String tagName) {
+    public Set<String> getAvailableNamespaces(final XmlFile file, @Nullable final String tagName) {
         return Collections.emptySet();
     }
 
     @Nullable
-    public String getDefaultPrefix(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
+    public String getDefaultPrefix(String namespace, final XmlFile context) {
         return null;
     }
 
     @Nullable
-    public Set<String> getLocations(@Nonnull @NonNls String namespace, @Nonnull final XmlFile context) {
+    public Set<String> getLocations(String namespace, final XmlFile context) {
         return null;
     }
 }

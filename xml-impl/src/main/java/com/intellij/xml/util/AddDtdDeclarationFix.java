@@ -33,30 +33,25 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
 
 import java.util.function.Function;
 
 public class AddDtdDeclarationFix implements LocalQuickFix {
-    @Nonnull
     private final Function<Object, LocalizeValue> myNameTemplate;
-    @Nonnull
     private final String myElementDeclarationName;
-    @Nonnull
     private final String myReference;
 
     @RequiredReadAction
     public AddDtdDeclarationFix(
-        @Nonnull Function<Object, LocalizeValue> nameTemplate,
-        @Nonnull String elementDeclarationName,
-        @Nonnull PsiReference reference
+        Function<Object, LocalizeValue> nameTemplate,
+        String elementDeclarationName,
+        PsiReference reference
     ) {
         myNameTemplate = nameTemplate;
         myElementDeclarationName = elementDeclarationName;
         myReference = reference.getCanonicalText();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return myNameTemplate.apply(myReference);
@@ -64,7 +59,7 @@ public class AddDtdDeclarationFix implements LocalQuickFix {
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         PsiElement element = descriptor.getPsiElement();
         PsiFile containingFile = element.getContainingFile();
 

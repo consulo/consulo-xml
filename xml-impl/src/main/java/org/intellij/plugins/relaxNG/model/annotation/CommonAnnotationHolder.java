@@ -25,7 +25,6 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 
-import jakarta.annotation.Nonnull;
 
 abstract class CommonAnnotationHolder<C> {
   public static <T extends DomElement> CommonAnnotationHolder<T> create(DomElementAnnotationHolder holder) {
@@ -37,7 +36,7 @@ abstract class CommonAnnotationHolder<C> {
   }
 
   @RequiredReadAction
-  public abstract Annotation createAnnotation(C element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message);
+  public abstract Annotation createAnnotation(C element, HighlightSeverity severity, LocalizeValue message);
 
   private static class DomHolderAdapter<T extends DomElement> extends CommonAnnotationHolder<T> {
     private final DomElementAnnotationHolder myHolder;
@@ -48,7 +47,7 @@ abstract class CommonAnnotationHolder<C> {
 
     @Override
     @RequiredReadAction
-    public Annotation createAnnotation(DomElement element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message) {
+    public Annotation createAnnotation(DomElement element, HighlightSeverity severity, LocalizeValue message) {
       final Annotation annotation = myHolder.createAnnotation(element, severity, message);
       annotation.setTooltip(message);  // no tooltip by default??
       return annotation;
@@ -64,7 +63,7 @@ abstract class CommonAnnotationHolder<C> {
 
     @RequiredReadAction
     @Override
-    public Annotation createAnnotation(T element, @Nonnull HighlightSeverity severity, @Nonnull LocalizeValue message) {
+    public Annotation createAnnotation(T element, HighlightSeverity severity, LocalizeValue message) {
       if (severity == HighlightSeverity.ERROR) {
         return myHolder.createErrorAnnotation(element, message.getNullIfEmpty());
       } else if (severity == HighlightSeverity.WARNING) {

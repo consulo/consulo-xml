@@ -24,8 +24,7 @@ import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
 import consulo.util.lang.StringUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public abstract class DomGenericInfoEx implements DomGenericInfo {
   @Nullable
   public abstract Invocation createInvocation(final JavaMethod method);
 
-  @Nonnull
   public abstract List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions();
 
   @Nullable

@@ -6,7 +6,6 @@ import consulo.language.editor.rawHighlight.HighlightVisitorFactory;
 import consulo.language.psi.PsiFile;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -15,7 +14,7 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XmlHighlightVisitorFactory implements HighlightVisitorFactory {
     @Override
-    public boolean suitableForFile(@Nonnull PsiFile file) {
+    public boolean suitableForFile(PsiFile file) {
         if (file instanceof XmlFile) {
             return true;
         }
@@ -28,7 +27,6 @@ public class XmlHighlightVisitorFactory implements HighlightVisitorFactory {
         return false;
     }
 
-    @Nonnull
     @Override
     public HighlightVisitor createVisitor() {
         return new XmlHighlightVisitor();

@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -23,7 +22,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -35,7 +34,7 @@ public class RncAnnotationImpl extends RncElementImpl implements RncAnnotation {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitAnnotation(this);
   }
 

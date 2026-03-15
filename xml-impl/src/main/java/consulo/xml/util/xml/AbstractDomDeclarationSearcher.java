@@ -22,8 +22,7 @@ import consulo.language.pom.PomTarget;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.Consumer;
 
 /**
@@ -32,7 +31,7 @@ import java.util.function.Consumer;
  */
 public abstract class AbstractDomDeclarationSearcher extends PomDeclarationSearcher {
 
-  public void findDeclarationsAt(@Nonnull PsiElement psiElement, int offsetInElement, Consumer<PomTarget> consumer) {
+  public void findDeclarationsAt(PsiElement psiElement, int offsetInElement, Consumer<PomTarget> consumer) {
     if (!(psiElement instanceof XmlToken)) return;
 
     final IElementType tokenType = ((XmlToken)psiElement).getTokenType();

@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml.ui.actions.generate;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.editor.template.Expression;
 import consulo.codeEditor.Editor;
@@ -42,7 +41,7 @@ public abstract class CreateDomElementAction<T extends DomElement> extends Simpl
   }
 
   @Override
-  public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+  public void invoke(Project project, Editor editor, PsiFile file) {
     DomElement element = createElement(getContextElement(editor), editor, file, project);
   }
 
@@ -50,7 +49,7 @@ public abstract class CreateDomElementAction<T extends DomElement> extends Simpl
   protected abstract DomElement createElement(T context, Editor editor, PsiFile file, Project project);
 
   @Override
-  protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+  protected boolean isValidForFile(Project project, Editor editor, PsiFile file) {
     return getContextElement(editor) != null;
   }
 

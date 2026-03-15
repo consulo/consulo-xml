@@ -15,12 +15,10 @@
  */
 package com.intellij.xml.util;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -32,24 +30,20 @@ import com.intellij.xml.XmlAttributeDescriptor;
  * @author peter
  */
 public class IncludedXmlAttribute extends IncludedXmlElement<XmlAttribute> implements XmlAttribute {
-    public IncludedXmlAttribute(@Nonnull XmlAttribute original, @Nullable XmlTag parent) {
+    public IncludedXmlAttribute(XmlAttribute original, @Nullable XmlTag parent) {
         super(original, parent);
     }
 
     @Override
-    @NonNls
-    @Nonnull
     public String getName() {
         return getOriginal().getName();
     }
 
     @Override
-    public PsiElement setName(@NonNls @Nonnull String name) throws consulo.language.util.IncorrectOperationException {
+    public PsiElement setName(String name) throws consulo.language.util.IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included elements");
     }
 
-    @NonNls
-    @Nonnull
     public String getLocalName() {
         return getOriginal().getLocalName();
     }
@@ -59,14 +53,10 @@ public class IncludedXmlAttribute extends IncludedXmlElement<XmlAttribute> imple
         return getOriginal().getNameElement();
     }
 
-    @NonNls
-    @Nonnull
     public String getNamespace() {
         return getOriginal().getNamespace();
     }
 
-    @NonNls
-    @Nonnull
     public String getNamespacePrefix() {
         return getOriginal().getNamespacePrefix();
     }

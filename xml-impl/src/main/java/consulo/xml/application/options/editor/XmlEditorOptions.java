@@ -23,8 +23,7 @@ import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
 import consulo.util.xml.serializer.XmlSerializerUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jakarta.inject.Singleton;
 
 /**
@@ -47,7 +46,6 @@ public class XmlEditorOptions implements PersistentStateComponent<XmlEditorOptio
     private int myTagTreeHighlightingLevelCount = 6;
     private int myTagTreeHighlightingOpacity = 10;
 
-    @Nonnull
     public static XmlEditorOptions getInstance() {
         return Application.get().getInstance(XmlEditorOptions.class);
     }

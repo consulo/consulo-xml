@@ -8,8 +8,7 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ContainerUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +16,7 @@ import java.util.Set;
 public abstract class ModuleContextProvider {
   public static final ExtensionPointName<ModuleContextProvider> EP_NAME = ExtensionPointName.create(ModuleContextProvider.class);
 
-  @Nonnull
-  public abstract Module[] getContextModules(@Nonnull PsiFile context);
+  public abstract Module[] getContextModules(PsiFile context);
 
   public static Module[] getModules(@Nullable PsiFile context) {
     if (context == null) return Module.EMPTY_ARRAY;

@@ -21,8 +21,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -32,5 +31,5 @@ public interface XmlStructureViewElementProvider {
   ExtensionPointName<XmlStructureViewElementProvider> EP_NAME = ExtensionPointName.create(XmlStructureViewElementProvider.class);
 
   @Nullable
-  StructureViewTreeElement createCustomXmlTagTreeElement(@Nonnull XmlTag tag);
+  StructureViewTreeElement createCustomXmlTagTreeElement(XmlTag tag);
 }

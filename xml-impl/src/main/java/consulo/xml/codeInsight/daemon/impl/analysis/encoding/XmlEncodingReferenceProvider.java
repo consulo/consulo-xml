@@ -25,7 +25,6 @@ import consulo.language.util.ProcessingContext;
 import consulo.logging.Logger;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlChildRole;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author cdr
@@ -34,10 +33,9 @@ public class XmlEncodingReferenceProvider extends PsiReferenceProvider {
     private static final Logger LOG = Logger.getInstance(XmlEncodingReferenceProvider.class);
     private static final String CHARSET_PREFIX = "charset=";
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+    public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
         LOG.assertTrue(element instanceof XmlAttributeValue);
         XmlAttributeValue value = (XmlAttributeValue)element;
 

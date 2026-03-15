@@ -26,16 +26,13 @@ import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 public class HtmlFileType extends XmlLikeFileType
 {
-	@NonNls
 	public static final String DOT_DEFAULT_EXTENSION = ".html";
 
 	public final static HtmlFileType INSTANCE = new HtmlFileType();
@@ -50,39 +47,35 @@ public class HtmlFileType extends XmlLikeFileType
 		super(language);
 	}
 
-	@Nonnull
 	public String getId()
 	{
 		return "HTML";
 	}
 
-	@Nonnull
 	public LocalizeValue getDescription()
 	{
 		return XmlLocalize.filetypeDescriptionHtml();
 	}
 
-	@Nonnull
 	public String getDefaultExtension()
 	{
 		return "html";
 	}
 
-	@Nonnull
 	@Override
 	public Image getIcon()
 	{
 		return AllIcons.FileTypes.Html;
 	}
 
-	public String getCharset(@Nonnull final VirtualFile file, final byte[] content)
+	public String getCharset(final VirtualFile file, final byte[] content)
 	{
 		String charset = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
 		if(charset != null)
 		{
 			return charset;
 		}
-		@NonNls String strContent;
+		String strContent;
 		try
 		{
 			strContent = new String(content, "ISO-8859-1");
@@ -95,7 +88,7 @@ public class HtmlFileType extends XmlLikeFileType
 		return c == null ? null : c.name();
 	}
 
-	public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, @Nonnull final CharSequence content)
+	public Charset extractCharsetFromFileContent(@Nullable final Project project, @Nullable final VirtualFile file, final CharSequence content)
 	{
 		String name = XmlCharsetDetector.extractXmlEncodingFromProlog(content);
 		Charset charset = CharsetToolkit.forName(name);

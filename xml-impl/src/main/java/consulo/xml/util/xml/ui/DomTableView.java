@@ -27,7 +27,6 @@ import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -60,7 +59,7 @@ public class DomTableView extends AbstractTableView<DomElement> {
     installPopup(ActionPlaces.J2EE_ATTRIBUTES_VIEW_POPUP, group);
   }
 
-  protected void wrapValueSetting(@Nonnull final DomElement domElement, final Runnable valueSetter) {
+  protected void wrapValueSetting(final DomElement domElement, final Runnable valueSetter) {
     if (domElement.isValid()) {
       new WriteCommandAction(getProject(), DomUtil.getFile(domElement)) {
         protected void run(final Result result) throws Throwable {

@@ -24,8 +24,7 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.converters.values.BooleanValueConverter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +39,6 @@ import java.util.Set;
 public abstract class ResolvingConverter<T> extends Converter<T> {
   @Deprecated
   public static final ResolvingConverter EMPTY_CONVERTER = new ResolvingConverter() {
-    @Nonnull
     public Collection getVariants(final ConvertContext context) {
       return Collections.emptyList();
     }
@@ -71,7 +69,6 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
       return t == null? null:t.toString();
     }
 
-    @Nonnull
     public Collection<? extends Boolean> getVariants(final ConvertContext context) {
       final DomElement element = context.getInvocationElement();
       if (element instanceof GenericDomValue) {
@@ -91,7 +88,6 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
    * @param context context
    * @return reference completion variants
    */
-  @Nonnull
   public abstract Collection<? extends T> getVariants(final ConvertContext context);
 
   /**
@@ -99,7 +95,6 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
    * They will also appear in the completion dropdown.
    */
   @Deprecated
-  @Nonnull
   public Set<String> getAdditionalVariants() {
     return Collections.emptySet();
   }
@@ -107,8 +102,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
    * @return additional reference variants. They won't resolve to anywhere, but won't be highlighted as errors.
    * They will also appear in the completion dropdown.
    */
-  @Nonnull
-  public Set<String> getAdditionalVariants(@Nonnull final ConvertContext context) {
+  public Set<String> getAdditionalVariants(final ConvertContext context) {
     return getAdditionalVariants();
   }
 
@@ -161,7 +155,7 @@ public abstract class ResolvingConverter<T> extends Converter<T> {
    * @param context context
    * @return is reference to?
    */
-  public boolean isReferenceTo(@Nonnull PsiElement element, final String stringValue, @Nullable T resolveResult,
+  public boolean isReferenceTo(PsiElement element, final String stringValue, @Nullable T resolveResult,
                                final ConvertContext context) {
     return resolveResult != null && element.getManager().areElementsEquivalent(element, getPsiElement(resolveResult));
   }

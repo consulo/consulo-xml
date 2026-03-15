@@ -23,10 +23,8 @@ import consulo.util.dataholder.Key;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +42,13 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName
 	private final String myNamespaceKey;
 	private final boolean myEqualToParent;
 
-	private EvaluatedXmlNameImpl(@Nonnull final XmlName xmlName, @Nullable final String namespaceKey, final boolean equalToParent)
+	private EvaluatedXmlNameImpl(final XmlName xmlName, @Nullable final String namespaceKey, final boolean equalToParent)
 	{
 		myXmlName = xmlName;
 		myNamespaceKey = namespaceKey;
 		myEqualToParent = equalToParent;
 	}
 
-	@Nonnull
 	public final String getLocalName()
 	{
 		return myXmlName.getLocalName();
@@ -62,7 +59,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName
 		return myXmlName;
 	}
 
-	public final EvaluatedXmlName evaluateChildName(@Nonnull final XmlName name)
+	public final EvaluatedXmlName evaluateChildName(final XmlName name)
 	{
 		String namespaceKey = name.getNamespaceKey();
 		final boolean equalToParent = Comparing.equal(namespaceKey, myNamespaceKey);
@@ -127,7 +124,6 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName
 		return isNamespaceAllowed(namespace, getAllowedNamespaces(file));
 	}
 
-	@Nonnull
 	private List<String> getAllowedNamespaces(final XmlFile file)
 	{
 		CachedValue<Map<String, List<String>>> value = file.getUserData(NAMESPACE_PROVIDER_KEY);
@@ -166,9 +162,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName
 		return myNamespaceKey == null || myEqualToParent && !qualified || isNamespaceAllowed(namespace, getNamespaceList(file));
 	}
 
-	@Nonnull
-	@NonNls
-	public final String getNamespace(@Nonnull XmlElement parentElement, final XmlFile file)
+	public final String getNamespace(XmlElement parentElement, final XmlFile file)
 	{
 		final String xmlElementNamespace = getXmlElementNamespace(parentElement);
 		if(myNamespaceKey != null && !myEqualToParent)
@@ -213,7 +207,7 @@ public class EvaluatedXmlNameImpl implements EvaluatedXmlName
 		return getAllowedNamespaces(file);
 	}
 
-	public static EvaluatedXmlNameImpl createEvaluatedXmlName(@Nonnull final XmlName xmlName, @Nullable final String namespaceKey, boolean equalToParent)
+	public static EvaluatedXmlNameImpl createEvaluatedXmlName(final XmlName xmlName, @Nullable final String namespaceKey, boolean equalToParent)
 	{
 		final EvaluatedXmlNameImpl name = new EvaluatedXmlNameImpl(xmlName, namespaceKey, equalToParent);
 		final EvaluatedXmlNameImpl interned = ourInterned.get(name);

@@ -10,8 +10,7 @@ import consulo.xml.util.xml.converters.PathReferenceConverter;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -46,7 +45,6 @@ public class ConverterManagerImpl implements ConverterManager {
     mySimpleConverters.put(clazz, converter);
   }
 
-  @Nonnull
   public final Converter getConverterInstance(final Class<? extends Converter> converterClass) {
     Converter converter = getInstance(converterClass);
     assert converter != null : "Converter not found for " + converterClass;

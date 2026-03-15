@@ -17,7 +17,7 @@ package consulo.xml.psi.xml;
 
 import consulo.language.psi.meta.PsiMetaOwner;
 import com.intellij.xml.XmlNSDescriptor;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Mike

@@ -39,8 +39,7 @@ import consulo.util.dataholder.Key;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -134,7 +133,7 @@ public class XmlElementDescriptorImpl extends BaseXmlElementDescriptorImpl imple
 
         XmlUtil.processXmlElements(contentSpecElement, new PsiElementProcessor() {
             @Override
-            public boolean execute(@Nonnull PsiElement child) {
+            public boolean execute(PsiElement child) {
                 if (child instanceof XmlToken token) {
                     if (token.getTokenType() == XmlTokenType.XML_NAME) {
                         final String text = child.getText();
@@ -230,7 +229,6 @@ public class XmlElementDescriptorImpl extends BaseXmlElementDescriptorImpl imple
     }
 
     public static
-    @Nonnull
     XmlAttlistDecl[] getCachedAttributeDeclarations(@Nullable XmlElement owner) {
         if (owner == null) {
             return XmlAttlistDecl.EMPTY_ARRAY;

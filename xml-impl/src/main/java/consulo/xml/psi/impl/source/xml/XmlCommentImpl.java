@@ -25,8 +25,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.tree.injected.XmlCommentLiteralEscaper;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Mike
@@ -40,7 +39,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return XML_COMMENT;
   }
 
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlComment(this);
     } else {
@@ -68,7 +67,6 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return null;
   }
 
-  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlComment.class);
   }
@@ -78,7 +76,7 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return MetaDataService.getInstance().getMeta(this);
   }
 
-  public PsiLanguageInjectionHost updateText(@Nonnull final String text) {
+  public PsiLanguageInjectionHost updateText(final String text) {
     final PsiFile psiFile = getContainingFile();
 
     final XmlDocument document =
@@ -93,7 +91,6 @@ public class XmlCommentImpl extends XmlElementImpl implements XmlComment, XmlEle
     return this;
   }
 
-  @Nonnull
   public LiteralTextEscaper<? extends PsiLanguageInjectionHost> createLiteralTextEscaper() {
     return new XmlCommentLiteralEscaper(this);
   }

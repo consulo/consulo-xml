@@ -24,23 +24,19 @@ import consulo.language.editor.inspection.scheme.InspectionProjectProfileManager
 import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
-    @Nonnull
     private final String myName;
-    @Nonnull
     private final LocalizeValue myText;
-    @Nonnull
     private final String myInspectionShortName;
 
     public AddCustomTagOrAttributeIntentionAction(
-        @Nonnull String inspectionShortName,
-        @Nonnull String name,
-        @Nonnull LocalizeValue text
+        String inspectionShortName,
+        String name,
+        LocalizeValue text
     ) {
         myInspectionShortName = inspectionShortName;
         myName = name;
@@ -48,14 +44,13 @@ public class AddCustomTagOrAttributeIntentionAction implements LocalQuickFix {
     }
 
     @Override
-    @Nonnull
     public LocalizeValue getName() {
         return myText;
     }
 
     @Override
     @RequiredReadAction
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         PsiElement element = descriptor.getPsiElement();
 
         InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();

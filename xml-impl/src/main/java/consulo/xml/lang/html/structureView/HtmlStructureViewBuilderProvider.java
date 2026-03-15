@@ -24,15 +24,14 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionImpl
 public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider
 {
 	@Override
 	@Nullable
-	public StructureViewBuilder createStructureViewBuilder(@Nonnull final XmlFile file)
+	public StructureViewBuilder createStructureViewBuilder(final XmlFile file)
 	{
 		if(file.getViewProvider().getVirtualFile().getFileType() != HtmlFileType.INSTANCE)
 		{
@@ -48,7 +47,6 @@ public class HtmlStructureViewBuilderProvider implements XmlStructureViewBuilder
 			}
 
 			@Override
-			@Nonnull
 			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 			{
 				return new HtmlStructureViewTreeModel(file, editor);

@@ -22,24 +22,22 @@ import consulo.language.editor.inspection.SuppressQuickFix;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlInspectionSuppressor implements InspectionSuppressor
 {
 	@Override
-	public boolean isSuppressedFor(@Nonnull PsiElement element, String toolId)
+	public boolean isSuppressedFor(PsiElement element, String toolId)
 	{
 		return XmlSuppressionProvider.isSuppressed(element, toolId);
 	}
 
 	@Override
-	public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, String toolShortName)
+	public SuppressQuickFix[] getSuppressActions(PsiElement element, String toolShortName)
 	{
 		return XmlSuppressableInspectionTool.getSuppressFixes(toolShortName);
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

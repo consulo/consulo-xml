@@ -33,8 +33,7 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -44,13 +43,12 @@ public class RenameTagBeginOrEndIntentionAction implements SyntheticIntentionAct
     private final String myTargetName;
     private final String mySourceName;
 
-    RenameTagBeginOrEndIntentionAction(@Nonnull String targetName, @Nonnull String sourceName, boolean start) {
+    RenameTagBeginOrEndIntentionAction(String targetName, String sourceName, boolean start) {
         myTargetName = targetName;
         mySourceName = sourceName;
         myStart = start;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return myStart
@@ -59,13 +57,13 @@ public class RenameTagBeginOrEndIntentionAction implements SyntheticIntentionAct
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
     @RequiredWriteAction
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         int offset = editor.getCaretModel().getOffset();
         PsiElement psiElement = file.findElementAt(offset);
 

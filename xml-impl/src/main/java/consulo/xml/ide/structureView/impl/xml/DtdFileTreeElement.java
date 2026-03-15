@@ -22,11 +22,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.application.AllIcons;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import org.jetbrains.annotations.NonNls;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.util.lang.Comparing;
@@ -51,7 +49,6 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 	}
 
 	@Override
-	@Nonnull
 	public Collection<StructureViewTreeElement> getChildrenBase()
 	{
 		return collectElements(getElement().getDocument());
@@ -64,7 +61,7 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 		XmlUtil.processXmlElements(element, new PsiElementProcessor()
 		{
 			@Override
-			public boolean execute(@Nonnull final PsiElement element)
+			public boolean execute(final PsiElement element)
 			{
 				if(element instanceof XmlElementDecl || element instanceof XmlEntityDecl)
 				{
@@ -84,17 +81,11 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 
 	private static class DtdTreeElement extends PsiTreeElementBase<PsiNamedElement>
 	{
-		@NonNls
 		private static final String IMPLIED = "implied";
-		@NonNls
 		private static final String REQUIRED = "required";
-		@NonNls
 		private static final String FIXED = "fixed";
-		@NonNls
 		private static final String ID = "id";
-		@NonNls
 		private static final String IDREF = "idref";
-		@NonNls
 		private static final String ENUM = "enum";
 
 		public DtdTreeElement(final PsiNamedElement element)
@@ -103,7 +94,6 @@ public class DtdFileTreeElement extends PsiTreeElementBase<XmlFile>
 		}
 
 		@Override
-		@Nonnull
 		public Collection<StructureViewTreeElement> getChildrenBase()
 		{
 			return Collections.emptyList();

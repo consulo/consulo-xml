@@ -25,7 +25,6 @@ import consulo.language.ast.IElementType;
 import consulo.language.codeStyle.*;
 import consulo.language.psi.PsiElement;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public class SyntheticBlock extends AbstractSyntheticBlock implements Block {
@@ -38,17 +37,15 @@ public class SyntheticBlock extends AbstractSyntheticBlock implements Block {
     myChildIndent = childIndent;
   }
 
-  @Nonnull
   public TextRange getTextRange() {
     return calculateTextRange(mySubBlocks);
   }
 
-  @Nonnull
   public List<Block> getSubBlocks() {
     return mySubBlocks;
   }
 
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     if (child1 instanceof ReadOnlyBlock || child2 instanceof ReadOnlyBlock) {
       return Spacing.getReadOnlySpacing();
     }
@@ -202,7 +199,6 @@ public class SyntheticBlock extends AbstractSyntheticBlock implements Block {
       ;
   }
 
-  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (isOuterLanguageBlock()) return ChildAttributes.DELEGATE_TO_NEXT_CHILD;
     final List<Block> subBlocks = getSubBlocks();

@@ -36,7 +36,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -50,13 +49,11 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  @Nonnull
   public FileType getFileType() {
     return RncFileType.getInstance();
   }
 
   @Override
-  @Nonnull
   public XmlDocument getDocument() {
     // this needs to be a seperate child element because of com.intellij.util.xml.impl.ExternalChangeProcessor.visitDocumentChanged()
     final XmlDocument document = findChildByClass(XmlDocument.class);
@@ -70,7 +67,7 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
+  public boolean processDeclarations(PsiScopeProcessor processor, ResolveState substitutor, PsiElement lastParent, PsiElement place) {
     //processor.handleEvent(JavaScopeProcessorEvent.SET_CURRENT_FILE_CONTEXT, this);
     try {
       final ASTNode docNode = getDocument().getNode();
@@ -94,17 +91,17 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
   }
 
   @Override
-  public PsiElement add(@Nonnull PsiElement element) throws IncorrectOperationException {
+  public PsiElement add(PsiElement element) throws IncorrectOperationException {
     return getDocument().add(element);
   }
 
   @Override
-  public PsiElement addAfter(@Nonnull PsiElement element, PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addAfter(PsiElement element, PsiElement anchor) throws IncorrectOperationException {
     return getDocument().addAfter(element, anchor);
   }
 
   @Override
-  public PsiElement addBefore(@Nonnull PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement addBefore(PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     return getDocument().addBefore(element, anchor);
   }
 
@@ -113,7 +110,6 @@ public class RncFileImpl extends PsiFileBase implements RncFile, XmlFile {
     return false;
   }
 
-  @Nonnull
   @Override
   public GlobalSearchScope getFileResolveScope() {
     return GlobalSearchScope.allScope(getProject());

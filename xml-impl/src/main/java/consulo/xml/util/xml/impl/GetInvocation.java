@@ -12,7 +12,7 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.ref.SimpleReference;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**

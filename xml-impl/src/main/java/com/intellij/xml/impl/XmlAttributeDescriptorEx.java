@@ -15,11 +15,9 @@
  */
 package com.intellij.xml.impl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.intellij.xml.XmlAttributeDescriptor;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
@@ -30,6 +28,5 @@ public interface XmlAttributeDescriptorEx extends XmlAttributeDescriptor {
      * @return new attribute local name
      */
     @Nullable
-    @NonNls
-    String handleTargetRename(@Nonnull @NonNls final String newTargetName);
+    String handleTargetRename(final String newTargetName);
 }

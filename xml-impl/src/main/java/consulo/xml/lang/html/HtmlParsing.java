@@ -32,8 +32,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class HtmlParsing {
   private static final String TR_TAG = "tr";
@@ -102,8 +101,7 @@ public class HtmlParsing {
     document.done(XmlElementType.HTML_DOCUMENT);
   }
 
-  @Nullable
-  private static PsiBuilder.Marker flushError(PsiBuilder.Marker error) {
+  private static PsiBuilder.@Nullable Marker flushError(PsiBuilder.Marker error) {
     if (error != null) {
       error.error(XmlErrorLocalize.xmlParsingUnexpectedTokens());
       error = null;
@@ -377,8 +375,7 @@ public class HtmlParsing {
   }
 
 
-  @Nonnull
-  private PsiBuilder.Marker startText(@Nullable PsiBuilder.Marker xmlText) {
+  private PsiBuilder.Marker startText(PsiBuilder.@Nullable Marker xmlText) {
     if (xmlText == null) {
       xmlText = mark();
       assert xmlText != null;
@@ -390,8 +387,7 @@ public class HtmlParsing {
     return myBuilder.mark();
   }
 
-  @Nullable
-  private static PsiBuilder.Marker terminateText(@Nullable PsiBuilder.Marker xmlText) {
+  private static PsiBuilder.@Nullable Marker terminateText(PsiBuilder.@Nullable Marker xmlText) {
     if (xmlText != null) {
       xmlText.done(XmlElementType.XML_TEXT);
       xmlText = null;

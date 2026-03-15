@@ -27,8 +27,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -40,14 +39,12 @@ import java.util.function.Function;
  */
 public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuilder<T> {
     public static final Function<DomElement, Collection<? extends PsiElement>> DEFAULT_DOM_CONVERTOR = new Function<>() {
-        @Nonnull
         @Override
         public Collection<? extends PsiElement> apply(DomElement o) {
             return ContainerUtil.createMaybeSingletonList(o.getXmlElement());
         }
     };
     public static final Function<DomElement, Collection<? extends GotoRelatedItem>> DOM_GOTO_RELATED_ITEM_PROVIDER = new Function<>() {
-        @Nonnull
         @Override
         public Collection<? extends GotoRelatedItem> apply(DomElement dom) {
             if (dom.getXmlElement() != null) {
@@ -57,32 +54,32 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
         }
     };
 
-    public static DomNavigationGutterIconBuilder<PsiElement> create(@Nonnull Image icon) {
+    public static DomNavigationGutterIconBuilder<PsiElement> create(Image icon) {
         return create(icon, DEFAULT_PSI_CONVERTOR, PSI_GOTO_RELATED_ITEM_PROVIDER);
     }
 
     public static <T> DomNavigationGutterIconBuilder<T> create(
-        @Nonnull Image icon,
-        @Nonnull Function<T, Collection<? extends PsiElement>> converter
+        Image icon,
+        Function<T, Collection<? extends PsiElement>> converter
     ) {
         return create(icon, converter, null);
     }
 
     public static <T> DomNavigationGutterIconBuilder<T> create(
-        @Nonnull Image icon,
-        @Nonnull Function<T, Collection<? extends PsiElement>> converter,
+        Image icon,
+        Function<T, Collection<? extends PsiElement>> converter,
         @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
     ) {
         return new DomNavigationGutterIconBuilder<>(icon, converter, gotoRelatedItemProvider);
     }
 
-    protected DomNavigationGutterIconBuilder(@Nonnull Image icon, @Nonnull Function<T, Collection<? extends PsiElement>> converter) {
+    protected DomNavigationGutterIconBuilder(Image icon, Function<T, Collection<? extends PsiElement>> converter) {
         super(icon, converter);
     }
 
     protected DomNavigationGutterIconBuilder(
-        @Nonnull Image icon,
-        @Nonnull Function<T, Collection<? extends PsiElement>> converter,
+        Image icon,
+        Function<T, Collection<? extends PsiElement>> converter,
         @Nullable Function<T, Collection<? extends GotoRelatedItem>> gotoRelatedItemProvider
     ) {
         super(icon, converter, gotoRelatedItemProvider);
@@ -90,7 +87,7 @@ public class DomNavigationGutterIconBuilder<T> extends NavigationGutterIconBuild
 
     @Nullable
     @RequiredReadAction
-    public Annotation install(@Nonnull DomElementAnnotationHolder holder, @Nullable DomElement element) {
+    public Annotation install(DomElementAnnotationHolder holder, @Nullable DomElement element) {
         if (!myLazy && myTargets.get().isEmpty() || element == null) {
             return null;
         }

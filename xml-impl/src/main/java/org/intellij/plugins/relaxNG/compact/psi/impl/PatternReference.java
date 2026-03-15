@@ -33,8 +33,7 @@ import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.VirtualFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.*;
@@ -58,7 +57,6 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
         super(ref);
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public TextRange getRangeInElement() {
@@ -84,7 +82,6 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
         return results.length == 1 ? results[0].getElement() : null;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public ResolveResult[] multiResolve(boolean incompleteCode) {
@@ -123,7 +120,6 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
         return PsiTreeUtil.getParentOfType(myElement, RncGrammar.class, true, PsiFile.class);
     }
 
-    @Nonnull
     @Override
     public String getCanonicalText() {
         ASTNode node = findNameNode();
@@ -140,11 +136,10 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
     }
 
     @Override
-    public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
+    public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException {
         throw new UnsupportedOperationException();
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public Object[] getVariants() {
@@ -171,9 +166,8 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
         return false;
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
         return LocalizeValue.localizeTODO("Unresolved pattern reference '" + s + "'");
     }
 
@@ -193,7 +187,6 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
             myReference = reference;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return LocalizeValue.localizeTODO("Create Pattern '" + myReference.getCanonicalText() + "'");
@@ -201,7 +194,7 @@ class PatternReference extends PsiReferenceBase.Poly<RncRef>
 
         @Override
         @RequiredWriteAction
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             RncFile rncfile = (RncFile) PsiFileFactory.getInstance(myReference.getElement().getProject())
                 .createFileFromText("dummy.rnc", RncFileType.getInstance(), "dummy = xxx");
 

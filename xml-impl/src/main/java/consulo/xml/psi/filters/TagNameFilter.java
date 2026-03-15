@@ -16,7 +16,6 @@
 package consulo.xml.psi.filters;
 
 import consulo.language.psi.filter.PlainTextFilter;
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.psi.xml.XmlTag;
 
 /**
@@ -25,17 +24,17 @@ import consulo.xml.psi.xml.XmlTag;
  */
 public class TagNameFilter extends PlainTextFilter
 {
-	public TagNameFilter(@NonNls String value)
+	public TagNameFilter(String value)
 	{
 		super(value);
 	}
 
-	public TagNameFilter(@NonNls String... values)
+	public TagNameFilter(String... values)
 	{
 		super(values);
 	}
 
-	public TagNameFilter(@NonNls String value1, @NonNls String value2)
+	public TagNameFilter(String value1, String value2)
 	{
 		super(value1, value2);
 	}

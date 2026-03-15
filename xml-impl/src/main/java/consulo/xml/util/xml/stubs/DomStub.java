@@ -18,8 +18,7 @@ package consulo.xml.util.xml.stubs;
 import java.util.Collections;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import consulo.util.lang.Comparing;
 import consulo.language.psi.stub.ObjectStubBase;
 import consulo.util.collection.SmartList;
@@ -43,7 +42,7 @@ public abstract class DomStub extends ObjectStubBase<DomStub>
 	private final StringRef myNamespace;
 	private DomInvocationHandler myHandler;
 
-	public DomStub(DomStub parent, @Nonnull StringRef localName, StringRef namespace)
+	public DomStub(DomStub parent, StringRef localName, StringRef namespace)
 	{
 		super(parent);
 		myNamespace = namespace;

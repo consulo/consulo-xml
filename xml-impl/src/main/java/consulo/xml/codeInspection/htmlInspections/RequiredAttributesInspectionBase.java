@@ -25,30 +25,25 @@ import consulo.logging.Logger;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 public abstract class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {
     protected static final Logger LOG = Logger.getInstance(RequiredAttributesInspectionBase.class);
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.HTML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return InspectionLocalize.inspectionRequiredAttributesDisplayName();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME;
@@ -59,13 +54,12 @@ public abstract class RequiredAttributesInspectionBase extends XmlSuppressableIn
         return true;
     }
 
-    @Nonnull
     @Override
     public InspectionToolState<?> createStateProvider() {
         return new XmlEntitiesInspectionState(InspectionLocalize.inspectionJavadocHtmlNotRequiredLabelText());
     }
 
-    public static IntentionAction getIntentionAction(@Nonnull String name) {
+    public static IntentionAction getIntentionAction(String name) {
         return new AddHtmlTagOrAttributeToCustomsIntention(
             XmlEntitiesInspection.REQUIRED_ATTRIBUTES_SHORT_NAME,
             name,

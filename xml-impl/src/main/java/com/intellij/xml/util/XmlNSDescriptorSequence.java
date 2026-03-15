@@ -18,8 +18,7 @@ package com.intellij.xml.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlDocument;
@@ -50,7 +49,7 @@ public class XmlNSDescriptorSequence implements XmlNSDescriptor {
     }
 
     @Override
-    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
         for (XmlNSDescriptor descriptor : sequence) {
             final XmlElementDescriptor elementDescriptor = descriptor.getElementDescriptor(tag);
             if (elementDescriptor != null) {
@@ -61,7 +60,6 @@ public class XmlNSDescriptorSequence implements XmlNSDescriptor {
     }
 
     @Override
-    @Nonnull
     public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
         final List<XmlElementDescriptor> descriptors = new ArrayList<>();
         for (XmlNSDescriptor descriptor : sequence) {

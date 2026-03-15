@@ -5,8 +5,7 @@ import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -18,18 +17,17 @@ import java.util.List;
 public class AttributeChildDescriptionImpl extends DomChildDescriptionImpl implements DomAttributeChildDescription<Void> {
   private final JavaMethod myGetterMethod;
 
-  protected AttributeChildDescriptionImpl(final XmlName attributeName, @Nonnull final JavaMethod getter) {
+  protected AttributeChildDescriptionImpl(final XmlName attributeName, final JavaMethod getter) {
     super(attributeName, getter.getGenericReturnType());
     myGetterMethod = getter;
   }
 
-  public AttributeChildDescriptionImpl(final XmlName attributeName, @Nonnull Type type) {
+  public AttributeChildDescriptionImpl(final XmlName attributeName, Type type) {
     super(attributeName, type);
     myGetterMethod = null;
   }
 
-  @Nonnull
-  public DomNameStrategy getDomNameStrategy(@Nonnull DomElement parent) {
+  public DomNameStrategy getDomNameStrategy(DomElement parent) {
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(ReflectionUtil.getRawType(getType()), true);
     return strategy == null ? parent.getNameStrategy() : strategy;
   }
@@ -50,13 +48,11 @@ public class AttributeChildDescriptionImpl extends DomChildDescriptionImpl imple
     return method == null ? super.getAnnotation(annotationClass) : method.getAnnotation(annotationClass);
   }
 
-  @Nonnull
-  public List<? extends DomElement> getValues(@Nonnull DomElement parent) {
+  public List<? extends DomElement> getValues(DomElement parent) {
     return Arrays.asList(getDomAttributeValue(parent));
   }
 
-  @Nonnull
-  public String getCommonPresentableName(@Nonnull DomNameStrategy strategy) {
+  public String getCommonPresentableName(DomNameStrategy strategy) {
     throw new UnsupportedOperationException("Method getCommonPresentableName is not yet implemented in " + getClass().getName());
   }
 

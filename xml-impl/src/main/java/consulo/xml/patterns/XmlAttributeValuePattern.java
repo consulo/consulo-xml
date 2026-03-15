@@ -15,8 +15,7 @@
  */
 package consulo.xml.patterns;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.InitialPatternCondition;
@@ -24,7 +23,6 @@ import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.PsiNamePatternCondition;
 import consulo.language.pattern.StandardPatterns;
 import consulo.language.pattern.StringPattern;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
@@ -52,12 +50,12 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		super(condition);
 	}
 
-	public XmlAttributeValuePattern withLocalName(@NonNls String... names)
+	public XmlAttributeValuePattern withLocalName(String... names)
 	{
 		return names.length == 1 ? withLocalName(StandardPatterns.string().equalTo(names[0])) : withLocalName(StandardPatterns.string().oneOf(names));
 	}
 
-	public XmlAttributeValuePattern withLocalNameIgnoreCase(@NonNls String... names)
+	public XmlAttributeValuePattern withLocalNameIgnoreCase(String... names)
 	{
 		return withLocalName(StandardPatterns.string().oneOfIgnoreCase(names));
 	}
@@ -67,7 +65,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PsiNamePatternCondition<XmlAttributeValue>("withLocalName", namePattern)
 		{
 			@Override
-			public String getPropertyValue(@Nonnull final Object o)
+			public String getPropertyValue(final Object o)
 			{
 				if(o instanceof XmlAttributeValue)
 				{
@@ -97,7 +95,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		});
 	}
 
-	public XmlAttributeValuePattern withNamespace(@NonNls String... names)
+	public XmlAttributeValuePattern withNamespace(String... names)
 	{
 		return names.length == 1 ? withNamespace(StandardPatterns.string().equalTo(names[0])) : withNamespace(StandardPatterns.string().oneOf(names));
 	}
@@ -107,7 +105,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PsiNamePatternCondition<XmlAttributeValue>("withNamespace", namePattern)
 		{
 			@Override
-			public String getPropertyValue(@Nonnull final Object o)
+			public String getPropertyValue(final Object o)
 			{
 				if(o instanceof XmlAttributeValue)
 				{
@@ -127,7 +125,7 @@ public class XmlAttributeValuePattern extends XmlElementPattern<XmlAttributeValu
 		return with(new PatternCondition<XmlAttributeValue>("withValue")
 		{
 			@Override
-			public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue, ProcessingContext context)
+			public boolean accepts(XmlAttributeValue xmlAttributeValue, ProcessingContext context)
 			{
 				return valuePattern.accepts(xmlAttributeValue.getValue(), context);
 			}

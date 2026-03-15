@@ -21,8 +21,7 @@ import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import consulo.virtualFileSystem.fileType.FileType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -40,21 +39,18 @@ public class RncFileType extends LanguageFileType
 	}
 
 	@Override
-	@Nonnull
 	public String getId()
 	{
 		return "RNG Compact";
 	}
 
 	@Override
-	@Nonnull
 	public LocalizeValue getDescription()
 	{
 		return LocalizeValue.localizeTODO("RELAX NG Compact Syntax");
 	}
 
 	@Override
-	@Nonnull
 	public String getDefaultExtension()
 	{
 		return "rnc";

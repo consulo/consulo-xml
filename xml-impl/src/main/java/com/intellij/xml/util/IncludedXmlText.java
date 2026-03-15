@@ -16,8 +16,7 @@
 package com.intellij.xml.util;
 
 import consulo.annotation.access.RequiredReadAction;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
@@ -29,7 +28,7 @@ import consulo.language.util.IncorrectOperationException;
  * @author peter
  */
 public class IncludedXmlText extends IncludedXmlElement<XmlText> implements XmlText {
-    public IncludedXmlText(@Nonnull XmlText original, @Nullable XmlTag parent) {
+    public IncludedXmlText(XmlText original, @Nullable XmlTag parent) {
         super(original, parent);
     }
 

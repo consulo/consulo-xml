@@ -27,7 +27,6 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileWithId;
 import consulo.xml.util.xml.DomFileElement;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @since 13.0
@@ -59,7 +58,6 @@ public class DomNamespaceKeyIndex extends StringStubIndexExtension<PsiFile> {
     return processor.isFound();
   }
 
-  @Nonnull
   @Override
   public StubIndexKey<String, PsiFile> getKey() {
     return KEY;

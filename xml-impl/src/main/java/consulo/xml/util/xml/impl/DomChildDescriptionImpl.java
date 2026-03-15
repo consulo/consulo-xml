@@ -3,7 +3,6 @@ package consulo.xml.util.xml.impl;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomChildrenDescription;
-import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.Type;
 
@@ -13,7 +12,7 @@ import java.lang.reflect.Type;
 public abstract class DomChildDescriptionImpl extends AbstractDomChildDescriptionImpl implements DomChildrenDescription {
   private final XmlName myTagName;
 
-  protected DomChildDescriptionImpl(final XmlName tagName, @Nonnull final Type type) {
+  protected DomChildDescriptionImpl(final XmlName tagName, final Type type) {
     super(type);
     myTagName = tagName;
   }
@@ -22,18 +21,15 @@ public abstract class DomChildDescriptionImpl extends AbstractDomChildDescriptio
     return myTagName.getLocalName();
   }
 
-  @Nonnull
   public String getXmlElementName() {
     return myTagName.getLocalName();
   }
 
-  @Nonnull
   public final XmlName getXmlName() {
     return myTagName;
   }
 
-  @Nonnull
-  public String getCommonPresentableName(@Nonnull DomElement parent) {
+  public String getCommonPresentableName(DomElement parent) {
     return getCommonPresentableName(getDomNameStrategy(parent));
   }
 

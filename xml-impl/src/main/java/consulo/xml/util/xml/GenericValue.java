@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This interface may be interpreted as a reference, whose text is {@link #getStringValue()}, and resolving to

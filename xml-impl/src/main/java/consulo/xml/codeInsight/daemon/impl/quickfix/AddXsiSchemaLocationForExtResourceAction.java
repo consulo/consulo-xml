@@ -39,7 +39,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,6 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
     private static final String XMLNS_XSI_ATTR_NAME = "xmlns:xsi";
     private static final String XSI_SCHEMA_LOCATION_ATTR_NAME = "xsi:schemaLocation";
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlLocalize.addXsiSchemaLocationForExternalResource();
@@ -61,7 +59,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
 
     @Override
     @RequiredUIAccess
-    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor) throws IncorrectOperationException {
+    protected void doInvoke(PsiFile file, int offset, String uri, Editor editor) throws IncorrectOperationException {
         XmlTag tag = PsiTreeUtil.getParentOfType(file.findElementAt(offset), XmlTag.class);
         if (tag == null) {
             return;
@@ -122,7 +120,7 @@ public class AddXsiSchemaLocationForExtResourceAction extends BaseExtResourceAct
 
     @Override
     @RequiredReadAction
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         if (!(file instanceof XmlFile)) {
             return false;
         }

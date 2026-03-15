@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.util.IncorrectOperationException;
@@ -25,7 +24,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDecl;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author sweinreuter
@@ -76,7 +74,7 @@ public class RncDeclImpl extends RncElementImpl implements RncDecl {
   }
 
   @Override
-  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
+  public PsiElement setName(String name) throws IncorrectOperationException {
     final ASTNode node = findIdentifierNode();
     if (node == null) return this;
     node.getTreeParent().replaceChild(node, RenameUtil.createIdentifierNode(getManager(), name));
@@ -84,7 +82,7 @@ public class RncDeclImpl extends RncElementImpl implements RncDecl {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitElement(this);
   }
 }

@@ -35,7 +35,6 @@ import consulo.xml.psi.impl.source.xml.XmlTagImpl;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -51,8 +50,8 @@ public class SchemaDefinitionsSearch implements DefinitionsScopedSearchExecutor 
     @Override
     @RequiredReadAction
     public boolean execute(
-        @Nonnull DefinitionsScopedSearch.SearchParameters parameters,
-        @Nonnull Predicate<? super PsiElement> consumer
+        DefinitionsScopedSearch.SearchParameters parameters,
+        Predicate<? super PsiElement> consumer
     ) {
         PsiElement queryParameters = parameters.getElement();
         if (queryParameters instanceof XmlTagImpl xml && isTypeElement(xml)) {

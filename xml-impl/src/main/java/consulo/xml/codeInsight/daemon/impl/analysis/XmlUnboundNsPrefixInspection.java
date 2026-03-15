@@ -39,8 +39,7 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -55,9 +54,8 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             private Boolean isXml;
 
@@ -193,7 +191,7 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
 
     private static void reportTagProblem(
         XmlTag element,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         TextRange range,
         ProblemHighlightType highlightType,
         CreateNSDeclarationIntentionFix fix,
@@ -217,7 +215,6 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         }
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
@@ -228,19 +225,16 @@ public class XmlUnboundNsPrefixInspection extends XmlSuppressableInspectionTool 
         return true;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlLocalize.xmlInspectionsGroupName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsUnboundPrefix();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "XmlUnboundNsPrefix";

@@ -60,10 +60,8 @@ import consulo.xml.javaee.ImplicitNamespaceDescriptorProvider;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -107,7 +105,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Nullable
-  private static XmlNSDescriptor getDtdDescriptor(@Nonnull XmlFile containingFile) {
+  private static XmlNSDescriptor getDtdDescriptor(XmlFile containingFile) {
     final XmlDocument document = containingFile.getDocument();
     if (document == null) {
       return null;
@@ -149,20 +147,18 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
    * Use {@link #getReferences(PsiReferenceService.Hints)} instead of calling or overriding this method.
    */
   @Deprecated
-  @Nonnull
   @Override
   public final PsiReference[] getReferences() {
     return getReferences(PsiReferenceService.Hints.NO_HINTS);
   }
 
   @Override
-  public boolean shouldAskParentForReferences(@Nonnull PsiReferenceService.Hints hints) {
+  public boolean shouldAskParentForReferences(PsiReferenceService.Hints hints) {
     return false;
   }
 
-  @Nonnull
   @Override
-  public PsiReference[] getReferences(@Nonnull PsiReferenceService.Hints hints) {
+  public PsiReference[] getReferences(PsiReferenceService.Hints hints) {
     ProgressManager.checkCanceled();
     final ASTNode startTagName = XmlChildRole.START_TAG_NAME_FINDER.findChild(this);
     if (startTagName == null) {
@@ -218,7 +214,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     return i >= 0 || ranges[-i - 2].containsOffset(offsetInTag);
   }
 
-  @Nonnull
   private TextRange[] getValueTextRanges() {
     TextRange[] elements = myTextElements;
     if (elements == null) {
@@ -295,8 +290,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
   @Override
   @Nullable
-  @NonNls
-  public String getSubTagText(@NonNls String qname) {
+  public String getSubTagText(String qname) {
     final XmlTag tag = findFirstSubTag(qname);
     if (tag == null) {
       return null;
@@ -309,7 +303,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
         externalResourceModificationTracker()));
   }
 
-  @Nonnull
   private Map<String, CachedValue<XmlNSDescriptor>> computeNsDescriptorMap() {
     Map<String, CachedValue<XmlNSDescriptor>> map = null;
     // XSD aware attributes processing
@@ -349,7 +342,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     return map == null ? Collections.<String, CachedValue<XmlNSDescriptor>>emptyMap() : map;
   }
 
-  private Map<String, CachedValue<XmlNSDescriptor>> initializeSchema(@Nonnull final String namespace,
+  private Map<String, CachedValue<XmlNSDescriptor>> initializeSchema(final String namespace,
                                                                      @Nullable final String version,
                                                                      final String fileLocation,
                                                                      Map<String, CachedValue<XmlNSDescriptor>> map,
@@ -440,7 +433,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Nullable
-  private PsiMetaOwner retrieveOwner(final XmlFile file, @Nonnull final String namespace) {
+  private PsiMetaOwner retrieveOwner(final XmlFile file, final String namespace) {
     if (file == null) {
       return namespace.equals(XmlUtil.getTargetSchemaNsFromTag(this)) ? this : null;
     }
@@ -521,7 +514,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public String getName() {
     String name = myName;
     if (name == null) {
@@ -537,7 +529,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  public PsiElement setName(@Nonnull final String name) throws IncorrectOperationException {
+  public PsiElement setName(final String name) throws IncorrectOperationException {
     final String oldName = getName();
     final XmlTagImpl dummyTag = (XmlTagImpl) XmlElementFactory.getInstance(getProject()).createTagFromText(XmlTagUtil.composeTagText(name, "aa"));
     final XmlTagImpl tag = XmlTagImpl.this;
@@ -558,7 +550,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public XmlAttribute[] getAttributes() {
     XmlAttribute[] attributes = myAttributes;
     if (attributes == null) {
@@ -567,12 +558,11 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     return attributes;
   }
 
-  @Nonnull
   private XmlAttribute[] calculateAttributes() {
     final List<XmlAttribute> result = new ArrayList<>(10);
     processChildren(new PsiElementProcessor() {
       @Override
-      public boolean execute(@Nonnull PsiElement element) {
+      public boolean execute(PsiElement element) {
         if (element instanceof XmlAttribute) {
           XmlAttribute attribute = (XmlAttribute) element;
           result.add(attribute);
@@ -645,7 +635,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public XmlTag[] getSubTags() {
     return CachedValuesManager.getManager(getProject()).getParameterizedCachedValue(this, SUBTAGS_KEY, CACHED_VALUE_PROVIDER, false, this);
   }
@@ -653,7 +642,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   protected void fillSubTags(final List<XmlTag> result) {
     processElements(new PsiElementProcessor() {
       @Override
-      public boolean execute(@Nonnull PsiElement element) {
+      public boolean execute(PsiElement element) {
         if (element instanceof XmlTag) {
           assert element.isValid();
           result.add((XmlTag) element);
@@ -664,13 +653,11 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public XmlTag[] findSubTags(String name) {
     return findSubTags(name, null);
   }
 
   @Override
-  @Nonnull
   public XmlTag[] findSubTags(final String name, @Nullable final String namespace) {
     final XmlTag[] subTags = getSubTags();
     final List<XmlTag> result = new ArrayList<>();
@@ -735,19 +722,16 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public String getNamespace() {
     return LanguageCachedValueUtil.getCachedValue(this, () -> CachedValueProvider.Result.create(getNamespaceByPrefix(getNamespacePrefix()), PsiModificationTracker.MODIFICATION_COUNT));
   }
 
   @Override
-  @Nonnull
   public String getNamespacePrefix() {
     return XmlUtil.findPrefixByQualifiedName(getName());
   }
 
   @Override
-  @Nonnull
   public String getNamespaceByPrefix(String prefix) {
     BidirectionalMap<String, String> map = getNamespaceMap();
     if (map != null) {
@@ -908,7 +892,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public String getLocalName() {
     String localName = myLocalName;
     if (localName == null) {
@@ -925,7 +908,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public Map<String, String> getLocalNamespaceDeclarations() {
     Map<String, String> namespaces = new HashMap<>();
     for (final XmlAttribute attribute : getAttributes()) {
@@ -993,7 +975,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  @Nonnull
   public XmlTagValue getValue() {
     XmlTagValue tagValue = myValue;
     if (tagValue == null) {
@@ -1003,7 +984,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor) visitor).visitXmlTag(this);
     } else {
@@ -1083,7 +1064,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   }
 
   @Override
-  public void deleteChildInternal(@Nonnull final ASTNode child) {
+  public void deleteChildInternal(final ASTNode child) {
     if (child.getElementType() == XmlElementType.XML_ATTRIBUTE) {
       XmlTagImpl.super.deleteChildInternal(child);
     } else {

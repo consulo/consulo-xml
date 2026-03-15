@@ -23,7 +23,6 @@ import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
 import consulo.xml.lang.xml.XMLLanguage;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
@@ -36,12 +35,12 @@ public class XmlContextType extends BaseTemplateContextType {
 
     @Override
     @RequiredReadAction
-    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+    public boolean isInContext(PsiFile file, int offset) {
         return file.getLanguage().isKindOf(XMLLanguage.INSTANCE) && !isEmbeddedContent(file, offset)
             && !HtmlContextType.isMyLanguage(PsiUtilCore.getLanguageAtOffset(file, offset));
     }
 
-    public static boolean isEmbeddedContent(@Nonnull PsiFile file, int offset) {
+    public static boolean isEmbeddedContent(PsiFile file, int offset) {
         Language languageAtOffset = PsiUtilCore.getLanguageAtOffset(file, offset);
         return !(languageAtOffset.isKindOf(XMLLanguage.INSTANCE) || languageAtOffset instanceof XMLLanguage);
     }

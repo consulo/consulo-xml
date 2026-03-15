@@ -36,8 +36,7 @@ import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.TagNameReference;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.InputEvent;
@@ -58,7 +57,7 @@ public class XmlTagRenameDialog extends RefactoringDialog {
     private final XmlTag myTag;
     private NameSuggestionsField.DataChanged myNameChangedListener;
 
-    public XmlTagRenameDialog(@Nonnull final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag) {
+    public XmlTagRenameDialog(final Editor editor, final PsiElement element, final XmlTag tag) {
         super(element.getProject(), true);
 
         myEditor = editor;
@@ -86,12 +85,12 @@ public class XmlTagRenameDialog extends RefactoringDialog {
         return false;
     }
 
-    private static String getFullName(@Nonnull final XmlTag tag) {
+    private static String getFullName(final XmlTag tag) {
         final String name = DescriptiveNameUtil.getDescriptiveName(tag);
         return (UsageViewUtil.getType(tag) + " " + name).trim();
     }
 
-    public static void renameXmlTag(final Editor editor, @Nonnull final PsiElement element, @Nonnull final XmlTag tag) {
+    public static void renameXmlTag(final Editor editor, final PsiElement element, final XmlTag tag) {
         final XmlTagRenameDialog dialog = new XmlTagRenameDialog(editor, element, tag);
         dialog.show();
     }

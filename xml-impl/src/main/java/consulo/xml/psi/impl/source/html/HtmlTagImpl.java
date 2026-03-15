@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
@@ -39,7 +38,6 @@ public class HtmlTagImpl extends XmlTagImpl implements HtmlTag
 	}
 
 	@Override
-	@Nonnull
 	public XmlTag[] findSubTags(String name, String namespace)
 	{
 		final XmlTag[] subTags = getSubTags();
@@ -104,7 +102,6 @@ public class HtmlTagImpl extends XmlTagImpl implements HtmlTag
 	}
 
 	@Override
-	@Nonnull
 	public String getNamespace()
 	{
 		final String xmlNamespace = super.getNamespace();

@@ -25,22 +25,17 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ServiceAPI(ComponentScope.APPLICATION)
 public abstract class XmlQuickFixFactory {
-  @Nonnull
   public static XmlQuickFixFactory getInstance() {
     return ServiceManager.getService(XmlQuickFixFactory.class);
   }
 
-  @Nonnull
-  public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values);
+  public abstract LocalQuickFixAndIntentionActionOnPsiElement insertRequiredAttributeFix(XmlTag tag, String attrName, String... values);
 
-  @Nonnull
-  public abstract LocalQuickFix createNSDeclarationIntentionFix(@Nonnull final PsiElement element, @Nonnull String namespacePrefix, @Nullable final XmlToken token);
+  public abstract LocalQuickFix createNSDeclarationIntentionFix(final PsiElement element, String namespacePrefix, @Nullable final XmlToken token);
 
-  @Nonnull
-  public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(@Nonnull XmlAttribute attribute);
+  public abstract LocalQuickFixAndIntentionActionOnPsiElement addAttributeValueFix(XmlAttribute attribute);
 }

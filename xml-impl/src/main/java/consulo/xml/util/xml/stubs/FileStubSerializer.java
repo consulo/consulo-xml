@@ -18,7 +18,6 @@ package consulo.xml.util.xml.stubs;
 import consulo.language.psi.stub.*;
 import consulo.util.xml.fastReader.XmlFileHeader;
 
-import jakarta.annotation.Nonnull;
 import java.io.IOException;
 
 /**
@@ -27,7 +26,6 @@ import java.io.IOException;
  */
 public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 {
-	@Nonnull
 	@Override
 	public String getExternalId()
 	{
@@ -35,7 +33,7 @@ public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 	}
 
 	@Override
-	public void serialize(@Nonnull FileStub stub, @Nonnull StubOutputStream dataStream) throws IOException
+	public void serialize(FileStub stub, StubOutputStream dataStream) throws IOException
 	{
 		XmlFileHeader header = stub.getHeader();
 		dataStream.writeName(header.getRootTagLocalName());
@@ -44,15 +42,14 @@ public class FileStubSerializer implements ObjectStubSerializer<FileStub, Stub>
 		dataStream.writeName(header.getSystemId());
 	}
 
-	@Nonnull
 	@Override
-	public FileStub deserialize(@Nonnull StubInputStream dataStream, Stub parentStub) throws IOException
+	public FileStub deserialize(StubInputStream dataStream, Stub parentStub) throws IOException
 	{
 		return new FileStub(dataStream.readName(), dataStream.readName(), dataStream.readName(), dataStream.readName());
 	}
 
 	@Override
-	public void indexStub(@Nonnull FileStub stub, @Nonnull IndexSink sink)
+	public void indexStub(FileStub stub, IndexSink sink)
 	{
 	}
 

@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Should be stateless, since its instances are cached.
@@ -33,6 +32,6 @@ public abstract class ScopeProvider {
    * Searches within all children of returned element.
    */
   @Nullable
-  public abstract DomElement getScope(@Nonnull DomElement element);
+  public abstract DomElement getScope(DomElement element);
 
 }

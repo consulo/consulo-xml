@@ -31,8 +31,7 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public abstract class XMLBasedExternalAnnotator
     extends ExternalAnnotator<XMLBasedExternalAnnotator.MyHost, XMLBasedExternalAnnotator.MyHost> {
     @Nullable
     @Override
-    public MyHost collectInformation(@Nonnull PsiFile file) {
+    public MyHost collectInformation(PsiFile file) {
         if (!(file instanceof XmlFile xmlFile)) {
             return null;
         }
@@ -72,7 +71,7 @@ public abstract class XMLBasedExternalAnnotator
 
     @Override
     @RequiredReadAction
-    public void apply(@Nonnull PsiFile file, MyHost annotationResult, @Nonnull AnnotationHolder holder) {
+    public void apply(PsiFile file, MyHost annotationResult, AnnotationHolder holder) {
         annotationResult.apply(holder);
     }
 
@@ -86,13 +85,13 @@ public abstract class XMLBasedExternalAnnotator
     }
 
     static class MyHost implements Validator.ValidationHost {
-        private record Message(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
+        private record Message(PsiElement context, LocalizeValue message, ErrorType type) {
         }
 
         private final List<Message> messages = new ArrayList<>();
 
         @Override
-        public void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
+        public void addMessage(PsiElement context, LocalizeValue message, ErrorType type) {
             messages.add(new Message(context, message, type));
         }
 
@@ -107,10 +106,10 @@ public abstract class XMLBasedExternalAnnotator
     @RequiredReadAction
     public static void addMessageWithFixes(
         PsiElement context,
-        @Nonnull LocalizeValue message,
-        @Nonnull Validator.ValidationHost.ErrorType type,
+        LocalizeValue message,
+        Validator.ValidationHost.ErrorType type,
         AnnotationHolder myHolder,
-        @Nonnull IntentionAction... fixes
+        IntentionAction... fixes
     ) {
         if (message.isNotEmpty()) {
             if (context instanceof XmlTag tag) {
@@ -127,7 +126,7 @@ public abstract class XMLBasedExternalAnnotator
     @RequiredReadAction
     private static void addMessagesForTag(
         XmlTag tag,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         Validator.ValidationHost.ErrorType type,
         AnnotationHolder myHolder,
         IntentionAction... actions
@@ -144,7 +143,7 @@ public abstract class XMLBasedExternalAnnotator
     private static void addMessagesForTreeChild(
         XmlToken childByRole,
         Validator.ValidationHost.ErrorType type,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         AnnotationHolder myHolder,
         IntentionAction... actions
     ) {

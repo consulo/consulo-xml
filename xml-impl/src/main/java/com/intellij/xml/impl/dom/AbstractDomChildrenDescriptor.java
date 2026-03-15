@@ -17,10 +17,8 @@ import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.impl.AttributeChildDescriptionImpl;
 import consulo.xml.util.xml.reflect.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +92,7 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
     }
 
     @Nullable
-    public XmlElementDescriptor getElementDescriptor(@Nonnull final XmlTag childTag, @Nullable XmlTag contextTag) {
+    public XmlElementDescriptor getElementDescriptor(final XmlTag childTag, @Nullable XmlTag contextTag) {
         DomElement domElement = myManager.getDomElement(childTag);
         if (domElement == null) {
             domElement = myManager.getDomElement(contextTag);
@@ -191,11 +189,10 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
     public XmlNSDescriptor getNSDescriptor() {
         return new XmlNSDescriptor() {
             @Nullable
-            public XmlElementDescriptor getElementDescriptor(@Nonnull final XmlTag tag) {
+            public XmlElementDescriptor getElementDescriptor(final XmlTag tag) {
                 throw new UnsupportedOperationException("Method getElementDescriptor not implemented in " + getClass());
             }
 
-            @Nonnull
             public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
                 throw new UnsupportedOperationException("Method getRootElementsDescriptors not implemented in " + getClass());
             }
@@ -214,12 +211,10 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
                 throw new UnsupportedOperationException("Method getDeclaration not implemented in " + getClass());
             }
 
-            @NonNls
             public String getName(final PsiElement context) {
                 throw new UnsupportedOperationException("Method getName not implemented in " + getClass());
             }
 
-            @NonNls
             public String getName() {
                 throw new UnsupportedOperationException("Method getName not implemented in " + getClass());
             }
@@ -251,7 +246,6 @@ public abstract class AbstractDomChildrenDescriptor implements XmlElementDescrip
         throw new UnsupportedOperationException("Method getDependences not implemented in " + getClass());
     }
 
-    @NonNls
     public String getName() {
         return getDefaultName();
     }

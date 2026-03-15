@@ -26,7 +26,6 @@ import consulo.language.psi.PsiFileFactory;
 import consulo.project.Project;
 import consulo.ui.ex.awt.DialogBuilder;
 import consulo.ui.ex.localize.UILocalize;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +49,7 @@ public class TextControl extends EditorTextFieldControl<TextPanel>
 	}
 
 	@Override
-	protected EditorTextField getEditorTextField(@Nonnull final TextPanel panel)
+	protected EditorTextField getEditorTextField(final TextPanel panel)
 	{
 		final Component component = panel.getComponent(0);
 		if(component instanceof ReferenceEditorWithBrowseButton)

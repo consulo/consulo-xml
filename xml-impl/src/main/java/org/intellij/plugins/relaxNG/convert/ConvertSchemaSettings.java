@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.convert;
 
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ import java.util.List;
  * @since 2007-11-17
  */
 public interface ConvertSchemaSettings {
-  @Nonnull
   SchemaType getOutputType();
 
   String getOutputEncoding();

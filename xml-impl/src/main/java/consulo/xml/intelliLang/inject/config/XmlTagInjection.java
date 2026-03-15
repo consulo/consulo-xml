@@ -20,7 +20,6 @@ import consulo.language.inject.advanced.InjectionPlace;
 import consulo.language.inject.advanced.InjectorUtils;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 public class XmlTagInjection extends AbstractTagInjection {
 
@@ -28,11 +27,10 @@ public class XmlTagInjection extends AbstractTagInjection {
     setTagName("<none>");
   }
 
-  public boolean isApplicable(@Nonnull final XmlTag context) {
+  public boolean isApplicable(final XmlTag context) {
     return matches(context) && matchXPath(context);
   }
 
-  @Nonnull
   public String getDisplayName() {
     final String name = getTagName();
     return name.length() > 0 ? name : "*";
@@ -43,7 +41,7 @@ public class XmlTagInjection extends AbstractTagInjection {
     return new XmlTagInjection().copyFrom(this);
   }
 
-  public XmlTagInjection copyFrom(@Nonnull BaseInjection o) {
+  public XmlTagInjection copyFrom(BaseInjection o) {
     super.copyFrom(o);
     return this;
   }

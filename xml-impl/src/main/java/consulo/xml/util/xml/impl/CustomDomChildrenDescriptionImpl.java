@@ -21,8 +21,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomExtensionImpl;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -36,7 +35,6 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
   @Nullable
   private final JavaMethod myGetter;
   public static final Function<DomInvocationHandler,List<XmlTag>> CUSTOM_TAGS_GETTER = new Function<DomInvocationHandler, List<XmlTag>>() {
-    @Nonnull
     public List<XmlTag> apply(final DomInvocationHandler handler) {
       return DomImplUtil.getCustomSubTags(handler, handler.getXmlTag().getSubTags(), handler.getFile());
     }
@@ -46,7 +44,7 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
   private final AttributeDescriptor myAttributeDescriptor;
 
 
-  public CustomDomChildrenDescriptionImpl(@Nonnull final JavaMethod getter) {
+  public CustomDomChildrenDescriptionImpl(final JavaMethod getter) {
     this(getter, DomReflectionUtil.extractCollectionElementType(getter.getGenericReturnType()),
          TagNameDescriptor.EMPTY, TagNameDescriptor.EMPTY);
   }
@@ -55,7 +53,7 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
     this(null, custom.getType(), custom.getTagNameDescriptor(), custom.getAttributesDescriptor());
   }
 
-  private CustomDomChildrenDescriptionImpl(@Nullable final JavaMethod getter, @Nonnull Type type,
+  private CustomDomChildrenDescriptionImpl(@Nullable final JavaMethod getter, Type type,
                                           @Nullable TagNameDescriptor descriptor,
                                           @Nullable AttributeDescriptor attributesDescriptor) {
     super(type);
@@ -69,16 +67,14 @@ public class CustomDomChildrenDescriptionImpl extends AbstractDomChildDescriptio
     return myGetter;
   }
 
-  @Nonnull
-  public List<? extends DomElement> getValues(@Nonnull final DomInvocationHandler parent) {
+  public List<? extends DomElement> getValues(final DomInvocationHandler parent) {
     if (!parent.getGenericInfo().checkInitialized()) {
       return Collections.emptyList();
     }
     return parent.getCollectionChildren(this, CUSTOM_TAGS_GETTER);
   }
 
-  @Nonnull
-  public List<? extends DomElement> getValues(@Nonnull final DomElement parent) {
+  public List<? extends DomElement> getValues(final DomElement parent) {
     final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(parent);
     if (handler != null) return getValues(handler);
 

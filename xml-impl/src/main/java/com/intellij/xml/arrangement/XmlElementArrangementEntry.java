@@ -7,8 +7,7 @@ import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
 import consulo.document.util.TextRange;
 import consulo.language.codeStyle.arrangement.NameAwareArrangementEntry;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
@@ -22,8 +21,8 @@ public class XmlElementArrangementEntry extends DefaultArrangementEntry implemen
 
     public XmlElementArrangementEntry(
         @Nullable ArrangementEntry parent,
-        @Nonnull TextRange range,
-        @Nonnull ArrangementSettingsToken type,
+        TextRange range,
+        ArrangementSettingsToken type,
         @Nullable String name,
         boolean canBeMatched
     ) {
@@ -38,7 +37,6 @@ public class XmlElementArrangementEntry extends DefaultArrangementEntry implemen
         return myName;
     }
 
-    @Nonnull
     @Override
     public Set<ArrangementSettingsToken> getTypes() {
         return Collections.singleton(myType);

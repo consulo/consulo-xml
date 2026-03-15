@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlDocument;
@@ -34,7 +33,6 @@ public class XmlFileTreeElement extends AbstractXmlTagTreeElement<XmlFile> {
     super(file);
   }
 
-  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     final XmlDocument document = getElement().getDocument();
     List<XmlTag> rootTags = new ArrayList<XmlTag>();

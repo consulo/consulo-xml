@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
@@ -36,7 +35,7 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
+  public boolean processDeclarations(PsiScopeProcessor processor, ResolveState substitutor, PsiElement lastParent, PsiElement place) {
     final PsiElement[] children = getChildren();
     for (PsiElement child : children) {
       if (!processor.execute(child, substitutor)) {
@@ -47,7 +46,7 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitInclude(this);
   }
 
@@ -62,7 +61,6 @@ public class RncIncludeImpl extends RncFileReferenceImpl implements RncInclude {
   }
 
   @Override
-  @Nonnull
   public RncDefine[] getOverrides() {
     // TODO: DIVs?
     return findChildrenByClass(RncDefine.class);

@@ -25,12 +25,11 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlChildRole;
 
-import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTool {
-  protected static void registerProblemOnAttributeName(@Nonnull XmlAttribute attribute,
+  protected static void registerProblemOnAttributeName(XmlAttribute attribute,
                                                        String message,
-                                                       @Nonnull ProblemsHolder holder,
+                                                       ProblemsHolder holder,
                                                        LocalQuickFix... quickfixes) {
     final ASTNode node = attribute.getNode();
     assert node != null;
@@ -45,7 +44,6 @@ public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTo
 
   protected abstract LocalizeValue getCheckboxTitle();
 
-  @Nonnull
   @Override
   public InspectionToolState<?> createStateProvider() {
     return new HtmlEntitiesInspectionState(getCheckboxTitle());

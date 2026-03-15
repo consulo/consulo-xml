@@ -28,7 +28,6 @@ import consulo.xml.lexer.XHtmlLexer;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.xml.psi.xml.XmlElementType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author max
@@ -36,7 +35,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XHTMLParserDefinition extends XMLParserDefinition
 {
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
@@ -44,8 +42,7 @@ public class XHTMLParserDefinition extends XMLParserDefinition
 	}
 
 	@Override
-	@Nonnull
-	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	public Lexer createLexer(LanguageVersion languageVersion)
 	{
 		return new XHtmlLexer();
 	}

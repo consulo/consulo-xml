@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiNamedElement;
 import org.intellij.plugins.relaxNG.model.Define;

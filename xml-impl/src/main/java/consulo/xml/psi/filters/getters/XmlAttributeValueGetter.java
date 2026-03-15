@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.filters.getters;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -30,7 +29,6 @@ import com.intellij.xml.impl.XmlEnumerationDescriptor;
  */
 public class XmlAttributeValueGetter
 {
-	@Nonnull
 	public static String[] getEnumeratedValues(XmlAttribute attribute)
 	{
 		final XmlAttributeDescriptor descriptor = attribute.getDescriptor();

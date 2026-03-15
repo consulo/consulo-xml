@@ -20,7 +20,6 @@ import javax.xml.namespace.QName;
 import consulo.util.collection.ArrayUtil;
 import org.intellij.plugins.relaxNG.model.descriptors.CompositeDescriptor;
 import org.intellij.plugins.relaxNG.model.descriptors.RngElementDescriptor;
-import jakarta.annotation.Nonnull;
 import org.kohsuke.rngom.digested.DElementPattern;
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import consulo.language.psi.PsiElement;
@@ -159,7 +158,7 @@ public class RelaxedHtmlFromRngElementDescriptor implements XmlElementDescriptor
   }
 
   @Override
-  public int compareTo(@Nonnull Object o) {
+  public int compareTo(Object o) {
     if (!(o instanceof RelaxedHtmlFromRngElementDescriptor)) return 1;
     final RelaxedHtmlFromRngElementDescriptor other = (RelaxedHtmlFromRngElementDescriptor)o;
     if (other.isHtml && !isHtml) return -1;

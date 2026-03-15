@@ -24,7 +24,7 @@ import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.util.ColorSampleLookupValue;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 

@@ -38,8 +38,7 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.stubs.DomStub;
 import consulo.xml.util.xml.stubs.ElementStub;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jakarta.inject.Inject;
 
 import java.lang.reflect.Type;
@@ -216,7 +215,7 @@ public class DomSemContributor extends SemContributor {
   }
 
   @Nullable
-  private static DomInvocationHandler getParentDom(@Nonnull XmlTag tag) {
+  private static DomInvocationHandler getParentDom(XmlTag tag) {
     LinkedHashSet<XmlTag> allParents = new LinkedHashSet<>();
     PsiElement each = tag;
     while (each instanceof XmlTag && allParents.add((XmlTag)each)) {

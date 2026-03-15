@@ -28,7 +28,6 @@ import consulo.xml.psi.xml.XmlElementContentGroup;
 import consulo.xml.psi.xml.XmlElementContentSpec;
 import consulo.xml.psi.xml.XmlElementType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike
@@ -79,12 +78,11 @@ public class XmlElementContentSpecImpl extends XmlElementImpl implements XmlElem
     return (XmlElementContentGroup)findElementByTokenType(XML_ELEMENT_CONTENT_GROUP);
   }
 
-  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this,XmlElementContentSpec.class);
   }
 
-  public void accept(@Nonnull final PsiElementVisitor visitor) {
+  public void accept(final PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlElement(this);
     }

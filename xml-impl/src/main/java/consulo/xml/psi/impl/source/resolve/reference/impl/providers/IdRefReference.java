@@ -28,8 +28,7 @@ import com.intellij.xml.util.XmlDeclareIdInCommentAction;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -129,12 +128,12 @@ public class IdRefReference extends BasicAttributeValueReference {
     }
   };
 
-  private static boolean isDeclarationComment(@Nonnull final PsiComment comment) {
+  private static boolean isDeclarationComment(final PsiComment comment) {
     return comment.getText().contains("@declare id=");
   }
 
   @Nullable
-  private static String getImplicitIdValue(@Nonnull final PsiComment comment) {
+  private static String getImplicitIdValue(final PsiComment comment) {
     return XmlDeclareIdInCommentAction.getImplicitlyDeclaredId(comment);
   }
 
@@ -155,7 +154,7 @@ public class IdRefReference extends BasicAttributeValueReference {
     process(new PsiElementProcessor<PsiElement>() {
       String canonicalText = getCanonicalText();
 
-      public boolean execute(@Nonnull final PsiElement element) {
+      public boolean execute(final PsiElement element) {
         final String idValue = getIdValue(element);
         if (idValue != null && idValue.equals(canonicalText)) {
           result[0] = getIdValueElement(element);
@@ -168,12 +167,11 @@ public class IdRefReference extends BasicAttributeValueReference {
     return result[0];
   }
 
-  @Nonnull
   public Object[] getVariants() {
     final List<String> result = new LinkedList<String>();
 
     process(new PsiElementProcessor<PsiElement>() {
-      public boolean execute(@Nonnull final PsiElement element) {
+      public boolean execute(final PsiElement element) {
         String value = getIdValue(element);
         if (value != null) {
           result.add(value);

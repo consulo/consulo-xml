@@ -47,8 +47,7 @@ import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -77,7 +76,7 @@ public class MapExternalResourceDialog extends DialogWrapper {
     private final FileSystemTree myExplorer;
     private String myLocation;
 
-    public MapExternalResourceDialog(String uri, @Nonnull Project project, @Nullable PsiFile file, @Nullable String location) {
+    public MapExternalResourceDialog(String uri, Project project, @Nullable PsiFile file, @Nullable String location) {
         super(project);
         setTitle("Map External Resource");
         myUri.setText(uri);
@@ -86,7 +85,7 @@ public class MapExternalResourceDialog extends DialogWrapper {
         mySchemasTree.setModel(new DefaultTreeModel(root));
         ConfigFileSearcher searcher = new ConfigFileSearcher(file == null ? null : ModuleUtilCore.findModuleForPsiElement(file), project) {
             @Override
-            public Set<PsiFile> search(@Nullable Module module, @Nonnull Project project) {
+            public Set<PsiFile> search(@Nullable Module module, Project project) {
                 List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources = XmlNamespaceIndex.getAllResources(module, project, null);
 
                 HashSet<PsiFile> files = new HashSet<>();

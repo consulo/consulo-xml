@@ -41,7 +41,6 @@ import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 import org.xml.sax.SAXParseException;
 
 import java.util.concurrent.Future;
@@ -128,7 +127,7 @@ public class StdErrorReporter extends ErrorReporter {
         }
 
         @Override
-        public void contentRemoved(@Nonnull ContentManagerEvent event) {
+        public void contentRemoved(ContentManagerEvent event) {
             final Content eventContent = event.getContent();
             if (!eventContent.equals(myContent)) {
                 return;
@@ -142,15 +141,15 @@ public class StdErrorReporter extends ErrorReporter {
         }
 
         @Override
-        public void contentAdded(@Nonnull ContentManagerEvent event) {
+        public void contentAdded(ContentManagerEvent event) {
         }
 
         @Override
-        public void contentRemoveQuery(@Nonnull ContentManagerEvent event) {
+        public void contentRemoveQuery(ContentManagerEvent event) {
         }
 
         @Override
-        public void selectionChanged(@Nonnull ContentManagerEvent event) {
+        public void selectionChanged(ContentManagerEvent event) {
         }
     }
 
@@ -164,7 +163,7 @@ public class StdErrorReporter extends ErrorReporter {
         }
 
         @Override
-        public void contentRemoved(@Nonnull ContentManagerEvent event) {
+        public void contentRemoved(ContentManagerEvent event) {
             if (event.getContent() == myContent) {
                 myErrorsView.stopProcess();
 
@@ -175,7 +174,7 @@ public class StdErrorReporter extends ErrorReporter {
         }
 
         @Override
-        public void contentRemoveQuery(@Nonnull ContentManagerEvent event) {
+        public void contentRemoveQuery(ContentManagerEvent event) {
             if (event.getContent() == myContent) {
                 if (!myErrorsView.isProcessStopped()) {
                     int result = Messages.showYesNoDialog(

@@ -16,9 +16,7 @@
 package consulo.xml.util.xml;
 
 import consulo.util.lang.Comparing;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -29,18 +27,17 @@ public class XmlName implements Comparable<XmlName> {
 
   private final int myHashCode;
 
-  public XmlName(@Nonnull @NonNls final String localName) {
+  public XmlName(final String localName) {
     this(localName, null);
   }
 
-  public XmlName(@Nonnull @NonNls final String localName, @Nullable final String namespaceKey) {
+  public XmlName(final String localName, @Nullable final String namespaceKey) {
     myLocalName = localName;
     myNamespaceKey = namespaceKey;
 
     myHashCode = 31 * myLocalName.hashCode() + (myNamespaceKey != null ? myNamespaceKey.hashCode() : 0);
   }
 
-  @Nonnull
   public final String getLocalName() {
     return myLocalName;
   }

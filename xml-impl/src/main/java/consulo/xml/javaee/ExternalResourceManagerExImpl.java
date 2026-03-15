@@ -44,8 +44,7 @@ import consulo.xml.impl.internal.StandardExternalResourceData;
 import consulo.xml.psi.xml.XmlFile;
 import org.jdom.Element;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.io.File;
 import java.util.*;
 
@@ -110,7 +109,6 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 
 	private static final String DEFAULT_VERSION = "";
 
-	@Nonnull
 	protected abstract StandardExternalResourceData getData();
 
 	@Override
@@ -127,7 +125,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Nullable
-	public static <T> Map<String, T> getMap(@Nonnull Map<String, Map<String, T>> resources, @Nullable String version, boolean create)
+	public static <T> Map<String, T> getMap(Map<String, Map<String, T>> resources, @Nullable String version, boolean create)
 	{
 		version = StringUtil.notNullize(version, DEFAULT_VERSION);
 		Map<String, T> map = resources.get(version);
@@ -147,13 +145,13 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public String getResourceLocation(@Nonnull String url)
+	public String getResourceLocation(String url)
 	{
 		return getResourceLocation(url, DEFAULT_VERSION);
 	}
 
 	@Override
-	public String getResourceLocation(@Nonnull String url, @Nullable String version)
+	public String getResourceLocation(String url, @Nullable String version)
 	{
 		String result = getUserResource(url, StringUtil.notNullize(version, DEFAULT_VERSION));
 		if(result == null)
@@ -186,7 +184,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 
 	@Override
 	@Nullable
-	public String getStdResource(@Nonnull String url, @Nullable String version)
+	public String getStdResource(String url, @Nullable String version)
 	{
 		Map<String, ExternalResource> map = getMap(getData().resources(), version, false);
 		if(map != null)
@@ -201,19 +199,19 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Nullable
-	private String getUserResource(@Nonnull String url, @Nullable String version)
+	private String getUserResource(String url, @Nullable String version)
 	{
 		Map<String, String> map = getMap(myResources, version, false);
 		return map != null ? map.get(url) : null;
 	}
 
 	@Override
-	public String getResourceLocation(@Nonnull String url, @Nonnull Project project)
+	public String getResourceLocation(String url, Project project)
 	{
 		return getResourceLocation(url, null, project);
 	}
 
-	private String getResourceLocation(String url, String version, @Nonnull Project project)
+	private String getResourceLocation(String url, String version, Project project)
 	{
 		ExternalResourceManagerExImpl projectResources = getProjectResources(project);
 		String location = projectResources.getResourceLocation(url, version);
@@ -240,7 +238,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 
 	@Override
 	@Nullable
-	public PsiFile getResourceLocation(@Nonnull final String url, @Nonnull final PsiFile baseFile, final String version)
+	public PsiFile getResourceLocation(final String url, final PsiFile baseFile, final String version)
 	{
 		final XmlFile schema = XmlSchemaProvider.findSchema(url, baseFile);
 		if(schema != null)
@@ -271,7 +269,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 		return ArrayUtil.toStringArray(result);
 	}
 
-	private static <T> void addResourcesFromMap(@Nonnull List<String> result, @Nullable String version, @Nonnull Map<String, Map<String, T>> resourcesMap)
+	private static <T> void addResourcesFromMap(List<String> result, @Nullable String version, Map<String, Map<String, T>> resourcesMap)
 	{
 		Map<String, T> resources = getMap(resourcesMap, version, false);
 		if(resources != null)
@@ -281,20 +279,20 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void addResource(@Nonnull String url, String location)
+	public void addResource(String url, String location)
 	{
 		addResource(url, DEFAULT_VERSION, location);
 	}
 
 	@Override
-	public void addResource(@Nonnull String url, String version, String location)
+	public void addResource(String url, String version, String location)
 	{
 		ApplicationManager.getApplication().assertWriteAccessAllowed();
 		addSilently(url, version, location);
 		fireExternalResourceChanged();
 	}
 
-	private void addSilently(@Nonnull String url, @Nullable String version, String location)
+	private void addSilently(String url, @Nullable String version, String location)
 	{
 		Map<String, String> map = getMap(myResources, version, true);
 		assert map != null;
@@ -304,13 +302,13 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void removeResource(@Nonnull String url)
+	public void removeResource(String url)
 	{
 		removeResource(url, DEFAULT_VERSION);
 	}
 
 	@Override
-	public void removeResource(@Nonnull String url, @Nullable String version)
+	public void removeResource(String url, @Nullable String version)
 	{
 		ApplicationManager.getApplication().assertWriteAccessAllowed();
 		Map<String, String> map = getMap(myResources, version, false);
@@ -327,13 +325,13 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void removeResource(String url, @Nonnull Project project)
+	public void removeResource(String url, Project project)
 	{
 		getProjectResources(project).removeResource(url);
 	}
 
 	@Override
-	public void addResource(String url, String location, @Nonnull Project project)
+	public void addResource(String url, String location, Project project)
 	{
 		getProjectResources(project).addResource(url, location);
 	}
@@ -373,7 +371,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void addIgnoredResource(@Nonnull String url)
+	public void addIgnoredResource(String url)
 	{
 		ApplicationManager.getApplication().assertWriteAccessAllowed();
 		if(addIgnoredSilently(url))
@@ -382,7 +380,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 		}
 	}
 
-	private boolean addIgnoredSilently(@Nonnull String url)
+	private boolean addIgnoredSilently(String url)
 	{
 		if(getData().ignored().contains(url))
 		{
@@ -401,7 +399,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void removeIgnoredResource(@Nonnull String url)
+	public void removeIgnoredResource(String url)
 	{
 		ApplicationManager.getApplication().assertWriteAccessAllowed();
 		if(myIgnoredResources.remove(url))
@@ -412,7 +410,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public boolean isIgnoredResource(@Nonnull String url)
+	public boolean isIgnoredResource(String url)
 	{
 		if(myIgnoredResources.contains(url))
 		{
@@ -423,7 +421,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 		return getData().toString().contains(url) || isImplicitNamespaceDescriptor(url);
 	}
 
-	private static boolean isImplicitNamespaceDescriptor(@Nonnull String url)
+	private static boolean isImplicitNamespaceDescriptor(String url)
 	{
 		for(ImplicitNamespaceDescriptorProvider provider : ImplicitNamespaceDescriptorProvider.EP_NAME.getExtensions())
 		{
@@ -451,7 +449,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public long getModificationCount(@Nonnull Project project)
+	public long getModificationCount(Project project)
 	{
 		return getProjectResources(project).getModificationCount();
 	}
@@ -593,8 +591,7 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	@Nonnull
-	public String getDefaultHtmlDoctype(@Nonnull Project project)
+	public String getDefaultHtmlDoctype(Project project)
 	{
 		final String doctype = getProjectResources(project).myDefaultHtmlDoctype;
 		if(XmlUtil.XHTML_URI.equals(doctype))
@@ -612,19 +609,19 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 	}
 
 	@Override
-	public void setDefaultHtmlDoctype(@Nonnull String defaultHtmlDoctype, @Nonnull Project project)
+	public void setDefaultHtmlDoctype(String defaultHtmlDoctype, Project project)
 	{
 		getProjectResources(project).setDefaultHtmlDoctype(defaultHtmlDoctype);
 	}
 
 	@Override
-	public XMLSchemaVersion getXmlSchemaVersion(@Nonnull Project project)
+	public XMLSchemaVersion getXmlSchemaVersion(Project project)
 	{
 		return getProjectResources(project).myXMLSchemaVersion;
 	}
 
 	@Override
-	public void setXmlSchemaVersion(XMLSchemaVersion version, @Nonnull Project project)
+	public void setXmlSchemaVersion(XMLSchemaVersion version, Project project)
 	{
 		getProjectResources(project).myXMLSchemaVersion = version;
 		fireExternalResourceChanged();

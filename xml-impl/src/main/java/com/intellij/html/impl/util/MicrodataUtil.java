@@ -33,9 +33,8 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.Nls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -159,7 +158,7 @@ public class MicrodataUtil {
     }
 
     @Nullable
-    public static String getStripedAttributeValue(@Nullable XmlTag tag, @Nls String attributeName) {
+    public static String getStripedAttributeValue(@Nullable XmlTag tag, String attributeName) {
         String value = tag != null ? tag.getAttributeValue(attributeName) : null;
         return value != null ? StringUtil.unquoteString(value) : null;
     }

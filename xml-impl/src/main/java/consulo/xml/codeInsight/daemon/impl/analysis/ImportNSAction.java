@@ -27,7 +27,6 @@ import consulo.project.Project;
 import consulo.ui.ex.awt.JBList;
 import consulo.ui.ex.popup.JBPopup;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -44,7 +43,7 @@ public class ImportNSAction implements QuestionAction {
     private final Editor myEditor;
     private final String myTitle;
 
-    public ImportNSAction(Set<String> namespaces, XmlFile file, @Nonnull PsiElement element, Editor editor, String title) {
+    public ImportNSAction(Set<String> namespaces, XmlFile file, PsiElement element, Editor editor, String title) {
         myNamespaces = namespaces;
         myFile = file;
         myElement = element;

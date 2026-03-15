@@ -18,7 +18,6 @@ package com.intellij.xml.actions.xmlbeans;
 
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import org.jetbrains.annotations.NonNls;
 
 import java.io.*;
 
@@ -26,9 +25,7 @@ import java.io.*;
  * @author Konstantin Bulenkov
  */
 public class FileUtils {
-    @NonNls
     public static final String CLASS_RESOURCE_STRING = "*?.class";
-    @NonNls
     private static final String SOAP_ADDRESS = "soap:address";
 
     private FileUtils() {

@@ -17,7 +17,6 @@
 package consulo.xml.util.xml;
 
 import consulo.application.CommonBundle;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
 import java.lang.ref.Reference;
@@ -30,7 +29,7 @@ import java.util.ResourceBundle;
 public class DomBundle {
   private static Reference<ResourceBundle> ourBundle;
 
-  @NonNls protected static final String PATH_TO_BUNDLE = "messages.DomBundle";
+  protected static final String PATH_TO_BUNDLE = "messages.DomBundle";
 
   private DomBundle() {
   }

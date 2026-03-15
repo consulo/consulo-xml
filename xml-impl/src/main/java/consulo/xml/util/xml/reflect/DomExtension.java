@@ -21,7 +21,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.language.psi.PsiElement;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
@@ -30,18 +29,17 @@ import java.lang.reflect.Type;
  */
 public interface DomExtension {
 
-  @Nonnull
   Type getType();
 
-  DomExtension setDeclaringElement(@Nonnull DomElement declaringElement);
+  DomExtension setDeclaringElement(DomElement declaringElement);
 
-  DomExtension setDeclaringElement(@Nonnull PsiElement declaringElement);
+  DomExtension setDeclaringElement(PsiElement declaringElement);
 
-  DomExtension setConverter(@Nonnull Converter converter);
+  DomExtension setConverter(Converter converter);
 
-  DomExtension setConverter(@Nonnull Converter converter, boolean soft);
+  DomExtension setConverter(Converter converter, boolean soft);
 
-  DomExtension addCustomAnnotation(@Nonnull Annotation anno);
+  DomExtension addCustomAnnotation(Annotation anno);
 
   <T> void putUserData(Key<T> key, T value);
 

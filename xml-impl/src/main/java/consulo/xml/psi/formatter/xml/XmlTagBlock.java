@@ -27,8 +27,7 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.language.codeStyle.Wrap;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,7 +208,7 @@ public class XmlTagBlock extends AbstractXmlBlock{
     return createSyntheticBlock(localResult, null);
   }
 
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     if (isPreserveSpace()) return Spacing.getReadOnlySpacing();
     if(child1 instanceof AbstractSyntheticBlock && child2 instanceof AbstractSyntheticBlock) {
       return getSpacing((AbstractSyntheticBlock)child1, (AbstractSyntheticBlock)child2);
@@ -310,7 +309,6 @@ public class XmlTagBlock extends AbstractXmlBlock{
   }
 
   @Override
-  @Nonnull
   public ChildAttributes getChildAttributes(final int newChildIndex) {
     if (isAfterAttribute(newChildIndex)) {
       List<Block> subBlocks = getSubBlocks();

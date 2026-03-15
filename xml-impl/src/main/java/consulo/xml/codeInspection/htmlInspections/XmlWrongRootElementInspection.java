@@ -38,8 +38,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -52,32 +51,28 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionWrongRootElement();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "XmlWrongRootElement";
     }
 
     @Override
-    @Nonnull
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
     @Override
-    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+    protected void checkTag(XmlTag tag, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         if (!(tag.getParent() instanceof XmlTag)) {
             if (!(tag.getContainingFile() instanceof XmlFile xmlFile)) {
                 return;
@@ -146,7 +141,6 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
             myText = text;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.changeRootElementTo(myText);
@@ -154,7 +148,7 @@ public class XmlWrongRootElementInspection extends HtmlLocalInspectionTool {
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(final Project project, ProblemDescriptor descriptor) {
             final XmlTag myTag = PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), XmlTag.class);
 
             if (!FileModificationService.getInstance().prepareFileForWrite(myTag.getContainingFile())) {

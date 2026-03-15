@@ -44,10 +44,8 @@ import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -55,27 +53,17 @@ import java.util.*;
  */
 @SuppressWarnings({"HardCodedStringLiteral"})
 public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocument>, DumbAware, XmlNSTypeDescriptorProvider {
-    @NonNls
     public static final String XSD_PREFIX = "xsd";
-    @NonNls
     public static final String SCHEMA_TAG_NAME = "schema";
-    @NonNls
     public static final String IMPORT_TAG_NAME = "import";
-    @NonNls
     static final String ELEMENT_TAG_NAME = "element";
-    @NonNls
     static final String ATTRIBUTE_TAG_NAME = "attribute";
-    @NonNls
     static final String COMPLEX_TYPE_TAG_NAME = "complexType";
-    @NonNls
     static final String SEQUENCE_TAG_NAME = "sequence";
     private static final Logger LOG = Logger.getInstance("#XmlNSDescriptorImpl");
-    @NonNls
     private static final Set<String> STD_TYPES = new HashSet<>();
     private static final Set<String> UNDECLARED_STD_TYPES = new HashSet<>();
-    @NonNls
     private static final String INCLUDE_TAG_NAME = "include";
-    @NonNls
     private static final String REDEFINE_TAG_NAME = "redefine";
     private static final ThreadLocal<Set<PsiFile>> myRedefinedDescriptorsInProcessing = new ThreadLocal<>();
     private final Map<QNameKey, CachedValue<XmlElementDescriptor>> myDescriptorsMap =
@@ -95,7 +83,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     public XmlNSDescriptorImpl() {
     }
 
-    private static void collectDependencies(@Nullable XmlTag myTag, @Nonnull XmlFile myFile, @Nonnull Set<PsiFile> visited) {
+    private static void collectDependencies(@Nullable XmlTag myTag, XmlFile myFile, Set<PsiFile> visited) {
         if (visited.contains(myFile)) {
             return;
         }
@@ -168,7 +156,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
             namespace);
     }
 
-    public static boolean checkSchemaNamespace(@Nonnull XmlTag context) {
+    public static boolean checkSchemaNamespace(XmlTag context) {
         LOG.assertTrue(context.isValid());
         final String namespace = context.getNamespace();
         if (namespace.length() > 0) {
@@ -177,7 +165,6 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
         return StringUtil.startsWithConcatenation(context.getName(), XSD_PREFIX, ":");
     }
 
-    @Nonnull
     static XmlNSDescriptorImpl getNSDescriptorToSearchIn(XmlTag rootTag, final String name, XmlNSDescriptorImpl defaultNSDescriptor) {
         if (name == null) {
             return defaultNSDescriptor;
@@ -208,12 +195,12 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
         return elementDescriptor;
     }
 
-    public static boolean processTagsInNamespace(@Nonnull final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor) {
+    public static boolean processTagsInNamespace(final XmlTag rootTag, String[] tagNames, PsiElementProcessor<XmlTag> processor) {
         return processTagsInNamespaceInner(rootTag, tagNames, processor, null);
     }
 
     private static boolean processTagsInNamespaceInner(
-        @Nonnull final XmlTag rootTag,
+        final XmlTag rootTag,
         final String[] tagNames,
         final PsiElementProcessor<XmlTag> processor,
         Set<XmlTag> visitedTags
@@ -263,15 +250,15 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
         return true;
     }
 
-    public static boolean equalsToSchemaName(@Nonnull XmlTag tag, @NonNls String schemaName) {
+    public static boolean equalsToSchemaName(XmlTag tag, String schemaName) {
         return schemaName.equals(tag.getLocalName()) && checkSchemaNamespace(tag);
     }
 
     private static
     @Nullable
     XmlTag findSpecialTag(
-        @NonNls String name,
-        @NonNls String specialName,
+        String name,
+        String specialName,
         XmlTag rootTag,
         XmlNSDescriptorImpl descriptor,
         HashSet<XmlTag> visited
@@ -798,7 +785,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
         return null;
     }
 
-    private boolean isSameName(@Nonnull String name, String namespace, String nameAttribute) {
+    private boolean isSameName(String name, String namespace, String nameAttribute) {
         return nameAttribute != null
             && (nameAttribute.equals(name) || (name.contains(":") && nameAttribute.equals(name.substring(name.indexOf(":") + 1))))
             && (namespace == null || namespace.length() == 0 || namespace.equals(getDefaultNamespace()));
@@ -848,7 +835,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     }
 
     @Override
-    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
         PsiElement parent = tag.getParent();
         final String namespace = tag.getNamespace();
         while (parent instanceof XmlTag parentTag && !namespace.equals(parentTag.getNamespace())) {
@@ -887,13 +874,12 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     }
 
     @Override
-    @Nonnull
     public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
         class CollectElementsProcessor implements PsiElementProcessor<XmlTag> {
             final List<XmlElementDescriptor> result = new ArrayList<>();
 
             @Override
-            public boolean execute(@Nonnull final XmlTag element) {
+            public boolean execute(final XmlTag element) {
                 ContainerUtil.addIfNotNull(result, getElementDescriptor(element.getAttributeValue("name"), getDefaultNamespace()));
                 return true;
             }
@@ -901,7 +887,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 
         CollectElementsProcessor processor = new CollectElementsProcessor() {
             @Override
-            public boolean execute(@Nonnull final XmlTag element) {
+            public boolean execute(final XmlTag element) {
                 if (!XmlElementDescriptorImpl.isAbstractDeclaration(element)) {
                     return super.execute(element);
                 }
@@ -918,7 +904,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
             final List<XmlAttributeDescriptor> result = new ArrayList<>();
 
             @Override
-            public boolean execute(@Nonnull final XmlTag element) {
+            public boolean execute(final XmlTag element) {
                 result.add(createAttributeDescriptor(element));
                 return true;
             }
@@ -1084,7 +1070,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     }
 
     @Override
-    public void validate(@Nonnull XmlDocument context, @Nonnull Validator.ValidationHost host) {
+    public void validate(XmlDocument context, Validator.ValidationHost host) {
         ExternalDocumentValidator.doValidation(context, host);
     }
 

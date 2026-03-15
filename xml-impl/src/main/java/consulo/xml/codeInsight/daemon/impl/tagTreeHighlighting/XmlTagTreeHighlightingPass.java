@@ -53,8 +53,7 @@ import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
 
     private final List<Couple<TextRange>> myPairsToHighlight = new ArrayList<>();
 
-    public XmlTagTreeHighlightingPass(@Nonnull PsiFile file, @Nonnull EditorEx editor) {
+    public XmlTagTreeHighlightingPass(PsiFile file, EditorEx editor) {
         super(file.getProject(), editor.getDocument(), true);
         myFile = file;
         myEditor = editor;
@@ -84,7 +83,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
 
     @RequiredReadAction
     @Override
-    public void doCollectInformation(@Nonnull ProgressIndicator progress) {
+    public void doCollectInformation(ProgressIndicator progress) {
         if (Application.get().isUnitTestMode()) {
             return;
         }
@@ -137,7 +136,6 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         return type == XmlTokenType.XML_START_TAG_START || type == XmlTokenType.XML_END_TAG_START || type == XmlTokenType.XML_TAG_END;
     }
 
-    @Nonnull
     private static Couple<TextRange> getTagRanges(XmlTag tag) {
         ASTNode tagNode = tag.getNode();
         return Couple.of(getStartTagRange(tagNode), getEndTagRange(tagNode));
@@ -267,8 +265,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         }
     }
 
-    @Nonnull
-    private static HighlightInfo createHighlightInfo(ColorValue color, @Nonnull TextRange range) {
+    private static HighlightInfo createHighlightInfo(ColorValue color, TextRange range) {
         TextAttributes attributes = new TextAttributes(null, color, null, null, Font.PLAIN);
         return HighlightInfo.newHighlightInfo(TYPE)
             .range(range)
@@ -277,8 +274,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
             .createUnconditionally();
     }
 
-    @Nonnull
-    private static RangeHighlighter createHighlighter(MarkupModel mm, @Nonnull TextRange range, ColorValue color) {
+    private static RangeHighlighter createHighlighter(MarkupModel mm, TextRange range, ColorValue color) {
         RangeHighlighter highlighter =
             mm.addRangeHighlighter(range.getStartOffset(), range.getEndOffset(), 0, null, HighlighterTargetArea.LINES_IN_RANGE);
 
@@ -333,7 +329,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         return resultColors;
     }
 
-    public static void clearHighlightingAndLineMarkers(Editor editor, @Nonnull Project project) {
+    public static void clearHighlightingAndLineMarkers(Editor editor, Project project) {
         MarkupModel markupModel = DocumentMarkupModel.forDocument(editor.getDocument(), project, true);
 
         for (RangeHighlighter highlighter : markupModel.getAllHighlighters()) {

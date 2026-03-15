@@ -40,8 +40,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -61,9 +60,8 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
         return true;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
             @RequiredReadAction
@@ -102,25 +100,21 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
             || language == HTMLLanguage.INSTANCE && !HtmlUtil.isSingleHtmlTagL(tagName) && tagName.indexOf(':') == -1;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlLocalize.htmlInspectionsGroupName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsCheckEmptyTag();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "CheckEmptyScriptTag";
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
@@ -133,7 +127,6 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
     }
 
     private static class MyLocalQuickFix implements LocalQuickFix {
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.htmlInspectionsCheckEmptyScriptTagFixMessage();
@@ -141,7 +134,7 @@ public class CheckEmptyTagInspection extends XmlSuppressableInspectionTool {
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             XmlTag tag = (XmlTag) descriptor.getPsiElement();
             if (tag == null) {
                 return;

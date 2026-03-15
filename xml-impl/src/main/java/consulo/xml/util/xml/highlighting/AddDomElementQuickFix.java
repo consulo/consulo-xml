@@ -17,7 +17,6 @@ package consulo.xml.util.xml.highlighting;
 
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
-import jakarta.annotation.Nonnull;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;
@@ -31,16 +30,14 @@ import consulo.language.editor.inspection.LocalQuickFix;
  */
 public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFix {
     protected final T myElement;
-    @Nonnull
     protected final LocalizeValue myName;
 
     @SuppressWarnings("unchecked")
-    public AddDomElementQuickFix(@Nonnull T element) {
+    public AddDomElementQuickFix(T element) {
         myElement = (T) element.createStableCopy();
         myName = computeName();
     }
 
-    @Nonnull
     public LocalizeValue getName() {
         return myName;
     }
@@ -58,7 +55,7 @@ public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFi
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         myElement.ensureXmlElementExists();
     }
 }

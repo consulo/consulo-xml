@@ -20,7 +20,6 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.util.xml.GenericAttributeValue;
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:startElemType interface.
@@ -32,6 +31,5 @@ public interface RngStart extends RngDomElement, RngOpenPattern {
    *
    * @return the value of the combine child.
    */
-  @Nonnull
   GenericAttributeValue<Combine> getCombine();
 }

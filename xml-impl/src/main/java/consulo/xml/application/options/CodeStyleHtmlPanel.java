@@ -33,7 +33,6 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -105,7 +104,7 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         };
     }
 
-    private static void customizeField(@Nonnull LocalizeValue title, TextFieldWithBrowseButton uiField) {
+    private static void customizeField(LocalizeValue title, TextFieldWithBrowseButton uiField) {
         uiField.getTextField().setEditable(false);
         uiField.setButtonIcon(PlatformIconGroup.actionsShow());
         uiField.addActionListener(new ActionListener() {
@@ -225,7 +224,6 @@ public class CodeStyleHtmlPanel extends CodeStyleAbstractPanel {
         return readFromFile(this.getClass(), "preview.html.template");
     }
 
-    @Nonnull
     @Override
     protected FileType getFileType() {
         return HtmlFileType.INSTANCE;

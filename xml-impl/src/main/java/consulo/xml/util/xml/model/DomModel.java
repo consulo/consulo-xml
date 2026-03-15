@@ -19,7 +19,6 @@ package consulo.xml.util.xml.model;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Set;
@@ -33,11 +32,9 @@ public interface DomModel<T extends DomElement> {
    * Using this method may result in a large memory usage, since it will keep all the DOM and PSI for all the config files
    * @return
    */
-  @Nonnull
   @Deprecated
   T getMergedModel();
 
-  @Nonnull
   Set<XmlFile> getConfigFiles();
   
   List<DomFileElement<T>> getRoots();

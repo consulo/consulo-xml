@@ -30,7 +30,6 @@ import consulo.logging.Logger;
 import consulo.navigation.Navigatable;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike
@@ -71,13 +70,12 @@ public class XmlElementDeclImpl extends XmlElementImpl implements XmlElementDecl
     return MetaDataService.getInstance().getMeta(this);
   }
 
-  public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
+  public PsiElement setName(String name) throws IncorrectOperationException {
     XmlElementChangeUtil.doNameReplacement(this, getNameElement(), name);
 
     return null;
   }
 
-  @Nonnull
   public PsiReference[] getReferences() {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this, XmlElementDecl.class);
   }
@@ -137,7 +135,6 @@ public class XmlElementDeclImpl extends XmlElementImpl implements XmlElementDecl
     return null;
   }
 
-  @Nonnull
   public PsiElement getNavigationElement() {
     return this;
   }

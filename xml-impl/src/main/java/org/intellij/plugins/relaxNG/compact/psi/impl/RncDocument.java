@@ -28,8 +28,7 @@ import consulo.language.psi.resolve.PsiElementProcessor;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class RncDocument extends RncElementImpl implements XmlDocument {
   public RncDocument(ASTNode node) {
@@ -77,13 +76,12 @@ public class RncDocument extends RncElementImpl implements XmlDocument {
   }
 
   @Override
-  @Nonnull
   protected <T> T[] findChildrenByClass(Class<T> aClass) {
     return super.findChildrenByClass(aClass);
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitElement(this);
   }
 }

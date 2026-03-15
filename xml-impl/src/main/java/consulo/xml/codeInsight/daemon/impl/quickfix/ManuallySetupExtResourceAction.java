@@ -26,7 +26,6 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.MapExternalResourceDialog;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author mike
@@ -34,7 +33,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.manually.setup.external.resource", fileExtensions = "xml", categories = "XML")
 public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlLocalize.manuallySetupExternalResource();
@@ -42,7 +40,7 @@ public class ManuallySetupExtResourceAction extends BaseExtResourceAction {
 
     @Override
     @RequiredUIAccess
-    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor)
+    protected void doInvoke(PsiFile file, int offset, String uri, Editor editor)
         throws IncorrectOperationException {
         Project project = file.getProject();
         MapExternalResourceDialog dialog = new MapExternalResourceDialog(uri, project, file, null);

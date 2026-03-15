@@ -62,8 +62,7 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.*;
@@ -79,31 +78,29 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     private final PsiAnchor myElement;
     private final PsiAnchor myToken;
 
-    @Nonnull
     private XmlFile getFile() {
         return (XmlFile)myElement.getFile();
     }
 
     @Nullable
     @RequiredReadAction
-    public static CreateNSDeclarationIntentionFix createFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
+    public static CreateNSDeclarationIntentionFix createFix(PsiElement element, String namespacePrefix) {
         PsiFile file = element.getContainingFile();
         return file instanceof XmlFile ? new CreateNSDeclarationIntentionFix(element, namespacePrefix) : null;
     }
 
     @RequiredReadAction
-    protected CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, @Nonnull String namespacePrefix) {
+    protected CreateNSDeclarationIntentionFix(PsiElement element, String namespacePrefix) {
         this(element, namespacePrefix, null);
     }
 
     @RequiredReadAction
-    public CreateNSDeclarationIntentionFix(@Nonnull PsiElement element, String namespacePrefix, @Nullable XmlToken token) {
+    public CreateNSDeclarationIntentionFix(PsiElement element, String namespacePrefix, @Nullable XmlToken token) {
         myNamespacePrefix = namespacePrefix;
         myElement = PsiAnchor.create(element);
         myToken = token == null ? null : PsiAnchor.create(token);
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         String alias = StringUtil.capitalize(getXmlExtension().getNamespaceAlias(getFile()));
@@ -114,7 +111,6 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         return XmlNamespaceHelper.getHelper(getFile());
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return getText();
@@ -122,7 +118,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         PsiFile containingFile = descriptor.getPsiElement().getContainingFile();
         Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
         PsiFile file = editor != null ? PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument()) : null;
@@ -140,14 +136,14 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
     @Override
     @RequiredReadAction
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         PsiElement element = myElement.retrieve();
         return element != null && element.isValid();
     }
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }
@@ -209,7 +205,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
 
     @Override
     @RequiredUIAccess
-    public boolean showHint(@Nonnull Editor editor) {
+    public boolean showHint(Editor editor) {
         if (myToken == null) {
             return false;
         }
@@ -298,13 +294,13 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     public interface StringToAttributeProcessor {
-        void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(@Nonnull String attrName) throws IncorrectOperationException;
+        void doSomethingWithGivenStringToProduceXmlAttributeNowPlease(String attrName) throws IncorrectOperationException;
     }
 
     @RequiredUIAccess
     public static void runActionOverSeveralAttributeValuesAfterLettingUserSelectTheNeededOne(
-        @Nonnull String[] namespacesToChooseFrom,
-        @Nonnull Project project,
+        String[] namespacesToChooseFrom,
+        Project project,
         @RequiredUIAccess StringToAttributeProcessor onSelection,
         String title,
         IntentionAction requestor,
@@ -438,6 +434,6 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
     }
 
     public interface ExternalUriProcessor {
-        void process(@Nonnull String uri, @Nullable String url);
+        void process(String uri, @Nullable String url);
     }
 }

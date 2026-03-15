@@ -29,14 +29,13 @@ import consulo.xml.util.xml.DomTarget;
 import consulo.xml.util.xml.ElementPresentation;
 import consulo.xml.util.xml.ElementPresentationTemplate;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
  */
 @ExtensionImpl(id = "domDefault", order = "last, before pomDefault")
 public class DefaultDomTargetDescriptionProvider extends PomDescriptionProvider {
-  public String getElementDescription(@Nonnull PomTarget element, @Nonnull ElementDescriptionLocation location) {
+  public String getElementDescription(PomTarget element, ElementDescriptionLocation location) {
     if (!(element instanceof DomTarget)) return null;
 
     final DomTarget target = (DomTarget) element;

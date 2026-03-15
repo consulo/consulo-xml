@@ -21,7 +21,6 @@ import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import jakarta.annotation.Nonnull;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
@@ -35,7 +34,7 @@ public class ChildGenericValueColumnInfo<T extends DomElement> extends DomColumn
   private final DomFixedChildDescription myChildDescription;
 
   public ChildGenericValueColumnInfo(final String name,
-                                     @Nonnull final DomFixedChildDescription description,
+                                     final DomFixedChildDescription description,
                                      final TableCellRenderer renderer,
                                      final TableCellEditor editor) {
     super(name, renderer);

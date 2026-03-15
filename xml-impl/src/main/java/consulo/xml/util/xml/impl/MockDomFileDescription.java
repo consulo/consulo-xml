@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.impl;
 
-import jakarta.annotation.Nonnull;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileDescription;
 
@@ -33,7 +32,7 @@ public class MockDomFileDescription<T> extends DomFileDescription<T>
 	}
 
 	@Override
-	public boolean isMyFile(@Nonnull final XmlFile xmlFile)
+	public boolean isMyFile(final XmlFile xmlFile)
 	{
 		return myFile == xmlFile;
 	}

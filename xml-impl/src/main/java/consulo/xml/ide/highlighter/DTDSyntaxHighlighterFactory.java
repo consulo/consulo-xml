@@ -8,7 +8,6 @@ import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.xml.lang.dtd.DTDLanguage;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -23,13 +22,11 @@ public class DTDSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlig
     myApplication = application;
   }
 
-  @Nonnull
   @Override
   protected SyntaxHighlighter createHighlighter() {
     return new DTDFileHighlighter(myApplication);
   }
 
-  @Nonnull
   @Override
   public Language getLanguage() {
     return DTDLanguage.INSTANCE;

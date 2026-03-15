@@ -26,13 +26,11 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 
 public abstract class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy {
   protected final Tokenizer<XmlAttributeValue> myXmlAttributeTokenizer = new XmlAttributeValueTokenizer();
   protected final Tokenizer<XmlText> myXmlTextTokenizer = new XmlTextTokenizer();
 
-  @Nonnull
   public Tokenizer getTokenizer(PsiElement element) {
     if (element instanceof XmlAttributeValue) {
       return myXmlAttributeTokenizer;
@@ -45,7 +43,7 @@ public abstract class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy
   }
 
   public static class XmlAttributeValueTokenizer extends Tokenizer<XmlAttributeValue> {
-    public void tokenize(@Nonnull final XmlAttributeValue element, final TokenConsumer consumer) {
+    public void tokenize(final XmlAttributeValue element, final TokenConsumer consumer) {
       if (element instanceof PsiLanguageInjectionHost && InjectedLanguageManager.getInstance(element.getProject()).getInjectedPsiFiles(element) != null) {
         return;
       }

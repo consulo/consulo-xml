@@ -22,7 +22,6 @@ import consulo.language.psi.stub.todo.LexerBasedTodoIndexer;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.DTDFileType;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class DTDTodoIndexer extends LexerBasedTodoIndexer {
@@ -31,7 +30,6 @@ public class DTDTodoIndexer extends LexerBasedTodoIndexer {
     return XmlIdIndexer.createIndexingLexer(consumer);
   }
 
-  @Nonnull
   @Override
   public FileType getFileType() {
     return DTDFileType.INSTANCE;

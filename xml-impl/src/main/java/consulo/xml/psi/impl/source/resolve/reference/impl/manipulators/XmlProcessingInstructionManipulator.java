@@ -22,7 +22,6 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.xml.psi.xml.XmlProcessingInstruction;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author anna
@@ -37,7 +36,6 @@ public class XmlProcessingInstructionManipulator extends AbstractElementManipula
 		return XmlAttributeValueManipulator.handleContentChange(element, range, newContent, XmlTokenType.XML_TAG_CHARACTERS);
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlProcessingInstruction> getElementClass()
 	{

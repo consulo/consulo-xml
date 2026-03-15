@@ -8,8 +8,7 @@ import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Supplier;
@@ -19,7 +18,7 @@ import java.util.function.Supplier;
  */
 public class CollectionElementInvocationHandler extends DomInvocationHandler<AbstractDomChildDescriptionImpl, ElementStub>{
 
-  public CollectionElementInvocationHandler(final Type type, @Nonnull final XmlTag tag,
+  public CollectionElementInvocationHandler(final Type type, final XmlTag tag,
                                             final AbstractCollectionChildDescription description,
                                             final DomInvocationHandler parent,
                                             @Nullable ElementStub stub) {
@@ -27,7 +26,7 @@ public class CollectionElementInvocationHandler extends DomInvocationHandler<Abs
           (AbstractDomChildDescriptionImpl)description, parent.getManager(), true, stub);
   }
 
-  public CollectionElementInvocationHandler(@Nonnull EvaluatedXmlName tagName,
+  public CollectionElementInvocationHandler(EvaluatedXmlName tagName,
                                             AbstractDomChildDescriptionImpl childDescription,
                                             DomManagerImpl manager,
                                             ElementStub stub) {
@@ -35,7 +34,7 @@ public class CollectionElementInvocationHandler extends DomInvocationHandler<Abs
 
   }
 
-  protected Type narrowType(@Nonnull final Type nominalType) {
+  protected Type narrowType(final Type nominalType) {
     return getStub() == null ? getManager().getTypeChooserManager().getTypeChooser(nominalType).chooseType(getXmlTag()) : nominalType;
   }
 

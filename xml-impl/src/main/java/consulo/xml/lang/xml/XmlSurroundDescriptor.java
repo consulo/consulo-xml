@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.base.XmlBasedSurroundDescriptor;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XmlSurroundDescriptor extends XmlBasedSurroundDescriptor
 {
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

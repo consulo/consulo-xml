@@ -7,7 +7,6 @@ import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.IgnoreExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
@@ -15,13 +14,12 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class DependentNSReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<DependentNSReference> {
   @Override
-  public void registerFixes(@Nonnull DependentNSReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+  public void registerFixes(DependentNSReference ref, QuickFixActionRegistrar registrar) {
     registrar.register(new FetchExtResourceAction(ref.isForceFetchResultValid()));
     registrar.register(new ManuallySetupExtResourceAction());
     registrar.register(new IgnoreExtResourceAction());
   }
 
-  @Nonnull
   @Override
   public Class<DependentNSReference> getReferenceClass() {
     return DependentNSReference.class;

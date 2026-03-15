@@ -26,10 +26,8 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Set;
 
 /**
@@ -67,10 +65,10 @@ public abstract class XmlNamespaceHelper {
     }
 
     public abstract void insertNamespaceDeclaration(
-        @Nonnull final XmlFile file,
+        final XmlFile file,
         @Nullable final Editor editor,
-        @NonNls @Nonnull final Set<String> possibleNamespaces,
-        @NonNls @Nullable final String nsPrefix,
+        final Set<String> possibleNamespaces,
+        @Nullable final String nsPrefix,
         @Nullable Runner<String, IncorrectOperationException> runAfter
     ) throws IncorrectOperationException;
 
@@ -88,13 +86,11 @@ public abstract class XmlNamespaceHelper {
         return false;
     }
 
-    @Nonnull
-    public abstract Set<String> guessUnboundNamespaces(@Nonnull PsiElement element, final XmlFile file);
+    public abstract Set<String> guessUnboundNamespaces(PsiElement element, final XmlFile file);
 
-    @Nonnull
-    public abstract Set<String> getNamespacesByTagName(@Nonnull final String tagName, @Nonnull final XmlFile context);
+    public abstract Set<String> getNamespacesByTagName(final String tagName, final XmlFile context);
 
-    public String getNamespaceAlias(@Nonnull final XmlFile file) {
+    public String getNamespaceAlias(final XmlFile file) {
         return XmlLocalize.namespaceAlias().get();
     }
 }

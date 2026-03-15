@@ -21,8 +21,7 @@ import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -31,7 +30,6 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class DomWrapper<T> {
 
-  @Nonnull
   public abstract DomElement getExistingDomElement();
 
   @Nullable

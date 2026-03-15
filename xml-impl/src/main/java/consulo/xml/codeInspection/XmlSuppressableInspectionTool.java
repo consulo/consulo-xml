@@ -29,13 +29,11 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool implements BatchSuppressableTool {
     static final String ALL = "ALL";
 
-    @Nonnull
     @Override
     public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element) {
         return getSuppressFixes(getID());
@@ -51,7 +49,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     }
 
     @Override
-    public boolean isSuppressedFor(@Nonnull PsiElement element) {
+    public boolean isSuppressedFor(PsiElement element) {
         return XmlSuppressionProvider.isSuppressed(element, getID());
     }
 
@@ -64,11 +62,10 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     public static class SuppressTagStatic implements SuppressQuickFix {
         private final String id;
 
-        public SuppressTagStatic(@Nonnull String id) {
+        public SuppressTagStatic(String id) {
             this.id = id;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return InspectionLocalize.xmlSuppressableForTagTitle();
@@ -76,13 +73,13 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 
         @Override
         @RequiredReadAction
-        public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+        public boolean isAvailable(Project project, PsiElement context) {
             return context.isValid();
         }
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             PsiElement element = descriptor.getPsiElement();
             if (PsiTreeUtil.getParentOfType(element, XmlTag.class) == null) {
                 return;
@@ -94,11 +91,10 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
     public static class SuppressForFile implements SuppressQuickFix {
         private final String myInspectionId;
 
-        public SuppressForFile(@Nonnull String inspectionId) {
+        public SuppressForFile(String inspectionId) {
             myInspectionId = inspectionId;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return InspectionLocalize.xmlSuppressableForFileTitle();
@@ -106,7 +102,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 
         @Override
         @RequiredReadAction
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             PsiElement element = descriptor.getPsiElement();
             if (element == null || !element.isValid() || !(element.getContainingFile() instanceof XmlFile)) {
                 return;
@@ -116,7 +112,7 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
 
         @Override
         @RequiredReadAction
-        public boolean isAvailable(@Nonnull Project project, @Nonnull PsiElement context) {
+        public boolean isAvailable(Project project, PsiElement context) {
             return context.isValid();
         }
     }
@@ -126,7 +122,6 @@ public abstract class XmlSuppressableInspectionTool extends LocalInspectionTool 
             super(ALL);
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return InspectionLocalize.xmlSuppressableAllForFileTitle();

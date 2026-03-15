@@ -25,7 +25,6 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -34,7 +33,7 @@ import jakarta.annotation.Nonnull;
 public class HtmlClosingTagErrorFilter extends HighlightErrorFilter {
     @Override
     @RequiredReadAction
-    public boolean shouldHighlightErrorElement(@Nonnull PsiErrorElement element) {
+    public boolean shouldHighlightErrorElement(PsiErrorElement element) {
         PsiFile psiFile = element.getContainingFile();
         if (psiFile == null || (psiFile.getViewProvider().getBaseLanguage() != HTMLLanguage.INSTANCE
             && HTMLLanguage.INSTANCE != element.getLanguage())) {

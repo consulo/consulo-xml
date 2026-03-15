@@ -30,8 +30,7 @@ import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -290,7 +289,6 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
         }
     }
 
-    @Nonnull
     protected String getHelpId() {
         return "webservices.GenerateInstanceDocumentFromSchema";
     }

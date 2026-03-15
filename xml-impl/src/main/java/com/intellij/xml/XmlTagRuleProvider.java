@@ -21,21 +21,20 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XmlTagRuleProvider {
     public static final ExtensionPointName<XmlTagRuleProvider> EP_NAME = ExtensionPointName.create(XmlTagRuleProvider.class);
 
-    public abstract Rule[] getTagRule(@Nonnull XmlTag tag);
+    public abstract Rule[] getTagRule(XmlTag tag);
 
     public static class Rule {
         public static final Rule[] EMPTY_ARRAY = new Rule[0];
 
-        public void annotate(@Nonnull XmlTag tag, ProblemsHolder holder) {
+        public void annotate(XmlTag tag, ProblemsHolder holder) {
         }
 
-        public boolean needAtLeastOneAttribute(@Nonnull XmlTag tag) {
+        public boolean needAtLeastOneAttribute(XmlTag tag) {
             return false;
         }
     }

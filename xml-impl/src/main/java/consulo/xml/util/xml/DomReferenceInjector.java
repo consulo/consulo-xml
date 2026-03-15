@@ -21,14 +21,13 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.project.Project;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.Consumer;
 
 @ExtensionAPI(ComponentScope.PROJECT)
 public interface DomReferenceInjector
 {
-	static void walk(@Nonnull Project project, @Nonnull DomFileDescription<?> fileDescription, @Nonnull Consumer<DomReferenceInjector> consumer)
+	static void walk(Project project, DomFileDescription<?> fileDescription, Consumer<DomReferenceInjector> consumer)
 	{
 		project.getExtensionPoint(DomReferenceInjector.class).forEachExtensionSafe(domReferenceInjector ->
 		{
@@ -42,8 +41,7 @@ public interface DomReferenceInjector
 	boolean isAvaliable(DomFileDescription<?> fileDescription);
 
 	@Nullable
-	String resolveString(@Nullable String unresolvedText, @Nonnull ConvertContext context);
+	String resolveString(@Nullable String unresolvedText, ConvertContext context);
 
-	@Nonnull
-	PsiReference[] inject(@Nullable String unresolvedText, @Nonnull PsiElement element, @Nonnull ConvertContext context);
+	PsiReference[] inject(@Nullable String unresolvedText, PsiElement element, ConvertContext context);
 }

@@ -32,8 +32,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.impl.RncDocument;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +45,11 @@ class RncBlock implements Block {
   }
 
   @Override
-  @Nonnull
   public TextRange getTextRange() {
     return myNode.getTextRange();
   }
 
   @Override
-  @Nonnull
   public List<Block> getSubBlocks() {
     final List<Block> list = new ArrayList<>();
     ASTNode node = myNode.getFirstChildNode();
@@ -101,7 +98,7 @@ class RncBlock implements Block {
 
   @Override
   @Nullable
-  public Spacing getSpacing(Block child1, @Nonnull Block child2) {
+  public Spacing getSpacing(Block child1, Block child2) {
     if (child1 == null) {
       return null;
     }
@@ -126,7 +123,6 @@ class RncBlock implements Block {
   }
 
   @Override
-  @Nonnull
   public ChildAttributes getChildAttributes(int newChildIndex) {
     return new ChildAttributes(null, null);
   }

@@ -20,8 +20,7 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -38,7 +37,6 @@ class Html5SectionTreeElement extends PsiTreeElementBase<XmlTag> {
     myHeader = header;
   }
 
-  @Nonnull
   public Collection<StructureViewTreeElement> getChildrenBase() {
     return myChildrenComputable.compute();
   }

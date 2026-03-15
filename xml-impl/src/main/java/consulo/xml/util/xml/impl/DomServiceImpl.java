@@ -46,8 +46,7 @@ import consulo.xml.util.xml.stubs.FileStub;
 import consulo.xml.util.xml.stubs.builder.DomStubBuilder;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -70,7 +69,6 @@ public class DomServiceImpl extends DomService {
     }
   };
 
-  @Nonnull
   private static XmlFileHeader calcXmlFileHeader(final XmlFile file) {
 
     if (file instanceof PsiFileEx && ((PsiFileEx)file).isContentsLoaded() && file.getNode().isParsed()) {
@@ -149,20 +147,17 @@ public class DomServiceImpl extends DomService {
     return DomAnchorImpl.createAnchor(domElement);
   }
 
-  @Nonnull
-  public XmlFile getContainingFile(@Nonnull DomElement domElement) {
+  public XmlFile getContainingFile(DomElement domElement) {
     if (domElement instanceof DomFileElement) {
       return ((DomFileElement)domElement).getFile();
     }
     return DomManagerImpl.getNotNullHandler(domElement).getFile();
   }
 
-  @Nonnull
-  public EvaluatedXmlName getEvaluatedXmlName(@Nonnull final DomElement element) {
+  public EvaluatedXmlName getEvaluatedXmlName(final DomElement element) {
     return DomManagerImpl.getNotNullHandler(element).getXmlName();
   }
 
-  @Nonnull
   public XmlFileHeader getXmlFileHeader(XmlFile file) {
     return file.isValid() ? ourRootTagCache.get(ROOT_TAG_NS_KEY, file, null).getValue() : XmlFileHeader.EMPTY;
   }

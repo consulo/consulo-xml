@@ -16,7 +16,6 @@
 package org.intellij.plugins.relaxNG.convert;
 
 import consulo.ui.ex.awt.ComboBox;
-import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -27,11 +26,8 @@ import java.util.Map;
  * @since 2007-11-18
  */
 public class AdvancedXsdOptions implements AdvancedOptions {
-  @NonNls
   private static final String DISABLE_ABSTRACT_ELEMENTS = "disable-abstract-elements";
-  @NonNls
   private static final String ANY_PROCESS_CONTENTS = "any-process-contents";
-  @NonNls
   private static final String ANY_ATTRIBUTE_PROCESS_CONTENTS = "any-attribute-process-contents";
 
   private JComponent myRoot;

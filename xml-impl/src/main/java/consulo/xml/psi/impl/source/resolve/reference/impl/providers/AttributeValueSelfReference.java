@@ -15,8 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.util.collection.ArrayUtil;
@@ -43,7 +42,6 @@ public class AttributeValueSelfReference extends BasicAttributeValueReference {
     return myElement;
   }
 
-  @Nonnull
   public Object[] getVariants() {
     return ArrayUtil.EMPTY_OBJECT_ARRAY;
   }

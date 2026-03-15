@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
@@ -36,7 +35,7 @@ import consulo.xml.util.xml.model.SimpleModelFactory;
 public abstract class SimpleDomModelFactory<T extends DomElement, M extends DomModel<T>> extends DomModelFactoryHelper<T> implements
                                                                                                                          SimpleModelFactory<T, M> {
 
-  public SimpleDomModelFactory(@Nonnull Class<T> aClass, @Nonnull ModelMerger modelMerger) {
+  public SimpleDomModelFactory(Class<T> aClass, ModelMerger modelMerger) {
     super(aClass, modelMerger);
   }
 

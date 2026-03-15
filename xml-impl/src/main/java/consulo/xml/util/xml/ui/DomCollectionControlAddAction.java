@@ -9,7 +9,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.AddDomElementAction;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.lang.reflect.Type;
@@ -33,7 +32,6 @@ public class DomCollectionControlAddAction extends AddDomElementAction {
         return DomCollectionControl.getDomCollectionControl(e);
     }
 
-    @Nonnull
     @Override
     protected DomCollectionChildDescription[] getDomCollectionChildDescriptions(AnActionEvent e) {
         return new DomCollectionChildDescription[]{getDomCollectionControl(e).getChildDescription()};
@@ -49,7 +47,6 @@ public class DomCollectionControlAddAction extends AddDomElementAction {
         return getDomCollectionControl(e).getComponent();
     }
 
-    @Nonnull
     @Override
     public AnAction[] getChildren(AnActionEvent e) {
         DomCollectionControl control = getDomCollectionControl(e);

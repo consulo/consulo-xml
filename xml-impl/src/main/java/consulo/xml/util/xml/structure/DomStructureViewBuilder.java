@@ -20,8 +20,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomService;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.Function;
 
 public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
@@ -36,15 +35,13 @@ public class DomStructureViewBuilder extends TreeBasedStructureViewBuilder
 	}
 
 	@Override
-	@Nonnull
 	public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 	{
 		return new DomStructureViewTreeModel(myFile, myDescriptor, editor);
 	}
 
 	@Override
-	@Nonnull
-	public StructureView createStructureView(final FileEditor fileEditor, @Nonnull final Project project)
+	public StructureView createStructureView(final FileEditor fileEditor, final Project project)
 	{
 		return new StructureViewComponent(fileEditor, createStructureViewModel(fileEditor instanceof TextEditor ? ((TextEditor) fileEditor).getEditor() : null), project, true)
 		{

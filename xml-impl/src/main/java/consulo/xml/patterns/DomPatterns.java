@@ -29,7 +29,6 @@ import consulo.language.pattern.PsiElementPattern;
 import consulo.language.pom.PomTargetPsiElement;
 import consulo.language.util.ProcessingContext;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -58,7 +57,7 @@ public class DomPatterns {
 
   public static XmlElementPattern.Capture withDom(final ElementPattern<? extends DomElement> pattern) {
     return new XmlElementPattern.Capture().with(new PatternCondition<XmlElement>("tagWithDom") {
-      public boolean accepts(@Nonnull final XmlElement xmlElement, final ProcessingContext context) {
+      public boolean accepts(final XmlElement xmlElement, final ProcessingContext context) {
         final DomManager manager = DomManager.getDomManager(xmlElement.getProject());
         if (xmlElement instanceof XmlAttribute) {
           return pattern.getCondition().accepts(manager.getDomElement((XmlAttribute)xmlElement), context);
@@ -83,7 +82,7 @@ public class DomPatterns {
   public static ElementPattern<DomTarget> withDomTarget(final ElementPattern<? extends DomElement> pattern) {
     return new ObjectPattern.Capture<DomTarget>(DomTarget.class).with(new PatternCondition<DomTarget>("withDomTarget") {
       @Override
-      public boolean accepts(@Nonnull final DomTarget target, final ProcessingContext context) {
+      public boolean accepts(final DomTarget target, final ProcessingContext context) {
         return pattern.accepts(target.getDomElement(), context);
       }
     });

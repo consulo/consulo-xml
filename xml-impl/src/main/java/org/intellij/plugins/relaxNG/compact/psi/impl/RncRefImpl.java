@@ -15,8 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiReference;
 import consulo.language.ast.ASTNode;
@@ -55,7 +54,7 @@ public class RncRefImpl extends RncElementImpl implements RncRef {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitRef(this);
   }
 

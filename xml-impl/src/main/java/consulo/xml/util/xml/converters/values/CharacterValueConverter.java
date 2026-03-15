@@ -19,13 +19,11 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.DomBundle;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class CharacterValueConverter extends Converter<String> {
-  @NonNls private static final String UNICODE_PREFIX = "\\u";
+  private static final String UNICODE_PREFIX = "\\u";
   private static final int UNICODE_LENGTH = 6;
   private final boolean myAllowEmpty;
 
@@ -34,7 +32,7 @@ public class CharacterValueConverter extends Converter<String> {
   }
 
 
-  public String fromString(@Nullable @NonNls String s, final ConvertContext context) {
+  public String fromString(@Nullable String s, final ConvertContext context) {
     if (s == null) return null;
 
     if (myAllowEmpty && s.trim().length() == 0) return s;
@@ -59,7 +57,6 @@ public class CharacterValueConverter extends Converter<String> {
     return s;
   }
 
-  @Nonnull
   public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
    return LocalizeValue.localizeTODO(DomBundle.message("value.converter.format.exception", s, "char"));
   }

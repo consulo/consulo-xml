@@ -6,7 +6,7 @@ import consulo.language.psi.PsiFile;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.psi.xml.XmlDocument;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev

@@ -29,9 +29,7 @@ import consulo.language.psi.resolve.PsiScopeProcessor;
 import consulo.language.psi.resolve.ResolveState;
 import consulo.util.dataholder.Key;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +39,7 @@ import java.util.List;
 public class ScriptSupportUtil {
   private static final Key<CachedValue<XmlTag[]>> CachedScriptTagsKey = Key.create("script tags");
   private static final ThreadLocal<String> ProcessingDeclarationsFlag = new ThreadLocal<String>();
-  private static final @NonNls String SCRIPT_TAG = "script";
+  private static final String SCRIPT_TAG = "script";
 
   private ScriptSupportUtil() {
   }
@@ -66,7 +64,7 @@ public class ScriptSupportUtil {
 
               if (document != null) {
                 PsiElementProcessor psiElementProcessor = new PsiElementProcessor() {
-                  public boolean execute(@Nonnull final PsiElement element) {
+                  public boolean execute(final PsiElement element) {
                     if (element instanceof XmlTag) {
                       final XmlTag tag = (XmlTag)element;
 

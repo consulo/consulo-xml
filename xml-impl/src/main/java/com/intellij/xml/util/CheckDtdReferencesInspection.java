@@ -30,7 +30,6 @@ import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,9 +44,8 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
         return true;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             private Map<PsiFile, Boolean> myDoctypeMap = new HashMap<>();
 
@@ -103,25 +101,21 @@ public class CheckDtdReferencesInspection extends XmlSuppressableInspectionTool 
         }
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsCheckDtdReferences();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "CheckDtdRefs";

@@ -25,7 +25,6 @@ import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.localize.LocalizeValue;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.ide.highlighter.XmlFileHighlighter;
-import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
 @ExtensionImpl
@@ -48,22 +47,18 @@ public class XMLColorsPage implements ColorSettingsPage {
     myApplication = application;
   }
 
-  @Nonnull
   public LocalizeValue getDisplayName() {
     return ApplicationLocalize.titleXml();
   }
 
-  @Nonnull
   public AttributesDescriptor[] getAttributeDescriptors() {
     return ATTRS;
   }
 
-  @Nonnull
   public SyntaxHighlighter getHighlighter() {
     return new XmlFileHighlighter(myApplication);
   }
 
-  @Nonnull
   public String getDemoText() {
     return "<?xml version='1.0' encoding='ISO-8859-1'  ?>\n" +
            "<!DOCTYPE index>\n" +

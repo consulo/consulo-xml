@@ -38,8 +38,7 @@ import consulo.xml.util.xml.tree.DomElementsGroupNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 import consulo.xml.util.xml.ui.actions.AddDomElementAction;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jakarta.inject.Inject;
 
 import javax.swing.*;
@@ -95,7 +94,6 @@ public class AddElementInCollectionAction extends AddDomElementAction {
         }
     }
 
-    @Nonnull
     @Override
     protected DomCollectionChildDescription[] getDomCollectionChildDescriptions(AnActionEvent e) {
         DomModelTreeView view = getTreeView(e);

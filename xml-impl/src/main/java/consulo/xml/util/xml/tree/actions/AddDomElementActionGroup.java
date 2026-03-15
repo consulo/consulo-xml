@@ -16,13 +16,12 @@
 package consulo.xml.util.xml.tree.actions;
 
 import consulo.annotation.component.ActionImpl;
-import jakarta.annotation.Nonnull;
 
 import consulo.ui.ex.action.ActionGroup;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -36,14 +35,13 @@ public class AddDomElementActionGroup extends ActionGroup {
         }
     };
 
-    @Nonnull
     @Override
     public AnAction[] getChildren(@Nullable AnActionEvent e) {
         return myAction.getChildren(e);
     }
 
     @Override
-    public void update(@Nonnull AnActionEvent e) {
+    public void update(AnActionEvent e) {
         //myAction.getChildren(e).length
         getTemplatePresentation().setTextValue(myAction.getTemplatePresentation().getTextValue());
         super.update(e);

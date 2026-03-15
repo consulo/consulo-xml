@@ -22,21 +22,18 @@ import consulo.language.codeStyle.*;
 import consulo.language.psi.PsiElement;
 import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RncFormattingModelBuilder implements FormattingModelBuilder
 {
-	@Nonnull
 	@Override
-	public FormattingModel createModel(@Nonnull FormattingContext context)
+	public FormattingModel createModel(FormattingContext context)
 	{
 		PsiElement element = context.getPsiElement();
 		CodeStyleSettings settings = context.getCodeStyleSettings();
 		return FormattingModelProvider.createFormattingModelForPsiFile(element.getContainingFile(), new RncBlock(element.getNode()), settings);
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

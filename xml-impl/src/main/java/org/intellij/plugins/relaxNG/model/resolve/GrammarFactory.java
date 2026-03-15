@@ -21,8 +21,7 @@ import consulo.xml.util.xml.DomManager;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -30,7 +29,7 @@ import jakarta.annotation.Nullable;
  */
 public class GrammarFactory {
   @Nullable
-  public static Grammar getGrammar(@Nonnull XmlFile element) {
+  public static Grammar getGrammar(XmlFile element) {
     if (element instanceof RncFile) {
       return ((RncFile)element).getGrammar();
     }
