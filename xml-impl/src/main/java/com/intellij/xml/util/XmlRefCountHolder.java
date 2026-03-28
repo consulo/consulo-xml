@@ -17,6 +17,7 @@ package com.intellij.xml.util;
 
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
@@ -25,7 +26,6 @@ import consulo.language.Language;
 import consulo.language.psi.*;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ContainerUtil;
-import consulo.util.dataholder.Key;
 import consulo.util.lang.Pair;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
@@ -42,23 +42,23 @@ import java.util.*;
  * @author spleaner
  */
 public class XmlRefCountHolder {
-    private static final Key<CachedValue<XmlRefCountHolder>> xmlRefCountHolderKey = Key.create("xml ref count holder");
-
-    private final static UserDataCache<CachedValue<XmlRefCountHolder>, XmlFile, Object> CACHE = new UserDataCache<>() {
-        protected CachedValue<XmlRefCountHolder> compute(final XmlFile file, final Object p) {
-            return CachedValuesManager.getManager(file.getProject()).createCachedValue(
-                () -> {
-                    final XmlRefCountHolder holder = new XmlRefCountHolder();
-                    final Language language = file.getViewProvider().getBaseLanguage();
-                    final PsiFile psiFile = file.getViewProvider().getPsi(language);
-                    assert psiFile != null;
-                    psiFile.accept(new IdGatheringRecursiveVisitor(holder));
-                    return new CachedValueProvider.Result<>(holder, file);
-                },
-                false
-            );
-        }
-    };
+    private final static UserDataCache<CachedValue<XmlRefCountHolder>, XmlFile, @Nullable Void> CACHE =
+        new UserDataCache<CachedValue<XmlRefCountHolder>, XmlFile, @Nullable Void>("xml ref count holder") {
+            @Override
+            protected CachedValue<XmlRefCountHolder> compute(XmlFile file, @Nullable Void p) {
+                return CachedValuesManager.getManager(file.getProject()).createCachedValue(
+                    () -> {
+                        XmlRefCountHolder holder = new XmlRefCountHolder();
+                        Language language = file.getViewProvider().getBaseLanguage();
+                        PsiFile psiFile = file.getViewProvider().getPsi(language);
+                        assert psiFile != null;
+                        psiFile.accept(new IdGatheringRecursiveVisitor(holder));
+                        return new CachedValueProvider.Result<>(holder, file);
+                    },
+                    false
+                );
+            }
+        };
 
     private final Map<String, List<Pair<XmlAttributeValue, Boolean>>> myId2AttributeListMap = new HashMap<>();
     private final Set<XmlAttributeValue> myPossiblyDuplicateIds = new HashSet<>();
@@ -69,32 +69,31 @@ public class XmlRefCountHolder {
     private final Set<String> myUsedNamespaces = new HashSet<>();
 
     @Nullable
-    public static XmlRefCountHolder getRefCountHolder(final XmlElement element) {
-        PsiFile file = element.getContainingFile();
-        return file instanceof XmlFile ? CACHE.get(xmlRefCountHolderKey, (XmlFile)file, null).getValue() : null;
+    public static XmlRefCountHolder getRefCountHolder(XmlElement element) {
+        return element.getContainingFile() instanceof XmlFile xmlFile ? CACHE.get(xmlFile, null).getValue() : null;
     }
 
     private XmlRefCountHolder() {
     }
 
 
-    public boolean isDuplicateIdAttributeValue(final XmlAttributeValue value) {
+    public boolean isDuplicateIdAttributeValue(XmlAttributeValue value) {
         return myPossiblyDuplicateIds.contains(value);
     }
 
-    public boolean isValidatable(@Nullable final PsiElement element) {
+    public boolean isValidatable(@Nullable PsiElement element) {
         return !myDoNotValidateParentsList.contains(element);
     }
 
-    public boolean hasIdDeclaration(final String idRef) {
+    public boolean hasIdDeclaration(String idRef) {
         return myId2AttributeListMap.get(idRef) != null || myAdditionallyDeclaredIds.contains(idRef);
     }
 
-    public boolean isIdReferenceValue(final XmlAttributeValue value) {
+    public boolean isIdReferenceValue(XmlAttributeValue value) {
         return myIdReferences.contains(value);
     }
 
-    private void registerId(final String id, final XmlAttributeValue attributeValue, final boolean soft) {
+    private void registerId(String id, XmlAttributeValue attributeValue, boolean soft) {
         List<Pair<XmlAttributeValue, Boolean>> list = myId2AttributeListMap.get(id);
         if (list == null) {
             list = new ArrayList<>();
@@ -112,15 +111,15 @@ public class XmlRefCountHolder {
         list.add(new Pair<>(attributeValue, soft));
     }
 
-    private void registerAdditionalId(final String id) {
+    private void registerAdditionalId(String id) {
         myAdditionallyDeclaredIds.add(id);
     }
 
-    private void registerIdReference(final XmlAttributeValue value) {
+    private void registerIdReference(XmlAttributeValue value) {
         myIdReferences.add(value);
     }
 
-    private void registerOuterLanguageElement(final PsiElement element) {
+    private void registerOuterLanguageElement(PsiElement element) {
         PsiElement parent = element.getParent();
 
         if (parent instanceof XmlText) {
@@ -147,7 +146,7 @@ public class XmlRefCountHolder {
         }
 
         @Override
-        public void visitElement(final PsiElement element) {
+        public void visitElement(PsiElement element) {
             if (element instanceof OuterLanguageElement) {
                 visitOuterLanguageElement(element);
             }
@@ -155,10 +154,10 @@ public class XmlRefCountHolder {
             super.visitElement(element);
         }
 
-        private void visitOuterLanguageElement(final PsiElement element) {
+        @RequiredReadAction
+        private void visitOuterLanguageElement(PsiElement element) {
             myHolder.registerOuterLanguageElement(element);
-            PsiReference[] references = element.getReferences();
-            for (PsiReference reference : references) {
+            for (PsiReference reference : element.getReferences()) {
                 if (reference instanceof PossiblePrefixReference possiblePrefixReference && possiblePrefixReference.isPrefixReference()
                     && reference.resolve() instanceof SchemaPrefix schemaPrefix) {
                     myHolder.addUsedPrefix(schemaPrefix.getName());
@@ -167,19 +166,22 @@ public class XmlRefCountHolder {
         }
 
         @Override
-        public void visitComment(final PsiComment comment) {
+        @RequiredReadAction
+        public void visitComment(PsiComment comment) {
             doVisitAnyComment(comment);
             super.visitComment(comment);
         }
 
         @Override
-        public void visitXmlComment(final XmlComment comment) {
+        @RequiredReadAction
+        public void visitXmlComment(XmlComment comment) {
             doVisitAnyComment(comment);
             super.visitXmlComment(comment);
         }
 
-        private void doVisitAnyComment(final PsiComment comment) {
-            final String id = XmlDeclareIdInCommentAction.getImplicitlyDeclaredId(comment);
+        @RequiredReadAction
+        private void doVisitAnyComment(PsiComment comment) {
+            String id = XmlDeclareIdInCommentAction.getImplicitlyDeclaredId(comment);
             if (id != null) {
                 myHolder.registerAdditionalId(id);
             }
@@ -204,31 +206,29 @@ public class XmlRefCountHolder {
         }
 
         @Override
-        public void visitXmlAttributeValue(final XmlAttributeValue value) {
-            final PsiElement element = value.getParent();
-            if (!(element instanceof XmlAttribute)) {
+        @RequiredReadAction
+        public void visitXmlAttributeValue(XmlAttributeValue value) {
+            if (!(value.getParent() instanceof XmlAttribute attribute)) {
                 return;
             }
 
-            final XmlAttribute attribute = (XmlAttribute)element;
-
-            final XmlTag tag = attribute.getParent();
+            XmlTag tag = attribute.getParent();
             if (tag == null) {
                 return;
             }
 
-            final XmlElementDescriptor descriptor = tag.getDescriptor();
+            XmlElementDescriptor descriptor = tag.getDescriptor();
             if (descriptor == null) {
                 return;
             }
 
-            final XmlAttributeDescriptor attributeDescriptor = descriptor.getAttributeDescriptor(attribute);
+            XmlAttributeDescriptor attributeDescriptor = descriptor.getAttributeDescriptor(attribute);
             if (attributeDescriptor != null) {
                 if (attributeDescriptor.hasIdType()) {
                     updateMap(attribute, value, false);
                 }
                 else {
-                    final PsiReference[] references = value.getReferences();
+                    PsiReference[] references = value.getReferences();
                     for (PsiReference r : references) {
                         if (r instanceof IdReferenceProvider.GlobalAttributeValueSelfReference /*&& !r.isSoft()*/) {
                             updateMap(attribute, value, r.isSoft());
@@ -261,8 +261,9 @@ public class XmlRefCountHolder {
             }
         }
 
-        private void updateMap(final XmlAttribute attribute, final XmlAttributeValue value, final boolean soft) {
-            final String id = XmlHighlightVisitor.getUnquotedValue(value, attribute.getParent());
+        @RequiredReadAction
+        private void updateMap(XmlAttribute attribute, XmlAttributeValue value, boolean soft) {
+            String id = XmlHighlightVisitor.getUnquotedValue(value, attribute.getParent());
             if (XmlUtil.isSimpleValue(id, value)
                 && PsiTreeUtil.getChildOfType(value, OuterLanguageElement.class) == null) {
                 myHolder.registerId(id, value, soft);
