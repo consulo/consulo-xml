@@ -24,7 +24,6 @@ import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlElementsGroup;
-import jakarta.annotation.Nonnull;
 
 public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescriptor {
     private volatile XmlElementDescriptor[] myElementDescriptors;
@@ -50,15 +49,13 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 
     static final FieldCache<XmlElementDescriptor[], BaseXmlElementDescriptorImpl, Object, XmlTag> myElementDescriptorsCache =
         new FieldCache<>() {
-            @Nonnull
             @Override
-            protected final XmlElementDescriptor[] compute(BaseXmlElementDescriptorImpl xmlElementDescriptor, @Nonnull XmlTag tag) {
+            protected final XmlElementDescriptor[] compute(BaseXmlElementDescriptorImpl xmlElementDescriptor, XmlTag tag) {
                 return xmlElementDescriptor.doCollectXmlDescriptors(tag);
             }
 
-            @Nonnull
             @Override
-            protected final XmlElementDescriptor[] getValue(BaseXmlElementDescriptorImpl xmlElementDescriptor, @Nonnull Object o) {
+            protected final XmlElementDescriptor[] getValue(BaseXmlElementDescriptorImpl xmlElementDescriptor, Object o) {
                 return xmlElementDescriptor.myElementDescriptors;
             }
 
@@ -66,7 +63,7 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
             protected final void putValue(
                 XmlElementDescriptor[] xmlElementDescriptors,
                 BaseXmlElementDescriptorImpl xmlElementDescriptor,
-                @Nonnull Object o
+                Object o
             ) {
                 xmlElementDescriptor.myElementDescriptors = xmlElementDescriptors;
             }
@@ -79,13 +76,11 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 
     private static final SimpleFieldCache<XmlAttributeDescriptor[], BaseXmlElementDescriptorImpl> myAttributeDescriptorsCache =
         new SimpleFieldCache<>() {
-            @Nonnull
             @Override
             protected final XmlAttributeDescriptor[] compute(BaseXmlElementDescriptorImpl xmlElementDescriptor) {
                 return xmlElementDescriptor.collectAttributeDescriptors(null);
             }
 
-            @Nonnull
             @Override
             protected final XmlAttributeDescriptor[] getValue(BaseXmlElementDescriptorImpl xmlElementDescriptor) {
                 return xmlElementDescriptor.myAttributeDescriptors;
@@ -110,13 +105,11 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 
     private static final SimpleFieldCache<Map<String, XmlAttributeDescriptor>, BaseXmlElementDescriptorImpl>
         attributeDescriptorsMapCache = new SimpleFieldCache<>() {
-        @Nonnull
         @Override
         protected final Map<String, XmlAttributeDescriptor> compute(BaseXmlElementDescriptorImpl baseXmlElementDescriptor) {
             return baseXmlElementDescriptor.collectAttributeDescriptorsMap(null);
         }
 
-        @Nonnull
         @Override
         protected final Map<String, XmlAttributeDescriptor> getValue(BaseXmlElementDescriptorImpl baseXmlElementDescriptor) {
             return baseXmlElementDescriptor.attributeDescriptorsMap;
@@ -138,15 +131,13 @@ public abstract class BaseXmlElementDescriptorImpl implements XmlElementDescript
 
     private static final FieldCache<Map<String, XmlElementDescriptor>, BaseXmlElementDescriptorImpl, Object, XmlTag>
         myElementDescriptorsMapCache = new FieldCache<>() {
-        @Nonnull
         @Override
-        protected final Map<String, XmlElementDescriptor> compute(BaseXmlElementDescriptorImpl baseXmlElementDescriptor, @Nonnull XmlTag p) {
+        protected final Map<String, XmlElementDescriptor> compute(BaseXmlElementDescriptorImpl baseXmlElementDescriptor, XmlTag p) {
             return baseXmlElementDescriptor.collectElementDescriptorsMap(p);
         }
 
-        @Nonnull
         @Override
-        protected final Map<String, XmlElementDescriptor> getValue(BaseXmlElementDescriptorImpl baseXmlElementDescriptor, @Nonnull Object p) {
+        protected final Map<String, XmlElementDescriptor> getValue(BaseXmlElementDescriptorImpl baseXmlElementDescriptor, Object p) {
             return baseXmlElementDescriptor.myElementDescriptorsMap;
         }
 
