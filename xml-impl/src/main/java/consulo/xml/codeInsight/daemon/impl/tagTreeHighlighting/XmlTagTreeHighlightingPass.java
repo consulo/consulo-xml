@@ -190,6 +190,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
             UpdateHighlightersUtil.setHighlightersToEditor(
                 myProject,
                 myDocument,
+                myFile,
                 0,
                 myFile.getTextLength(),
                 infos,
