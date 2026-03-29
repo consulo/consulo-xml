@@ -15,26 +15,28 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.UserDataCache;
 import consulo.language.file.FileViewProvider;
 import consulo.language.psi.PsiFile;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValuesManager;
-import consulo.util.dataholder.Key;
 
 /**
  * @author Maxim.Mossienko
  * @since 2008-12-30
  */
 public abstract class FileBasedUserDataCache<T> extends UserDataCache<CachedValue<T>, PsiFile, Object> {
-  protected CachedValue<T> compute(final PsiFile xmlFile, final Object o) {
-    return CachedValuesManager.getManager(xmlFile.getProject()).createCachedValue(new CachedValueProvider<T>() {
-      public Result<T> compute() {
+  protected FileBasedUserDataCache(String keyName) {
+    super(keyName);
+  }
 
-        return new Result<T>(doCompute(xmlFile), getDependencies(xmlFile));
-      }
-    }, false);
+  @Override
+  @RequiredReadAction
+  protected CachedValue<T> compute(PsiFile xmlFile, Object o) {
+    return CachedValuesManager.getManager(xmlFile.getProject())
+        .createCachedValue(() -> new CachedValueProvider.Result<>(doCompute(xmlFile), getDependencies(xmlFile)), false);
   }
 
   protected Object[] getDependencies(PsiFile xmlFile) {
@@ -42,12 +44,12 @@ public abstract class FileBasedUserDataCache<T> extends UserDataCache<CachedValu
   }
 
   protected abstract T doCompute(PsiFile file);
-  protected abstract Key<CachedValue<T>> getKey();
 
+  @RequiredReadAction
   public T compute(PsiFile file) {
-    final FileViewProvider fileViewProvider = file.getViewProvider();
-    final PsiFile baseFile = fileViewProvider.getPsi(fileViewProvider.getBaseLanguage());
+    FileViewProvider fileViewProvider = file.getViewProvider();
+    PsiFile baseFile = fileViewProvider.getPsi(fileViewProvider.getBaseLanguage());
     baseFile.getFirstChild(); // expand chameleon out of lock
-    return get(getKey(), baseFile, null).getValue();
+    return get(baseFile, null).getValue();
   }
 }
