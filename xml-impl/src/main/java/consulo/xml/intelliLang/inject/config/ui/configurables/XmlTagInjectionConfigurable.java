@@ -16,24 +16,23 @@
 package consulo.xml.intelliLang.inject.config.ui.configurables;
 
 import consulo.language.inject.advanced.ui.InjectionConfigurable;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.intelliLang.inject.config.XmlTagInjection;
 import consulo.xml.intelliLang.inject.config.ui.XmlTagPanel;
 
-public class XmlTagInjectionConfigurable extends InjectionConfigurable<XmlTagInjection, XmlTagPanel>
-{
-	public XmlTagInjectionConfigurable(XmlTagInjection injection, Runnable treeUpdater, Project project)
-	{
-		super(injection, treeUpdater, project);
-	}
+public class XmlTagInjectionConfigurable extends InjectionConfigurable<XmlTagInjection, XmlTagPanel> {
+    public XmlTagInjectionConfigurable(XmlTagInjection injection, Runnable treeUpdater, Project project) {
+        super(injection, treeUpdater, project);
+    }
 
-	public String getBannerSlogan()
-	{
-		return "Edit XML Text Injection";
-	}
+	@Override
+    public LocalizeValue getBannerSlogan() {
+        return LocalizeValue.localizeTODO("Edit XML Text Injection");
+    }
 
-	protected XmlTagPanel createOptionsPanelImpl()
-	{
-		return new XmlTagPanel(myInjection, myProject);
-	}
+	@Override
+    protected XmlTagPanel createOptionsPanelImpl() {
+        return new XmlTagPanel(myInjection, myProject);
+    }
 }
