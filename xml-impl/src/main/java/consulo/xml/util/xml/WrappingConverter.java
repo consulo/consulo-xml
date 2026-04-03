@@ -16,9 +16,7 @@
 
 package consulo.xml.util.xml;
 
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +28,7 @@ import java.util.List;
  */
 public abstract class WrappingConverter extends Converter<Object> {
 
-  public Object fromString(@Nullable @NonNls String s, final ConvertContext context) {
+  public Object fromString(@Nullable String s, final ConvertContext context) {
     final List<Converter> converters = getConverters((GenericDomValue)context.getInvocationElement());
     if (converters.isEmpty()) return s;
     for (Converter converter : converters) {
@@ -54,14 +52,13 @@ public abstract class WrappingConverter extends Converter<Object> {
     return null;
   }
 
-  @Nonnull
-  public List<Converter> getConverters(@Nonnull final GenericDomValue domElement) {
+  public List<Converter> getConverters(final GenericDomValue domElement) {
     final Converter converter = getConverter(domElement);
     return converter == null ? Collections.<Converter>emptyList() : Collections.singletonList(converter);
   }
 
   @Nullable
-  public abstract Converter getConverter(@Nonnull final GenericDomValue domElement);
+  public abstract Converter getConverter(final GenericDomValue domElement);
 
   public static Converter getDeepestConverter(final Converter converter, final GenericDomValue domValue) {
     Converter cur = converter;

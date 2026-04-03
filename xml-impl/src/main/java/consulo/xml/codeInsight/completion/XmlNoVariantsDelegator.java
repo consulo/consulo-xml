@@ -24,7 +24,6 @@ import consulo.language.editor.completion.CompletionResultSet;
 import consulo.language.editor.completion.CompletionType;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
@@ -46,7 +45,6 @@ public class XmlNoVariantsDelegator extends CompletionContributor {
         }
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

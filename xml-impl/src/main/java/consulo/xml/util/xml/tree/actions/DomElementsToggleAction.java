@@ -25,7 +25,6 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
-import jakarta.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +61,7 @@ public class DomElementsToggleAction extends ToggleAction {
     }
 
     @Override
-    public void update(@Nonnull AnActionEvent e) {
+    public void update(AnActionEvent e) {
         super.update(e);
 
         e.getPresentation().setIcon(myIcon);
@@ -72,7 +71,7 @@ public class DomElementsToggleAction extends ToggleAction {
     }
 
     @Override
-    public boolean isSelected(@Nonnull AnActionEvent e) {
+    public boolean isSelected(AnActionEvent e) {
         return getHiders().get(myClass);
     }
 
@@ -82,7 +81,7 @@ public class DomElementsToggleAction extends ToggleAction {
 
     @Override
     @RequiredUIAccess
-    public void setSelected(@Nonnull AnActionEvent e, boolean state) {
+    public void setSelected(AnActionEvent e, boolean state) {
         getHiders().put(myClass, state);
         myTreeView.getBuilder().updateFromRoot();
     }

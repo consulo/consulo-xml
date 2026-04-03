@@ -31,18 +31,14 @@ import consulo.navigation.Navigatable;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Mike
  */
 public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttributeDecl, XmlElementType {
   private static final Logger LOG = Logger.getInstance("#XmlAttributeDeclImpl");
-  @NonNls
   private static final String ID_ATT = "ID";
-  @NonNls
   private static final String IDREF_ATT = "IDREF";
 
   public XmlAttributeDeclImpl() {
@@ -97,7 +93,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
 
     final StringBuilder builder = new StringBuilder();
     value.processElements(new PsiElementProcessor() {
-      public boolean execute(@Nonnull PsiElement element) {
+      public boolean execute(PsiElement element) {
         builder.append(element.getText());
         return true;
       }
@@ -142,7 +138,7 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     return MetaDataService.getInstance().getMeta(this);
   }
 
-  public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
+  public PsiElement setName(String name) throws IncorrectOperationException {
     XmlElementChangeUtil.doNameReplacement(this, getNameElement(), name);
     return null;
   }
@@ -174,7 +170,6 @@ public class XmlAttributeDeclImpl extends XmlElementImpl implements XmlAttribute
     navigatable.navigate(requestFocus);
   }
 
-  @Nonnull
   public PsiElement getNavigationElement() {
     return this;
   }

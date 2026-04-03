@@ -30,8 +30,7 @@ import consulo.project.Project;
 import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -41,7 +40,7 @@ public abstract class XmlBasedSmartEnterProcessor extends SmartEnterProcessor {
 
     @Override
     @RequiredReadAction
-    public boolean process(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile psiFile) {
+    public boolean process(Project project, Editor editor, PsiFile psiFile) {
         return completeEndTag(project, editor, psiFile);
     }
 
@@ -216,7 +215,6 @@ public abstract class XmlBasedSmartEnterProcessor extends SmartEnterProcessor {
         return getClosingQuote(xmlAttribute) + (emptyTag ? "/>" : ">");
     }
 
-    @Nonnull
     @RequiredReadAction
     protected static CharSequence getClosingQuote(@Nullable XmlAttribute attribute) {
         if (attribute == null) {

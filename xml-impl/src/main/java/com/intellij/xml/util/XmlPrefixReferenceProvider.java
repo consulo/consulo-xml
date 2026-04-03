@@ -13,16 +13,14 @@ import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceProvider;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev
  */
 public class XmlPrefixReferenceProvider extends PsiReferenceProvider {
 
-    @Nonnull
     @Override
-    public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+    public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
         XmlAttributeValue attributeValue = (XmlAttributeValue)element;
         PsiElement parent = attributeValue.getParent();
         if (parent instanceof XmlAttribute attribute

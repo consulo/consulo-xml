@@ -50,8 +50,7 @@ import consulo.xml.util.xml.stubs.DomStub;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 	protected final Stub myStub;
 
 	protected DomInvocationHandler(Type type, DomParentStrategy parentStrategy,
-								   @Nonnull final EvaluatedXmlName tagName,
+								   final EvaluatedXmlName tagName,
 								   final T childDescription,
 								   final DomManagerImpl manager,
 								   boolean dynamic,
@@ -110,7 +109,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	protected Type narrowType(@Nonnull Type nominalType)
+	protected Type narrowType(Type nominalType)
 	{
 		return nominalType;
 	}
@@ -143,7 +142,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return myStub;
 	}
 
-	@Nonnull
 	public final Type getDomElementType()
 	{
 		return myType;
@@ -265,7 +263,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return copy;
 	}
 
-	@Nonnull
 	public String getXmlElementNamespace()
 	{
 		final DomInvocationHandler parent = getParentHandler();
@@ -404,7 +401,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 	}
 
 
-	@Nonnull
 	public final DomGenericInfoEx getGenericInfo()
 	{
 		return myGenericInfo;
@@ -475,13 +471,11 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	@Nonnull
 	public final String getXmlElementName()
 	{
 		return myTagName.getXmlName().getLocalName();
 	}
 
-	@Nonnull
 	public final EvaluatedXmlName getXmlName()
 	{
 		return myTagName;
@@ -511,7 +505,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	@Nonnull
 	protected final Converter getScalarConverter()
 	{
 		Converter converter = myScalarConverter;
@@ -522,7 +515,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return converter;
 	}
 
-	@Nonnull
 	private Converter createConverter(final JavaMethod method)
 	{
 		final Type returnType = method.getGenericReturnType();
@@ -614,7 +606,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return null;
 	}
 
-	@Nonnull
 	@SuppressWarnings("unchecked")
 	public final DomElement getProxy()
 	{
@@ -633,13 +624,11 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return myProxy;
 	}
 
-	@Nonnull
 	public final XmlFile getFile()
 	{
 		return getParentStrategy().getContainingFile(this);
 	}
 
-	@Nonnull
 	public DomNameStrategy getNameStrategy()
 	{
 		final Class<?> rawType = getRawType();
@@ -657,7 +646,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return false;
 	}
 
-	@Nonnull
 	public ElementPresentation getPresentation()
 	{
 		ElementPresentationTemplate template = getChildDescription().getPresentationTemplate();
@@ -703,7 +691,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return _getParentOfType(requiredClass, strict ? getParent() : getProxy());
 	}
 
-	@Nonnull
 	final IndexedElementInvocationHandler getFixedChild(final Pair<FixedChildDescriptionImpl, Integer> info)
 	{
 		final FixedChildDescriptionImpl description = info.first;
@@ -751,7 +738,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		return new IndexedElementInvocationHandler(evaluatedXmlName, description, index, new VirtualDomParentStrategy(this), myManager, null);
 	}
 
-	@Nonnull
 	final AttributeChildInvocationHandler getAttributeChild(final AttributeChildDescriptionImpl description)
 	{
 		final EvaluatedXmlName evaluatedXmlName = createEvaluatedXmlName(description.getXmlName());
@@ -796,7 +782,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	@Nonnull
 	private Invocation findInvocation(Method method)
 	{
 		Invocation invocation = myAccessorInvocations.get(method);
@@ -866,7 +851,7 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 	}
 
 	@Nullable
-	protected XmlElement recomputeXmlElement(@Nonnull final DomInvocationHandler parentHandler)
+	protected XmlElement recomputeXmlElement(final DomInvocationHandler parentHandler)
 	{
 		return null;
 	}
@@ -911,7 +896,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		myGenericInfo = dynamic ? new DynamicGenericInfo(this, staticInfo) : staticInfo;
 	}
 
-	@Nonnull
 	public final DomManagerImpl getManager()
 	{
 		return myManager;
@@ -968,7 +952,6 @@ public abstract class DomInvocationHandler<T extends AbstractDomChildDescription
 		}
 	}
 
-	@Nonnull
 	public final EvaluatedXmlName createEvaluatedXmlName(final XmlName xmlName)
 	{
 		return getXmlName().evaluateChildName(xmlName);

@@ -33,8 +33,7 @@ import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,7 +78,7 @@ public class DomFileDescription<T>
 	 * @deprecated use {@link #registerNamespacePolicy(String, String...)} or override {@link #getAllowedNamespaces(String,
 	 * XmlFile)} instead
 	 */
-	protected final void registerNamespacePolicy(@Nonnull String namespaceKey, Function<XmlTag, List<String>> policy)
+	protected final void registerNamespacePolicy(String namespaceKey, Function<XmlTag, List<String>> policy)
 	{
 		myNamespacePolicies.put(namespaceKey, policy);
 	}
@@ -89,7 +88,7 @@ public class DomFileDescription<T>
 	 * @param namespaces   XML namespace or DTD public or system id value for the given namespaceKey
 	 * @see Namespace
 	 */
-	public final void registerNamespacePolicy(@Nonnull String namespaceKey, final String... namespaces)
+	public final void registerNamespacePolicy(String namespaceKey, final String... namespaces)
 	{
 		registerNamespacePolicy(namespaceKey, new ConstantFunction<>(Arrays.asList(namespaces)));
 	}
@@ -98,8 +97,7 @@ public class DomFileDescription<T>
 	 * Consider using {@link DomService#getXmlFileHeader(XmlFile)} when implementing this.
 	 */
 	@SuppressWarnings({"MethodMayBeStatic"})
-	@Nonnull
-	public List<String> getAllowedNamespaces(@Nonnull String namespaceKey, @Nonnull XmlFile file)
+	public List<String> getAllowedNamespaces(String namespaceKey, XmlFile file)
 	{
 		final Function<XmlTag, List<String>> function = myNamespacePolicies.get(namespaceKey);
 		if(function instanceof ConstantFunction)
@@ -179,7 +177,6 @@ public class DomFileDescription<T>
 		return null;
 	}
 
-	@Nonnull
 	public final Class<T> getRootElementClass()
 	{
 		return myRootElementClass;
@@ -190,7 +187,7 @@ public class DomFileDescription<T>
 		return myRootTagName;
 	}
 
-	public boolean isMyFile(@Nonnull XmlFile file)
+	public boolean isMyFile(XmlFile file)
 	{
 		final Namespace namespace = DomReflectionUtil.findAnnotationDFS(myRootElementClass, Namespace.class);
 		if(namespace != null)
@@ -222,7 +219,6 @@ public class DomFileDescription<T>
 	 * @param file XML file to get dependencies of
 	 * @return dependency item set
 	 */
-	@Nonnull
 	public Set<? extends Object> getDependencyItems(XmlFile file)
 	{
 		return Collections.emptySet();
@@ -232,7 +228,6 @@ public class DomFileDescription<T>
 	 * @param reference DOM reference
 	 * @return element, whose all children will be searched for declaration
 	 */
-	@Nonnull
 	public DomElement getResolveScope(GenericDomValue<?> reference)
 	{
 		final DomElement annotation = getScopeFromAnnotation(reference);
@@ -249,7 +244,6 @@ public class DomFileDescription<T>
 	 * @return element, whose direct children names will be compared by name. Basically it's parameter element's parent (see {@link
 	 * ParentScopeProvider}).
 	 */
-	@Nonnull
 	public DomElement getIdentityScope(DomElement element)
 	{
 		final DomElement annotation = getScopeFromAnnotation(element);

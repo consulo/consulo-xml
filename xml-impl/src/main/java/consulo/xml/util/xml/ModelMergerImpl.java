@@ -10,10 +10,8 @@ import consulo.util.collection.SmartList;
 import consulo.util.lang.Pair;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -88,7 +86,7 @@ public class ModelMergerImpl implements ModelMerger
 
 			public Object invokeMethod(final JavaMethod method, final Object proxy, final Object[] args, final List<Object> implementations)
 			{
-				@NonNls String methodName = method.getName();
+				String methodName = method.getName();
 				if("toString".equals(methodName))
 				{
 					return "Merger: " + implementations;
@@ -298,7 +296,6 @@ public class ModelMergerImpl implements ModelMerger
 			myClass = aClass;
 		}
 
-		@Nonnull
 		private InvocationStrategy findStrategy(final Object proxy, final Method method)
 		{
 			for(final Pair<InvocationStrategy, Class> pair : myAcceptsCache.get(method))

@@ -4,7 +4,7 @@ import consulo.annotation.DeprecationInfo;
 import consulo.component.util.pointer.NamedPointer;
 import consulo.language.Language;
 import consulo.language.LanguagePointerUtil;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL

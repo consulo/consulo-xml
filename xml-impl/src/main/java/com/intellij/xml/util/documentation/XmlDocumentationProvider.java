@@ -44,10 +44,8 @@ import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,7 +67,6 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         return element instanceof SchemaPrefix schemaPrefix ? schemaPrefix.getQuickNavigateInfo() : null;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;
@@ -205,7 +202,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         return enumerationTag.get();
     }
 
-    static String generateHtmlAdditionalDocTemplate(@Nonnull PsiElement element) {
+    static String generateHtmlAdditionalDocTemplate(PsiElement element) {
         StringBuilder buf = new StringBuilder();
         final PsiFile containingFile = element.getContainingFile();
         if (containingFile != null) {
@@ -374,7 +371,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
                 return null;
             }
             try {
-                @NonNls StringBuffer tagText = new StringBuffer(object.toString());
+                StringBuffer tagText = new StringBuffer(object.toString());
                 String namespacePrefix = XmlUtil.findPrefixByQualifiedName(object.toString());
                 String namespace = tag.getNamespaceByPrefix(namespacePrefix);
 
@@ -451,7 +448,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         return null;
     }
 
-    public static PsiElement findDeclWithName(final String name, final @Nonnull PsiElement element) {
+    public static PsiElement findDeclWithName(final String name, final PsiElement element) {
         final XmlFile containingXmlFile = XmlUtil.getContainingFile(element);
         final XmlTag nearestTag = PsiTreeUtil.getParentOfType(element, XmlTag.class, false);
         final XmlFile xmlFile = nearestTag != null ? XmlUtil.findDescriptorFile(nearestTag, containingXmlFile) : containingXmlFile;
@@ -492,16 +489,13 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         String result;
         String version;
         String url;
-        @NonNls
         public static final String DOCUMENTATION_ELEMENT_LOCAL_NAME = "documentation";
         private
-        @NonNls
         static final String CDATA_PREFIX = "<![CDATA[";
         private
-        @NonNls
         static final String CDATA_SUFFIX = "]]>";
 
-        public boolean execute(@Nonnull PsiElement element) {
+        public boolean execute(PsiElement element) {
             if (element instanceof XmlTag tag && DOCUMENTATION_ELEMENT_LOCAL_NAME.equals(tag.getLocalName())) {
                 result = tag.getValue().getText().trim();
                 boolean withCData = false;
@@ -520,7 +514,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
                     result = escapeDocumentationTextText(result);
                 }
 
-                final @NonNls String s = tag.getAttributeValue("source");
+                final String s = tag.getAttributeValue("source");
                 if (s != null) {
                     if (s.startsWith("http:")) {
                         url = s;

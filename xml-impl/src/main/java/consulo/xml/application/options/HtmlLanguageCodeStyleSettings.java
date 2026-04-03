@@ -24,21 +24,19 @@ import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.language.codeStyle.ui.setting.SmartIndentOptionsEditor;
 import consulo.xml.lang.html.HTMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Rustam Vishnyakov
  */
 @ExtensionImpl
 public class HtmlLanguageCodeStyleSettings extends LanguageCodeStyleSettingsProvider {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return HTMLLanguage.INSTANCE;
     }
 
     @Override
-    public String getCodeSample(@Nonnull SettingsType settingsType) {
+    public String getCodeSample(SettingsType settingsType) {
         return CodeStyleAbstractPanel.readFromFile(this.getClass(), "preview.html.template");
     }
 

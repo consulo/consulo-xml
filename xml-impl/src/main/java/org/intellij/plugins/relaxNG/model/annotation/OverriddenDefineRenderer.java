@@ -19,8 +19,7 @@ package org.intellij.plugins.relaxNG.model.annotation;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.application.AllIcons;
 import consulo.application.dumb.DumbAware;
@@ -41,12 +40,11 @@ class OverriddenDefineRenderer extends GutterIconRenderer implements DumbAware {
 
   private final Define myDefine;
 
-  public OverriddenDefineRenderer(@Nonnull Define define) {
+  public OverriddenDefineRenderer(Define define) {
     myDefine = define;
   }
 
   @Override
-  @Nonnull
   public Image getIcon() {
     return AllIcons.Gutter.OverridenMethod;
   }

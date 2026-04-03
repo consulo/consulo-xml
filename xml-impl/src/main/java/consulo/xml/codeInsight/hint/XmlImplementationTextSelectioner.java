@@ -26,7 +26,6 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author anna
@@ -38,13 +37,13 @@ public class XmlImplementationTextSelectioner implements ImplementationTextSelec
 
     @Override
     @RequiredReadAction
-    public int getTextStartOffset(@Nonnull PsiElement parent) {
+    public int getTextStartOffset(PsiElement parent) {
         return parent.getTextRange().getStartOffset();
     }
 
     @Override
     @RequiredReadAction
-    public int getTextEndOffset(@Nonnull PsiElement element) {
+    public int getTextEndOffset(PsiElement element) {
         if (element instanceof XmlAttributeValue) {
             XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);// for convenience
             if (xmlTag != null) {
@@ -55,7 +54,6 @@ public class XmlImplementationTextSelectioner implements ImplementationTextSelec
         return element.getTextRange().getEndOffset();
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

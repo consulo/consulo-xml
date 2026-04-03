@@ -31,7 +31,6 @@ import consulo.xml.util.xml.reflect.DomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public abstract class BasicDomElementComponent<T extends DomElement> extends Abs
     if (domElement == null) return;
 
     DomElementAnnotationsManager.getInstance(domElement.getManager().getProject()).addHighlightingListener(new DomElementAnnotationsManager.DomHighlightingListener() {
-      public void highlightingFinished(@Nonnull final DomFileElement element) {
+      public void highlightingFinished(final DomFileElement element) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
           public void run() {
             if (getComponent().isShowing() && element.isValid()) {

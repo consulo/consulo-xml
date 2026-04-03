@@ -24,7 +24,6 @@ import consulo.language.lexer.MergingLexerAdapter;
 import consulo.language.util.LanguageUtil;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
@@ -52,7 +51,7 @@ public class HtmlLexer extends BaseHtmlLexer {
   }
 
   @Override
-  public void start(@Nonnull CharSequence buffer, int startOffset, int endOffset, int initialState) {
+  public void start(CharSequence buffer, int startOffset, int endOffset, int initialState) {
     myTokenType = null;
     super.start(buffer, startOffset, endOffset, initialState);
   }

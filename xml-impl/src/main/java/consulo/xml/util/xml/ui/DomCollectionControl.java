@@ -40,8 +40,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.lang.reflect.Type;
@@ -391,7 +390,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
         }
 
         @Override
-        protected final void afterAddition(@Nonnull T newElement) {
+        protected final void afterAddition(T newElement) {
             reset();
             afterAddition(myCollectionPanel.getTable(), myCollectionElements.size() - 1);
         }

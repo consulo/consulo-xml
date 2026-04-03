@@ -16,8 +16,7 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.AttributeStub;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -44,7 +43,7 @@ public class AttributeChildInvocationHandler extends DomInvocationHandler<Attrib
     return true;
   }
 
-  protected XmlElement recomputeXmlElement(@Nonnull final DomInvocationHandler parent) {
+  protected XmlElement recomputeXmlElement(final DomInvocationHandler parent) {
     if (!parent.isValid()) return null;
 
     final XmlTag tag = parent.getXmlTag();

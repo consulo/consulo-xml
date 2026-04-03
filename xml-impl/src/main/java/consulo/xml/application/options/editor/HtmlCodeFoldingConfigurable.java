@@ -26,8 +26,7 @@ import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author anna
@@ -35,10 +34,9 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionImpl
 public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties implements ApplicationConfigurable {
-    @Nonnull
     @Override
     @RequiredUIAccess
-    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
+    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 
         XmlFoldingSettings settings = XmlFoldingSettings.getInstance();
@@ -50,7 +48,6 @@ public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties 
         return layout;
     }
 
-    @Nonnull
     @Override
     public String getId() {
         return "editor.preferences.folding.html";
@@ -62,7 +59,6 @@ public class HtmlCodeFoldingConfigurable extends SimpleConfigurableByProperties 
         return "editor.preferences.folding";
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return ApplicationLocalize.titleHtml();

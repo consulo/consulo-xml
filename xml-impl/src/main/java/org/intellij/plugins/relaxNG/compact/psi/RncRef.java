@@ -16,7 +16,7 @@
 package org.intellij.plugins.relaxNG.compact.psi;
 
 import org.intellij.plugins.relaxNG.model.Ref;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter

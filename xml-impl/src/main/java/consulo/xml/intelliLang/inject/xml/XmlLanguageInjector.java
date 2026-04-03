@@ -35,8 +35,7 @@ import consulo.util.lang.function.PairProcessor;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -62,7 +61,7 @@ public abstract class XmlLanguageInjector implements MultiHostInjector {
   }
 
   @Override
-  public void injectLanguages(@Nonnull final MultiHostRegistrar registrar, @Nonnull PsiElement host) {
+  public void injectLanguages(final MultiHostRegistrar registrar, PsiElement host) {
     final XmlElement xmlElement = (XmlElement) host;
     if (!isInIndex(xmlElement)) return;
     final TreeSet<TextRange> ranges = new TreeSet<TextRange>(InjectorUtils.RANGE_COMPARATOR);

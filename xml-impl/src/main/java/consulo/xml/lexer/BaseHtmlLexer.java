@@ -31,10 +31,8 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.lang.HtmlScriptContentProvider;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,11 +78,8 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 
 	public class XmlNameHandler implements TokenHandler
 	{
-		@NonNls
 		private static final String TOKEN_SCRIPT = "script";
-		@NonNls
 		private static final String TOKEN_STYLE = "style";
-		@NonNls
 		private static final String TOKEN_ON = "on";
 
 		@Override
@@ -108,7 +103,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 				seenContentType = false;
 				if(((firstCh == 'l' || firstCh == 't') || (caseInsensitive && (firstCh == 'L' || firstCh == 'T'))))
 				{
-					@NonNls String name = TreeUtil.getTokenText(lexer);
+					String name = TreeUtil.getTokenText(lexer);
 					seenContentType = Comparing.strEqual("language", name, !caseInsensitive) || Comparing.strEqual("type", name, !caseInsensitive);
 					return;
 				}
@@ -185,12 +180,12 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 		{
 			if(seenContentType && seenScript && !seenAttribute)
 			{
-				@NonNls String mimeType = TreeUtil.getTokenText(lexer);
+				String mimeType = TreeUtil.getTokenText(lexer);
 				scriptType = caseInsensitive ? mimeType.toLowerCase(Locale.US) : mimeType;
 			}
 			if(seenStylesheetType && seenStyle && !seenAttribute)
 			{
-				@NonNls String type = TreeUtil.getTokenText(lexer).trim();
+				String type = TreeUtil.getTokenText(lexer).trim();
 				styleType = caseInsensitive ? type.toLowerCase(Locale.US) : type;
 			}
 		}
@@ -353,7 +348,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	}
 
 	@Override
-	public void start(@Nonnull final CharSequence buffer, final int startOffset, final int endOffset, final int initialState)
+	public void start(final CharSequence buffer, final int startOffset, final int endOffset, final int initialState)
 	{
 		initState(initialState);
 		super.start(buffer, startOffset, endOffset, initialState & BASE_STATE_MASK);

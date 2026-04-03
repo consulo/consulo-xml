@@ -29,8 +29,7 @@ import consulo.util.lang.Pair;
 import consulo.xml.psi.xml.XmlComment;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -45,7 +44,7 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
    * @param host  target element to check
    * @return      <code>true</code> if given element is conditional comment; <code>false</code> otherwise
    */
-  public static boolean isConditionalComment(@Nonnull PsiElement host) {
+  public static boolean isConditionalComment(PsiElement host) {
     return parseConditionalCommentBoundaries(host) != null;
   }
 
@@ -57,7 +56,7 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
    *              pair like <code>(conditional comment start element; conditional comment end element)</code> otherwise
    */
   @Nullable
-  private static Pair<ASTNode, ASTNode> parseConditionalCommentBoundaries(@Nonnull PsiElement host) {
+  private static Pair<ASTNode, ASTNode> parseConditionalCommentBoundaries(PsiElement host) {
     if (!(host instanceof XmlComment)) {
       return null;
     }
@@ -77,14 +76,13 @@ public class HtmlConditionalCommentInjector implements MultiHostInjector {
     return endOfEnd == null ? null : new Pair<ASTNode, ASTNode>(conditionalStart, conditionalEnd);
   }
 
-  @Nonnull
   @Override
   public Class<? extends PsiElement> getElementClass() {
     return PsiComment.class;
   }
 
   @Override
-  public void injectLanguages(@Nonnull final MultiHostRegistrar registrar, @Nonnull final PsiElement host) {
+  public void injectLanguages(final MultiHostRegistrar registrar, final PsiElement host) {
     Pair<ASTNode, ASTNode> pair = parseConditionalCommentBoundaries(host);
     if (pair == null) {
       return;

@@ -36,10 +36,8 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.GenericDomValue;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,20 +50,20 @@ import java.util.Set;
  */
 public abstract class GoToSymbolProvider implements GotoSymbolContributor {
 
-  protected abstract void addNames(@Nonnull Module module, Set<String> result);
+  protected abstract void addNames(Module module, Set<String> result);
 
-  protected abstract void addItems(@Nonnull Module module, String name, List<NavigationItem> result);
+  protected abstract void addItems(Module module, String name, List<NavigationItem> result);
 
   protected abstract boolean acceptModule(final Module module);
 
-  protected static void addNewNames(@Nonnull final List<? extends DomElement> elements, final Set<String> existingNames) {
+  protected static void addNewNames(final List<? extends DomElement> elements, final Set<String> existingNames) {
     for (DomElement name : elements) {
       existingNames.add(name.getGenericInfo().getElementName(name));
     }
   }
 
   @Override
-  public void processNames(@Nonnull Processor<String> processor, @Nonnull SearchScope searchScope, @Nullable IdFilter idFilter) {
+  public void processNames(Processor<String> processor, SearchScope searchScope, @Nullable IdFilter idFilter) {
     if (!(searchScope instanceof ProjectAwareSearchScope)) {
       return;
     }
@@ -81,9 +79,9 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
   }
 
   @Override
-  public void processElementsWithName(@Nonnull String name,
-                                      @Nonnull Processor<NavigationItem> processor,
-                                      @Nonnull FindSymbolParameters params) {
+  public void processElementsWithName(String name,
+                                      Processor<NavigationItem> processor,
+                                      FindSymbolParameters params) {
     NavigationItem[] itemsByName = getItemsByName(name,
                                                   params.getCompletePattern(),
                                                   params.getProject(),
@@ -96,7 +94,6 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
     }
   }
 
-  @Nonnull
   public String[] getNames(final Project project, boolean includeNonProjectItems) {
     Set<String> result = new HashSet<String>();
     Module[] modules = ModuleManager.getInstance(project).getModules();
@@ -109,7 +106,6 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
     return ArrayUtil.toStringArray(result);
   }
 
-  @Nonnull
   public NavigationItem[] getItemsByName(final String name, final String pattern, final Project project, boolean includeNonProjectItems) {
     List<NavigationItem> result = new ArrayList<NavigationItem>();
     Module[] modules = ModuleManager.getInstance(project).getModules();
@@ -135,9 +131,8 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
     return createNavigationItem(psiElement, value, icon);
   }
 
-  @Nonnull
-  protected static NavigationItem createNavigationItem(@Nonnull final PsiElement element,
-                                                       @Nonnull @NonNls final String text,
+  protected static NavigationItem createNavigationItem(final PsiElement element,
+                                                       final String text,
                                                        @Nullable final Image icon) {
     return new BaseNavigationItem(element, text, icon);
   }
@@ -159,13 +154,12 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
      * @param text       Text to show for this element.
      * @param icon       Icon to show for this element.
      */
-    public BaseNavigationItem(@Nonnull PsiElement psiElement, @Nonnull @NonNls String text, @Nullable Image icon) {
+    public BaseNavigationItem(PsiElement psiElement, String text, @Nullable Image icon) {
       myPsiElement = psiElement;
       myText = text;
       myIcon = icon;
     }
 
-    @Nonnull
     public PsiElement getNavigationElement() {
       return myPsiElement;
     }
@@ -197,7 +191,6 @@ public abstract class GoToSymbolProvider implements GotoSymbolContributor {
       return myPsiElement.getParent();
     }
 
-    @Nonnull
     @Override
     public Project getProject() {
       return myPsiElement.getProject();

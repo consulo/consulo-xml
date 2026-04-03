@@ -20,14 +20,13 @@ import org.apache.xerces.jaxp.SAXParserFactoryImpl;
 import org.apache.xerces.util.SecurityManager;
 import org.apache.xerces.util.XMLGrammarPoolImpl;
 import org.apache.xerces.xni.grammars.XMLGrammarPool;
-import org.jetbrains.annotations.NonNls;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -59,7 +58,6 @@ public class ValidateXmlActionHandler implements ValidateXmlHandler {
     private SAXParser myParser;
     private XmlResourceResolver myXmlResourceResolver;
     private final boolean myForceChecking;
-    @NonNls
     private static final String ENTITY_RESOLVER_PROPERTY_NAME = "http://apache.org/xml/properties/internal/entity-resolver";
 
     public ValidateXmlActionHandler(boolean _forceChecking) {

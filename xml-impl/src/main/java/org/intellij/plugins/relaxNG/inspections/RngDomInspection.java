@@ -20,9 +20,6 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -34,7 +31,6 @@ public class RngDomInspection extends BasicDomElementsInspection<RngDomElement, 
         super(RngDomElement.class);
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;
@@ -45,19 +41,16 @@ public class RngDomInspection extends BasicDomElementsInspection<RngDomElement, 
         return true;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return BaseInspection.getRngGroupDisplayName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return LocalizeValue.localizeTODO("Unresolved References");
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "UnresolvedReference";

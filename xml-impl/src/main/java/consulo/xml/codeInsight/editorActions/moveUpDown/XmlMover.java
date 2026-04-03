@@ -40,7 +40,6 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 import jakarta.inject.Inject;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xml", order = "before line")
 class XmlMover extends LineMover {
@@ -50,7 +49,7 @@ class XmlMover extends LineMover {
 
     @Override
     @RequiredReadAction
-    public boolean checkAvailable(@Nonnull Editor editor, @Nonnull PsiFile file, @Nonnull MoveInfo info, boolean down) {
+    public boolean checkAvailable(Editor editor, PsiFile file, MoveInfo info, boolean down) {
         if (!(file instanceof XmlFile)) {
             return false;
         }
@@ -284,7 +283,7 @@ class XmlMover extends LineMover {
             || (text2 != null && InjectedLanguageManager.getInstance(text2.getProject()).getInjectedPsiFiles(text2) != null);
     }
 
-    private static void updatedMovedIntoEnd(Document document, @Nonnull MoveInfo info, int offset) {
+    private static void updatedMovedIntoEnd(Document document, MoveInfo info, int offset) {
         if (offset + 1 < document.getTextLength()) {
             int line = document.getLineNumber(offset + 1);
             LineRange toMove2 = info.toMove2;
@@ -299,7 +298,7 @@ class XmlMover extends LineMover {
         Document document,
         int movedLineStart,
         int offset,
-        @Nonnull MoveInfo info,
+        MoveInfo info,
         boolean down
     ) {
         int line = document.getLineNumber(offset);
@@ -320,7 +319,7 @@ class XmlMover extends LineMover {
         Document document,
         int movedLineStart,
         int valueStart,
-        @Nonnull MoveInfo info,
+        MoveInfo info,
         boolean down
     ) {
         int line = document.getLineNumber(valueStart);

@@ -25,9 +25,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +87,7 @@ public class XmlTagUtil {
     }
 
 
-    public static String composeTagText(@NonNls String tagName, @NonNls String tagValue) {
+    public static String composeTagText(String tagName, String tagValue) {
         String result = "<" + tagName;
         if (tagValue == null || "".equals(tagValue)) {
             result += "/>";
@@ -110,7 +108,7 @@ public class XmlTagUtil {
     }
 
     @Nullable
-    public static XmlToken getStartTagNameElement(@Nonnull XmlTag tag) {
+    public static XmlToken getStartTagNameElement(XmlTag tag) {
         final ASTNode node = tag.getNode();
         if (node == null) {
             return null;
@@ -127,7 +125,7 @@ public class XmlTagUtil {
     }
 
     @Nullable
-    public static XmlToken getEndTagNameElement(@Nonnull XmlTag tag) {
+    public static XmlToken getEndTagNameElement(XmlTag tag) {
         final ASTNode node = tag.getNode();
         if (node == null) {
             return null;
@@ -149,8 +147,7 @@ public class XmlTagUtil {
         return null;
     }
 
-    @Nonnull
-    public static TextRange getTrimmedValueRange(final @Nonnull XmlTag tag) {
+    public static TextRange getTrimmedValueRange(final XmlTag tag) {
         XmlTagValue tagValue = tag.getValue();
         final String text = tagValue.getText();
         final String trimmed = text.trim();
@@ -160,14 +157,14 @@ public class XmlTagUtil {
     }
 
     @Nullable
-    public static TextRange getStartTagRange(@Nonnull XmlTag tag) {
+    public static TextRange getStartTagRange(XmlTag tag) {
         XmlToken tagName = getStartTagNameElement(tag);
         return getTag(tagName, XmlTokenType.XML_START_TAG_START);
     }
 
 
     @Nullable
-    public static TextRange getEndTagRange(@Nonnull XmlTag tag) {
+    public static TextRange getEndTagRange(XmlTag tag) {
         XmlToken tagName = getEndTagNameElement(tag);
 
         return getTag(tagName, XmlTokenType.XML_END_TAG_START);

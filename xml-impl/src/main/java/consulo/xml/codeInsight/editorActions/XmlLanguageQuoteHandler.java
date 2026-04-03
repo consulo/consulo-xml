@@ -5,7 +5,6 @@ import consulo.language.Language;
 import consulo.language.editor.action.LanguageQuoteHandler;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlLanguageQuoteHandler extends XmlBasedQuoteHandler implements LanguageQuoteHandler {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

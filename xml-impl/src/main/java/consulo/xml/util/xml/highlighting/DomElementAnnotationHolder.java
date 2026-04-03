@@ -27,34 +27,30 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDescriptor> {
     boolean isOnTheFly();
 
-    @Nonnull
-    DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes);
+    DomElementProblemDescriptor createProblem(DomElement domElement, @Nullable String message, LocalQuickFix... fixes);
 
-    @Nonnull
     DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         DomCollectionChildDescription childDescription,
         @Nullable String message
     );
 
-    @Nonnull
-    DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, HighlightSeverity highlightType, String message);
+    DomElementProblemDescriptor createProblem(DomElement domElement, HighlightSeverity highlightType, String message);
 
     DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         HighlightSeverity highlightType,
         String message,
         LocalQuickFix... fixes
     );
 
     DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         HighlightSeverity highlightType,
         String message,
         TextRange textRange,
@@ -62,15 +58,14 @@ public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDe
     );
 
     DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         ProblemHighlightType highlightType,
         String message,
         @Nullable TextRange textRange,
         LocalQuickFix... fixes
     );
 
-    @Nonnull
-    DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference);
+    DomElementResolveProblemDescriptor createResolveProblem(GenericDomValue element, PsiReference reference);
 
     /**
      * Is useful only if called from {@link DomElementsAnnotator} instance
@@ -80,9 +75,8 @@ public interface DomElementAnnotationHolder extends Iterable<DomElementProblemDe
      * @param message  description
      * @return annotation
      */
-    @Nonnull
     @RequiredReadAction
-    Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message);
+    Annotation createAnnotation(DomElement element, HighlightSeverity severity, LocalizeValue message);
 
     int getSize();
 }

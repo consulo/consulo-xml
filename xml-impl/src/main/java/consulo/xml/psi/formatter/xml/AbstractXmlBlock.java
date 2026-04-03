@@ -40,8 +40,7 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,7 +242,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   private static XmlTag[] collectSubTags(final XmlElement node) {
     final List<XmlTag> result = new ArrayList<XmlTag>();
     node.processElements(new PsiElementProcessor() {
-      public boolean execute(@Nonnull final PsiElement element) {
+      public boolean execute(final PsiElement element) {
         if (element instanceof XmlTag) {
           result.add((XmlTag)element);
         }
@@ -269,7 +268,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   }
 
   private ASTNode processAllChildrenFrom(final List<Block> result,
-                                         final @Nonnull ASTNode child,
+                                         final ASTNode child,
                                          final Wrap wrap,
                                          final Alignment alignment,
                                          final Indent indent) {
@@ -406,7 +405,7 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
   }
 
   @Nullable
-  protected static ASTNode findChildAfter(@Nonnull final ASTNode child, final int endOffset) {
+  protected static ASTNode findChildAfter(final ASTNode child, final int endOffset) {
     TreeElement fileNode = TreeUtil.getFileElement((TreeElement)child);
     final LeafElement leaf = fileNode.findLeafElementAt(endOffset);
     if (leaf != null && leaf.getStartOffset() == endOffset && endOffset > 0) {

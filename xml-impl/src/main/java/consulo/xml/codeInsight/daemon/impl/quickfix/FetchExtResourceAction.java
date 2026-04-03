@@ -54,8 +54,7 @@ import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.io.File;
@@ -83,7 +82,6 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
         myForceResultIsValid = forceResultIsValid;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlLocalize.fetchExternalResource();
@@ -142,13 +140,13 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
 
     @Override
     @RequiredUIAccess
-    protected void doInvoke(@Nonnull PsiFile file, int offset, @Nonnull String uri, Editor editor) throws IncorrectOperationException {
+    protected void doInvoke(PsiFile file, int offset, String uri, Editor editor) throws IncorrectOperationException {
         String url = findUrl(file, offset, uri);
         Project project = file.getProject();
 
         ProgressManager.getInstance().run(new Task.Backgroundable(project, XmlLocalize.fetchingResourceTitle()) {
             @Override
-            public void run(@Nonnull ProgressIndicator indicator) {
+            public void run(ProgressIndicator indicator) {
                 while (true) {
                     try {
                         HttpProxyManager.getInstance().prepareURL(url);

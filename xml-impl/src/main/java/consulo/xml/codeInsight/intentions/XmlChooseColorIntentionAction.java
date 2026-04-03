@@ -35,7 +35,6 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,13 +51,13 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) {
+    public boolean isAvailable(Project project, Editor editor, PsiElement element) {
         PsiElement parent = element.getParent();
         return parent instanceof XmlAttributeValue attrValue && ColorUtil.fromHex(attrValue.getValue(), null) != null;
     }
 
     @Override
-    public void invoke(@Nonnull Project project, Editor editor, @Nonnull PsiElement element) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiElement element) throws IncorrectOperationException {
         chooseColor(editor.getComponent(), element, getText().get());
     }
 

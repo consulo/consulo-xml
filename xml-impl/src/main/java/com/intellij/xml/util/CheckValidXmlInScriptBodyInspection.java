@@ -50,8 +50,7 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Maxim.Mossienko
@@ -75,9 +74,8 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
             @RequiredReadAction
@@ -142,19 +140,16 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
         };
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.HTML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsCheckValidScriptTag();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "CheckValidXmlInScriptTagBody";
@@ -171,7 +166,6 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
             myStartInElement = startInElement;
         }
 
-        @Nonnull
         @Override
         @RequiredReadAction
         public LocalizeValue getName() {
@@ -183,7 +177,7 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor problemDescriptor) {
+        public void applyFix(Project project, ProblemDescriptor problemDescriptor) {
             if (!FileModificationService.getInstance().prepareFileForWrite(myPsiFile)) {
                 return;
             }
@@ -215,7 +209,6 @@ public class CheckValidXmlInScriptBodyInspection extends XmlSuppressableInspecti
         }
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;

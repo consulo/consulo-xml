@@ -23,7 +23,6 @@ import consulo.component.persist.Storage;
 import consulo.xml.impl.internal.StandardExternalResourceData;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,7 +37,6 @@ public class ProjectExternalResourceManagerImpl extends ExternalResourceManagerE
 {
 	private StandardExternalResourceData myData = new StandardExternalResourceData(Map.of(), Set.of());
 
-	@Nonnull
 	@Override
 	protected StandardExternalResourceData getData()
 	{

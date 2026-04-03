@@ -12,8 +12,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 @ExtensionImpl
@@ -78,7 +77,6 @@ public class RngDocumentationProvider implements DocumentationProvider, Language
 		return null;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

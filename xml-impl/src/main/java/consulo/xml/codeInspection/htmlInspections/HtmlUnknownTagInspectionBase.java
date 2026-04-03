@@ -37,14 +37,12 @@ import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementInspection {
-    @Nonnull
     @Override
     public InspectionToolState<?> createStateProvider() {
         return new HtmlUnknownTagInspectionState(getCheckboxTitle());
@@ -54,13 +52,11 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
         return descriptor == null || descriptor instanceof AnyXmlElementDescriptor;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsUnknownTag();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return XmlEntitiesInspection.TAG_SHORT_NAME;
@@ -73,7 +69,7 @@ public abstract class HtmlUnknownTagInspectionBase extends HtmlUnknownElementIns
 
     @Override
     @RequiredReadAction
-    protected void checkTag(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder, boolean isOnTheFly, Object state) {
+    protected void checkTag(XmlTag tag, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         if (!(tag instanceof HtmlTag) || !XmlHighlightVisitor.shouldBeValidated(tag)) {
             return;
         }

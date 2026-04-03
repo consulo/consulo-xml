@@ -18,8 +18,7 @@ package consulo.xml.psi.impl.source.xml;
 import consulo.language.template.TemplateLanguageUtil;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlElementDescriptor;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public abstract class XmlContentDFA {
   public abstract void transition(XmlTag xmlTag);
 
   @Nullable
-  public static XmlContentDFA getContentDFA(@Nonnull XmlTag parentTag) {
+  public static XmlContentDFA getContentDFA(XmlTag parentTag) {
 
     if (TemplateLanguageUtil.isInsideTemplateFile(parentTag)) return null;
 

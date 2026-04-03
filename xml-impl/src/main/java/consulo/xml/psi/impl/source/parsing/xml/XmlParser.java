@@ -30,7 +30,6 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 public class XmlParser implements PsiParser {
   // tries to match an old and new XmlTag by name
@@ -62,8 +61,7 @@ public class XmlParser implements PsiParser {
     return ThreeState.UNSURE;
   };
 
-  @Nonnull
-  public ASTNode parse(@Nonnull final IElementType root, @Nonnull final PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
+  public ASTNode parse(final IElementType root, final PsiBuilder builder, LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
     builder.setReparseMergeCustomComparator(REPARSE_XML_TAG_BY_NAME);
     builder.registerWhitespaceToken(XmlTokenType.XML_REAL_WHITE_SPACE);

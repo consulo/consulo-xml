@@ -22,7 +22,6 @@ import consulo.language.psi.stub.todo.LexerBasedTodoIndexer;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XHtmlTodoIndexer extends LexerBasedTodoIndexer {
@@ -31,7 +30,6 @@ public class XHtmlTodoIndexer extends LexerBasedTodoIndexer {
     return XHtmlIdIndexer.createIndexingLexer(consumer);
   }
 
-  @Nonnull
   @Override
   public FileType getFileType() {
     return XHtmlFileType.INSTANCE;

@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.index;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
@@ -36,7 +36,7 @@ public enum ResourceRelevance {
 
     public static ResourceRelevance getRelevance(
         VirtualFile resource,
-        @Nullable consulo.module.Module module,
+        consulo.module.@Nullable Module module,
         ProjectFileIndex fileIndex,
         @Nullable GlobalSearchScope additionalScope
     ) {

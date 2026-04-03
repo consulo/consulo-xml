@@ -40,13 +40,11 @@ import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
 import org.intellij.plugins.relaxNG.validation.RngParser;
 import org.intellij.plugins.relaxNG.validation.XmlInstanceValidator;
-import org.jetbrains.annotations.NonNls;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;
 import org.kohsuke.rngom.nc.NameClass;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
 
@@ -69,7 +67,7 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
 
   @Override
   @Nullable
-  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+  public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
     if (myPattern == null) {
       return null;
     }
@@ -166,7 +164,6 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   }
 
   @Override
-  @Nonnull
   public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable XmlDocument document) {
     if (myPattern == null) {
       return XmlElementDescriptor.EMPTY_ARRAY;
@@ -204,12 +201,11 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
     return result.toArray(new XmlElementDescriptor[result.size()]);
   }
 
-  protected XmlElementDescriptor initDescriptor(@Nonnull XmlElementDescriptor descriptor) {
+  protected XmlElementDescriptor initDescriptor(XmlElementDescriptor descriptor) {
     return descriptor;
   }
 
   @Override
-  @Nonnull
   public XmlFile getDescriptorFile() {
     return myFile;
   }
@@ -231,13 +227,11 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   }
 
   @Override
-  @NonNls
   public String getName(PsiElement context) {
     return getName();
   }
 
   @Override
-  @NonNls
   public String getName() {
     return getDescriptorFile().getName();
   }
@@ -275,7 +269,7 @@ public class RngNsDescriptor implements XmlNSDescriptorEx, Validator {
   }
 
   @Override
-  public void validate(@Nonnull PsiElement context, @Nonnull final ValidationHost host) {
+  public void validate(PsiElement context, final ValidationHost host) {
     final XmlDocument doc = PsiTreeUtil.getContextOfType(context, XmlDocument.class, false);
     if (doc == null) {
       return;

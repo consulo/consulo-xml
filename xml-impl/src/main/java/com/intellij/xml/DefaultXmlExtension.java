@@ -21,14 +21,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.logging.Logger;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
@@ -51,8 +49,7 @@ public class DefaultXmlExtension extends XmlExtension {
     }
 
     @Override
-    @Nonnull
-    public List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context) {
+    public List<TagInfo> getAvailableTagNames(final XmlFile file, final XmlTag context) {
 
         final Set<String> namespaces = new HashSet<>(Arrays.asList(context.knownNamespaces()));
         final List<XmlSchemaProvider> providers = XmlSchemaProvider.getAvailableProviders(file);
@@ -104,7 +101,7 @@ public class DefaultXmlExtension extends XmlExtension {
         return set;
     }
 
-    private static boolean hasTag(@Nonnull XmlElementDescriptor elementDescriptor, String tagName, Set<XmlElementDescriptor> visited) {
+    private static boolean hasTag(XmlElementDescriptor elementDescriptor, String tagName, Set<XmlElementDescriptor> visited) {
         final String name = elementDescriptor.getDefaultName();
         if (name == null) {
             LOG.error(elementDescriptor + " returned null as default name");
@@ -126,7 +123,7 @@ public class DefaultXmlExtension extends XmlExtension {
 
     @Override
     public SchemaPrefix getPrefixDeclaration(final XmlTag context, String namespacePrefix) {
-        @NonNls String nsDeclarationAttrName = null;
+        String nsDeclarationAttrName = null;
         for (XmlTag t = context; t != null; t = t.getParentTag()) {
             if (t.hasNamespaceDeclarations()) {
                 if (nsDeclarationAttrName == null) {

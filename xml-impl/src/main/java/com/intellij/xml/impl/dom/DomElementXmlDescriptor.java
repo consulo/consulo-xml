@@ -26,10 +26,8 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomChildrenDescription;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -40,12 +38,12 @@ import java.util.List;
 public class DomElementXmlDescriptor extends AbstractDomChildrenDescriptor implements XmlHighlightingAwareElementDescriptor {
     private final DomChildrenDescription myChildrenDescription;
 
-    public DomElementXmlDescriptor(@Nonnull final DomElement domElement) {
+    public DomElementXmlDescriptor(final DomElement domElement) {
         super(domElement.getManager());
         myChildrenDescription = new MyRootDomChildrenDescription(domElement);
     }
 
-    public DomElementXmlDescriptor(@Nonnull final DomChildrenDescription childrenDescription, final DomManager manager) {
+    public DomElementXmlDescriptor(final DomChildrenDescription childrenDescription, final DomManager manager) {
         super(manager);
         myChildrenDescription = childrenDescription;
     }
@@ -62,7 +60,6 @@ public class DomElementXmlDescriptor extends AbstractDomChildrenDescriptor imple
     }
 
     @Override
-    @NonNls
     public String getName(final PsiElement context) {
         final String name = getDefaultName();
         if (context instanceof XmlTag tag) {
@@ -125,50 +122,42 @@ public class DomElementXmlDescriptor extends AbstractDomChildrenDescriptor imple
         }
 
         @Override
-        @Nonnull
         public XmlName getXmlName() {
             throw new UnsupportedOperationException("Method getXmlName not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
         public String getXmlElementName() {
             return myDomElement.getXmlElementName();
         }
 
         @Override
-        @Nonnull
-        public String getCommonPresentableName(@Nonnull final DomNameStrategy strategy) {
+        public String getCommonPresentableName(final DomNameStrategy strategy) {
             throw new UnsupportedOperationException("Method getCommonPresentableName not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
-        public String getCommonPresentableName(@Nonnull final DomElement parent) {
+        public String getCommonPresentableName(final DomElement parent) {
             throw new UnsupportedOperationException("Method getCommonPresentableName not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
-        public List<? extends DomElement> getValues(@Nonnull final DomElement parent) {
+        public List<? extends DomElement> getValues(final DomElement parent) {
             throw new UnsupportedOperationException("Method getValues not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
-        public List<? extends DomElement> getStableValues(@Nonnull final DomElement parent) {
+        public List<? extends DomElement> getStableValues(final DomElement parent) {
             throw new UnsupportedOperationException("Method getStableValues not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
         public Type getType() {
             throw new UnsupportedOperationException("Method getType not implemented in " + getClass());
         }
 
         @Override
-        @Nonnull
-        public DomNameStrategy getDomNameStrategy(@Nonnull final DomElement parent) {
+        public DomNameStrategy getDomNameStrategy(final DomElement parent) {
             throw new UnsupportedOperationException("Method getDomNameStrategy not implemented in " + getClass());
         }
 

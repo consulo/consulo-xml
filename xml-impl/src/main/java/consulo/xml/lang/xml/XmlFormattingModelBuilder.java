@@ -28,12 +28,10 @@ import consulo.language.impl.ast.TreeUtil;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.formatter.xml.XmlBlock;
 import consulo.xml.psi.formatter.xml.XmlPolicy;
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlFormattingModelBuilder implements FormattingModelBuilder
 {
-	@Nonnull
 	public FormattingModel createModel(FormattingContext context)
 	{
 		PsiElement element = context.getPsiElement();
@@ -44,7 +42,6 @@ public class XmlFormattingModelBuilder implements FormattingModelBuilder
 		return new XmlFormattingModel(element.getContainingFile(), new XmlBlock(root, null, null, new XmlPolicy(settings, documentModel), null, null, false), documentModel);
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

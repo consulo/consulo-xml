@@ -25,7 +25,6 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
@@ -38,7 +37,7 @@ public class HtmlContextType extends FileTypeBasedContextType {
 
     @Override
     @RequiredReadAction
-    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+    public boolean isInContext(PsiFile file, int offset) {
         return isMyLanguage(file.getLanguage()) && !XmlContextType.isEmbeddedContent(file, offset);
     }
 

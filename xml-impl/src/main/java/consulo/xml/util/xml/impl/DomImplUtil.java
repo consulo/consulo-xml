@@ -28,10 +28,8 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.*;
 import java.util.Collections;
 import java.util.HashSet;
@@ -89,7 +87,7 @@ public class DomImplUtil {
   }
 
   public static boolean isGetter(final JavaMethod method) {
-    @NonNls final String name = method.getName();
+    final String name = method.getName();
     final boolean isGet = name.startsWith("get");
     final boolean isIs = !isGet && name.startsWith("is");
     if (!isGet && !isIs) {
@@ -140,7 +138,7 @@ public class DomImplUtil {
     return null;
   }
 
-  public static List<XmlTag> findSubTags(@Nonnull final XmlTag tag, final EvaluatedXmlName name, final XmlFile file) {
+  public static List<XmlTag> findSubTags(final XmlTag tag, final EvaluatedXmlName name, final XmlFile file) {
     if (!tag.isValid()) {
       throw new AssertionError("Invalid tag");
     }
@@ -179,7 +177,7 @@ public class DomImplUtil {
     });
   }
 
-  public static boolean isNameSuitable(final XmlName name, final XmlTag tag, @Nonnull final DomInvocationHandler handler, final XmlFile file) {
+  public static boolean isNameSuitable(final XmlName name, final XmlTag tag, final DomInvocationHandler handler, final XmlFile file) {
     return isNameSuitable(handler.createEvaluatedXmlName(name), tag, file);
   }
 
@@ -199,7 +197,7 @@ public class DomImplUtil {
   }
 
   @Nullable
-  public static XmlName createXmlName(@Nonnull String name, Type type, @Nullable JavaMethod javaMethod) {
+  public static XmlName createXmlName(String name, Type type, @Nullable JavaMethod javaMethod) {
     final Class<?> aClass = getErasure(type);
     if (aClass == null) return null;
     String key = getNamespaceKey(aClass);
@@ -243,13 +241,13 @@ public class DomImplUtil {
   }
 
   @Nullable
-  private static String getNamespaceKey(@Nonnull Class<?> type) {
+  private static String getNamespaceKey(Class<?> type) {
     final Namespace namespace = DomReflectionUtil.findAnnotationDFS(type, Namespace.class);
     return namespace != null ? namespace.value() : null;
   }
 
   @Nullable
-  public static XmlName createXmlName(@Nonnull final String name, final JavaMethod method) {
+  public static XmlName createXmlName(final String name, final JavaMethod method) {
     return createXmlName(name, method.getGenericReturnType(), method);
   }
 

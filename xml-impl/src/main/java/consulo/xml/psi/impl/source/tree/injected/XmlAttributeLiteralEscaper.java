@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.tree.injected;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.document.util.TextRange;
 import consulo.language.psi.LiteralTextEscaper;
@@ -39,7 +38,7 @@ public class XmlAttributeLiteralEscaper extends LiteralTextEscaper<XmlAttributeV
 	}
 
 	@Override
-	public boolean decode(@Nonnull final TextRange rangeInsideHost, @Nonnull StringBuilder outChars)
+	public boolean decode(final TextRange rangeInsideHost, StringBuilder outChars)
 	{
 		TextRange valueTextRange = myXmlAttribute.getValueTextRange();
 		int startInDecoded = myXmlAttribute.physicalToDisplay(rangeInsideHost.getStartOffset() - valueTextRange.getStartOffset());
@@ -57,7 +56,7 @@ public class XmlAttributeLiteralEscaper extends LiteralTextEscaper<XmlAttributeV
 	}
 
 	@Override
-	public int getOffsetInHost(final int offsetInDecoded, @Nonnull final TextRange rangeInsideHost)
+	public int getOffsetInHost(final int offsetInDecoded, final TextRange rangeInsideHost)
 	{
 		TextRange valueTextRange = myXmlAttribute.getValueTextRange();
 		int displayStart = myXmlAttribute.physicalToDisplay(rangeInsideHost.getStartOffset());

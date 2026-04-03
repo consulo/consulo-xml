@@ -24,8 +24,7 @@ import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import consulo.xml.psi.tree.xml.IXmlLeafElementType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static consulo.xml.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
 
@@ -40,9 +39,8 @@ public class XmlASTLeafFactory implements ASTLeafFactory {
 //    PsiBuilder.registerWhitespaceToken(XML_REAL_WHITE_SPACE);
 //  }
 
-  @Nonnull
   @Override
-  public LeafElement createLeaf(@Nonnull IElementType type, @Nonnull LanguageVersion languageVersion, @Nonnull CharSequence text) {
+  public LeafElement createLeaf(IElementType type, LanguageVersion languageVersion, CharSequence text) {
     if (type instanceof IXmlLeafElementType) {
       if (type == XML_REAL_WHITE_SPACE) {
         return new PsiWhiteSpaceImpl(text);

@@ -15,21 +15,19 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import consulo.application.util.CachedValue;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlComment;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlDeclareIdInCommentAction;
 import consulo.util.collection.ArrayUtil;
-import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,20 +38,19 @@ import java.util.List;
 public class IdRefReference extends BasicAttributeValueReference {
   private final boolean myIdAttrsOnly;
 
-  public IdRefReference(final PsiElement element, int offset, boolean idAttrsOnly) {
+  public IdRefReference(PsiElement element, int offset, boolean idAttrsOnly) {
     super(element, offset);
     myIdAttrsOnly = idAttrsOnly;
   }
 
-  public IdRefReference(final PsiElement element) {
+  public IdRefReference(PsiElement element) {
     super(element);
     myIdAttrsOnly = false;
   }
 
   @Nullable
   protected PsiElement getIdValueElement(PsiElement element) {
-    if (element instanceof XmlTag) {
-      final XmlTag tag = (XmlTag)element;
+    if (element instanceof XmlTag tag) {
       XmlAttribute attribute = tag.getAttribute(IdReferenceProvider.ID_ATTR_NAME, null);
       if (!myIdAttrsOnly) {
         if (attribute == null) {
@@ -71,34 +68,32 @@ public class IdRefReference extends BasicAttributeValueReference {
   }
 
   @Nullable
-  protected String getIdValue(final PsiElement element) {
-    if (element instanceof XmlTag) {
-      final XmlTag tag = (XmlTag)element;
+  @RequiredReadAction
+  protected String getIdValue(PsiElement element) {
+    if (element instanceof XmlTag tag) {
       String s = tag.getAttributeValue(IdReferenceProvider.ID_ATTR_NAME);
       if (!myIdAttrsOnly) {
         if (s == null) s = tag.getAttributeValue(IdReferenceProvider.NAME_ATTR_NAME);
         if (s == null) s = tag.getAttributeValue(IdReferenceProvider.STYLE_ID_ATTR_NAME);
       }
       return s;
-    } else if (element instanceof PsiComment) {
-      return getImplicitIdValue((PsiComment) element);
+    } else if (element instanceof PsiComment comment) {
+      return getImplicitIdValue(comment);
     }
 
     return null;
   }
 
-  protected static boolean isAcceptableTagType(final XmlTag subTag) {
-    return subTag.getAttributeValue(IdReferenceProvider.ID_ATTR_NAME) != null ||
-           subTag.getAttributeValue(IdReferenceProvider.FOR_ATTR_NAME) != null ||
-           (subTag.getAttributeValue(IdReferenceProvider.NAME_ATTR_NAME) != null &&
-            subTag.getName().indexOf(".directive") == -1);
+  protected static boolean isAcceptableTagType(XmlTag subTag) {
+    return subTag.getAttributeValue(IdReferenceProvider.ID_ATTR_NAME) != null
+      || subTag.getAttributeValue(IdReferenceProvider.FOR_ATTR_NAME) != null
+      || (subTag.getAttributeValue(IdReferenceProvider.NAME_ATTR_NAME) != null && !subTag.getName().contains(".directive"));
   }
 
-  private static final FileBasedUserDataCache<List<PsiElement>> ourCachedIdsCache = new FileBasedUserDataCache<List<PsiElement>>() {
-    private final Key<CachedValue<List<PsiElement>>> ourCachedIdsValueKey = Key.create("my.ids.cached.value");
-
+  private static final FileBasedUserDataCache<List<PsiElement>> CACHED_IDS_CACHE = new FileBasedUserDataCache<>("my.ids.cached.value") {
+    @Override
     protected List<PsiElement> doCompute(PsiFile file) {
-      final List<PsiElement> result = new ArrayList<PsiElement>();
+      final List<PsiElement> result = new ArrayList<>();
 
       file.accept(new XmlRecursiveElementVisitor(true) {
         @Override
@@ -108,14 +103,16 @@ public class IdRefReference extends BasicAttributeValueReference {
         }
 
         @Override
-        public void visitComment(final PsiComment comment) {
+        @RequiredReadAction
+        public void visitComment(PsiComment comment) {
           if (isDeclarationComment(comment)) result.add(comment);
 
           super.visitComment(comment);
         }
 
         @Override
-        public void visitXmlComment(final XmlComment comment) {
+        @RequiredReadAction
+        public void visitXmlComment(XmlComment comment) {
           if (isDeclarationComment(comment)) result.add(comment);
 
           super.visitComment(comment);
@@ -123,40 +120,44 @@ public class IdRefReference extends BasicAttributeValueReference {
       });
       return result;
     }
-
-    protected Key<CachedValue<List<PsiElement>>> getKey() {
-      return ourCachedIdsValueKey;
-    }
   };
 
-  private static boolean isDeclarationComment(@Nonnull final PsiComment comment) {
+  @RequiredReadAction
+  private static boolean isDeclarationComment(PsiComment comment) {
     return comment.getText().contains("@declare id=");
   }
 
   @Nullable
-  private static String getImplicitIdValue(@Nonnull final PsiComment comment) {
+  @RequiredReadAction
+  private static String getImplicitIdValue(PsiComment comment) {
     return XmlDeclareIdInCommentAction.getImplicitlyDeclaredId(comment);
   }
 
+  @RequiredReadAction
   private void process(PsiElementProcessor<PsiElement> processor) {
-    final PsiFile psiFile = getElement().getContainingFile();
+    PsiFile psiFile = getElement().getContainingFile();
     process(processor, psiFile);
   }
 
-  public static void process(final PsiElementProcessor<PsiElement> processor, PsiFile file) {
-    for (PsiElement e : ourCachedIdsCache.compute(file)) {
+  @RequiredReadAction
+  public static void process(PsiElementProcessor<PsiElement> processor, PsiFile file) {
+    for (PsiElement e : CACHED_IDS_CACHE.compute(file)) {
       if (!processor.execute(e)) return;
     }
   }
 
   @Nullable
+  @Override
+  @RequiredReadAction
   public PsiElement resolve() {
     final PsiElement[] result = new PsiElement[1];
-    process(new PsiElementProcessor<PsiElement>() {
+    process(new PsiElementProcessor<>() {
       String canonicalText = getCanonicalText();
 
-      public boolean execute(@Nonnull final PsiElement element) {
-        final String idValue = getIdValue(element);
+      @Override
+      @RequiredReadAction
+      public boolean execute(PsiElement element) {
+        String idValue = getIdValue(element);
         if (idValue != null && idValue.equals(canonicalText)) {
           result[0] = getIdValueElement(element);
           return false;
@@ -168,25 +169,25 @@ public class IdRefReference extends BasicAttributeValueReference {
     return result[0];
   }
 
-  @Nonnull
+  @Override
+  @RequiredReadAction
   public Object[] getVariants() {
-    final List<String> result = new LinkedList<String>();
+    List<String> result = new LinkedList<>();
 
-    process(new PsiElementProcessor<PsiElement>() {
-      public boolean execute(@Nonnull final PsiElement element) {
-        String value = getIdValue(element);
-        if (value != null) {
-          result.add(value);
-        }
-        return true;
+    process(element -> {
+      String value = getIdValue(element);
+      if (value != null) {
+        result.add(value);
       }
+      return true;
     });
 
     return ArrayUtil.toObjectArray(result);
   }
 
+  @Override
+  @RequiredReadAction
   public boolean isSoft() {
     return false;
   }
-
 }

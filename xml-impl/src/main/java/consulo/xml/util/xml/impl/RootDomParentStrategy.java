@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
@@ -31,7 +30,6 @@ public class RootDomParentStrategy implements DomParentStrategy {
     myFileElement = fileElement;
   }
 
-  @Nonnull
   public DomInvocationHandler getParentHandler() {
     throw new UnsupportedOperationException("Method getParentHandler is not yet implemented in " + getClass().getName());
   }
@@ -40,17 +38,14 @@ public class RootDomParentStrategy implements DomParentStrategy {
     return myFileElement.getRootTag();
   }
 
-  @Nonnull
   public DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     return this;
   }
 
-  @Nonnull
-  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
+  public DomParentStrategy setXmlElement(final XmlElement element) {
     return this;
   }
 
-  @Nonnull
   public DomParentStrategy clearXmlElement() {
     return this;
   }

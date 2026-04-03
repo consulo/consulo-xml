@@ -19,8 +19,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.util.dataholder.UserDataHolder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
@@ -28,10 +27,9 @@ import java.util.Set;
  * @author Sergey.Vasiliev
  */
 public interface MultipleDomModelFactory<Scope extends UserDataHolder, T extends DomElement, M extends DomModel<T>> {
-  @Nonnull
-  List<M> getAllModels(@Nonnull Scope scope);
+  List<M> getAllModels(Scope scope);
 
-  Set<XmlFile> getAllConfigFiles(@Nonnull Scope scope);
+  Set<XmlFile> getAllConfigFiles(Scope scope);
 
   @Nullable
   M getCombinedModel(@Nullable Scope scope);

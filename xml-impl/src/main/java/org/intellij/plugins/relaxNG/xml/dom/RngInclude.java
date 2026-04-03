@@ -19,7 +19,6 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
@@ -40,7 +39,6 @@ public interface RngInclude extends RngIncludeContent, Include<XmlElement, RngDe
    *
    * @return the value of the href child.
    */
-  @Nonnull
   @Required
   @Convert(RngHrefConverter.class)
   @Attribute("href")

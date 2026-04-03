@@ -3,7 +3,6 @@ package consulo.xml.codeInspection.htmlInspections;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.localize.LocalizeValue;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -14,11 +13,11 @@ public class HtmlEntitiesInspectionState extends BaseHtmlEntitiesInspectionState
   public HtmlEntitiesInspectionState() {
   }
 
-  public HtmlEntitiesInspectionState(@Nonnull LocalizeValue labelText) {
+  public HtmlEntitiesInspectionState(LocalizeValue labelText) {
     super(labelText);
   }
 
-  public HtmlEntitiesInspectionState(@Nonnull LocalizeValue labelText, String... defaultValues) {
+  public HtmlEntitiesInspectionState(LocalizeValue labelText, String... defaultValues) {
     super(labelText, defaultValues);
   }
 }

@@ -2,7 +2,6 @@ package consulo.xml.impl.inject;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.inject.advanced.InjectionConfigProvider;
-import jakarta.annotation.Nonnull;
 
 import java.io.InputStream;
 
@@ -12,7 +11,6 @@ import java.io.InputStream;
  */
 @ExtensionImpl
 public class XmlInjectConfigProvider implements InjectionConfigProvider {
-    @Nonnull
     @Override
     public InputStream openConfigFileStream() throws Exception {
         InputStream stream = getClass().getResourceAsStream("/resources/xmlInjections-html.xml");

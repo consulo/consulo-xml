@@ -25,7 +25,6 @@ import consulo.xml.codeInsight.daemon.impl.quickfix.IgnoreExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
@@ -33,7 +32,7 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<URLReference> {
   @Override
-  public void registerFixes(@Nonnull URLReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+  public void registerFixes(URLReference ref, QuickFixActionRegistrar registrar) {
     registrar.register(new FetchExtResourceAction());
     registrar.register(new ManuallySetupExtResourceAction());
     registrar.register(new IgnoreExtResourceAction());
@@ -44,7 +43,6 @@ public class URLReferenceQuickFixProvider extends UnresolvedReferenceQuickFixPro
     }
   }
 
-  @Nonnull
   @Override
   public Class<URLReference> getReferenceClass() {
     return URLReference.class;

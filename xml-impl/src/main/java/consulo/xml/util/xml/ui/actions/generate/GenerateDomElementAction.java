@@ -26,8 +26,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.ui.image.Image;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sergey.Vasiliev
@@ -36,7 +35,7 @@ public class GenerateDomElementAction extends CodeInsightAction {
 
   protected final GenerateDomElementProvider myProvider;
 
-  public GenerateDomElementAction(@Nonnull final GenerateDomElementProvider generateProvider, @Nullable Image icon) {
+  public GenerateDomElementAction(final GenerateDomElementProvider generateProvider, @Nullable Image icon) {
     getTemplatePresentation().setDescription(generateProvider.getDescription());
     getTemplatePresentation().setText(generateProvider.getDescription());
     getTemplatePresentation().setIcon(icon);
@@ -49,10 +48,9 @@ public class GenerateDomElementAction extends CodeInsightAction {
       this(generateProvider, null);
   }
 
-  @Nonnull
   protected CodeInsightActionHandler getHandler() {
     return new CodeInsightActionHandler() {
-      public void invoke(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
+      public void invoke(final Project project, final Editor editor, final PsiFile file) {
         final Runnable runnable = new Runnable() {
           public void run() {
             final DomElement element = myProvider.generate(project, editor, file);
@@ -82,7 +80,7 @@ public class GenerateDomElementAction extends CodeInsightAction {
     return true;
   }
 
-  protected boolean isValidForFile(@Nonnull final Project project, @Nonnull final Editor editor, @Nonnull final PsiFile file) {
+  protected boolean isValidForFile(final Project project, final Editor editor, final PsiFile file) {
     final DomElement element = DomUtil.getContextElement(editor);
     return element != null && myProvider.isAvailableForElement(element);
   }

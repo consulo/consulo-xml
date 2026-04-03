@@ -9,8 +9,7 @@ import consulo.ui.TextBox;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,11 +35,11 @@ public abstract class BaseHtmlEntitiesInspectionState<E> extends BaseXmlEntities
   public BaseHtmlEntitiesInspectionState() {
   }
 
-  public BaseHtmlEntitiesInspectionState(@Nonnull LocalizeValue labelText) {
+  public BaseHtmlEntitiesInspectionState(LocalizeValue labelText) {
     super(labelText);
   }
 
-  public BaseHtmlEntitiesInspectionState(@Nonnull LocalizeValue labelText, String... defaultValues) {
+  public BaseHtmlEntitiesInspectionState(LocalizeValue labelText, String... defaultValues) {
     super(labelText, defaultValues);
   }
 

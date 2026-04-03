@@ -28,10 +28,8 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 import consulo.ui.util.LabeledBuilder;
 import consulo.util.lang.StringUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jakarta.inject.Inject;
-import org.jetbrains.annotations.Nls;
 
 /**
  * @author Dmitry Avdeev
@@ -45,11 +43,10 @@ public class XMLCatalogConfigurable implements ProjectConfigurable {
     private FileChooserTextBoxBuilder.Controller myCatalogFileBox;
 
     @Inject
-    public XMLCatalogConfigurable(@Nonnull Project project) {
+    public XMLCatalogConfigurable(Project project) {
         myProject = project;
     }
 
-    @Nonnull
     @Override
     public String getId() {
         return "xml.catalog";
@@ -61,8 +58,6 @@ public class XMLCatalogConfigurable implements ProjectConfigurable {
         return "preferences.externalResources";
     }
 
-    @Nonnull
-    @Nls
     @Override
     public LocalizeValue getDisplayName() {
         return LocalizeValue.localizeTODO("XML Catalog");
@@ -76,7 +71,7 @@ public class XMLCatalogConfigurable implements ProjectConfigurable {
     @RequiredUIAccess
     @Nullable
     @Override
-    public Component createUIComponent(@Nonnull Disposable parentDisposable) {
+    public Component createUIComponent(Disposable parentDisposable) {
         if (myLayout == null) {
             FileChooserTextBoxBuilder builder = FileChooserTextBoxBuilder.create(myProject);
             builder.fileChooserDescriptor(new FileChooserDescriptor(true, false, false, false, false, false));

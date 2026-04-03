@@ -27,8 +27,7 @@ import com.intellij.xml.impl.schema.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSTypeDescriptorProvider;
 import consulo.application.dumb.DumbAware;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +84,7 @@ public class HtmlNSDescriptorImpl implements XmlNSDescriptor, DumbAware, XmlNSTy
     return decls;
   }
 
-  public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+  public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
     String name = tag.getLocalName();
     if (!myCaseSensitive) name = name.toLowerCase();
 
@@ -96,7 +95,6 @@ public class HtmlNSDescriptorImpl implements XmlNSDescriptor, DumbAware, XmlNSTy
     return xmlElementDescriptor;
   }
 
-  @Nonnull
   public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document) {
     return myDelegate == null ? XmlElementDescriptor.EMPTY_ARRAY : myDelegate.getRootElementsDescriptors(document);
   }

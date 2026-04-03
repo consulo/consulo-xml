@@ -30,7 +30,6 @@ import org.intellij.plugins.relaxNG.xml.dom.RngDomVisitor;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
 
-import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,7 +39,6 @@ import java.util.Set;
  */
 public class RngReferenceConverter implements CustomReferenceConverter {
   @Override
-  @Nonnull
   public PsiReference[] createReferences(GenericDomValue genericDomValue, PsiElement element, ConvertContext context) {
     final GenericAttributeValue<String> e = (GenericAttributeValue<String>) genericDomValue;
 
@@ -65,7 +63,6 @@ public class RngReferenceConverter implements CustomReferenceConverter {
             }
 
             @Override
-            @Nonnull
             public Object[] getVariants() {
               final RngInclude include = e.getParentOfType(RngInclude.class, true);
               final RngGrammar scope = e.getParentOfType(RngGrammar.class, true);

@@ -35,7 +35,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +76,7 @@ public abstract class EditorTextFieldControl<T extends JComponent> extends BaseM
         this(domWrapper, false);
     }
 
-    protected abstract EditorTextField getEditorTextField(@Nonnull T component);
+    protected abstract EditorTextField getEditorTextField(T component);
 
     @Override
     protected void doReset() {
@@ -110,7 +109,6 @@ public abstract class EditorTextFieldControl<T extends JComponent> extends BaseM
 
     protected abstract T createMainComponent(T boundedComponent, Project project);
 
-    @Nonnull
     @Override
     public String getValue() {
         return getEditorTextField(getComponent()).getText();

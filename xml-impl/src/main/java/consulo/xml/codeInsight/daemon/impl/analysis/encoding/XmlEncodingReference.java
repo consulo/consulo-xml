@@ -28,8 +28,7 @@ import consulo.localize.LocalizeValue;
 import consulo.util.io.CharsetToolkit;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -58,7 +57,6 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
         return myValue;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public TextRange getRangeInElement() {
@@ -75,13 +73,11 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
         //return myValue.getManager().findClass(fqn, GlobalSearchScope.allScope(myValue.getProject()));
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+    public LocalizeValue buildUnresolvedMessage(String referenceText) {
         return XmlErrorLocalize.unknownEncoding0(referenceText);
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public String getCanonicalText() {
@@ -96,7 +92,7 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
 
     @Override
     @RequiredWriteAction
-    public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+    public PsiElement bindToElement(PsiElement element) throws consulo.language.util.IncorrectOperationException {
         return null;
     }
 
@@ -107,7 +103,6 @@ public class XmlEncodingReference implements PsiReference, EmptyResolveMessagePr
     }
 
     @Override
-    @Nonnull
     @RequiredReadAction
     public Object[] getVariants() {
         Charset[] charsets = CharsetToolkit.getAvailableCharsets();

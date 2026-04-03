@@ -45,10 +45,8 @@ import consulo.xml.Validator;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nonnull;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,7 +59,6 @@ public class ExternalDocumentValidator {
     private static final Key<SoftReference<ExternalDocumentValidator>> validatorInstanceKey = Key.create("validatorInstance");
 
     public static final
-    @NonNls
     String INSPECTION_SHORT_NAME = "CheckXmlFileWithXercesValidator";
 
     private ValidateXmlActionHandler myHandler;
@@ -69,24 +66,16 @@ public class ExternalDocumentValidator {
 
     private long myModificationStamp;
     private PsiFile myFile;
-    @NonNls
     private static final String CANNOT_FIND_DECLARATION_ERROR_PREFIX = "Cannot find the declaration of element";
-    @NonNls
     private static final String ELEMENT_ERROR_PREFIX = "Element";
-    @NonNls
     private static final String ROOT_ELEMENT_ERROR_PREFIX = "Document root element";
-    @NonNls
     private static final String CONTENT_OF_ELEMENT_TYPE_ERROR_PREFIX = "The content of element type";
-    @NonNls
     private static final String VALUE_ERROR_PREFIX = "Value ";
-    @NonNls
     private static final String ATTRIBUTE_ERROR_PREFIX = "Attribute ";
-    @NonNls
     private static final String STRING_ERROR_PREFIX = "The string";
-    @NonNls
     private static final String ATTRIBUTE_MESSAGE_PREFIX = "cvc-attribute.";
 
-    private record ValidationInfo(PsiElement element, @Nonnull LocalizeValue message, Validator.ValidationHost.ErrorType type) {
+    private record ValidationInfo(PsiElement element, LocalizeValue message, Validator.ValidationHost.ErrorType type) {
     }
 
     private WeakReference<List<ValidationInfo>> myInfos; // last jaxp validation result
@@ -186,7 +175,7 @@ public class ExternalDocumentValidator {
                             }
                             else {
                                 if (messageId.startsWith(ATTRIBUTE_MESSAGE_PREFIX)) {
-                                    @NonNls String prefix = "of attribute ";
+                                    String prefix = "of attribute ";
                                     final int i = localizedMessage.indexOf(prefix);
 
                                     if (i != -1) {

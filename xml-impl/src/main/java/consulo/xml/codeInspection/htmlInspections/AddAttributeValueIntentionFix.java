@@ -32,15 +32,13 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {
     public AddAttributeValueIntentionFix(@Nullable PsiElement element) {
         super(element);
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlErrorLocalize.addAttributeValueQuickfixText();
@@ -49,11 +47,11 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
     @Override
     @RequiredUIAccess
     public void invoke(
-        @Nonnull Project project,
-        @Nonnull PsiFile file,
+        Project project,
+        PsiFile file,
         @Nullable final Editor editor,
-        @Nonnull PsiElement startElement,
-        @Nonnull PsiElement endElement
+        PsiElement startElement,
+        PsiElement endElement
     ) {
         final XmlAttribute attribute = PsiTreeUtil.getNonStrictParentOfType(startElement, XmlAttribute.class);
         if (attribute == null || attribute.getValue() != null) {
@@ -67,7 +65,7 @@ public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActi
         new WriteCommandAction(project) {
             @Override
             @RequiredWriteAction
-            protected void run(@Nonnull Result result) {
+            protected void run(Result result) {
                 XmlAttribute attributeWithValue =
                     XmlElementFactory.getInstance(getProject()).createXmlAttribute(attribute.getName(), "");
                 PsiElement newAttribute = attribute.replace(attributeWithValue);

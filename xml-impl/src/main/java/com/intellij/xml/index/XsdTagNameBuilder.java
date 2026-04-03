@@ -22,9 +22,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
-import org.jetbrains.annotations.NonNls;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 
 /**
@@ -59,9 +58,9 @@ public class XsdTagNameBuilder extends NanoXmlUtil.IXMLBuilderAdapter {
     private boolean myElementStarted;
 
     public void startElement(
-        @NonNls final String name,
-        @NonNls final String nsPrefix,
-        @NonNls final String nsURI,
+        final String name,
+        final String nsPrefix,
+        final String nsURI,
         final String systemID,
         final int lineNr
     )
@@ -70,7 +69,7 @@ public class XsdTagNameBuilder extends NanoXmlUtil.IXMLBuilderAdapter {
         myElementStarted = nsPrefix != null && nsURI.equals("http://www.w3.org/2001/XMLSchema") && name.equals("element");
     }
 
-    public void addAttribute(@NonNls final String key, final String nsPrefix, final String nsURI, final String value, final String type)
+    public void addAttribute(final String key, final String nsPrefix, final String nsURI, final String value, final String type)
         throws Exception {
         if (myElementStarted && key.equals("name")) {
             myTagNames.add(value);

@@ -27,7 +27,6 @@ import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ import java.util.List;
 public class XmlNsPrefixAnnotator implements Annotator {
     @Override
     @RequiredReadAction
-    public void annotate(@Nonnull PsiElement element, @Nonnull AnnotationHolder holder) {
+    public void annotate(PsiElement element, AnnotationHolder holder) {
         if (element instanceof XmlTag || element instanceof XmlAttribute) {
             List<SchemaPrefixReference> references = ContainerUtil.findAll(element.getReferences(), SchemaPrefixReference.class);
             for (SchemaPrefixReference reference : references) {

@@ -31,8 +31,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.scope.GlobalSearchScope;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author mike
@@ -56,7 +55,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     result[0] = null;
 
     processElements(new PsiElementProcessor(){
-      public boolean execute(@Nonnull PsiElement element){
+      public boolean execute(PsiElement element){
         if(element instanceof TreeElement && ((ASTNode)element).getElementType() == type){
           result[0] = (XmlElement)element;
           return false;
@@ -78,7 +77,6 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return super.getParent();
   }
 
-  @Nonnull
   public PsiElement getNavigationElement() {
     if (!isPhysical()) {
       final XmlElement including = getUserData(INCLUDING_ELEMENT);
@@ -97,7 +95,6 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return getContext();
   }
 
-  @Nonnull
   public Language getLanguage() {
     return getContainingFile().getLanguage();
   }
@@ -116,7 +113,7 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
       final StringBuilder builder = new StringBuilder();
 
       ((XmlElement)name.getPsi()).processElements(new PsiElementProcessor() {
-        public boolean execute(@Nonnull final PsiElement element) {
+        public boolean execute(final PsiElement element) {
           builder.append(element.getText());
           return true;
         }
@@ -126,7 +123,6 @@ public abstract class XmlElementImpl extends CompositePsiElement implements XmlE
     return null;
   }
 
-  @Nonnull
   public SearchScope getUseScope() {
     return GlobalSearchScope.allScope(getProject());
   }

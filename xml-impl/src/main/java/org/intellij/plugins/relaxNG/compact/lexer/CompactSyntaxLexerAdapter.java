@@ -24,8 +24,7 @@ import consulo.util.collection.primitive.ints.IntIntMap;
 import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.lang.CharArrayCharSequence;
 import consulo.util.lang.CharArrayUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxConstants;
 import org.kohsuke.rngom.parse.compact.CompactSyntaxTokenManager;
@@ -122,7 +121,6 @@ public class CompactSyntaxLexerAdapter extends LexerBase {
         return CharArrayUtil.fromSequence(myBuffer);
     }
 
-    @Nonnull
     @Override
     public CharSequence getBufferSequence() {
         return myBuffer;
@@ -169,7 +167,7 @@ public class CompactSyntaxLexerAdapter extends LexerBase {
 
     @Override
     @SuppressWarnings("IOResourceOpenedButNotSafelyClosed")
-    public void start(@Nonnull CharSequence buffer, int startOffset, int endOffset, int initialState) {
+    public void start(CharSequence buffer, int startOffset, int endOffset, int initialState) {
         myBuffer = buffer;
 
         final Reader reader = new CharSequenceReader(buffer, startOffset, endOffset);

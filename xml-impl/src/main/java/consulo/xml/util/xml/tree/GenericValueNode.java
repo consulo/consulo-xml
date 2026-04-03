@@ -16,7 +16,6 @@
 
 package consulo.xml.util.xml.tree;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.tree.SimpleNode;
@@ -68,7 +67,6 @@ public class GenericValueNode extends AbstractDomElementNode {
     return NO_CHILDREN;
   }
 
-  @Nonnull
   public Object[] getEqualityObjects() {
     return new Object[]{myModelElement};
   }

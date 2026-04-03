@@ -21,7 +21,6 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.psi.PsiFile;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
 import java.util.Set;
 
 /**
@@ -32,7 +31,7 @@ public abstract class RelatedToHtmlFilesContributor
 {
 	public static final ExtensionPointName<RelatedToHtmlFilesContributor> EP_NAME = ExtensionPointName.create(RelatedToHtmlFilesContributor.class);
 
-	public abstract void fillRelatedFiles(@Nonnull XmlFile xmlFile, @Nonnull Set<PsiFile> resultSet);
+	public abstract void fillRelatedFiles(XmlFile xmlFile, Set<PsiFile> resultSet);
 
 	public abstract String getGroupName();
 }

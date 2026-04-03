@@ -20,20 +20,17 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
  */
 @ExtensionImpl
 public class HtmlUnknownAnchorTargetInspection extends XmlPathReferenceInspection {
-    @Nonnull
     @Override
     public String getShortName() {
         return "HtmlUnknownAnchorTarget";
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsUnknownAnchor();

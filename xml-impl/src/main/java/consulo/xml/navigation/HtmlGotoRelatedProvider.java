@@ -25,7 +25,6 @@ import consulo.language.Language;
 import consulo.language.navigation.GotoRelatedItem;
 import consulo.language.navigation.GotoRelatedProvider;
 
-import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -34,9 +33,8 @@ import java.util.*;
  */
 @ExtensionImpl
 public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
-  @Nonnull
   @Override
-  public List<? extends GotoRelatedItem> getItems(@Nonnull PsiElement context) {
+  public List<? extends GotoRelatedItem> getItems(PsiElement context) {
     final PsiFile file = context.getContainingFile();
     if (file == null || !isAvailable(file)) {
       return Collections.emptyList();
@@ -45,7 +43,7 @@ public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
     return getRelatedFiles(file);
   }
 
-  private static boolean isAvailable(@Nonnull PsiFile psiFile) {
+  private static boolean isAvailable(PsiFile psiFile) {
     for (PsiFile file : psiFile.getViewProvider().getAllFiles()) {
       Language language = file.getLanguage();
       if (language.isKindOf(HTMLLanguage.INSTANCE) || language.isKindOf(XHTMLLanguage.INSTANCE)) {
@@ -55,7 +53,7 @@ public class HtmlGotoRelatedProvider extends GotoRelatedProvider {
     return false;
   }
 
-  private static List<? extends GotoRelatedItem> getRelatedFiles(@Nonnull PsiFile file) {
+  private static List<? extends GotoRelatedItem> getRelatedFiles(PsiFile file) {
     List<GotoRelatedItem> items = new ArrayList<GotoRelatedItem>();
 
     for (PsiFile psiFile : file.getViewProvider().getAllFiles()) {

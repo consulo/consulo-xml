@@ -35,7 +35,6 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -43,7 +42,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "xml.split.current.tag", fileExtensions = "html", categories = "XML")
 public class XmlSplitTagAction implements IntentionAction {
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlLocalize.xmlSplitTagIntentionAction();
@@ -51,7 +49,7 @@ public class XmlSplitTagAction implements IntentionAction {
 
     @Override
     @RequiredReadAction
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         if (file instanceof XmlFile xmlFile && editor != null) {
             int offset = editor.getCaretModel().getOffset();
             PsiElement psiElement = xmlFile.findElementAt(offset);
@@ -78,7 +76,7 @@ public class XmlSplitTagAction implements IntentionAction {
 
     @Override
     @RequiredWriteAction
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;
         }

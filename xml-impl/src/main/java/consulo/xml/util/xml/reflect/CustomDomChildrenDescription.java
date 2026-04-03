@@ -19,8 +19,7 @@ package consulo.xml.util.xml.reflect;
 import consulo.language.pom.PomTarget;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -40,17 +39,17 @@ public interface CustomDomChildrenDescription extends AbstractDomChildrenDescrip
 
     public static final AttributeDescriptor EMPTY = new AttributeDescriptor();
 
-    public Set<EvaluatedXmlName> getCompletionVariants(@Nonnull DomElement parent) {
+    public Set<EvaluatedXmlName> getCompletionVariants(DomElement parent) {
       return Collections.emptySet();
     }
 
     @Nullable
-    public PomTarget findDeclaration(DomElement parent, @Nonnull EvaluatedXmlName name) {
+    public PomTarget findDeclaration(DomElement parent, EvaluatedXmlName name) {
       return null;
     }
 
     @Nullable
-    public PomTarget findDeclaration(@Nonnull DomElement child) {
+    public PomTarget findDeclaration(DomElement child) {
       return child.getChildDescription();
     }
     

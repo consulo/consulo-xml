@@ -15,8 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -125,7 +124,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
     // ---=== Classes ===---
 
     public abstract static class Effect {
-        public abstract void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder);
+        public abstract void annotate(XmlTag tag, ProblemsHolder holder);
     }
 
     public static class InvalidAttrEffect extends Effect {
@@ -140,7 +139,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
         }
 
         @Override
-        public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder) {
+        public void annotate(XmlTag tag, ProblemsHolder holder) {
             XmlAttribute attribute = tag.getAttribute(myAttrName);
             if (attribute != null) {
                 PsiElement attributeNameElement = getAttributeNameElement(attribute);
@@ -163,7 +162,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
         }
 
         @Override
-        public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder) {
+        public void annotate(XmlTag tag, ProblemsHolder holder) {
             for (XmlAttribute xmlAttribute : tag.getAttributes()) {
                 String attrName = xmlAttribute.getName();
                 if (!ArrayUtil.contains(attrName, myAttrNames)) {
@@ -186,7 +185,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
         }
 
         @Override
-        public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder) {
+        public void annotate(XmlTag tag, ProblemsHolder holder) {
             if (myCondition.value(tag)) {
                 for (Effect effect : myEffect) {
                     effect.annotate(tag, holder);
@@ -197,7 +196,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
 
     public static class ShouldHaveParams extends Rule {
         @Override
-        public boolean needAtLeastOneAttribute(@Nonnull XmlTag tag) {
+        public boolean needAtLeastOneAttribute(XmlTag tag) {
             return true;
         }
     }
@@ -211,7 +210,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
             myProblemHighlightType = ProblemHighlightType.GENERIC_ERROR_OR_WARNING;
         }
 
-        public RequireAttributeOneOf(@Nonnull ProblemHighlightType problemHighlightType, String... attributeNames) {
+        public RequireAttributeOneOf(ProblemHighlightType problemHighlightType, String... attributeNames) {
             assert attributeNames.length > 0;
             myAttributeNames = attributeNames;
             myProblemHighlightType = problemHighlightType;
@@ -222,7 +221,7 @@ public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {
         }
 
         @Override
-        public void annotate(@Nonnull XmlTag tag, @Nonnull ProblemsHolder holder) {
+        public void annotate(XmlTag tag, ProblemsHolder holder) {
             for (String attributeName : myAttributeNames) {
                 if (tag.getAttribute(attributeName) != null) {
                     return;

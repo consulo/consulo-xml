@@ -25,7 +25,6 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncFileReference;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -34,7 +33,7 @@ import jakarta.annotation.Nonnull;
 public class RncFileReferenceManipulator extends AbstractElementManipulator<RncFileReference>
 {
 	@Override
-	public RncFileReference handleContentChange(@Nonnull RncFileReference element, @Nonnull TextRange range, String newContent) throws
+	public RncFileReference handleContentChange(RncFileReference element, TextRange range, String newContent) throws
 			IncorrectOperationException
 	{
 		final ASTNode node = element.getNode();
@@ -51,14 +50,12 @@ public class RncFileReferenceManipulator extends AbstractElementManipulator<RncF
 		return element;
 	}
 
-	@Nonnull
 	@Override
-	public TextRange getRangeInElement(@Nonnull RncFileReference element)
+	public TextRange getRangeInElement(RncFileReference element)
 	{
 		return element.getReferenceRange();
 	}
 
-	@Nonnull
 	@Override
 	public Class<RncFileReference> getElementClass()
 	{

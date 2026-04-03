@@ -43,8 +43,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Maxim Mossienko
@@ -56,9 +55,8 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
         return true;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
             @RequiredReadAction
@@ -90,13 +88,11 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
             || "img".equals(name) || "input".equals(name) || "hr".equals(name);
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlInspectionGroupNames.XML_INSPECTIONS;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsCheckTagEmptyBody();
@@ -108,20 +104,17 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "CheckTagEmptyBody";
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
     }
 
     private static class ReplaceEmptyTagBodyByEmptyEndFix implements LocalQuickFix {
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.xmlInspectionsReplaceTagEmptyBodyWithEmptyEnd();
@@ -129,7 +122,7 @@ public class CheckTagEmptyBodyInspection extends XmlSuppressableInspectionTool {
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(final Project project, ProblemDescriptor descriptor) {
             final PsiElement tag = descriptor.getPsiElement();
             if (!FileModificationService.getInstance().prepareFileForWrite(tag.getContainingFile())) {
                 return;

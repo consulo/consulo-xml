@@ -15,7 +15,6 @@
  */
 package com.intellij.html.impl.providers;
 
-import jakarta.annotation.Nonnull;
 
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.language.psi.PsiElement;
@@ -28,9 +27,8 @@ import consulo.language.psi.PsiReference;
  * @author: Fedor.Korotkov
  */
 public class MicrodataReferenceProvider extends PsiReferenceProvider {
-    @Nonnull
     @Override
-    public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+    public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
         return element instanceof XmlAttributeValue attributeValue
             ? MicrodataUtil.getUrlReferencesForAttributeValue(attributeValue)
             : PsiReference.EMPTY_ARRAY;

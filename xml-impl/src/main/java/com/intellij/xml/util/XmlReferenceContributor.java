@@ -35,7 +35,6 @@ import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.*;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
 
 import static consulo.xml.patterns.XmlPatterns.*;
 
@@ -45,7 +44,7 @@ import static consulo.xml.patterns.XmlPatterns.*;
 @ExtensionImpl
 public class XmlReferenceContributor extends PsiReferenceContributor {
     @Override
-    public void registerReferenceProviders(@Nonnull final PsiReferenceRegistrar registrar) {
+    public void registerReferenceProviders(final PsiReferenceRegistrar registrar) {
 
         final IdReferenceProvider idReferenceProvider = new IdReferenceProvider();
 
@@ -157,16 +156,14 @@ public class XmlReferenceContributor extends PsiReferenceContributor {
                 .withLocalName("source")
                 .withSuperParent(2, xmlTag().withLocalName("documentation").withNamespace(XmlUtil.SCHEMA_URIS)),
             new PsiReferenceProvider() {
-                @Nonnull
                 @Override
-                public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+                public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
                     return new PsiReference[]{new WebReference(element)};
                 }
             }
         );
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return Language.ANY;

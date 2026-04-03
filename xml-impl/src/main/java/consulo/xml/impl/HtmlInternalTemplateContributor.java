@@ -5,7 +5,6 @@ import consulo.fileTemplate.FileTemplateContributor;
 import consulo.fileTemplate.FileTemplateManager;
 import consulo.fileTemplate.FileTemplateRegistrator;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -15,7 +14,7 @@ import jakarta.annotation.Nonnull;
 public class HtmlInternalTemplateContributor implements FileTemplateContributor
 {
 	@Override
-	public void register(@Nonnull FileTemplateRegistrator fileTemplateRegistrator)
+	public void register(FileTemplateRegistrator fileTemplateRegistrator)
 	{
 	 	fileTemplateRegistrator.registerInternalTemplate(FileTemplateManager.INTERNAL_HTML5_TEMPLATE_NAME);
 	 	fileTemplateRegistrator.registerInternalTemplate(FileTemplateManager.INTERNAL_HTML_TEMPLATE_NAME);

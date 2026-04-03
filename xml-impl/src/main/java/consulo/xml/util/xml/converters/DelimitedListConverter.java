@@ -29,10 +29,8 @@ import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.ResolvingConverter;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
@@ -45,7 +43,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   private final String myDelimiters;
 
-  public DelimitedListConverter(@NonNls @Nonnull String delimiters) {
+  public DelimitedListConverter(String delimiters) {
 
     myDelimiters = delimiters;
   }
@@ -64,7 +62,6 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
 
   protected abstract LocalizeValue buildUnresolvedMessageInner(String value);
 
-  @Nonnull
   public Collection<? extends List<T>> getVariants(final ConvertContext context) {
     return Collections.emptyList();
   }
@@ -118,7 +115,6 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     return buffer.toString();
   }
 
-  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue<List<T>> genericDomValue,
                                          final PsiElement element,
                                          final ConvertContext context) {
@@ -137,7 +133,6 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     return references.toArray(new PsiReference[references.size()]);
   }
 
-  @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
                                             int start,
                                             int end,
@@ -187,7 +182,6 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       return resolveReference(convertString(value, myContext), myContext);
     }
 
-    @Nonnull
     public Object[] getVariants() {
       return getReferenceVariants(myContext, myGenericDomValue);
     }
@@ -204,7 +198,7 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
     }
 
     @Override
-    public PsiElement bindToElement(@Nonnull final PsiElement element) throws consulo.language.util.IncorrectOperationException {
+    public PsiElement bindToElement(final PsiElement element) throws consulo.language.util.IncorrectOperationException {
       final Ref<IncorrectOperationException> ref = new Ref<IncorrectOperationException>();
       PsiElement bindElement =
         referenceBindToElement(this, element, getSuperBindToElementFunction(ref), getSuperElementRenameFunction(ref));
@@ -246,9 +240,8 @@ public abstract class DelimitedListConverter<T> extends ResolvingConverter<List<
       };
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
       return buildUnresolvedMessageInner(getValue());
     }
   }

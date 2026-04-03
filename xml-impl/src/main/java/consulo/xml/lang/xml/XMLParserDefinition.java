@@ -33,7 +33,6 @@ import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author max
@@ -41,7 +40,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XMLParserDefinition implements ParserDefinition
 {
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
@@ -49,43 +47,37 @@ public class XMLParserDefinition implements ParserDefinition
 	}
 
 	@Override
-	@Nonnull
-	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	public Lexer createLexer(LanguageVersion languageVersion)
 	{
 		return new XmlLexer();
 	}
 
 	@Override
-	@Nonnull
 	public IFileElementType getFileNodeType()
 	{
 		return XmlElementType.XML_FILE;
 	}
 
 	@Override
-	@Nonnull
-	public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion)
+	public TokenSet getWhitespaceTokens(LanguageVersion languageVersion)
 	{
 		return XmlTokenType.WHITESPACES;
 	}
 
 	@Override
-	@Nonnull
 	public TokenSet getCommentTokens(LanguageVersion languageVersion)
 	{
 		return XmlTokenType.COMMENTS;
 	}
 
 	@Override
-	@Nonnull
 	public TokenSet getStringLiteralElements(LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
 	@Override
-	@Nonnull
-	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
+	public PsiParser createParser(LanguageVersion languageVersion)
 	{
 		return new XmlParser();
 	}

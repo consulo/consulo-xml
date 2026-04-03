@@ -44,8 +44,7 @@ import consulo.xml.util.xml.impl.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,7 +66,6 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         }
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public List<DomElementProblemDescriptor> checkRequired(DomElement element, DomElementAnnotationHolder holder) {
@@ -114,7 +112,6 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         return Collections.emptyList();
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public List<DomElementProblemDescriptor> checkResolveProblems(GenericDomValue element, DomElementAnnotationHolder holder) {
@@ -168,7 +165,6 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
             && resolvingConverter.getAdditionalVariants(domReference.getConvertContext()).contains(element.getStringValue());
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, DomElementAnnotationHolder holder) {
@@ -272,31 +268,29 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
         private final String myTagNamespace;
         private final XmlTag myParentTag;
 
-        public AddRequiredSubtagFix(@Nonnull String tagName, @Nonnull String tagNamespace, @Nonnull XmlTag parentTag) {
+        public AddRequiredSubtagFix(String tagName, String tagNamespace, XmlTag parentTag) {
             myTagName = tagName;
             myTagNamespace = tagNamespace;
             myParentTag = parentTag;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.insertRequiredTagFix(myTagName);
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getText() {
             return getName();
         }
 
         @Override
-        public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        public boolean isAvailable(Project project, Editor editor, PsiFile file) {
             return true;
         }
 
         @Override
-        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
             doFix();
         }
 
@@ -307,7 +301,7 @@ public class DomHighlightingHelperImpl extends DomHighlightingHelper {
 
         @Override
         @RequiredUIAccess
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             doFix();
         }
 

@@ -23,7 +23,6 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.lang.Comparing;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Gregory.Shrago
@@ -69,7 +68,6 @@ public class XmlTextManipulator extends AbstractElementManipulator<XmlText>
 		return getValueRange(text);
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlText> getElementClass()
 	{

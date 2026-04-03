@@ -4,7 +4,6 @@ import consulo.language.psi.PsiManager;
 import consulo.xml.util.xml.AbstractConvertContext;
 import consulo.xml.util.xml.DomElement;
 import consulo.module.Module;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -20,7 +19,6 @@ public class ConvertContextImpl extends AbstractConvertContext {
     this(DomManagerImpl.getDomInvocationHandler(element));
   }
 
-  @Nonnull
   public DomElement getInvocationElement() {
     return myHandler.getProxy();
   }

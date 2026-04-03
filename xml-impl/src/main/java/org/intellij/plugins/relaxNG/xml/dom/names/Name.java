@@ -21,7 +21,6 @@ package org.intellij.plugins.relaxNG.xml.dom.names;
 
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.xml.dom.RngDomElement;
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:nameElemType interface.
@@ -33,7 +32,6 @@ public interface Name extends RngDomElement {
    *
    * @return the value of the simple content.
    */
-  @Nonnull
   @Required
   String getValue();
 
@@ -42,5 +40,5 @@ public interface Name extends RngDomElement {
    *
    * @param value the new value to set
    */
-  void setValue(@Nonnull String value);
+  void setValue(String value);
 }

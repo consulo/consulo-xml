@@ -24,10 +24,8 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
@@ -172,7 +170,7 @@ public class StaticGenericInfoBuilder {
   }
 
   @Nullable
-  private XmlName extractTagName(JavaMethod method, @NonNls String prefix) {
+  private XmlName extractTagName(JavaMethod method, String prefix) {
     final String name = method.getName();
     if (!name.startsWith(prefix)) return null;
 
@@ -308,7 +306,6 @@ public class StaticGenericInfoBuilder {
     return StringUtil.getPropertyName(method.getMethodName());
   }
 
-  @Nonnull
   private DomNameStrategy getNameStrategy(boolean isAttribute) {
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(ReflectionUtil.getRawType(myClass), isAttribute);
     return strategy != null ? strategy : DomNameStrategy.HYPHEN_STRATEGY;

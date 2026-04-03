@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.language.psi.PsiReference;
@@ -24,9 +23,7 @@ import consulo.language.psi.PsiReference;
  * @author peter
  */
 public interface DomElementResolveProblemDescriptor extends DomElementProblemDescriptor{
-  @Nonnull
   PsiReference getPsiReference();
 
-  @Nonnull
   GenericDomValue getDomElement();
 }

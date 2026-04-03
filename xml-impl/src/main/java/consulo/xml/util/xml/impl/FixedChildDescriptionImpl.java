@@ -10,8 +10,7 @@ import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.util.lang.StringUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -62,8 +61,7 @@ public class FixedChildDescriptionImpl extends DomChildDescriptionImpl implement
     return myCount;
   }
 
-  @Nonnull
-  public List<? extends DomElement> getValues(@Nonnull final DomElement element) {
+  public List<? extends DomElement> getValues(final DomElement element) {
     final List<DomElement> result = new SmartList<DomElement>();
     final DomInvocationHandler handler = DomManagerImpl.getDomInvocationHandler(element);
     if (handler != null) {
@@ -81,8 +79,7 @@ public class FixedChildDescriptionImpl extends DomChildDescriptionImpl implement
     return result;
   }
 
-  @Nonnull
-  public String getCommonPresentableName(@Nonnull DomNameStrategy strategy) {
+  public String getCommonPresentableName(DomNameStrategy strategy) {
     return StringUtil.capitalizeWords(strategy.splitIntoWords(getXmlElementName()), true);
   }
 

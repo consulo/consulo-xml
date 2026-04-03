@@ -26,8 +26,7 @@ import com.intellij.xml.util.XmlTagUtil;
 import consulo.language.pom.PsiDeclaredTarget;
 import consulo.util.lang.StringUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -45,7 +44,7 @@ public class DomTarget extends DelegatePsiTarget implements PsiDeclaredTarget, P
   }
 
   @Nullable
-  public static DomTarget getTarget(@Nonnull DomElement element) {
+  public static DomTarget getTarget(DomElement element) {
     final GenericDomValue nameElement = element.getGenericInfo().getNameDomElement(element);
     if (nameElement == null) {
       return null;
@@ -90,7 +89,7 @@ public class DomTarget extends DelegatePsiTarget implements PsiDeclaredTarget, P
     return getNavigationElement().isWritable();
   }
 
-  public Object setName(@Nonnull String newName) {
+  public Object setName(String newName) {
     myNameDomElement.setStringValue(newName);
     return myDomElement;
   }

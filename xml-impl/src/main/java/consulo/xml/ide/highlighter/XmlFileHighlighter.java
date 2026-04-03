@@ -9,7 +9,6 @@ import consulo.language.lexer.Lexer;
 import consulo.util.collection.MultiMap;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.lexer.XmlHighlightingLexer;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -37,7 +36,6 @@ public class XmlFileHighlighter extends BaseXmlFileHighlighter {
   }
 
   @Override
-  @Nonnull
   public Lexer getHighlightingLexer() {
     return new XmlHighlightingLexer();
   }

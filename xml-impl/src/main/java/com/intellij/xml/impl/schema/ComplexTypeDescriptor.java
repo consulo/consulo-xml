@@ -28,9 +28,8 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Comparing;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -99,27 +98,17 @@ public class ComplexTypeDescriptor extends TypeDescriptor {
 
     private volatile XmlElementDescriptor[] myElementDescriptors = null;
     private volatile XmlAttributeDescriptor[] myAttributeDescriptors = null;
-    @NonNls
     private static final String PROHIBITED_ATTR_VALUE = "prohibited";
-    @NonNls
     private static final String OTHER_NAMESPACE_ATTR_VALUE = "##other";
 
-    @NonNls
     private static final String TRUE_ATTR_VALUE = "true";
-    @NonNls
     private static final String REF_ATTR_NAME = "ref";
-    @NonNls
     private static final String NAME_ATTR_NAME = "name";
-    @NonNls
     private static final String ELEMENT_TAG_NAME = "element";
-    @NonNls
     private static final String ATTRIBUTE_TAG_NAME = "attribute";
     private boolean myHasAnyInContentModel;
-    @NonNls
     private static final String RESTRICTION_TAG_NAME = "restriction";
-    @NonNls
     private static final String EXTENSION_TAG_NAME = "extension";
-    @NonNls
     private static final String BASE_ATTR_NAME = "base";
 
     public ComplexTypeDescriptor(XmlNSDescriptorImpl documentDescriptor, XmlTag tag) {

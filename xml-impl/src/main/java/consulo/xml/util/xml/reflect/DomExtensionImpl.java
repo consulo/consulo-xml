@@ -28,7 +28,6 @@ import consulo.xml.util.xml.impl.DomChildDescriptionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -73,38 +72,36 @@ public class DomExtensionImpl implements DomExtension {
     myAttributesDescriptor = attributesDescriptor;
   }
 
-  @Nonnull
   public XmlName getXmlName() {
     return myXmlName;
   }
 
-  @Nonnull
   public Type getType() {
     return myType;
   }
 
-  public DomExtension setDeclaringElement(@Nonnull DomElement declaringElement) {
+  public DomExtension setDeclaringElement(DomElement declaringElement) {
     putUserData(KEY_DOM_DECLARATION, DomAnchorImpl.createAnchor(declaringElement, true));
     return this;
   }
 
   @Override
-  public DomExtension setDeclaringElement(@Nonnull PsiElement declaringElement) {
+  public DomExtension setDeclaringElement(PsiElement declaringElement) {
     putUserData(DECLARING_ELEMENT_KEY, SmartPointerManager.getInstance(declaringElement.getProject()).createSmartPsiElementPointer(declaringElement));
     return this;
   }
 
-  public DomExtension setConverter(@Nonnull Converter converter) {
+  public DomExtension setConverter(Converter converter) {
     return setConverter(converter, false);
   }
 
-  public final DomExtension setConverter(@Nonnull final Converter converter, final boolean soft) {
+  public final DomExtension setConverter(final Converter converter, final boolean soft) {
     myConverter = converter;
     mySoft = soft;
     return this;
   }
 
-  public DomExtension addCustomAnnotation(@Nonnull final Annotation anno) {
+  public DomExtension addCustomAnnotation(final Annotation anno) {
     myCustomAnnos.add(anno);
     return this;
   }

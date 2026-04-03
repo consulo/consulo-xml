@@ -37,10 +37,8 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.function.Supplier;
@@ -60,7 +58,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 		return INSTANCE_CACHE.getValue(project);
 	}
 
-	public DomManager(@Nonnull Project project)
+	public DomManager(Project project)
 	{
 		super(PsiManager.getInstance(project).getModificationTracker());
 	}
@@ -84,11 +82,10 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * @deprecated use {@link #getFileElement(XmlFile, Class)}
 	 */ public abstract <T extends DomElement> DomFileElement<T> getFileElement(XmlFile file);
 
-	@Nonnull
 	@Deprecated
 	/**
 	 * @deprecated use {@link #getFileElement(XmlFile, Class)}
-	 */ public abstract <T extends DomElement> DomFileElement<T> getFileElement(XmlFile file, Class<T> aClass, @NonNls String rootTagName);
+	 */ public abstract <T extends DomElement> DomFileElement<T> getFileElement(XmlFile file, Class<T> aClass, String rootTagName);
 
 	public abstract void addDomEventListener(DomEventListener listener, Disposable parentDisposable);
 
@@ -154,7 +151,6 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	 * this method to resolve DOM references. This result's subtree will be traversed recursively searching for the reference target. See
 	 * {@link Resolve} annotation.
 	 */
-	@Nonnull
 	public abstract DomElement getResolvingScope(GenericDomValue element);
 
 	/**
@@ -171,7 +167,7 @@ public abstract class DomManager extends CompositeModificationTracker implements
 	public abstract TypeChooserManager getTypeChooserManager();
 
 	@Nullable
-	public abstract AbstractDomChildrenDescription findChildrenDescription(@Nonnull XmlTag templateChildTag, @Nonnull DomElement parent);
+	public abstract AbstractDomChildrenDescription findChildrenDescription(XmlTag templateChildTag, DomElement parent);
 
 	@Nullable
 	public final DomFileDescription<?> getDomFileDescription(final XmlFile xmlFile)

@@ -18,7 +18,6 @@ package consulo.xml.psi.filters.position;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.lang.reflect.ReflectionUtil;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.psi.filter.ElementFilter;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlDocument;
@@ -30,7 +29,7 @@ public class NamespaceFilter implements ElementFilter
 {
 	private final String[] myNamespaces;
 
-	public NamespaceFilter(@NonNls String... namespaces)
+	public NamespaceFilter(String... namespaces)
 	{
 		myNamespaces = namespaces;
 	}

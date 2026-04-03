@@ -17,7 +17,6 @@ package consulo.xml.util.xml.ui;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
-import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -44,7 +43,6 @@ public class DomFixedWrapper<T> extends DomWrapper<T>{
     return element.isValid() ? (T)DomUIFactory.GET_VALUE_METHOD.invoke(element) : null;
   }
 
-  @Nonnull
   public DomElement getExistingDomElement() {
     return myDomElement;
   }

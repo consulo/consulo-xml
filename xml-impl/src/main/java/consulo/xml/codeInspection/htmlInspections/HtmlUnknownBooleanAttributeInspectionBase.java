@@ -31,16 +31,13 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnknownElementInspection {
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsUnknownBooleanAttribute();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME;
@@ -53,8 +50,8 @@ public abstract class HtmlUnknownBooleanAttributeInspectionBase extends HtmlUnkn
 
     @Override
     protected void checkAttribute(
-        @Nonnull XmlAttribute attribute,
-        @Nonnull ProblemsHolder holder,
+        XmlAttribute attribute,
+        ProblemsHolder holder,
         boolean isOnTheFly,
         Object state
     ) {

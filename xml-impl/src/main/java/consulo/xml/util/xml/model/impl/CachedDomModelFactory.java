@@ -20,15 +20,13 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.model.DomModel;
 import consulo.util.dataholder.UserDataHolder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sergey.Vasiliev
  */
 public interface CachedDomModelFactory <T extends DomElement, M extends DomModel<T>, Scope extends UserDataHolder> {
-  @Nonnull
   Object[] computeDependencies(@Nullable M model, @Nullable Scope scope);
 
-  Scope getModelScope(@Nonnull XmlFile xmlFile);
+  Scope getModelScope(XmlFile xmlFile);
 }

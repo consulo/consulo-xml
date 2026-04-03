@@ -15,11 +15,9 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
@@ -28,11 +26,11 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
   private final XmlName myXmlName;
   private final String myNamespace;
 
-  public DummyEvaluatedXmlName(final String localName, @Nonnull final String namespace) {
+  public DummyEvaluatedXmlName(final String localName, final String namespace) {
     this(new XmlName(localName), namespace);
   }
 
-  public DummyEvaluatedXmlName(final XmlName xmlName, @Nonnull final String namespace) {
+  public DummyEvaluatedXmlName(final XmlName xmlName, final String namespace) {
     myXmlName = xmlName;
     myNamespace = namespace;
   }
@@ -41,7 +39,7 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
     return myXmlName;
   }
 
-  public EvaluatedXmlName evaluateChildName(@Nonnull final XmlName name) {
+  public EvaluatedXmlName evaluateChildName(final XmlName name) {
     String namespaceKey = name.getNamespaceKey();
     if (namespaceKey == null) {
       return new DummyEvaluatedXmlName(name.getLocalName(), myNamespace);
@@ -53,9 +51,7 @@ public class DummyEvaluatedXmlName implements EvaluatedXmlName {
     return namespace.equals(myNamespace);
   }
 
-  @Nonnull
-  @NonNls
-  public String getNamespace(@Nonnull final XmlElement parentElement, final XmlFile file) {
+  public String getNamespace(final XmlElement parentElement, final XmlFile file) {
     return myNamespace;
   }
 

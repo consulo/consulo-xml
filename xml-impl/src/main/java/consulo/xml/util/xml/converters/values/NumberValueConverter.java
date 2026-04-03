@@ -20,9 +20,7 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomBundle;
 import consulo.xml.util.xml.ResolvingConverter;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -35,13 +33,13 @@ public class NumberValueConverter extends ResolvingConverter<String> {
   private final boolean myAllowEmpty;
 
 
-  public NumberValueConverter(@Nonnull final Class numberClass, final boolean allowEmpty) {
+  public NumberValueConverter(final Class numberClass, final boolean allowEmpty) {
     myNumberClass = numberClass;
     myAllowEmpty = allowEmpty;
   }
 
   @Override
-  public String fromString(@Nullable @NonNls final String s, final ConvertContext context) {
+  public String fromString(@Nullable final String s, final ConvertContext context) {
     if (s == null) return null;
 
     if (myAllowEmpty && s.trim().length() == 0) return s;
@@ -55,7 +53,6 @@ public class NumberValueConverter extends ResolvingConverter<String> {
   }
 
   @Override
-  @Nonnull
   public LocalizeValue buildUnresolvedMessage(@Nullable final String s, final ConvertContext context) {
     if (s == null) return super.buildUnresolvedMessage(s, context);
 
@@ -64,14 +61,13 @@ public class NumberValueConverter extends ResolvingConverter<String> {
           DomBundle.message("value.converter.format.exception", s, myNumberClass.getName()));
   }
 
-  @Nonnull
   @Override
   public Collection<? extends String> getVariants(ConvertContext context) {
     return Collections.emptySet();
   }
 
   @Nullable
-  public static Number parseNumber(@Nonnull String text, @Nonnull Class targetClass) {
+  public static Number parseNumber(String text, Class targetClass) {
     try {
       String trimmed = text.trim();
 

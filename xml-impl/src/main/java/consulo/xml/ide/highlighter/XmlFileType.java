@@ -24,7 +24,6 @@ import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 
-import jakarta.annotation.Nonnull;
 import java.nio.charset.Charset;
 
 public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, FileTypeWithPredefinedCharset
@@ -39,36 +38,31 @@ public class XmlFileType extends XmlLikeFileType implements DomSupportEnabled, F
 	}
 
 	@Override
-	@Nonnull
 	public String getId()
 	{
 		return "XML";
 	}
 
 	@Override
-	@Nonnull
 	public LocalizeValue getDescription()
 	{
 		return XmlLocalize.filetypeDescriptionXml();
 	}
 
 	@Override
-	@Nonnull
 	public String getDefaultExtension()
 	{
 		return DEFAULT_EXTENSION;
 	}
 
-	@Nonnull
 	@Override
 	public Image getIcon()
 	{
 		return PlatformIconGroup.filetypesXml();
 	}
 
-	@Nonnull
 	@Override
-	public Pair<Charset, String> getPredefinedCharset(@Nonnull VirtualFile virtualFile)
+	public Pair<Charset, String> getPredefinedCharset(VirtualFile virtualFile)
 	{
 		return Pair.create(virtualFile.getCharset(), "XML file");
 	}

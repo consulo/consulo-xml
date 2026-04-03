@@ -27,9 +27,8 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.ui.ex.awt.JBLabel;
 import consulo.ui.image.Image;
 
-import jakarta.annotation.Nonnull;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -43,7 +42,7 @@ public class ErrorableTableCellRenderer<T extends DomElement> extends DefaultTab
   private final T myCellValueDomElement;
   private final DomElement myRoot;
 
-  public ErrorableTableCellRenderer(@Nullable final T cellValueDomElement, final TableCellRenderer renderer, @Nonnull final DomElement rowDomElement) {
+  public ErrorableTableCellRenderer(@Nullable final T cellValueDomElement, final TableCellRenderer renderer, final DomElement rowDomElement) {
     myCellValueDomElement = cellValueDomElement;
     myRenderer = renderer;
     myRowDomElement = rowDomElement;

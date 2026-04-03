@@ -29,19 +29,17 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "htmlText")
 public class HtmlTextCompletionConfidence extends CompletionConfidence {
-    @Nonnull
     @Override
     @RequiredReadAction
-    public ThreeState shouldSkipAutopopup(@Nonnull PsiElement contextElement, @Nonnull PsiFile psiFile, int offset) {
+    public ThreeState shouldSkipAutopopup(PsiElement contextElement, PsiFile psiFile, int offset) {
         return shouldSkipAutopopupInHtml(contextElement, offset) ? ThreeState.YES : ThreeState.UNSURE;
     }
 
     @RequiredReadAction
-    public static boolean shouldSkipAutopopupInHtml(@Nonnull PsiElement contextElement, int offset) {
+    public static boolean shouldSkipAutopopupInHtml(PsiElement contextElement, int offset) {
         ASTNode node = contextElement.getNode();
         if (node != null && node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) {
             PsiElement parent = contextElement.getParent();
@@ -55,7 +53,6 @@ public class HtmlTextCompletionConfidence extends CompletionConfidence {
         return false;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return HTMLLanguage.INSTANCE;

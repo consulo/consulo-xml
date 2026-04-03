@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.xml;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface XmlTagChild extends XmlElement{
   XmlTagChild[] EMPTY_ARRAY = new XmlTagChild[0];

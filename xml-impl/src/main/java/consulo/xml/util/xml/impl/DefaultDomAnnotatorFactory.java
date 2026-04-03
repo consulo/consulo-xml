@@ -6,8 +6,7 @@ import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.annotation.AnnotatorFactory;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -23,7 +22,6 @@ public class DefaultDomAnnotatorFactory implements AnnotatorFactory
 		return new DefaultDomAnnotator();
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

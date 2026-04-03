@@ -24,8 +24,7 @@ import consulo.module.content.ProjectFileIndex;
 import consulo.module.content.ProjectRootManager;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,8 +39,8 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
     public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getResources(
         ID<K, V> indexId,
         final K key,
-        @Nullable final consulo.module.Module module,
-        @Nonnull Project project,
+        consulo.module.@Nullable Module module,
+        Project project,
         @Nullable final GlobalSearchScope additionalScope
     ) {
         if (project.isDefault()) {
@@ -68,7 +67,7 @@ public class IndexedRelevantResource<K, V extends Comparable> implements Compara
     public static <K, V extends Comparable> List<IndexedRelevantResource<K, V>> getAllResources(
         ID<K, V> indexId,
         @Nullable final Module module,
-        @Nonnull Project project,
+        Project project,
         @Nullable Function<List<IndexedRelevantResource<K, V>>, IndexedRelevantResource<K, V>> chooser
     ) {
         ArrayList<IndexedRelevantResource<K, V>> all = new ArrayList<>();

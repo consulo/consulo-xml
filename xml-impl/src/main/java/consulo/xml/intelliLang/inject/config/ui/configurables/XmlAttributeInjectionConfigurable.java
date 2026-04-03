@@ -16,24 +16,23 @@
 package consulo.xml.intelliLang.inject.config.ui.configurables;
 
 import consulo.language.inject.advanced.ui.InjectionConfigurable;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.intelliLang.inject.config.XmlAttributeInjection;
 import consulo.xml.intelliLang.inject.config.ui.XmlAttributePanel;
 
-public class XmlAttributeInjectionConfigurable extends InjectionConfigurable<XmlAttributeInjection, XmlAttributePanel>
-{
-	public XmlAttributeInjectionConfigurable(XmlAttributeInjection injection, Runnable treeUpdater, Project project)
-	{
-		super(injection, treeUpdater, project);
-	}
+public class XmlAttributeInjectionConfigurable extends InjectionConfigurable<XmlAttributeInjection, XmlAttributePanel> {
+    public XmlAttributeInjectionConfigurable(XmlAttributeInjection injection, Runnable treeUpdater, Project project) {
+        super(injection, treeUpdater, project);
+    }
 
-	protected XmlAttributePanel createOptionsPanelImpl()
-	{
-		return new XmlAttributePanel(myInjection, myProject);
-	}
+    @Override
+    protected XmlAttributePanel createOptionsPanelImpl() {
+        return new XmlAttributePanel(myInjection, myProject);
+    }
 
-	public String getBannerSlogan()
-	{
-		return "Edit XML Attribute Injection";
-	}
+    @Override
+    public LocalizeValue getBannerSlogan() {
+        return LocalizeValue.localizeTODO("Edit XML Attribute Injection");
+    }
 }

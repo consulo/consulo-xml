@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XmlMarkupLineWrapPositionStrategy extends MarkupLineWrapPositionStrategy
 {
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

@@ -23,10 +23,8 @@ import consulo.xml.util.xml.ModelMerger;
 import consulo.xml.util.xml.model.DomModel;
 import consulo.xml.util.xml.model.DomModelCache;
 import consulo.util.dataholder.UserDataHolder;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sergey.Vasiliev
@@ -37,15 +35,14 @@ public abstract class CachedSimpleDomModelFactory<T extends DomElement, M extend
 
   private final DomModelCache<M, XmlFile> myModelCache;
 
-  protected CachedSimpleDomModelFactory(@Nonnull Class<T> aClass,
-                          @Nonnull ModelMerger modelMerger,
+  protected CachedSimpleDomModelFactory(Class<T> aClass,
+                          ModelMerger modelMerger,
                           final Project project,
-                          @NonNls String name) {
+                          String name) {
     super(aClass, modelMerger);
 
     myModelCache = new DomModelCache<M, XmlFile>(project, name + " model") {
-       @Nonnull
-       protected CachedValueProvider.Result<M> computeValue(@Nonnull XmlFile file) {
+       protected CachedValueProvider.Result<M> computeValue(XmlFile file) {
          file = (XmlFile)file.getOriginalFile();
 
          final Scope scope = getModelScope(file);
@@ -64,5 +61,5 @@ public abstract class CachedSimpleDomModelFactory<T extends DomElement, M extend
   }
 
   @Nullable
-  protected abstract M computeModel(@Nonnull XmlFile psiFile, @Nullable Scope scope);
+  protected abstract M computeModel(XmlFile psiFile, @Nullable Scope scope);
 }

@@ -21,7 +21,6 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -31,5 +30,5 @@ import java.util.List;
 public interface XmlTagNameProvider {
     ExtensionPointName<XmlTagNameProvider> EP_NAME = ExtensionPointName.create(XmlTagNameProvider.class);
 
-    void addTagNameVariants(List<LookupElement> elements, @Nonnull XmlTag tag, String prefix);
+    void addTagNameVariants(List<LookupElement> elements, XmlTag tag, String prefix);
 }

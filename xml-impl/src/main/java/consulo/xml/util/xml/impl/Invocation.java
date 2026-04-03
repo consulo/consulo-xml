@@ -1,6 +1,6 @@
 package consulo.xml.util.xml.impl;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter

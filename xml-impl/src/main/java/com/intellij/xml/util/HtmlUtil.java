@@ -53,10 +53,8 @@ import consulo.xml.psi.impl.source.parsing.xml.HtmlBuilderDriver;
 import consulo.xml.psi.impl.source.parsing.xml.XmlBuilder;
 import consulo.xml.psi.xml.*;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -66,13 +64,9 @@ import java.util.*;
 public class HtmlUtil {
     private static final Logger LOG = Logger.getInstance(HtmlUtil.class);
 
-    @NonNls
     private static final String JSFC = "jsfc";
-    @NonNls
     private static final String CHARSET = "charset";
-    @NonNls
     private static final String CHARSET_PREFIX = CHARSET + "=";
-    @NonNls
     private static final String HTML5_DATA_ATTR_PREFIX = "data-";
 
     public static final String SCRIPT_TAG_NAME = "script";
@@ -84,9 +78,7 @@ public class HtmlUtil {
 
     public static final String[] CONTENT_TYPES = ArrayUtil.toStringArray(MimeTypeDictionary.getContentTypes());
 
-    @NonNls
     public static final String MATH_ML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
-    @NonNls
     public static final String SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
     public static final String[] RFC2616_HEADERS = new String[]{
@@ -144,7 +136,6 @@ public class HtmlUtil {
     }
 
     private static final Set<String> EMPTY_TAGS_MAP = new HashSet<>();
-    @NonNls
     private static final String[] OPTIONAL_END_TAGS = {
         //"html",
         "head",
@@ -166,7 +157,6 @@ public class HtmlUtil {
     };
     private static final Set<String> OPTIONAL_END_TAGS_MAP = new HashSet<>();
 
-    @NonNls
     private static final String[] BLOCK_TAGS = {
         "p",
         "h1",
@@ -210,7 +200,6 @@ public class HtmlUtil {
     };
 
     // flow elements are block or inline, so they should not close <p> for example
-    @NonNls
     private static final String[] POSSIBLY_INLINE_TAGS = {
         "a",
         "abbr",
@@ -255,7 +244,6 @@ public class HtmlUtil {
 
     private static final Set<String> BLOCK_TAGS_MAP = new HashSet<>();
 
-    @NonNls
     private static final String[] INLINE_ELEMENTS_CONTAINER = {
         "p",
         "h1",
@@ -271,7 +259,6 @@ public class HtmlUtil {
 
     private static final Set<String> POSSIBLY_INLINE_TAGS_MAP = new HashSet<>();
 
-    @NonNls
     private static final String[] HTML5_TAGS = {
         "article",
         "aside",
@@ -324,7 +311,7 @@ public class HtmlUtil {
         return EMPTY_TAGS_MAP.contains(tagName.toLowerCase(Locale.US));
     }
 
-    public static boolean isSingleHtmlTag(@Nonnull XmlTag tag, boolean lowerCase) {
+    public static boolean isSingleHtmlTag(XmlTag tag, boolean lowerCase) {
         final XmlExtension extension = XmlExtension.getExtensionByElement(tag);
         final String name = tag.getName();
         boolean result = EMPTY_TAGS_MAP.contains(!lowerCase || tag.isCaseSensitive()
@@ -416,7 +403,7 @@ public class HtmlUtil {
         return true;
     }
 
-    public static boolean isBooleanAttribute(@Nonnull XmlAttributeDescriptor descriptor, @Nullable PsiElement context) {
+    public static boolean isBooleanAttribute(XmlAttributeDescriptor descriptor, @Nullable PsiElement context) {
         if (descriptor instanceof HtmlAttributeDescriptorImpl && descriptor.isEnumerated()) {
             final String[] values = descriptor.getEnumeratedValues();
             if (values == null) {
@@ -433,7 +420,7 @@ public class HtmlUtil {
         return context != null && isCustomBooleanAttribute(descriptor.getName(), context);
     }
 
-    public static boolean isCustomBooleanAttribute(@Nonnull String attributeName, @Nonnull PsiElement context) {
+    public static boolean isCustomBooleanAttribute(String attributeName, PsiElement context) {
         final Set<String> entitiesString = getEntitiesString(context, XmlEntitiesInspection.BOOLEAN_ATTRIBUTE_SHORT_NAME);
         for (String token : entitiesString) {
             if (attributeName.equalsIgnoreCase(token)) {
@@ -487,8 +474,7 @@ public class HtmlUtil {
         return descriptors;
     }
 
-    @Nonnull
-    public static Set<String> getEntitiesString(@Nullable PsiElement context, @Nonnull String inspectionName) {
+    public static Set<String> getEntitiesString(@Nullable PsiElement context, String inspectionName) {
         if (context == null) {
             return Set.of();
         }
@@ -593,7 +579,7 @@ public class HtmlUtil {
         return isHtml5Document(doc);
     }
 
-    public static boolean isHtmlTag(@Nonnull XmlTag tag) {
+    public static boolean isHtmlTag(XmlTag tag) {
         if (tag.getLanguage() != HTMLLanguage.INSTANCE) {
             return false;
         }
@@ -643,7 +629,7 @@ public class HtmlUtil {
         return "meta.rnc".equals(name);
     }
 
-    public static boolean tagHasHtml5Schema(@Nonnull XmlTag context) {
+    public static boolean tagHasHtml5Schema(XmlTag context) {
         XmlElementDescriptor descriptor = context.getDescriptor();
         if (descriptor != null) {
             XmlNSDescriptor nsDescriptor = descriptor.getNSDescriptor();
@@ -661,7 +647,7 @@ public class HtmlUtil {
         private static final TerminateException INSTANCE = new TerminateException();
     }
 
-    public static Charset detectCharsetFromMetaTag(@Nonnull CharSequence content) {
+    public static Charset detectCharsetFromMetaTag(CharSequence content) {
         // check for <meta http-equiv="charset=CharsetName" > or <meta charset="CharsetName"> and return Charset
         // because we will lightly parse and explicit charset isn't used very often do quick check for applicability
         int charPrefix = StringUtil.indexOf(content, CHARSET);
@@ -683,7 +669,6 @@ public class HtmlUtil {
         final Ref<String> charsetNameRef = new Ref<>();
         try {
             new HtmlBuilderDriver(content).build(new XmlBuilder() {
-                @NonNls
                 final Set<String> inTag = new HashSet<>();
                 boolean metHttpEquiv = false;
                 boolean metHttml5Charset = false;
@@ -705,7 +690,7 @@ public class HtmlUtil {
                     final int endoffset,
                     final int headerEndOffset
                 ) {
-                    @NonNls String name = localName.toString().toLowerCase();
+                    String name = localName.toString().toLowerCase();
                     inTag.add(name);
                     if (!inTag.contains("head") && !"html".equals(name)) {
                         terminate();
@@ -719,7 +704,7 @@ public class HtmlUtil {
 
                 @Override
                 public void endTag(final CharSequence localName, final String namespace, final int startoffset, final int endoffset) {
-                    @NonNls final String name = localName.toString().toLowerCase();
+                    final String name = localName.toString().toLowerCase();
                     if ("meta".equals(name) && (metHttpEquiv || metHttml5Charset) && contentAttributeValue != null) {
                         String charsetName;
                         if (metHttpEquiv) {
@@ -753,9 +738,9 @@ public class HtmlUtil {
 
                 @Override
                 public void attribute(final CharSequence localName, final CharSequence v, final int startoffset, final int endoffset) {
-                    @NonNls final String name = localName.toString().toLowerCase();
+                    final String name = localName.toString().toLowerCase();
                     if (inTag.contains("meta")) {
-                        @NonNls String value = v.toString().toLowerCase();
+                        String value = v.toString().toLowerCase();
                         if (name.equals("http-equiv")) {
                             metHttpEquiv |= value.equals("content-type");
                         }
@@ -798,7 +783,7 @@ public class HtmlUtil {
         return CharsetToolkit.forName(name);
     }
 
-    public static boolean isTagWithoutAttributes(@NonNls String tagName) {
+    public static boolean isTagWithoutAttributes(String tagName) {
         return tagName != null && "br".equalsIgnoreCase(tagName);
     }
 
@@ -821,17 +806,17 @@ public class HtmlUtil {
         return false;
     }
 
-    public static boolean hasHtmlPrefix(@Nonnull String url) {
+    public static boolean hasHtmlPrefix(String url) {
         return url.startsWith("http://") || url.startsWith("https://")
             || url.startsWith("//") /* Protocol-relative URL */ || url.startsWith("ftp://");
     }
 
-    public static boolean isHtmlFile(@Nonnull PsiElement element) {
+    public static boolean isHtmlFile(PsiElement element) {
         Language language = element.getLanguage();
         return language.isKindOf(HTMLLanguage.INSTANCE) || language == XHTMLLanguage.INSTANCE;
     }
 
-    public static boolean isHtmlFile(@Nonnull VirtualFile file) {
+    public static boolean isHtmlFile(VirtualFile file) {
         FileType fileType = file.getFileType();
         return fileType == HtmlFileType.INSTANCE || fileType == XHtmlFileType.INSTANCE;
     }
@@ -918,7 +903,7 @@ public class HtmlUtil {
     }
 
     @Nullable
-    private static String getAttributeValue(@Nonnull XmlTag tag, @Nonnull String attrName) {
+    private static String getAttributeValue(XmlTag tag, String attrName) {
         XmlAttribute classAttribute = getAttributeByName(tag, attrName);
         if (classAttribute != null && !containsOuterLanguageElements(classAttribute)) {
             String value = classAttribute.getValue();
@@ -930,7 +915,7 @@ public class HtmlUtil {
     }
 
     @Nullable
-    private static XmlAttribute getAttributeByName(@Nonnull XmlTag tag, @Nonnull String name) {
+    private static XmlAttribute getAttributeByName(XmlTag tag, String name) {
         PsiElement child = tag.getFirstChild();
         while (child != null) {
             if (child instanceof XmlAttribute attribute) {
@@ -945,7 +930,7 @@ public class HtmlUtil {
         return null;
     }
 
-    private static boolean containsOuterLanguageElements(@Nonnull PsiElement element) {
+    private static boolean containsOuterLanguageElements(PsiElement element) {
         PsiElement child = element.getFirstChild();
         while (child != null) {
             if (child instanceof CompositeElement) {

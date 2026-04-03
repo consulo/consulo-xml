@@ -17,8 +17,6 @@ package consulo.xml.util.xml;
 
 import consulo.xml.psi.xml.XmlFile;
 import consulo.util.collection.ArrayUtil;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,14 +29,12 @@ import java.util.Set;
 public abstract class MergingFileDescription<T extends DomElement> extends DomFileDescription<T>{
   private ModelMerger myMerger;
 
-  protected MergingFileDescription(final Class<T> rootElementClass, @NonNls final String rootTagName) {
+  protected MergingFileDescription(final Class<T> rootElementClass, final String rootTagName) {
     super(rootElementClass, rootTagName);
   }
 
-  @Nonnull
   protected abstract Set<XmlFile> getFilesToMerge(DomElement element);
 
-  @Nonnull
   public DomElement getResolveScope(GenericDomValue<?> reference) {
     final DomElement annotation = getScopeFromAnnotation(reference);
     if (annotation != null) return annotation;
@@ -82,7 +78,6 @@ public abstract class MergingFileDescription<T extends DomElement> extends DomFi
     return myMerger.mergeModels(getRootElementClass(), roots);
   }
 
-  @Nonnull
   public DomElement getIdentityScope(DomElement element) {
     final DomElement annotation = getScopeFromAnnotation(element);
     if (annotation != null) return annotation;

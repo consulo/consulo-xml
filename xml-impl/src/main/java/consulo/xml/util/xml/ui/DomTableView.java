@@ -71,5 +71,4 @@ public class DomTableView extends AbstractTableView<DomElement> {
             fireChanged();
         }
     }
-
 }

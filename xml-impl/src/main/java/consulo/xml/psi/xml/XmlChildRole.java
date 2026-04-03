@@ -23,8 +23,7 @@ import consulo.language.ast.RoleFinder;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ArrayUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface XmlChildRole
 {
@@ -33,7 +32,7 @@ public interface XmlChildRole
 
 	RoleFinder START_TAG_NAME_FINDER = new RoleFinder()
 	{
-		public ASTNode findChild(@Nonnull ASTNode parent)
+		public ASTNode findChild(ASTNode parent)
 		{
 			final PsiElement element = XmlTagUtil.getStartTagNameElement((XmlTag) parent.getPsi());
 			return element == null ? null : element.getNode();
@@ -43,7 +42,7 @@ public interface XmlChildRole
 	RoleFinder CLOSING_TAG_NAME_FINDER = new RoleFinder()
 	{
 		@Nullable
-		public ASTNode findChild(@Nonnull ASTNode parent)
+		public ASTNode findChild(ASTNode parent)
 		{
 			final PsiElement element = XmlTagUtil.getEndTagNameElement((XmlTag) parent.getPsi());
 			return element == null ? null : element.getNode();
@@ -52,7 +51,7 @@ public interface XmlChildRole
 
 	RoleFinder DOCUMENT_FINDER = new RoleFinder()
 	{
-		public ASTNode findChild(@Nonnull ASTNode parent)
+		public ASTNode findChild(ASTNode parent)
 		{
 			ASTNode oldDocument = parent.findChildByType(XmlElementType.XML_DOCUMENT);
 			if(oldDocument == null)

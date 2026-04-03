@@ -34,8 +34,7 @@ import consulo.xml.util.xml.impl.ConvertContextFactory;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -53,18 +52,16 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
         return myOnTheFly;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public DomElementProblemDescriptor createProblem(@Nonnull DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
+    public DomElementProblemDescriptor createProblem(DomElement domElement, @Nullable String message, LocalQuickFix... fixes) {
         return createProblem(domElement, HighlightSeverity.ERROR, message, fixes);
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         DomCollectionChildDescription childDescription,
         String message
     ) {
@@ -76,11 +73,10 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
         ));
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public final DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         HighlightSeverity highlightType,
         String message
     ) {
@@ -90,7 +86,7 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     @Override
     @RequiredReadAction
     public DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         HighlightSeverity highlightType,
         String message,
         LocalQuickFix[] fixes
@@ -101,7 +97,7 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     @Override
     @RequiredReadAction
     public DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         HighlightSeverity highlightType,
         String message,
         TextRange textRange,
@@ -120,7 +116,7 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
     @Override
     @RequiredReadAction
     public DomElementProblemDescriptor createProblem(
-        @Nonnull DomElement domElement,
+        DomElement domElement,
         ProblemHighlightType highlightType,
         String message,
         @Nullable TextRange textRange,
@@ -136,17 +132,15 @@ public class DomElementAnnotationHolderImpl extends SmartList<DomElementProblemD
         ));
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public DomElementResolveProblemDescriptor createResolveProblem(@Nonnull GenericDomValue element, @Nonnull PsiReference reference) {
+    public DomElementResolveProblemDescriptor createResolveProblem(GenericDomValue element, PsiReference reference) {
         return addProblem(new DomElementResolveProblemDescriptorImpl(element, reference, getQuickFixes(element, reference)));
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public Annotation createAnnotation(@Nonnull DomElement element, HighlightSeverity severity, @Nonnull LocalizeValue message) {
+    public Annotation createAnnotation(DomElement element, HighlightSeverity severity, LocalizeValue message) {
         XmlElement xmlElement = element.getXmlElement();
         LOG.assertTrue(xmlElement != null, "No XML element for " + element);
         TextRange range = xmlElement.getTextRange();

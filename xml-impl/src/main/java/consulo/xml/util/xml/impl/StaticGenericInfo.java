@@ -10,9 +10,7 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -76,7 +74,6 @@ public class StaticGenericInfo extends DomGenericInfoEx {
       }
 
       final Function<String, CollectionChildDescriptionImpl> mapper = new Function<>() {
-        @Nonnull
         public CollectionChildDescriptionImpl apply(final String xmlName) {
           return ObjectUtil.assertNotNull(myCollections.findDescription(xmlName));
         }
@@ -208,7 +205,6 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return o instanceof GenericDomValue ? (GenericDomValue)o : null;
   }
 
-  @Nonnull
   public List<? extends CustomDomChildrenDescriptionImpl> getCustomNameChildrenDescription() {
     return myCustomDescription == null ? Collections.<CustomDomChildrenDescriptionImpl>emptyList() : Collections.singletonList(myCustomDescription);
   }
@@ -225,7 +221,6 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return o == null || o instanceof String ? (String)o : ((GenericValue)o).getStringValue();
   }
 
-  @Nonnull
   public List<AbstractDomChildDescriptionImpl> getChildrenDescriptions() {
     buildMethodMaps();
     final ArrayList<AbstractDomChildDescriptionImpl> list = new ArrayList<AbstractDomChildDescriptionImpl>();
@@ -236,13 +231,11 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return list;
   }
 
-  @Nonnull
   public List<? extends DomFixedChildDescription> getFixedChildrenDescriptions() {
     buildMethodMaps();
     return myFixed.getDescriptions();
   }
 
-  @Nonnull
   public List<? extends DomCollectionChildDescription> getCollectionChildrenDescriptions() {
     buildMethodMaps();
     return myCollections.getDescriptions();
@@ -253,7 +246,6 @@ public class StaticGenericInfo extends DomGenericInfoEx {
     return myValueElement;
   }
 
-  @Nonnull
   public List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions() {
     buildMethodMaps();
     return new ArrayList<AttributeChildDescriptionImpl>(myAttributeChildrenMethods.values());
@@ -266,37 +258,37 @@ public class StaticGenericInfo extends DomGenericInfoEx {
   }
 
   @Nullable
-  public DomFixedChildDescription getFixedChildDescription(@NonNls final String tagName) {
+  public DomFixedChildDescription getFixedChildDescription(final String tagName) {
     buildMethodMaps();
     return myFixed.findDescription(tagName);
   }
 
   @Nullable
-  public DomFixedChildDescription getFixedChildDescription(@NonNls final String tagName, @NonNls final String namespaceKey) {
+  public DomFixedChildDescription getFixedChildDescription(final String tagName, final String namespaceKey) {
     buildMethodMaps();
     return myFixed.getDescription(tagName, namespaceKey);
   }
 
   @Nullable
-  public DomCollectionChildDescription getCollectionChildDescription(@NonNls final String tagName) {
+  public DomCollectionChildDescription getCollectionChildDescription(final String tagName) {
     buildMethodMaps();
     return myCollections.findDescription(tagName);
   }
 
   @Nullable
-  public DomCollectionChildDescription getCollectionChildDescription(@NonNls final String tagName, @NonNls final String namespaceKey) {
+  public DomCollectionChildDescription getCollectionChildDescription(final String tagName, final String namespaceKey) {
     buildMethodMaps();
     return myCollections.getDescription(tagName, namespaceKey);
   }
 
   @Nullable
-  public DomAttributeChildDescription getAttributeChildDescription(@NonNls final String attributeName) {
+  public DomAttributeChildDescription getAttributeChildDescription(final String attributeName) {
     buildMethodMaps();
     return myAttributes.findDescription(attributeName);
   }
 
   @Nullable
-  public DomAttributeChildDescription getAttributeChildDescription(@NonNls final String attributeName, @NonNls final String namespaceKey) {
+  public DomAttributeChildDescription getAttributeChildDescription(final String attributeName, final String namespaceKey) {
     buildMethodMaps();
     return myAttributes.getDescription(attributeName, namespaceKey);
   }

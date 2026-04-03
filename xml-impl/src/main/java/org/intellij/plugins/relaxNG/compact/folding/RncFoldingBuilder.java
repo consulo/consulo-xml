@@ -33,8 +33,7 @@ import org.intellij.plugins.relaxNG.compact.psi.RncAnnotation;
 import org.intellij.plugins.relaxNG.compact.psi.RncName;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 
 /**
@@ -44,8 +43,7 @@ import java.util.ArrayList;
 public class RncFoldingBuilder implements FoldingBuilder
 {
 	@Override
-	@Nonnull
-	public FoldingDescriptor[] buildFoldRegions(@Nonnull ASTNode node, @Nonnull Document document)
+	public FoldingDescriptor[] buildFoldRegions(ASTNode node, Document document)
 	{
 
 		final ArrayList<FoldingDescriptor> regions = new ArrayList<>();
@@ -57,7 +55,7 @@ public class RncFoldingBuilder implements FoldingBuilder
 	}
 
 	@Override
-	public String getPlaceholderText(@Nonnull ASTNode node)
+	public String getPlaceholderText(ASTNode node)
 	{
 		final IElementType type = node.getElementType();
 		if(type == RncTokenTypes.LBRACE)
@@ -96,7 +94,7 @@ public class RncFoldingBuilder implements FoldingBuilder
 	}
 
 	@Override
-	public boolean isCollapsedByDefault(@Nonnull ASTNode node)
+	public boolean isCollapsedByDefault(ASTNode node)
 	{
 		return isCommentLike(node.getElementType()) && CodeFoldingSettings.getInstance().COLLAPSE_DOC_COMMENTS;
 	}
@@ -197,7 +195,6 @@ public class RncFoldingBuilder implements FoldingBuilder
 		return document.getLineNumber(first.getStartOffset()) != document.getLineNumber(second.getStartOffset());
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

@@ -40,13 +40,11 @@ import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.compact.RngCompactLanguage;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxIncludeIndex;
-import org.jetbrains.annotations.NonNls;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +59,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 
 	@Nullable
 	@Override
-	public MyValidationMessageConsumer collectInformation(@Nonnull final PsiFile file)
+	public MyValidationMessageConsumer collectInformation(final PsiFile file)
 	{
 		final FileType type = file.getFileType();
 		if(type != XmlFileType.INSTANCE && type != RncFileType.getInstance())
@@ -123,7 +121,7 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 	}
 
 	@Override
-	public void apply(@Nonnull PsiFile file, MyValidationMessageConsumer annotationResult, @Nonnull AnnotationHolder holder)
+	public void apply(PsiFile file, MyValidationMessageConsumer annotationResult, AnnotationHolder holder)
 	{
 		annotationResult.apply(holder);
 	}
@@ -262,7 +260,6 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 		}
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
@@ -319,7 +316,6 @@ public class RngSchemaValidator extends ExternalAnnotator<RngSchemaValidator.MyV
 
 	private static class ErrorMessageConsumer extends MessageConsumerImpl
 	{
-		@NonNls
 		private static final String MISSING_START_ELEMENT = "missing \"start\" element";
 		private static final String UNDEFINED_PATTERN = "reference to undefined pattern ";
 

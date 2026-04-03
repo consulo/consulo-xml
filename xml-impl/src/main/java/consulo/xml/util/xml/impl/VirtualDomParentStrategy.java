@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiFile;
 import consulo.xml.psi.xml.XmlElement;
@@ -29,7 +28,7 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
   private long myModCount;
   private final PsiFile myModificationTracker;
 
-  public VirtualDomParentStrategy(@Nonnull final DomInvocationHandler parentHandler) {
+  public VirtualDomParentStrategy(final DomInvocationHandler parentHandler) {
     myParentHandler = parentHandler;
     myModificationTracker = parentHandler.getFile();
     myModCount = getModCount();
@@ -39,7 +38,6 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return myModificationTracker.getModificationStamp();
   }
 
-  @Nonnull
   public DomInvocationHandler getParentHandler() {
     return myParentHandler;
   }
@@ -48,7 +46,6 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return null;
   }
 
-  @Nonnull
   public synchronized DomParentStrategy refreshStrategy(final DomInvocationHandler handler) {
     if (!myParentHandler.isValid()) return this;
 
@@ -63,12 +60,10 @@ public class VirtualDomParentStrategy implements DomParentStrategy {
     return this;
   }
 
-  @Nonnull
-  public DomParentStrategy setXmlElement(@Nonnull final XmlElement element) {
+  public DomParentStrategy setXmlElement(final XmlElement element) {
     return new PhysicalDomParentStrategy(element, DomManagerImpl.getDomManager(element.getProject()));
   }
 
-  @Nonnull
   public synchronized DomParentStrategy clearXmlElement() {
     myModCount = getModCount();
     return this;

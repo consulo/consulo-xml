@@ -15,8 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.document.util.TextRange;
@@ -27,16 +26,15 @@ import consulo.util.collection.ArrayUtil;
 
 public class DependentNSReference extends BasicAttributeValueReference
 {
-	@Nonnull
 	private final URLReference myReference;
 	private final boolean myForceFetchResultValid;
 
-	public DependentNSReference(final PsiElement element, TextRange range, @Nonnull URLReference ref)
+	public DependentNSReference(final PsiElement element, TextRange range, URLReference ref)
 	{
 		this(element, range, ref, false);
 	}
 
-	public DependentNSReference(final PsiElement element, TextRange range, @Nonnull URLReference ref, boolean valid)
+	public DependentNSReference(final PsiElement element, TextRange range, URLReference ref, boolean valid)
 	{
 		super(element, range);
 		myReference = ref;
@@ -62,7 +60,6 @@ public class DependentNSReference extends BasicAttributeValueReference
 	}
 
 	@Override
-	@Nonnull
 	public Object[] getVariants()
 	{
 		return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -79,7 +76,6 @@ public class DependentNSReference extends BasicAttributeValueReference
 		return myForceFetchResultValid;
 	}
 
-	@Nonnull
 	public URLReference getNamespaceReference()
 	{
 		return myReference;

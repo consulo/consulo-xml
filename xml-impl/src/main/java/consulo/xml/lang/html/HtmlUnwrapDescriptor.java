@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.base.XmlBasedUnwrapDescriptor;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class HtmlUnwrapDescriptor extends XmlBasedUnwrapDescriptor
 {
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

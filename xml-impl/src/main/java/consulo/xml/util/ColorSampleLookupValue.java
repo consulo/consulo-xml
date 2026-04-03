@@ -27,9 +27,7 @@ import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.ui.image.Image;
 import consulo.ui.image.ImageEffects;
 import consulo.util.lang.StringUtil;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 import java.util.List;
@@ -44,10 +42,8 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 	private static Map<String, String> ourColorNameToHexCodeMap;
 	private static Map<String, String> ourHexCodeToColorNameMap;
 
-	@NonNls
 	private static final String BR = "<br>";
 
-	@NonNls
 	private static final String systemColorsString = "ActiveBorder\n" +
 			"    Active window border.\n" +
 			"ActiveCaption\n" +
@@ -104,12 +100,10 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 			"    Window frame.\n" +
 			"WindowText\n" +
 			"    Text in windows. ";
-	@NonNls
 	private static final String standardColorsString = "maroon #800000 red #ff0000 orange #ffA500 yellow #ffff00 olive #808000\n" +
 			"purple #800080 fuchsia #ff00ff white #ffffff lime #00ff00 green #008000\n" +
 			"navy #000080 blue #0000ff aqua #00ffff teal #008080\n" +
 			"black #000000 silver #c0c0c0 gray #808080";
-	@NonNls
 	private static final String colorsString = "aliceblue \t#f0f8ff \t240,248,255\n" +
 			"  \t  \tantiquewhite \t#faebd7 \t250,235,215\n" +
 			"  \t  \taqua \t#00ffff \t0,255,255\n" +
@@ -343,12 +337,12 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		return true;
 	}
 
-	public static boolean isSystemColorName(@Nonnull @NonNls final String s)
+	public static boolean isSystemColorName(final String s)
 	{
 		return ourSystemColors.contains(s);
 	}
 
-	public static boolean isStandardColor(@Nonnull @NonNls final String s)
+	public static boolean isStandardColor(final String s)
 	{
 		return ourStandardColors.contains(s);
 	}
@@ -450,7 +444,7 @@ public class ColorSampleLookupValue implements LookupValueWithUIHint, DeferredUs
 		return ourHexCodeToColorNameMap.get(colorName);
 	}
 
-	private static String toHex(@Nonnull final Color color)
+	private static String toHex(final Color color)
 	{
 		final StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < 3; i++)

@@ -17,25 +17,22 @@ package consulo.xml.ide.structureView.impl.xml;
 
 import java.util.Collection;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 
 public class XmlTagTreeElement extends AbstractXmlTagTreeElement<XmlTag>{
-  @NonNls private static final String ID_ATTR_NAME = "id";
-  @NonNls private static final String NAME_ATTR_NAME = "name";
+  private static final String ID_ATTR_NAME = "id";
+  private static final String NAME_ATTR_NAME = "name";
 
   public XmlTagTreeElement(XmlTag tag) {
     super(tag);
   }
 
- @Nonnull
  public Collection<StructureViewTreeElement> getChildrenBase() {
     return getStructureViewTreeElements(getElement().getSubTags());
   }

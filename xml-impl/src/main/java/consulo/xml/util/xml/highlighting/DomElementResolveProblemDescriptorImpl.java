@@ -28,19 +28,17 @@ import consulo.util.lang.Pair;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.util.xml.GenericDomValue;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
  */
 class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptorImpl implements DomElementResolveProblemDescriptor {
-    @Nonnull
     private final PsiReference myReference;
 
     @RequiredReadAction
     public DomElementResolveProblemDescriptorImpl(
-        @Nonnull GenericDomValue domElement,
-        @Nonnull PsiReference reference,
+        GenericDomValue domElement,
+        PsiReference reference,
         LocalQuickFix... quickFixes
     ) {
         super(
@@ -54,19 +52,16 @@ class DomElementResolveProblemDescriptorImpl extends DomElementProblemDescriptor
         myReference = reference;
     }
 
-    @Nonnull
     @Override
     public PsiReference getPsiReference() {
         return myReference;
     }
 
-    @Nonnull
     @Override
     public GenericDomValue getDomElement() {
         return (GenericDomValue) super.getDomElement();
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     protected Pair<TextRange, PsiElement> computeProblemRange() {

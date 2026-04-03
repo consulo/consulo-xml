@@ -28,16 +28,13 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.htmlInspectionsUnknownAttribute();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return XmlEntitiesInspection.ATTRIBUTE_SHORT_NAME;
@@ -50,8 +47,8 @@ public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElem
 
     @Override
     protected void checkAttribute(
-        @Nonnull XmlAttribute attribute,
-        @Nonnull ProblemsHolder holder,
+        XmlAttribute attribute,
+        ProblemsHolder holder,
         boolean isOnTheFly,
         Object state
     ) {

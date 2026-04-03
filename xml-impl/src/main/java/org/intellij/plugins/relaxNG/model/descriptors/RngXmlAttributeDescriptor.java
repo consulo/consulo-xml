@@ -29,17 +29,14 @@ import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
 import consulo.util.collection.HashingStrategy;
 import consulo.util.collection.Sets;
-import org.jetbrains.annotations.NonNls;
 import org.kohsuke.rngom.digested.DAttributePattern;
 import org.xml.sax.Locator;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.xml.namespace.QName;
 import java.util.*;
 
 public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
-  @NonNls
   private static final QName UNKNOWN = new QName("", "#unknown");
 
   private static final HashingStrategy<Locator> HASHING_STRATEGY = new HashingStrategy<Locator>() {
@@ -177,7 +174,6 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
   }
 
   @Override
-  @NonNls
   public String getName() {
     return myName.getLocalPart();
   }
@@ -214,7 +210,7 @@ public class RngXmlAttributeDescriptor extends BasicXmlAttributeDescriptor {
   }
 
   @Override
-  public PsiReference[] getValueReferences(final XmlElement element, @Nonnull String text) {
+  public PsiReference[] getValueReferences(final XmlElement element, String text) {
     return new PsiReference[] { new XmlEnumeratedValueReference(element, this) {
       @Nullable
       @Override

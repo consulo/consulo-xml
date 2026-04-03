@@ -26,7 +26,6 @@ import consulo.xml.psi.tree.xml.IDTDElementType;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author ik
@@ -40,7 +39,7 @@ public class XmlTokenImpl extends LeafPsiElement implements XmlToken, Navigatabl
     return false;
   }
 
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlToken(this);
     }
@@ -62,7 +61,6 @@ public class XmlTokenImpl extends LeafPsiElement implements XmlToken, Navigatabl
     return getElementType();
   }
 
-  @Nonnull
   public PsiReference[] getReferences() {
     final IElementType elementType = getElementType();
 

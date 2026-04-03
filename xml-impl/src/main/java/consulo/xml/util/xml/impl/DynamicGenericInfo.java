@@ -30,10 +30,8 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.JavaMethod;
 import consulo.xml.util.xml.reflect.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,7 +42,6 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
   private static final Key<SoftReference<ConcurrentHashMap<ChildrenDescriptionsHolder, ChildrenDescriptionsHolder>>> HOLDERS_CACHE = Key.create("DOM_CHILDREN_HOLDERS_CACHE");
   private static final RecursionGuard ourGuard = RecursionManager.createGuard("dynamicGenericInfo");
   private final StaticGenericInfo myStaticGenericInfo;
-  @Nonnull
   private final DomInvocationHandler myInvocationHandler;
   private volatile boolean myInitialized;
   private volatile ChildrenDescriptionsHolder<AttributeChildDescriptionImpl> myAttributes;
@@ -52,7 +49,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
   private volatile ChildrenDescriptionsHolder<CollectionChildDescriptionImpl> myCollections;
   private volatile List<CustomDomChildrenDescriptionImpl> myCustomChildren;
 
-  public DynamicGenericInfo(@Nonnull final DomInvocationHandler handler, final StaticGenericInfo staticGenericInfo) {
+  public DynamicGenericInfo(final DomInvocationHandler handler, final StaticGenericInfo staticGenericInfo) {
     myInvocationHandler = handler;
     myStaticGenericInfo = staticGenericInfo;
 
@@ -178,7 +175,6 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.getNameDomElement(element);
   }
 
-  @Nonnull
   public List<? extends CustomDomChildrenDescription> getCustomNameChildrenDescription() {
     checkInitialized();
     if (myCustomChildren != null) return myCustomChildren;
@@ -189,7 +185,6 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.getElementName(element);
   }
 
-  @Nonnull
   public List<AbstractDomChildDescriptionImpl> getChildrenDescriptions() {
     checkInitialized();
     final ArrayList<AbstractDomChildDescriptionImpl> list = new ArrayList<AbstractDomChildDescriptionImpl>();
@@ -200,13 +195,11 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return list;
   }
 
-  @Nonnull
   public final List<FixedChildDescriptionImpl> getFixedChildrenDescriptions() {
     checkInitialized();
     return myFixeds.getDescriptions();
   }
 
-  @Nonnull
   public final List<CollectionChildDescriptionImpl> getCollectionChildrenDescriptions() {
     checkInitialized();
     return myCollections.getDescriptions();
@@ -217,7 +210,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myFixeds.findDescription(tagName);
   }
 
-  public DomFixedChildDescription getFixedChildDescription(@NonNls String tagName, @NonNls String namespace) {
+  public DomFixedChildDescription getFixedChildDescription(String tagName, String namespace) {
     checkInitialized();
     return myFixeds.getDescription(tagName, namespace);
   }
@@ -227,7 +220,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myCollections.findDescription(tagName);
   }
 
-  public DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName, @NonNls String namespace) {
+  public DomCollectionChildDescription getCollectionChildDescription(String tagName, String namespace) {
     checkInitialized();
     return myCollections.getDescription(tagName, namespace);
   }
@@ -238,7 +231,7 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
   }
 
 
-  public DomAttributeChildDescription getAttributeChildDescription(@NonNls String attributeName, @NonNls String namespace) {
+  public DomAttributeChildDescription getAttributeChildDescription(String attributeName, String namespace) {
     checkInitialized();
     return myAttributes.getDescription(attributeName, namespace);
   }
@@ -247,7 +240,6 @@ public class DynamicGenericInfo extends DomGenericInfoEx {
     return myStaticGenericInfo.isTagValueElement();
   }
 
-  @Nonnull
   public List<AttributeChildDescriptionImpl> getAttributeChildrenDescriptions() {
     checkInitialized();
     return myAttributes.getDescriptions();

@@ -39,8 +39,7 @@ import consulo.project.Project;
 import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.StringUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 
@@ -127,7 +126,7 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
     }
 
     @RequiredWriteAction
-    private static void qualifyWithPrefix(@Nonnull String namespacePrefix, @Nonnull PsiElement context) {
+    private static void qualifyWithPrefix(String namespacePrefix, PsiElement context) {
         PsiElement parent = context.getParent();
 
         if (parent instanceof XmlAttribute) {
@@ -146,8 +145,7 @@ public class XmlAttributeInsertHandler implements InsertHandler<LookupElement> {
         }
     }
 
-    @Nonnull
-    private static String makePrefixUnique(@Nonnull String basePrefix, @Nonnull XmlTag context) {
+    private static String makePrefixUnique(String basePrefix, XmlTag context) {
         if (context.getNamespaceByPrefix(basePrefix).isEmpty()) {
             return basePrefix;
         }

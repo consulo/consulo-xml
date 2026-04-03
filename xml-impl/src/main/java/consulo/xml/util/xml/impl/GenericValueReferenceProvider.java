@@ -28,8 +28,7 @@ import consulo.xml.javaee.web.PsiReferenceConverter;
 import consulo.xml.psi.xml.*;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +41,7 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider
 
 	private final static Logger LOG = Logger.getInstance("#GenericValueReferenceProvider");
 
-	@Nonnull
-	public final PsiReference[] getReferencesByElement(@Nonnull PsiElement psiElement, @Nonnull final ProcessingContext context)
+	public final PsiReference[] getReferencesByElement(PsiElement psiElement, final ProcessingContext context)
 	{
 		final DomManager domManager = DomManager.getDomManager(psiElement.getProject());
 
@@ -141,7 +139,6 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider
 		return result.toArray(new PsiReference[result.size()]);
 	}
 
-	@Nonnull
 	@SuppressWarnings("unchecked")
 	private PsiReference[] doCreateReferences(GenericDomValue domValue, XmlElement psiElement, Object converter, ConvertContext context)
 	{
@@ -181,7 +178,6 @@ public class GenericValueReferenceProvider extends PsiReferenceProvider
 			return new PsiReference[]{
 					new GenericDomValueReference<>((GenericDomValue<Integer>) domValue)
 					{
-						@Nonnull
 						public Object[] getVariants()
 						{
 							return new Object[]{"0"};

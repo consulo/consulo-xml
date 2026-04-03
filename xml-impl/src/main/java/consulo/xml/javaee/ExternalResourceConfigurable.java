@@ -39,8 +39,7 @@ import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.VirtualFileSystem;
 import consulo.virtualFileSystem.archive.ArchiveFileSystem;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jakarta.inject.Inject;
 
 import javax.swing.*;
@@ -76,7 +75,6 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
         myNewPairs = newResources;
     }
 
-    @Nonnull
     @Override
     public String getId() {
         return "preferences.externalResources";
@@ -88,14 +86,13 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
         return StandardConfigurableIds.EDITOR_GROUP;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.displayNameEditExternalResource();
     }
 
     @Override
-    public JComponent createComponent(@Nonnull Disposable uiDisposable) {
+    public JComponent createComponent(Disposable uiDisposable) {
         myPanel = new JPanel(new GridBagLayout()) {
             @Override
             public Dimension getPreferredSize() {

@@ -43,11 +43,10 @@ import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
 import org.apache.xerces.xni.parser.XMLInputSource;
-import org.jetbrains.annotations.NonNls;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -66,7 +65,6 @@ public class XmlResourceResolver implements XMLEntityResolver {
     private final Project myProject;
     private final Map<String, String> myExternalResourcesMap = new HashMap<>(1);
     private boolean myStopOnUnDeclaredResource;
-    @NonNls
     public static final String HONOUR_ALL_SCHEMA_LOCATIONS_PROPERTY_KEY = "idea.xml.honour.all.schema.locations";
     private final ErrorReporter myErrorReporter;
 

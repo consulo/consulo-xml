@@ -15,9 +15,8 @@
  */
 package com.intellij.xml.util;
 
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
@@ -32,7 +31,6 @@ import consulo.xml.psi.xml.XmlTag;
  * @author mike
  */
 public class XmlIncludeHandler {
-    @NonNls
     private static final String INCLUDE_TAG_NAME = "include";
 
     public static boolean isXInclude(PsiElement element) {

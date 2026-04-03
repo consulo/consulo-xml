@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.impl;
 
 import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ServiceImpl;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
@@ -24,15 +24,15 @@ import consulo.application.util.CachedValuesManager;
 import consulo.application.util.UserDataCache;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 import consulo.language.psi.PsiErrorElement;
-import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileEx;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
-import consulo.language.psi.stub.*;
+import consulo.language.psi.stub.FileBasedIndex;
+import consulo.language.psi.stub.FileContent;
+import consulo.language.psi.stub.ObjectStubTree;
+import consulo.language.psi.stub.StubTreeLoader;
 import consulo.project.Project;
-import consulo.util.dataholder.Key;
 import consulo.util.io.CharSequenceReader;
-import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.util.xml.fastReader.XmlFileHeader;
@@ -45,12 +45,12 @@ import consulo.xml.util.xml.structure.DomStructureViewBuilder;
 import consulo.xml.util.xml.stubs.FileStub;
 import consulo.xml.util.xml.stubs.builder.DomStubBuilder;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -59,21 +59,19 @@ import java.util.function.Function;
 @Singleton
 @ServiceImpl
 public class DomServiceImpl extends DomService {
-  private static final Key<CachedValue<XmlFileHeader>> ROOT_TAG_NS_KEY = Key.create("rootTag&ns");
-  private static final UserDataCache<CachedValue<XmlFileHeader>,XmlFile,Object> ourRootTagCache = new UserDataCache<CachedValue<XmlFileHeader>, XmlFile, Object>() {
-    protected CachedValue<XmlFileHeader> compute(final XmlFile file, final Object o) {
-      return CachedValuesManager.getManager(file.getProject()).createCachedValue(new CachedValueProvider<XmlFileHeader>() {
-        public Result<XmlFileHeader> compute() {
-          return new Result<XmlFileHeader>(calcXmlFileHeader(file), file);
-        }
-      }, false);
-    }
-  };
+  private static final UserDataCache<CachedValue<XmlFileHeader>, XmlFile, Object> ROOT_TAG_CACHE =
+    new UserDataCache<CachedValue<XmlFileHeader>, XmlFile, Object>("rootTag&ns") {
+      @Override
+      @RequiredReadAction
+      protected CachedValue<XmlFileHeader> compute(XmlFile file, Object o) {
+        return CachedValuesManager.getManager(file.getProject())
+            .createCachedValue(() -> new CachedValueProvider.Result<>(calcXmlFileHeader(file), file), false);
+      }
+    };
 
-  @Nonnull
-  private static XmlFileHeader calcXmlFileHeader(final XmlFile file) {
-
-    if (file instanceof PsiFileEx && ((PsiFileEx)file).isContentsLoaded() && file.getNode().isParsed()) {
+  @RequiredReadAction
+  private static XmlFileHeader calcXmlFileHeader(XmlFile file) {
+    if (file instanceof PsiFileEx fileEx && fileEx.isContentsLoaded() && file.getNode().isParsed()) {
       return computeHeaderByPsi(file);
     }
 
@@ -81,11 +79,8 @@ public class DomServiceImpl extends DomService {
       VirtualFile virtualFile = file.getVirtualFile();
       if (virtualFile instanceof VirtualFileWithId) {
         ObjectStubTree tree = StubTreeLoader.getInstance().readFromVFile(file.getProject(), virtualFile);
-        if (tree != null) {
-          Stub root = tree.getRoot();
-          if (root instanceof FileStub) {
-            return ((FileStub)root).getHeader();
-          }
+        if (tree != null && tree.getRoot() instanceof FileStub rootFileStub) {
+          return rootFileStub.getHeader();
         }
       }
     }
@@ -102,17 +97,18 @@ public class DomServiceImpl extends DomService {
     return NanoXmlUtil.parseHeaderWithException(file.getViewProvider().getContents());
   }
 
+  @RequiredReadAction
   private static XmlFileHeader computeHeaderByPsi(XmlFile file) {
-    final XmlDocument document = file.getDocument();
+    XmlDocument document = file.getDocument();
     if (document == null) {
       return XmlFileHeader.EMPTY;
     }
 
     String publicId = null;
     String systemId = null;
-    final XmlProlog prolog = document.getProlog();
+    XmlProlog prolog = document.getProlog();
     if (prolog != null) {
-      final XmlDoctype doctype = prolog.getDoctype();
+      XmlDoctype doctype = prolog.getDoctype();
       if (doctype != null) {
         publicId = doctype.getPublicId();
         systemId = doctype.getSystemId();
@@ -122,7 +118,7 @@ public class DomServiceImpl extends DomService {
       }
     }
 
-    final XmlTag tag = document.getRootTag();
+    XmlTag tag = document.getRootTag();
     if (tag == null) {
       return XmlFileHeader.EMPTY;
     }
@@ -134,12 +130,17 @@ public class DomServiceImpl extends DomService {
       }
 
       String psiNs = tag.getNamespace();
-      return new XmlFileHeader(localName, psiNs == XmlUtil.EMPTY_URI || Comparing.equal(psiNs, systemId) ? null : psiNs, publicId,
-                               systemId);
+      return new XmlFileHeader(
+        localName,
+        psiNs == XmlUtil.EMPTY_URI || Objects.equals(psiNs, systemId) ? null : psiNs,
+        publicId,
+        systemId
+      );
     }
     return XmlFileHeader.EMPTY;
   }
 
+  @Override
   public ModelMerger createModelMerger() {
     return new ModelMergerImpl();
   }
@@ -149,36 +150,39 @@ public class DomServiceImpl extends DomService {
     return DomAnchorImpl.createAnchor(domElement);
   }
 
-  @Nonnull
-  public XmlFile getContainingFile(@Nonnull DomElement domElement) {
-    if (domElement instanceof DomFileElement) {
-      return ((DomFileElement)domElement).getFile();
+  @Override
+  public XmlFile getContainingFile(DomElement domElement) {
+    if (domElement instanceof DomFileElement domFileElement) {
+      return domFileElement.getFile();
     }
     return DomManagerImpl.getNotNullHandler(domElement).getFile();
   }
 
-  @Nonnull
-  public EvaluatedXmlName getEvaluatedXmlName(@Nonnull final DomElement element) {
+  @Override
+  public EvaluatedXmlName getEvaluatedXmlName(DomElement element) {
     return DomManagerImpl.getNotNullHandler(element).getXmlName();
   }
 
-  @Nonnull
-  public XmlFileHeader getXmlFileHeader(XmlFile file) {
-    return file.isValid() ? ourRootTagCache.get(ROOT_TAG_NS_KEY, file, null).getValue() : XmlFileHeader.EMPTY;
+  @Override
+  @RequiredReadAction
+    public XmlFileHeader getXmlFileHeader(XmlFile file) {
+    return file.isValid() ? ROOT_TAG_CACHE.get(file, null).getValue() : XmlFileHeader.EMPTY;
   }
 
-
+  @Override
   public Collection<VirtualFile> getDomFileCandidates(Class<? extends DomElement> description, Project project) {
     return FileBasedIndex.getInstance().getContainingFiles(DomFileIndex.NAME, description.getName(), GlobalSearchScope.allScope(project));
   }
 
-  public <T extends DomElement> List<DomFileElement<T>> getFileElements(final Class<T> clazz, final Project project, @Nullable final GlobalSearchScope scope) {
-    final Collection<VirtualFile> list = scope == null ? getDomFileCandidates(clazz, project) : getDomFileCandidates(clazz, project, scope);
-    final ArrayList<DomFileElement<T>> result = new ArrayList<DomFileElement<T>>(list.size());
+  @Override
+  @RequiredReadAction
+  public <T extends DomElement> List<DomFileElement<T>> getFileElements(Class<T> clazz, Project project, @Nullable GlobalSearchScope scope) {
+    Collection<VirtualFile> list = scope == null ? getDomFileCandidates(clazz, project) : getDomFileCandidates(clazz, project, scope);
+    List<DomFileElement<T>> result = new ArrayList<>(list.size());
+    PsiManager psiManager = PsiManager.getInstance(project);
     for (VirtualFile file : list) {
-      final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-      if (psiFile instanceof XmlFile) {
-        final DomFileElement<T> element = DomManager.getDomManager(project).getFileElement((XmlFile)psiFile, clazz);
+      if (psiManager.findFile(file) instanceof XmlFile xmlFile) {
+        DomFileElement<T> element = DomManager.getDomManager(project).getFileElement(xmlFile, clazz);
         if (element != null) {
           result.add(element);
         }
@@ -188,9 +192,8 @@ public class DomServiceImpl extends DomService {
     return result;
   }
 
-
-  public StructureViewBuilder createSimpleStructureViewBuilder(final XmlFile file, final Function<DomElement, StructureViewMode> modeProvider) {
+  @Override
+  public StructureViewBuilder createSimpleStructureViewBuilder(XmlFile file, Function<DomElement, StructureViewMode> modeProvider) {
     return new DomStructureViewBuilder(file, modeProvider);
   }
-
 }

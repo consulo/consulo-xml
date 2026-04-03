@@ -28,7 +28,6 @@ import org.intellij.plugins.relaxNG.compact.RncElementTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.model.CommonElement;
-import jakarta.annotation.Nonnull;
 
 public abstract class RncElementImpl extends ASTWrapperPsiElement implements RncElement, CommonElement<RncElement> {
   private static final TokenSet GRAMMAR_CONTENT = TokenSet.create(
@@ -52,7 +51,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement add(@Nonnull PsiElement psiElement) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement add(PsiElement psiElement) throws consulo.language.util.IncorrectOperationException {
     final ASTNode astNode = psiElement.getNode();
     assert astNode != null;
 
@@ -64,7 +63,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement addBefore(@Nonnull PsiElement psiElement, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement addBefore(PsiElement psiElement, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     final ASTNode child = psiElement.getNode();
     assert child != null;
 
@@ -79,7 +78,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public PsiElement addAfter(@Nonnull PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
+  public PsiElement addAfter(PsiElement element, PsiElement anchor) throws consulo.language.util.IncorrectOperationException {
     final ASTNode astNode = anchor.getNode();
     assert astNode != null;
 
@@ -92,7 +91,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public final void accept(@Nonnull PsiElementVisitor visitor) {
+  public final void accept(PsiElementVisitor visitor) {
     if (visitor instanceof RncElementVisitor) {
       accept((RncElementVisitor)visitor);
     } else {
@@ -101,7 +100,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
   }
 
   @Override
-  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
+  public boolean processDeclarations(PsiScopeProcessor processor, ResolveState substitutor, PsiElement lastParent, PsiElement place) {
     final ASTNode astNode = getNode();
 
     final ASTNode[] children = astNode.getChildren(GRAMMAR_CONTENT);
@@ -115,7 +114,7 @@ public abstract class RncElementImpl extends ASTWrapperPsiElement implements Rnc
     return true;
   }
 
-  public abstract void accept(@Nonnull RncElementVisitor visitor);
+  public abstract void accept(RncElementVisitor visitor);
 
   @Override
   public void accept(Visitor visitor) {

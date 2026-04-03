@@ -16,8 +16,7 @@
 package consulo.xml.javaee;
 
 import consulo.logging.Logger;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.apache.xml.resolver.Catalog;
 import org.apache.xml.resolver.CatalogManager;
 import org.jetbrains.annotations.TestOnly;
@@ -54,7 +53,7 @@ public class XMLCatalogManager {
 
   private final CatalogManager myManager = new CatalogManager();
 
-  public XMLCatalogManager(@Nonnull String propertiesFilePath) {
+  public XMLCatalogManager(String propertiesFilePath) {
 
     File file = new File(propertiesFilePath);
     try {

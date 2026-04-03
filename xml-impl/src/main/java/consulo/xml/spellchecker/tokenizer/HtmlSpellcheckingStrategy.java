@@ -25,12 +25,10 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy
 {
-	@Nonnull
 	@Override
 	public Tokenizer getTokenizer(PsiElement element)
 	{
@@ -49,7 +47,6 @@ public class HtmlSpellcheckingStrategy extends XmlBaseSpellcheckingStrategy
 		return SpellcheckingStrategy.EMPTY_TOKENIZER;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

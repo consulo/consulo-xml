@@ -19,8 +19,7 @@ package consulo.xml.util.xml;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -31,7 +30,6 @@ public interface ConverterManager {
 
   void addConverter(Class clazz, Converter converter);
 
-  @Nonnull
   Converter getConverterInstance(Class<? extends Converter> converterClass);
 
   @Nullable

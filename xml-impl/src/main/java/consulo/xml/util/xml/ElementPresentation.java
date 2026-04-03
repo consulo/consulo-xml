@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.ui.image.Image;
 

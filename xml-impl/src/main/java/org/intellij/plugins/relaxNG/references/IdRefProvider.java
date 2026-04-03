@@ -33,7 +33,6 @@ import consulo.language.psi.PsiReferenceBase;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,8 +44,7 @@ public class IdRefProvider extends PsiReferenceProvider {
   public static final HasIdTypeCondition HAS_ID_TYPE = new HasIdTypeCondition();
 
   @Override
-  @Nonnull
-  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull ProcessingContext context) {
+  public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
     final XmlAttributeValue value = (XmlAttributeValue)element;
 
     if (hasIdRefType(value)) {
@@ -104,7 +102,6 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    @Nonnull
     public Object[] getVariants() {
       final ProcessingContext context = new ProcessingContext();
       context.put(VARIANTS, new HashSet<>());
@@ -139,7 +136,7 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue, ProcessingContext context) {
+    public boolean accepts(XmlAttributeValue xmlAttributeValue, ProcessingContext context) {
       return hasIdType(xmlAttributeValue);
     }
   }
@@ -150,7 +147,7 @@ public class IdRefProvider extends PsiReferenceProvider {
     }
 
     @Override
-    public boolean accepts(@Nonnull XmlAttributeValue xmlAttributeValue,  ProcessingContext context) {
+    public boolean accepts(XmlAttributeValue xmlAttributeValue,  ProcessingContext context) {
       return hasIdRefType(xmlAttributeValue);
     }
   }

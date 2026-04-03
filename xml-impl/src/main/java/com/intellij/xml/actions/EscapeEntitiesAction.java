@@ -26,7 +26,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlEntityDecl;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Dennis.Ushakov
@@ -60,7 +59,6 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
         return result.toString();
     }
 
-    @Nonnull
     private static IntObjectMap<String> computeMap(XmlFile xmlFile) {
         XmlFile file = XmlUtil.findXmlFile(xmlFile, Html5SchemaProvider.getCharsDtdLocation());
         assert file != null;
@@ -104,11 +102,10 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
     }
 
     @Override
-    protected boolean isValidForFile(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    protected boolean isValidForFile(Project project, Editor editor, PsiFile file) {
         return file instanceof XmlFile;
     }
 
-    @Nonnull
     @Override
     protected CodeInsightActionHandler getHandler() {
         return this;
@@ -116,7 +113,7 @@ public class EscapeEntitiesAction extends BaseCodeInsightAction implements CodeI
 
     @Override
     @RequiredUIAccess
-    public void invoke(@Nonnull Project project, @Nonnull Editor editor, @Nonnull PsiFile file) {
+    public void invoke(Project project, Editor editor, PsiFile file) {
         int[] starts = editor.getSelectionModel().getBlockSelectionStarts();
         int[] ends = editor.getSelectionModel().getBlockSelectionEnds();
         Document document = editor.getDocument();

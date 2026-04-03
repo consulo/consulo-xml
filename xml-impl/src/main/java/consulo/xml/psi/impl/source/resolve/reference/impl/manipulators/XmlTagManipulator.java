@@ -24,7 +24,6 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagValue;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -36,7 +35,7 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 	private static final Logger LOG = Logger.getInstance(XmlTagManipulator.class);
 
 	@Override
-	public XmlTag handleContentChange(@Nonnull XmlTag tag, @Nonnull TextRange range, String newContent) throws IncorrectOperationException
+	public XmlTag handleContentChange(XmlTag tag, TextRange range, String newContent) throws IncorrectOperationException
 	{
 		final StringBuilder replacement = new StringBuilder(tag.getValue().getText());
 		final int valueOffset = tag.getValue().getTextRange().getStartOffset() - tag.getTextOffset();
@@ -47,8 +46,7 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 	}
 
 	@Override
-	@Nonnull
-	public TextRange getRangeInElement(@Nonnull final XmlTag tag)
+	public TextRange getRangeInElement(final XmlTag tag)
 	{
 		if(tag.getSubTags().length > 0)
 		{
@@ -74,7 +72,6 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 		}
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlTag> getElementClass()
 	{
@@ -91,7 +88,7 @@ public class XmlTagManipulator extends AbstractElementManipulator<XmlTag>
 		return trimmed.isEmpty() ? new TextRange(start, start) : new TextRange(start, xmlText.displayToPhysical(i + trimmed.length() - 1) + offset + 1);
 	}
 
-	public static TextRange[] getValueRanges(@Nonnull final XmlTag tag)
+	public static TextRange[] getValueRanges(final XmlTag tag)
 	{
 		final XmlTagValue value = tag.getValue();
 		final XmlText[] texts = value.getTextElements();

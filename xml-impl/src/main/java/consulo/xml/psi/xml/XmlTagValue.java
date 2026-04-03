@@ -17,23 +17,17 @@ package consulo.xml.psi.xml;
 
 import consulo.document.util.TextRange;
 
-import jakarta.annotation.Nonnull;
 
 public interface XmlTagValue
 {
-	@Nonnull
 	XmlTagChild[] getChildren();
 
-	@Nonnull
 	XmlText[] getTextElements();
 
-	@Nonnull
 	String getText();
 
-	@Nonnull
 	TextRange getTextRange();
 
-	@Nonnull
 	String getTrimmedText();
 
 	void setText(String value);

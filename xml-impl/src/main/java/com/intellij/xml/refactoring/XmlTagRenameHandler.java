@@ -38,8 +38,7 @@ import consulo.project.Project;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -78,7 +77,6 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         return isAvailableOnDataContext(dataContext);
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getActionTitleValue() {
         return LocalizeValue.localizeTODO("Rename XML tag");
@@ -88,7 +86,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         return editor.getSettings().isVariableInplaceRenameEnabled();
     }
 
-    private static boolean isDeclarationOutOfProjectOrAbsent(@Nonnull final Project project, final DataContext context) {
+    private static boolean isDeclarationOutOfProjectOrAbsent(final Project project, final DataContext context) {
         final PsiElement[] elements = BaseRefactoringAction.getPsiElementArray(context);
         return elements.length == 0 || elements.length == 1 && shouldBeRenamedInplace(project, elements);
     }
@@ -132,7 +130,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
         return null;
     }
 
-    private void invoke(@Nullable final Editor editor, @Nonnull final PsiElement element, @Nullable final DataContext context) {
+    private void invoke(@Nullable final Editor editor, final PsiElement element, @Nullable final DataContext context) {
         if (!isRenaming(context)) {
             return;
         }
@@ -148,7 +146,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
     }
 
     @Override
-    public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext) {
+    public void invoke(final Project project, final Editor editor, final PsiFile file, @Nullable final DataContext dataContext) {
         if (!isRenaming(dataContext)) {
             return;
         }
@@ -160,7 +158,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
     }
 
     @Override
-    public void invoke(@Nonnull final Project project, @Nonnull final PsiElement[] elements, @Nullable final DataContext dataContext) {
+    public void invoke(final Project project, final PsiElement[] elements, @Nullable final DataContext dataContext) {
         PsiElement element = elements.length == 1 ? elements[0] : null;
         if (element == null) {
             element = getElement(dataContext);

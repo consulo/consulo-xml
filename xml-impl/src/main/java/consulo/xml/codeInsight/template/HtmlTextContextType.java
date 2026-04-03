@@ -28,7 +28,6 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -41,7 +40,7 @@ public class HtmlTextContextType extends BaseTemplateContextType {
 
     @Override
     @RequiredReadAction
-    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+    public boolean isInContext(PsiFile file, int offset) {
         if (!HtmlContextType.isMyLanguage(file.getLanguage())) {
             return false;
         }
@@ -49,7 +48,7 @@ public class HtmlTextContextType extends BaseTemplateContextType {
         return element == null || isInContext(element);
     }
 
-    public static boolean isInContext(@Nonnull PsiElement element) {
+    public static boolean isInContext(PsiElement element) {
         if (PsiTreeUtil.getParentOfType(element, XmlComment.class) != null) {
             return false;
         }

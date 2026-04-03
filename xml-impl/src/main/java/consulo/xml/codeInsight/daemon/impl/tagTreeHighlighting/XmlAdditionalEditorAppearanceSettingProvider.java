@@ -13,7 +13,6 @@ import consulo.ui.util.Indenter;
 import consulo.ui.util.LabeledBuilder;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 import java.util.function.Consumer;
 
@@ -23,7 +22,6 @@ import java.util.function.Consumer;
  */
 @ExtensionImpl
 public class XmlAdditionalEditorAppearanceSettingProvider implements AdditionalEditorAppearanceSettingProvider {
-    @Nonnull
     @Override
     public LocalizeValue getLabelName() {
         return XmlLocalize.xmlEditorOptionsMiscTitle();
@@ -31,7 +29,7 @@ public class XmlAdditionalEditorAppearanceSettingProvider implements AdditionalE
 
     @Override
     @RequiredUIAccess
-    public void fillProperties(@Nonnull SimpleConfigurableByProperties.PropertyBuilder propertyBuilder, Consumer<Component> consumer) {
+    public void fillProperties(SimpleConfigurableByProperties.PropertyBuilder propertyBuilder, Consumer<Component> consumer) {
         XmlEditorOptions options = XmlEditorOptions.getInstance();
 
         VerticalLayout layout = VerticalLayout.create();

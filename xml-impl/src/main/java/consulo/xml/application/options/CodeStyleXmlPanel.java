@@ -26,7 +26,6 @@ import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 
@@ -143,7 +142,6 @@ public class CodeStyleXmlPanel extends CodeStyleAbstractPanel {
         return readFromFile(getClass(), "preview.xml.template");
     }
 
-    @Nonnull
     @Override
     protected FileType getFileType() {
         return XmlFileType.INSTANCE;

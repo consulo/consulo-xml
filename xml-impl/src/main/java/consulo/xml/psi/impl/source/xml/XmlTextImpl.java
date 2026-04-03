@@ -41,8 +41,7 @@ import consulo.xml.psi.impl.source.tree.injected.XmlTextLiteralEscaper;
 import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 
 public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageInjectionHost
@@ -399,7 +398,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	public void accept(@Nonnull PsiElementVisitor visitor)
+	public void accept(PsiElementVisitor visitor)
 	{
 		if(visitor instanceof XmlElementVisitor)
 		{
@@ -456,13 +455,12 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	public PsiLanguageInjectionHost updateText(@Nonnull final String text)
+	public PsiLanguageInjectionHost updateText(final String text)
 	{
 		try
 		{
 			doSetValue(text, new DefaultXmlPsiPolicy()
 			{
-				@Nonnull
 				@Override
 				public Language getLanguage()
 				{
@@ -559,7 +557,6 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 	}
 
 	@Override
-	@Nonnull
 	public LiteralTextEscaper<XmlTextImpl> createLiteralTextEscaper()
 	{
 		return new XmlTextLiteralEscaper(this);

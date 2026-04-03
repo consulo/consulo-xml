@@ -20,7 +20,6 @@ import consulo.colorScheme.EditorColorKey;
 import consulo.ui.color.ColorValue;
 import consulo.ui.style.StandardColors;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -40,7 +39,6 @@ public class XmlTagTreeHighlightingColors {
     private XmlTagTreeHighlightingColors() {
     }
 
-    @Nonnull
     public static EditorColorKey[] getColorKeys() {
         int levelCount = XmlEditorOptions.getInstance().getTagTreeHighlightingLevelCount();
 

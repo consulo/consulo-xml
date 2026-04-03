@@ -38,8 +38,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -48,7 +47,7 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
 
   @Override
   @RequiredReadAction
-  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
+  public void annotate(PsiElement psiElement, AnnotationHolder holder) {
     if (psiElement instanceof XmlToken) {
       PsiElement parent = psiElement.getParent();
       if (parent instanceof XmlTag tag) {
@@ -96,10 +95,10 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
 
   @RequiredReadAction
   private static void registerProblemStart(
-    @Nonnull final AnnotationHolder holder,
-    @Nonnull final XmlTag tag,
-    @Nonnull final XmlToken start,
-    @Nonnull final XmlToken end
+    final AnnotationHolder holder,
+    final XmlTag tag,
+    final XmlToken start,
+    final XmlToken end
   ) {
     PsiElement context = tag.getContainingFile().getContext();
     if (context != null) {
@@ -127,9 +126,9 @@ public class XmlWrongClosingTagNameInspection implements Annotator {
   }
 
   @RequiredReadAction
-  private static void registerProblemEnd(@Nonnull AnnotationHolder holder,
-                                         @Nonnull XmlTag tag,
-                                         @Nonnull XmlToken end) {
+  private static void registerProblemEnd(AnnotationHolder holder,
+                                         XmlTag tag,
+                                         XmlToken end) {
     PsiElement context = tag.getContainingFile().getContext();
     if (context != null) {
       ParserDefinition parserDefinition = ParserDefinition.forLanguage(context.getLanguage());

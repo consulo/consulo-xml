@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.compact.psi.impl;
 import consulo.language.ast.ASTNode;
 import org.intellij.plugins.relaxNG.compact.psi.RncDiv;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -30,7 +29,7 @@ public class RncDivImpl extends RncElementImpl implements RncDiv {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitDiv(this);
   }
 

@@ -22,7 +22,6 @@ import consulo.language.editor.Pass;
 import consulo.language.editor.highlight.TextEditorHighlightingPass;
 import consulo.language.editor.highlight.TextEditorHighlightingPassFactory;
 import consulo.language.psi.PsiFile;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -30,12 +29,12 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlightingPassFactory {
     @Override
-    public void register(@Nonnull Registrar registrar) {
+    public void register(Registrar registrar) {
         registrar.registerTextEditorHighlightingPass(this, new int[]{Pass.UPDATE_ALL}, null, false, -1);
     }
 
     @Override
-    public TextEditorHighlightingPass createHighlightingPass(@Nonnull PsiFile file, @Nonnull Editor editor) {
+    public TextEditorHighlightingPass createHighlightingPass(PsiFile file, Editor editor) {
         return !editor.isOneLineMode()
             && XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)
             && editor instanceof EditorEx editorEx

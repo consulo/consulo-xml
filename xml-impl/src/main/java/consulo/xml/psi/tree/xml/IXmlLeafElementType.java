@@ -15,10 +15,9 @@
  */
 package consulo.xml.psi.tree.xml;
 
-import org.jetbrains.annotations.NonNls;
 
 public class IXmlLeafElementType extends IXmlElementType {
-  public IXmlLeafElementType(@NonNls String debugName) {
+  public IXmlLeafElementType(String debugName) {
     super(debugName);
   }
 }

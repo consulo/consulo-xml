@@ -29,8 +29,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -91,7 +90,6 @@ public class ComboControl extends BaseModifiableControl<JComboBox, String> {
         final Converter converter = reference.getConverter();
         if (converter instanceof ResolvingConverter) {
           final AbstractConvertContext context = new AbstractConvertContext() {
-            @Nonnull
             public DomElement getInvocationElement() {
               return reference;
             }

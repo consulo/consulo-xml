@@ -33,8 +33,7 @@ import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlDoctype;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -42,9 +41,8 @@ import jakarta.annotation.Nullable;
  */
 @ExtensionImpl
 public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
             @RequiredReadAction
@@ -99,19 +97,16 @@ public class XmlPathReferenceInspection extends XmlSuppressableInspectionTool {
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlLocalize.xmlInspectionsGroupName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsPathResolve();
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.ERROR;

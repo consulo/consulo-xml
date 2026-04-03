@@ -19,7 +19,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.util.lang.reflect.ReflectionUtil;
 
-import jakarta.annotation.Nonnull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -51,7 +50,6 @@ public class DomCollectionWrapper<T> extends DomWrapper<T>{
     myGetter = getter;
   }
 
-  @Nonnull
   public DomElement getExistingDomElement() {
     return myDomElement;
   }

@@ -28,7 +28,6 @@ import consulo.language.psi.PsiPolyVariantReference;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ResolveResult;
 
-import jakarta.annotation.Nonnull;
 
 import java.util.Set;
 
@@ -38,7 +37,7 @@ import java.util.Set;
 @ExtensionImpl
 public class LinkedToHtmlFilesContributor extends RelatedToHtmlFilesContributor {
   @Override
-  public void fillRelatedFiles(@Nonnull final XmlFile xmlFile, @Nonnull final Set<PsiFile> resultSet) {
+  public void fillRelatedFiles(final XmlFile xmlFile, final Set<PsiFile> resultSet) {
     HtmlLinkUtil.processLinks(xmlFile, new Processor<XmlTag>() {
       @Override
       public boolean process(XmlTag tag) {

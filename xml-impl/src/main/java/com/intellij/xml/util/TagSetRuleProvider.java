@@ -17,8 +17,7 @@ package com.intellij.xml.util;
 
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,12 +30,12 @@ public abstract class TagSetRuleProvider extends XmlTagRuleProviderBase {
     private final Map<String, TagsRuleMap> map = Collections.synchronizedMap(new HashMap<String, TagsRuleMap>());
 
     @Nullable
-    protected abstract String getNamespace(@Nonnull XmlTag tag);
+    protected abstract String getNamespace(XmlTag tag);
 
-    protected abstract void initMap(TagsRuleMap map, @Nonnull String version);
+    protected abstract void initMap(TagsRuleMap map, String version);
 
     @Override
-    public Rule[] getTagRule(@Nonnull XmlTag tag) {
+    public Rule[] getTagRule(XmlTag tag) {
         String namespace = getNamespace(tag);
         if (namespace == null) {
             return Rule.EMPTY_ARRAY;
@@ -45,7 +44,7 @@ public abstract class TagSetRuleProvider extends XmlTagRuleProviderBase {
         return getTagRule(tag, namespace);
     }
 
-    public Rule[] getTagRule(@Nonnull XmlTag tag, String namespace) {
+    public Rule[] getTagRule(XmlTag tag, String namespace) {
         TagsRuleMap ruleMap = map.get(namespace);
         if (ruleMap == null) {
             ruleMap = new TagsRuleMap();

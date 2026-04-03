@@ -34,8 +34,7 @@ import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.ui.TooltipUtils;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Type;
@@ -164,7 +163,6 @@ public class BaseDomElementNode extends AbstractDomElementNode {
     return -1;
   }
 
-  @Nonnull
   public List<DomCollectionChildDescription> getConsolidatedChildrenDescriptions() {
     if (!myDomElement.isValid()) return Collections.emptyList();
 
@@ -177,7 +175,6 @@ public class BaseDomElementNode extends AbstractDomElementNode {
     return consolidated;
   }
 
-  @Nonnull
   public Object[] getEqualityObjects() {
     return new Object[]{myDomElement};
   }

@@ -26,10 +26,8 @@ import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.meta.PsiWritableMetaData;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 
@@ -39,9 +37,7 @@ import java.util.HashSet;
 public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor implements PsiWritableMetaData {
     private XmlTag myTag;
     String myUse;
-    @NonNls
     public static final String REQUIRED_ATTR_VALUE = "required";
-    @NonNls
     public static final String QUALIFIED_ATTR_VALUE = "qualified";
 
     public XmlAttributeDescriptorImpl(XmlTag tag) {
@@ -77,7 +73,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
         return myTag.getAttributeValue("fixed") != null;
     }
 
-    private boolean hasSimpleSchemaType(@NonNls String type) {
+    private boolean hasSimpleSchemaType(String type) {
         final String attributeValue = getType();
 
         if (attributeValue != null && attributeValue.endsWith(type)) {
@@ -167,7 +163,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
         final String[] enumeratedValues;
         final boolean exaustive;
 
-        EnumerationData(@Nonnull String[] _values, boolean _exaustive) {
+        EnumerationData(String[] _values, boolean _exaustive) {
             enumeratedValues = _values;
             exaustive = _exaustive;
         }

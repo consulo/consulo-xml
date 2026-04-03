@@ -20,7 +20,6 @@ import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorColorsScheme;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +36,7 @@ public class XmlNSRenderer extends ColoredListCellRenderer {
     }
 
     @Override
-    protected void customizeCellRenderer(@Nonnull JList list, Object value, int index, boolean selected, boolean hasFocus) {
+    protected void customizeCellRenderer(JList list, Object value, int index, boolean selected, boolean hasFocus) {
         append(value.toString(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
         setIcon(PlatformIconGroup.nodesStatic());
         setPaintFocusBorder(false);

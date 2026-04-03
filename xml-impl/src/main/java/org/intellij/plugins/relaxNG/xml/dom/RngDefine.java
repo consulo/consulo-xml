@@ -25,7 +25,6 @@ import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:defineElemType interface.
@@ -38,7 +37,6 @@ public interface RngDefine extends RngOpenPatterns, Define<Pattern, XmlElement> 
    *
    * @return the value of the name child.
    */
-  @Nonnull
   @Required
   @Referencing(value = RngReferenceConverter.class, soft = true)
   @Attribute("name")
@@ -50,7 +48,6 @@ public interface RngDefine extends RngOpenPatterns, Define<Pattern, XmlElement> 
    *
    * @return the value of the combine child.
    */
-  @Nonnull
   GenericAttributeValue<Combine> getCombine();
 
   void setName(String name);

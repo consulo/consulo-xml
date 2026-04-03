@@ -4,8 +4,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Commenter;
 import consulo.language.Language;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionImpl
 public class RngCommenter implements Commenter
@@ -43,7 +42,6 @@ public class RngCommenter implements Commenter
 		return null;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

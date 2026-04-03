@@ -17,8 +17,7 @@ package consulo.xml.ide.highlighter;
 
 import java.nio.charset.Charset;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.Language;
 import consulo.language.file.LanguageFileType;
@@ -31,12 +30,12 @@ public abstract class XmlLikeFileType extends LanguageFileType {
   public XmlLikeFileType(Language language) {
     super(language);
   }
-  public String getCharset(@Nonnull VirtualFile file, final byte[] content) {
+  public String getCharset(VirtualFile file, final byte[] content) {
     String charset = XmlUtil.extractXmlEncodingFromProlog(content);
     return charset == null ? CharsetToolkit.UTF8 : charset;
   }
 
-  public Charset extractCharsetFromFileContent(final Project project, @Nullable final VirtualFile file, @Nonnull final CharSequence content) {
+  public Charset extractCharsetFromFileContent(final Project project, @Nullable final VirtualFile file, final CharSequence content) {
     String name = XmlUtil.extractXmlEncodingFromProlog(content);
     Charset charset = CharsetToolkit.forName(name);
     return charset == null ? CharsetToolkit.UTF8_CHARSET : charset;

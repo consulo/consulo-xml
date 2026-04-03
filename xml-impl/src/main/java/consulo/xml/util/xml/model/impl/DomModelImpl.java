@@ -21,7 +21,6 @@ import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.model.DomModel;
-import jakarta.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,24 +41,23 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
    * @return
    */
   @Deprecated
-  public DomModelImpl(T mergedModel, @Nonnull Set<XmlFile> configFiles) {
+  public DomModelImpl(T mergedModel, Set<XmlFile> configFiles) {
     myMergedModel = DomUtil.getFileElement(mergedModel);
     myConfigFiles = configFiles;
   }
 
-  public DomModelImpl(DomFileElement<T> mergedModel, @Nonnull Set<XmlFile> configFiles) {
+  public DomModelImpl(DomFileElement<T> mergedModel, Set<XmlFile> configFiles) {
     myMergedModel = DomUtil.getFileElement(mergedModel);
     myConfigFiles = configFiles;
   }
 
-  public DomModelImpl(@Nonnull Set<XmlFile> configFiles, Class<T> clazz, Project project) {
+  public DomModelImpl(Set<XmlFile> configFiles, Class<T> clazz, Project project) {
     myProject = project;
     myMergedModel = null;
     myConfigFiles = configFiles;
     myClass = clazz;
   }
 
-  @Nonnull
   public T getMergedModel() {
     if (myMergedModel == null) {
       final DomManager domManager = DomManager.getDomManager(myProject);
@@ -71,12 +69,10 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
     return myMergedModel.getRootElement();
   }
 
-  @Nonnull
   public Set<XmlFile> getConfigFiles() {
     return myConfigFiles;
   }
 
-  @Nonnull
   public List<DomFileElement<T>> getRoots() {
     if (myMergedModel == null) {
       return ContainerUtil.mapNotNull(myConfigFiles, xmlFile -> DomManager.getDomManager(xmlFile.getProject()).getFileElement(xmlFile, myClass));
@@ -84,7 +80,6 @@ public class DomModelImpl<T extends DomElement> implements DomModel<T> {
     return myMergedModel instanceof MergedObject ? ((MergedObject) myMergedModel).getImplementations() : Collections.singletonList(myMergedModel);
   }
 
-  @Nonnull
   public Project getProject() {
     return myProject;
   }

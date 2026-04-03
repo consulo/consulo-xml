@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml.ui.actions.generate;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
@@ -36,7 +35,7 @@ public abstract class GenerateDomElementProvider<T extends DomElement> {
     myDescription = description;
   }
 
-  public boolean isAvailableForElement(@Nonnull DomElement contextElement) {
+  public boolean isAvailableForElement(DomElement contextElement) {
     return true;
   }
   

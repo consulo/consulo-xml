@@ -23,7 +23,6 @@ import consulo.xml.util.xml.Attribute;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Namespace;
 import org.intellij.plugins.relaxNG.xml.dom.names.OpenNameClasses;
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:elementElemType interface.
@@ -36,7 +35,6 @@ public interface RngElement extends OpenNameClasses, RngOpenPatterns {
    *
    * @return the value of the name child.
    */
-  @Nonnull
   @Attribute("name")
   GenericAttributeValue<String> getNameAttr();
 }

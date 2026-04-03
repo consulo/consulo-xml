@@ -38,8 +38,7 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.XmlChildRole;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author anna
@@ -50,13 +49,12 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
     private final String[] myValues;
     private static final String NAME_TEMPLATE_VARIABLE = "name";
 
-    public InsertRequiredAttributeFix(@Nonnull XmlTag tag, @Nonnull String attrName, @Nonnull String... values) {
+    public InsertRequiredAttributeFix(XmlTag tag, String attrName, String... values) {
         super(tag);
         myAttrName = attrName;
         myValues = values;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return XmlErrorLocalize.insertRequiredAttributeQuickfixText(myAttrName);
@@ -64,11 +62,11 @@ public class InsertRequiredAttributeFix extends LocalQuickFixAndIntentionActionO
 
     @Override
     public void invoke(
-        @Nonnull Project project,
-        @Nonnull PsiFile file,
+        Project project,
+        PsiFile file,
         @Nullable Editor editor,
-        @Nonnull PsiElement startElement,
-        @Nonnull PsiElement endElement
+        PsiElement startElement,
+        PsiElement endElement
     ) {
         if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
             return;

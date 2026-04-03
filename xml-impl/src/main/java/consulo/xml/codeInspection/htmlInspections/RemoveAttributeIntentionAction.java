@@ -30,7 +30,6 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
@@ -42,7 +41,6 @@ public class RemoveAttributeIntentionAction implements LocalQuickFix {
         myLocalName = localName;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return XmlErrorLocalize.removeAttributeQuickfixText(myLocalName);
@@ -50,7 +48,7 @@ public class RemoveAttributeIntentionAction implements LocalQuickFix {
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(final Project project, ProblemDescriptor descriptor) {
         PsiElement e = descriptor.getPsiElement();
         final XmlAttribute myAttribute = PsiTreeUtil.getParentOfType(e, XmlAttribute.class);
       if (myAttribute == null) {

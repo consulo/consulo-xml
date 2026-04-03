@@ -25,8 +25,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -36,11 +35,11 @@ import java.util.List;
 public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T> {
   private static final Logger LOG = Logger.getInstance("#DomAnchorImpl");
 
-  public static <T extends DomElement> DomAnchor<T> createAnchor(@Nonnull T t) {
+  public static <T extends DomElement> DomAnchor<T> createAnchor(T t) {
     return createAnchor(t, false);
   }
 
-  public static <T extends DomElement> DomAnchor<T> createAnchor(@Nonnull T t, boolean usePsi) {
+  public static <T extends DomElement> DomAnchor<T> createAnchor(T t, boolean usePsi) {
     if (usePsi) {
       final XmlElement element = t.getXmlElement();
       if (element != null) {
@@ -142,7 +141,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
   @Nullable
   public abstract T retrieveDomElement();
 
-  @Nonnull
   public abstract XmlFile getContainingFile();
 
   private static class NamedAnchor<T extends DomElement> extends DomAnchorImpl<T> {
@@ -202,7 +200,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
       return null;
     }
 
-    @Nonnull
     public XmlFile getContainingFile() {
       return myParent.getContainingFile();
     }
@@ -253,7 +250,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
       return (T) list.get(myIndex);
     }
 
-    @Nonnull
     public XmlFile getContainingFile() {
       return myParent.getContainingFile();
     }
@@ -294,7 +290,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
       return fileElement == null ? null : fileElement.getRootElement();
     }
 
-    @Nonnull
     public XmlFile getContainingFile() {
       return myFile;
     }
@@ -324,7 +319,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
       return null;
     }
 
-    @Nonnull
     @Override
     public XmlFile getContainingFile() {
       return (XmlFile) myAnchor.getFile();
@@ -366,7 +360,6 @@ public abstract class DomAnchorImpl<T extends DomElement> implements DomAnchor<T
       return (T) myHandler.getProxy();
     }
 
-    @Nonnull
     @Override
     public XmlFile getContainingFile() {
       return myHandler.getFile();

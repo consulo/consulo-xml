@@ -36,10 +36,8 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +51,6 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
     TypeReference
   }
 
-  @NonNls
   private static final String TARGET_NAMESPACE = "targetNamespace";
 
   private final PsiElement myElement;
@@ -268,7 +265,6 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
   }
 
   @Override
-  @Nonnull
   public String getCanonicalText() {
     final String text = myElement.getText();
     String name = myRange.getEndOffset() <= text.length() ? myRange.substring(text) : "";
@@ -289,7 +285,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
   }
 
   @Override
-  public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
+  public PsiElement bindToElement(PsiElement element) throws IncorrectOperationException {
     throw new consulo.language.util.IncorrectOperationException();
   }
 
@@ -299,7 +295,6 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
   }
 
   @Override
-  @Nonnull
   public Object[] getVariants() {
     final XmlTag tag = PsiTreeUtil.getContextOfType(myElement, XmlTag.class, true);
     if (tag == null || myType == null) {
@@ -384,7 +379,7 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
     }
 
     @Override
-    public boolean execute(@Nonnull final XmlTag element) {
+    public boolean execute(final XmlTag element) {
       String name = element.getAttributeValue(SchemaReferencesProvider.NAME_ATTR_NAME);
       final String prefixByNamespace = tag.getPrefixByNamespace(namespace);
       if (prefixByNamespace != null && !prefixByNamespace.isEmpty() && prefix == null) {

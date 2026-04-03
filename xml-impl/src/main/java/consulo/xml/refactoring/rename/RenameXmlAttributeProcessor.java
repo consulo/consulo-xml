@@ -32,14 +32,13 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @ExtensionImpl(id = "xmlAttribute")
 public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
   private static final Logger LOG = Logger.getInstance(RenameXmlAttributeProcessor.class);
 
-  public boolean canProcessElement(@Nonnull final PsiElement element) {
+  public boolean canProcessElement(final PsiElement element) {
     return element instanceof XmlAttribute || element instanceof XmlAttributeValue;
   }
 
@@ -69,7 +68,7 @@ public class RenameXmlAttributeProcessor extends RenamePsiElementProcessor {
     }
   }
 
-  private static void doRenameXmlAttributeValue(@Nonnull XmlAttributeValue value,
+  private static void doRenameXmlAttributeValue(XmlAttributeValue value,
                                                 String newName,
                                                 UsageInfo[] infos,
                                                 @Nullable RefactoringElementListener listener)

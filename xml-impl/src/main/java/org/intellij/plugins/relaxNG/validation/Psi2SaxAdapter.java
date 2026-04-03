@@ -30,7 +30,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.Attributes2Impl;
 import org.xml.sax.ext.Locator2Impl;
 
-import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**
@@ -69,7 +68,7 @@ class Psi2SaxAdapter extends XmlElementVisitor implements PsiElementProcessor<Ps
   }
 
   @Override
-  public boolean execute(@Nonnull PsiElement element) {
+  public boolean execute(PsiElement element) {
     element.accept(this);
     return true;
   }

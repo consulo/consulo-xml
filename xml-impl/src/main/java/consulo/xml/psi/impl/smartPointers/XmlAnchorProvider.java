@@ -23,8 +23,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dennis.Ushakov
@@ -33,7 +32,7 @@ import jakarta.annotation.Nullable;
 public class XmlAnchorProvider implements SmartPointerAnchorProvider {
   @Nullable
   @Override
-  public PsiElement getAnchor(@Nonnull PsiElement element) {
+  public PsiElement getAnchor(PsiElement element) {
     if (element instanceof XmlTag) {
       return XmlTagUtil.getStartTagNameElement((XmlTag) element);
     }
@@ -42,7 +41,7 @@ public class XmlAnchorProvider implements SmartPointerAnchorProvider {
 
   @Nullable
   @Override
-  public PsiElement restoreElement(@Nonnull PsiElement anchor) {
+  public PsiElement restoreElement(PsiElement anchor) {
     if (anchor instanceof XmlToken) {
       XmlToken token = (XmlToken) anchor;
       return token.getTokenType() == XmlTokenType.XML_NAME ? token.getParent() : null;

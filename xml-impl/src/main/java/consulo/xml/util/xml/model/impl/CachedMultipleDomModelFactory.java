@@ -29,10 +29,8 @@ import consulo.language.psi.PsiElement;
 import consulo.module.Module;
 import consulo.project.Project;
 import consulo.util.dataholder.UserDataHolder;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -46,23 +44,21 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
     private final DomModelCache<List<M>, Scope> myAllModelsCache;
 
 
-    protected CachedMultipleDomModelFactory(@Nonnull Class<T> aClass,
-                            @Nonnull ModelMerger modelMerger,
+    protected CachedMultipleDomModelFactory(Class<T> aClass,
+                            ModelMerger modelMerger,
                             final Project project,
-                            @NonNls String name) {
+                            String name) {
       super(aClass,modelMerger);
 
       myCombinedModelCache = new DomModelCache<M, Scope>(project, name + " combined model") {
-        @Nonnull
-        protected CachedValueProvider.Result<M> computeValue(@Nonnull final Scope scope) {
+        protected CachedValueProvider.Result<M> computeValue(final Scope scope) {
           final M combinedModel = computeCombinedModel(scope);
           return new CachedValueProvider.Result<M>(combinedModel, computeDependencies(combinedModel, scope));
         }
       };
 
       myAllModelsCache = new DomModelCache<List<M>, Scope>(project, name + " models list") {
-        @Nonnull
-        protected CachedValueProvider.Result<List<M>> computeValue(@Nonnull final Scope scope) {
+        protected CachedValueProvider.Result<List<M>> computeValue(final Scope scope) {
           final List<M> models = computeAllModels(scope);
           return new CachedValueProvider.Result<List<M>>(models, computeDependencies(null, scope));
         }
@@ -70,10 +66,9 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
     }
 
     @Nullable
-    public abstract M getModel(@Nonnull C context);
+    public abstract M getModel(C context);
 
-    @Nonnull
-    public List<M> getAllModels(@Nonnull Scope scope) {
+    public List<M> getAllModels(Scope scope) {
 
       final List<M> models = myAllModelsCache.getCachedValue(scope);
       if (models == null) {
@@ -85,7 +80,7 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
     }
 
     @Nullable
-    protected abstract List<M> computeAllModels(@Nonnull Scope scope);
+    protected abstract List<M> computeAllModels(Scope scope);
 
     @Nullable
     public M getCombinedModel(@Nullable Scope scope) {
@@ -96,7 +91,7 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
     }
 
     @Nullable
-    protected M computeCombinedModel(@Nonnull Scope scope) {
+    protected M computeCombinedModel(Scope scope) {
       final List<M> models = getAllModels(scope);
       switch (models.size()) {
         case 0:
@@ -130,7 +125,6 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
      */
     protected abstract M createCombinedModel(Set<XmlFile> configFiles, DomFileElement<T> mergedModel, M firstModel, final Scope scope);
 
-    @Nonnull
     public Set<XmlFile> getConfigFiles(@Nullable C context) {
       if (context == null) {
         return Collections.emptySet();
@@ -144,8 +138,7 @@ public abstract class CachedMultipleDomModelFactory<Scope extends UserDataHolder
       }
     }
 
-    @Nonnull
-    public Set<XmlFile> getAllConfigFiles(@Nonnull Scope scope) {
+    public Set<XmlFile> getAllConfigFiles(Scope scope) {
       final HashSet<XmlFile> xmlFiles = new HashSet<XmlFile>();
       for (M model: getAllModels(scope)) {
         xmlFiles.addAll(model.getConfigFiles());

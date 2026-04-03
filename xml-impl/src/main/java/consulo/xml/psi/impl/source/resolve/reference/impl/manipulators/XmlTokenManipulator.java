@@ -26,7 +26,6 @@ import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
 import consulo.xml.psi.xml.XmlToken;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author ven
@@ -46,7 +45,6 @@ public class XmlTokenManipulator extends AbstractElementManipulator<XmlToken>
 		return (XmlToken) xmlToken.replace(leaf.getPsi());
 	}
 
-	@Nonnull
 	@Override
 	public Class<XmlToken> getElementClass()
 	{

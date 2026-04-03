@@ -26,18 +26,16 @@ import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
 public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties implements ApplicationConfigurable {
-    @Nonnull
     @Override
     @RequiredUIAccess
-    protected Component createLayout(PropertyBuilder propertyBuilder, @Nonnull Disposable uiDisposable) {
+    protected Component createLayout(PropertyBuilder propertyBuilder, Disposable uiDisposable) {
         VerticalLayout layout = VerticalLayout.create();
 
         XmlSettings settings = XmlSettings.getInstance();
@@ -49,7 +47,6 @@ public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties
         return layout;
     }
 
-    @Nonnull
     @Override
     public String getId() {
         return "editor.preferences.import.xml";
@@ -61,7 +58,6 @@ public class XmlAutoImportOptionsProvider extends SimpleConfigurableByProperties
         return "editor.preferences.import";
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return ApplicationLocalize.titleXml();

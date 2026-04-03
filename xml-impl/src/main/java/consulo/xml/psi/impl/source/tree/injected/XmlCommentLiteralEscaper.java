@@ -22,23 +22,22 @@ import consulo.language.Commenter;
 import consulo.language.psi.LiteralTextEscaper;
 import consulo.xml.psi.impl.source.xml.XmlCommentImpl;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author spleaner
  */
 public class XmlCommentLiteralEscaper extends LiteralTextEscaper<XmlCommentImpl> {
-  public XmlCommentLiteralEscaper(@Nonnull XmlCommentImpl host) {
+  public XmlCommentLiteralEscaper(XmlCommentImpl host) {
     super(host);
   }
 
-  public boolean decode(@Nonnull final TextRange rangeInsideHost, @Nonnull final StringBuilder outChars) {
+  public boolean decode(final TextRange rangeInsideHost, final StringBuilder outChars) {
     ProperTextRange.assertProperRange(rangeInsideHost);
     outChars.append(myHost.getText(), rangeInsideHost.getStartOffset(), rangeInsideHost.getEndOffset());
     return true;
   }
 
-  public int getOffsetInHost(final int offsetInDecoded, @Nonnull final TextRange rangeInsideHost) {
+  public int getOffsetInHost(final int offsetInDecoded, final TextRange rangeInsideHost) {
     int offset = offsetInDecoded + rangeInsideHost.getStartOffset();
     if (offset < rangeInsideHost.getStartOffset()) offset = rangeInsideHost.getStartOffset();
     if (offset > rangeInsideHost.getEndOffset()) offset = rangeInsideHost.getEndOffset();

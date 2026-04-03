@@ -21,7 +21,6 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.language.ast.IElementType;
 import consulo.language.version.LanguageVersion;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenTypesProvider
@@ -31,13 +30,11 @@ public interface EmbeddedTokenTypesProvider
 	/**
 	 * @return name of provider, doesn't related to language name.
 	 */
-	@Nonnull
 	String getName();
 
-	@Nonnull
 	IElementType getElementType();
 
-	default boolean isMyVersion(@Nonnull LanguageVersion languageVersion)
+	default boolean isMyVersion(LanguageVersion languageVersion)
 	{
 		return getElementType().getLanguage() == languageVersion.getLanguage();
 	}

@@ -20,8 +20,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.io.FileUtil;
 import consulo.xml.ide.highlighter.XmlFileType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Eugene.Kudelevsky
@@ -34,7 +33,7 @@ public class XslTextContextType extends BaseTemplateContextType {
 
     @Override
     @RequiredReadAction
-    public boolean isInContext(@Nonnull PsiFile file, int offset) {
+    public boolean isInContext(PsiFile file, int offset) {
         if (isXslOrXsltFile(file)) {
             PsiElement element = file.findElementAt(offset);
             return element == null || HtmlTextContextType.isInContext(element);

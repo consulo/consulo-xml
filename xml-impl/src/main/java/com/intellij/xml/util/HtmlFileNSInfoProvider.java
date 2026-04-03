@@ -21,8 +21,7 @@ import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlFileNSInfoProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author yole
@@ -31,12 +30,12 @@ import jakarta.annotation.Nullable;
 public class HtmlFileNSInfoProvider implements XmlFileNSInfoProvider {
     @Nullable
     @Override
-    public String[][] getDefaultNamespaces(@Nonnull XmlFile file) {
+    public String[][] getDefaultNamespaces(XmlFile file) {
         return null;
     }
 
     @Override
-    public boolean overrideNamespaceFromDocType(@Nonnull XmlFile file) {
+    public boolean overrideNamespaceFromDocType(XmlFile file) {
         return file.getFileType() == HtmlFileType.INSTANCE || file.getFileType() == XHtmlFileType.INSTANCE;
     }
 }

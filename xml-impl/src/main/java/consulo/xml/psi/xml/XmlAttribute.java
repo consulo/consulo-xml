@@ -15,14 +15,12 @@
  */
 package consulo.xml.psi.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.util.IncorrectOperationException;
 import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.document.util.TextRange;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author Mike
@@ -31,18 +29,18 @@ public interface XmlAttribute extends XmlElement, PsiNamedElement {
   XmlAttribute[] EMPTY_ARRAY = new XmlAttribute[0];
 
   @Override
-  @NonNls @Nonnull
+  
   String getName();
 
-  @NonNls @Nonnull
+  
   String getLocalName();
 
   XmlElement getNameElement();
 
-  @NonNls @Nonnull
+  
   String getNamespace();
 
-  @NonNls @Nonnull
+  
   String getNamespacePrefix();
 
   @Override

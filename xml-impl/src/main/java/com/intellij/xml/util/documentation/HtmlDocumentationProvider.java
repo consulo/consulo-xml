@@ -36,8 +36,7 @@ import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.xml.*;
 import consulo.xml.util.ColorSampleLookupValue;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Collections;
@@ -59,7 +58,6 @@ public class HtmlDocumentationProvider implements LanguageDocumentationProvider 
         ourStyleProvider = documentationProvider;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return HTMLLanguage.INSTANCE;

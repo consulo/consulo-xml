@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.compact;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.codeEditor.DefaultLanguageHighlighterColors;
 import consulo.codeEditor.HighlighterColors;
@@ -34,7 +33,6 @@ import consulo.colorScheme.TextAttributesKey;
  */
 public class RncHighlighter extends SyntaxHighlighterBase {
   @Override
-  @Nonnull
   public Lexer getHighlightingLexer() {
     return new CompactSyntaxLexerAdapter();
   }
@@ -69,7 +67,6 @@ public class RncHighlighter extends SyntaxHighlighterBase {
   }
 
   @Override
-  @Nonnull
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
     return pack(ourMap1.get(tokenType));
   }

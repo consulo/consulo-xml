@@ -26,8 +26,7 @@ import consulo.xml.psi.impl.source.html.HtmlTagImpl;
 import consulo.xml.psi.impl.source.tree.XmlFileElement;
 import consulo.xml.psi.impl.source.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static consulo.xml.psi.xml.XmlElementType.*;
 
@@ -37,7 +36,6 @@ import static consulo.xml.psi.xml.XmlElementType.*;
  */
 @ExtensionImpl
 public class XmlASTCompositeFactory implements ASTCompositeFactory {
-  @Nonnull
   @Override
   public CompositeElement createComposite(IElementType type) {
     if (type == XML_TAG) {

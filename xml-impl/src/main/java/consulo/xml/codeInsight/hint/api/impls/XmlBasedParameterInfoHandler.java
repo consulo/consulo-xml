@@ -30,8 +30,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -87,7 +86,7 @@ public abstract class XmlBasedParameterInfoHandler implements ParameterInfoHandl
 
     @Override
     @RequiredReadAction
-    public void showParameterInfo(@Nonnull XmlTag element, CreateParameterInfoContext context) {
+    public void showParameterInfo(XmlTag element, CreateParameterInfoContext context) {
         context.showHint(element, element.getTextRange().getStartOffset() + 1, this);
     }
 
@@ -106,7 +105,7 @@ public abstract class XmlBasedParameterInfoHandler implements ParameterInfoHandl
     }
 
     @Override
-    public void updateParameterInfo(@Nonnull XmlTag o, UpdateParameterInfoContext context) {
+    public void updateParameterInfo(XmlTag o, UpdateParameterInfoContext context) {
         if (context.getParameterOwner() == null || o.equals(context.getParameterOwner())) {
             context.setParameterOwner(o);
         }
@@ -170,7 +169,7 @@ public abstract class XmlBasedParameterInfoHandler implements ParameterInfoHandl
     }
 
     @Override
-    public void updateUI(XmlElementDescriptor o, @Nonnull ParameterInfoUIContext context) {
+    public void updateUI(XmlElementDescriptor o, ParameterInfoUIContext context) {
         updateElementDescriptor(
             o,
             context,

@@ -19,8 +19,7 @@ import consulo.ui.ex.awt.DialogWrapper;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.project.Project;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -56,7 +55,6 @@ public class ConvertSchemaDialog extends DialogWrapper implements PropertyChange
     getOKAction().setEnabled(mySettings.getOutputDestination().trim().length() > 0);
   }
 
-  @Nonnull
   @Override
   protected Action[] createLeftSideActions() {
     return new Action[]{

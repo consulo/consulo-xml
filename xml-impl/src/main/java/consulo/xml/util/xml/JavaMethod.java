@@ -16,8 +16,6 @@
 package consulo.xml.util.xml;
 
 import consulo.util.collection.SmartFMap;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -87,7 +85,6 @@ public final class JavaMethod implements AnnotatedElement{
     return "JavaMethod: " + myMethod.toString();
   }
 
-  @NonNls
   public final String getName() {
     return myMethod.getName();
   }
@@ -101,7 +98,6 @@ public final class JavaMethod implements AnnotatedElement{
     return annotation == NONE ? null : (T)annotation;
   }
 
-  @Nonnull
   private Object findAnnotation(Class<? extends Annotation> annotationClass) {
     for (Method method : mySignature.getAllMethods(myDeclaringClass)) {
       final Annotation annotation = method.getAnnotation(annotationClass);

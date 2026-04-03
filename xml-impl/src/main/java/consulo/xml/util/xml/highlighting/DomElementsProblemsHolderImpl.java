@@ -27,8 +27,7 @@ import consulo.xml.util.xml.DomElementVisitor;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -69,7 +68,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     myPassedInspections.add(inspectionClass);
   }
 
-  public final boolean isInspectionCompleted(@Nonnull final DomElementsInspection inspection) {
+  public final boolean isInspectionCompleted(final DomElementsInspection inspection) {
     return isInspectionCompleted(inspection.getClass());
   }
 
@@ -89,7 +88,6 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     myCachedChildrenErrors.clear();
   }
 
-  @Nonnull
   public synchronized List<DomElementProblemDescriptor> getProblems(DomElement domElement) {
     if (domElement == null || !domElement.isValid()) return Collections.emptyList();
     return myDomProblemsGetter.apply(domElement);
@@ -125,7 +123,6 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
 
   }
 
-  @Nonnull
   private Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> getProblemsMap(final DomElement domElement) {
     final Map<Class<? extends DomElementsInspection>, List<DomElementProblemDescriptor>> map = myCachedChildrenErrors.get(domElement);
     if (map != null) {
@@ -163,7 +160,7 @@ public class DomElementsProblemsHolderImpl implements DomElementsProblemsHolder 
     return getProblems(myElement, false, true);
   }
 
-  public List<DomElementProblemDescriptor> getAllProblems(@Nonnull DomElementsInspection inspection) {
+  public List<DomElementProblemDescriptor> getAllProblems(DomElementsInspection inspection) {
     if (!myElement.isValid()) {
       return Collections.emptyList();
     }

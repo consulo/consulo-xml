@@ -17,8 +17,7 @@ package com.intellij.xml.index;
 
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
@@ -45,17 +44,17 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
         final GlobalSearchScope projectScope = GlobalSearchScope.allScope(project);
         return new GlobalSearchScope(project) {
             @Override
-            public int compare(@Nonnull VirtualFile file1, @Nonnull VirtualFile file2) {
+            public int compare(VirtualFile file1, VirtualFile file2) {
                 return projectScope.compare(file1, file2);
             }
 
             @Override
-            public boolean isSearchInModuleContent(@Nonnull consulo.module.Module aModule) {
+            public boolean isSearchInModuleContent(consulo.module.Module aModule) {
                 return true;
             }
 
             @Override
-            public boolean contains(@Nonnull VirtualFile file) {
+            public boolean contains(VirtualFile file) {
                 final VirtualFile parent = file.getParent();
                 return parent != null && (parent.getName().equals("standardSchemas") || projectScope.contains(file));
             }
@@ -67,7 +66,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
         };
     }
 
-    protected static VirtualFileFilter createFilter(@Nonnull final consulo.module.Module module) {
+    protected static VirtualFileFilter createFilter(final consulo.module.Module module) {
         final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
         return new VirtualFileFilter() {
             @Override
@@ -96,17 +95,15 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
     }
 
     @Override
-    @Nonnull
     public KeyDescriptor<String> getKeyDescriptor() {
         return EnumeratorStringDescriptor.INSTANCE;
     }
 
     @Override
-    @Nonnull
     public FileBasedIndex.InputFilter getInputFilter() {
         return new DefaultFileTypeSpecificInputFilter(XmlFileType.INSTANCE, DTDFileType.INSTANCE) {
             @Override
-            public boolean acceptInput(@Nullable Project project, @Nonnull final VirtualFile file) {
+            public boolean acceptInput(@Nullable Project project, final VirtualFile file) {
                 FileType fileType = file.getFileType();
                 final String extension = file.getExtension();
                 return XmlFileType.INSTANCE.equals(fileType) && "xsd".equals(extension)

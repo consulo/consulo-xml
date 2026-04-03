@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.compact.psi.util;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -26,7 +25,7 @@ import jakarta.annotation.Nonnull;
  */
 public class EscapeUtil {
   @SuppressWarnings({ "SSBasedInspection" })
-  public static String unescapeText(@Nonnull PsiElement element) {
+  public static String unescapeText(PsiElement element) {
     final ASTNode node = element.getNode();
     if (node != null) {
       return unescapeText(node);
@@ -36,7 +35,7 @@ public class EscapeUtil {
   }
 
   @SuppressWarnings({ "SSBasedInspection" })
-  public static String unescapeText(@Nonnull ASTNode node) {
+  public static String unescapeText(ASTNode node) {
     final String text = node.getText();
 
     // TODO: unescape \x{xx} sequences

@@ -49,8 +49,7 @@ import org.intellij.plugins.relaxNG.compact.psi.*;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 import org.intellij.plugins.relaxNG.compact.psi.util.RenameUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -73,7 +72,6 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
         return parts.length == 2 ? parts[0] : null;
     }
 
-    @Nonnull
     @Override
     public String getLocalPart() {
         String[] parts = EscapeUtil.unescapeText(getNode()).split(":", 2);
@@ -81,7 +79,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     }
 
     @Override
-    public void accept(@Nonnull RncElementVisitor visitor) {
+    public void accept(RncElementVisitor visitor) {
         visitor.visitName(this);
     }
 
@@ -96,7 +94,6 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
         return this;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
     public TextRange getRangeInElement() {
@@ -123,7 +120,6 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     }
 
     @Override
-    @Nonnull
     @RequiredReadAction
     public String getCanonicalText() {
         return getRangeInElement().substring(getText());
@@ -140,7 +136,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
 
     @Override
     @RequiredWriteAction
-    public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+    public PsiElement bindToElement(PsiElement element) throws consulo.language.util.IncorrectOperationException {
         throw new UnsupportedOperationException();
     }
 
@@ -151,7 +147,6 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
     }
 
     @Override
-    @Nonnull
     @RequiredReadAction
     public Object[] getVariants() {
         return ArrayUtil.EMPTY_OBJECT_ARRAY;
@@ -164,9 +159,8 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
         return "xsd".equals(prefix) || "xml".equals(prefix);
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
         return LocalizeValue.localizeTODO("Unresolved namespace prefix '" + s + "'");
     }
 
@@ -190,7 +184,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
         }
 
         @Override
-        public boolean execute(@Nonnull PsiElement element, @Nonnull ResolveState substitutor) {
+        public boolean execute(PsiElement element, ResolveState substitutor) {
             ASTNode node = element.getNode();
             if (node == null) {
                 return true;
@@ -235,7 +229,6 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
             myReference = reference;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return LocalizeValue.localizeTODO(
@@ -245,7 +238,7 @@ public class RncNameImpl extends RncElementImpl implements RncName, PsiReference
 
         @Override
         @RequiredWriteAction
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             String prefix = myReference.getPrefix();
             PsiFileFactory factory = PsiFileFactory.getInstance(myReference.getProject());
             RncFile psiFile = (RncFile) factory.createFileFromText(

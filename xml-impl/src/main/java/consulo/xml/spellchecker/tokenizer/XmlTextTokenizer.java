@@ -26,11 +26,10 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 public class XmlTextTokenizer extends Tokenizer<XmlText> {
   @Override
-  public void tokenize(@Nonnull XmlText element, TokenConsumer consumer) {
+  public void tokenize(XmlText element, TokenConsumer consumer) {
     if (element instanceof PsiLanguageInjectionHost && InjectedLanguageManager.getInstance(element.getProject()).getInjectedPsiFiles(element) != null)
       return;
     processChildren(element, consumer);

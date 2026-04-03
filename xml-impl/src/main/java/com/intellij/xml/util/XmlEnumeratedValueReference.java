@@ -27,8 +27,7 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -53,7 +52,6 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
         return myDescriptor.getValueDeclaration(getElement(), getValue());
     }
 
-    @Nonnull
     @Override
     public Object[] getVariants() {
         if (myDescriptor.isFixed()) {
@@ -66,9 +64,8 @@ public class XmlEnumeratedValueReference extends PsiReferenceBase<XmlElement> im
         }
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String referenceText) {
+    public LocalizeValue buildUnresolvedMessage(String referenceText) {
         String name = getElement() instanceof XmlTag ? "tag" : "attribute";
         return myDescriptor.isFixed()
             ? XmlErrorLocalize.shouldHaveFixedValue(StringUtil.capitalize(name), myDescriptor.getDefaultValue())

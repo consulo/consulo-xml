@@ -20,9 +20,7 @@ import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.localize.LocalizeValue;
 import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.converters.values.NumberValueConverter;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base DOM class to convert objects of a definite type into {@link String} and back. Most often used with
@@ -37,7 +35,7 @@ import org.jetbrains.annotations.NonNls;
  */
 public abstract class Converter<T> {
   @Nullable
-  public abstract T fromString(@Nullable @NonNls String s, final ConvertContext context);
+  public abstract T fromString(@Nullable String s, final ConvertContext context);
   @Nullable
   public abstract String toString(@Nullable T t, final ConvertContext context);
 
@@ -46,7 +44,6 @@ public abstract class Converter<T> {
    * @param context context
    * @return error message used to highlight the errors somewhere in the UI, most often - like unresolved references in XML
    */
-  @Nonnull
   public LocalizeValue buildUnresolvedMessage(@Nullable String s, final ConvertContext context) {
     return CodeInsightLocalize.errorCannotConvertDefaultMessage(StringUtil.notNullize(s));
   }
@@ -73,7 +70,6 @@ public abstract class Converter<T> {
       return t == null? null: t.toString();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue buildUnresolvedMessage(final String s, final ConvertContext context) {
       return IdeLocalize.valueShouldBeInteger();

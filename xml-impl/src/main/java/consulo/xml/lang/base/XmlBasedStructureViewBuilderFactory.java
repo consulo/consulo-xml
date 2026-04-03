@@ -31,8 +31,7 @@ import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public abstract class XmlBasedStructureViewBuilderFactory implements PsiStructureViewFactory
 {
@@ -62,7 +61,6 @@ public abstract class XmlBasedStructureViewBuilderFactory implements PsiStructur
 		return new TreeBasedStructureViewBuilder()
 		{
 			@Override
-			@Nonnull
 			public StructureViewModel createStructureViewModel(@Nullable Editor editor)
 			{
 				return new XmlStructureViewTreeModel((XmlFile) psiFile, editor);

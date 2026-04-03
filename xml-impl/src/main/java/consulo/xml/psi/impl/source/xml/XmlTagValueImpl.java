@@ -28,7 +28,6 @@ import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,21 +41,19 @@ public class XmlTagValueImpl implements XmlTagValue
 	private volatile String myText = null;
 	private volatile String myTrimmedText = null;
 
-	public XmlTagValueImpl(@Nonnull XmlTagChild[] bodyElements, @Nonnull XmlTag tag)
+	public XmlTagValueImpl(XmlTagChild[] bodyElements, XmlTag tag)
 	{
 		myTag = tag;
 		myElements = bodyElements;
 	}
 
 	@Override
-	@Nonnull
 	public XmlTagChild[] getChildren()
 	{
 		return myElements;
 	}
 
 	@Override
-	@Nonnull
 	public XmlText[] getTextElements()
 	{
 		XmlText[] textElements = myTextElements;
@@ -76,7 +73,6 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@Nonnull
 	public String getText()
 	{
 		String text = myText;
@@ -93,7 +89,6 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@Nonnull
 	public TextRange getTextRange()
 	{
 		if(myElements.length == 0)
@@ -109,7 +104,6 @@ public class XmlTagValueImpl implements XmlTagValue
 	}
 
 	@Override
-	@Nonnull
 	public String getTrimmedText()
 	{
 		String trimmedText = myTrimmedText;
@@ -165,7 +159,6 @@ public class XmlTagValueImpl implements XmlTagValue
 					{
 						((XmlTextImpl) text).doSetValue(value, new DefaultXmlPsiPolicy()
 						{
-							@Nonnull
 							@Override
 							public Language getLanguage()
 							{
@@ -223,7 +216,7 @@ public class XmlTagValueImpl implements XmlTagValue
 			boolean insideBody = false;
 
 			@Override
-			public boolean execute(@Nonnull PsiElement element)
+			public boolean execute(PsiElement element)
 			{
 				final ASTNode treeElement = element.getNode();
 				if(insideBody)

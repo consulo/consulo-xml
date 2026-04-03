@@ -20,7 +20,7 @@ import consulo.language.psi.stub.ObjectStubSerializer;
 import consulo.language.psi.stub.Stub;
 import consulo.util.xml.fastReader.XmlFileHeader;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**

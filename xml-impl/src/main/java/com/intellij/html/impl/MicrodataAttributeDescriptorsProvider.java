@@ -29,8 +29,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,10 +95,9 @@ public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescri
     }
 
     private static class MicrodataPropertyAttributeDescriptor extends AnyXmlAttributeDescriptor {
-        @Nonnull
         private final XmlTag myContext;
 
-        public MicrodataPropertyAttributeDescriptor(@Nonnull XmlTag context) {
+        public MicrodataPropertyAttributeDescriptor(XmlTag context) {
             super(ITEM_PROP);
             myContext = context;
         }
@@ -121,7 +119,7 @@ public class MicrodataAttributeDescriptorsProvider implements XmlAttributeDescri
             return scopeParent != null ? findProperties(scopeParent) : super.getEnumeratedValues();
         }
 
-        private static String[] findProperties(@Nonnull XmlTag tag) {
+        private static String[] findProperties(XmlTag tag) {
             final XmlAttribute typeAttribute = tag.getAttribute(ITEM_TYPE);
             if (typeAttribute != null) {
                 final XmlAttributeValue valueElement = typeAttribute.getValueElement();

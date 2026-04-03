@@ -28,8 +28,7 @@ import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -80,13 +79,10 @@ public abstract class DomService {
 
   public abstract <T extends DomElement> DomAnchor<T> createAnchor(T domElement);
 
-  @Nonnull
-  public abstract XmlFile getContainingFile(@Nonnull DomElement domElement);
+  public abstract XmlFile getContainingFile(DomElement domElement);
 
-  @Nonnull
-  public abstract EvaluatedXmlName getEvaluatedXmlName(@Nonnull DomElement element);
+  public abstract EvaluatedXmlName getEvaluatedXmlName(DomElement element);
 
-  @Nonnull
   public abstract XmlFileHeader getXmlFileHeader(XmlFile file);
 
   public enum StructureViewMode {

@@ -28,7 +28,6 @@ import consulo.ui.layout.Layout;
 import consulo.ui.layout.VerticalLayout;
 import consulo.util.collection.Lists;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -78,7 +77,6 @@ public class HtmlLanguageLevelForm {
         return myContentLayout;
     }
 
-    @Nonnull
     public String getDoctype() {
         if (myHtml4RadioButton.getValueOrError()) {
             return XmlUtil.XHTML_URI;
@@ -106,11 +104,11 @@ public class HtmlLanguageLevelForm {
         }
     }
 
-    public void addListener(@Nonnull MyListener listener) {
+    public void addListener(MyListener listener) {
         myListeners.add(listener);
     }
 
-    public void removeListener(@Nonnull MyListener listener) {
+    public void removeListener(MyListener listener) {
         myListeners.remove(listener);
     }
 

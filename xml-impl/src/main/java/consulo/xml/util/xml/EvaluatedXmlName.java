@@ -15,11 +15,9 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
@@ -28,11 +26,9 @@ public interface EvaluatedXmlName {
 
   XmlName getXmlName();
 
-  EvaluatedXmlName evaluateChildName(@Nonnull XmlName name);
+  EvaluatedXmlName evaluateChildName(XmlName name);
 
   boolean isNamespaceAllowed(String namespace, final XmlFile file, boolean qualified);
 
-  @Nonnull
-  @NonNls
-  String getNamespace(@Nonnull XmlElement parentElement, final XmlFile file);
+  String getNamespace(XmlElement parentElement, final XmlFile file);
 }

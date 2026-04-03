@@ -23,14 +23,12 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author maxim
  */
 @ExtensionImpl
 public class XHtmlDocumentationProvider extends HtmlDocumentationProvider {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XHTMLLanguage.INSTANCE;

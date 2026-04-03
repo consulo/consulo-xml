@@ -27,7 +27,7 @@ import consulo.language.ast.IElementType;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.language.codeStyle.Alignment;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
 * @author nik

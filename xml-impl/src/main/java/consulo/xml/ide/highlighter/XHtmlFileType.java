@@ -21,7 +21,6 @@ import consulo.ui.image.Image;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 
-import jakarta.annotation.Nonnull;
 
 public class XHtmlFileType extends HtmlFileType {
   public static final XHtmlFileType INSTANCE = new XHtmlFileType();
@@ -30,22 +29,18 @@ public class XHtmlFileType extends HtmlFileType {
     super(XHTMLLanguage.INSTANCE);
   }
 
-  @Nonnull
   public String getId() {
     return "XHTML";
   }
 
-  @Nonnull
   public LocalizeValue getDescription() {
     return XmlLocalize.filetypeDescriptionXhtml();
   }
 
-  @Nonnull
   public String getDefaultExtension() {
     return "xhtml";
   }
 
-  @Nonnull
   @Override
   public Image getIcon() {
     return AllIcons.FileTypes.Xhtml;

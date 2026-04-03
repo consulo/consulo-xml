@@ -21,7 +21,6 @@ import consulo.application.util.NotNullLazyValue;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlContentParticle;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -31,7 +30,6 @@ public class XmlElementsGroupImpl implements XmlElementsGroup {
     private final XmlContentParticle myParticle;
     private final XmlElementsGroup myParent;
     private final NotNullLazyValue<List<XmlElementsGroup>> mySubGroups = new NotNullLazyValue<List<XmlElementsGroup>>() {
-        @Nonnull
         @Override
         protected List<XmlElementsGroup> compute() {
             return ContainerUtil.map(
@@ -41,7 +39,7 @@ public class XmlElementsGroupImpl implements XmlElementsGroup {
         }
     };
 
-    public XmlElementsGroupImpl(@Nonnull XmlContentParticle particle, XmlElementsGroup parent) {
+    public XmlElementsGroupImpl(XmlContentParticle particle, XmlElementsGroup parent) {
         myParticle = particle;
         myParent = parent;
     }

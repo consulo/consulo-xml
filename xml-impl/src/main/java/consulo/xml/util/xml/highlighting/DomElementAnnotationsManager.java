@@ -26,7 +26,6 @@ import consulo.project.Project;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 
-import jakarta.annotation.Nonnull;
 import java.util.EventListener;
 import java.util.List;
 
@@ -37,10 +36,8 @@ public abstract class DomElementAnnotationsManager {
     return ServiceManager.getService(project, DomElementAnnotationsManager.class);
   }
 
-  @Nonnull
   public abstract DomElementsProblemsHolder getProblemHolder(DomElement element);
 
-  @Nonnull
   public abstract DomElementsProblemsHolder getCachedProblemHolder(DomElement element);
 
   public abstract List<ProblemDescriptor> createProblemDescriptors(final InspectionManager manager,
@@ -62,9 +59,8 @@ public abstract class DomElementAnnotationsManager {
    * @param onTheFly
    * @return collected DOM problem descriptors
    */
-  @Nonnull
-  public abstract <T extends DomElement, State> List<DomElementProblemDescriptor> checkFileElement(@Nonnull DomFileElement<T> element,
-                                                                                                   @Nonnull DomElementsInspection<T, State> inspection,
+  public abstract <T extends DomElement, State> List<DomElementProblemDescriptor> checkFileElement(DomFileElement<T> element,
+                                                                                                   DomElementsInspection<T, State> inspection,
                                                                                                    boolean onTheFly,
                                                                                                    State state);
 
@@ -78,6 +74,6 @@ public abstract class DomElementAnnotationsManager {
      *
      * @param element file element whose highlighting has been finished
      */
-    void highlightingFinished(@Nonnull DomFileElement element);
+    void highlightingFinished(DomFileElement element);
   }
 }

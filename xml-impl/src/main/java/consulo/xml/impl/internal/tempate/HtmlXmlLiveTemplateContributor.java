@@ -6,24 +6,21 @@ import consulo.language.editor.template.LiveTemplateContributor;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.template.HtmlContextType;
 import consulo.xml.codeInsight.template.XmlContextType;
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class HtmlXmlLiveTemplateContributor implements LiveTemplateContributor {
   @Override
-  @Nonnull
   public String groupId() {
     return "htmlXml";
   }
 
   @Override
-  @Nonnull
   public LocalizeValue groupName() {
     return LocalizeValue.localizeTODO("HTML & XML");
   }
 
   @Override
-  public void contribute(@Nonnull Factory factory) {
+  public void contribute(Factory factory) {
     try(Builder builder = factory.newBuilder("htmlxmlT", "T", "<$TAG$>$SELECTION$</$TAGNAME$>\r\n", CodeInsightLocalize.livetemplateDescriptionSurroundTag())) {
       builder.withReformat();
 

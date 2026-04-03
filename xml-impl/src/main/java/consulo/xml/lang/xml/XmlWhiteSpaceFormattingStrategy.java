@@ -26,7 +26,6 @@ import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlText;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Denis Zhdanov
@@ -78,7 +77,7 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
 		}
 	}
 
-	protected boolean isInsideTagBody(@Nonnull ASTNode place)
+	protected boolean isInsideTagBody(ASTNode place)
 	{
 		final ASTNode treeParent = place.getTreeParent();
 		if(treeParent.getElementType() != XmlElementType.XML_TAG
@@ -97,7 +96,7 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
 		return false;
 	}
 
-	public boolean addWhitespace(@Nonnull final ASTNode treePrev, @Nonnull final LeafElement whiteSpaceElement)
+	public boolean addWhitespace(final ASTNode treePrev, final LeafElement whiteSpaceElement)
 	{
 		if(isInsideTagBody(treePrev))
 		{
@@ -108,13 +107,12 @@ public class XmlWhiteSpaceFormattingStrategy extends WhiteSpaceFormattingStrateg
 		return false;
 	}
 
-	public boolean containsWhitespacesOnly(@Nonnull final ASTNode node)
+	public boolean containsWhitespacesOnly(final ASTNode node)
 	{
 		return (node.getElementType() == XmlTokenType.XML_DATA_CHARACTERS) &&
 				node.getText().trim().length() == 0;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

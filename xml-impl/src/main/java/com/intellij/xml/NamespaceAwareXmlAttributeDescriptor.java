@@ -1,7 +1,6 @@
 package com.intellij.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlTag;
 
@@ -10,5 +9,5 @@ import consulo.xml.psi.xml.XmlTag;
  */
 public interface NamespaceAwareXmlAttributeDescriptor extends XmlAttributeDescriptor {
     @Nullable
-    String getNamespace(@Nonnull XmlTag context);
+    String getNamespace(XmlTag context);
 }

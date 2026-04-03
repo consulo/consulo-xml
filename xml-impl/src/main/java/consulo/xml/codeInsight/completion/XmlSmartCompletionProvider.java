@@ -24,7 +24,6 @@ import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class XmlSmartCompletionProvider {
         });
     }
 
-    private static void addElementToResult(@Nonnull XmlElementDescriptor descriptor, CompletionResultSet result) {
+    private static void addElementToResult(XmlElementDescriptor descriptor, CompletionResultSet result) {
         XmlTagInsertHandler insertHandler = XmlTagInsertHandler.INSTANCE;
         if (descriptor instanceof XmlElementDescriptorImpl elementDescriptor) {
             String name = elementDescriptor.getName();
@@ -75,7 +74,7 @@ public class XmlSmartCompletionProvider {
         result.addElement(createLookupElement(descriptor).withInsertHandler(insertHandler));
     }
 
-    public static LookupElementBuilder createLookupElement(@Nonnull XmlElementDescriptor descriptor) {
+    public static LookupElementBuilder createLookupElement(XmlElementDescriptor descriptor) {
         LookupElementBuilder builder = LookupElementBuilder.create(descriptor.getName());
         if (descriptor instanceof XmlElementDescriptorImpl elementDescriptor) {
             builder = builder.withTypeText(elementDescriptor.getNamespace(), true);

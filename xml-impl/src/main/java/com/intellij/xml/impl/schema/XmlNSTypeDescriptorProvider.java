@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.impl.schema;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlTag;
 

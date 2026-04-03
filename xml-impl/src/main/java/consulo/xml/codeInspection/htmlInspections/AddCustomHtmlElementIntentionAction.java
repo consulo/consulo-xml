@@ -23,23 +23,18 @@ import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
-import jakarta.annotation.Nonnull;
 
 public class AddCustomHtmlElementIntentionAction implements LocalQuickFix {
-    @Nonnull
     private final String myName;
-    @Nonnull
     private final LocalizeValue myText;
-    @Nonnull
     private String myInspectionKey;
 
-    public AddCustomHtmlElementIntentionAction(@Nonnull String inspectionKey, @Nonnull String name, @Nonnull LocalizeValue text) {
+    public AddCustomHtmlElementIntentionAction(String inspectionKey, String name, LocalizeValue text) {
         myInspectionKey = inspectionKey;
         myName = name;
         myText = text;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return myText;
@@ -47,7 +42,7 @@ public class AddCustomHtmlElementIntentionAction implements LocalQuickFix {
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(Project project, ProblemDescriptor descriptor) {
         PsiElement element = descriptor.getPsiElement();
 
         InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();

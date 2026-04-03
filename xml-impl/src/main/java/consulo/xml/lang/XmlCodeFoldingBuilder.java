@@ -35,8 +35,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.impl.source.html.HtmlFileImpl;
 import consulo.xml.psi.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +45,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
   private static final int MIN_TEXT_RANGE_LENGTH = 3;
   private static final String STYLE_ATTRIBUTE = "style";
 
-  @Nonnull
-  public FoldingDescriptor[] buildFoldRegions(@Nonnull ASTNode node, @Nonnull Document document) {
+  public FoldingDescriptor[] buildFoldRegions(ASTNode node, Document document) {
     final PsiElement psiElement = node.getPsi();
     XmlDocument xmlDocument = null;
 
@@ -217,7 +215,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
     return false;
   }
 
-  public String getPlaceholderText(@Nonnull ASTNode node) {
+  public String getPlaceholderText(ASTNode node) {
     final PsiElement psi = node.getPsi();
     if (psi instanceof XmlTag ||
         psi instanceof XmlComment ||
@@ -227,7 +225,7 @@ public abstract class XmlCodeFoldingBuilder implements FoldingBuilder, DumbAware
     return null;
   }
 
-  public boolean isCollapsedByDefault(@Nonnull ASTNode node) {
+  public boolean isCollapsedByDefault(ASTNode node) {
     final PsiElement psi = node.getPsi();
     final XmlCodeFoldingSettings foldingSettings = getFoldingSettings();
     return (psi instanceof XmlTag && foldingSettings.isCollapseXmlTags())

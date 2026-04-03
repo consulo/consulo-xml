@@ -20,8 +20,7 @@ import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sergey.Vasiliev
@@ -30,19 +29,19 @@ public class DomModelFactoryHelper<T extends DomElement> {
   protected final Class<T> myClass;
   protected final ModelMerger myModelMerger;
 
-  public DomModelFactoryHelper(@Nonnull Class<T> aClass, @Nonnull ModelMerger modelMerger) {
+  public DomModelFactoryHelper(Class<T> aClass, ModelMerger modelMerger) {
     myClass = aClass;
     myModelMerger = modelMerger;
   }
 
   @Nullable
-  public T getDom(@Nonnull XmlFile configFile) {
+  public T getDom(XmlFile configFile) {
     final DomFileElement<T> element = getDomRoot(configFile);
     return element == null ? null : element.getRootElement();
   }
 
   @Nullable
-  public DomFileElement<T> getDomRoot(@Nonnull XmlFile configFile) {
+  public DomFileElement<T> getDomRoot(XmlFile configFile) {
     return DomManager.getDomManager(configFile.getProject()).getFileElement(configFile, myClass);
   }
 

@@ -17,8 +17,7 @@ package consulo.xml.util.xml.impl;
 
 import consulo.xml.util.xml.XmlName;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -37,13 +36,13 @@ public class ChildrenDescriptionsHolder<T extends DomChildDescriptionImpl> {
     this(null);
   }
 
-  final T addDescription(@Nonnull T t) {
+  final T addDescription(T t) {
     myMap.put(t.getXmlName(), t);
     myCached = null;
     return t;
   }
 
-  final void addDescriptions(@Nonnull Collection<T> collection) {
+  final void addDescriptions(Collection<T> collection) {
     for (final T t : collection) {
       addDescription(t);
     }
@@ -57,19 +56,18 @@ public class ChildrenDescriptionsHolder<T extends DomChildDescriptionImpl> {
   }
 
   @Nullable
-  final T getDescription(@Nonnull final String localName, String namespaceKey) {
+  final T getDescription(final String localName, String namespaceKey) {
     return getDescription(new XmlName(localName, namespaceKey));
   }
 
   @Nullable
-  final T findDescription(@Nonnull final String localName) {
+  final T findDescription(final String localName) {
     for (final XmlName xmlName : myMap.keySet()) {
       if (xmlName.getLocalName().equals(localName)) return myMap.get(xmlName);
     }
     return myDelegate != null ? myDelegate.findDescription(localName) : null;
   }
 
-  @Nonnull
   final List<T> getDescriptions() {
     final ArrayList<T> result = new ArrayList<T>();
     dumpDescriptions(result);

@@ -27,8 +27,7 @@ import consulo.language.editor.refactoring.rename.inplace.VariableInplaceRenamer
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -56,7 +55,7 @@ public class SchemaPrefixRenameHandler extends VariableInplaceRenameHandler {
     }
 
     @Override
-    protected VariableInplaceRenamer createRenamer(@Nonnull PsiElement elementToRename, Editor editor) {
+    protected VariableInplaceRenamer createRenamer(PsiElement elementToRename, Editor editor) {
         PossiblePrefixReference reference = getReference(elementToRename.getContainingFile(), editor);
         if (reference != null) {
             PsiElement prefix = reference.resolve();

@@ -15,8 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlFile;
 import com.intellij.xml.util.PsiElementPointer;
@@ -30,6 +29,5 @@ public interface DomAnchor<T extends DomElement> extends PsiElementPointer {
   @Nullable
   T retrieveDomElement();
 
-  @Nonnull
   XmlFile getContainingFile();
 }

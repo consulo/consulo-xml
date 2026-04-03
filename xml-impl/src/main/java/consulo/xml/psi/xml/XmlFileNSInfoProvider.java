@@ -19,10 +19,8 @@ package consulo.xml.psi.xml;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Implementations of this interface add default mappings
@@ -39,8 +37,7 @@ public interface XmlFileNSInfoProvider {
    * Empty nsPrefix is "", nsPrefix, namespaceId should not be null, invalid mapping table is skipped.
    */
   @Nullable
-  @NonNls
-  String[][] getDefaultNamespaces(@Nonnull XmlFile file);
+  String[][] getDefaultNamespaces(XmlFile file);
 
-  boolean overrideNamespaceFromDocType(@Nonnull XmlFile file);
+  boolean overrideNamespaceFromDocType(XmlFile file);
 }

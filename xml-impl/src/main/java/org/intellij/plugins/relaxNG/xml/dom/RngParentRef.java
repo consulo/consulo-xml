@@ -25,7 +25,6 @@ import consulo.xml.util.xml.Referencing;
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
-import jakarta.annotation.Nonnull;
 
 /**
  * http://relaxng.org/ns/structure/1.0:parentRefElemType interface.
@@ -38,7 +37,6 @@ public interface RngParentRef extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the name child.
    */
-  @Nonnull
   @Required
   @Referencing(RngReferenceConverter.class)
   GenericAttributeValue<String> getName();

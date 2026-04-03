@@ -28,8 +28,7 @@ import consulo.xml.util.xml.actions.generate.DomTemplateRunner;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +54,7 @@ public class DomTemplateRunnerImpl extends DomTemplateRunner
 
 	@Override
 	public <T extends DomElement> void runTemplate(T t, String mappingId, Editor editor,
-												   @Nonnull Map<String, String> predefinedVars)
+												   Map<String, String> predefinedVars)
 	{
 		final Template template = getTemplate(mappingId);
 		runTemplate(t, editor, template, predefinedVars);

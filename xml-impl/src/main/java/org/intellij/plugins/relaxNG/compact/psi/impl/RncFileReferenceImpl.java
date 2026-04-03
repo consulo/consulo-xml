@@ -15,8 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.ast.ASTNode;
 import consulo.document.util.TextRange;
@@ -43,7 +42,6 @@ abstract class RncFileReferenceImpl extends RncElementImpl implements RncFileRef
     super(node);
   }
 
-  @Nonnull
   @Override
   @SuppressWarnings({ "SSBasedInspection" })
   public PsiReference[] getReferences() {
@@ -89,7 +87,7 @@ abstract class RncFileReferenceImpl extends RncElementImpl implements RncFileRef
   }
 
   @Override
-  public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
+  public boolean processDeclarations(PsiScopeProcessor processor, ResolveState substitutor, PsiElement lastParent, PsiElement place) {
     final FollowFileHint hint = processor.getHint(FollowFileHint.KEY);
     final RncFile file = getReferencedFile();
     if (file != null && hint != null && hint.doFollow(file)) {

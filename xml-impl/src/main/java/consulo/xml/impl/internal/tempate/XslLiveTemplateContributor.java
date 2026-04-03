@@ -6,24 +6,21 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.template.HtmlContextType;
 import consulo.xml.codeInsight.template.XmlContextType;
 import consulo.xml.codeInsight.template.XslTextContextType;
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XslLiveTemplateContributor implements LiveTemplateContributor {
     @Override
-    @Nonnull
     public String groupId() {
         return "xsl";
     }
 
     @Override
-    @Nonnull
     public LocalizeValue groupName() {
         return LocalizeValue.localizeTODO("XSL");
     }
 
     @Override
-    public void contribute(@Nonnull LiveTemplateContributor.Factory factory) {
+    public void contribute(LiveTemplateContributor.Factory factory) {
         try (Builder builder = factory.newBuilder("xslAi", "ai", "<xsl:apply-imports/>$END$", LocalizeValue.localizeTODO("Apply-Imports."))) {
             builder.withContext(XmlContextType.class, false);
             builder.withContext(XslTextContextType.class, true);

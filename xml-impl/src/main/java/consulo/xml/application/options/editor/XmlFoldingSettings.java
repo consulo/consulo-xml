@@ -27,7 +27,6 @@ import consulo.ide.ServiceManager;
 import consulo.util.xml.serializer.XmlSerializerUtil;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
 
 @Singleton
 @ServiceAPI(ComponentScope.APPLICATION)
@@ -37,7 +36,6 @@ public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentSta
     public boolean COLLAPSE_XML_TAGS = false;
     public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
 
-    @Nonnull
     public static XmlFoldingSettings getInstance() {
         return ServiceManager.getService(XmlFoldingSettings.class);
     }

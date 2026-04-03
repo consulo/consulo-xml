@@ -16,7 +16,6 @@
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.PsiElement;
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
@@ -29,7 +28,6 @@ import com.intellij.xml.util.XmlUtil;
  */
 public class XmlElementDescriptorByType extends XmlElementDescriptorImpl {
     private ComplexTypeDescriptor myType;
-    @NonNls
     public static final String QUALIFIED_ATTR_VALUE = "qualified";
 
     public XmlElementDescriptorByType(XmlTag instanceTag, ComplexTypeDescriptor descriptor) {

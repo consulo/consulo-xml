@@ -9,7 +9,6 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Sergey Evdokimov
@@ -18,7 +17,7 @@ import jakarta.annotation.Nonnull;
 public class XmlSpellcheckingStrategy extends SuppressibleSpellcheckingStrategy
 {
 	@Override
-	public boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String name)
+	public boolean isSuppressedFor(PsiElement element, String name)
 	{
 		DomElement domElement = DomUtil.getDomElement(element);
 		if(domElement != null)
@@ -33,12 +32,11 @@ public class XmlSpellcheckingStrategy extends SuppressibleSpellcheckingStrategy
 	}
 
 	@Override
-	public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, @Nonnull String name)
+	public SuppressQuickFix[] getSuppressActions(PsiElement element, String name)
 	{
 		return SuppressQuickFix.EMPTY_ARRAY;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

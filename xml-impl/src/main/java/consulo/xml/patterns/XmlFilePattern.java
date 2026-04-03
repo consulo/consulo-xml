@@ -15,7 +15,6 @@
  */
 package consulo.xml.patterns;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -35,13 +34,13 @@ public class XmlFilePattern<Self extends XmlFilePattern<Self>> extends PsiFilePa
     super(XmlFile.class);
   }
 
-  protected XmlFilePattern(@Nonnull final InitialPatternCondition<XmlFile> condition) {
+  protected XmlFilePattern(final InitialPatternCondition<XmlFile> condition) {
     super(condition);
   }
 
   public Self withRootTag(final ElementPattern<XmlTag> rootTag) {
     return with(new PatternCondition<XmlFile>("withRootTag") {
-      public boolean accepts(@Nonnull final XmlFile xmlFile, final ProcessingContext context) {
+      public boolean accepts(final XmlFile xmlFile, final ProcessingContext context) {
         XmlDocument document = xmlFile.getDocument();
         return document != null && rootTag.getCondition().accepts(document.getRootTag(), context);
       }

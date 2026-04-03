@@ -22,7 +22,6 @@ import consulo.language.editor.bidi.TokenSetBidiRegionsSeparator;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlBidiRegionsSeparator extends TokenSetBidiRegionsSeparator
@@ -32,7 +31,6 @@ public class XmlBidiRegionsSeparator extends TokenSetBidiRegionsSeparator
 		super(TokenSet.create(XmlTokenType.XML_DATA_CHARACTERS, XmlTokenType.XML_REAL_WHITE_SPACE));
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

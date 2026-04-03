@@ -28,7 +28,6 @@ import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author sweinreuter
@@ -38,7 +37,7 @@ public class ReferenceAnnotator extends RncElementVisitor implements Annotator {
   private AnnotationHolder myHolder;
 
   @Override
-  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
+  public void annotate(PsiElement psiElement, AnnotationHolder holder) {
     myHolder = holder;
     try {
       psiElement.accept(this);

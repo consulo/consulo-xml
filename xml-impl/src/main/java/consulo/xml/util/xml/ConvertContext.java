@@ -23,15 +23,13 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
  */
 public abstract class ConvertContext {
 
-  @Nonnull
   public abstract DomElement getInvocationElement();
 
   @Nullable
@@ -52,7 +50,6 @@ public abstract class ConvertContext {
     return null;
   }
 
-  @Nonnull
   public abstract XmlFile getFile();
 
   @Nullable

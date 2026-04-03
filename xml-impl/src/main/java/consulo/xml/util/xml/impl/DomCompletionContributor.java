@@ -35,7 +35,6 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 
 /**
@@ -124,7 +123,6 @@ public class DomCompletionContributor extends CompletionContributor
 		return false;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

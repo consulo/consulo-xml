@@ -15,8 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
@@ -103,7 +102,7 @@ public class XmlEntityDeclImpl extends XmlElementImpl implements XmlEntityDecl, 
 	}
 
 	@Override
-	public PsiElement setName(@Nonnull String name) throws IncorrectOperationException
+	public PsiElement setName(String name) throws IncorrectOperationException
 	{
 		final PsiElement nameElement = getNameElement();
 
@@ -218,7 +217,6 @@ public class XmlEntityDeclImpl extends XmlElementImpl implements XmlEntityDecl, 
 	}
 
 	@Override
-	@Nonnull
 	public PsiElement getNavigationElement()
 	{
 		return getNameElement();

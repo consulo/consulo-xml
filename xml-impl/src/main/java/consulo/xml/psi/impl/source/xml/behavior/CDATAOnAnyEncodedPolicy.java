@@ -30,7 +30,6 @@ import consulo.language.util.CharTable;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 public class CDATAOnAnyEncodedPolicy extends DefaultXmlPsiPolicy
 {
@@ -63,7 +62,6 @@ public class CDATAOnAnyEncodedPolicy extends DefaultXmlPsiPolicy
 		return dummyParent;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

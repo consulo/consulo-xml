@@ -25,42 +25,37 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
  */
 public class AddHtmlTagOrAttributeToCustomsIntention implements SyntheticIntentionAction {
-    @Nonnull
     private final String myName;
-    @Nonnull
     private final LocalizeValue myText;
-    @Nonnull
     private final String myInspectionKey;
 
     public AddHtmlTagOrAttributeToCustomsIntention(
-        @Nonnull String inspectionKey,
-        @Nonnull String name,
-        @Nonnull LocalizeValue text
+        String inspectionKey,
+        String name,
+        LocalizeValue text
     ) {
         myInspectionKey = inspectionKey;
         myName = name;
         myText = text;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getText() {
         return myText;
     }
 
     @Override
-    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+    public boolean isAvailable(Project project, Editor editor, PsiFile file) {
         return true;
     }
 
     @Override
-    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    public void invoke(Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
         InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getInspectionProfile();
         profile.<LocalInspectionTool, BaseXmlEntitiesInspectionState>modifyToolSettings(
             myInspectionKey,

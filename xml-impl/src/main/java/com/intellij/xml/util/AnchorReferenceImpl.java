@@ -33,9 +33,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +47,6 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
     private final PsiElement myElement;
     private final int myOffset;
     private final boolean mySoft;
-    @NonNls
     private static final String ANCHOR_ELEMENT_NAME = "a";
     private static final String MAP_ELEMENT_NAME = "map";
     private static final Key<CachedValue<Map<String, XmlTag>>> ourCachedIdsKey = Key.create("cached.ids");
@@ -173,7 +170,6 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
     }
 
     @RequiredReadAction
-    @Nonnull
     public String getCanonicalText() {
         return myAnchor;
     }
@@ -185,7 +181,7 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
 
     @RequiredWriteAction
     @Nullable
-    public PsiElement bindToElement(@Nonnull PsiElement element) throws consulo.language.util.IncorrectOperationException {
+    public PsiElement bindToElement(PsiElement element) throws consulo.language.util.IncorrectOperationException {
         return null;
     }
 
@@ -195,7 +191,6 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
     }
 
     @RequiredReadAction
-    @Nonnull
     public Object[] getVariants() {
         final Map<String, XmlTag> idMap = getIdMap();
         if (idMap == null) {
@@ -232,9 +227,8 @@ public class AnchorReferenceImpl implements PsiReference, EmptyResolveMessagePro
         return mySoft;
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
         final XmlFile xmlFile = getFile();
         return xmlFile == null
             ? XmlLocalize.cannotResolveAnchor(myAnchor)

@@ -15,12 +15,11 @@
  */
 package consulo.xml.util.xml.impl;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -31,13 +30,10 @@ public interface DomParentStrategy {
   @Nullable
   XmlElement getXmlElement();
 
-  @Nonnull
   DomParentStrategy refreshStrategy(final DomInvocationHandler handler);
 
-  @Nonnull
-  DomParentStrategy setXmlElement(@Nonnull XmlElement element);
+  DomParentStrategy setXmlElement(XmlElement element);
 
-  @Nonnull
   DomParentStrategy clearXmlElement();
 
   @Nullable

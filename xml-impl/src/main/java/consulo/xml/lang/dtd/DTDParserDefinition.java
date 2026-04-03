@@ -34,7 +34,6 @@ import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.xml.psi.xml.XmlElementType;
 import consulo.xml.psi.xml.XmlEntityDecl;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author max
@@ -52,38 +51,33 @@ public class DTDParserDefinition extends XMLParserDefinition
 		return new XmlFileImpl(viewProvider, XmlElementType.DTD_FILE);
 	}
 
-	@Nonnull
 	@Override
-	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
+	public PsiParser createParser(LanguageVersion languageVersion)
 	{
 		return new PsiParser()
 		{
-			@Nonnull
 			@Override
-			public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion)
+			public ASTNode parse(IElementType root, PsiBuilder builder, LanguageVersion languageVersion)
 			{
 				return new DtdParsing(root, XmlEntityDecl.EntityContextType.GENERIC_XML, builder).parse();
 			}
 		};
 	}
 
-	@Nonnull
 	@Override
 	public IFileElementType getFileNodeType()
 	{
 		return XmlElementType.DTD_FILE;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{
 		return DTDLanguage.INSTANCE;
 	}
 
-	@Nonnull
 	@Override
-	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
+	public Lexer createLexer(LanguageVersion languageVersion)
 	{
 		return new DtdLexer(false);
 	}

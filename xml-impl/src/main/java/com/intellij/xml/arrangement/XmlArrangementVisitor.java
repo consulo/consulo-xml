@@ -10,8 +10,7 @@ import consulo.util.collection.Stack;
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -27,7 +26,7 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
     private final XmlArrangementParseInfo myInfo;
     private final Collection<TextRange> myRanges;
 
-    public XmlArrangementVisitor(@Nonnull XmlArrangementParseInfo info, @Nonnull Collection<TextRange> ranges) {
+    public XmlArrangementVisitor(XmlArrangementParseInfo info, Collection<TextRange> ranges) {
         myInfo = info;
         myRanges = ranges;
     }
@@ -71,8 +70,8 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
 
     @Nullable
     private XmlElementArrangementEntry createNewEntry(
-        @Nonnull TextRange range,
-        @Nonnull ArrangementSettingsToken type,
+        TextRange range,
+        ArrangementSettingsToken type,
         @Nullable String name,
         boolean canBeMatched
     ) {
@@ -97,7 +96,7 @@ public class XmlArrangementVisitor extends XmlElementVisitor {
         return myStack.isEmpty() ? null : myStack.peek();
     }
 
-    private boolean isWithinBounds(@Nonnull TextRange range) {
+    private boolean isWithinBounds(TextRange range) {
         for (TextRange textRange : myRanges) {
             if (textRange.intersects(range)) {
                 return true;

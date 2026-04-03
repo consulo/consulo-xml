@@ -33,7 +33,7 @@ import consulo.util.lang.reflect.ReflectionUtil;
 
 import java.util.List;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sergey.Vasiliev

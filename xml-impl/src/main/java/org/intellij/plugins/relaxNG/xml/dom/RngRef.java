@@ -19,7 +19,6 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.GenericAttributeValue;
@@ -34,7 +33,6 @@ import org.intellij.plugins.relaxNG.xml.dom.impl.RngReferenceConverter;
  */
 public interface RngRef extends RngDomElement, Ref<Define, XmlElement> {
 
-  @Nonnull
   @Required
   @Referencing(RngReferenceConverter.class)
   GenericAttributeValue<String> getName();

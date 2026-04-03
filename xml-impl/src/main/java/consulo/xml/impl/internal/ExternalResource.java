@@ -3,8 +3,7 @@ package consulo.xml.impl.internal;
 import consulo.logging.Logger;
 import consulo.util.io.FileUtil;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.net.URL;
 
 public class ExternalResource
@@ -12,11 +11,10 @@ public class ExternalResource
 	private static final Logger LOG = Logger.getInstance(ExternalResource.class);
 
 	private final String myFile;
-	@Nonnull
 	private final ClassLoader myClassLoader;
 	private volatile String myResolvedResourcePath;
 
-	public ExternalResource(String _file, @Nonnull ClassLoader _classLoader)
+	public ExternalResource(String _file, ClassLoader _classLoader)
 	{
 		myFile = _file;
 		myClassLoader = _classLoader;

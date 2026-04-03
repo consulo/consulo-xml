@@ -25,10 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.util.lang.Comparing;
 import consulo.util.xml.fastReader.NanoXmlUtil;
@@ -76,9 +74,9 @@ public class XsdNamespaceBuilder extends NanoXmlUtil.IXMLBuilderAdapter implemen
 
     @Override
     public void startElement(
-        @NonNls final String name,
-        @NonNls final String nsPrefix,
-        @NonNls final String nsURI,
+        final String name,
+        final String nsPrefix,
+        final String nsURI,
         final String systemID,
         final int lineNr
     ) throws Exception {
@@ -97,7 +95,7 @@ public class XsdNamespaceBuilder extends NanoXmlUtil.IXMLBuilderAdapter implemen
 
     @Override
     public void addAttribute(
-        @NonNls final String key,
+        final String key,
         final String nsPrefix,
         final String nsURI,
         final String value,
@@ -122,11 +120,11 @@ public class XsdNamespaceBuilder extends NanoXmlUtil.IXMLBuilderAdapter implemen
     }
 
     @Override
-    public int compareTo(@Nonnull XsdNamespaceBuilder o) {
+    public int compareTo(XsdNamespaceBuilder o) {
         return Comparing.compare(myNamespace, o.myNamespace);
     }
 
-    public boolean hasTag(@Nonnull String tagName) {
+    public boolean hasTag(String tagName) {
         return myTags.contains(tagName);
     }
 

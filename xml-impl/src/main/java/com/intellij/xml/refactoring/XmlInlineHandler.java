@@ -7,7 +7,6 @@ import consulo.language.editor.refactoring.inline.InlineHandler;
 import consulo.language.psi.PsiElement;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Eugene.Kudelevsky
@@ -28,7 +27,6 @@ public class XmlInlineHandler implements InlineHandler {
         return null;
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

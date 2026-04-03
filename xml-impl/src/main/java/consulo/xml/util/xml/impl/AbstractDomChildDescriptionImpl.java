@@ -26,8 +26,7 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomExtensionImpl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -48,13 +47,12 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
     myType = type;
   }
 
-  public final void addCustomAnnotation(@Nonnull Annotation annotation) {
+  public final void addCustomAnnotation(Annotation annotation) {
     if (myCustomAnnotations == null) myCustomAnnotations = new HashMap<Class, Annotation>();
     myCustomAnnotations.put(annotation.annotationType(), annotation);
   }
 
   private NotNullLazyValue<Boolean> myStubbed = new NotNullLazyValue<Boolean>() {
-    @Nonnull
     @Override
     protected Boolean compute() {
       return myType instanceof Class && DomReflectionUtil.findAnnotationDFS((Class)myType, Stubbed.class) != null ||
@@ -98,8 +96,7 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
     return myUserMap == null ? null : (T)myUserMap.get(key);
   }
 
-  @Nonnull
-  public final List<? extends DomElement> getStableValues(@Nonnull final DomElement parent) {
+  public final List<? extends DomElement> getStableValues(final DomElement parent) {
     final List<? extends DomElement> list = getValues(parent);
     final ArrayList<DomElement> result = new ArrayList<DomElement>(list.size());
     final DomManager domManager = parent.getManager();
@@ -119,13 +116,11 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
   }
 
 
-  @Nonnull
   public final Type getType() {
     return myType;
   }
 
-  @Nonnull
-  public DomNameStrategy getDomNameStrategy(@Nonnull DomElement parent) {
+  public DomNameStrategy getDomNameStrategy(DomElement parent) {
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(ReflectionUtil.getRawType(getType()), false);
     return strategy == null ? parent.getNameStrategy() : strategy;
   }

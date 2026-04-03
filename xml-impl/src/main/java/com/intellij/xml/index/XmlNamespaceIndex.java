@@ -33,8 +33,7 @@ import consulo.util.io.StreamUtil;
 import consulo.util.lang.Comparing;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.*;
 import java.util.*;
@@ -46,7 +45,7 @@ import java.util.function.Function;
 @ExtensionImpl
 public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     @Nullable
-    public static String getNamespace(@Nonnull VirtualFile file, final Project project, PsiFile context) {
+    public static String getNamespace(VirtualFile file, final Project project, PsiFile context) {
         if (DumbService.isDumb(project) || (context != null && XmlUtil.isStubBuilding())) {
             return computeNamespace(file);
         }
@@ -55,7 +54,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     }
 
     @Nullable
-    public static String computeNamespace(@Nonnull VirtualFile file) {
+    public static String computeNamespace(VirtualFile file) {
         InputStream stream = null;
         try {
             stream = file.getInputStream();
@@ -71,7 +70,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
 
     public static List<IndexedRelevantResource<String, XsdNamespaceBuilder>> getResourcesByNamespace(
         String namespace,
-        @Nonnull Project project,
+        Project project,
         @Nullable Module module
     ) {
         List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources =
@@ -81,8 +80,8 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     }
 
     public static List<IndexedRelevantResource<String, XsdNamespaceBuilder>> getAllResources(
-        @Nullable final consulo.module.Module module,
-        @Nonnull Project project,
+        consulo.module.@Nullable Module module,
+        Project project,
         @Nullable Function<List<IndexedRelevantResource<String, XsdNamespaceBuilder>>, IndexedRelevantResource<String, XsdNamespaceBuilder>> chooser
     ) {
         return IndexedRelevantResource.getAllResources(NAME, module, project, chooser);
@@ -91,18 +90,15 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     public static final ID<String, XsdNamespaceBuilder> NAME = ID.create("XmlNamespaces");
 
     @Override
-    @Nonnull
     public ID<String, XsdNamespaceBuilder> getName() {
         return NAME;
     }
 
     @Override
-    @Nonnull
     public DataIndexer<String, XsdNamespaceBuilder, FileContent> getIndexer() {
         return new DataIndexer<String, XsdNamespaceBuilder, FileContent>() {
             @Override
-            @Nonnull
-            public Map<String, XsdNamespaceBuilder> map(@Nonnull final FileContent inputData) {
+            public Map<String, XsdNamespaceBuilder> map(final FileContent inputData) {
                 final XsdNamespaceBuilder builder;
                 if ("dtd".equals(inputData.getFile().getExtension())) {
                     builder = new XsdNamespaceBuilder(inputData.getFileName(),
@@ -128,12 +124,11 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
 
     private static final String NULL_STRING = "\"\"";
 
-    @Nonnull
     @Override
     public DataExternalizer<XsdNamespaceBuilder> getValueExternalizer() {
         return new DataExternalizer<XsdNamespaceBuilder>() {
             @Override
-            public void save(@Nonnull DataOutput out, XsdNamespaceBuilder value) throws IOException {
+            public void save(DataOutput out, XsdNamespaceBuilder value) throws IOException {
                 IOUtil.writeUTF(out, value.getNamespace() != null ? value.getNamespace() : NULL_STRING);
                 IOUtil.writeUTF(out, value.getVersion() != null ? value.getVersion() : NULL_STRING);
                 IOUtil.writeStringList(out, value.getTags());
@@ -141,7 +136,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
             }
 
             @Override
-            public XsdNamespaceBuilder read(@Nonnull DataInput in) throws IOException {
+            public XsdNamespaceBuilder read(DataInput in) throws IOException {
                 String namespace = IOUtil.readUTF(in);
                 if (NULL_STRING.equals(namespace)) {
                     namespace = null;
@@ -167,8 +162,8 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
         @Nullable final String tagName,
         @Nullable final String version,
         @Nullable String schemaLocation,
-        @Nullable consulo.module.Module module,
-        @Nonnull Project project
+        consulo.module.@Nullable Module module,
+        Project project
     ) {
 
         final List<IndexedRelevantResource<String, XsdNamespaceBuilder>> resources = getResourcesByNamespace(namespace, project, module);
@@ -212,7 +207,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
         @Nullable final String tagName,
         @Nullable final String version,
         @Nullable String schemaLocation,
-        @Nonnull PsiFile file
+        PsiFile file
     ) {
 
         if (DumbService.isDumb(file.getProject()) || XmlUtil.isStubBuilding()) {
@@ -234,7 +229,7 @@ public class XmlNamespaceIndex extends XmlIndex<XsdNamespaceBuilder> {
     }
 
     @Nullable
-    public static XmlFile guessDtd(String dtdUri, @Nonnull PsiFile baseFile) {
+    public static XmlFile guessDtd(String dtdUri, PsiFile baseFile) {
 
         if (!dtdUri.endsWith(".dtd") || DumbService.isDumb(baseFile.getProject()) || XmlUtil.isStubBuilding()) {
             return null;

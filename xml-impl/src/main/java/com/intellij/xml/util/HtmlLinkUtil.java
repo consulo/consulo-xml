@@ -8,16 +8,13 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public class HtmlLinkUtil {
-    @NonNls
     public static final String LINK = "link";
 
-    public static void processLinks(@Nonnull final XmlFile xhtmlFile, @Nonnull Processor<XmlTag> tagProcessor) {
+    public static void processLinks(final XmlFile xhtmlFile, Processor<XmlTag> tagProcessor) {
         final XmlDocument doc = HtmlUtil.getRealXmlDocument(xhtmlFile.getDocument());
         if (doc == null) {
             return;
@@ -36,7 +33,7 @@ public class HtmlLinkUtil {
         }
     }
 
-    public static void findLinkStylesheets(@Nonnull final XmlTag tag, @Nonnull Processor<XmlTag> tagProcessor) {
+    public static void findLinkStylesheets(final XmlTag tag, Processor<XmlTag> tagProcessor) {
         processInjectedContent(tag, tagProcessor);
 
         for (XmlTag subTag : tag.getSubTags()) {
@@ -48,7 +45,7 @@ public class HtmlLinkUtil {
         }
     }
 
-    public static void processInjectedContent(final XmlTag element, @Nonnull final Processor<XmlTag> tagProcessor) {
+    public static void processInjectedContent(final XmlTag element, final Processor<XmlTag> tagProcessor) {
         final PsiLanguageInjectionHost.InjectedPsiVisitor injectedPsiVisitor = (injectedPsi, places) -> {
             if (injectedPsi instanceof XmlFile xmlFile) {
                 final XmlDocument injectedDocument = xmlFile.getDocument();

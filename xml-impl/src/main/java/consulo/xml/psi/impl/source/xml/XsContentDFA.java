@@ -25,8 +25,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.apache.xerces.impl.Constants;
 import org.apache.xerces.impl.xs.*;
 import org.apache.xerces.impl.xs.models.CMBuilder;
@@ -73,7 +72,7 @@ class XsContentDFA extends XmlContentDFA
 	private final XmlElementDescriptor[] myElementDescriptors;
 
 	@Nullable
-	public static XmlContentDFA createContentDFA(@Nonnull XmlTag parentTag)
+	public static XmlContentDFA createContentDFA(XmlTag parentTag)
 	{
 		final PsiFile file = parentTag.getContainingFile().getOriginalFile();
 		if(!(file instanceof XmlFile))
@@ -94,7 +93,7 @@ class XsContentDFA extends XmlContentDFA
 		return new XsContentDFA(decl, parentTag);
 	}
 
-	public XsContentDFA(@Nonnull XSElementDeclaration decl, final XmlTag parentTag)
+	public XsContentDFA(XSElementDeclaration decl, final XmlTag parentTag)
 	{
 		XSComplexTypeDecl definition = (XSComplexTypeDecl) decl.getTypeDefinition();
 		myContentModel = definition.getContentModel(new CMBuilder(new CMNodeFactory()));

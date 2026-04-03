@@ -30,10 +30,8 @@ import consulo.xml.util.xml.model.MultipleDomModelFactory;
 import consulo.xml.util.xml.model.SimpleModelFactory;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.UserDataHolder;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +46,7 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
   private final SimpleModelFactory<T,M> mySimpleDomModelFactory;
   private final MultipleDomModelFactory<S, T, M> myMultipleDomModelFactory;
 
-  protected BaseDomModelFactory(@Nonnull Class<T> aClass, final Project project, @NonNls String name) {
+  protected BaseDomModelFactory(Class<T> aClass, final Project project, String name) {
     super(aClass, DomService.getInstance().createModelMerger());
 
     myProject = project;
@@ -61,12 +59,12 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
   protected abstract S getModelScope(final XmlFile file);
 
   @Nullable
-  protected abstract List<M> computeAllModels(@Nonnull S scope);
+  protected abstract List<M> computeAllModels(S scope);
 
-  protected abstract M createCombinedModel(@Nonnull Set<XmlFile> configFiles, @Nonnull DomFileElement<T> mergedModel, M firstModel, final S scope);
+  protected abstract M createCombinedModel(Set<XmlFile> configFiles, DomFileElement<T> mergedModel, M firstModel, final S scope);
 
   @Nullable
-  public M getModel(@Nonnull C context){
+  public M getModel(C context){
     final PsiFile psiFile = context.getContainingFile();
     if (psiFile instanceof XmlFile) {
       return getModelByConfigFile((XmlFile)psiFile);
@@ -74,8 +72,7 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
     return null;
   }
 
-  @Nonnull
-  public List<M> getAllModels(@Nonnull S scope) {
+  public List<M> getAllModels(S scope) {
     return myMultipleDomModelFactory.getAllModels(scope);
   }
 
@@ -84,7 +81,6 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
     return mySimpleDomModelFactory.getModelByConfigFile(psiFile);
   }
 
-  @Nonnull
   public Object[] computeDependencies(@Nullable M model, @Nullable S scope) {
 
     final ArrayList<Object> dependencies = new ArrayList<Object>();
@@ -96,7 +92,7 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
   }
 
   @Nullable
-  protected M computeModel(@Nonnull XmlFile psiFile, @Nullable S scope) {
+  protected M computeModel(XmlFile psiFile, @Nullable S scope) {
     if (scope == null) {
       return null;
     }
@@ -115,8 +111,7 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
     return myMultipleDomModelFactory.getCombinedModel(scope);
   }
 
-  @Nonnull
-  public Set<XmlFile> getAllConfigFiles(@Nonnull S scope) {
+  public Set<XmlFile> getAllConfigFiles(S scope) {
     return myMultipleDomModelFactory.getAllConfigFiles(scope);
   }
 
@@ -130,11 +125,11 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
                                                                                   final Project project,
                                                                                   final String name) {
     return new CachedMultipleDomModelFactory<S, T, M, C>(aClass, modelMerger, project, name) {
-      public M getModel(@Nonnull final C context) {
+      public M getModel(final C context) {
         return BaseDomModelFactory.this.getModel(context);
       }
 
-      protected List<M> computeAllModels(@Nonnull final S scope) {
+      protected List<M> computeAllModels(final S scope) {
         return BaseDomModelFactory.this.computeAllModels(scope);
       }
 
@@ -145,12 +140,11 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
         return BaseDomModelFactory.this.createCombinedModel(configFiles, mergedModel, firstModel, scope);
       }
 
-      @Nonnull
       public Object[] computeDependencies(@Nullable final M model, @Nullable final S scope) {
         return BaseDomModelFactory.this.computeDependencies(model, scope);
       }
 
-      public S getModelScope(@Nonnull final XmlFile xmlFile) {
+      public S getModelScope(final XmlFile xmlFile) {
         return BaseDomModelFactory.this.getModelScope(xmlFile);
       }
     };
@@ -162,16 +156,15 @@ public abstract class BaseDomModelFactory<S extends UserDataHolder, T extends Do
                                                                         final String name) {
     return new CachedSimpleDomModelFactory<T, M, S>(aClass, modelMerger, project, name) {
 
-      protected M computeModel(@Nonnull final XmlFile psiFile, @Nullable final S scope) {
+      protected M computeModel(final XmlFile psiFile, @Nullable final S scope) {
         return BaseDomModelFactory.this.computeModel(psiFile, scope);
       }
 
-      @Nonnull
       public Object[] computeDependencies(@Nullable final M model, @Nullable final S scope) {
         return BaseDomModelFactory.this.computeDependencies(model, scope);
       }
 
-      public S getModelScope(@Nonnull XmlFile file) {
+      public S getModelScope(XmlFile file) {
         return BaseDomModelFactory.this.getModelScope(file);
       }
     };

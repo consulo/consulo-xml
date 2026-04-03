@@ -22,7 +22,6 @@ import consulo.language.psi.PsiReferenceRegistrar;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.patterns.XmlPatterns;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -38,7 +37,6 @@ public class DomReferenceContributor extends PsiReferenceContributor
 		registrar.registerReferenceProvider(XmlPatterns.xmlAttributeValue(), provider);
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

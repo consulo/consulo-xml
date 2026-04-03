@@ -20,10 +20,8 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.language.pattern.*;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.util.ProcessingContext;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.BiPredicate;
 
 /**
@@ -31,34 +29,34 @@ import java.util.function.BiPredicate;
  */
 public abstract class XmlNamedElementPattern<T extends XmlElement & PsiNamedElement,Self extends XmlNamedElementPattern<T,Self>> extends XmlElementPattern<T,Self>{
 
-  public XmlNamedElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
+  public XmlNamedElementPattern(final InitialPatternCondition<T> condition) {
     super(condition);
   }
 
   protected abstract String getLocalName(T t);
   protected abstract String getNamespace(T t);
 
-  public Self withLocalName(@NonNls String localName) {
+  public Self withLocalName(String localName) {
     return withLocalName(StandardPatterns.string().equalTo(localName));
   }
 
-  public Self withLocalName(@NonNls String... localNames) {
+  public Self withLocalName(String... localNames) {
     return withLocalName(StandardPatterns.string().oneOf(localNames));
   }
 
   public Self withLocalName(final ElementPattern<String> localName) {
     return with(new PsiNamePatternCondition<T>("withLocalName", localName) {
-      public String getPropertyValue(@Nonnull final Object o) {
+      public String getPropertyValue(final Object o) {
         return o instanceof XmlElement ? getLocalName((T)o) : null;
       }
     });
   }
 
-  public Self withNamespace(@NonNls final String namespace) {
+  public Self withNamespace(final String namespace) {
     return withNamespace(StandardPatterns.string().equalTo(namespace));
   }
 
-  public Self withNamespace(@NonNls final String... namespaces) {
+  public Self withNamespace(final String... namespaces) {
     return withNamespace(StandardPatterns.string().oneOf(namespaces));
   }
 

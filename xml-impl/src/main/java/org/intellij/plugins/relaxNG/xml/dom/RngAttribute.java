@@ -19,7 +19,6 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.Attribute;
 import consulo.xml.util.xml.GenericAttributeValue;
@@ -35,7 +34,6 @@ public interface RngAttribute extends OpenNameClasses, RngOpenPatterns {
    *
    * @return the value of the name child.
    */
-  @Nonnull
   @Attribute("name")
   GenericAttributeValue<String> getNameAttr();
 }

@@ -23,8 +23,7 @@ import consulo.localize.LocalizeValue;
 import consulo.util.collection.Stack;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static consulo.xml.psi.xml.XmlElementType.*;
 
@@ -91,8 +90,7 @@ public class XmlParsing {
     document.done(XML_DOCUMENT);
   }
 
-  @Nullable
-  private static PsiBuilder.Marker flushError(PsiBuilder.Marker error) {
+  private static PsiBuilder.@Nullable Marker flushError(PsiBuilder.Marker error) {
     if (error != null) {
       error.error(XmlErrorLocalize.xmlParsingUnexpectedTokens());
       error = null;
@@ -279,8 +277,7 @@ public class XmlParsing {
     return tt == XML_COMMENT_START;
   }
 
-  @Nonnull
-  private PsiBuilder.Marker startText(@Nullable PsiBuilder.Marker xmlText) {
+  private PsiBuilder.Marker startText(PsiBuilder.@Nullable Marker xmlText) {
     if (xmlText == null) {
       xmlText = mark();
       assert xmlText != null;
@@ -292,8 +289,7 @@ public class XmlParsing {
     return myBuilder.mark();
   }
 
-  @Nullable
-  private static PsiBuilder.Marker terminateText(@Nullable PsiBuilder.Marker xmlText) {
+  private static PsiBuilder.@Nullable Marker terminateText(PsiBuilder.@Nullable Marker xmlText) {
     if (xmlText != null) {
       xmlText.done(XML_TEXT);
       xmlText = null;

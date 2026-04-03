@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.dom.DomElementImplementationProvider;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,14 +12,12 @@ import jakarta.annotation.Nonnull;
 @ExtensionImpl
 public class RngIncludeImplementationProvider implements DomElementImplementationProvider<RngInclude, RngIncludeImpl>
 {
-	@Nonnull
 	@Override
 	public Class<RngInclude> getInterfaceClass()
 	{
 		return RngInclude.class;
 	}
 
-	@Nonnull
 	@Override
 	public Class<RngIncludeImpl> getImplementationClass()
 	{

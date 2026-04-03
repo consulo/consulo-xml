@@ -33,8 +33,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author spleaner
@@ -42,11 +41,10 @@ import jakarta.annotation.Nullable;
 public class XmlDeclareIdInCommentAction implements LocalQuickFix {
     private final String myId;
 
-    public XmlDeclareIdInCommentAction(@Nonnull String id) {
+    public XmlDeclareIdInCommentAction(String id) {
         myId = id;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getName() {
         return XmlErrorLocalize.declareIdInCommentQuickfix();
@@ -54,7 +52,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
 
     @Nullable
     @RequiredReadAction
-    public static String getImplicitlyDeclaredId(@Nonnull PsiComment comment) {
+    public static String getImplicitlyDeclaredId(PsiComment comment) {
         String text = getUncommentedText(comment);
         if (text == null) {
             return null;
@@ -70,7 +68,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
 
     @Nullable
     @RequiredReadAction
-    private static String getUncommentedText(@Nonnull PsiComment comment) {
+    private static String getUncommentedText(PsiComment comment) {
         PsiFile psiFile = comment.getContainingFile();
         Language language = psiFile.getViewProvider().getBaseLanguage();
         Commenter commenter = Commenter.forLanguage(language);
@@ -92,7 +90,7 @@ public class XmlDeclareIdInCommentAction implements LocalQuickFix {
 
     @Override
     @RequiredUIAccess
-    public void applyFix(@Nonnull final Project project, @Nonnull ProblemDescriptor descriptor) {
+    public void applyFix(final Project project, ProblemDescriptor descriptor) {
         final PsiElement psiElement = descriptor.getPsiElement();
         final PsiFile psiFile = psiElement.getContainingFile();
 

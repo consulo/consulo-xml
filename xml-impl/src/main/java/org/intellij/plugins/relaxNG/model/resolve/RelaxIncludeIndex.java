@@ -26,7 +26,6 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomManager;
-import jakarta.annotation.Nonnull;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 
@@ -46,7 +45,7 @@ public class RelaxIncludeIndex {
     return processRelatedFiles(file, files, processor);
   }
 
-  public static boolean processBackwardDependencies(@Nonnull XmlFile file, PsiElementProcessor<XmlFile> processor) {
+  public static boolean processBackwardDependencies(XmlFile file, PsiElementProcessor<XmlFile> processor) {
     VirtualFile virtualFile = file.getVirtualFile();
     if (virtualFile == null) {
       return processor.execute(file);

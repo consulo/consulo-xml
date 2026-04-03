@@ -1,6 +1,5 @@
 package consulo.xml.dom;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -8,9 +7,7 @@ import jakarta.annotation.Nonnull;
  */
 public interface ImplementationProvider<Base, Impl extends Base>
 {
-	@Nonnull
 	Class<Base> getInterfaceClass();
 
-	@Nonnull
 	Class<Impl> getImplementationClass();
 }

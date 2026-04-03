@@ -23,7 +23,6 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -37,7 +36,6 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the value of the type child.
    */
-  @Nonnull
   @Required
   GenericAttributeValue<String> getType();
 
@@ -46,7 +44,6 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of param children.
    */
-  @Nonnull
   List<RngParam> getParams();
 
   /**
@@ -62,6 +59,5 @@ public interface RngData extends RngDomElement, Pattern<XmlElement> {
    *
    * @return the list of except children.
    */
-  @Nonnull
   RngExcept getExcept();
 }

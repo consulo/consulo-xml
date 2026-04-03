@@ -12,9 +12,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.*;
 import consulo.xml.util.xml.stubs.FileStub;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -41,7 +39,6 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
       return null;
     }
 
-    @Nonnull
     public List<? extends CustomDomChildrenDescription> getCustomNameChildrenDescription() {
       return Collections.emptyList();
     }
@@ -51,22 +48,18 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
       return null;
     }
 
-    @Nonnull
     public List<DomChildrenDescription> getChildrenDescriptions() {
       return Collections.emptyList();
     }
 
-    @Nonnull
     public List<DomFixedChildDescription> getFixedChildrenDescriptions() {
       return Collections.emptyList();
     }
 
-    @Nonnull
     public List<DomCollectionChildDescription> getCollectionChildrenDescriptions() {
       return Collections.emptyList();
     }
 
-    @Nonnull
     public List<DomAttributeChildDescription> getAttributeChildrenDescriptions() {
       return Collections.emptyList();
     }
@@ -81,7 +74,7 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     }
 
     @Nullable
-    public DomFixedChildDescription getFixedChildDescription(@NonNls String tagName, @NonNls String namespace) {
+    public DomFixedChildDescription getFixedChildDescription(String tagName, String namespace) {
       return null;
     }
 
@@ -91,7 +84,7 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     }
 
     @Nullable
-    public DomCollectionChildDescription getCollectionChildDescription(@NonNls String tagName, @NonNls String namespace) {
+    public DomCollectionChildDescription getCollectionChildDescription(String tagName, String namespace) {
       return null;
     }
 
@@ -100,7 +93,7 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     }
 
     @Nullable
-    public DomAttributeChildDescription getAttributeChildDescription(@NonNls String attributeName, @NonNls String namespace) {
+    public DomAttributeChildDescription getAttributeChildDescription(String attributeName, String namespace) {
       return null;
     }
 
@@ -128,12 +121,10 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
                                                  stub == null ? null : stub.getRootTagStub());
   }
 
-  @Nonnull
   public final XmlFile getFile() {
     return myFile;
   }
 
-  @Nonnull
   public XmlFile getOriginalFile() {
     return (XmlFile)myFile.getOriginalFile();
   }
@@ -179,7 +170,6 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return result;
   }
 
-  @Nonnull
   public final DomManagerImpl getManager() {
     return myManager;
   }
@@ -188,7 +178,6 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return getClass();
   }
 
-  @Nonnull
   public AbstractDomChildrenDescription getChildDescription() {
     throw new UnsupportedOperationException("Method getChildDescription is not yet implemented in " + getClass().getName());
   }
@@ -197,15 +186,14 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return getRootHandler().getNameStrategy();
   }
 
-  @Nonnull
   public ElementPresentation getPresentation() {
     return new ElementPresentation() {
 
-      public @NonNls String getElementName() {
+      public String getElementName() {
         return "<ROOT>";
       }
 
-      public @NonNls String getTypeName() {
+      public String getTypeName() {
         return "<ROOT>";
       }
 
@@ -245,18 +233,15 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     });
   }
 
-  @Nonnull
   public String getXmlElementNamespace() {
     return "";
   }
 
   @Nullable
-  @NonNls
   public String getXmlElementNamespaceKey() {
     return null;
   }
 
-  @Nonnull
   public final T getRootElement() {
     if (!isValid()) {
       if (!myFile.isValid()) {
@@ -275,22 +260,19 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return (T)getRootHandler().getProxy();
   }
 
-  @Nonnull
   public Class<T> getRootElementClass() {
     return myRootElementClass;
   }
 
-  @Nonnull
   public DomFileDescription<T> getFileDescription() {
     return myFileDescription;
   }
 
-  @Nonnull
   protected final DomRootInvocationHandler getRootHandler() {
     return myRootHandler;
   }
 
-  public @NonNls String toString() {
+  public String toString() {
     return "File " + myFile.toString();
   }
 
@@ -302,7 +284,6 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return null;
   }
 
-  @Nonnull
   public <T extends DomElement> DomFileElementImpl<T> getRoot() {
     return (DomFileElementImpl<T>)this;
   }
@@ -348,12 +329,10 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     return null;
   }
 
-  @Nonnull
   public final DomGenericInfo getGenericInfo() {
     return EMPTY_DOM_GENERIC_INFO;
   }
 
-  @Nonnull
   public String getXmlElementName() {
     return "";
   }
@@ -366,11 +345,11 @@ public class DomFileElementImpl<T extends DomElement> implements DomFileElement<
     getRootElement().accept(visitor);
   }
 
-  public <T> T getUserData(@Nonnull Key<T> key) {
+  public <T> T getUserData(Key<T> key) {
     return (T)myUserData.get(key);
   }
 
-  public <T> void putUserData(@Nonnull Key<T> key, T value) {
+  public <T> void putUserData(Key<T> key, T value) {
     myUserData.put(key, value);
   }
 

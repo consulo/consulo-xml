@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -12,7 +11,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlParameterInfoHandler extends XmlBasedParameterInfoHandler {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

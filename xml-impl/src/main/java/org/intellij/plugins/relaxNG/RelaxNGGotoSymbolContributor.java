@@ -41,8 +41,7 @@ import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.model.resolve.GrammarFactory;
 import org.intellij.plugins.relaxNG.model.resolve.RelaxSymbolIndex;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 
 /**
@@ -52,14 +51,14 @@ import java.util.Collections;
 @ExtensionImpl
 public class RelaxNGGotoSymbolContributor implements GotoSymbolContributor {
   @Override
-  public void processNames(@Nonnull Processor<String> processor, @Nonnull SearchScope scope, @Nullable IdFilter filter) {
+  public void processNames(Processor<String> processor, SearchScope scope, @Nullable IdFilter filter) {
     FileBasedIndex.getInstance().processAllKeys(RelaxSymbolIndex.NAME, processor, scope, filter);
   }
 
   @Override
-  public void processElementsWithName(@Nonnull String name,
-                                      @Nonnull Processor<NavigationItem> processor,
-                                      @Nonnull FindSymbolParameters parameters) {
+  public void processElementsWithName(String name,
+                                      Processor<NavigationItem> processor,
+                                      FindSymbolParameters parameters) {
     boolean[] result = {true};
     PsiManager psiManager = PsiManager.getInstance(parameters.getProject());
     FileBasedIndex.getInstance().getFilesWithKey(
@@ -92,7 +91,6 @@ public class RelaxNGGotoSymbolContributor implements GotoSymbolContributor {
         return metaData.getName();
       }
 
-      @Nonnull
       @Override
       public String getLocationString() {
         return MyNavigationItem.getLocationString(item);
@@ -118,7 +116,7 @@ public class RelaxNGGotoSymbolContributor implements GotoSymbolContributor {
     final NavigationItem myItem;
     final ItemPresentation myPresentation;
 
-    private MyNavigationItem(NavigationItem item, @Nonnull final ItemPresentation presentation) {
+    private MyNavigationItem(NavigationItem item, final ItemPresentation presentation) {
       myItem = item;
       myPresentation = presentation;
     }

@@ -28,7 +28,6 @@ import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,12 +39,10 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
   public static final String ACTION_ID = "HTML5_OUTLINE_MODE";
   public static final String HTML5_OUTLINE_PROVIDER_PROPERTY = "html5.sections.node.provider";
 
-  @Nonnull
   public String getName() {
     return ACTION_ID;
   }
 
-  @Nonnull
   public ActionPresentation getPresentation() {
     return new ActionPresentationData(XmlLocalize.html5OutlineMode().get(), null, XmlIconGroup.html5());
   }
@@ -58,7 +55,6 @@ public class Html5SectionsNodeProvider implements FileStructureNodeProvider<Html
     return KeymapManager.getInstance().getActiveKeymap().getShortcuts("FileStructurePopup");
   }
 
-  @Nonnull
   public String getSerializePropertyName() {
     return HTML5_OUTLINE_PROVIDER_PROPERTY;
   }

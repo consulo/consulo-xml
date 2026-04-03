@@ -32,14 +32,12 @@ import consulo.project.Project;
 import consulo.util.lang.ref.SimpleReference;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlAuto", order = "after xmlGt")
 public class XmlAutoPopupHandler extends TypedHandlerDelegate {
-    @Nonnull
     @Override
     @RequiredReadAction
-    public Result checkAutoPopup(char charTyped, @Nonnull Project project, @Nonnull Editor editor, PsiFile file) {
+    public Result checkAutoPopup(char charTyped, Project project, Editor editor, PsiFile file) {
         boolean isXmlLikeFile = file.getLanguage() instanceof XMLLanguage
             || file.getViewProvider().getBaseLanguage() instanceof XMLLanguage;
         boolean spaceInTag = isXmlLikeFile && charTyped == ' ';

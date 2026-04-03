@@ -20,7 +20,6 @@ import org.intellij.plugins.relaxNG.compact.RncTokenTypes;
 import org.intellij.plugins.relaxNG.compact.psi.RncElementVisitor;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.RncPattern;
-import jakarta.annotation.Nonnull;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
@@ -35,7 +34,7 @@ public class RncGrammarImpl extends RncElementImpl implements RncGrammar {
   }
 
   @Override
-  public void accept(@Nonnull RncElementVisitor visitor) {
+  public void accept(RncElementVisitor visitor) {
     visitor.visitGrammar(this);
   }
 
@@ -51,7 +50,7 @@ public class RncGrammarImpl extends RncElementImpl implements RncGrammar {
   }
 
   @Override
-  public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
+  public PsiElement add(PsiElement psiElement) throws IncorrectOperationException {
     final PsiElement rbrace = findChildByType(RncTokenTypes.RBRACE);
     // TODO: fix block psi
     if (rbrace != null) {

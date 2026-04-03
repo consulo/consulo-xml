@@ -16,7 +16,6 @@
 package consulo.xml.psi.tree.xml;
 
 import consulo.language.ast.IElementType;
-import org.jetbrains.annotations.NonNls;
 import consulo.xml.lang.dtd.DTDLanguage;
 
 /**
@@ -24,7 +23,7 @@ import consulo.xml.lang.dtd.DTDLanguage;
  */
 public class IDTDElementType extends IElementType
 {
-	public IDTDElementType(@NonNls String debugName)
+	public IDTDElementType(String debugName)
 	{
 		super(debugName, DTDLanguage.INSTANCE);
 	}

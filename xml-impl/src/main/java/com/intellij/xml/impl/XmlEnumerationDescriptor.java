@@ -1,7 +1,6 @@
 package com.intellij.xml.impl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
@@ -39,7 +38,7 @@ public abstract class XmlEnumerationDescriptor<T extends XmlElement> {
 
     protected abstract PsiElement getDefaultValueDeclaration();
 
-    public PsiReference[] getValueReferences(T element, @Nonnull String text) {
+    public PsiReference[] getValueReferences(T element, String text) {
         return new PsiReference[]{new XmlEnumeratedValueReference(element, this)};
     }
 }

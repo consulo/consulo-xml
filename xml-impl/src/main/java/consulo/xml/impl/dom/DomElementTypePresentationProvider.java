@@ -8,8 +8,7 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ElementPresentationManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -18,7 +17,6 @@ import jakarta.annotation.Nullable;
 @ExtensionImpl
 public class DomElementTypePresentationProvider extends TypePresentationProvider<DomElement>
 {
-	@Nonnull
 	@Override
 	public Class<DomElement> getItemClass()
 	{

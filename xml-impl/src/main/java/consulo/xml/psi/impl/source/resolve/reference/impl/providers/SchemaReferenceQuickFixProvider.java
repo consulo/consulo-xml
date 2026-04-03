@@ -20,7 +20,6 @@ import consulo.language.editor.intention.QuickFixActionRegistrar;
 import consulo.language.editor.intention.UnresolvedReferenceQuickFixProvider;
 import consulo.localize.LocalizeValue;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 import java.util.function.Function;
 
@@ -30,7 +29,7 @@ import java.util.function.Function;
 @ExtensionImpl
 public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFixProvider<TypeOrElementOrAttributeReference> {
     @Override
-    public void registerFixes(@Nonnull TypeOrElementOrAttributeReference ref, @Nonnull QuickFixActionRegistrar registrar) {
+    public void registerFixes(TypeOrElementOrAttributeReference ref, QuickFixActionRegistrar registrar) {
         if (ref.getType() == TypeOrElementOrAttributeReference.ReferenceType.TypeReference) {
             registrar.register(new CreateXmlElementIntentionAction(
                 XmlLocalize::xmlSchemaCreateComplexTypeIntentionName,
@@ -69,7 +68,6 @@ public class SchemaReferenceQuickFixProvider extends UnresolvedReferenceQuickFix
         }
     }
 
-    @Nonnull
     @Override
     public Class<TypeOrElementOrAttributeReference> getReferenceClass() {
         return TypeOrElementOrAttributeReference.class;

@@ -36,10 +36,8 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
@@ -50,7 +48,6 @@ import java.awt.*;
 
 public class DomModelTreeView extends Wrapper implements DataProvider, Disposable {
   public static final Key<DomModelTreeView> DATA_KEY = Key.create("DOM_MODEL_TREE_VIEW_KEY");
-  @NonNls
   public static String DOM_MODEL_TREE_VIEW_POPUP = "DOM_MODEL_TREE_VIEW_POPUP";
 
   private final SimpleTree myTree;
@@ -59,7 +56,7 @@ public class DomModelTreeView extends Wrapper implements DataProvider, Disposabl
   @Nullable
   private DomElement myRootElement;
 
-  public DomModelTreeView(@Nonnull DomElement rootElement) {
+  public DomModelTreeView(DomElement rootElement) {
     this(rootElement, rootElement.getManager(), new DomModelTreeStructure(rootElement));
   }
 
@@ -184,7 +181,7 @@ public class DomModelTreeView extends Wrapper implements DataProvider, Disposabl
 
   @Override
   @Nullable
-  public Object getData(@Nonnull Key<?> dataId) {
+  public Object getData(Key<?> dataId) {
     if (DomModelTreeView.DATA_KEY == dataId) {
       return this;
     }

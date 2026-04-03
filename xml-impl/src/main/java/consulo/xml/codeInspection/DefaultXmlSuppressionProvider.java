@@ -30,10 +30,8 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
@@ -44,18 +42,18 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
   public static final String SUPPRESS_MARK = "suppress";
 
   @Override
-  public boolean isProviderAvailable(@Nonnull PsiFile file) {
+  public boolean isProviderAvailable(PsiFile file) {
     return true;
   }
 
   @Override
-  public boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId) {
+  public boolean isSuppressedFor(PsiElement element, String inspectionId) {
     final XmlTag tag = element instanceof XmlFile ? ((XmlFile) element).getRootTag() : PsiTreeUtil.getContextOfType(element, XmlTag.class, false);
     return tag != null && findSuppression(tag, inspectionId, element) != null;
   }
 
   @Override
-  public void suppressForFile(@Nonnull PsiElement element, @Nonnull String inspectionId) {
+  public void suppressForFile(PsiElement element, String inspectionId) {
     final PsiFile file = element.getContainingFile();
     final XmlDocument document = ((XmlFile) file).getDocument();
     final PsiElement anchor = document != null ? document.getRootTag() : file.findElementAt(0);
@@ -64,7 +62,7 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
   }
 
   @Override
-  public void suppressForTag(@Nonnull PsiElement element, @Nonnull String inspectionId) {
+  public void suppressForTag(PsiElement element, String inspectionId) {
     final XmlTag tag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
     assert tag != null;
     suppress(element.getContainingFile(), findSuppressionLeaf(tag, null, 0), inspectionId, tag.getTextRange().getStartOffset());
@@ -94,7 +92,7 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
   protected PsiElement findSuppressionLeaf(PsiElement leaf, @Nullable final String id, int offset) {
     while (leaf != null && leaf.getTextOffset() >= offset) {
       if (leaf instanceof PsiComment || leaf instanceof XmlProlog || leaf instanceof XmlText) {
-        @NonNls String text = leaf.getText();
+        String text = leaf.getText();
         if (isSuppressedFor(text, id)) return leaf;
       }
       leaf = leaf.getPrevSibling();
@@ -105,14 +103,14 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
     return null;
   }
 
-  private boolean isSuppressedFor(@NonNls final String text, @Nullable final String id) {
+  private boolean isSuppressedFor(final String text, @Nullable final String id) {
     if (!text.contains(getPrefix())) {
       return false;
     }
     if (id == null) {
       return true;
     }
-    @NonNls final String[] parts = text.split("[ ,]");
+    final String[] parts = text.split("[ ,]");
     return ArrayUtil.find(parts, id) != -1 || ArrayUtil.find(parts, XmlSuppressableInspectionTool.ALL) != -1;
   }
 
@@ -147,14 +145,12 @@ public class DefaultXmlSuppressionProvider extends XmlSuppressionProvider {
     return originalText.replace(getSuffix(), ", " + inspectionId + getSuffix());
   }
 
-  @NonNls
   protected String getPrefix() {
     return "<!--" +
         SUPPRESS_MARK +
         " ";
   }
 
-  @NonNls
   protected String getSuffix() {
     return " -->\n";
   }

@@ -27,8 +27,7 @@ import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -44,7 +43,6 @@ public abstract class AbstractConvertContext extends ConvertContext {
     return getInvocationElement().getXmlElement();
   }
 
-  @Nonnull
   public final XmlFile getFile() {
     return DomUtil.getFile(getInvocationElement());
   }
@@ -89,7 +87,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
     return scope; // ??? scope == null ? GlobalSearchScope.allScope(getProject()) : scope; ???
   }
 
-  public static GlobalSearchScope getSearchScope(@Nonnull ConvertContext context) {
+  public static GlobalSearchScope getSearchScope(ConvertContext context) {
     consulo.module.Module[] modules = getConvertContextModules(context);
     if (modules.length == 0) return null;
 
@@ -114,8 +112,7 @@ public abstract class AbstractConvertContext extends ConvertContext {
   }
 
 
-  @Nonnull
-  private static Module[] getConvertContextModules(@Nonnull ConvertContext context) {
+  private static Module[] getConvertContextModules(ConvertContext context) {
     consulo.module.Module[] modules = ModuleContextProvider.getModules(context.getFile());
     if (modules.length > 0) return modules;
 

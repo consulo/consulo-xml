@@ -33,8 +33,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -46,7 +45,7 @@ public class XmlInstanceValidator {
   private XmlInstanceValidator() {
   }
 
-  public static void doValidation(@Nonnull final XmlDocument doc, final Validator.ValidationHost host, final XmlFile descriptorFile) {
+  public static void doValidation(final XmlDocument doc, final Validator.ValidationHost host, final XmlFile descriptorFile) {
     try {
       final Schema schema = RngParser.getCachedSchema(descriptorFile);
       if (schema == null) {

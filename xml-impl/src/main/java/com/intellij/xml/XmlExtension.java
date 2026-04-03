@@ -35,8 +35,7 @@ import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ import java.util.List;
 public abstract class XmlExtension {
     public static final ExtensionPointName<XmlExtension> EP_NAME = ExtensionPointName.create(XmlExtension.class);
 
-    public static XmlExtension getExtension(@Nonnull final PsiFile file) {
+    public static XmlExtension getExtension(final PsiFile file) {
         return LanguageCachedValueUtil.getCachedValue(
             file,
             () -> CachedValueProvider.Result.create(calcExtension(file), PsiModificationTracker.MODIFICATION_COUNT)
@@ -88,8 +87,7 @@ public abstract class XmlExtension {
         }
     }
 
-    @Nonnull
-    public abstract List<TagInfo> getAvailableTagNames(@Nonnull final XmlFile file, @Nonnull final XmlTag context);
+    public abstract List<TagInfo> getAvailableTagNames(final XmlFile file, final XmlTag context);
 
     @Nullable
     public TagNameReference createTagNameReference(final ASTNode nameElement, final boolean startTagFlag) {
@@ -172,7 +170,7 @@ public abstract class XmlExtension {
         return true;
     }
 
-    public boolean isSingleTagException(@Nonnull XmlTag tag) {
+    public boolean isSingleTagException(XmlTag tag) {
         return false;
     }
 

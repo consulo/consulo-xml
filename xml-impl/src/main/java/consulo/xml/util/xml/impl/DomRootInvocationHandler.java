@@ -12,10 +12,8 @@ import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomNameStrategy;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.stubs.ElementStub;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
@@ -28,13 +26,12 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
 
   public DomRootInvocationHandler(final Class aClass,
                                   final RootDomParentStrategy strategy,
-                                  @Nonnull final DomFileElementImpl fileElement,
-                                  @Nonnull final EvaluatedXmlName tagName,
+                                  final DomFileElementImpl fileElement,
+                                  final EvaluatedXmlName tagName,
                                   @Nullable ElementStub stub
   ) {
     super(aClass, strategy, tagName, new AbstractDomChildDescriptionImpl(aClass) {
-      @Nonnull
-      public List<? extends DomElement> getValues(@Nonnull final DomElement parent) {
+      public List<? extends DomElement> getValues(final DomElement parent) {
         throw new UnsupportedOperationException();
       }
 
@@ -70,7 +67,6 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return myParent.hashCode();
   }
 
-  @Nonnull
   public String getXmlElementNamespace() {
     return getXmlName().getNamespace(getFile(), getFile());
   }
@@ -90,7 +86,6 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return null;
   }
 
-  @Nonnull
   public DomFileElementImpl getParent() {
     return myParent;
   }
@@ -106,7 +101,7 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
       public void run() {
         try {
           final String namespace = getXmlElementNamespace();
-          @NonNls final String nsDecl = StringUtil.isEmpty(namespace) ? "" : " xmlns=\"" + namespace + "\"";
+          final String nsDecl = StringUtil.isEmpty(namespace) ? "" : " xmlns=\"" + namespace + "\"";
           final XmlFile xmlFile = getFile();
           final XmlTag tag = XmlElementFactory.getInstance(xmlFile.getProject()).createTagFromText("<" + getXmlElementName() + nsDecl + "/>");
           result[0] = ((XmlDocument)xmlFile.getDocument().replace(((XmlFile)tag.getContainingFile()).getDocument())).getRootTag();
@@ -119,7 +114,6 @@ public class DomRootInvocationHandler extends DomInvocationHandler<AbstractDomCh
     return result[0];
   }
 
-  @Nonnull
   public final DomNameStrategy getNameStrategy() {
     final Class<?> rawType = getRawType();
     final DomNameStrategy strategy = DomImplUtil.getDomNameStrategy(rawType, isAttribute());

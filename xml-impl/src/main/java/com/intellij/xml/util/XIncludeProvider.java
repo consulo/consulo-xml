@@ -26,7 +26,6 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -35,7 +34,6 @@ import java.util.function.Consumer;
  */
 @ExtensionImpl
 public class XIncludeProvider extends FileIncludeProvider {
-    @Nonnull
     @Override
     public String getId() {
         return "XInclude";
@@ -47,11 +45,10 @@ public class XIncludeProvider extends FileIncludeProvider {
     }
 
     @Override
-    public void registerFileTypesUsedForIndexing(@Nonnull Consumer<FileType> fileTypeSink) {
+    public void registerFileTypesUsedForIndexing(Consumer<FileType> fileTypeSink) {
         fileTypeSink.accept(XmlFileType.INSTANCE);
     }
 
-    @Nonnull
     @Override
     public FileIncludeInfo[] getIncludeInfos(FileContent content) {
         CharSequence contentAsText = content.getContentAsText();

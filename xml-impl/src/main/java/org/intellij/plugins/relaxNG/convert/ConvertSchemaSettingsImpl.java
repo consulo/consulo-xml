@@ -34,7 +34,6 @@ import consulo.virtualFileSystem.encoding.EncodingProjectManager;
 import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.event.ItemEvent;
@@ -74,7 +73,7 @@ public class ConvertSchemaSettingsImpl implements ConvertSchemaSettings {
 
   private TextFieldWithBrowseButton myOutputDestination;
 
-  public ConvertSchemaSettingsImpl(Project project, @Nonnull SchemaType inputType, VirtualFile firstFile) {
+  public ConvertSchemaSettingsImpl(Project project, SchemaType inputType, VirtualFile firstFile) {
     myProject = project;
     myInputType = inputType;
     
@@ -167,7 +166,6 @@ public class ConvertSchemaSettingsImpl implements ConvertSchemaSettings {
   }
 
   @Override
-  @Nonnull
   public SchemaType getOutputType() {
     if (myOutputRng.isSelected()) {
       return SchemaType.RNG;

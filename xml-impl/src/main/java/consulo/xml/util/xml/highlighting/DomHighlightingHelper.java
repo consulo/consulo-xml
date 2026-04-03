@@ -19,7 +19,6 @@ import consulo.util.collection.SmartList;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 
-import jakarta.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
@@ -28,13 +27,10 @@ import java.util.List;
  * @author peter
  */
 public abstract class DomHighlightingHelper {
-  @Nonnull
   public abstract List<DomElementProblemDescriptor> checkRequired(DomElement element, DomElementAnnotationHolder holder);
 
-  @Nonnull
   public abstract List<DomElementProblemDescriptor> checkResolveProblems(GenericDomValue element, DomElementAnnotationHolder holder);
 
-  @Nonnull
   public abstract List<DomElementProblemDescriptor> checkNameIdentity(DomElement element, DomElementAnnotationHolder holder);
 
   public abstract void runAnnotators(DomElement element, DomElementAnnotationHolder holder, Class<? extends DomElement> rootClass);
@@ -46,7 +42,6 @@ public abstract class DomHighlightingHelper {
    * @param holder Holder instance.
    * @return Collected problem descriptors. 
    */
-  @Nonnull
   public List<DomElementProblemDescriptor> checkCustomAnnotations(final DomElement element, final DomElementAnnotationHolder holder) {
     List<DomElementProblemDescriptor> result = null;
     for (final DomCustomAnnotationChecker<?> checker : DomCustomAnnotationChecker.EP_NAME.getExtensionList()) {

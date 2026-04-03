@@ -17,13 +17,11 @@ package com.intellij.xml.util;
 
 import java.util.Map;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.logging.Logger;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.XmlTagValueImpl;
@@ -41,7 +39,7 @@ import com.intellij.xml.XmlNSDescriptor;
 public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag {
     private static final Logger LOG = Logger.getInstance("#IncludedXmlTag");
 
-    public IncludedXmlTag(@Nonnull XmlTag original, @Nullable PsiElement parent) {
+    public IncludedXmlTag(XmlTag original, @Nullable PsiElement parent) {
         super(original, parent);
     }
 
@@ -52,20 +50,16 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
-    @NonNls
     public String getName() {
         return getOriginal().getName();
     }
 
     @Override
-    public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
+    public PsiElement setName(String name) throws IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included tags");
     }
 
     @Override
-    @Nonnull
-    @NonNls
     public String getNamespace() {
         XmlTag original = getOriginal();
         LOG.assertTrue(original.isValid());
@@ -73,8 +67,6 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
-    @NonNls
     public String getLocalName() {
         return getOriginal().getLocalName();
     }
@@ -86,7 +78,6 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
     public XmlAttribute[] getAttributes() {
         XmlAttribute[] original = getOriginal().getAttributes();
         XmlAttribute[] attributes = new XmlAttribute[original.length];
@@ -99,46 +90,46 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 
     @Override
     @Nullable
-    public XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace) {
+    public XmlAttribute getAttribute(String name, String namespace) {
         XmlAttribute attribute = getOriginal().getAttribute(name, namespace);
         return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
     }
 
     @Override
     @Nullable
-    public XmlAttribute getAttribute(@NonNls String qname) {
+    public XmlAttribute getAttribute(String qname) {
         XmlAttribute attribute = getOriginal().getAttribute(qname);
         return attribute == null ? null : new IncludedXmlAttribute(attribute, this);
     }
 
     @Override
     @Nullable
-    public String getAttributeValue(@NonNls String name, @NonNls String namespace) {
+    public String getAttributeValue(String name, String namespace) {
         return getOriginal().getAttributeValue(name, namespace);
     }
 
     @Override
     @Nullable
-    public String getAttributeValue(@NonNls String qname) {
+    public String getAttributeValue(String qname) {
         return getOriginal().getAttributeValue(qname);
     }
 
     @Override
-    public XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value)
+    public XmlAttribute setAttribute(String name, String namespace, String value)
         throws IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included tags");
     }
 
     @Override
-    public XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException {
+    public XmlAttribute setAttribute(String qname, String value) throws IncorrectOperationException {
         throw new UnsupportedOperationException("Can't modify included tags");
     }
 
     @Override
     public XmlTag createChildTag(
-        @NonNls String localName,
-        @NonNls String namespace,
-        @Nullable @NonNls String bodyText,
+        String localName,
+        String namespace,
+        @Nullable String bodyText,
         boolean enforceNamespacesDeep
     ) {
         return getOriginal().createChildTag(localName, namespace, bodyText, enforceNamespacesDeep);
@@ -150,7 +141,6 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
     public XmlTag[] getSubTags() {
         return wrapTags(getOriginal().getSubTags());
     }
@@ -164,41 +154,35 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
-    public XmlTag[] findSubTags(@NonNls String qname) {
+    public XmlTag[] findSubTags(String qname) {
         return wrapTags(getOriginal().findSubTags(qname));
     }
 
     @Override
-    @Nonnull
-    public XmlTag[] findSubTags(@NonNls String localName, @NonNls String namespace) {
+    public XmlTag[] findSubTags(String localName, String namespace) {
         return wrapTags(getOriginal().findSubTags(localName, namespace));
     }
 
     @Override
     @Nullable
-    public XmlTag findFirstSubTag(@NonNls String qname) {
+    public XmlTag findFirstSubTag(String qname) {
         XmlTag tag = getOriginal().findFirstSubTag(qname);
         return tag == null ? null : new IncludedXmlTag(tag, this);
     }
 
     @Override
-    @Nonnull
-    @NonNls
     public String getNamespacePrefix() {
         return getOriginal().getNamespacePrefix();
     }
 
     @Override
-    @Nonnull
-    @NonNls
-    public String getNamespaceByPrefix(@NonNls String prefix) {
+    public String getNamespaceByPrefix(String prefix) {
         return getOriginal().getNamespaceByPrefix(prefix);
     }
 
     @Override
     @Nullable
-    public String getPrefixByNamespace(@NonNls String namespace) {
+    public String getPrefixByNamespace(String namespace) {
         return getOriginal().getPrefixByNamespace(namespace);
     }
 
@@ -213,20 +197,18 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
     }
 
     @Override
-    @Nonnull
     public Map<String, String> getLocalNamespaceDeclarations() {
         return getOriginal().getLocalNamespaceDeclarations();
     }
 
     @Override
-    @Nonnull
     public XmlTagValue getValue() {
         return XmlTagValueImpl.createXmlTagValue(this);
     }
 
     @Override
     @Nullable
-    public XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict) {
+    public XmlNSDescriptor getNSDescriptor(String namespace, boolean strict) {
         return getOriginal().getNSDescriptor(namespace, strict);
     }
 
@@ -242,8 +224,7 @@ public class IncludedXmlTag extends IncludedXmlElement<XmlTag> implements XmlTag
 
     @Override
     @Nullable
-    @NonNls
-    public String getSubTagText(@NonNls String qname) {
+    public String getSubTagText(String qname) {
         return getOriginal().getSubTagText(qname);
     }
 

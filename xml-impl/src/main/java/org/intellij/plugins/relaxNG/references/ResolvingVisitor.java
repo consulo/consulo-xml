@@ -29,8 +29,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -119,7 +118,7 @@ class ResolvingVisitor extends XmlElementVisitor implements PsiElementProcessor 
   }
 
   @Override
-  public boolean execute(@Nonnull PsiElement element) {
+  public boolean execute(PsiElement element) {
     element.accept(this);
     return shouldContinue();
   }

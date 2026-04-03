@@ -25,10 +25,8 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.Validator;
 import consulo.xml.psi.xml.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,11 +42,8 @@ public class XmlElementDescriptorImpl extends XsdEnumerationDescriptor<XmlTag>
     @Nullable
     Validator<XmlTag> myValidator;
 
-    @NonNls
     public static final String QUALIFIED_ATTR_VALUE = "qualified";
-    @NonNls
     public static final String NONQUALIFIED_ATTR_VALUE = "unqualified";
-    @NonNls
     private static final String ELEMENT_FORM_DEFAULT = "elementFormDefault";
 
     public XmlElementDescriptorImpl(@Nullable XmlTag descriptorTag) {
@@ -546,7 +541,7 @@ public class XmlElementDescriptorImpl extends XsdEnumerationDescriptor<XmlTag>
     }
 
     @Override
-    public void validate(@Nonnull XmlTag context, @Nonnull ValidationHost host) {
+    public void validate(XmlTag context, ValidationHost host) {
         Validator<XmlTag> validator = myValidator;
         if (validator != null) {
             validator.validate(context, host);
@@ -554,7 +549,7 @@ public class XmlElementDescriptorImpl extends XsdEnumerationDescriptor<XmlTag>
     }
 
     @Override
-    public PsiReference[] getValueReferences(XmlTag xmlTag, @Nonnull String text) {
+    public PsiReference[] getValueReferences(XmlTag xmlTag, String text) {
         XmlTagValue value = xmlTag.getValue();
         XmlText[] elements = value.getTextElements();
         if (elements.length == 0 || xmlTag.getSubTags().length > 0) {

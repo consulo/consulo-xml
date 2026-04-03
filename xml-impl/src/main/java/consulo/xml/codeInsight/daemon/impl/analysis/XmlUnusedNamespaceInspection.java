@@ -45,8 +45,7 @@ import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -61,9 +60,8 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         return XMLLanguage.INSTANCE;
     }
 
-    @Nonnull
     @Override
-    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, boolean isOnTheFly) {
+    public PsiElementVisitor buildVisitor(final ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
             @RequiredReadAction
@@ -252,7 +250,6 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         return reference.getRangeInElement().substring(reference.getElement().getText());
     }
 
-    @Nonnull
     @Override
     public HighlightDisplayLevel getDefaultLevel() {
         return HighlightDisplayLevel.WARNING;
@@ -263,19 +260,16 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
         return true;
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
         return XmlLocalize.xmlInspectionsGroupName();
     }
 
-    @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
         return XmlLocalize.xmlInspectionsUnusedSchema();
     }
 
-    @Nonnull
     @Override
     public String getShortName() {
         return "XmlUnusedNamespaceDeclaration";
@@ -290,7 +284,6 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
             myLocationFix = locationFix;
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.xmlInspectionsUnusedSchemaDeclarationRemove();
@@ -298,7 +291,7 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
 
         @Override
         @RequiredWriteAction
-        public void applyFix(@Nonnull Project project, @Nonnull ProblemDescriptor descriptor) {
+        public void applyFix(Project project, ProblemDescriptor descriptor) {
             doFix(project, descriptor, true);
         }
 
@@ -401,7 +394,6 @@ public class XmlUnusedNamespaceInspection extends XmlSuppressableInspectionTool 
             super(namespace, true);
         }
 
-        @Nonnull
         @Override
         public LocalizeValue getName() {
             return XmlLocalize.xmlInspectionsUnusedSchemaLocationRemove();

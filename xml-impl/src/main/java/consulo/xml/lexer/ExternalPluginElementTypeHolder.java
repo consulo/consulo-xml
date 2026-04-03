@@ -12,8 +12,7 @@ import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -31,7 +30,6 @@ public class ExternalPluginElementTypeHolder
 {
 	private static PerApplicationInstance<ExternalPluginElementTypeHolder> ourInstance = PerApplicationInstance.of(ExternalPluginElementTypeHolder.class);
 
-	@Nonnull
 	public static ExternalPluginElementTypeHolder getInstance()
 	{
 		return ourInstance.get();

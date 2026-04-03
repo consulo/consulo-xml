@@ -20,9 +20,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.charset.Charset;
 
@@ -38,13 +36,12 @@ public class HtmlAttributeValueGetter extends XmlAttributeValueGetter {
   }
 
   @Nullable
-  @NonNls
   protected String[] addSpecificCompletions(final XmlAttribute attribute) {
-    @NonNls String name = attribute.getName();
+    String name = attribute.getName();
     final XmlTag tag = attribute.getParent();
     if (tag == null) return null;
 
-    @NonNls String tagName = tag.getName();
+    String tagName = tag.getName();
     if (!myCaseSensitive) {
       name = name.toLowerCase();
       tagName = tagName.toLowerCase();
@@ -97,7 +94,7 @@ public class HtmlAttributeValueGetter extends XmlAttributeValueGetter {
   }
 
   @Nullable
-  private XmlAttribute getAttribute(@Nonnull XmlTag tag, @Nonnull String attributeName) {
+  private XmlAttribute getAttribute(XmlTag tag, String attributeName) {
     if (myCaseSensitive) {
       return tag.getAttribute(attributeName);
     }

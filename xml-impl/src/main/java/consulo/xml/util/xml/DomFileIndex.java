@@ -32,7 +32,6 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.util.xml.fastReader.XmlFileHeader;
 
-import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -49,7 +48,6 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 		myDataIndexer = new DataIndexer<String, Void, FileContent>()
 		{
 			@Override
-			@Nonnull
 			public Map<String, Void> map(final FileContent inputData)
 			{
 				final Set<String> namespaces = new HashSet<String>();
@@ -86,14 +84,12 @@ public class DomFileIndex extends ScalarIndexExtension<String>
 	}
 
 	@Override
-	@Nonnull
 	public ID<String, Void> getName()
 	{
 		return NAME;
 	}
 
 	@Override
-	@Nonnull
 	public DataIndexer<String, Void, FileContent> getIndexer()
 	{
 		return myDataIndexer;

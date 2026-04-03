@@ -7,8 +7,7 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 /**
@@ -43,7 +42,6 @@ public class EnumConverter<T extends Enum> extends ResolvingConverter<T> {
     return CodeInsightLocalize.errorUnknownEnumValueMessage(s);
   }
 
-  @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
     final XmlElement element = context.getXmlElement();
     if (element instanceof XmlTag) {

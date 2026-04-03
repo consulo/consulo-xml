@@ -15,7 +15,6 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiElementVisitor;
 import consulo.xml.psi.XmlElementVisitor;
@@ -30,7 +29,7 @@ public class XmlDeclImpl extends XmlElementImpl implements XmlDecl{
     super(XmlElementType.XML_DECL);
   }
 
-  public void accept(@Nonnull PsiElementVisitor visitor) {
+  public void accept(PsiElementVisitor visitor) {
     if (visitor instanceof XmlElementVisitor) {
       ((XmlElementVisitor)visitor).visitXmlDecl(this);
     }

@@ -20,7 +20,6 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.xml.util.xml.tree.DomModelTreeView;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Sergey.Vasiliev
@@ -28,17 +27,17 @@ import jakarta.annotation.Nonnull;
 abstract public class BaseDomTreeAction extends AnAction {
     private DomModelTreeView myTreeView;
 
-    protected BaseDomTreeAction(@Nonnull LocalizeValue text) {
+    protected BaseDomTreeAction(LocalizeValue text) {
         super(text);
     }
 
-    protected BaseDomTreeAction(@Nonnull LocalizeValue text, DomModelTreeView treeView) {
+    protected BaseDomTreeAction(LocalizeValue text, DomModelTreeView treeView) {
         super(text);
         myTreeView = treeView;
     }
 
     @Override
-    final public void update(@Nonnull AnActionEvent e) {
+    final public void update(AnActionEvent e) {
         DomModelTreeView treeView = getTreeView(e);
 
         if (treeView != null) {
@@ -59,7 +58,7 @@ abstract public class BaseDomTreeAction extends AnAction {
 
     @Override
     @RequiredUIAccess
-    final public void actionPerformed(@Nonnull AnActionEvent e) {
+    final public void actionPerformed(AnActionEvent e) {
         DomModelTreeView treeView = getTreeView(e);
         if (treeView != null) {
             actionPerformed(e, treeView);

@@ -22,8 +22,7 @@ import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -35,8 +34,8 @@ public class DomStructureTreeElement implements StructureViewTreeElement, ItemPr
   private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
   private final DomElementNavigationProvider myNavigationProvider;
 
-  public DomStructureTreeElement(@Nonnull final DomElement element,
-                                 @Nonnull final Function<DomElement,DomService.StructureViewMode> descriptor,
+  public DomStructureTreeElement(final DomElement element,
+                                 final Function<DomElement,DomService.StructureViewMode> descriptor,
                                  @Nullable final DomElementNavigationProvider navigationProvider) {
     myElement = element;
     myDescriptor = descriptor;

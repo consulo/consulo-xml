@@ -18,7 +18,6 @@ package consulo.xml.util.xml;
 
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
-import jakarta.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +48,6 @@ public class GenericValueUtil {
     return false;
   }
 
-  @Nonnull
   public static <T> Collection<T> getValueCollection(final Collection<? extends GenericValue<? extends T>> collection, Collection<T> result) {
     for (GenericValue<? extends T> o : collection) {
       ContainerUtil.addIfNotNull(result, o.getValue());
@@ -57,7 +55,6 @@ public class GenericValueUtil {
     return result;
   }
 
-  @Nonnull
   public static Collection<String> getStringCollection(final Collection<? extends GenericValue> collection, Collection<String> result) {
     for (GenericValue o : collection) {
       ContainerUtil.addIfNotNull(result, o.getStringValue());
@@ -65,7 +62,6 @@ public class GenericValueUtil {
     return result;
   }
 
-  @Nonnull
   public static Collection<String> getClassStringCollection(final Collection<? extends GenericValue> collection, Collection<String> result) {
     for (GenericValue o : collection) {
       final String value = o.getStringValue();

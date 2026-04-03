@@ -15,7 +15,6 @@
  */
 package com.intellij.xml.impl.dom;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
@@ -28,9 +27,8 @@ import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.xml.NamespaceAwareXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author mike
@@ -84,7 +82,6 @@ public class DomAttributeXmlDescriptor implements NamespaceAwareXmlAttributeDesc
         return myDescription.getDeclaration(myProject);
     }
 
-    @NonNls
     public String getName(final PsiElement context) {
         return getQualifiedAttributeName(context, myDescription.getXmlName());
     }
@@ -107,7 +104,6 @@ public class DomAttributeXmlDescriptor implements NamespaceAwareXmlAttributeDesc
         return localName;
     }
 
-    @NonNls
     public String getName() {
         return getLocalName();
     }
@@ -117,7 +113,7 @@ public class DomAttributeXmlDescriptor implements NamespaceAwareXmlAttributeDesc
     }
 
     @Nullable
-    public String getNamespace(@Nonnull XmlTag context) {
+    public String getNamespace(XmlTag context) {
         final DomInvocationHandler handler = DomManagerImpl.getDomManager(myProject).getDomHandler(context);
 
         if (handler == null) {

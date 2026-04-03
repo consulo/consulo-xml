@@ -15,8 +15,7 @@
  */
 package com.intellij.html.impl;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.intellij.html.RelaxedHtmlNSDescriptor;
 import consulo.xml.psi.xml.XmlDocument;
@@ -30,7 +29,7 @@ import com.intellij.xml.util.XmlUtil;
 
 public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl implements RelaxedHtmlNSDescriptor {
     @Override
-    public XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag) {
+    public XmlElementDescriptor getElementDescriptor(XmlTag tag) {
         XmlElementDescriptor elementDescriptor = super.getElementDescriptor(tag);
 
         String namespace;
@@ -50,7 +49,6 @@ public class RelaxedHtmlFromSchemaNSDescriptor extends XmlNSDescriptorImpl imple
     }
 
     @Override
-    @Nonnull
     public XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument doc) {
         return ArrayUtil.mergeArrays(super.getRootElementsDescriptors(doc), HtmlUtil.getCustomTagDescriptors(doc));
     }

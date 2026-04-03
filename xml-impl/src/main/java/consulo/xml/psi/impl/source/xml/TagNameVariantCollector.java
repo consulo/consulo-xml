@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import consulo.util.collection.ContainerUtil;

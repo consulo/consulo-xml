@@ -23,7 +23,6 @@ import consulo.language.editor.action.QuoteHandler;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author peter
@@ -60,7 +59,6 @@ public class HtmlQuoteHandler implements FileQuoteHandler {
         return myBaseQuoteHandler.isInsideLiteral(iterator);
     }
 
-    @Nonnull
     @Override
     public FileType getFileType() {
         return HtmlFileType.INSTANCE;

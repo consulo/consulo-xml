@@ -24,9 +24,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.model.DomModel;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import org.jetbrains.annotations.NonNls;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +33,7 @@ import java.util.Set;
 
 public abstract class DomModelFactory<T extends DomElement, M extends DomModel<T>, C extends PsiElement> extends BaseDomModelFactory<Module, T, M, C> {
 
-  protected DomModelFactory(@Nonnull Class<T> aClass, final Project project, @NonNls String name) {
+  protected DomModelFactory(Class<T> aClass, final Project project, String name) {
     super(aClass, project, name);
   }
 
@@ -43,7 +41,6 @@ public abstract class DomModelFactory<T extends DomElement, M extends DomModel<T
     return file.getModule();
   }
 
-  @Nonnull
   public Set<XmlFile> getConfigFiles(@Nullable C context) {
     if (context == null) {
       return Collections.emptySet();

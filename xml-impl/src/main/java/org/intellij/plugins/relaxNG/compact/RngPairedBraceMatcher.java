@@ -5,7 +5,6 @@ import consulo.language.BracePair;
 import consulo.language.Language;
 import consulo.language.PairedBraceMatcher;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RngPairedBraceMatcher implements PairedBraceMatcher
@@ -26,7 +25,6 @@ public class RngPairedBraceMatcher implements PairedBraceMatcher
 		return myBracePairs;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

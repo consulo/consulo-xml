@@ -15,8 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
@@ -87,7 +86,6 @@ public class SchemaPrefixReference extends PsiReferenceBase<XmlElement> implemen
 	}
 
 	@Override
-	@Nonnull
 	public Object[] getVariants()
 	{
 		return ArrayUtil.EMPTY_OBJECT_ARRAY;

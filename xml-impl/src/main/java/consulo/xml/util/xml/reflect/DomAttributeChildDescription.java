@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.reflect;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericAttributeValue;

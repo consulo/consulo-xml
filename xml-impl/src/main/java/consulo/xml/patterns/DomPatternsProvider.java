@@ -2,8 +2,7 @@ package consulo.xml.patterns;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.inject.advanced.pattern.PatternClassProvider;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -19,7 +18,6 @@ public class DomPatternsProvider implements PatternClassProvider
 		return "dom";
 	}
 
-	@Nonnull
 	@Override
 	public Class<?> getPatternClass()
 	{

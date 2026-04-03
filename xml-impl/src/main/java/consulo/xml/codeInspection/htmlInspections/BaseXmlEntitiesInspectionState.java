@@ -11,8 +11,7 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.serializer.XmlSerializerUtil;
 import consulo.util.xml.serializer.annotation.Transient;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -36,12 +35,12 @@ public abstract class BaseXmlEntitiesInspectionState<E> implements InspectionToo
     myEntities = new String[0];
   }
 
-  public BaseXmlEntitiesInspectionState(@Nonnull LocalizeValue labelText) {
+  public BaseXmlEntitiesInspectionState(LocalizeValue labelText) {
     myLabelText = labelText;
     myEntities = new String[0];
   }
 
-  public BaseXmlEntitiesInspectionState(@Nonnull LocalizeValue labelText, String... defaultValues) {
+  public BaseXmlEntitiesInspectionState(LocalizeValue labelText, String... defaultValues) {
     myLabelText = labelText;
     myEntities = defaultValues;
   }

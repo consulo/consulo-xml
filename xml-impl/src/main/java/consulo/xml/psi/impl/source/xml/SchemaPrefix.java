@@ -15,8 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.impl.psi.RenameableFakePsiElement;
@@ -84,7 +83,6 @@ public class SchemaPrefix extends RenameableFakePsiElement {
     return TextRange.from(getTextOffset(), getTextLength());
   }
 
-  @Nonnull
   @Override
   public SearchScope getUseScope() {
     return XmlExtension.getExtension(getContainingFile()).getNsPrefixScope(getDeclaration());

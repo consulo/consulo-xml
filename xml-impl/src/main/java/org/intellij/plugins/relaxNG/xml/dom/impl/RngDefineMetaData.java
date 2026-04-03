@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.xml.dom.impl;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.language.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;

@@ -27,9 +27,7 @@ import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,10 +35,10 @@ import java.util.Set;
  * @author peter
  */
 public class IdReferenceProvider extends PsiReferenceProvider {
-  @NonNls public static final String FOR_ATTR_NAME = "for";
-  @NonNls public static final String ID_ATTR_NAME = "id";
-  @NonNls public static final String STYLE_ID_ATTR_NAME = "styleId";
-  @NonNls public static final String NAME_ATTR_NAME = "name";
+  public static final String FOR_ATTR_NAME = "for";
+  public static final String ID_ATTR_NAME = "id";
+  public static final String STYLE_ID_ATTR_NAME = "styleId";
+  public static final String NAME_ATTR_NAME = "name";
 
   private static final Set<String> ourNamespacesWithoutNameReference = new HashSet<String>();
   static {
@@ -77,8 +75,7 @@ public class IdReferenceProvider extends PsiReferenceProvider {
     };
   }
 
-  @Nonnull
-  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
+  public PsiReference[] getReferencesByElement(PsiElement element, final ProcessingContext context) {
     if (element instanceof XmlAttributeValue) {
       final XmlExtension extension = XmlExtension.getExtensionByElement(element);
       if (extension != null && extension.hasDynamicComponents(element)) {
@@ -126,7 +123,7 @@ public class IdReferenceProvider extends PsiReferenceProvider {
     return PsiReference.EMPTY_ARRAY;
   }
 
-  private static boolean hasOuterLanguageElement(@Nonnull PsiElement element) {
+  private static boolean hasOuterLanguageElement(PsiElement element) {
     for (PsiElement child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
       if (child instanceof OuterLanguageElement) {
         return true;

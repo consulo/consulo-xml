@@ -21,8 +21,7 @@ import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.localize.LocalizeValue;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author anna
@@ -36,7 +35,6 @@ public class RequiredAttributesInspection extends RequiredAttributesInspectionBa
     return XMLLanguage.INSTANCE;
   }
 
-  @Nonnull
   @Override
   public LocalizeValue getDisplayName() {
     return XmlLocalize.inspectionRequiredAttributesDisplayName();

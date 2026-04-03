@@ -17,8 +17,7 @@ package consulo.xml.util.xml.reflect;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.JavaMethod;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -32,9 +31,9 @@ public interface DomCollectionChildDescription extends DomChildrenDescription {
   @Nullable
   JavaMethod getGetterMethod();
 
-  DomElement addValue(@Nonnull DomElement parent);
-  DomElement addValue(@Nonnull DomElement parent, int index);
-  DomElement addValue(@Nonnull DomElement parent, Type type);
-  DomElement addValue(@Nonnull DomElement parent, Type type, int index);
+  DomElement addValue(DomElement parent);
+  DomElement addValue(DomElement parent, int index);
+  DomElement addValue(DomElement parent, Type type);
+  DomElement addValue(DomElement parent, Type type, int index);
 
 }

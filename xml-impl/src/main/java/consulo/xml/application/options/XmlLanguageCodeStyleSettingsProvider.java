@@ -24,21 +24,19 @@ import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.language.codeStyle.ui.setting.SmartIndentOptionsEditor;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Rustam Vishnyakov
  */
 @ExtensionImpl
 public class XmlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;
     }
 
     @Override
-    public String getCodeSample(@Nonnull SettingsType settingsType) {
+    public String getCodeSample(SettingsType settingsType) {
         if (settingsType == SettingsType.INDENT_SETTINGS) {
             return CodeStyleAbstractPanel.readFromFile(getClass(), "preview.xml.template");
         }

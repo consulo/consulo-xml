@@ -19,7 +19,6 @@ import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementTypeAsPsiFactory;
 import org.intellij.plugins.relaxNG.compact.psi.RncElement;
 
-import jakarta.annotation.Nonnull;
 import java.util.function.Function;
 
 /**
@@ -36,8 +35,7 @@ class RncElementTypeEx<C extends RncElement> extends RncElementType implements I
 	}
 
 	@Override
-	@Nonnull
-	public final C createElement(@Nonnull ASTNode node)
+	public final C createElement(ASTNode node)
 	{
 		return myFactory.apply(node);
 	}

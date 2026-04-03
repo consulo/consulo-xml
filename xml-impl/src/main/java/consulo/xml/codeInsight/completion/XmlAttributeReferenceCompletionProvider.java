@@ -41,8 +41,7 @@ import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.util.ProcessingContext;
 import consulo.logging.Logger;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static consulo.language.editor.completion.CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;
 
@@ -51,7 +50,7 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
 
     @Override
     @RequiredReadAction
-    public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result) {
+    public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         PsiReference reference = parameters.getPosition().getContainingFile().findReferenceAt(parameters.getOffset());
         if (reference instanceof XmlAttributeReference xmlAttributeReference) {
             addAttributeReferenceCompletionVariants(xmlAttributeReference, result, null);
@@ -141,7 +140,7 @@ public class XmlAttributeReferenceCompletionProvider implements CompletionProvid
 
     private static boolean isValidVariant(
         XmlAttribute attribute,
-        @Nonnull XmlAttributeDescriptor descriptor,
+        XmlAttributeDescriptor descriptor,
         XmlAttribute[] attributes,
         XmlExtension extension
     ) {

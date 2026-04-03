@@ -16,7 +16,6 @@
 package consulo.xml.psi.filters;
 
 import consulo.language.psi.filter.ElementFilter;
-import org.jetbrains.annotations.NonNls;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;
 import consulo.xml.psi.xml.XmlTag;
@@ -33,22 +32,22 @@ public class XmlTextFilter implements ElementFilter {
   public XmlTextFilter(){
     myValue = ArrayUtil.EMPTY_STRING_ARRAY;
   }
-  public XmlTextFilter(@NonNls String value, boolean incensetiveFlag){
+  public XmlTextFilter(String value, boolean incensetiveFlag){
     myCaseInsensitiveFlag = incensetiveFlag;
     myValue = new String[1];
     myValue[0] = value;
   }
 
-  public XmlTextFilter(@NonNls String value){
+  public XmlTextFilter(String value){
     myValue = new String[1];
     myValue[0] = value;
   }
 
-  public XmlTextFilter(@NonNls String... values){
+  public XmlTextFilter(String... values){
     myValue = values;
   }
 
-  public XmlTextFilter(@NonNls String value1, @NonNls String value2){
+  public XmlTextFilter(String value1, String value2){
     myValue = new String[2];
     myValue[0] = value1;
     myValue[1] = value2;

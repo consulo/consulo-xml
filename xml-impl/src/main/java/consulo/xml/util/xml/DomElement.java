@@ -25,10 +25,8 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Type;
 
 /**
@@ -68,14 +66,11 @@ public interface DomElement extends AnnotatedElement, UserDataHolder
    */
   boolean exists();
 
-  @Nonnull
   DomGenericInfo getGenericInfo();
 
-  @Nonnull
-  @NonNls String getXmlElementName();
+  String getXmlElementName();
 
-  @Nonnull
-  @NonNls String getXmlElementNamespace();
+  String getXmlElementNamespace();
 
   /**
    * @return namespace key if this element or one of its ancestors is annotated with
@@ -83,24 +78,20 @@ public interface DomElement extends AnnotatedElement, UserDataHolder
    * to that of the element's parent
    */
   @Nullable
-  @NonNls String getXmlElementNamespaceKey();
+  String getXmlElementNamespaceKey();
 
   void accept(final DomElementVisitor visitor);
 
   void acceptChildren(DomElementVisitor visitor);
 
-  @Nonnull
   DomManager getManager();
 
-  @Nonnull
   Type getDomElementType();
 
   AbstractDomChildrenDescription getChildDescription();
 
-  @Nonnull
   DomNameStrategy getNameStrategy();
 
-  @Nonnull
   ElementPresentation getPresentation();
 
   GlobalSearchScope getResolveScope();

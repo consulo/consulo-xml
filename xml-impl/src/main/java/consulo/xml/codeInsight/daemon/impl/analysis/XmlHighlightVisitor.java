@@ -57,8 +57,7 @@ import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -106,14 +105,14 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     }
 
     @RequiredReadAction
-    private void addElementsForTag(XmlTag tag, @Nonnull LocalizeValue message, HighlightInfoType type, IntentionAction quickFixAction) {
+    private void addElementsForTag(XmlTag tag, LocalizeValue message, HighlightInfoType type, IntentionAction quickFixAction) {
         addElementsForTagWithManyQuickFixes(tag, message, type, quickFixAction);
     }
 
     @RequiredReadAction
     private void addElementsForTagWithManyQuickFixes(
         XmlTag tag,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         HighlightInfoType type,
         IntentionAction... quickFixActions
     ) {
@@ -191,7 +190,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         XmlTag tag,
         HighlightInfoType warning,
         int messageLength,
-        @Nonnull LocalizeValue localizedMessage,
+        LocalizeValue localizedMessage,
         IntentionAction... quickFixActions
     ) {
         XmlToken childByRole = XmlTagUtil.getStartTagNameElement(tag);
@@ -233,7 +232,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         HighlightInfoType warning,
         int offset,
         int length,
-        @Nonnull LocalizeValue localizedMessage,
+        LocalizeValue localizedMessage,
         IntentionAction... quickFixActions
     ) {
         if (childByRole != null) {
@@ -377,7 +376,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     private void reportOneTagProblem(
         XmlTag tag,
         String name,
-        @Nonnull LocalizeValue message,
+        LocalizeValue message,
         IntentionAction basicIntention,
         HighlightDisplayKey key,
         BaseXmlEntitiesInspectionState state,
@@ -435,7 +434,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         return DO_NOT_VALIDATE.get(context, null);
     }
 
-    public static void setSkipValidation(@Nonnull PsiElement element) {
+    public static void setSkipValidation(PsiElement element) {
         DO_NOT_VALIDATE.put(element, Boolean.TRUE);
     }
 
@@ -504,7 +503,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
     @Nullable
     @RequiredReadAction
-    private HighlightInfo reportAttributeProblem(XmlTag tag, String localName, XmlAttribute attribute, @Nonnull LocalizeValue message) {
+    private HighlightInfo reportAttributeProblem(XmlTag tag, String localName, XmlAttribute attribute, LocalizeValue message) {
         RemoveAttributeIntentionFix removeAttributeIntention = new RemoveAttributeIntentionFix(localName, attribute);
 
         if (!(tag instanceof HtmlTag)) {
@@ -705,7 +704,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
 
     @Override
     @RequiredReadAction
-    public void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type) {
+    public void addMessage(PsiElement context, LocalizeValue message, ErrorType type) {
         addMessageWithFixes(context, message, type);
     }
 
@@ -713,9 +712,9 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     @RequiredReadAction
     public void addMessageWithFixes(
         PsiElement context,
-        @Nonnull LocalizeValue message,
-        @Nonnull ErrorType type,
-        @Nonnull IntentionAction... fixes
+        LocalizeValue message,
+        ErrorType type,
+        IntentionAction... fixes
     ) {
         if (message.isNotEmpty()) {
             PsiFile containingFile = context.getContainingFile();
@@ -758,16 +757,16 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
     }
 
     @Override
-    public void visit(@Nonnull PsiElement element) {
+    public void visit(PsiElement element) {
         element.accept(this);
     }
 
     @Override
     public boolean analyze(
-        @Nonnull PsiFile file,
+        PsiFile file,
         boolean updateWholeFile,
-        @Nonnull HighlightInfoHolder holder,
-        @Nonnull Runnable action
+        HighlightInfoHolder holder,
+        Runnable action
     ) {
         myHolder = holder;
         try {
@@ -789,7 +788,7 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
         return unquotedValue;
     }
 
-    public static boolean shouldBeValidated(@Nonnull XmlTag tag) {
+    public static boolean shouldBeValidated(XmlTag tag) {
         PsiElement parent = tag.getParent();
         return !(parent instanceof XmlTag)
             || !skipValidation(parent) && !XmlUtil.tagFromTemplateFramework(tag);

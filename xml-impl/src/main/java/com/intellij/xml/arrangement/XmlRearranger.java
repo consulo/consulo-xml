@@ -17,8 +17,7 @@ import consulo.language.psi.PsiElement;
 import consulo.util.lang.Pair;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 import static consulo.language.codeStyle.arrangement.std.StdArrangementTokens.EntryType.XML_ATTRIBUTE;
@@ -50,9 +49,8 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
     private static final DefaultArrangementSettingsSerializer SETTINGS_SERIALIZER =
         new DefaultArrangementSettingsSerializer(DEFAULT_SETTINGS);
 
-    @Nonnull
     public static StdArrangementMatchRule attrArrangementRule(
-        @Nonnull String nameFilter, @Nonnull String namespaceFilter, @Nonnull ArrangementSettingsToken orderType
+        String nameFilter, String namespaceFilter, ArrangementSettingsToken orderType
     ) {
         return new StdArrangementMatchRule(new StdArrangementEntryMatcher(ArrangementUtil.combine(new ArrangementAtomMatchCondition
             (StdArrangementTokens.Regexp.NAME, nameFilter), new ArrangementAtomMatchCondition(
@@ -61,7 +59,6 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
         ))), orderType);
     }
 
-    @Nonnull
     @Override
     public ArrangementSettingsSerializer getSerializer() {
         return SETTINGS_SERIALIZER;
@@ -74,12 +71,11 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
     }
 
     @Override
-    public boolean isEnabled(@Nonnull ArrangementSettingsToken token, @Nullable ArrangementMatchCondition current) {
+    public boolean isEnabled(ArrangementSettingsToken token, @Nullable ArrangementMatchCondition current) {
         return SUPPORTED_TYPES.contains(token) || StdArrangementTokens.Regexp.NAME.equals(token) || StdArrangementTokens.Regexp.XML_NAMESPACE.equals
             (token) || KEEP.equals(token) || BY_NAME.equals(token) || SUPPORTED_TYPES.contains(token);
     }
 
-    @Nonnull
     @Override
     public Collection<Set<ArrangementSettingsToken>> getMutexes() {
         return Collections.singleton(SUPPORTED_TYPES);
@@ -88,11 +84,11 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
     @Nullable
     @Override
     public Pair<XmlElementArrangementEntry, List<XmlElementArrangementEntry>> parseWithNew(
-        @Nonnull PsiElement root,
+        PsiElement root,
         @Nullable Document document,
-        @Nonnull Collection<TextRange> ranges,
-        @Nonnull PsiElement element,
-        @Nonnull ArrangementSettings settings
+        Collection<TextRange> ranges,
+        PsiElement element,
+        ArrangementSettings settings
     ) {
         final XmlArrangementParseInfo newEntryInfo = new XmlArrangementParseInfo();
         element.accept(new XmlArrangementVisitor(newEntryInfo, Collections.singleton(element.getTextRange())));
@@ -106,13 +102,12 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
         return Pair.create(entry, existingEntriesInfo.getEntries());
     }
 
-    @Nonnull
     @Override
     public List<XmlElementArrangementEntry> parse(
-        @Nonnull PsiElement root,
+        PsiElement root,
         @Nullable Document document,
-        @Nonnull Collection<TextRange> ranges,
-        @Nonnull ArrangementSettings settings
+        Collection<TextRange> ranges,
+        ArrangementSettings settings
     ) {
         final XmlArrangementParseInfo parseInfo = new XmlArrangementParseInfo();
         root.accept(new XmlArrangementVisitor(parseInfo, ranges));
@@ -121,10 +116,10 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
 
     @Override
     public int getBlankLines(
-        @Nonnull CodeStyleSettings settings,
+        CodeStyleSettings settings,
         @Nullable XmlElementArrangementEntry parent,
         @Nullable XmlElementArrangementEntry previous,
-        @Nonnull XmlElementArrangementEntry target
+        XmlElementArrangementEntry target
     ) {
         return -1;
     }
@@ -146,13 +141,11 @@ public class XmlRearranger implements Rearranger<XmlElementArrangementEntry>, Ar
         );
     }
 
-    @Nonnull
     @Override
-    public ArrangementEntryMatcher buildMatcher(@Nonnull ArrangementMatchCondition condition) throws IllegalArgumentException {
+    public ArrangementEntryMatcher buildMatcher(ArrangementMatchCondition condition) throws IllegalArgumentException {
         throw new IllegalArgumentException("Can't build a matcher for condition " + condition);
     }
 
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XMLLanguage.INSTANCE;

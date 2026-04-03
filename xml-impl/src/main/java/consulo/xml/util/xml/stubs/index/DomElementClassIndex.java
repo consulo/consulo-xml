@@ -29,7 +29,6 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.StubbedOccurrence;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @see StubbedOccurrence
@@ -65,7 +64,6 @@ public class DomElementClassIndex extends StringStubIndexExtension<PsiFile> {
     return processor.isFound();
   }
 
-  @Nonnull
   @Override
   public StubIndexKey<String, PsiFile> getKey() {
     return KEY;

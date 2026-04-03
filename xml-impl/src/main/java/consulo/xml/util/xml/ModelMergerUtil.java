@@ -21,8 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import consulo.application.util.function.CommonProcessors;
 import consulo.application.util.function.Processor;
 import consulo.util.collection.ContainerUtil;
@@ -71,7 +70,6 @@ public class ModelMergerUtil {
     return (V)processor.getFoundValue();
   }
 
-  @Nonnull
   public static <T, V> Collection<V> getImplementations(final T element, final Class<V> clazz) {
     if (element == null) return Collections.emptyList();
     CommonProcessors.CollectProcessor<T> processor = new CommonProcessors.CollectProcessor<T>() {
@@ -83,7 +81,6 @@ public class ModelMergerUtil {
     return (Collection<V>)processor.getResults();
   }
 
-  @Nonnull
   public static <T> List<T> getImplementations(T element) {
     if (element instanceof MergedObject) {
       final MergedObject<T> mergedObject = (MergedObject<T>)element;
@@ -97,7 +94,6 @@ public class ModelMergerUtil {
     }
   }
 
-  @Nonnull
   public static <T> List<T> getFilteredImplementations(final T element) {
     if (element == null) return Collections.emptyList();
     final CommonProcessors.CollectProcessor<T> processor = new CommonProcessors.CollectProcessor<T>(new ArrayList<T>());
@@ -105,7 +101,6 @@ public class ModelMergerUtil {
     return (List<T>)processor.getResults();
   }
 
-  @Nonnull
   public static <T> Processor<T> createFilteringProcessor(final Processor<T> processor) {
     return new ImplementationProcessor<T>(processor, false);
   }

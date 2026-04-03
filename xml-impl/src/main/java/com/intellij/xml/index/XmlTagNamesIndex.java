@@ -28,7 +28,6 @@ import consulo.util.io.Readers;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 
-import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,18 +49,15 @@ public class XmlTagNamesIndex extends XmlIndex<Void> {
     static final ID<String, Void> NAME = ID.create("XmlTagNames");
 
     @Override
-    @Nonnull
     public ID<String, Void> getName() {
         return NAME;
     }
 
     @Override
-    @Nonnull
     public DataIndexer<String, Void, FileContent> getIndexer() {
         return new DataIndexer<>() {
             @Override
-            @Nonnull
-            public Map<String, Void> map(@Nonnull final FileContent inputData) {
+            public Map<String, Void> map(final FileContent inputData) {
                 CharSequence text = inputData.getContentAsText();
                 if (StringUtil.indexOf(text, XmlUtil.XML_SCHEMA_URI) == -1) {
                     return Collections.emptyMap();
@@ -76,7 +72,6 @@ public class XmlTagNamesIndex extends XmlIndex<Void> {
         };
     }
 
-    @Nonnull
     @Override
     public DataExternalizer<Void> getValueExternalizer() {
         return ScalarIndexExtension.VOID_DATA_EXTERNALIZER;

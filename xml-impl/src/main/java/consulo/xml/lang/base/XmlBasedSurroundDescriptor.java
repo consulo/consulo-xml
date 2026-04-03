@@ -25,7 +25,6 @@ import consulo.xml.psi.xml.XmlTagChild;
 import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import java.util.List;
  * @author ven
  */
 public abstract class XmlBasedSurroundDescriptor implements SurroundDescriptor {
-  @Nonnull
   public PsiElement[] getElementsToSurround(PsiFile file, int startOffset, int endOffset) {
     final Pair<XmlTagChild, XmlTagChild> childrenInRange = XmlUtil.findTagChildrenInRange(file, startOffset, endOffset);
     if (childrenInRange == null) {
@@ -56,7 +54,6 @@ public abstract class XmlBasedSurroundDescriptor implements SurroundDescriptor {
     return result.toArray(PsiElement.ARRAY_FACTORY);
   }
 
-  @Nonnull
   public Surrounder[] getSurrounders() {
     return new Surrounder[0]; //everything is in live templates now
   }

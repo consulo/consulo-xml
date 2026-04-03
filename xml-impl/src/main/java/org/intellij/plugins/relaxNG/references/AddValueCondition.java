@@ -20,7 +20,6 @@ import consulo.language.pattern.PatternCondition;
 import consulo.language.util.ProcessingContext;
 import consulo.util.dataholder.Key;
 
-import jakarta.annotation.Nonnull;
 import java.util.Set;
 
 class AddValueCondition<T> extends PatternCondition<T> {
@@ -36,7 +35,7 @@ class AddValueCondition<T> extends PatternCondition<T> {
   }
 
   @Override
-  public boolean accepts(@Nonnull T value, ProcessingContext context) {
+  public boolean accepts(T value, ProcessingContext context) {
     context.get(myKey).add(value);
     return true;
   }

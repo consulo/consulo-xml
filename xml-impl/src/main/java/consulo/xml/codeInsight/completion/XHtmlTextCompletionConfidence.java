@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -12,7 +11,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl(id = "xhtmlText")
 public class XHtmlTextCompletionConfidence extends HtmlTextCompletionConfidence {
-    @Nonnull
     @Override
     public Language getLanguage() {
         return XHTMLLanguage.INSTANCE;

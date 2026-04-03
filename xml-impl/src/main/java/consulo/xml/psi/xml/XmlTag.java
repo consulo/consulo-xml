@@ -20,10 +20,8 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.meta.PsiMetaOwner;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 /**
@@ -34,26 +32,19 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	XmlTag[] EMPTY = new XmlTag[0];
 
 	@Override
-	@Nonnull
-	@NonNls
 	String getName();
 
-	@Nonnull
-	@NonNls
 	String getNamespace();
 
-	@Nonnull
-	@NonNls
 	String getLocalName();
 
 	@Nullable
 	XmlElementDescriptor getDescriptor();
 
-	@Nonnull
 	XmlAttribute[] getAttributes();
 
 	@Nullable
-	XmlAttribute getAttribute(@NonNls String name, @NonNls String namespace);
+	XmlAttribute getAttribute(String name, String namespace);
 
 	/**
 	 * Returns a tag attribute by qualified name.
@@ -63,10 +54,10 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	 * @see #getAttribute(String, String)
 	 */
 	@Nullable
-	XmlAttribute getAttribute(@NonNls String qname);
+	XmlAttribute getAttribute(String qname);
 
 	@Nullable
-	String getAttributeValue(@NonNls String name, @NonNls String namespace);
+	String getAttributeValue(String name, String namespace);
 
 	/**
 	 * Returns a tag attribute value by qualified name.
@@ -76,11 +67,11 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	 * @see #getAttributeValue(String, String)
 	 */
 	@Nullable
-	String getAttributeValue(@NonNls String qname);
+	String getAttributeValue(String qname);
 
-	XmlAttribute setAttribute(@NonNls String name, @NonNls String namespace, @NonNls String value) throws IncorrectOperationException;
+	XmlAttribute setAttribute(String name, String namespace, String value) throws IncorrectOperationException;
 
-	XmlAttribute setAttribute(@NonNls String qname, @NonNls String value) throws IncorrectOperationException;
+	XmlAttribute setAttribute(String qname, String value) throws IncorrectOperationException;
 
 	/**
 	 * Creates a new child tag
@@ -91,36 +82,29 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	 * @param enforceNamespacesDeep if you pass some xml tags to {@code bodyText} parameter, this flag sets namespace prefixes for them
 	 * @return created tag. Use {@link #addSubTag(XmlTag, boolean)}} to add it to parent
 	 */
-	XmlTag createChildTag(@NonNls String localName, @NonNls String namespace, @Nullable @NonNls String bodyText, boolean enforceNamespacesDeep);
+	XmlTag createChildTag(String localName, String namespace, @Nullable String bodyText, boolean enforceNamespacesDeep);
 
 	XmlTag addSubTag(XmlTag subTag, boolean first);
 
-	@Nonnull
 	XmlTag[] getSubTags();
 
-	@Nonnull
-	XmlTag[] findSubTags(@NonNls String qname);
+	XmlTag[] findSubTags(String qname);
 
 	/**
 	 * @param localName non-qualified tag name.
 	 * @param namespace if null, name treated as qualified name to find.
 	 */
-	@Nonnull
-	XmlTag[] findSubTags(@NonNls String localName, @Nullable String namespace);
+	XmlTag[] findSubTags(String localName, @Nullable String namespace);
 
 	@Nullable
-	XmlTag findFirstSubTag(@NonNls String qname);
+	XmlTag findFirstSubTag(String qname);
 
-	@Nonnull
-	@NonNls
 	String getNamespacePrefix();
 
-	@Nonnull
-	@NonNls
-	String getNamespaceByPrefix(@NonNls String prefix);
+	String getNamespaceByPrefix(String prefix);
 
 	@Nullable
-	String getPrefixByNamespace(@NonNls String namespace);
+	String getPrefixByNamespace(String namespace);
 
 	String[] knownNamespaces();
 
@@ -129,22 +113,19 @@ public interface XmlTag extends XmlElement, PsiNamedElement, PsiMetaOwner, XmlTa
 	/**
 	 * @return map keys: prefixes values: namespaces
 	 */
-	@Nonnull
 	Map<String, String> getLocalNamespaceDeclarations();
 
-	@Nonnull
 	XmlTagValue getValue();
 
 	@Nullable
-	XmlNSDescriptor getNSDescriptor(@NonNls String namespace, boolean strict);
+	XmlNSDescriptor getNSDescriptor(String namespace, boolean strict);
 
 	boolean isEmpty();
 
 	void collapseIfEmpty();
 
 	@Nullable
-	@NonNls
-	String getSubTagText(@NonNls String qname);
+	String getSubTagText(String qname);
 
 	default boolean isCaseSensitive()
 	{

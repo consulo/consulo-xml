@@ -14,8 +14,7 @@ import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.function.Predicate;
 
 /**
@@ -40,7 +39,7 @@ public class XmlNavBarExtension extends AbstractNavBarModelExtension {
 
   @Override
   @RequiredReadAction
-  public PsiElement getLeafElement(@Nonnull DataContext dataContext) {
+  public PsiElement getLeafElement(DataContext dataContext) {
     if (UISettings.getInstance().getShowMembersInNavigationBar()) {
       PsiFile psiFile = dataContext.getData(CommonDataKeys.PSI_FILE);
       Editor editor = dataContext.getData(CommonDataKeys.EDITOR);
@@ -57,7 +56,7 @@ public class XmlNavBarExtension extends AbstractNavBarModelExtension {
 
   @Nullable
   @Override
-  public PsiElement getParent(@Nonnull PsiElement psiElement) {
+  public PsiElement getParent(PsiElement psiElement) {
     if (psiElement instanceof XmlTag) {
       PsiElement parent = psiElement.getParent();
       if (parent instanceof XmlDocument) {

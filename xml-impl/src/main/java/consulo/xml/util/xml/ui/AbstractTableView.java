@@ -33,8 +33,6 @@ import consulo.ui.ex.awt.table.TableView;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.xml.XmlStringUtil;
-import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -63,9 +61,7 @@ public abstract class AbstractTableView<T> extends JPanel implements UiDataProvi
     private final Project myProject;
     private TableCellRenderer[][] myCachedRenderers;
     private EmptyPane myEmptyPane;
-    @NonNls
     private static final String TREE = "Tree";
-    @NonNls
     private static final String EMPTY_PANE = "EmptyPane";
     private final EventDispatcher<ChangeListener> myDispatcher = EventDispatcher.create(ChangeListener.class);
     private final MyListTableModel myTableModel = new MyListTableModel();
@@ -230,7 +226,7 @@ public abstract class AbstractTableView<T> extends JPanel implements UiDataProvi
     }
 
     @Override
-    public void uiDataSnapshot(@Nonnull DataSink dataSink) {
+    public void uiDataSnapshot(DataSink dataSink) {
         dataSink.set(HelpManager.HELP_ID, getHelpId());
     }
 
@@ -276,7 +272,7 @@ public abstract class AbstractTableView<T> extends JPanel implements UiDataProvi
         myTable.repaint();
     }
 
-    protected abstract void wrapValueSetting(@Nonnull T t, Runnable valueSetter);
+    protected abstract void wrapValueSetting(T t, Runnable valueSetter);
 
     protected final void fireChanged() {
         myDispatcher.getMulticaster().changed();
@@ -328,7 +324,6 @@ public abstract class AbstractTableView<T> extends JPanel implements UiDataProvi
                 });
             }
         }
-
     }
 
     protected static enum ToolbarPosition {

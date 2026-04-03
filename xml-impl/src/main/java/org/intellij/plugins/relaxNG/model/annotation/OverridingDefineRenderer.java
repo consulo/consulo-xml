@@ -31,8 +31,7 @@ import consulo.util.collection.ContainerUtil;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 import org.intellij.plugins.relaxNG.model.Define;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Set;
@@ -48,7 +47,6 @@ class OverridingDefineRenderer extends GutterIconRenderer implements DumbAware {
   }
 
   @Override
-  @Nonnull
   public Image getIcon() {
     return AllIcons.Gutter.OverridingMethod;
   }

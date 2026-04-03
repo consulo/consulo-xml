@@ -24,14 +24,13 @@ import consulo.usage.UsageViewShortNameLocation;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.psi.xml.XmlTag;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author yole
  */
 @ExtensionImpl
 public class XmlUsageViewDescriptionProvider implements ElementDescriptionProvider {
-  public String getElementDescription(@Nonnull final PsiElement element, @Nonnull final ElementDescriptionLocation location) {
+  public String getElementDescription(final PsiElement element, final ElementDescriptionLocation location) {
     if (location instanceof UsageViewShortNameLocation) {
       if (element instanceof XmlAttributeValue) {
         return ((XmlAttributeValue)element).getValue();

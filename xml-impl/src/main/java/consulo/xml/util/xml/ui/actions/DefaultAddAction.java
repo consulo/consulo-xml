@@ -27,8 +27,7 @@ import consulo.ui.image.Image;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -61,7 +60,7 @@ public abstract class DefaultAddAction<T extends DomElement> extends AnAction {
 
   protected abstract DomElement getParentDomElement();
 
-  protected void afterAddition(@Nonnull T newElement) {
+  protected void afterAddition(T newElement) {
   }
 
   public final void actionPerformed(final AnActionEvent e) {

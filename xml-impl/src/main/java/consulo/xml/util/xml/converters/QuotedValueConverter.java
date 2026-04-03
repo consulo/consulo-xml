@@ -28,8 +28,7 @@ import consulo.util.lang.StringUtil;
 import com.intellij.xml.util.XmlTagTextUtil;
 import consulo.xml.util.xml.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -59,12 +58,10 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
   protected abstract Object[] getReferenceVariants(final ConvertContext context, GenericDomValue<T> genericDomValue,
                                                    final TextRange rangeInElement);
 
-  @Nonnull
   protected abstract ResolveResult[] multiResolveReference(@Nullable final T t, final ConvertContext context);
 
   protected abstract LocalizeValue buildUnresolvedMessageInner(String value);
 
-  @Nonnull
   public Collection<? extends T> getVariants(final ConvertContext context) {
     return Collections.emptyList();
   }
@@ -79,7 +76,6 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     return delimiter > 0? delimiter + s+ delimiter : s;
   }
 
-  @Nonnull
   public PsiReference[] createReferences(final GenericDomValue<T> genericDomValue,
                                                               final PsiElement element,
                                                               final ConvertContext context) {
@@ -116,7 +112,6 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     return StringUtil.isNotEmpty(str) && str.charAt(0) != str.charAt(str.length()-1);
   }
 
-  @Nonnull
   protected PsiReference createPsiReference(final PsiElement element,
                                                                  int start, int end,
                                                                  final boolean isSoft,
@@ -140,21 +135,18 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
       myBadQuotation = badQuotation;
     }
 
-    @Nonnull
     public ResolveResult[] multiResolve(final boolean incompleteCode) {
       if (myBadQuotation) return ResolveResult.EMPTY_ARRAY;
       final String value = getValue();
       return multiResolveReference(convertString(value, myContext), myContext);
     }
 
-    @Nonnull
     public Object[] getVariants() {
       return getReferenceVariants(myContext, myGenericDomValue, getRangeInElement());
     }
 
-    @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(String s) {
       return myBadQuotation ? LocalizeValue.localizeTODO(DomBundle.message("message.invalid.value.quotation", s)) : buildUnresolvedMessageInner(getValue());
     }
   }

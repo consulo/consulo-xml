@@ -26,8 +26,7 @@ import consulo.xml.psi.xml.XmlAttribute;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlText;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -37,7 +36,7 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
     private SoftReference<T> myRef;
     private final PsiElement myParent;
 
-    public IncludedXmlElement(@Nonnull T original, @Nullable PsiElement parent) {
+    public IncludedXmlElement(T original, @Nullable PsiElement parent) {
         super(original.getManager(), original.getLanguage());
         //noinspection unchecked
         T realOriginal = original instanceof IncludedXmlElement ? ((IncludedXmlElement<T>)original).getOriginal() : original;
@@ -91,7 +90,6 @@ public abstract class IncludedXmlElement<T extends XmlElement> extends LightElem
         return element;
     }
 
-    @Nonnull
     @Override
     public T getNavigationElement() {
         return getOriginal();

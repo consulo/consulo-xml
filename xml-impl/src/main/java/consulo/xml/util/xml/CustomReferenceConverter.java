@@ -15,7 +15,6 @@
  */
 package consulo.xml.util.xml;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.xml.util.xml.highlighting.DomElementsInspection;
 import consulo.language.psi.PsiReference;
@@ -39,6 +38,5 @@ public interface CustomReferenceConverter<T> {
    * @param context {@link ConvertContext}
    * @return custom {@link PsiReference}s for the value
    */
-  @Nonnull
   PsiReference[] createReferences(GenericDomValue<T> value, PsiElement element, ConvertContext context);
 }

@@ -22,8 +22,7 @@ import consulo.language.pattern.InitialPatternCondition;
 import consulo.language.pattern.PsiElementPattern;
 import consulo.language.util.ProcessingContext;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -33,7 +32,7 @@ public class XmlElementPattern<T extends XmlElement,Self extends XmlElementPatte
     super(aClass);
   }
 
-  public XmlElementPattern(@Nonnull final InitialPatternCondition<T> condition) {
+  public XmlElementPattern(final InitialPatternCondition<T> condition) {
     super(condition);
   }
 

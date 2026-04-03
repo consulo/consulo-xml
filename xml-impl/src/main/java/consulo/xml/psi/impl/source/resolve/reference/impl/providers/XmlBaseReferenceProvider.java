@@ -18,7 +18,6 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 import java.util.Collection;
 import java.util.Collections;
 
-import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.*;
 import consulo.xml.psi.xml.XmlAttribute;
@@ -43,9 +42,8 @@ public class XmlBaseReferenceProvider extends PsiReferenceProvider
 		myAcceptSelf = acceptSelf;
 	}
 
-	@Nonnull
 	@Override
-	public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull ProcessingContext context)
+	public PsiReference[] getReferencesByElement(final PsiElement element, ProcessingContext context)
 	{
 		PsiReference reference = URIReferenceProvider.getUrlReference(element, ElementManipulators.getValueText(element));
 		if(reference != null)

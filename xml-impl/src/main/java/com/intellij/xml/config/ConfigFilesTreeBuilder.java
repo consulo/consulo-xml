@@ -28,7 +28,6 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFilePresentation;
 import consulo.virtualFileSystem.archive.ArchiveFileSystem;
 import consulo.virtualFileSystem.fileType.FileType;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -146,7 +145,7 @@ public class ConfigFilesTreeBuilder {
         return nonEmptyGroups > 1;
     }
 
-    private void addChildrenFiles(@Nonnull Set<PsiFile> psiFiles, DefaultMutableTreeNode parentNode, @Nonnull List<PsiFile> moduleFiles) {
+    private void addChildrenFiles(Set<PsiFile> psiFiles, DefaultMutableTreeNode parentNode, List<PsiFile> moduleFiles) {
         Collections.sort(moduleFiles, FILE_COMPARATOR);
         for (PsiFile file : moduleFiles) {
             final DefaultMutableTreeNode fileNode = createFileNode(file);

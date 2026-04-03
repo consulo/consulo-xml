@@ -26,9 +26,7 @@ import consulo.language.util.ProcessingContext;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlAttribute;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -54,12 +52,10 @@ public class URIReferenceProvider extends PsiReferenceProvider {
       return true;
     }
   };
-  @NonNls
   private static final String NAMESPACE_ATTR_NAME = "namespace";
 
   @Override
-  @Nonnull
-  public PsiReference[] getReferencesByElement(@Nonnull PsiElement element, @Nonnull final ProcessingContext context) {
+  public PsiReference[] getReferencesByElement(PsiElement element, final ProcessingContext context) {
     final String text = element.getText();
     String s = StringUtil.unquoteString(text);
     final PsiElement parent = element.getParent();

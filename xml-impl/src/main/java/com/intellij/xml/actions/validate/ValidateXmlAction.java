@@ -20,7 +20,6 @@ import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.xml.XmlFile;
-import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
 /**
@@ -45,7 +44,7 @@ public class ValidateXmlAction extends AnAction {
         myApplication = application;
     }
 
-    private ValidateXmlHandler getHandler(@Nonnull PsiFile file) {
+    private ValidateXmlHandler getHandler(PsiFile file) {
         ValidateXmlHandler handler = myApplication.getExtensionPoint(ValidateXmlHandler.class)
             .findFirstSafe(thisHandler -> thisHandler.isAvailable((XmlFile) file));
         if (handler == null) {
@@ -58,14 +57,14 @@ public class ValidateXmlAction extends AnAction {
 
     @Override
     @RequiredUIAccess
-    public void actionPerformed(@Nonnull AnActionEvent e) {
+    public void actionPerformed(AnActionEvent e) {
         PsiFile psiFile = e.getData(PsiFile.KEY);
         if (psiFile != null && psiFile.getVirtualFile() != null) {
             doRunAction(psiFile);
         }
     }
 
-    private void doRunAction(@Nonnull PsiFile psiFile) {
+    private void doRunAction(PsiFile psiFile) {
         CommandProcessor.getInstance().newCommand()
             .project(psiFile.getProject())
             .name(LocalizeValue.ofNullable(getCommandName()))
@@ -89,7 +88,7 @@ public class ValidateXmlAction extends AnAction {
     }
 
     @Override
-    public void update(@Nonnull AnActionEvent event) {
+    public void update(AnActionEvent event) {
         Presentation presentation = event.getPresentation();
         PsiElement psiElement = event.getData(PsiFile.KEY);
 

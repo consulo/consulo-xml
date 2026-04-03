@@ -25,7 +25,6 @@ import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.VirtualFile;
 
 import consulo.xml.localize.XmlLocalize;
-import jakarta.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -69,7 +68,7 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
     private static final List<String> simpleContentTypes = Arrays.asList(STRING_TYPE, SMART_TYPE);
     private Runnable myOkAction;
 
-    public GenerateSchemaFromInstanceDocumentDialog(Project project, @Nonnull VirtualFile file) {
+    public GenerateSchemaFromInstanceDocumentDialog(Project project, VirtualFile file) {
         super(project, true);
 
         setTitle(XmlLocalize.generateSchemaFromInstanceDocumentDialogTitle());
@@ -225,7 +224,6 @@ public class GenerateSchemaFromInstanceDocumentDialog extends DialogWrapper {
         return null;
     }
 
-    @Nonnull
     @Override
     protected String getHelpId() {
         return "webservices.GenerateSchemaFromInstanceDocument";

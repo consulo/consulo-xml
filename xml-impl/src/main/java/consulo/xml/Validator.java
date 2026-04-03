@@ -18,7 +18,6 @@ package consulo.xml;
 import consulo.language.psi.PsiElement;
 
 import consulo.localize.LocalizeValue;
-import jakarta.annotation.Nonnull;
 
 /**
  * @author Maxim.Mossienko
@@ -35,12 +34,12 @@ public interface Validator<T extends PsiElement> {
             INFO
         }
 
-        default void addMessage(PsiElement context, String message, @Nonnull ErrorType type) {
+        default void addMessage(PsiElement context, String message, ErrorType type) {
             addMessage(context, LocalizeValue.ofNullable(message), type);
         }
 
-        void addMessage(PsiElement context, @Nonnull LocalizeValue message, @Nonnull ErrorType type);
+        void addMessage(PsiElement context, LocalizeValue message, ErrorType type);
     }
 
-    void validate(@Nonnull T context, @Nonnull ValidationHost host);
+    void validate(T context, ValidationHost host);
 }

@@ -18,7 +18,6 @@ package org.intellij.plugins.relaxNG.compact.parser;
 import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
 import org.intellij.plugins.relaxNG.compact.RncElementTypes;
-import jakarta.annotation.Nonnull;
 import consulo.language.ast.ASTNode;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.ast.IElementType;
@@ -30,7 +29,6 @@ import consulo.language.ast.IElementType;
 public class RncParser implements PsiParser {
 
   @Override
-  @Nonnull
   public ASTNode parse(IElementType root, PsiBuilder builder, LanguageVersion languageVersion) {
     final PsiBuilder.Marker fileMarker = builder.mark();
     final PsiBuilder.Marker docMarker = builder.mark();

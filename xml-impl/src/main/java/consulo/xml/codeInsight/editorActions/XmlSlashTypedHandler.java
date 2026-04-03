@@ -35,19 +35,17 @@ import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.lang.xml.XMLLanguage;
 import consulo.xml.psi.xml.*;
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl(id = "xmlSlash")
 public class XmlSlashTypedHandler extends TypedHandlerDelegate {
-    @Nonnull
     @Override
     @RequiredReadAction
     public Result beforeCharTyped(
         char c,
-        @Nonnull Project project,
-        @Nonnull Editor editor,
+        Project project,
+        Editor editor,
         PsiFile editedFile,
-        @Nonnull FileType fileType
+        FileType fileType
     ) {
         if ((editedFile.getLanguage() instanceof XMLLanguage || editedFile.getViewProvider().getBaseLanguage() instanceof XMLLanguage)
             && c == '/') {
@@ -79,10 +77,9 @@ public class XmlSlashTypedHandler extends TypedHandlerDelegate {
         return Result.CONTINUE;
     }
 
-    @Nonnull
     @Override
     @RequiredReadAction
-    public Result charTyped(char c, @Nonnull Project project, @Nonnull Editor editor, PsiFile editedFile) {
+    public Result charTyped(char c, Project project, Editor editor, PsiFile editedFile) {
         if ((editedFile.getLanguage() instanceof XMLLanguage
             || editedFile.getViewProvider().getBaseLanguage() instanceof XMLLanguage) && c == '/') {
             PsiDocumentManager.getInstance(project).commitAllDocuments();

@@ -21,7 +21,6 @@ import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * Can be implemented by {@link Converter} instance
@@ -37,6 +36,5 @@ public interface PsiReferenceConverter {
    * @param soft true if created references should be soft ({@link PsiReference#isSoft()})
    * @return empty array if the converter cannot get any references
    */
-  @Nonnull
-  PsiReference[] createReferences(@Nonnull PsiElement psiElement, final boolean soft);
+  PsiReference[] createReferences(PsiElement psiElement, final boolean soft);
 }

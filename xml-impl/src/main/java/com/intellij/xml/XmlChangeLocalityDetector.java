@@ -22,12 +22,11 @@ import consulo.language.psi.PsiElement;
 import consulo.xml.codeInspection.DefaultXmlSuppressionProvider;
 import consulo.xml.lang.xml.XMLLanguage;
 
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XmlChangeLocalityDetector implements ChangeLocalityDetector {
     @Override
-    public PsiElement getChangeHighlightingDirtyScopeFor(@Nonnull PsiElement changedElement) {
+    public PsiElement getChangeHighlightingDirtyScopeFor(PsiElement changedElement) {
         // rehighlight everything when inspection suppress comment changed
         if (changedElement.getLanguage() instanceof XMLLanguage
             && changedElement instanceof PsiComment

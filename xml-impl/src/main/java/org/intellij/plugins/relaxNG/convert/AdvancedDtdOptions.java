@@ -30,7 +30,6 @@ import consulo.xml.psi.xml.XmlAttributeDecl;
 import consulo.xml.psi.xml.XmlElementDecl;
 import consulo.project.Project;
 import consulo.ui.ex.action.DefaultActionGroup;
-import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -43,23 +42,14 @@ import java.util.*;
  * @since 2007-11-18
  */
 public class AdvancedDtdOptions implements AdvancedOptions {
-  @NonNls
   private static final String COLON_REPLACEMENT = "colon-replacement";
-  @NonNls
   private static final String ELEMENT_DEFINE = "element-define";
-  @NonNls
   private static final String ATTLIST_DEFINE = "attlist-define";
-  @NonNls
   private static final String INLINE_ATTLIST = "inline-attlist";
-  @NonNls
   private static final String ANY_NAME = "any-name";
-  @NonNls
   private static final String STRICT_ANY = "strict-any";
-  @NonNls
   private static final String ANNOTATION_PREFIX = "annotation-prefix";
-  @NonNls
   private static final String GENERATE_START = "generate-start";
-  @NonNls
   private static final String XMLNS = "xmlns";
 
   private JComponent myRoot;

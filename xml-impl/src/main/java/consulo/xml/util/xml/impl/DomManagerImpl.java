@@ -65,10 +65,8 @@ import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomGenericInfo;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
@@ -147,7 +145,7 @@ public final class DomManagerImpl extends DomManager
 			private final List<DomEvent> myDeletionEvents = new SmartList<>();
 
 			@Override
-			public void contentsChanged(@Nonnull VirtualFileEvent event)
+			public void contentsChanged(VirtualFileEvent event)
 			{
 				if(!event.isFromSave())
 				{
@@ -156,19 +154,19 @@ public final class DomManagerImpl extends DomManager
 			}
 
 			@Override
-			public void fileMoved(@Nonnull VirtualFileMoveEvent event)
+			public void fileMoved(VirtualFileMoveEvent event)
 			{
 				fireEvents(calcDomChangeEvents(event.getFile()));
 			}
 
 			@Override
-			public void beforeFileDeletion(@Nonnull final VirtualFileEvent event)
+			public void beforeFileDeletion(final VirtualFileEvent event)
 			{
 				myDeletionEvents.addAll(calcDomChangeEvents(event.getFile()));
 			}
 
 			@Override
-			public void fileDeleted(@Nonnull VirtualFileEvent event)
+			public void fileDeleted(VirtualFileEvent event)
 			{
 				if(!myDeletionEvents.isEmpty())
 				{
@@ -178,7 +176,7 @@ public final class DomManagerImpl extends DomManager
 			}
 
 			@Override
-			public void propertyChanged(@Nonnull VirtualFilePropertyEvent event)
+			public void propertyChanged(VirtualFilePropertyEvent event)
 			{
 				final VirtualFile file = event.getFile();
 				if(!file.isDirectory() && VirtualFile.PROP_NAME.equals(event.getPropertyName()))
@@ -215,7 +213,7 @@ public final class DomManagerImpl extends DomManager
 		VirtualFileUtil.visitChildrenRecursively(file, new VirtualFileVisitor()
 		{
 			@Override
-			public boolean visitFile(@Nonnull VirtualFile file)
+			public boolean visitFile(VirtualFile file)
 			{
 				if(myProject.isDisposed() || !ProjectFileIndex.getInstance(myProject).isInContent(file))
 				{
@@ -239,7 +237,7 @@ public final class DomManagerImpl extends DomManager
 
 			@Nullable
 			@Override
-			public Iterable<VirtualFile> getChildrenIterable(@Nonnull VirtualFile file)
+			public Iterable<VirtualFile> getChildrenIterable(VirtualFile file)
 			{
 				return ((NewVirtualFile) file).getCachedChildren();
 			}
@@ -320,7 +318,6 @@ public final class DomManagerImpl extends DomManager
 		return null;
 	}
 
-	@Nonnull
 	public static DomInvocationHandler getNotNullHandler(DomElement proxy)
 	{
 		DomInvocationHandler handler = getDomInvocationHandler(proxy);
@@ -348,7 +345,6 @@ public final class DomManagerImpl extends DomManager
 	}
 
 	@Override
-	@Nonnull
 	public final <T extends DomElement> DomFileElementImpl<T> getFileElement(final XmlFile file, final Class<T> aClass, String rootTagName)
 	{
 		//noinspection unchecked
@@ -364,7 +360,6 @@ public final class DomManagerImpl extends DomManager
 
 
 	@SuppressWarnings({"unchecked"})
-	@Nonnull
 	final <T extends DomElement> FileDescriptionCachedValueProvider<T> getOrCreateCachedValueProvider(final XmlFile xmlFile)
 	{
 		//noinspection ConstantConditions
@@ -381,8 +376,6 @@ public final class DomManagerImpl extends DomManager
 		return myApplicationComponent.getAcceptingOtherRootTagNameDescriptions();
 	}
 
-	@Nonnull
-	@NonNls
 	public final String getComponentName()
 	{
 		return getClass().getName();
@@ -433,7 +426,7 @@ public final class DomManagerImpl extends DomManager
 	}
 
 	@Nullable
-	static <T extends DomElement> DomFileElementImpl<T> getCachedFileElement(@Nonnull XmlFile file)
+	static <T extends DomElement> DomFileElementImpl<T> getCachedFileElement(XmlFile file)
 	{
 		//noinspection unchecked
 		return SoftReference.dereference(file.getUserData(CACHED_FILE_ELEMENT));
@@ -497,7 +490,7 @@ public final class DomManagerImpl extends DomManager
 
 	@Override
 	@Nullable
-	public AbstractDomChildrenDescription findChildrenDescription(@Nonnull final XmlTag tag, @Nonnull final DomElement parent)
+	public AbstractDomChildrenDescription findChildrenDescription(final XmlTag tag, final DomElement parent)
 	{
 		return findChildrenDescription(tag, getDomInvocationHandler(parent));
 	}
@@ -586,7 +579,6 @@ public final class DomManagerImpl extends DomManager
 	}
 
 	@Override
-	@Nonnull
 	public final DomElement getResolvingScope(GenericDomValue element)
 	{
 		final DomFileDescription<?> description = DomUtil.getFileElement(element).getFileDescription();
@@ -607,7 +599,7 @@ public final class DomManagerImpl extends DomManager
 		return myApplicationComponent.getTypeChooserManager();
 	}
 
-	public void performAtomicChange(@Nonnull Runnable change)
+	public void performAtomicChange(Runnable change)
 	{
 		mySemService.performAtomicChange(change);
 		if(!mySemService.isInsideAtomicChange())

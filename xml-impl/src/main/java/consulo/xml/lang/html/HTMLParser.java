@@ -27,12 +27,10 @@ import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.xml.XmlTokenType;
 
-import jakarta.annotation.Nonnull;
 
 public class HTMLParser implements PsiParser {
 
-  @Nonnull
-  public ASTNode parse(@Nonnull final IElementType root, @Nonnull final PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
+  public ASTNode parse(final IElementType root, final PsiBuilder builder, LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
     builder.registerWhitespaceToken(XmlTokenType.XML_REAL_WHITE_SPACE);
 

@@ -21,8 +21,7 @@ import consulo.util.collection.SmartList;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.XmlName;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -65,58 +64,50 @@ public class DomExtensionsRegistrarImpl implements DomExtensionsRegistrar
 		return myCustoms;
 	}
 
-	@Nonnull
-	public final DomExtension registerFixedNumberChildrenExtension(@Nonnull final XmlName name, @Nonnull final Type type, final int count)
+	public final DomExtension registerFixedNumberChildrenExtension(final XmlName name, final Type type, final int count)
 	{
 		assert count > 0;
 		return addExtension(myFixeds, name, type).setCount(count);
 	}
 
-	@Nonnull
-	public DomExtension registerFixedNumberChildExtension(@Nonnull final XmlName name, @Nonnull final Type type)
+	public DomExtension registerFixedNumberChildExtension(final XmlName name, final Type type)
 	{
 		return registerFixedNumberChildrenExtension(name, type, 1);
 	}
 
-	@Nonnull
-	public DomExtension registerCollectionChildrenExtension(@Nonnull final XmlName name, @Nonnull final Type type)
+	public DomExtension registerCollectionChildrenExtension(final XmlName name, final Type type)
 	{
 		return addExtension(myCollections, name, type);
 	}
 
-	@Nonnull
-	public DomExtension registerGenericAttributeValueChildExtension(@Nonnull final XmlName name, final Type parameterType)
+	public DomExtension registerGenericAttributeValueChildExtension(final XmlName name, final Type parameterType)
 	{
 		return addExtension(myAttributes, name, new ParameterizedTypeImpl(GenericAttributeValue.class, parameterType));
 	}
 
-	@Nonnull
-	public DomExtension registerAttributeChildExtension(@Nonnull final XmlName name, @Nonnull final Type type)
+	public DomExtension registerAttributeChildExtension(final XmlName name, final Type type)
 	{
 		assert GenericAttributeValue.class.isAssignableFrom(ReflectionUtil.getRawType(type));
 		return addExtension(myAttributes, name, type);
 	}
 
-	@Nonnull
-	public DomExtension registerCustomChildrenExtension(@Nonnull final Type type)
+	public DomExtension registerCustomChildrenExtension(final Type type)
 	{
 		return registerCustomChildrenExtension(type, CustomDomChildrenDescription.TagNameDescriptor.EMPTY);
 	}
 
-	@Nonnull
 	@Override
-	public DomExtension registerCustomChildrenExtension(@Nonnull Type type,
-														@Nonnull CustomDomChildrenDescription.TagNameDescriptor descriptor)
+	public DomExtension registerCustomChildrenExtension(Type type,
+														CustomDomChildrenDescription.TagNameDescriptor descriptor)
 	{
 		DomExtensionImpl extension = addExtension(myCustoms, null, type);
 		extension.setTagNameDescriptor(descriptor);
 		return extension;
 	}
 
-	@Nonnull
 	@Override
-	public DomExtension registerCustomChildrenExtension(@Nonnull Type type,
-														@Nonnull CustomDomChildrenDescription.AttributeDescriptor attributeDescriptor)
+	public DomExtension registerCustomChildrenExtension(Type type,
+														CustomDomChildrenDescription.AttributeDescriptor attributeDescriptor)
 	{
 
 		DomExtensionImpl extension = addExtension(myCustoms, null, type);

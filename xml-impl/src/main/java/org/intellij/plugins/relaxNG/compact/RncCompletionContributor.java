@@ -37,7 +37,6 @@ import org.intellij.plugins.relaxNG.compact.psi.RncDefine;
 import org.intellij.plugins.relaxNG.compact.psi.RncGrammar;
 import org.intellij.plugins.relaxNG.compact.psi.util.EscapeUtil;
 
-import jakarta.annotation.Nonnull;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.language.pattern.StandardPatterns.and;
@@ -86,7 +85,7 @@ public class RncCompletionContributor extends CompletionContributor
 		CompletionProvider provider = new CompletionProvider()
 		{
 			@Override
-			public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result)
+			public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result)
 			{
 				String[] keywords = getKeywords(parameters.getPosition());
 				for(String keyword : keywords)
@@ -141,7 +140,6 @@ public class RncCompletionContributor extends CompletionContributor
 		return PsiTreeUtil.getPrevSiblingOfType(context.getParent(), RncDefine.class) != null;
 	}
 
-	@Nonnull
 	@Override
 	public Language getLanguage()
 	{

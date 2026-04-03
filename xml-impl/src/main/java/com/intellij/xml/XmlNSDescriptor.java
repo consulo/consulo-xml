@@ -15,8 +15,7 @@
  */
 package com.intellij.xml;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import consulo.xml.psi.xml.XmlDocument;
 import consulo.xml.psi.xml.XmlFile;
@@ -28,9 +27,8 @@ import consulo.language.psi.meta.PsiMetaData;
  */
 public interface XmlNSDescriptor extends PsiMetaData {
     @Nullable
-    XmlElementDescriptor getElementDescriptor(@Nonnull XmlTag tag);
+    XmlElementDescriptor getElementDescriptor(XmlTag tag);
 
-    @Nonnull
     XmlElementDescriptor[] getRootElementsDescriptors(@Nullable final XmlDocument document);
 
     @Nullable

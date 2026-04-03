@@ -15,8 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.compact.psi;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author sweinreuter
@@ -26,6 +25,5 @@ public interface RncName extends RncElement {
   @Nullable
   String getPrefix();
 
-  @Nonnull
   String getLocalPart();
 }

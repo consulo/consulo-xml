@@ -19,7 +19,6 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.language.psi.PsiFile;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import org.intellij.plugins.relaxNG.xml.dom.RngInclude;
-import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public abstract class RngIncludeImpl extends RngDomElementBase implements RngInc
   }
 
   @Override
-  @Nonnull
   public RngDefine[] getOverrides() {
     // TODO: include stuff inside DIVs - fix when this is actually used
     final List<RngDefine> defines = DomUtil.getChildrenOfType(this, RngDefine.class);

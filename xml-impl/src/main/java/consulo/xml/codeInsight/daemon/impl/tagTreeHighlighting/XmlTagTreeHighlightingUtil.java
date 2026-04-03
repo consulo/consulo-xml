@@ -26,7 +26,6 @@ import consulo.ui.color.RGBColor;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.psi.xml.XmlTag;
-import jakarta.annotation.Nonnull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,7 +60,7 @@ class XmlTagTreeHighlightingUtil {
         return hasXmlViewProvider(file) && XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled();
     }
 
-    private static boolean hasXmlViewProvider(@Nonnull PsiFile file) {
+    private static boolean hasXmlViewProvider(PsiFile file) {
         for (PsiFile f : file.getViewProvider().getAllFiles()) {
             if (f instanceof XmlFile) {
                 return true;
@@ -70,7 +69,7 @@ class XmlTagTreeHighlightingUtil {
         return false;
     }
 
-    static RGBColor makeTransparent(@Nonnull ColorValue c, @Nonnull ColorValue bc, double transparency) {
+    static RGBColor makeTransparent(ColorValue c, ColorValue bc, double transparency) {
         RGBColor color = c.toRGB();
         RGBColor backgroundColor = bc.toRGB();
         int r = makeTransparent(transparency, color.getRed(), backgroundColor.getRed());

@@ -34,10 +34,8 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.psi.xml.*;
 import consulo.xml.util.xml.reflect.*;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.*;
@@ -68,7 +66,7 @@ public class DomUtil {
   }
 
   @Nullable
-  public static <T extends DomElement> T findByName(@Nonnull Collection<T> list, @NonNls @Nonnull String name) {
+  public static <T extends DomElement> T findByName(Collection<T> list, String name) {
     for (T element : list) {
       String elementName = element.getGenericInfo().getElementName(element);
       if (elementName != null && elementName.equals(name)) {
@@ -78,8 +76,7 @@ public class DomUtil {
     return null;
   }
 
-  @Nonnull
-  public static String[] getElementNames(@Nonnull Collection<? extends DomElement> list) {
+  public static String[] getElementNames(Collection<? extends DomElement> list) {
     ArrayList<String> result = new ArrayList<String>(list.size());
     if (list.size() > 0) {
       for (DomElement element : list) {
@@ -92,8 +89,7 @@ public class DomUtil {
     return ArrayUtil.toStringArray(result);
   }
 
-  @Nonnull
-  public static List<XmlTag> getElementTags(@Nonnull Collection<? extends DomElement> list) {
+  public static List<XmlTag> getElementTags(Collection<? extends DomElement> list) {
     ArrayList<XmlTag> result = new ArrayList<XmlTag>(list.size());
     for (DomElement element : list) {
       XmlTag tag = element.getXmlTag();
@@ -104,8 +100,7 @@ public class DomUtil {
     return result;
   }
 
-  @Nonnull
-  public static XmlTag[] getElementTags(@Nonnull DomElement[] list) {
+  public static XmlTag[] getElementTags(DomElement[] list) {
     XmlTag[] result = new XmlTag[list.length];
     int i = 0;
     for (DomElement element : list) {
@@ -202,7 +197,7 @@ public class DomUtil {
     return Collections.emptyList();
   }
 
-  public static <T> List<T> getChildrenOfType(@Nonnull final DomElement parent, final Class<T> type) {
+  public static <T> List<T> getChildrenOfType(final DomElement parent, final Class<T> type) {
     final List<T> result = new SmartList<T>();
     parent.acceptChildren(new DomElementVisitor() {
       public void visitDomElement(final DomElement element) {
@@ -214,7 +209,7 @@ public class DomUtil {
     return result;
   }
 
-  public static List<DomElement> getDefinedChildren(@Nonnull final DomElement parent, final boolean tags, final boolean attributes) {
+  public static List<DomElement> getDefinedChildren(final DomElement parent, final boolean tags, final boolean attributes) {
     if (parent instanceof MergedObject) {
       final SmartList<DomElement> result = new SmartList<DomElement>();
       parent.acceptChildren(new DomElementVisitor() {
@@ -280,11 +275,11 @@ public class DomUtil {
     return true;
   }
 
-  public static <T> List<T> getDefinedChildrenOfType(@Nonnull final DomElement parent, final Class<T> type, boolean tags, boolean attributes) {
+  public static <T> List<T> getDefinedChildrenOfType(final DomElement parent, final Class<T> type, boolean tags, boolean attributes) {
     return ContainerUtil.findAll(getDefinedChildren(parent, tags, attributes), type);
   }
 
-  public static <T> List<T> getDefinedChildrenOfType(@Nonnull final DomElement parent, final Class<T> type) {
+  public static <T> List<T> getDefinedChildrenOfType(final DomElement parent, final Class<T> type) {
     return getDefinedChildrenOfType(parent, type, true, true);
   }
 
@@ -293,7 +288,7 @@ public class DomUtil {
     return ElementPresentationManager.findByName(getIdentitySiblings(element), newName);
   }
 
-  public static boolean isAncestor(@Nonnull DomElement ancestor, @Nonnull DomElement descendant, boolean strict) {
+  public static boolean isAncestor(DomElement ancestor, DomElement descendant, boolean strict) {
     if (!strict && ancestor.equals(descendant)) {
       return true;
     }
@@ -395,8 +390,7 @@ public class DomUtil {
     return null;
   }
 
-  @Nonnull
-  public static <T extends DomElement> T getOriginalElement(@Nonnull final T domElement) {
+  public static <T extends DomElement> T getOriginalElement(final T domElement) {
     final XmlElement psiElement = domElement.getXmlElement();
     if (psiElement == null) {
       return domElement;
@@ -421,7 +415,7 @@ public class DomUtil {
     return (T) current;
   }
 
-  public static <T extends DomElement> T addElementAfter(@Nonnull final T anchor) {
+  public static <T extends DomElement> T addElementAfter(final T anchor) {
     final DomElement parent = anchor.getParent();
     final DomCollectionChildDescription childDescription = (DomCollectionChildDescription) anchor.getChildDescription();
     assert parent != null;
@@ -456,7 +450,7 @@ public class DomUtil {
     return null;
   }
 
-  public static <T extends DomElement> DomFileElement<T> getFileElement(@Nonnull DomElement element) {
+  public static <T extends DomElement> DomFileElement<T> getFileElement(DomElement element) {
 
     if (element instanceof DomFileElement) {
       return (DomFileElement) element;
@@ -472,8 +466,7 @@ public class DomUtil {
     return fileElement;
   }
 
-  @Nonnull
-  public static XmlFile getFile(@Nonnull DomElement element) {
+  public static XmlFile getFile(DomElement element) {
     return DomService.getInstance().getContainingFile(element);
   }
 
@@ -483,8 +476,7 @@ public class DomUtil {
    * If root tag has changed, file may lose its domness, so there will be no DomFileElement, but the inner DomElement's
    * will be still alive because the underlying XML tags are valid
    */
-  @Nonnull
-  public static DomElement getRoot(@Nonnull DomElement domElement) {
+  public static DomElement getRoot(DomElement domElement) {
     while (true) {
       final DomElement parent = domElement.getParent();
       if (parent == null) {
@@ -494,7 +486,7 @@ public class DomUtil {
     }
   }
 
-  public static boolean hasXml(@Nonnull DomElement element) {
+  public static boolean hasXml(DomElement element) {
     return element.getXmlElement() != null;
   }
 

@@ -30,7 +30,6 @@ import consulo.language.editor.completion.lookup.*;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
 
-import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ import java.util.function.Consumer;
  * @author yole
  */
 public class TagNameReferenceCompletionProvider implements CompletionProvider {
-    public static LookupElement[] getTagNameVariants(@Nonnull XmlTag tag, String prefix) {
+    public static LookupElement[] getTagNameVariants(XmlTag tag, String prefix) {
         List<LookupElement> elements = new ArrayList<>();
         for (XmlTagNameProvider tagNameProvider : XmlTagNameProvider.EP_NAME.getExtensionList()) {
             tagNameProvider.addTagNameVariants(elements, tag, prefix);
@@ -50,7 +49,7 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider {
 
     @Override
     @RequiredReadAction
-    public void addCompletions(@Nonnull CompletionParameters parameters, ProcessingContext context, @Nonnull CompletionResultSet result) {
+    public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         LegacyCompletionContributor.processReferences(
             parameters,
             result,

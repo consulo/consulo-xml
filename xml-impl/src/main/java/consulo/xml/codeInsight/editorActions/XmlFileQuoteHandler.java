@@ -5,7 +5,6 @@ import consulo.language.editor.action.FileQuoteHandler;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 
-import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -13,7 +12,6 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class XmlFileQuoteHandler extends XmlBasedQuoteHandler implements FileQuoteHandler {
-    @Nonnull
     @Override
     public FileType getFileType() {
         return XmlFileType.INSTANCE;
