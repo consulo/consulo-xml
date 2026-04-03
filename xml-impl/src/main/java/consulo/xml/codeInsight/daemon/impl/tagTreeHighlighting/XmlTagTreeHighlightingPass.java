@@ -71,11 +71,12 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         new HighlightInfoTypeImpl(HighlightSeverity.INFORMATION, TAG_TREE_HIGHLIGHTING_KEY);
 
     private final PsiFile myFile;
-    private final EditorEx myEditor;
+
+    private final Editor myEditor;
 
     private final List<Couple<TextRange>> myPairsToHighlight = new ArrayList<>();
 
-    public XmlTagTreeHighlightingPass(PsiFile file, EditorEx editor) {
+    public XmlTagTreeHighlightingPass(PsiFile file, Editor editor) {
         super(file.getProject(), editor.getDocument(), true);
         myFile = file;
         myEditor = editor;
@@ -84,15 +85,11 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
     @RequiredReadAction
     @Override
     public void doCollectInformation(ProgressIndicator progress) {
-        if (Application.get().isUnitTestMode()) {
-            return;
-        }
-
         if (!XmlEditorOptions.getInstance().isTagTreeHighlightingEnabled()) {
             return;
         }
 
-        int offset = myEditor.getCaretModel().getOffset();
+        int offset = getImaginaryEditor().getCaretModel().getOffset();
         PsiElement[] elements = null; // FIXME [VISTALL] for now idk when it used, due it based on breadcrumbs, which removed
 
         if (elements == null || elements.length == 0 || !XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements)) {
@@ -310,7 +307,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
     }
 
     private ColorValue[] toColorsForEditor(ColorValue[] baseColors) {
-        ColorValue tagBackground = myEditor.getBackgroundColor();
+        ColorValue tagBackground = ((EditorEx) myEditor).getBackgroundColor();
 
         if (tagBackground == null) {
             return baseColors;
