@@ -40,6 +40,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
+import jakarta.annotation.Nonnull;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;
@@ -145,7 +146,7 @@ public class DomCollectionControl<T extends DomElement> extends DomUIControl imp
     }
 
     @Override
-    public void uiDataSnapshot(@Nonnull DataSink dataSink) {
+    public void uiDataSnapshot(DataSink dataSink) {
         dataSink.set(DOM_COLLECTION_CONTROL, this);
     }
 
