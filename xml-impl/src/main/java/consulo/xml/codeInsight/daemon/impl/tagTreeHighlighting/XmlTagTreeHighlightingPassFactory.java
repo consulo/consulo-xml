@@ -37,7 +37,7 @@ public class XmlTagTreeHighlightingPassFactory implements TextEditorHighlighting
     public TextEditorHighlightingPass createHighlightingPass(PsiFile file, Editor editor) {
         return !editor.isOneLineMode()
             && XmlTagTreeHighlightingUtil.isTagTreeHighlightingActive(file)
-            ? new XmlTagTreeHighlightingPass(file)
+            ? new XmlTagTreeHighlightingPass(file, editor)
             : null;
     }
 }
