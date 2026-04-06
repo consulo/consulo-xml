@@ -120,7 +120,6 @@ open module com.intellij.xml
     exports consulo.xml.psi.impl.source.xml;
     exports consulo.xml.psi.impl.source.xml.behavior;
     exports consulo.xml.psi.tree.xml;
-    exports consulo.xml.psi.xml;
     exports consulo.xml.refactoring;
     exports consulo.xml.refactoring.rename;
     exports consulo.xml.refactoring.util;
