@@ -16,7 +16,7 @@
 
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomUtil;

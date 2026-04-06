@@ -15,5 +15,7 @@
  */
 package com.intellij.xml.util;
 
+import consulo.xml.language.psi.util.XmlTagUtil;
+
 public class XmlTagTextUtil extends XmlTagUtil {
 }

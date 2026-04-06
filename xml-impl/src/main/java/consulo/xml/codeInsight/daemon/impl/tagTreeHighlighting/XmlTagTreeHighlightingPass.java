@@ -50,9 +50,9 @@ import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Couple;
 import consulo.xml.application.options.editor.XmlEditorOptions;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 
 import java.awt.*;

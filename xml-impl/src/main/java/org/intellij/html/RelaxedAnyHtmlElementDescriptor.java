@@ -2,12 +2,12 @@
 package org.intellij.html;
 
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 
 public class RelaxedAnyHtmlElementDescriptor extends AnyXmlElementDescriptor {
 

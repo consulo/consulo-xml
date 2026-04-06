@@ -23,7 +23,7 @@ import consulo.ide.localize.IdeLocalize;
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.PlaceHolder;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;

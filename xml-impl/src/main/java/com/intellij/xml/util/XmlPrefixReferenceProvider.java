@@ -1,12 +1,11 @@
 package com.intellij.xml.util;
 
 import consulo.language.psi.PsiReference;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.ProcessingContext;
-import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import consulo.document.util.TextRange;

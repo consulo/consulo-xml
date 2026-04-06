@@ -16,17 +16,17 @@
 package com.intellij.xml.impl.schema;
 
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
 import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.meta.PsiWritableMetaData;
 
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;

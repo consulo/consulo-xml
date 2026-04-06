@@ -4,8 +4,8 @@ import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiFile;
 import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.xml.psi.xml.XmlDocument;
 
+import consulo.xml.language.psi.XmlDocument;
 import org.jspecify.annotations.Nullable;
 
 /**

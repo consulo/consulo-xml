@@ -19,9 +19,9 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import consulo.index.io.StringRef;
 import consulo.xml.util.xml.Stubbed;
 import consulo.xml.util.xml.StubbedOccurrence;

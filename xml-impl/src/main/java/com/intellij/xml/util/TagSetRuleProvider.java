@@ -15,8 +15,7 @@
  */
 package com.intellij.xml.util;
 
-import consulo.xml.psi.xml.XmlTag;
-
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;

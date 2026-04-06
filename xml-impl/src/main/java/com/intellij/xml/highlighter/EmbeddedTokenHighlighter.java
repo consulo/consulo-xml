@@ -6,7 +6,7 @@ import consulo.annotation.component.ExtensionAPI;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.language.ast.IElementType;
 import consulo.util.collection.MultiMap;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface EmbeddedTokenHighlighter {

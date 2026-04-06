@@ -34,7 +34,13 @@ import consulo.util.lang.Trinity;
 import consulo.util.lang.function.PairProcessor;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.intelliLang.inject.config.AbstractTagInjection;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;

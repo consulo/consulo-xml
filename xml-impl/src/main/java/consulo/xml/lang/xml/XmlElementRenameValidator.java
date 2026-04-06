@@ -15,8 +15,8 @@
  */
 package consulo.xml.lang.xml;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.refactoring.rename.RenameInputValidator;
 import consulo.language.pattern.ElementPattern;
@@ -24,8 +24,8 @@ import consulo.language.pattern.PlatformPatterns;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
 import consulo.xml.patterns.XmlPatterns;
-import consulo.xml.psi.xml.XmlAttributeDecl;
-import consulo.xml.psi.xml.XmlElementDecl;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlElementDecl;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.language.pattern.StandardPatterns.or;

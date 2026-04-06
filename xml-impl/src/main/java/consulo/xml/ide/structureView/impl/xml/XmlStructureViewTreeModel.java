@@ -15,6 +15,7 @@
  */
 package consulo.xml.ide.structureView.impl.xml;
 
+import consulo.xml.language.psi.*;
 import org.jspecify.annotations.Nullable;
 
 import consulo.codeEditor.Editor;
@@ -25,12 +26,6 @@ import consulo.language.editor.structureView.StructureViewFactoryEx;
 import consulo.language.editor.structureView.TextEditorBasedStructureViewModel;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttlistDecl;
-import consulo.xml.psi.xml.XmlConditionalSection;
-import consulo.xml.psi.xml.XmlElementDecl;
-import consulo.xml.psi.xml.XmlEntityDecl;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 
 public class XmlStructureViewTreeModel extends TextEditorBasedStructureViewModel
 {

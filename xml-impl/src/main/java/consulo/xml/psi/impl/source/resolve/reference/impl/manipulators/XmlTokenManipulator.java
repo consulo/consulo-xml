@@ -24,7 +24,7 @@ import consulo.language.impl.ast.LeafElement;
 import consulo.language.impl.psi.DummyHolderFactory;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlToken;
 
 
 /**

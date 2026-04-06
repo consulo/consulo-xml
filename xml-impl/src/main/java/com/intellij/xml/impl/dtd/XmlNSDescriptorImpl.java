@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptorEx;
 import com.intellij.xml.impl.ExternalDocumentValidator;
 import com.intellij.xml.util.XmlUtil;
@@ -28,11 +28,10 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.filter.ClassFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
-import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.xml.Validator;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.lang.dtd.DTDLanguage;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

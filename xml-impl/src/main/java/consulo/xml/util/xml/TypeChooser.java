@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.IncorrectOperationException;
+import consulo.xml.language.psi.XmlTag;
 
 import java.lang.reflect.Type;
 

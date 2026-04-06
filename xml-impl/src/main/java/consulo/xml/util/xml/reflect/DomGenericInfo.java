@@ -15,9 +15,7 @@
  */
 package consulo.xml.util.xml.reflect;
 
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
 import org.jspecify.annotations.Nullable;

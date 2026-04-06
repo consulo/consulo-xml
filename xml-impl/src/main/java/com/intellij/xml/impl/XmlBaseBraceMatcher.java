@@ -32,9 +32,9 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.ide.highlighter.XmlLikeFileType;
-import consulo.xml.psi.tree.xml.IXmlLeafElementType;
-import consulo.xml.psi.xml.XmlTokenType;
 
+import consulo.xml.language.psi.IXmlLeafElementType;
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 import java.util.List;
 

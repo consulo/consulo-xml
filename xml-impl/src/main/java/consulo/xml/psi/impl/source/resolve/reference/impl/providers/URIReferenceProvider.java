@@ -25,7 +25,7 @@ import consulo.language.psi.path.FileReferenceSet;
 import consulo.language.util.ProcessingContext;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 
 import java.util.ArrayList;
 import java.util.List;

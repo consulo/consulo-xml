@@ -27,9 +27,9 @@ import consulo.language.psi.PsiFileFactory;
 import consulo.language.util.CharTable;
 import consulo.logging.Logger;
 import consulo.xml.psi.impl.source.xml.XmlPsiPolicy;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagChild;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagChild;
 
 public abstract class DefaultXmlPsiPolicy implements XmlPsiPolicy {
   private static final Logger LOG = Logger.getInstance(DefaultXmlPsiPolicy.class);

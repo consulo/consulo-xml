@@ -24,9 +24,9 @@ import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.language.psi.PsiElement;
 import consulo.language.ast.TokenType;
 import consulo.language.impl.ast.LeafElement;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.HashMap;
 import java.util.Map;

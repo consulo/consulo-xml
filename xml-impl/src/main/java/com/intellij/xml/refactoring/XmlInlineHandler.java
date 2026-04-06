@@ -5,7 +5,7 @@ import consulo.codeEditor.Editor;
 import consulo.language.Language;
 import consulo.language.editor.refactoring.inline.InlineHandler;
 import consulo.language.psi.PsiElement;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 
 /**

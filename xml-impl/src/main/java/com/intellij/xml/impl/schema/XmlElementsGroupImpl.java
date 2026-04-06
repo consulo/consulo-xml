@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author Dmitry Avdeev

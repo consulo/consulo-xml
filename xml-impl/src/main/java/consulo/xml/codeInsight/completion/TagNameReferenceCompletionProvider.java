@@ -18,7 +18,7 @@ package consulo.xml.codeInsight.completion;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.impl.source.xml.TagNameReference;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import com.intellij.xml.XmlTagNameProvider;
 import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
 import consulo.language.ast.ASTNode;

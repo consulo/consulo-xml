@@ -19,9 +19,9 @@ package com.intellij.html.impl.providers;
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceProvider;
-import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.language.util.ProcessingContext;
 import consulo.language.psi.PsiReference;
+import consulo.xml.language.psi.XmlAttributeValue;
 
 /**
  * @author: Fedor.Korotkov

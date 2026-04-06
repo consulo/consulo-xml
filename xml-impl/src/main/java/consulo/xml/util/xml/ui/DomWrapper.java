@@ -19,7 +19,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 
 import org.jspecify.annotations.Nullable;
 

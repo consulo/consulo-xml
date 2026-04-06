@@ -15,10 +15,10 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.util.XmlNSDescriptorSequence;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.util.CachedValue;
@@ -36,7 +36,7 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 
 import org.jspecify.annotations.Nullable;
 

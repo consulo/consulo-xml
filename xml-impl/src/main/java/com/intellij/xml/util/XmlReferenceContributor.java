@@ -29,12 +29,11 @@ import consulo.language.psi.filter.ScopeFilter;
 import consulo.language.psi.filter.position.ParentElementFilter;
 import consulo.language.util.ProcessingContext;
 import consulo.xml.codeInsight.daemon.impl.analysis.encoding.XmlEncodingReferenceProvider;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.filters.XmlTextFilter;
 import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.*;
-import consulo.xml.psi.xml.*;
-
 
 import static consulo.xml.patterns.XmlPatterns.*;
 

@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.actions.validate.ErrorReporter;
 import com.intellij.xml.actions.validate.ValidateXmlActionHandler;
 import consulo.application.ApplicationManager;
@@ -23,8 +23,8 @@ import consulo.application.util.function.Computable;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 import org.apache.xerces.impl.Constants;
 import org.apache.xerces.impl.xs.*;

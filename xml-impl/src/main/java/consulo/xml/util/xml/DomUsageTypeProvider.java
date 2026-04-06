@@ -21,8 +21,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.usage.UsageType;
 import consulo.usage.UsageTypeProvider;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlFile;
 
 import org.jspecify.annotations.Nullable;
 

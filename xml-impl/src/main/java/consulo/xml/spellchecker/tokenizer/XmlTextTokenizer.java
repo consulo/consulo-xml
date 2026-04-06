@@ -22,9 +22,9 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.spellcheker.tokenizer.TokenConsumer;
 import consulo.language.spellcheker.tokenizer.Tokenizer;
 import consulo.language.spellcheker.tokenizer.splitter.PlainTextTokenSplitter;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 public class XmlTextTokenizer extends Tokenizer<XmlText> {

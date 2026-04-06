@@ -25,9 +25,9 @@ import consulo.language.psi.PsiFile;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ThreeState;
 import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 @ExtensionImpl(id = "htmlText")

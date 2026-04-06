@@ -1,7 +1,7 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.events.DomEvent;

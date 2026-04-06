@@ -20,7 +20,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import org.jspecify.annotations.Nullable;
 

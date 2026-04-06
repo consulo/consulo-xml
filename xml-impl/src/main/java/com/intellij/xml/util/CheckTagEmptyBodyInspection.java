@@ -37,12 +37,12 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementVisitor;
 import org.jspecify.annotations.Nullable;
 
 /**

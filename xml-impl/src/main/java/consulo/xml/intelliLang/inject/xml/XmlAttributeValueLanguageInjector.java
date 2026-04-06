@@ -3,7 +3,7 @@ package consulo.xml.intelliLang.inject.xml;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttributeValue;
 import jakarta.inject.Inject;
 
 /**

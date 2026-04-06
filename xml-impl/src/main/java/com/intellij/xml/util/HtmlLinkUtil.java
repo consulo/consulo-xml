@@ -3,13 +3,10 @@ package com.intellij.xml.util;
 import consulo.application.util.function.Processor;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.*;
-
-import java.util.List;
 
 public class HtmlLinkUtil {
     public static final String LINK = "link";

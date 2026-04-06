@@ -20,9 +20,9 @@ import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagValue;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagValue;
+import consulo.xml.language.psi.XmlText;
 
 import java.util.Objects;
 

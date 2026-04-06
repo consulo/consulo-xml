@@ -16,12 +16,12 @@
 package com.intellij.xml.util;
 
 import consulo.annotation.access.RequiredReadAction;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagChild;
 import org.jspecify.annotations.Nullable;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagChild;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlText;
 import consulo.language.util.IncorrectOperationException;
 
 /**

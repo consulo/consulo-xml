@@ -29,7 +29,11 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 
 /**

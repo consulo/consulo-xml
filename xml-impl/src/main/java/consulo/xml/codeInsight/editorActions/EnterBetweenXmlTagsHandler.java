@@ -29,9 +29,9 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.util.lang.ref.SimpleReference;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 
 @ExtensionImpl(id = "xmlEnter")
 public class EnterBetweenXmlTagsHandler extends EnterHandlerDelegateAdapter {

@@ -25,11 +25,11 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 /**
  * @author spleaner

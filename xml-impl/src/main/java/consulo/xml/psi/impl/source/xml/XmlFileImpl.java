@@ -17,11 +17,11 @@ package consulo.xml.psi.impl.source.xml;
 
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.html.ScriptSupportUtil;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.ast.IElementType;
 import consulo.language.file.FileViewProvider;
 import consulo.language.impl.psi.PsiFileImpl;

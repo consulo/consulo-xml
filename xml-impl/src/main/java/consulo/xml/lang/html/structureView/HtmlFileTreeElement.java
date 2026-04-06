@@ -22,9 +22,9 @@ import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.language.editor.structureView.StructureViewFactoryEx;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.xml.psi.filters.XmlTagFilter;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;

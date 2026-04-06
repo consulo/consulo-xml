@@ -3,7 +3,8 @@ package consulo.xml.lexer;
 
 import consulo.language.ast.IElementType;
 import consulo.language.lexer.FlexLexer;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 %%
 
@@ -122,7 +123,7 @@ CONDITIONAL_COMMENT_CONDITION=({ALPHA})({ALPHA}|{S}|{DIGIT}|"."|"("|")"|"|"|"!"|
 <DOCTYPE> {NAME} { return XmlTokenType.XML_NAME;  }
 <DOCTYPE> "\""[^\"]*"\"" { return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;}
 <DOCTYPE> "'"[^']*"'" { return XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN;}
-<DOCTYPE> "["(([^\]\"]*)|(\"[^\"]*\"))*"]" { return XmlElementType.XML_MARKUP_DECL;}
+<DOCTYPE> "["(([^\]\"]*)|(\"[^\"]*\"))*"]" { return XmlElementTokenTypeImpl.XML_MARKUP_DECL;}
 <DOCTYPE> ">" { yybegin(YYINITIAL); return XmlTokenType.XML_DOCTYPE_END; }
 
 <YYINITIAL> "<?" { yybegin(PROCESSING_INSTRUCTION); return XmlTokenType.XML_PI_START; }

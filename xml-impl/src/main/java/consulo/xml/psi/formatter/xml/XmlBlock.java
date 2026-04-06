@@ -16,7 +16,7 @@
 package consulo.xml.psi.formatter.xml;
 
 import consulo.language.ast.ASTNode;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.language.ast.TokenType;
 import consulo.language.codeStyle.Alignment;
 import consulo.language.codeStyle.Block;
@@ -31,9 +31,9 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.codeStyle.AbstractBlock;
 import consulo.language.psi.OuterLanguageElement;
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 import consulo.util.collection.SmartList;
 import consulo.language.codeStyle.Wrap;
 

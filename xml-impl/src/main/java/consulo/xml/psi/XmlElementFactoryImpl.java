@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi;
 
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.annotation.component.ServiceImpl;
 import consulo.language.Language;
 import consulo.language.file.LanguageFileType;
@@ -32,9 +32,15 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.*;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

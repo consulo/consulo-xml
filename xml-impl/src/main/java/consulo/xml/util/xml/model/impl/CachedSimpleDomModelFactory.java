@@ -17,7 +17,7 @@ package consulo.xml.util.xml.model.impl;
 
 import consulo.project.Project;
 import consulo.application.util.CachedValueProvider;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ModelMerger;
 import consulo.xml.util.xml.model.DomModel;

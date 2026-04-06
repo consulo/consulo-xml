@@ -25,9 +25,18 @@ import consulo.language.psi.*;
 import consulo.logging.Logger;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlMarkupDecl;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 

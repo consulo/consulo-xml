@@ -18,9 +18,9 @@ package com.intellij.xml.util;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlFileNSInfoProvider;
 
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlFileNSInfoProvider;
 import org.jspecify.annotations.Nullable;
 
 /**

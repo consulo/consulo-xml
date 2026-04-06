@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.model.resolve;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import org.intellij.plugins.relaxNG.compact.psi.RncFile;

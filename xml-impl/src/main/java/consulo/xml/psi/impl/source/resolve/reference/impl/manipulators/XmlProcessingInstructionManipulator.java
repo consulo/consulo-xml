@@ -19,8 +19,8 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
-import consulo.xml.psi.xml.XmlProcessingInstruction;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlProcessingInstruction;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

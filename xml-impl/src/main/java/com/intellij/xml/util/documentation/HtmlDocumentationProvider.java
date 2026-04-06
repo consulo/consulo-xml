@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.util.UserColorLookup;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
@@ -31,10 +31,16 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.xml.lang.documentation.DocumentationUtil;
 import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
-import consulo.xml.psi.xml.*;
 import consulo.xml.util.ColorSampleLookupValue;
 import org.jspecify.annotations.Nullable;
 

@@ -25,9 +25,8 @@ import consulo.language.lexer.MergingLexerAdapter;
 import consulo.language.plain.PlainTextLanguage;
 import consulo.logging.Logger;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.lang.HtmlInlineScriptTokenTypesProvider;
 import consulo.xml.lang.HtmlScriptContentProvider;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 
 import org.jspecify.annotations.Nullable;
 

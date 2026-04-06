@@ -28,11 +28,17 @@ import consulo.language.psi.filter.ContentFilter;
 import consulo.language.psi.filter.OrFilter;
 import consulo.language.psi.meta.MetaDataContributor;
 import consulo.language.psi.meta.MetaDataRegistrar;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlConditionalSection;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlEntityRef;
+import consulo.xml.language.psi.XmlMarkupDecl;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.filters.XmlTextFilter;
 import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.filters.position.TargetNamespaceFilter;
-import consulo.xml.psi.xml.*;
 
 /**
  * @author Maxim.Mossienko

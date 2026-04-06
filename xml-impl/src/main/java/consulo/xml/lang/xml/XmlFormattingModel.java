@@ -32,7 +32,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.logging.Logger;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementType;
 
 import org.jspecify.annotations.Nullable;
 

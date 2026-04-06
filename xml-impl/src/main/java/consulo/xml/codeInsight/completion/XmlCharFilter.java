@@ -25,11 +25,11 @@ import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.xml.codeInsight.editorActions.XmlAutoPopupHandler;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
 
 /**
  * @author mike

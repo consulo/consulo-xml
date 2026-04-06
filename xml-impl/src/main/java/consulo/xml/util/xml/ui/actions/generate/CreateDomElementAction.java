@@ -22,7 +22,7 @@ import consulo.codeEditor.Editor;
 import consulo.language.psi.ElementManipulators;
 import consulo.project.Project;
 import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericDomValue;

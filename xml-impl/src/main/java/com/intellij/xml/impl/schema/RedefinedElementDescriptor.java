@@ -1,8 +1,8 @@
 package com.intellij.xml.impl.schema;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.Map;
 

@@ -20,9 +20,9 @@ import java.util.Collections;
 
 
 import consulo.language.psi.*;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.util.ProcessingContext;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.path.FileReferenceSet;

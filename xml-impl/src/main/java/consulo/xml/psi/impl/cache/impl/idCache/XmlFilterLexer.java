@@ -22,8 +22,8 @@ import consulo.language.lexer.Lexer;
 import consulo.language.psi.search.UsageSearchContext;
 import consulo.language.psi.stub.BaseFilterLexer;
 import consulo.language.psi.stub.OccurrenceConsumer;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
 
 public class XmlFilterLexer extends BaseFilterLexer {
   static final TokenSet ourNoWordsTokenSet = TokenSet.create(

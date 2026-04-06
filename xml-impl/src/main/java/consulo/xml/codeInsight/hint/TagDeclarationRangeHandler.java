@@ -21,9 +21,9 @@ import consulo.document.util.TextRange;
 import consulo.language.ast.IElementType;
 import consulo.language.editor.hint.DeclarationRangeHandler;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 @ExtensionImpl

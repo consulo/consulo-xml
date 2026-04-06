@@ -20,7 +20,7 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.Lists;
 import consulo.util.collection.Stack;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

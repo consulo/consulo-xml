@@ -26,7 +26,13 @@ import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlProlog;
+import consulo.xml.language.psi.XmlTag;
 
 import javax.swing.*;
 

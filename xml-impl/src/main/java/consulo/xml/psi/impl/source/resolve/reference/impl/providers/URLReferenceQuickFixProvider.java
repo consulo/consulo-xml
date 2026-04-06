@@ -23,7 +23,7 @@ import consulo.xml.codeInsight.daemon.impl.quickfix.AddXsiSchemaLocationForExtRe
 import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.IgnoreExtResourceAction;
 import consulo.xml.codeInsight.daemon.impl.quickfix.ManuallySetupExtResourceAction;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 
 
 /**

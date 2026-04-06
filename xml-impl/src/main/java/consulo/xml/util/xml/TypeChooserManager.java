@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 import java.lang.reflect.Type;
 import java.util.Map;

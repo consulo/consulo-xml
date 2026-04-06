@@ -18,8 +18,8 @@ package consulo.xml.psi.impl.source.xml;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import org.jspecify.annotations.Nullable;
 
 /**

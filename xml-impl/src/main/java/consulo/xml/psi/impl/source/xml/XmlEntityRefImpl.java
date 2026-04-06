@@ -16,7 +16,7 @@
 package consulo.xml.psi.impl.source.xml;
 
 import com.intellij.xml.Html5SchemaProvider;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
@@ -33,8 +33,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.highlighter.DTDFileType;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 
 import java.util.ArrayList;
 import java.util.List;

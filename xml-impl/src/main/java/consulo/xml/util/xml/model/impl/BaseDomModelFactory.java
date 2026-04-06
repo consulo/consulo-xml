@@ -20,7 +20,7 @@ import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.module.content.ProjectRootManager;
 import consulo.language.psi.PsiModificationTracker;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomService;

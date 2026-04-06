@@ -17,7 +17,7 @@ package consulo.xml.util.xml;
 
 import org.jspecify.annotations.Nullable;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import com.intellij.xml.util.PsiElementPointer;
 
 /**

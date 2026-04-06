@@ -16,8 +16,8 @@
 package consulo.xml.psi.filters.position;
 
 import consulo.xml.psi.filters.XmlTextFilter;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlTag;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.language.psi.PsiElement;
 

@@ -1,8 +1,8 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package consulo.xml.codeInsight.editorActions;
 
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementDescriptorWithCDataContent;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptorWithCDataContent;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
@@ -26,10 +26,16 @@ import consulo.project.Project;
 import consulo.util.collection.SmartList;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.application.options.editor.XmlEditorOptions;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;

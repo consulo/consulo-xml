@@ -22,11 +22,11 @@ import consulo.language.impl.ast.LeafElement;
 import consulo.language.impl.psi.PsiWhiteSpaceImpl;
 import consulo.language.version.LanguageVersion;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
-import consulo.xml.psi.tree.xml.IXmlLeafElementType;
+import consulo.xml.language.psi.IXmlLeafElementType;
 
 import org.jspecify.annotations.Nullable;
 
-import static consulo.xml.psi.xml.XmlTokenType.XML_REAL_WHITE_SPACE;
+import static consulo.xml.language.psi.XmlTokenType.XML_REAL_WHITE_SPACE;
 
 /**
  * @author VISTALL

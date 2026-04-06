@@ -33,9 +33,9 @@ import consulo.undoRedo.CommandProcessor;
 import consulo.usage.UsageViewUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.codeInsight.completion.TagNameReferenceCompletionProvider;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.TagNameReference;
-import consulo.xml.psi.xml.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;

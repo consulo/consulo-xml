@@ -25,7 +25,7 @@ import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 import org.jspecify.annotations.Nullable;
 
 /**

@@ -26,8 +26,8 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.xml.XmlFile;
 
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.List;

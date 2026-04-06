@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

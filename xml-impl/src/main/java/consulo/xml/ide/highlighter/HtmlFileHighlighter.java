@@ -27,7 +27,7 @@ import consulo.util.collection.MultiMap;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lexer.HtmlHighlightingLexer;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 public class HtmlFileHighlighter extends SyntaxHighlighterBase {

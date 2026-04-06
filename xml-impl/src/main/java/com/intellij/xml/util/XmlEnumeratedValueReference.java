@@ -24,9 +24,9 @@ import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
 
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

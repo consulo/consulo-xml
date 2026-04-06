@@ -24,7 +24,6 @@ import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.application.ApplicationManager;
 import consulo.application.util.function.Processor;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
@@ -53,28 +52,28 @@ import consulo.util.io.FileUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.XmlCharsetDetector;
-import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.Validator;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.UriUtil;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.*;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.xml.patterns.XmlPatterns;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
-import consulo.xml.psi.xml.*;
+import consulo.xml.standardResource.XmlStandardResourceUtil;
 import org.jspecify.annotations.Nullable;
 
-import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -99,9 +98,6 @@ public class XmlUtil {
     public static final String HTML_URI = "http://www.w3.org/1999/html";
     public static final String EMPTY_URI = "";
 
-    // todo remove it
-    public static final Key<String> TEST_PATH = Key.create("TEST PATH");
-
     public static final String TAGLIB_1_2_URI = "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd";
     public static final String JSP_URI = "http://java.sun.com/JSP/Page";
     public static final String JSTL_CORE_URI = "http://java.sun.com/jsp/jstl/core";
@@ -122,57 +118,23 @@ public class XmlUtil {
     };
     public static final String JSF_CORE_URI = "http://java.sun.com/jsf/core";
     public static final String JSF_CORE_URI_JAVAEE_7 = "http://xmlns.jcp.org/jsf/core";
-    public static final String[] JSF_CORE_URIS = {
-        JSF_CORE_URI,
-        JSF_CORE_URI_JAVAEE_7
-    };
-    public static final String JSF_PASS_THROUGH_ATTR_URI_JAVAEE7 = "http://xmlns.jcp.org/jsf";
-    public static final String JSF_PASSTHROUGH_URI = "http://xmlns.jcp.org/jsf/passthrough";
-    public static final String JSTL_FORMAT_URI = "http://java.sun.com/jsp/jstl/fmt";
-    public static final String JSTL_FORMAT_URI2 = "http://java.sun.com/jstl/fmt";
-    public static final String SPRING_URI = "http://www.springframework.org/tags";
-    public static final String SPRING_FORMS_URI = "http://www.springframework.org/tags/form";
+
     public static final String STRUTS_BEAN_URI = "http://struts.apache.org/tags-bean";
     public static final String STRUTS_BEAN_URI2 = "http://jakarta.apache.org/struts/tags-bean";
-    public static final String APACHE_I18N_URI = "http://jakarta.apache.org/taglibs/i18n-1.0";
     public static final String STRUTS_LOGIC_URI = "http://struts.apache.org/tags-logic";
-    public static final String STRUTS_HTML_URI = "http://struts.apache.org/tags-html";
-    public static final String STRUTS_HTML_URI2 = "http://jakarta.apache.org/struts/tags-html";
-    public static final String APACHE_TRINIDAD_URI = "http://myfaces.apache.org/trinidad";
-    public static final String APACHE_TRINIDAD_HTML_URI = "http://myfaces.apache.org/trinidad/html";
+
     public static final String XSD_SIMPLE_CONTENT_TAG = "simpleContent";
     public static final String NO_NAMESPACE_SCHEMA_LOCATION_ATT = "noNamespaceSchemaLocation";
     public static final String SCHEMA_LOCATION_ATT = "schemaLocation";
-    public static final String[] WEB_XML_URIS = {
-        "http://java.sun.com/xml/ns/j2ee",
-        "http://java.sun.com/xml/ns/javaee",
-        "http://xmlns.jcp.org/xml/ns/javaee",
-        "http://java.sun.com/dtd/web-app_2_3.dtd",
-        "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"
-    };
-    public static final String FACELETS_URI = "http://java.sun.com/jsf/facelets";
-    public static final String FACELETS_URI_JAVAEE_7 = "http://xmlns.jcp.org/jsf/facelets";
-    public static final String[] FACELETS_URIS = {
-        FACELETS_URI,
-        FACELETS_URI_JAVAEE_7
-    };
-    public static final String JSTL_FUNCTIONS_URI = "http://java.sun.com/jsp/jstl/functions";
-    public static final String JSTL_FUNCTIONS_URI2 = "http://java.sun.com/jstl/functions";
-    public static final String JSTL_FUNCTIONS_JAVAEE_7 = "http://xmlns.jcp.org/jsp/jstl/functions";
-    public static final String[] JSTL_FUNCTIONS_URIS = {
-        JSTL_FUNCTIONS_URI,
-        JSTL_FUNCTIONS_URI2
-    };
-    public static final String JSTL_FN_FACELET_URI = "com.sun.facelets.tag.jstl.fn.JstlFnLibrary";
-    public static final String JSTL_CORE_FACELET_URI = "com.sun.facelets.tag.jstl.core.JstlCoreLibrary";
+
     public static final String TARGET_NAMESPACE_ATTR_NAME = "targetNamespace";
     public static final String XML_NAMESPACE_URI = "http://www.w3.org/XML/1998/namespace";
     public static final List<String> ourSchemaUrisList = Arrays.asList(SCHEMA_URIS);
-    public static final Key<Boolean> ANT_FILE_SIGN = new Key<>("FORCED ANT FILE");
+    public static final Key<Boolean> ANT_FILE_SIGN = Key.create("FORCED ANT FILE");
     public static final String TAG_DIR_NS_PREFIX = "urn:jsptagdir:";
     public static final String VALUE_ATTR_NAME = "value";
     public static final String ENUMERATION_TAG_NAME = "enumeration";
-    public static final String HTML4_LOOSE_URI = "http://www.w3.org/TR/html4/loose.dtd";
+    public static final String HTML4_LOOSE_URI = XmlStandardResourceUtil.HTML4_LOOSE_URI;
     public static final String WSDL_SCHEMA_URI = "http://schemas.xmlsoap.org/wsdl/";
     public static final String XHTML4_SCHEMA_LOCATION;
     public final static ThreadLocal<Boolean> BUILDING_DOM_STUBS = new ThreadLocal<Boolean>() {
@@ -182,12 +144,7 @@ public class XmlUtil {
         }
     };
     private static final Logger LOG = Logger.getInstance("#XmlUtil");
-    private static final String JSTL_FORMAT_URI3 = "http://java.sun.com/jstl/fmt_rt";
-    public static final String[] JSTL_FORMAT_URIS = {
-        JSTL_FORMAT_URI,
-        JSTL_FORMAT_URI2,
-        JSTL_FORMAT_URI3
-    };
+
     private static final String FILE = "file:";
     private static final String CLASSPATH = "classpath:/";
     private static final String URN = "urn:";
@@ -309,17 +266,6 @@ public class XmlUtil {
     public static XmlFile findXmlFile(PsiFile base, String uri) {
         PsiFile result = null;
 
-        if (ApplicationManager.getApplication().isUnitTestMode()) {
-            String data = base.getOriginalFile().getUserData(TEST_PATH);
-
-            if (data != null) {
-                String filePath = data + "/" + uri;
-                final VirtualFile path = StandardFileSystems.local().findFileByPath(filePath.replace(File.separatorChar, '/'));
-                if (path != null) {
-                    result = base.getManager().findFile(path);
-                }
-            }
-        }
         if (result == null) {
             result = findRelativeFile(uri, base);
         }

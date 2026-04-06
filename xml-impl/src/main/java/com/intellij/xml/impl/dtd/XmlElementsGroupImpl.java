@@ -15,11 +15,11 @@
  */
 package com.intellij.xml.impl.dtd;
 
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
 import consulo.application.util.NotNullLazyValue;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.psi.xml.XmlContentParticle;
+import consulo.xml.language.psi.XmlContentParticle;
 
 import java.util.List;
 

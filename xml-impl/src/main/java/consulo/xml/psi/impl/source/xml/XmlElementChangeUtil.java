@@ -22,8 +22,8 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.module.content.ProjectRootManager;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTokenType;
 
 /**
  * @author Maxim.Mossienko

@@ -33,9 +33,9 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.undoRedo.CommandProcessor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
 
 /**
  * @author spleaner

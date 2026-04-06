@@ -15,14 +15,13 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.application.Application;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
 import consulo.codeEditor.Editor;
@@ -58,10 +57,10 @@ import consulo.xml.application.options.XmlSettings;
 import consulo.xml.codeInsight.completion.ExtendedTagInsertHandler;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;

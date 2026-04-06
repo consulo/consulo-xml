@@ -25,9 +25,9 @@ import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.StandardPatterns;
 import consulo.language.psi.meta.PsiMetaData;
 
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 import consulo.util.lang.Comparing;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.util.ProcessingContext;
 
 /**

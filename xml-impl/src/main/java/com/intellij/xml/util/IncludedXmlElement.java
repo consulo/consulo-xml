@@ -22,10 +22,10 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiInvalidElementAccessException;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.util.lang.ref.SoftReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
 import org.jspecify.annotations.Nullable;
 
 /**

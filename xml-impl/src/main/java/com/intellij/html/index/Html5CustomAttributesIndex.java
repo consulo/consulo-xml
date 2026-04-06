@@ -35,9 +35,9 @@ import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 import consulo.xml.lexer.XHtmlHighlightingLexer;
-import consulo.xml.psi.xml.XmlTokenType;
 
 import java.util.Collections;
 import java.util.HashMap;

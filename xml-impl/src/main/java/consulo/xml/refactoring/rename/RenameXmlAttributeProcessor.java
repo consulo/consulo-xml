@@ -28,9 +28,9 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.usage.UsageInfo;
 import consulo.util.collection.Queue;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlFile;
 
 import org.jspecify.annotations.Nullable;
 

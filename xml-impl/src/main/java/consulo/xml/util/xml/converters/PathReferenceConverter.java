@@ -26,7 +26,7 @@ import consulo.language.psi.path.PathReferenceManager;
 import consulo.language.psi.path.PathReference;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 
 /**
  * @author Dmitry Avdeev

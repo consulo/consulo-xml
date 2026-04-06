@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;

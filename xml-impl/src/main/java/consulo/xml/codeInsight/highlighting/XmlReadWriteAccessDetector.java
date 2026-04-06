@@ -19,10 +19,10 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlElementDecl;
-import consulo.xml.psi.xml.XmlComment;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlComment;
 import consulo.language.editor.highlight.ReadWriteAccessDetector;
 
 /**

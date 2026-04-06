@@ -15,7 +15,7 @@ import consulo.language.codeStyle.arrangement.model.ArrangementMatchCondition;
 import consulo.language.codeStyle.arrangement.std.*;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.Pair;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

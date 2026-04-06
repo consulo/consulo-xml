@@ -22,8 +22,8 @@ import consulo.language.editor.refactoring.unwrap.Unwrapper;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.Collections;
 import java.util.List;

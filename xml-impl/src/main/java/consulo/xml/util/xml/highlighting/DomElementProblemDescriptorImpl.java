@@ -28,10 +28,10 @@ import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
 import consulo.xml.util.xml.*;
 import org.jspecify.annotations.Nullable;
 

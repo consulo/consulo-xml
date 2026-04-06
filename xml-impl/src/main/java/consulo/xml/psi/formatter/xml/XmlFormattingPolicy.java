@@ -20,8 +20,8 @@ import consulo.language.codeStyle.*;
 import consulo.language.Language;
 import consulo.util.lang.Pair;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.HashMap;
 import java.util.Map;

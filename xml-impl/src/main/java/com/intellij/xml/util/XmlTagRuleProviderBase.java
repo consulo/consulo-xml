@@ -15,6 +15,10 @@
  */
 package com.intellij.xml.util;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import consulo.language.editor.inspection.LocalQuickFix;
@@ -28,10 +32,6 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.function.Condition;
 import consulo.util.lang.StringUtil;
 import consulo.language.ast.RoleFinder;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.XmlTagRuleProvider;
 
 public abstract class XmlTagRuleProviderBase extends XmlTagRuleProvider {

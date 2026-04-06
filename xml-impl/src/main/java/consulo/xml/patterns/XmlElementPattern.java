@@ -15,9 +15,9 @@
  */
 package consulo.xml.patterns;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlEntityRef;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlEntityRef;
+import consulo.xml.language.psi.XmlText;
 import consulo.language.pattern.InitialPatternCondition;
 import consulo.language.pattern.PsiElementPattern;
 import consulo.language.util.ProcessingContext;

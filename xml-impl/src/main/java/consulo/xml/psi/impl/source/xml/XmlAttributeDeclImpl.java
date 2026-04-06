@@ -30,7 +30,13 @@ import consulo.logging.Logger;
 import consulo.navigation.Navigatable;
 import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlEnumeratedType;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
 
 
 /**

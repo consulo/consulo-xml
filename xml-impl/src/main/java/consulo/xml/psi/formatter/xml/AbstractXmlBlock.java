@@ -37,8 +37,14 @@ import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

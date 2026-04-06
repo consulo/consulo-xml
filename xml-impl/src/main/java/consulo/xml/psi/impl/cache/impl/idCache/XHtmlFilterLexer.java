@@ -23,8 +23,8 @@ import consulo.language.psi.stub.BaseFilterLexer;
 import consulo.language.psi.stub.OccurrenceConsumer;
 import consulo.language.util.CommentUtilCore;
 import consulo.language.version.LanguageVersionUtil;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlElementType;
 
 public class XHtmlFilterLexer extends BaseFilterLexer {
 

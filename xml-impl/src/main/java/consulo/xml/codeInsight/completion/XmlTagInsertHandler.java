@@ -50,9 +50,12 @@ import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.codeInsight.editorActions.XmlTagNameSynchronizer;
 import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState;
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptorWithCDataContent;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;

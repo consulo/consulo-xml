@@ -18,7 +18,7 @@ package org.intellij.plugins.relaxNG.references;
 
 
 import consulo.language.pattern.PatternCondition;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.language.util.ProcessingContext;
 
 class AttributeValueCondition extends PatternCondition<XmlAttributeValue> {

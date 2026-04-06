@@ -15,8 +15,8 @@
  */
 package consulo.xml.codeInspection.htmlInspections;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
@@ -26,8 +26,8 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 
 public abstract class HtmlUnknownAttributeInspectionBase extends HtmlUnknownElementInspection {
     @Override

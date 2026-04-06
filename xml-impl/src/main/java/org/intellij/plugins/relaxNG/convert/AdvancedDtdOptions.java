@@ -26,8 +26,8 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
-import consulo.xml.psi.xml.XmlAttributeDecl;
-import consulo.xml.psi.xml.XmlElementDecl;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlElementDecl;
 import consulo.project.Project;
 import consulo.ui.ex.action.DefaultActionGroup;
 

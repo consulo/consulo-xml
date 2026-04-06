@@ -24,7 +24,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.localize.LocalizeKey;
 import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.Optional;
 

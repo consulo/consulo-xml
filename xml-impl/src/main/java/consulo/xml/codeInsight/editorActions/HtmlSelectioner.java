@@ -32,7 +32,11 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlTokenType;
 
 import java.util.ArrayList;
 import java.util.List;

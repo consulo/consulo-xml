@@ -15,10 +15,10 @@
  */
 package consulo.xml.psi.formatter.xml;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;

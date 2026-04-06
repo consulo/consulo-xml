@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.document.util.TextRange;
 import consulo.language.editor.completion.lookup.LookupElement;
 import consulo.language.editor.completion.lookup.LookupValueFactory;
@@ -30,9 +30,9 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
 
 import org.jspecify.annotations.Nullable;

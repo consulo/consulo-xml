@@ -15,16 +15,16 @@
  */
 package com.intellij.xml.util;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.util.IncorrectOperationException;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 
 /**
  * @author peter

@@ -15,8 +15,8 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.access.RequiredWriteAction;
@@ -36,8 +36,8 @@ import consulo.project.Project;
 import consulo.undoRedo.CommandProcessor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

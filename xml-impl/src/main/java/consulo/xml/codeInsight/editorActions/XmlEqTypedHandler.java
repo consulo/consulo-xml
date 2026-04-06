@@ -23,8 +23,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
 
 
 @ExtensionImpl(id = "xmlEq", order = "after xmlSlash")

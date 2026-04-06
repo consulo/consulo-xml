@@ -21,10 +21,10 @@ import consulo.language.psi.*;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.EditSourceUtil;
 import consulo.navigation.Navigatable;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.psi.tree.xml.IDTDElementType;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

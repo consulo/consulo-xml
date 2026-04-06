@@ -15,10 +15,9 @@
  */
 package com.intellij.xml.util.documentation;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlBundle;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.*;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
@@ -38,12 +37,12 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.lang.documentation.DocumentationUtil;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.*;
+import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.Collections;

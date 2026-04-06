@@ -41,7 +41,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.impl.internal.ExternalResource;
 import consulo.xml.impl.internal.StandardExternalResourceData;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import org.jdom.Element;
 
 import org.jspecify.annotations.Nullable;

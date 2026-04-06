@@ -19,7 +19,7 @@ package consulo.xml.codeInspection.htmlInspections;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 import org.jspecify.annotations.Nullable;
 

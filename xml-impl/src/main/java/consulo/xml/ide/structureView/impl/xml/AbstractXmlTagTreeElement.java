@@ -19,8 +19,8 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.ide.structureView.xml.XmlStructureViewElementProvider;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.Collection;
 

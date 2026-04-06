@@ -23,10 +23,9 @@ import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.util.lang.StringUtil;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.impl.source.xml.behavior.DefaultXmlPsiPolicy;
-import consulo.xml.psi.xml.*;
 
 import java.util.ArrayList;
 import java.util.List;

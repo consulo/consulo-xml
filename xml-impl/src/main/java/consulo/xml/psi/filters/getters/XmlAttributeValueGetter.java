@@ -17,9 +17,9 @@ package consulo.xml.psi.filters.getters;
 
 
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 import consulo.util.collection.ArrayUtil;
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.intellij.xml.impl.XmlEnumerationDescriptor;
 

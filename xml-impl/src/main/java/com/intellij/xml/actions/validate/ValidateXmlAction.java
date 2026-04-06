@@ -18,8 +18,8 @@ import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.xml.XmlFile;
 import jakarta.inject.Inject;
 
 /**

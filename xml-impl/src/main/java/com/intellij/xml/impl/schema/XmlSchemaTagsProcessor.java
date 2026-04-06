@@ -18,12 +18,12 @@ package com.intellij.xml.impl.schema;
 import java.util.HashSet;
 import java.util.Set;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.psi.PsiReference;
 import consulo.util.collection.ArrayUtil;
 

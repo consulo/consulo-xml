@@ -20,7 +20,7 @@ import consulo.language.Language;
 import consulo.language.editor.inspection.InspectionSuppressor;
 import consulo.language.editor.inspection.SuppressQuickFix;
 import consulo.language.psi.PsiElement;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 
 @ExtensionImpl

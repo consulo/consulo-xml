@@ -28,7 +28,11 @@ import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
 import consulo.navigation.Navigatable;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlElementContentSpec;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementDecl;
 
 
 /**

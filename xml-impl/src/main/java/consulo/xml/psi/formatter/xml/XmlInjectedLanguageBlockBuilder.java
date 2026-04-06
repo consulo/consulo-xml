@@ -24,7 +24,7 @@ import consulo.document.util.TextRange;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.inject.InjectedLanguageBlockBuilder;
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementType;
 import consulo.language.codeStyle.Alignment;
 
 import org.jspecify.annotations.Nullable;

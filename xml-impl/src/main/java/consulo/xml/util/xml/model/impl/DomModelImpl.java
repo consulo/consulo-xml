@@ -18,7 +18,7 @@ package consulo.xml.util.xml.model.impl;
 
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.model.DomModel;
 

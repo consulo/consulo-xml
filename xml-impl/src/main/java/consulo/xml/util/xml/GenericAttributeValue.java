@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 import org.jspecify.annotations.Nullable;
 
 /**

@@ -24,7 +24,7 @@ import consulo.language.impl.psi.CodeEditUtil;
 import consulo.language.impl.psi.DummyHolderFactory;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.CharTable;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 
 public abstract class EncodeEachSymbolPolicy extends DefaultXmlPsiPolicy {
   public ASTNode encodeXmlTextContents(String displayText, PsiElement text) {

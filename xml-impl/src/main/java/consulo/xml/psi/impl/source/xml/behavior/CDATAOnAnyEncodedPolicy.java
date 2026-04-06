@@ -27,8 +27,8 @@ import consulo.language.impl.psi.DummyHolderFactory;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import consulo.language.util.CharTable;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 public class CDATAOnAnyEncodedPolicy extends DefaultXmlPsiPolicy

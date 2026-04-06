@@ -19,14 +19,14 @@ import consulo.language.psi.OuterLanguageElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.filter.ElementFilter;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.HashSet;
 import java.util.Set;

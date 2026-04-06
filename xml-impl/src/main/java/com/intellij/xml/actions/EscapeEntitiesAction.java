@@ -21,11 +21,11 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.primitive.ints.IntMaps;
 import consulo.util.collection.primitive.ints.IntObjectMap;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlEntityDecl;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlEntityDecl;
 
 /**
  * @author Dennis.Ushakov

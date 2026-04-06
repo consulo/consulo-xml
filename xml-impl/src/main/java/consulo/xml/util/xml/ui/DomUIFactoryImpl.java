@@ -33,7 +33,7 @@ import consulo.ui.ex.event.UserActivityListener;
 import consulo.util.collection.ClassMap;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.dom.DomUIControlsProvider;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManagerImpl;

@@ -20,7 +20,7 @@ import consulo.language.editor.refactoring.rename.RenameInputValidator;
 import consulo.language.pattern.ElementPattern;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttributeValue;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 

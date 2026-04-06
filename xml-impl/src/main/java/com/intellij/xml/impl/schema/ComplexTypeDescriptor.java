@@ -15,10 +15,10 @@
  */
 package com.intellij.xml.impl.schema;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.util.*;
 import consulo.language.psi.PsiElement;
@@ -26,8 +26,8 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Comparing;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.SchemaReferencesProvider;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

@@ -15,9 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementType;
 import com.intellij.xml.util.XmlPsiUtil;
 import consulo.content.scope.SearchScope;
 import consulo.language.Language;
@@ -31,6 +30,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.scope.GlobalSearchScope;
 
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

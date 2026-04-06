@@ -22,9 +22,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.util.dataholder.Key;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
-import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
-import consulo.xml.psi.xml.*;
 
 import java.util.HashSet;
 import java.util.Set;

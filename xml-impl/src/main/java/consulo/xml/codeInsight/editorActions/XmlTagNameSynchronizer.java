@@ -44,8 +44,8 @@ import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.codeInspection.htmlInspections.RenameTagBeginOrEndIntentionAction;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlTokenType;
 import jakarta.inject.Inject;
 
 

@@ -23,8 +23,8 @@ import consulo.language.spellcheker.tokenizer.TokenConsumer;
 import consulo.language.spellcheker.tokenizer.Tokenizer;
 import consulo.language.spellcheker.tokenizer.splitter.TextTokenSplitter;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlText;
 
 
 public abstract class XmlBaseSpellcheckingStrategy extends SpellcheckingStrategy {

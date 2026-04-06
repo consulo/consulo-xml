@@ -15,10 +15,10 @@
  */
 package com.intellij.xml.impl;
 
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.jspecify.annotations.Nullable;
 
 /**

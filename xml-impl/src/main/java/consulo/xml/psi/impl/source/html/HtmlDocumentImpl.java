@@ -17,8 +17,8 @@ package consulo.xml.psi.impl.source.html;
 
 import consulo.xml.psi.impl.source.xml.XmlDocumentImpl;
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author Maxim.Mossienko

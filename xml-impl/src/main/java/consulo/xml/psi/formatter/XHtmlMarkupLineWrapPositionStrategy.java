@@ -4,7 +4,6 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 
-
 /**
  * @author VISTALL
  * @since 02-Aug-22

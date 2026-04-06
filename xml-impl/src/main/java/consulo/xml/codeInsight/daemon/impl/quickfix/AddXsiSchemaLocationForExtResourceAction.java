@@ -34,11 +34,11 @@ import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.List;

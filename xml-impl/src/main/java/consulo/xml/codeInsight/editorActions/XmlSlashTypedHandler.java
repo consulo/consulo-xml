@@ -33,8 +33,12 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 
 @ExtensionImpl(id = "xmlSlash")
 public class XmlSlashTypedHandler extends TypedHandlerDelegate {

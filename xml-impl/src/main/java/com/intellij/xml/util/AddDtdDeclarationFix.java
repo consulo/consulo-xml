@@ -31,8 +31,16 @@ import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttlistDecl;
+import consulo.xml.language.psi.XmlConditionalSection;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlMarkupDecl;
+import consulo.xml.language.psi.XmlProlog;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.function.Function;
 

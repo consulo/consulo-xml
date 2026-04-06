@@ -15,6 +15,7 @@
  */
 package consulo.xml.patterns;
 
+import consulo.xml.language.psi.*;
 import org.jspecify.annotations.Nullable;
 
 import consulo.language.pattern.ElementPattern;
@@ -24,11 +25,6 @@ import consulo.language.pattern.PsiNamePatternCondition;
 import consulo.language.pattern.StandardPatterns;
 import consulo.language.pattern.StringPattern;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlProcessingInstruction;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
 import consulo.language.util.ProcessingContext;
 
 /**

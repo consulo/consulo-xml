@@ -30,9 +30,9 @@ import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.lang.dtd.DTDLanguage;
-import consulo.xml.psi.xml.XmlEntityDecl;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTokenType;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 

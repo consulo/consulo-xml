@@ -22,11 +22,11 @@ import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ReferenceProvidersRegistry;
 import consulo.logging.Logger;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlElementContentGroup;
-import consulo.xml.psi.xml.XmlElementContentSpec;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElementContentGroup;
+import consulo.xml.language.psi.XmlElementContentSpec;
+import consulo.xml.language.psi.XmlElementType;
 
 
 /**

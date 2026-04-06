@@ -15,13 +15,13 @@
  */
 package com.intellij.html.impl;
 
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import com.intellij.html.RelaxedHtmlNSDescriptor;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.ArrayUtil;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;

@@ -26,7 +26,8 @@ import consulo.xml.psi.impl.source.tree.XmlFileElement;
 
 import org.jspecify.annotations.Nullable;
 
-import static consulo.xml.psi.xml.XmlElementType.*;
+import static consulo.xml.language.psi.XmlElementType.*;
+import static consulo.xml.psi.XmlElementTokenTypeImpl.*;
 
 /**
  * @author VISTALL

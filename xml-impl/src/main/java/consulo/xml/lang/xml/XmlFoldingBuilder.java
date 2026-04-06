@@ -3,6 +3,7 @@ package consulo.xml.lang.xml;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.xml.lang.base.XmlBasedFoldingBuilder;
+import consulo.xml.language.XMLLanguage;
 
 
 /**

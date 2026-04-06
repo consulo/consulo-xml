@@ -1,6 +1,6 @@
 package com.intellij.html;
 
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 
 /**
  * @author Eugene.Kudelevsky

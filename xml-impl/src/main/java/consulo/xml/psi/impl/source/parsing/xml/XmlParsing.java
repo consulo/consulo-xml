@@ -25,7 +25,7 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 
 import org.jspecify.annotations.Nullable;
 
-import static consulo.xml.psi.xml.XmlElementType.*;
+import static consulo.xml.language.psi.XmlElementType.*;
 
 /*
  * @author max

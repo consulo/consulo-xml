@@ -15,11 +15,11 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.component.util.ModificationTracker;
 import consulo.util.dataholder.UserDataHolder;
 
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

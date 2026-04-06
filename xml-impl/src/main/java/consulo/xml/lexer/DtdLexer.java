@@ -15,7 +15,7 @@
  */
 package consulo.xml.lexer;
 
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.language.ast.TokenSet;
 import consulo.language.lexer.FlexAdapter;
 import consulo.language.lexer.MergingLexerAdapter;

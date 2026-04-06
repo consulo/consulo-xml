@@ -24,8 +24,8 @@ import consulo.language.psi.PsiFile;
 import consulo.ui.color.ColorValue;
 import consulo.ui.color.RGBColor;
 import consulo.xml.application.options.editor.XmlEditorOptions;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.HashSet;
 import java.util.Set;

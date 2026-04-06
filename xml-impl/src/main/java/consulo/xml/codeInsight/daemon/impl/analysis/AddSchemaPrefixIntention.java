@@ -33,13 +33,13 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.InputValidator;
 import consulo.ui.ex.awt.Messages;
 import consulo.ui.ex.awt.UIUtil;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.language.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.TypeOrElementOrAttributeReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 

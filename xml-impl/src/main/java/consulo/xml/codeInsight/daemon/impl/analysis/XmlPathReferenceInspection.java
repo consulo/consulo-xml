@@ -27,12 +27,12 @@ import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlDoctype;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

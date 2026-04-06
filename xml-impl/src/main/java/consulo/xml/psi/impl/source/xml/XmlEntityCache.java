@@ -22,7 +22,7 @@ import consulo.language.psi.SmartPointerManager;
 import consulo.language.psi.SmartPsiElementPointer;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
-import consulo.xml.psi.xml.XmlEntityDecl;
+import consulo.xml.language.psi.XmlEntityDecl;
 import consulo.language.psi.PsiFile;
 import consulo.util.dataholder.Key;
 

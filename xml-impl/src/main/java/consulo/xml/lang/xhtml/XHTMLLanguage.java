@@ -15,7 +15,7 @@
  */
 package consulo.xml.lang.xhtml;
 
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 /**
  * @author max

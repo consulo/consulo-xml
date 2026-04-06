@@ -25,8 +25,7 @@ import consulo.language.ast.TokenSet;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
-import consulo.xml.psi.xml.XmlTokenType;
-
+import consulo.xml.language.psi.XmlTokenType;
 
 public class HTMLParser implements PsiParser {
 

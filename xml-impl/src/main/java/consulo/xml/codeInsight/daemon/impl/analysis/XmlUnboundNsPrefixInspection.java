@@ -15,10 +15,10 @@
  */
 package consulo.xml.codeInsight.daemon.impl.analysis;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
@@ -34,11 +34,18 @@ import consulo.language.psi.*;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 /**

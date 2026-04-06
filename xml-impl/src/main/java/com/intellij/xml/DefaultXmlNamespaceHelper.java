@@ -29,8 +29,10 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.xml.*;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
+import consulo.xml.language.psi.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

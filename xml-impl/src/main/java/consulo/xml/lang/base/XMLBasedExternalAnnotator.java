@@ -15,8 +15,8 @@
  */
 package consulo.xml.lang.base;
 
-import com.intellij.xml.XmlNSDescriptor;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.descriptor.XmlNSDescriptor;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.AnnotationBuilder;
 import consulo.language.editor.annotation.AnnotationHolder;
@@ -27,10 +27,10 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.xml.Validator;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

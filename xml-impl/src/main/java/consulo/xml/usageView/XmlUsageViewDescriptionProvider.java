@@ -21,8 +21,8 @@ import consulo.language.psi.ElementDescriptionProvider;
 import consulo.language.psi.PsiElement;
 import consulo.usage.UsageViewLongNameLocation;
 import consulo.usage.UsageViewShortNameLocation;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 
 
 /**

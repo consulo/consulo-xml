@@ -19,10 +19,10 @@ import consulo.document.util.TextRange;
 import consulo.language.pom.PomRenameableTarget;
 import consulo.language.impl.psi.DelegatePsiTarget;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagValue;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagValue;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.language.pom.PsiDeclaredTarget;
 import consulo.util.lang.StringUtil;
 

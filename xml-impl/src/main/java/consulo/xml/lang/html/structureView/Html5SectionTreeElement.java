@@ -17,7 +17,7 @@ package consulo.xml.lang.html.structureView;
 
 import consulo.application.util.function.Computable;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 
 import org.jspecify.annotations.Nullable;

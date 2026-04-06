@@ -1,15 +1,15 @@
 package com.intellij.xml.arrangement;
 
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.language.codeStyle.arrangement.DefaultArrangementEntry;
 import consulo.language.codeStyle.arrangement.std.ArrangementSettingsToken;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.util.collection.Stack;
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;

@@ -17,8 +17,7 @@ package com.intellij.xml.util;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.component.extension.ExtensionPointName;
+import consulo.xml.language.psi.XmlFile;
 
 /**
  * @author yole

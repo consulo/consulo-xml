@@ -22,9 +22,10 @@ import consulo.language.codeStyle.WhiteSpaceFormattingStrategyAdapter;
 import consulo.language.impl.ast.*;
 import consulo.language.impl.psi.CodeEditUtil;
 import consulo.language.util.CharTable;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

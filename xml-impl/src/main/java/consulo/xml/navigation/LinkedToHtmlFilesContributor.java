@@ -16,10 +16,10 @@
 package consulo.xml.navigation;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.application.util.function.Processor;
 import com.intellij.xml.util.HtmlLinkUtil;
 import consulo.language.psi.PsiElement;

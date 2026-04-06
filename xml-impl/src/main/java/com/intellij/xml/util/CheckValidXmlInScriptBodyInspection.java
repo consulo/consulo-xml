@@ -42,14 +42,14 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagValue;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.lexer.XmlLexer;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagValue;
-import consulo.xml.psi.xml.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 
 /**

@@ -29,8 +29,8 @@ import consulo.project.Project;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.collection.Stack;
 import consulo.util.lang.Pair;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.List;

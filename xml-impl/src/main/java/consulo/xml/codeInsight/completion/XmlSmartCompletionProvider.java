@@ -15,7 +15,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import consulo.application.Application;
 import consulo.language.editor.completion.CompletionParameters;
@@ -23,7 +23,7 @@ import consulo.language.editor.completion.CompletionResultSet;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.List;
 

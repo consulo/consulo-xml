@@ -44,7 +44,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.Validator;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 import org.xml.sax.SAXParseException;
 
 import java.lang.ref.WeakReference;

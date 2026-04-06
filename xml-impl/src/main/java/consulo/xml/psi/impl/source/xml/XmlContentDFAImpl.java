@@ -15,11 +15,11 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
 import consulo.util.collection.ContainerUtil;
 
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

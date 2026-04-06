@@ -23,7 +23,13 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.meta.PsiMetaData;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author ven

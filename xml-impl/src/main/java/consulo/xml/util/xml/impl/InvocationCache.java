@@ -4,7 +4,7 @@ import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.ProcessCanceledException;
 import consulo.navigation.Navigatable;
 import consulo.util.dataholder.Key;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.util.xml.*;
 
 import org.jspecify.annotations.Nullable;

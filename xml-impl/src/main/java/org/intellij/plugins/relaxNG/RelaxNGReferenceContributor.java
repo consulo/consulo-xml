@@ -21,7 +21,7 @@ import consulo.language.Language;
 import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceRegistrar;
 import consulo.language.psi.filter.position.PatternFilter;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.patterns.XmlNamedElementPattern;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 

@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.util.xml.DomElement;
 

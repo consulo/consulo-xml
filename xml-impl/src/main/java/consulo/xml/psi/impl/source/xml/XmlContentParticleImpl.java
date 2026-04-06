@@ -18,10 +18,10 @@ package consulo.xml.psi.impl.source.xml;
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DtdResolveUtil;
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlContentParticle;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.language.psi.XmlContentParticle;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.language.psi.PsiWhiteSpace;
 
 /**

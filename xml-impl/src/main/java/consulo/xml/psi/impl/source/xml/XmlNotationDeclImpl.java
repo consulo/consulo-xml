@@ -18,7 +18,11 @@ package consulo.xml.psi.impl.source.xml;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.ChildRoleBase;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlElementContentSpec;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlNotationDecl;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
 
 /**
  * @author Mike

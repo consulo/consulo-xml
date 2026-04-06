@@ -35,8 +35,8 @@ import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.javaee.ApplicationExternalResourceManager;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.xml.XmlFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

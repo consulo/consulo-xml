@@ -34,12 +34,12 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;

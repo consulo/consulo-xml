@@ -29,9 +29,9 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 import org.jspecify.annotations.Nullable;
 
 public class AddAttributeValueIntentionFix extends LocalQuickFixAndIntentionActionOnPsiElement {

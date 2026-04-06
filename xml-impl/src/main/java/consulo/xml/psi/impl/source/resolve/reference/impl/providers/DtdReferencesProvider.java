@@ -15,8 +15,8 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.util.AddDtdDeclarationFix;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
@@ -33,9 +33,9 @@ import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

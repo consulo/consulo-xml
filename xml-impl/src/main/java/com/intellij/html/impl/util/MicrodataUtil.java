@@ -26,13 +26,9 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.function.PairFunction;
 import consulo.util.lang.text.StringTokenizer;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

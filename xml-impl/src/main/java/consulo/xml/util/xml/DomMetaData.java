@@ -16,7 +16,7 @@
 package consulo.xml.util.xml;
 
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.meta.PsiPresentableMetaData;
 import consulo.language.psi.meta.PsiWritableMetaData;

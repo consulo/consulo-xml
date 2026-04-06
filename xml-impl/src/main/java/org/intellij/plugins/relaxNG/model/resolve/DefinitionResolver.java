@@ -21,7 +21,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.language.psi.resolve.PsiElementProcessor;

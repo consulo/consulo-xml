@@ -15,14 +15,15 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.XmlNamespaceIndex;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.*;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.*;
@@ -57,9 +58,6 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.ImplicitNamespaceDescriptorProvider;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

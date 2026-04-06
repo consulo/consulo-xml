@@ -6,6 +6,8 @@ open module com.intellij.xml
 {
     requires transitive consulo.ide.api;
 
+    requires transitive com.intellij.xml.api;
+
     requires consulo.util.xml.fast.reader;
 
     // TODO remove in future

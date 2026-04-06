@@ -22,7 +22,7 @@ import consulo.language.impl.psi.DelegatePsiTarget;
 import consulo.language.pom.PomTarget;
 import consulo.language.pom.PomTargetPsiElement;
 import consulo.language.psi.PsiElement;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 import java.util.List;
 

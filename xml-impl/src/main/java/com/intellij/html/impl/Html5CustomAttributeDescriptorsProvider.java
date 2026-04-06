@@ -16,7 +16,7 @@
 package com.intellij.html.impl;
 
 import com.intellij.html.index.Html5CustomAttributesIndex;
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 import com.intellij.xml.XmlAttributeDescriptorsProvider;
 import com.intellij.xml.impl.schema.AnyXmlAttributeDescriptor;
 import com.intellij.xml.util.HtmlUtil;
@@ -28,8 +28,8 @@ import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.stub.FileBasedIndex;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.Collection;

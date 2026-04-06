@@ -20,8 +20,8 @@ import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.ObjectUtil;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.highlighting.*;
 

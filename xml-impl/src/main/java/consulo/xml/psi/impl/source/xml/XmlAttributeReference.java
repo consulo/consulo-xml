@@ -15,8 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
 import consulo.application.util.NullableLazyValue;
 import consulo.document.util.TextRange;
@@ -26,9 +26,9 @@ import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 public class XmlAttributeReference implements PsiReference {

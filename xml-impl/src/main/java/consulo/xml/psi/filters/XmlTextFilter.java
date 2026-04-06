@@ -18,7 +18,7 @@ package consulo.xml.psi.filters;
 import consulo.language.psi.filter.ElementFilter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.util.collection.ArrayUtil;
 
 /**

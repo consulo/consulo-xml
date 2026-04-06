@@ -16,7 +16,7 @@
 
 package consulo.xml.util.xml.tree;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.project.Project;
 import consulo.ui.ex.SimpleTextAttributes;
@@ -24,8 +24,8 @@ import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.ui.ex.awt.tree.SimpleTree;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;

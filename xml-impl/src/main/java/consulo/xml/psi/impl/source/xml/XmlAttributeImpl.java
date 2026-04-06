@@ -15,8 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
@@ -31,9 +31,17 @@ import consulo.logging.Logger;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.primitive.ints.IntList;
 import consulo.util.collection.primitive.ints.IntLists;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlDecl;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlEntityRef;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 
 import org.jspecify.annotations.Nullable;
 import java.util.Arrays;

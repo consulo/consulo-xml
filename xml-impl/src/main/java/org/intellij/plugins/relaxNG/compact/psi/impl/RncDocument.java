@@ -16,10 +16,10 @@
 
 package org.intellij.plugins.relaxNG.compact.psi.impl;
 
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlProlog;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlProlog;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.meta.MetaDataService;

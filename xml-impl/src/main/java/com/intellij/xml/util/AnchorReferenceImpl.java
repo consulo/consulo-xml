@@ -31,8 +31,9 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.xml.*;
+import consulo.xml.psi.*;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;

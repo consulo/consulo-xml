@@ -16,9 +16,9 @@
 package consulo.xml.psi.impl.source.html.dtd;
 
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.util.collection.ArrayUtil;
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 
 /**
  * @author Maxim.Mossienko

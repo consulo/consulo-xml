@@ -32,9 +32,9 @@ import consulo.ui.ex.JBColor;
 import consulo.ui.ex.awt.ColorChooser;
 import consulo.ui.ex.awt.util.ColorUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.XmlElementFactory;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 
 import javax.swing.*;
 import java.awt.*;

@@ -22,9 +22,9 @@ import consulo.language.editor.ImplementationTextSelectioner;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 
 
 /**

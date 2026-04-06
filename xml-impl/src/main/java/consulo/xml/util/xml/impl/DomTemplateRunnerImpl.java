@@ -22,7 +22,7 @@ import consulo.language.editor.template.TemplateManager;
 import consulo.language.editor.template.TemplateSettings;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.actions.generate.DomTemplateRunner;
 import jakarta.inject.Inject;

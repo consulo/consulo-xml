@@ -15,10 +15,9 @@
  */
 package consulo.xml.psi.formatter;
 
-import consulo.codeEditor.LineWrapPositionStrategy;
 import consulo.language.ast.TokenType;
 import consulo.language.editor.PsiAwareDefaultLineWrapPositionStrategy;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementType;
 
 /**
  * @author Denis Zhdanov

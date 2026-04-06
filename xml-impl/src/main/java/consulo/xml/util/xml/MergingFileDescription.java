@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.util.collection.ArrayUtil;
 
 import java.util.ArrayList;

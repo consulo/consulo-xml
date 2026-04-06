@@ -20,13 +20,8 @@ import java.util.Collection;
 import java.util.List;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.xml.psi.xml.XmlDoctype;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlMarkupDecl;
-import consulo.xml.psi.xml.XmlProlog;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.psi.PsiElement;
+import consulo.xml.language.psi.*;
 
 public class XmlFileTreeElement extends AbstractXmlTagTreeElement<XmlFile> {
   public XmlFileTreeElement(XmlFile file) {

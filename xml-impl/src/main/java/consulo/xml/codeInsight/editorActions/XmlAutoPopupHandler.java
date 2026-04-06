@@ -30,8 +30,8 @@ import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.template.TemplateLanguageFileViewProvider;
 import consulo.project.Project;
 import consulo.util.lang.ref.SimpleReference;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlTag;
 
 @ExtensionImpl(id = "xmlAuto", order = "after xmlGt")
 public class XmlAutoPopupHandler extends TypedHandlerDelegate {

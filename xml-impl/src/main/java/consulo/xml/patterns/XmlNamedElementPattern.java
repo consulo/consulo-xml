@@ -15,12 +15,12 @@
  */
 package consulo.xml.patterns;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElement;
 import consulo.language.pattern.*;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.util.ProcessingContext;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElement;
 import org.jspecify.annotations.Nullable;
 import java.util.function.BiPredicate;
 

@@ -16,7 +16,7 @@
 
 package consulo.xml.lang;
 
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.application.dumb.DumbAware;
 import consulo.application.progress.ProgressManager;
 import consulo.document.Document;
@@ -31,9 +31,20 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlConditionalSection;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlProlog;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlToken;
 import consulo.xml.psi.impl.source.html.HtmlFileImpl;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

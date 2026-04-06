@@ -31,10 +31,10 @@ import consulo.project.Project;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 
 import java.util.*;
 import java.util.function.BiFunction;

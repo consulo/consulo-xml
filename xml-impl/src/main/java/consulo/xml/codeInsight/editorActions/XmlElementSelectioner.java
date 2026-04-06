@@ -16,8 +16,8 @@
 package consulo.xml.codeInsight.editorActions;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 import consulo.language.psi.PsiElement;
 

@@ -15,9 +15,9 @@
  */
 package com.intellij.xml.actions;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
 import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
@@ -59,10 +59,9 @@ import consulo.ui.ex.awt.ColoredListCellRenderer;
 import consulo.ui.ex.popup.JBPopup;
 import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.undoRedo.CommandProcessor;
+import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlContentDFA;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;

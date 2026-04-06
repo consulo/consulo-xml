@@ -19,10 +19,10 @@ import consulo.language.impl.DebugUtil;
 import consulo.language.psi.PsiElement;
 import consulo.logging.Logger;
 import consulo.logging.attachment.AttachmentFactory;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlEntityRef;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlEntityRef;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

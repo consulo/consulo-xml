@@ -15,8 +15,9 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlMarkupDecl;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
+import consulo.xml.language.psi.XmlMarkupDecl;
 import consulo.language.psi.meta.MetaDataService;
 import consulo.language.psi.meta.PsiMetaData;
 
@@ -25,7 +26,7 @@ import consulo.language.psi.meta.PsiMetaData;
  */
 public class XmlMarkupDeclImpl extends XmlElementImpl implements XmlMarkupDecl {
   public XmlMarkupDeclImpl() {
-    super(XmlElementType.XML_MARKUP_DECL);
+    super(XmlElementTokenTypeImpl.XML_MARKUP_DECL);
   }
 
   public PsiMetaData getMetaData(){

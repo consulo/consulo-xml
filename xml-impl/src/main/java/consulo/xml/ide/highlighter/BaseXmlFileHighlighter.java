@@ -24,8 +24,7 @@ import consulo.language.ast.IElementType;
 import consulo.language.editor.highlight.SyntaxHighlighterBase;
 import consulo.util.collection.MultiMap;
 import consulo.xml.editor.XmlHighlighterColors;
-import consulo.xml.psi.xml.XmlTokenType;
-
+import consulo.xml.language.psi.XmlTokenType;
 
 public abstract class BaseXmlFileHighlighter extends SyntaxHighlighterBase {
   protected static void storeDefaults(MultiMap<IElementType, TextAttributesKey> keys) {

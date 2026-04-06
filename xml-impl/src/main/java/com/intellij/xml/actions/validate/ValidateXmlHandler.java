@@ -3,8 +3,8 @@ package com.intellij.xml.actions.validate;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.xml.psi.xml.XmlFile;
 import consulo.component.extension.ExtensionPointName;
+import consulo.xml.language.psi.XmlFile;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface ValidateXmlHandler {

@@ -22,8 +22,8 @@ import java.util.Map;
 
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.util.PsiTreeUtil;
 

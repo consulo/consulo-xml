@@ -30,8 +30,8 @@ import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.xml.lang.HtmlScriptContentProvider;
 import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.psi.xml.XmlTokenType;
 
+import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;

@@ -27,10 +27,8 @@ import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.*;
-
 import java.util.HashMap;
 import java.util.Map;
 

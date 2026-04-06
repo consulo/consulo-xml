@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.XmlTagNameProvider;
@@ -42,10 +42,10 @@ import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.codeInsight.completion.XmlTagInsertHandler;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 import java.util.*;
 

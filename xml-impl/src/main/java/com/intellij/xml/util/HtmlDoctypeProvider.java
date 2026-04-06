@@ -17,10 +17,9 @@ package com.intellij.xml.util;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.component.extension.ExtensionPointName;
-import consulo.xml.psi.xml.XmlDoctype;
-import consulo.xml.psi.xml.XmlFile;
 
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 /**

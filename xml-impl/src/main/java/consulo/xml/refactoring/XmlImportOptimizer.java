@@ -29,11 +29,11 @@ import consulo.language.psi.SmartPsiElementPointer;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlUnusedNamespaceInspection;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -29,12 +29,12 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.language.psi.XmlRecursiveElementVisitor;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 

@@ -24,9 +24,9 @@ import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.DependentNSReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.URLReference;
-import consulo.xml.psi.xml.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 /**

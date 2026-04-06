@@ -32,7 +32,7 @@ import consulo.util.io.Readers;
 import consulo.util.io.StreamUtil;
 import consulo.util.lang.Comparing;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 import java.io.*;

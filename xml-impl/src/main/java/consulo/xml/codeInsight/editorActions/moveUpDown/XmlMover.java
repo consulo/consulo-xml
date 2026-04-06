@@ -15,8 +15,8 @@
  */
 package consulo.xml.codeInsight.editorActions.moveUpDown;
 
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
@@ -34,10 +34,10 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.TagNameVariantCollector;
 import consulo.xml.psi.impl.source.xml.XmlDocumentImpl;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlText;
 import jakarta.inject.Inject;
 
 

@@ -23,8 +23,8 @@ import consulo.language.codeStyle.ChildAttributes;
 import consulo.language.codeStyle.Indent;
 import consulo.language.codeStyle.Spacing;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.codeStyle.Wrap;
 
 import org.jspecify.annotations.Nullable;

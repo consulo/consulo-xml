@@ -5,7 +5,7 @@ import consulo.language.Language;
 import consulo.language.editor.inspection.SuppressQuickFix;
 import consulo.language.psi.PsiElement;
 import consulo.language.spellchecker.editor.inspection.SuppressibleSpellcheckingStrategy;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 

@@ -15,17 +15,12 @@
  */
 package com.intellij.xml.util;
 
-
+import consulo.xml.language.psi.*;
 import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.path.FileReferenceSet;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author mike

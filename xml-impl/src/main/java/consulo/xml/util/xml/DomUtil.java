@@ -15,7 +15,12 @@
  */
 package consulo.xml.util.xml;
 
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.codeEditor.Editor;
@@ -32,7 +37,6 @@ import consulo.util.collection.SmartList;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Pair;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.psi.xml.*;
 import consulo.xml.util.xml.reflect.*;
 
 import org.jspecify.annotations.Nullable;

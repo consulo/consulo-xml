@@ -25,8 +25,8 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.project.DumbService;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.psi.xml.XmlFile;
 
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;

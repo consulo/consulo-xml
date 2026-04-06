@@ -19,14 +19,14 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlRecursiveElementVisitor;
 import consulo.language.psi.resolve.PsiElementProcessor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlComment;
-import consulo.xml.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlDeclareIdInCommentAction;
 import consulo.util.collection.ArrayUtil;
 
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;

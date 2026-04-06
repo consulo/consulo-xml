@@ -22,7 +22,11 @@ import consulo.application.util.ConcurrentFactoryMap;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 import java.util.Collections;

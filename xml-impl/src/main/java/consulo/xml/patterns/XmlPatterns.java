@@ -19,7 +19,7 @@ import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.PlatformPatterns;
 import consulo.language.pattern.PsiNamePatternCondition;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 
 /**
  * @author peter

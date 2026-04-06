@@ -33,7 +33,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomCollectionProblemDescriptor;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;

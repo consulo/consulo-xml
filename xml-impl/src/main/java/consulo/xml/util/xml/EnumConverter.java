@@ -4,8 +4,8 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.localize.LocalizeValue;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

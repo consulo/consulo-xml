@@ -16,7 +16,7 @@
 package consulo.xml.psi.filters;
 
 import consulo.language.psi.filter.PlainTextFilter;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author ik

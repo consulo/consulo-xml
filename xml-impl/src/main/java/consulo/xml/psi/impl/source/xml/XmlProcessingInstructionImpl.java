@@ -19,11 +19,11 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ReferenceProvidersRegistry;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlProcessingInstruction;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagChild;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlProcessingInstruction;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagChild;
 
 
 /**

@@ -17,7 +17,7 @@ package consulo.xml.codeInsight.completion;
 
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlExtension;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlEnumeratedValueReference;
 import com.intellij.xml.util.XmlUtil;
@@ -50,11 +50,11 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;

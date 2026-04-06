@@ -17,7 +17,7 @@ package consulo.xml.codeInsight.editorActions;
 
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.HighlighterIterator;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.language.editor.action.QuoteHandler;
 
 /**

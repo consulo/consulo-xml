@@ -20,8 +20,8 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.moveLeftRight.MoveElementLeftRightHandler;
 import consulo.language.psi.PsiElement;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlTag;
 
 @ExtensionImpl
 public class XmlMoveLeftRightHandler implements MoveElementLeftRightHandler {

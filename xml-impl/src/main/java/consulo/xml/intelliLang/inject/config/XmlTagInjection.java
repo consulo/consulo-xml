@@ -19,7 +19,7 @@ import consulo.language.inject.advanced.BaseInjection;
 import consulo.language.inject.advanced.InjectionPlace;
 import consulo.language.inject.advanced.InjectorUtils;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 public class XmlTagInjection extends AbstractTagInjection {
 

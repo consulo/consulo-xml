@@ -18,12 +18,12 @@ package com.intellij.xml.util;
 import consulo.application.util.CachedValuesManager;
 import consulo.language.psi.PsiElement;
 import consulo.application.util.CachedValueProvider;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.application.util.RecursionManager;
 import consulo.language.psi.PsiModificationTracker;
 
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

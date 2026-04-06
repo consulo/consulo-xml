@@ -15,9 +15,8 @@
  */
 package consulo.xml.util.xml;
 
-
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
 
 /**
  * @author peter

@@ -20,10 +20,9 @@ import java.util.Collection;
 
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
-
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
 
 public class XmlTagTreeElement extends AbstractXmlTagTreeElement<XmlTag>{
   private static final String ID_ATTR_NAME = "id";

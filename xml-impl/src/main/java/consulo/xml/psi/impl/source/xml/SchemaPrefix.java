@@ -15,14 +15,14 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 import org.jspecify.annotations.Nullable;
 
 import consulo.document.util.TextRange;
 import consulo.language.impl.psi.RenameableFakePsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.content.scope.SearchScope;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
 import com.intellij.xml.XmlExtension;
 import consulo.application.AllIcons;
 import consulo.language.psi.ElementManipulators;

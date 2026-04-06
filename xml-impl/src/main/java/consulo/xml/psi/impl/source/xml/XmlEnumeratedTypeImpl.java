@@ -17,9 +17,9 @@ package consulo.xml.psi.impl.source.xml;
 
 import consulo.xml.psi.filters.position.XmlTokenTypeFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlEnumeratedType;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlEnumeratedType;
 
 import java.util.ArrayList;
 import java.util.List;

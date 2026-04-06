@@ -28,8 +28,8 @@ import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
 import consulo.xml.lang.xml.XmlEnclosingTagUnwrapper;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.Collections;

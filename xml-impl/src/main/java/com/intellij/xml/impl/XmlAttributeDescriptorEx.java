@@ -17,7 +17,7 @@ package com.intellij.xml.impl;
 
 import org.jspecify.annotations.Nullable;
 
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 
 /**
  * @author peter

@@ -2,9 +2,9 @@ package consulo.xml.util.xml.impl;
 
 import consulo.language.util.IncorrectOperationException;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.EvaluatedXmlName;
 import consulo.xml.util.xml.reflect.DomFixedChildDescription;

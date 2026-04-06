@@ -15,8 +15,8 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
@@ -28,12 +28,11 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.language.psi.*;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.IdReferenceProvider;
 import consulo.xml.psi.impl.source.xml.PossiblePrefixReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

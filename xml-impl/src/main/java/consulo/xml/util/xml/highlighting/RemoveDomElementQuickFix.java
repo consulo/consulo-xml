@@ -20,8 +20,8 @@ import consulo.ui.annotation.RequiredUIAccess;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.util.xml.DomBundle;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;

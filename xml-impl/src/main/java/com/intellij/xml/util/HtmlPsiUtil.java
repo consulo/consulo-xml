@@ -1,10 +1,10 @@
 package com.intellij.xml.util;
 
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
 import consulo.language.psi.PsiFile;
 import consulo.language.template.TemplateLanguageUtil;
 
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 public class HtmlPsiUtil {

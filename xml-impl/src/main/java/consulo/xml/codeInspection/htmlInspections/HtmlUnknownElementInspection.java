@@ -22,8 +22,8 @@ import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlChildRole;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlChildRole;
 
 
 public abstract class HtmlUnknownElementInspection extends HtmlLocalInspectionTool {

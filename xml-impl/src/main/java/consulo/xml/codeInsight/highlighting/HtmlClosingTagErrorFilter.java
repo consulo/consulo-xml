@@ -23,8 +23,8 @@ import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 /**
  * @author spleaner

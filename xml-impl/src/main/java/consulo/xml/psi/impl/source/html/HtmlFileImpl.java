@@ -19,8 +19,9 @@ import consulo.language.file.FileViewProvider;
 import consulo.language.impl.ast.CompositeElement;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
 import consulo.language.ast.IFileElementType;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 import consulo.language.ast.ASTNode;
 
 /**
@@ -30,7 +31,7 @@ public class HtmlFileImpl extends XmlFileImpl
 {
 	public HtmlFileImpl(FileViewProvider provider)
 	{
-		this(provider, XmlElementType.HTML_FILE);
+		this(provider, XmlElementTokenTypeImpl.HTML_FILE);
 	}
 
 	public HtmlFileImpl(FileViewProvider provider, IFileElementType type)

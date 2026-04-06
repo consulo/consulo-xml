@@ -17,8 +17,8 @@ package com.intellij.xml.impl.schema;
 
 import java.util.Stack;
 
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementsGroup;
+import consulo.xml.descriptor.XmlElementsGroup;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author Dmitry Avdeev

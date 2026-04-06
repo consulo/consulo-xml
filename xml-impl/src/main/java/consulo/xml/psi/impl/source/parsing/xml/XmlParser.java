@@ -26,9 +26,9 @@ import consulo.language.parser.ReparseMergeCustomComparator;
 import consulo.language.version.LanguageVersion;
 import consulo.util.lang.ThreeState;
 import consulo.util.lang.ref.Ref;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 public class XmlParser implements PsiParser {

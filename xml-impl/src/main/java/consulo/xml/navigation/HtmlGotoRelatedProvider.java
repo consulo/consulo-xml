@@ -20,7 +20,7 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.language.Language;
 import consulo.language.navigation.GotoRelatedItem;
 import consulo.language.navigation.GotoRelatedProvider;

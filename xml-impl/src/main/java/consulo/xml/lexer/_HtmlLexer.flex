@@ -3,7 +3,7 @@ package consulo.xml.lexer;
 
 import consulo.language.ast.IElementType;
 import consulo.language.lexer.FlexLexer;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 
 %%
 

@@ -16,7 +16,7 @@
 package consulo.xml.codeInspection.htmlInspections;
 
 import com.intellij.xml.util.HtmlUtil;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.inspection.ProblemHighlightType;
@@ -24,11 +24,11 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.localize.LocalizeValue;
 import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
 import org.jspecify.annotations.Nullable;
 
 /**

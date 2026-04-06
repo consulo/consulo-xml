@@ -25,7 +25,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.SmartList;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.xml.util.xml.highlighting.DomElementsAnnotator;

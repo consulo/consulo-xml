@@ -20,7 +20,7 @@ import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.pom.PomDeclarationSearcher;
 import consulo.language.pom.PomTarget;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.function.Consumer;

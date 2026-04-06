@@ -18,10 +18,11 @@ package consulo.xml.psi.impl.source.tree;
 import consulo.language.ast.ASTNode;
 import consulo.language.impl.ast.FileElement;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
-public class HtmlFileElement extends FileElement implements XmlElementType  {
+public class HtmlFileElement extends FileElement implements XmlElementType, XmlElementTokenTypeImpl {
   private static final Logger LOG = Logger.getInstance(HtmlFileElement.class);
 
   public HtmlFileElement(CharSequence text) {

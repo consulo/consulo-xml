@@ -21,9 +21,14 @@ import consulo.language.psi.meta.MetaDataService;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagChild;
 import consulo.xml.psi.impl.source.tree.injected.XmlCommentLiteralEscaper;
-import consulo.xml.psi.xml.*;
 
 import org.jspecify.annotations.Nullable;
 

@@ -16,8 +16,8 @@
 package consulo.xml.psi.impl.source.xml;
 
 import consulo.language.template.TemplateLanguageUtil;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;

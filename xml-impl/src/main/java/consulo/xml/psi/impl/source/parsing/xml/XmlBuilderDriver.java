@@ -31,9 +31,9 @@ import consulo.util.collection.Stack;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.SimpleReference;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
 
 /**
  * @author max

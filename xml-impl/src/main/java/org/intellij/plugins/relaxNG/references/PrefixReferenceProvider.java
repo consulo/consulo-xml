@@ -26,15 +26,14 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ProcessingContext;
 import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
-import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInspection.XmlQuickFixFactory;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.BasicAttributeValueReference;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlTag;
 
 import org.jspecify.annotations.Nullable;
 

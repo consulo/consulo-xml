@@ -23,10 +23,10 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.xml.XmlComment;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlText;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.model;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.util.dataholder.UserDataHolder;
 

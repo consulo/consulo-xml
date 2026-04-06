@@ -24,8 +24,8 @@ import consulo.language.psi.PsiElement;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.editor.XmlHighlighterColors;
 import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 
 
 import java.util.List;

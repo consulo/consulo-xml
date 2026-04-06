@@ -17,8 +17,8 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.HighlightSeverity;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.util.XmlTagUtil;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.document.util.TextRange;
 import consulo.language.editor.annotation.AnnotationHolder;

@@ -19,9 +19,9 @@ package consulo.xml.psi.impl.source.tree.injected;
 import consulo.document.util.TextRange;
 import consulo.language.psi.LiteralTextEscaper;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.XmlElementFactory;
+import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.psi.impl.source.xml.XmlAttributeValueImpl;
-import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.language.psi.XmlAttribute;
 
 /**
  * @author cdr

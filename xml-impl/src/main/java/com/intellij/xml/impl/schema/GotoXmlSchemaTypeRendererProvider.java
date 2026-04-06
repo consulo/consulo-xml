@@ -18,8 +18,8 @@ package com.intellij.xml.impl.schema;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.ide.navigation.GotoTargetRendererProvider;
 import consulo.language.editor.ui.PsiElementListCellRenderer;
+import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
-import consulo.xml.psi.xml.XmlAttribute;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 

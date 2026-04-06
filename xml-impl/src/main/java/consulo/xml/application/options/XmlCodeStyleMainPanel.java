@@ -19,7 +19,7 @@ import com.intellij.xml.arrangement.XmlArrangementPanel;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.setting.CodeStyleSettingsProvider;
 import consulo.language.codeStyle.ui.setting.TabbedLanguageCodeStylePanel;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 /**
  * @author Rustam Vishnyakov

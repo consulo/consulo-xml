@@ -15,10 +15,10 @@
  */
 package com.intellij.xml.util.documentation;
 
+import consulo.xml.language.psi.XmlTag;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import consulo.xml.psi.xml.XmlTag;
 
 /**
  * @author maxim

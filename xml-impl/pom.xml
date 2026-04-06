@@ -100,6 +100,12 @@
         </dependency>
 
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.intellij.xml.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>consulo.plugin</groupId>
             <artifactId>com.intellij.xml.rngom</artifactId>
             <version>${project.version}</version>

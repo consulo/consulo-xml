@@ -28,8 +28,8 @@ import consulo.language.editor.structureView.PsiStructureViewFactory;
 import consulo.language.psi.PsiFile;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlFile;
 
 import org.jspecify.annotations.Nullable;
 

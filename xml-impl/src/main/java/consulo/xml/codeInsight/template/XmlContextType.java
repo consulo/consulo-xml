@@ -22,7 +22,7 @@ import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.editor.template.context.BaseTemplateContextType;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiUtilCore;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 /**
  * @author yole

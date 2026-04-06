@@ -27,11 +27,12 @@ import consulo.language.parser.PsiParser;
 import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.lexer.XmlLexer;
 import consulo.xml.psi.impl.source.parsing.xml.XmlParser;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

@@ -31,8 +31,9 @@ import consulo.xml.lang.xml.XMLParserDefinition;
 import consulo.xml.lexer.DtdLexer;
 import consulo.xml.psi.impl.source.parsing.xml.DtdParsing;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlEntityDecl;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 
 /**
@@ -48,7 +49,7 @@ public class DTDParserDefinition extends XMLParserDefinition
 
 	public PsiFile createFile(FileViewProvider viewProvider)
 	{
-		return new XmlFileImpl(viewProvider, XmlElementType.DTD_FILE);
+		return new XmlFileImpl(viewProvider, XmlElementTokenTypeImpl.DTD_FILE);
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class DTDParserDefinition extends XMLParserDefinition
 	@Override
 	public IFileElementType getFileNodeType()
 	{
-		return XmlElementType.DTD_FILE;
+		return XmlElementTokenTypeImpl.DTD_FILE;
 	}
 
 	@Override

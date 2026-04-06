@@ -26,7 +26,7 @@ import consulo.language.psi.PsiElement;
 import consulo.project.Project;
 import consulo.ui.ex.awt.JBList;
 import consulo.ui.ex.popup.JBPopup;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 
 import javax.swing.*;
 import java.util.Arrays;

@@ -26,7 +26,8 @@ import consulo.language.version.LanguageVersionUtil;
 import consulo.xml.lang.xml.XMLParserDefinition;
 import consulo.xml.lexer.XHtmlLexer;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 
 /**
@@ -57,7 +58,7 @@ public class XHTMLParserDefinition extends XMLParserDefinition
 	@Override
 	public PsiFile createFile(FileViewProvider viewProvider)
 	{
-		return new XmlFileImpl(viewProvider, XmlElementType.XHTML_FILE);
+		return new XmlFileImpl(viewProvider, XmlElementTokenTypeImpl.XHTML_FILE);
 	}
 
 }

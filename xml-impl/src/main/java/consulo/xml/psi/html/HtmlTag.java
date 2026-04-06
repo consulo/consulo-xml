@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.html;
 
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author maxim

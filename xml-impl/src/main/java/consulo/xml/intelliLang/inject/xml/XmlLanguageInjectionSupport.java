@@ -42,8 +42,12 @@ import consulo.xml.intelliLang.inject.config.ui.XmlAttributePanel;
 import consulo.xml.intelliLang.inject.config.ui.XmlTagPanel;
 import consulo.xml.intelliLang.inject.config.ui.configurables.XmlAttributeInjectionConfigurable;
 import consulo.xml.intelliLang.inject.config.ui.configurables.XmlTagInjectionConfigurable;
+import consulo.xml.language.psi.XmlText;
 import consulo.xml.patterns.XmlPatterns;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 import org.jdom.Element;
 

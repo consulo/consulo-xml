@@ -20,11 +20,11 @@ import consulo.util.lang.StringUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.ast.TokenType;
-import consulo.xml.psi.xml.XmlConditionalSection;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlEntityDecl;
-import consulo.xml.psi.xml.XmlEntityRef;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlConditionalSection;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlEntityRef;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.language.ast.ASTNode;
 
 /**

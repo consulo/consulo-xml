@@ -19,7 +19,7 @@ package consulo.xml.util.xml.model.impl;
 import consulo.language.psi.PsiElement;
 import consulo.module.Module;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;

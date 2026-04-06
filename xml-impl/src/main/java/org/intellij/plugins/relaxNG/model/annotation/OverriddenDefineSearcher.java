@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.relaxNG.model.annotation;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.util.collection.primitive.ints.IntList;
 import consulo.util.collection.primitive.ints.IntLists;
 import org.intellij.plugins.relaxNG.model.*;

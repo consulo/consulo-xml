@@ -7,7 +7,7 @@ import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.language.ast.IElementType;
 import consulo.language.lexer.Lexer;
 import consulo.util.collection.MultiMap;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.lexer.XmlHighlightingLexer;
 
 /**

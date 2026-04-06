@@ -22,7 +22,7 @@ import consulo.navigation.LocationPresentation;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -17,9 +17,9 @@ package consulo.xml.psi.impl.source.xml;
 
 
 import consulo.language.psi.PsiElementVisitor;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlDecl;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlDecl;
+import consulo.xml.language.psi.XmlElementType;
 
 /**
  * @author Mike

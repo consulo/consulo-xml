@@ -51,9 +51,15 @@ import consulo.virtualFileSystem.fileType.UnknownFileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.javaee.ExternalResourceManager;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.impl.source.xml.XmlEntityCache;
-import consulo.xml.psi.xml.*;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;

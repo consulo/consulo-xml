@@ -15,15 +15,14 @@
  */
 package consulo.xml.patterns;
 
-
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.InitialPatternCondition;
 import consulo.language.pattern.PatternCondition;
 import consulo.language.pattern.PsiFilePattern;
 import consulo.language.util.ProcessingContext;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 /**
  * @author spleaner

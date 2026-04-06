@@ -21,17 +21,17 @@ import java.util.Map;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.logging.Logger;
 
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTagChild;
+import consulo.xml.language.psi.XmlTagValue;
 import org.jspecify.annotations.Nullable;
 
 import consulo.language.psi.PsiElement;
 import consulo.xml.psi.impl.source.xml.XmlTagValueImpl;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagChild;
-import consulo.xml.psi.xml.XmlTagValue;
 import consulo.language.util.IncorrectOperationException;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 
 /**
  * @author peter

@@ -17,7 +17,7 @@ package org.intellij.plugins.relaxNG.model.resolve;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.index.io.DataIndexer;
 import consulo.index.io.EnumeratorStringDescriptor;

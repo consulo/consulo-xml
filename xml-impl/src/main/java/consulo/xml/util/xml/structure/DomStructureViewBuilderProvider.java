@@ -18,7 +18,7 @@ package consulo.xml.util.xml.structure;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomService;

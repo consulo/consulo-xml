@@ -16,8 +16,8 @@
 package consulo.xml.codeInsight.editorActions;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.codeEditor.Editor;
 import consulo.document.util.TextRange;
 import consulo.ide.impl.idea.codeInsight.editorActions.wordSelection.PlainTextLineSelectioner;

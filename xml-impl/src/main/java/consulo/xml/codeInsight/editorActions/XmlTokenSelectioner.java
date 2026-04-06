@@ -22,8 +22,8 @@ import consulo.language.ast.IElementType;
 import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 import consulo.language.editor.action.SelectWordUtil;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,8 +16,8 @@
 package consulo.xml.psi.filters.getters;
 
 import consulo.util.io.CharsetToolkit;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import org.jspecify.annotations.Nullable;

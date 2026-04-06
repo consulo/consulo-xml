@@ -18,9 +18,9 @@ package consulo.xml.util.xml.stubs;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.impl.DomInvocationHandler;
 import consulo.xml.util.xml.impl.DomManagerImpl;
 import consulo.xml.util.xml.impl.DomParentStrategy;

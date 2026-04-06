@@ -21,7 +21,7 @@ import consulo.document.util.TextRange;
 import consulo.language.psi.AbstractElementManipulator;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.lang.Comparing;
-import consulo.xml.psi.xml.XmlText;
+import consulo.xml.language.psi.XmlText;
 
 
 /**

@@ -16,9 +16,9 @@
 
 package org.intellij.plugins.relaxNG.model.descriptors;
 
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.util.collection.ContainerUtil;
 import org.kohsuke.rngom.digested.DElementPattern;
 import org.kohsuke.rngom.digested.DPattern;

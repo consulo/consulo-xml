@@ -32,13 +32,14 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.lexer.DtdLexer;
 import consulo.xml.lexer._DtdLexer;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlEntityDecl;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlEntityDecl;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 /**
  * @author Mike
  */
-public class DtdParsing extends XmlParsing implements XmlElementType {
+public class DtdParsing extends XmlParsing implements XmlElementType, XmlElementTokenTypeImpl {
   private static final Logger LOG = Logger.getInstance("#XmlParser");
 
   private final IElementType myRootType;
@@ -78,7 +79,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
   public ASTNode parse() {
     final PsiBuilder.Marker root = myBuilder.mark();
 
-    if (myRootType == XML_MARKUP_DECL) {
+    if (myRootType == XmlElementTokenTypeImpl.XML_MARKUP_DECL) {
       parseTopLevelMarkupDecl();
       root.done(myRootType);
       return myBuilder.getTreeBuilt();
@@ -153,7 +154,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
         LOG.error("context: " + context);
     }
 
-    if (rootNodeType == XML_MARKUP_DECL && context == TYPE_FOR_MARKUP_DECL) {
+    if (rootNodeType == XmlElementTokenTypeImpl.XML_MARKUP_DECL && context == TYPE_FOR_MARKUP_DECL) {
       state = _DtdLexer.DOCTYPE;
     }
     return state;
@@ -408,7 +409,7 @@ public class DtdParsing extends XmlParsing implements XmlElementType {
     PsiBuilder.Marker decl = myBuilder.mark();
     parseMarkupContent();
 
-    decl.done(XML_MARKUP_DECL);
+    decl.done(XmlElementTokenTypeImpl.XML_MARKUP_DECL);
   }
 
   private void parseMarkupContent() {

@@ -27,7 +27,7 @@ import consulo.util.lang.function.Condition;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileWithId;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.events.DomEvent;
 import consulo.xml.util.xml.stubs.FileStub;

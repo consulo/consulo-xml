@@ -22,7 +22,11 @@ import consulo.language.psi.ReferenceProvidersRegistry;
 import consulo.language.psi.filter.ClassFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlAttlistDecl;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlElement;
 
 import java.util.ArrayList;
 import java.util.List;

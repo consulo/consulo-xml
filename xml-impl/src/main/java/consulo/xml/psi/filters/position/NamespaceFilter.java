@@ -19,11 +19,11 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.language.psi.filter.ElementFilter;
-import consulo.xml.psi.xml.XmlDoctype;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlProlog;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlProlog;
+import consulo.xml.language.psi.XmlTag;
 
 public class NamespaceFilter implements ElementFilter
 {

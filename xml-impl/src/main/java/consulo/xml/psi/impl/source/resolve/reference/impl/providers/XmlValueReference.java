@@ -18,7 +18,7 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ElementManipulators;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.document.util.TextRange;
 import consulo.language.psi.ElementManipulator;
 import consulo.language.psi.PsiElement;

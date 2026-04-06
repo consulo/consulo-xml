@@ -15,7 +15,7 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
@@ -30,10 +30,10 @@ import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.Predicate;

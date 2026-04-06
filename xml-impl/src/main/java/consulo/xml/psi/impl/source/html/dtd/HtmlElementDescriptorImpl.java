@@ -19,10 +19,10 @@ import java.util.HashMap;
 
 import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlTag;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.dtd.BaseXmlElementDescriptorImpl;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.HtmlUtil;

@@ -22,7 +22,11 @@ import consulo.document.util.TextRange;
 import consulo.language.editor.action.ExtendWordSelectionHandlerBase;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.XmlText;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.XmlTokenType;
 
 import java.util.List;
 

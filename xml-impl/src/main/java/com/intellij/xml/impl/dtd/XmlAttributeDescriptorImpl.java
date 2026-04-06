@@ -20,12 +20,12 @@ import java.util.List;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;
-import consulo.xml.psi.xml.XmlAttributeDecl;
-import consulo.xml.psi.xml.XmlElement;
 import consulo.util.collection.ArrayUtil;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.language.util.IncorrectOperationException;
+import consulo.xml.language.psi.XmlAttributeDecl;
+import consulo.xml.language.psi.XmlElement;
 
 /**
  * @author Mike

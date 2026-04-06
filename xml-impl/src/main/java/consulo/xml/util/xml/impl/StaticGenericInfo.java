@@ -5,7 +5,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.ObjectUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
 import consulo.xml.util.xml.reflect.DomCollectionChildDescription;

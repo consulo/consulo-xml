@@ -16,7 +16,7 @@
 package consulo.xml.psi.filters.position;
 
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlToken;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;

@@ -19,11 +19,11 @@ import consulo.language.ast.ASTNode;
 import consulo.language.ast.ChildRoleBase;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.logging.Logger;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.XmlChildRole;
-import consulo.xml.psi.xml.XmlDoctype;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlProlog;
+import consulo.xml.language.psi.XmlElementVisitor;
+import consulo.xml.language.psi.XmlChildRole;
+import consulo.xml.language.psi.XmlDoctype;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlProlog;
 
 
 /**

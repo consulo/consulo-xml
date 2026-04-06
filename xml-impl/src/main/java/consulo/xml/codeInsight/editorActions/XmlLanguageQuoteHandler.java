@@ -3,7 +3,7 @@ package consulo.xml.codeInsight.editorActions;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.action.LanguageQuoteHandler;
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 
 
 /**

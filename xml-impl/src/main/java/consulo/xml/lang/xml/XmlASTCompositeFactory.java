@@ -21,6 +21,7 @@ import consulo.language.impl.ast.ASTCompositeFactory;
 import consulo.language.impl.ast.CompositeElement;
 import consulo.language.impl.psi.CompositePsiElement;
 import consulo.language.impl.psi.template.TemplateDataElementType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
 import consulo.xml.psi.impl.source.html.HtmlTagImpl;
 import consulo.xml.psi.impl.source.tree.XmlFileElement;
@@ -28,7 +29,7 @@ import consulo.xml.psi.impl.source.xml.*;
 
 import org.jspecify.annotations.Nullable;
 
-import static consulo.xml.psi.xml.XmlElementType.*;
+import static consulo.xml.language.psi.XmlElementType.*;
 
 /**
  * @author VISTALL
@@ -64,7 +65,7 @@ public class XmlASTCompositeFactory implements ASTCompositeFactory {
       return new XmlCommentImpl();
     } else if (type == XML_DOCTYPE) {
       return new XmlDoctypeImpl();
-    } else if (type == XML_MARKUP_DECL) {
+    } else if (type == XmlElementTokenTypeImpl.XML_MARKUP_DECL) {
       return new XmlMarkupDeclImpl();
     } else if (type == XML_ELEMENT_DECL) {
       return new XmlElementDeclImpl();
@@ -109,7 +110,7 @@ public class XmlASTCompositeFactory implements ASTCompositeFactory {
         input == XML_ATTRIBUTE_VALUE ||
         input == XML_COMMENT ||
         input == XML_DOCTYPE ||
-        input == XML_MARKUP_DECL ||
+        input == XmlElementTokenTypeImpl.XML_MARKUP_DECL ||
         input == XML_ELEMENT_DECL ||
         input == XML_ENTITY_DECL ||
         input == XML_ATTLIST_DECL ||

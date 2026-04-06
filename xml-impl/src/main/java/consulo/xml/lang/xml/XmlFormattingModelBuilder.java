@@ -26,6 +26,7 @@ import consulo.language.codeStyle.*;
 import consulo.language.impl.ast.TreeElement;
 import consulo.language.impl.ast.TreeUtil;
 import consulo.language.psi.PsiElement;
+import consulo.xml.language.XMLLanguage;
 import consulo.xml.psi.formatter.xml.XmlBlock;
 import consulo.xml.psi.formatter.xml.XmlPolicy;
 

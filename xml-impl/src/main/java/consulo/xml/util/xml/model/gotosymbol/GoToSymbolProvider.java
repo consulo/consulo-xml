@@ -32,7 +32,7 @@ import consulo.project.Project;
 import consulo.project.content.scope.ProjectAwareSearchScope;
 import consulo.ui.image.Image;
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.ElementPresentationManager;
 import consulo.xml.util.xml.GenericDomValue;

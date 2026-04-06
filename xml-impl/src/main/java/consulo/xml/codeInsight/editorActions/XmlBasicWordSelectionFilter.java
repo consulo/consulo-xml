@@ -18,8 +18,8 @@ package consulo.xml.codeInsight.editorActions;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.action.WordSelectionerFilter;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlToken;
 
 /**
  * @author yole

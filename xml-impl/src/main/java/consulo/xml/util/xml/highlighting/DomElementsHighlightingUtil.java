@@ -30,7 +30,7 @@ import consulo.localize.LocalizeValue;
 import consulo.util.lang.Pair;
 import consulo.util.lang.xml.XmlStringUtil;
 
-import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.language.XMLLanguage;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;

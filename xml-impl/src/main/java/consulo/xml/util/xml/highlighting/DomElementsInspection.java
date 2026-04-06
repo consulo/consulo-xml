@@ -26,9 +26,9 @@ import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
 

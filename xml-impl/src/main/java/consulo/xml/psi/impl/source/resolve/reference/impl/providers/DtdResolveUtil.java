@@ -15,16 +15,16 @@
  */
 package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlMarkupDecl;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.dtd.XmlNSDescriptorImpl;
 import consulo.language.editor.completion.CompletionUtilCore;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
 
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlMarkupDecl;
 import org.jspecify.annotations.Nullable;
 
 /**

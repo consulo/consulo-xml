@@ -16,7 +16,7 @@
 package consulo.xml.lexer;
 
 import consulo.language.ast.IElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.language.lexer.DelegateLexer;
 
 /**

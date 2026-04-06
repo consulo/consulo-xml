@@ -22,7 +22,7 @@ import consulo.language.lexer.FlexAdapter;
 import consulo.language.lexer.Lexer;
 import consulo.language.lexer.MergingLexerAdapter;
 import consulo.language.util.LanguageUtil;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlTokenType;
 
 
 /**

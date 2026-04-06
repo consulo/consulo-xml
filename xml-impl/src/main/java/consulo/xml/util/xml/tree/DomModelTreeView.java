@@ -32,8 +32,8 @@ import consulo.ui.ex.awt.tree.action.CollapseAllAction;
 import consulo.ui.ex.awt.tree.action.ExpandAllAction;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
 

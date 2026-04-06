@@ -25,9 +25,9 @@ import consulo.ui.ex.keymap.KeymapManager;
 import consulo.xml.icon.XmlIconGroup;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.filters.XmlTagFilter;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.Collection;

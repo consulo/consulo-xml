@@ -15,16 +15,16 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.TokenSet;
 import consulo.language.psi.PsiElement;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.lazy.LazyValue;
-import consulo.xml.psi.xml.XmlContentParticle;
-import consulo.xml.psi.xml.XmlElementContentGroup;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlContentParticle;
+import consulo.xml.language.psi.XmlElementContentGroup;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlToken;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

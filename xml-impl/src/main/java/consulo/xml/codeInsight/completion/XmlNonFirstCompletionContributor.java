@@ -15,7 +15,7 @@
  */
 package consulo.xml.codeInsight.completion;
 
-import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.editor.completion.CompletionContributor;
@@ -24,8 +24,8 @@ import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.patterns.XmlPatterns;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElementType;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElementType;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.xml.codeInsight.completion.XmlCompletionContributor.hasEnumerationReference;

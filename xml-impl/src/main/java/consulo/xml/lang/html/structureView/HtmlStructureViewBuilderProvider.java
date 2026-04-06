@@ -22,7 +22,7 @@ import consulo.fileEditor.structureView.StructureViewModel;
 import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 
 import org.jspecify.annotations.Nullable;
 

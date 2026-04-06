@@ -23,8 +23,8 @@ import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenSet;
 import consulo.language.editor.completion.WordCompletionElementFilter;
 import consulo.language.version.LanguageVersion;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
 
 public abstract class XmlBasedWordCompletionFilter implements WordCompletionElementFilter {
   private final static TokenSet ENABLED_TOKENS = TokenSet.create(XmlElementType.XML_CDATA,

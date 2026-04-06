@@ -15,7 +15,7 @@
  */
 package consulo.xml.javaee;
 
-import com.intellij.xml.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;

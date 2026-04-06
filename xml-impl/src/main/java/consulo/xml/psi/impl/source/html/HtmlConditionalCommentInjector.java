@@ -26,8 +26,8 @@ import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.util.lang.Pair;
-import consulo.xml.psi.xml.XmlComment;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlComment;
+import consulo.xml.language.psi.XmlTokenType;
 
 import org.jspecify.annotations.Nullable;
 

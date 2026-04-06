@@ -22,8 +22,8 @@ import consulo.language.inject.advanced.StringMatcher;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.StringUtil;
 import consulo.util.xml.serializer.JDOMExternalizer;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlAttributeValue;
 import org.jdom.Element;
 
 public class XmlAttributeInjection extends AbstractTagInjection {

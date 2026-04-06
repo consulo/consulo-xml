@@ -30,8 +30,9 @@ import consulo.language.version.LanguageVersionUtil;
 import consulo.xml.lang.xml.XMLParserDefinition;
 import consulo.xml.lexer.HtmlLexer;
 import consulo.xml.psi.impl.source.html.HtmlFileImpl;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTokenType;
+import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 
 /**
@@ -55,7 +56,7 @@ public class HTMLParserDefinition implements ParserDefinition
 	@Override
 	public IFileElementType getFileNodeType()
 	{
-		return XmlElementType.HTML_FILE;
+		return XmlElementTokenTypeImpl.HTML_FILE;
 	}
 
 	@Override

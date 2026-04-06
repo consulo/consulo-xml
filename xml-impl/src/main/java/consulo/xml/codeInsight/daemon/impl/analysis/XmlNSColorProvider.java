@@ -17,7 +17,7 @@ package consulo.xml.codeInsight.daemon.impl.analysis;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.component.extension.ExtensionPointName;
 

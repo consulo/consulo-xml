@@ -26,8 +26,8 @@ import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.logging.Logger;
 import consulo.language.codeStyle.AbstractBlock;
 import consulo.language.psi.OuterLanguageElement;
-import consulo.xml.psi.xml.XmlElementType;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlElementType;
+import consulo.xml.language.psi.XmlTag;
 import consulo.language.codeStyle.WrapType;
 
 import java.util.List;

@@ -17,10 +17,10 @@ package consulo.xml.codeInsight.editorActions;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlAttlistDecl;
-import consulo.xml.psi.xml.XmlElementDecl;
-import consulo.xml.psi.xml.XmlToken;
-import consulo.xml.psi.xml.XmlTokenType;
+import consulo.xml.language.psi.XmlAttlistDecl;
+import consulo.xml.language.psi.XmlElementDecl;
+import consulo.xml.language.psi.XmlToken;
+import consulo.xml.language.psi.XmlTokenType;
 import consulo.document.util.TextRange;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.action.ExtendWordSelectionHandler;

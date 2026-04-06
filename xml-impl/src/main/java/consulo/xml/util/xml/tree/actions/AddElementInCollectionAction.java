@@ -28,7 +28,7 @@ import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.ui.ex.popup.ListPopup;
 import consulo.ui.image.Image;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.MergedObject;
