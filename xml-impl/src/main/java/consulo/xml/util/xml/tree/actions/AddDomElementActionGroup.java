@@ -43,7 +43,7 @@ public class AddDomElementActionGroup extends ActionGroup {
     @Override
     public void update(AnActionEvent e) {
         //myAction.getChildren(e).length
-        getTemplatePresentation().setTextValue(myAction.getTemplatePresentation().getTextValue());
+        getTemplatePresentation().setText(myAction.getTemplatePresentation().getTextValue());
         super.update(e);
     }
 }

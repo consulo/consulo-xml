@@ -329,7 +329,7 @@ public class FetchExtResourceAction extends BaseExtResourceAction {
         String extResourcesPath,
         @Nullable String refname
     ) throws IOException {
-        SwingUtilities.invokeLater(() -> indicator.setTextValue(XmlLocalize.fetchingProgressIndicator(resourceUrl)));
+        SwingUtilities.invokeLater(() -> indicator.setText(XmlLocalize.fetchingProgressIndicator(resourceUrl)));
 
         FetchResult result = fetchData(project, resourceUrl, indicator);
         if (result == null) {

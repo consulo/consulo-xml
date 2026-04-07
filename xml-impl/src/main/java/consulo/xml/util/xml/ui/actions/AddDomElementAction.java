@@ -65,7 +65,7 @@ public abstract class AddDomElementAction extends AnAction {
             }
         }
         if (actions.length == 1) {
-            e.getPresentation().setTextValue(actions[0].getTemplatePresentation().getTextValue());
+            e.getPresentation().setText(actions[0].getTemplatePresentation().getTextValue());
         }
         else {
             String actionText = getActionText(e);

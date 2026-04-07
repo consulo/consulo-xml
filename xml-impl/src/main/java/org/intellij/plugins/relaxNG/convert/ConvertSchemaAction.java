@@ -67,7 +67,7 @@ public class ConvertSchemaAction extends AnAction {
         if (files != null && project != null) {
             SchemaType type = getInputType(project, files);
             e.getPresentation().setEnabled(type != null);
-            e.getPresentation().setTextValue(
+            e.getPresentation().setText(
                 type == SchemaType.XML
                     ? RelaxNGLocalize.actionConvertSchemaFromXmlFilesText(files.length)
                     : RelaxNGLocalize.actionConvertSchemaText()
