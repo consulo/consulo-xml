@@ -92,13 +92,13 @@ public class DeleteDomElement extends BaseDomTreeAction {
             DomElement domElement = baseDomNode.getDomElement();
             if (domElement.isValid() && DomUtil.hasXml(domElement) && !(domElement.getParent() instanceof DomFileElement)) {
                 enabled = true;
-                e.getPresentation().setTextValue(getPresentationText(baseDomNode));
+                e.getPresentation().setText(getPresentationText(baseDomNode));
             }
         }
 
         e.getPresentation().setEnabled(enabled);
         if (!enabled) {
-            e.getPresentation().setTextValue(ApplicationLocalize.actionRemove());
+            e.getPresentation().setText(ApplicationLocalize.actionRemove());
         }
         e.getPresentation().setIcon(PlatformIconGroup.generalRemove());
     }

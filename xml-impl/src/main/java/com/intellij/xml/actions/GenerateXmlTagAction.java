@@ -80,8 +80,8 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
     private final static Logger LOG = Logger.getInstance(GenerateXmlTagAction.class);
 
     public GenerateXmlTagAction() {
-        getTemplatePresentation().setTextValue(XmlLocalize.actionGenerateXmlTagText());
-        getTemplatePresentation().setDescriptionValue(XmlLocalize.actionGenerateXmlTagDescription());
+        getTemplatePresentation().setText(XmlLocalize.actionGenerateXmlTagText());
+        getTemplatePresentation().setDescription(XmlLocalize.actionGenerateXmlTagDescription());
     }
 
     @Override

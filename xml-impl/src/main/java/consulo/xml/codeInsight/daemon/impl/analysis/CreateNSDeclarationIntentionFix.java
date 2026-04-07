@@ -396,7 +396,7 @@ public class CreateNSDeclarationIntentionFix implements HintAction, LocalQuickFi
         String searchFor = metaHandler.searchFor();
 
         if (pi != null) {
-            pi.setTextValue(XmlErrorLocalize.lookingInSchemas());
+            pi.setText(XmlErrorLocalize.lookingInSchemas());
         }
         ExternalResourceManager instanceEx = ExternalResourceManager.getInstance();
         String[] availableUrls = instanceEx.getResourceUrls(null, true);
