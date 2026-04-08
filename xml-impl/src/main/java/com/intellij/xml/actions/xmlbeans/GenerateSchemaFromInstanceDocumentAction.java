@@ -22,6 +22,7 @@ import consulo.document.FileDocumentManager;
 import consulo.fileEditor.FileEditorManager;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.project.Project;
+import consulo.ui.UIAccess;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
@@ -86,7 +87,7 @@ public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
 
     @RequiredUIAccess
     private static void doAction(Project project, GenerateSchemaFromInstanceDocumentDialog dialog) {
-        FileDocumentManager.getInstance().saveAllDocuments();
+        FileDocumentManager.getInstance().saveAllDocuments(UIAccess.current());
 
         String url = dialog.getUrl().getText();
         VirtualFile relativeFile =

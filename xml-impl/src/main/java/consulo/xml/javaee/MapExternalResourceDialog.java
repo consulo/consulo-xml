@@ -234,15 +234,9 @@ public class MapExternalResourceDialog extends DialogWrapper {
 
     private void createUIComponents() {
         myExplorerPanel = new JPanel(new BorderLayout());
-        DataManager.registerDataProvider(myExplorerPanel, dataId ->
-        {
-            if (CommonDataKeys.VIRTUAL_FILE_ARRAY == dataId) {
-                return myExplorer.getSelectedFiles();
-            }
-            else if (FileSystemTree.DATA_KEY == dataId) {
-                return myExplorer;
-            }
-            return null;
+        DataManager.registerUiDataProvider(myExplorerPanel, dataSink -> {
+            dataSink.set(CommonDataKeys.VIRTUAL_FILE_ARRAY, myExplorer.getSelectedFiles());
+            dataSink.set(FileSystemTree.DATA_KEY, myExplorer);
         });
     }
 }

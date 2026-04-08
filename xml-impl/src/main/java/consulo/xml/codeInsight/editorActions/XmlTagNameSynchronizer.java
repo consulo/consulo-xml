@@ -6,6 +6,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
+import consulo.application.concurrent.coroutine.ReadLock;
 import consulo.codeEditor.*;
 import consulo.codeEditor.event.EditorFactoryEvent;
 import consulo.codeEditor.event.EditorFactoryListener;
@@ -36,6 +37,10 @@ import consulo.undoRedo.ProjectUndoManager;
 import consulo.undoRedo.event.CommandEvent;
 import consulo.undoRedo.event.CommandListener;
 import consulo.util.collection.ContainerUtil;
+import consulo.util.concurrent.coroutine.Continuation;
+import consulo.util.concurrent.coroutine.Coroutine;
+import consulo.util.concurrent.coroutine.CoroutineScope;
+import consulo.util.concurrent.coroutine.step.CodeExecution;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Couple;
 import consulo.util.lang.StringUtil;
@@ -47,7 +52,6 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlTokenType;
 import jakarta.inject.Inject;
-
 
 import java.util.Objects;
 import java.util.Set;
@@ -61,6 +65,8 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
         XMLLanguage.INSTANCE,
         XHTMLLanguage.INSTANCE
     );
+
+    private static final Key<Continuation<?>> CONTINUATION_KEY = Key.create("XmlTagNameSynchronizer#CONTINUATION_KEY");
 
     private static final Key<TagNameSynchronizer> SYNCHRONIZER_KEY = Key.create("tag_name_synchronizer");
 
@@ -80,9 +86,30 @@ public final class XmlTagNameSynchronizer implements CommandListener, EditorFact
 
         Document document = editor.getDocument();
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-        Language language = findXmlLikeLanguage(project, file);
-        if (language != null) {
-            new TagNameSynchronizer((RealEditor)editor, project, language).listenForDocumentChanges();
+
+        Continuation<?> continuation = CoroutineScope.launchAsync(project.coroutineContext(), () -> {
+            return Coroutine.first(ReadLock.apply(o -> findXmlLikeLanguage(project, file)))
+                .then(CodeExecution.consume((language, c) -> {
+                    if (language != null) {
+                        new TagNameSynchronizer((RealEditor) editor, project, language).listenForDocumentChanges();
+
+                        editor.putUserData(CONTINUATION_KEY, null);
+                    }
+                }));
+        });
+
+        editor.putUserData(CONTINUATION_KEY, continuation);
+    }
+
+    @Override
+    public void editorReleased(EditorFactoryEvent event) {
+        Editor editor = event.getEditor();
+
+        Continuation<?> continuation = editor.getUserData(CONTINUATION_KEY);
+        if (continuation != null) {
+            continuation.cancel();
+
+            editor.putUserData(CONTINUATION_KEY, null);
         }
     }
 

@@ -23,6 +23,7 @@ import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.project.Project;
+import consulo.ui.UIAccess;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
@@ -80,7 +81,7 @@ public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
 
     @RequiredUIAccess
     private void doAction(Project project, GenerateInstanceDocumentFromSchemaDialog dialog) {
-        FileDocumentManager.getInstance().saveAllDocuments();
+        FileDocumentManager.getInstance().saveAllDocuments(UIAccess.current());
 
         List<String> parameters = new LinkedList<>();
 
