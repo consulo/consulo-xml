@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.lang;
+package consulo.html.language;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
@@ -25,29 +25,26 @@ import consulo.language.extension.ByLanguageValue;
 import consulo.language.extension.LanguageExtension;
 import consulo.language.extension.LanguageOneToOne;
 import consulo.language.lexer.Lexer;
-
 import org.jspecify.annotations.Nullable;
 
 @ExtensionAPI(ComponentScope.APPLICATION)
-public interface HtmlScriptContentProvider extends LanguageExtension
-{
-	ExtensionPointCacheKey<HtmlScriptContentProvider, ByLanguageValue<HtmlScriptContentProvider>> KEY = ExtensionPointCacheKey.create("HtmlScriptContentProvider",
-			LanguageOneToOne.build());
+public interface HtmlScriptContentProvider extends LanguageExtension {
+    ExtensionPointCacheKey<HtmlScriptContentProvider, ByLanguageValue<HtmlScriptContentProvider>> KEY =
+        ExtensionPointCacheKey.create("HtmlScriptContentProvider", LanguageOneToOne.build());
 
-	@Nullable
-	static HtmlScriptContentProvider forLanguage(Language language)
-	{
-		return Application.get().getExtensionPoint(HtmlScriptContentProvider.class).getOrBuildCache(KEY).get(language);
-	}
+    @Nullable
+    static HtmlScriptContentProvider forLanguage(Language language) {
+        return Application.get().getExtensionPoint(HtmlScriptContentProvider.class).getOrBuildCache(KEY).get(language);
+    }
 
-	/**
-	 * @return instance of the <code>com.intellij.psi.tree.IElementType</code> to use in html script tag
-	 */
-	IElementType getScriptElementType();
+    /**
+     * @return instance of the <code>com.intellij.psi.tree.IElementType</code> to use in html script tag
+     */
+    IElementType getScriptElementType();
 
-	/**
-	 * @return highlighting lexer to use in html script tag
-	 */
-	@Nullable
-	Lexer getHighlightingLexer();
+    /**
+     * @return highlighting lexer to use in html script tag
+     */
+    @Nullable
+    Lexer getHighlightingLexer();
 }

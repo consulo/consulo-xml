@@ -1,6 +1,6 @@
 package consulo.xml.ide.highlighter;
 
-import com.intellij.xml.highlighter.EmbeddedTokenHighlighter;
+import consulo.xml.editor.EmbeddedTokenHighlighter;
 import consulo.application.Application;
 import consulo.colorScheme.TextAttributesKey;
 import consulo.component.extension.ExtensionPointCacheKey;

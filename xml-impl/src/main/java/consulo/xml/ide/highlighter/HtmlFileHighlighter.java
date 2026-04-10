@@ -15,7 +15,7 @@
  */
 package consulo.xml.ide.highlighter;
 
-import com.intellij.xml.highlighter.EmbeddedTokenHighlighter;
+import consulo.xml.editor.EmbeddedTokenHighlighter;
 import consulo.application.Application;
 import consulo.codeEditor.HighlighterColors;
 import consulo.colorScheme.TextAttributesKey;

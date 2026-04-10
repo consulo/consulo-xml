@@ -28,7 +28,7 @@ import consulo.language.version.LanguageVersionUtil;
 import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
-import consulo.xml.lang.HtmlScriptContentProvider;
+import consulo.html.language.HtmlScriptContentProvider;
 import consulo.html.language.HTMLLanguage;
 
 import consulo.xml.language.psi.XmlTokenType;
