@@ -1,7 +1,7 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.DomElement;
 
 public class ConvertContextFactory {
    public static ConvertContext createConvertContext(final DomElement element) {

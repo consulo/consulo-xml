@@ -29,13 +29,13 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.EvaluatedXmlName;
+import consulo.xml.dom.EvaluatedXmlName;
 import consulo.xml.util.xml.EvaluatedXmlNameImpl;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
-import consulo.xml.util.xml.reflect.DomChildrenDescription;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import consulo.xml.util.xml.reflect.DomFixedChildDescription;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.CustomDomChildrenDescription;
+import consulo.xml.dom.reflect.DomChildrenDescription;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.stubs.DomStub;
 import consulo.xml.util.xml.stubs.ElementStub;
 import org.jspecify.annotations.Nullable;
@@ -47,7 +47,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static consulo.xml.patterns.XmlPatterns.*;
+import static consulo.xml.language.psi.pattern.XmlPatterns.*;
 
 /**
  * @author peter

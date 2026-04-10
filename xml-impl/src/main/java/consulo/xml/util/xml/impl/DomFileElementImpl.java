@@ -5,12 +5,13 @@ import consulo.logging.Logger;
 import consulo.module.Module;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.*;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.*;
 import consulo.xml.util.xml.stubs.FileStub;
 import org.jspecify.annotations.Nullable;
 

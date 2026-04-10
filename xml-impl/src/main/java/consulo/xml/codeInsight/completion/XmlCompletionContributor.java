@@ -53,7 +53,7 @@ import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import org.jspecify.annotations.Nullable;
 

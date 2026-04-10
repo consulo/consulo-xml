@@ -24,10 +24,10 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.function.Condition;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
-import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
-import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.xml.dom.*;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementsProblemsHolder;
 
 import org.jspecify.annotations.Nullable;
 import javax.swing.*;

@@ -19,10 +19,10 @@ package consulo.xml.util.xml.structure;
 import consulo.codeEditor.Editor;
 import consulo.disposer.Disposable;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
+import consulo.xml.dom.*;
 import consulo.xml.ide.structureView.impl.xml.XmlFileTreeElement;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.function.Function;

@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.EvaluatedXmlName;
+import consulo.xml.dom.EvaluatedXmlName;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;

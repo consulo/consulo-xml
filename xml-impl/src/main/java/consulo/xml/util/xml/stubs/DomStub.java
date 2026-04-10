@@ -24,7 +24,7 @@ import consulo.language.psi.stub.ObjectStubBase;
 import consulo.util.collection.SmartList;
 import consulo.index.io.StringRef;
 import consulo.xml.util.xml.EvaluatedXmlNameImpl;
-import consulo.xml.util.xml.XmlName;
+import consulo.xml.language.XmlName;
 import consulo.xml.util.xml.impl.CollectionElementInvocationHandler;
 import consulo.xml.util.xml.impl.DomChildDescriptionImpl;
 import consulo.xml.util.xml.impl.DomInvocationHandler;

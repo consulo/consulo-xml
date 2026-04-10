@@ -16,7 +16,7 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import consulo.xml.patterns.XmlAttributeValuePattern;
+import consulo.xml.language.psi.pattern.XmlAttributeValuePattern;
 import consulo.language.psi.PsiReference;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.AttributeValueSelfReference;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -36,8 +36,8 @@ import consulo.util.dataholder.Key;
 import java.util.HashSet;
 import java.util.Set;
 
-import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
-import static consulo.xml.patterns.XmlPatterns.xmlAttributeValue;
+import static consulo.xml.language.psi.pattern.XmlPatterns.xmlAttribute;
+import static consulo.xml.language.psi.pattern.XmlPatterns.xmlAttributeValue;
 
 public class IdRefProvider extends PsiReferenceProvider {
   public static final HasIdRefTypeCondition HAS_ID_REF_TYPE = new HasIdRefTypeCondition();

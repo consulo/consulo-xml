@@ -20,8 +20,8 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 import org.intellij.plugins.relaxNG.model.Pattern;
 
 /**

@@ -22,9 +22,9 @@ import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlAttribute;
-import consulo.xml.util.xml.DomBundle;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomBundle;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 import consulo.language.editor.inspection.LocalQuickFix;
 
 /**

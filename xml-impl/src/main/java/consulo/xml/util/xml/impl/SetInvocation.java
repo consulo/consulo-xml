@@ -1,7 +1,7 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.SubTag;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.SubTag;
 
 /**
  * @author peter

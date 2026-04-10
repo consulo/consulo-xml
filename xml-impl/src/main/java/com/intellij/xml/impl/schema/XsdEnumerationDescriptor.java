@@ -86,7 +86,7 @@ public abstract class XsdEnumerationDescriptor<T extends XmlElement> extends Xml
         final XmlElementDescriptorImpl elementDescriptor =
             (XmlElementDescriptorImpl)XmlUtil.findXmlDescriptorByType(getDeclaration(), contextTag);
 
-        if (elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptor typeDescriptor) {
+        if (elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptorImpl typeDescriptor) {
             return processEnumerationImpl(typeDescriptor.getDeclaration(), processor, forCompletion);
         }
 

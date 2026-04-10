@@ -29,6 +29,8 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.project.Project;
 import consulo.util.collection.ArrayUtil;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressionProvider;
 import consulo.xml.language.psi.XmlText;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;

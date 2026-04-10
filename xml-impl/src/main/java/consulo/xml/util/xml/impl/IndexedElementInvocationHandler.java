@@ -5,9 +5,9 @@ import consulo.logging.Logger;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.EvaluatedXmlName;
-import consulo.xml.util.xml.reflect.DomFixedChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.reflect.DomFixedChildDescription;
 import consulo.xml.util.xml.stubs.ElementStub;
 
 import org.jspecify.annotations.Nullable;

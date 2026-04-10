@@ -35,7 +35,7 @@ import consulo.xml.psi.filters.XmlTextFilter;
 import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.impl.source.resolve.reference.impl.providers.*;
 
-import static consulo.xml.patterns.XmlPatterns.*;
+import static consulo.xml.language.psi.pattern.XmlPatterns.*;
 
 /**
  * @author peter

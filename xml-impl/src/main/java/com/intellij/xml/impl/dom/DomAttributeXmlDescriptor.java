@@ -21,10 +21,10 @@ import consulo.util.lang.StringUtil;
 import consulo.language.psi.PsiElement;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.XmlName;
+import consulo.xml.language.XmlName;
 import consulo.xml.util.xml.impl.DomInvocationHandler;
 import consulo.xml.util.xml.impl.DomManagerImpl;
-import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
+import consulo.xml.dom.reflect.DomAttributeChildDescription;
 import com.intellij.xml.NamespaceAwareXmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 

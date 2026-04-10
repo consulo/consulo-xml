@@ -24,13 +24,13 @@ import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
 import consulo.logging.Logger;
 import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.xml.dom.*;
 import consulo.xml.javaee.web.PsiReferenceConverter;
 import consulo.xml.language.psi.XmlText;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

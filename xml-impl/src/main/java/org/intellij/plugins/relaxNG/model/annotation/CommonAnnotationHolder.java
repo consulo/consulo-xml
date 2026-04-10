@@ -20,8 +20,8 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 

@@ -27,11 +27,11 @@ import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.ui.ex.popup.ListPopup;
 import consulo.ui.image.Image;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.ElementPresentationManager;
-import consulo.xml.util.xml.TypeChooser;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.ElementPresentationManager;
+import consulo.xml.dom.TypeChooser;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.DomCollectionControl;
 import org.jspecify.annotations.Nullable;
 

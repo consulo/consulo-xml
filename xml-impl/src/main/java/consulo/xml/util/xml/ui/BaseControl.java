@@ -18,7 +18,7 @@ package consulo.xml.util.xml.ui;
 import consulo.proxy.EventDispatcher;
 import consulo.util.lang.Comparing;
 import consulo.ui.ex.SimpleTextAttributes;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import consulo.application.Result;
 import consulo.language.editor.WriteCommandAction;
 import consulo.project.Project;

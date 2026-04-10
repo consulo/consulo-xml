@@ -26,7 +26,7 @@ import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;

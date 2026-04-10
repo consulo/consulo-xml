@@ -20,7 +20,7 @@ import consulo.language.Language;
 import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceRegistrar;
 import consulo.xml.language.XMLLanguage;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 
 
 /**

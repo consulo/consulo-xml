@@ -15,7 +15,8 @@
  */
 package consulo.xml.util.xml.highlighting;
 
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 
 /**
  * @author peter

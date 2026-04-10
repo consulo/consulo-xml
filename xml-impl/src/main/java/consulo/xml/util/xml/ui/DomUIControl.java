@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 import javax.swing.*;
 

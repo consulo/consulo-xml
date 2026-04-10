@@ -22,7 +22,7 @@ package org.intellij.plugins.relaxNG.xml.dom;
 import org.intellij.plugins.relaxNG.model.Grammar;
 import org.intellij.plugins.relaxNG.model.Pattern;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.Namespace;
 
 /**
  * http://relaxng.org/ns/structure/1.0:grammarElemType interface.

@@ -3,6 +3,7 @@ package com.intellij.xml.impl.schema;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 
 import java.util.Map;
 
@@ -20,12 +21,12 @@ public class RedefinedElementDescriptor extends XmlElementDescriptorImpl {
     @Override
     public TypeDescriptor getType(XmlElement context) {
         TypeDescriptor typeDescriptor = super.getType(context);
-        return typeDescriptor instanceof ComplexTypeDescriptor complexTypeDescriptor
-            ? new RedefinedTypeDescriptor(complexTypeDescriptor) : typeDescriptor;
+        return typeDescriptor instanceof ComplexTypeDescriptorImpl complexTypeDescriptor
+            ? new RedefinedTypeDescriptorImpl(complexTypeDescriptor) : typeDescriptor;
     }
 
-    private class RedefinedTypeDescriptor extends ComplexTypeDescriptor {
-        public RedefinedTypeDescriptor(ComplexTypeDescriptor original) {
+    private class RedefinedTypeDescriptorImpl extends ComplexTypeDescriptorImpl {
+        public RedefinedTypeDescriptorImpl(ComplexTypeDescriptorImpl original) {
             super(original.getNsDescriptor(), original.getDeclaration());
         }
 
@@ -39,7 +40,7 @@ public class RedefinedElementDescriptor extends XmlElementDescriptorImpl {
                         String base = tag.getAttributeValue("base");
                         if (base != null) {
                             TypeDescriptor descriptor = myRedefinedNSDescriptor.findTypeDescriptor(base);
-                            if (descriptor instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+                            if (descriptor instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
                                 XmlElementDescriptor[] elements = complexTypeDescriptor.getElements(null);
                                 for (XmlElementDescriptor element : elements) {
                                     addElementDescriptor(map, element);

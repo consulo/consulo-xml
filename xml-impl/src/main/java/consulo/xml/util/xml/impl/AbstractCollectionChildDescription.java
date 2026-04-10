@@ -17,8 +17,8 @@ package consulo.xml.util.xml.impl;
 
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.xml.util.xml.EvaluatedXmlName;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.EvaluatedXmlName;
 
 import java.util.List;
 

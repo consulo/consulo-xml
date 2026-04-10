@@ -27,6 +27,7 @@ import consulo.language.psi.meta.PsiWritableMetaData;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
@@ -114,7 +115,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
         );
 
         if (elementDescriptor != null &&
-            elementDescriptor.getType() instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+            elementDescriptor.getType() instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
             final EnumerationData data = getEnumeratedValuesImpl(complexTypeDescriptor.getDeclaration());
             return data != null && data.exaustive;
         }
@@ -136,7 +137,7 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
             context != null ? PsiTreeUtil.getContextOfType(context, XmlTag.class, true) : null
         );
 
-        if (elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+        if (elementDescriptor != null && elementDescriptor.getType() instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
             final EnumerationData data = getEnumeratedValuesImpl(complexTypeDescriptor.getDeclaration());
             final String s = getDefaultValue();
 
@@ -205,10 +206,10 @@ public class XmlAttributeDescriptorImpl extends BasicXmlAttributeDescriptor impl
             if (xmlElementDescriptor instanceof XmlElementDescriptorImpl elementDescriptor) {
                 final TypeDescriptor type = elementDescriptor.getType();
 
-                if (type instanceof ComplexTypeDescriptor typeDescriptor) {
+                if (type instanceof ComplexTypeDescriptorImpl typeDescriptor) {
                     attributeShouldBeQualified =
                         typeDescriptor.canContainAttribute(targetNs, null)
-                            != ComplexTypeDescriptor.CanContainAttributeType.CanNotContain;
+                            != ComplexTypeDescriptorImpl.CanContainAttributeType.CanNotContain;
                 }
 
                 if (!attributeShouldBeQualified && contextNs.length() == 0 && targetNs.length() > 0) {

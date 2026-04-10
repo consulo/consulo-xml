@@ -5,8 +5,8 @@ import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.awt.CommonActionsPanel;
 import consulo.ui.image.Image;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.AddDomElementAction;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
 

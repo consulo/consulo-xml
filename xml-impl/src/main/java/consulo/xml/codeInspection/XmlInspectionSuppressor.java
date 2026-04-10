@@ -20,27 +20,25 @@ import consulo.language.Language;
 import consulo.language.editor.inspection.InspectionSuppressor;
 import consulo.language.editor.inspection.SuppressQuickFix;
 import consulo.language.psi.PsiElement;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressionProvider;
 import consulo.xml.language.XMLLanguage;
 
 
 @ExtensionImpl
-public class XmlInspectionSuppressor implements InspectionSuppressor
-{
-	@Override
-	public boolean isSuppressedFor(PsiElement element, String toolId)
-	{
-		return XmlSuppressionProvider.isSuppressed(element, toolId);
-	}
+public class XmlInspectionSuppressor implements InspectionSuppressor {
+    @Override
+    public boolean isSuppressedFor(PsiElement element, String toolId) {
+        return XmlSuppressionProvider.isSuppressed(element, toolId);
+    }
 
-	@Override
-	public SuppressQuickFix[] getSuppressActions(PsiElement element, String toolShortName)
-	{
-		return XmlSuppressableInspectionTool.getSuppressFixes(toolShortName);
-	}
+    @Override
+    public SuppressQuickFix[] getSuppressActions(PsiElement element, String toolShortName) {
+        return XmlSuppressableInspectionTool.getSuppressFixes(toolShortName);
+    }
 
-	@Override
-	public Language getLanguage()
-	{
-		return XMLLanguage.INSTANCE;
-	}
+    @Override
+    public Language getLanguage() {
+        return XMLLanguage.INSTANCE;
+    }
 }

@@ -26,6 +26,7 @@ import consulo.xml.language.psi.XmlEntityDecl;
 import consulo.xml.language.psi.XmlEntityRef;
 import consulo.xml.language.psi.XmlTokenType;
 import consulo.language.ast.ASTNode;
+import consulo.xml.internal.XmlEntityCache;
 
 /**
  * @author maxim.mossienko

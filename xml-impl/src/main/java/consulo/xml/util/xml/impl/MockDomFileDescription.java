@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileDescription;
+import consulo.xml.dom.DomFileDescription;
 
 /**
  * @author peter

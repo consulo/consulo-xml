@@ -17,9 +17,9 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomUtil;
 import consulo.application.ApplicationManager;
 import consulo.codeEditor.ScrollType;
 import consulo.document.Document;

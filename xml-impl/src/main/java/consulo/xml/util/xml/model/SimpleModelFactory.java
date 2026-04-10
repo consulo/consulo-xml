@@ -16,8 +16,8 @@
 package consulo.xml.util.xml.model;
 
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Set;

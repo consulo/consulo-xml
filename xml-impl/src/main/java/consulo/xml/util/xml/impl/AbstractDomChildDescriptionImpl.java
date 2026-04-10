@@ -22,8 +22,10 @@ import consulo.language.psi.SmartPsiElementPointer;
 import consulo.project.Project;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.DomReflectionUtil;
 import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomExtensionImpl;
 
 import org.jspecify.annotations.Nullable;
@@ -154,7 +156,7 @@ public abstract class AbstractDomChildDescriptionImpl implements AbstractDomChil
   public PsiElement getDeclaration(final Project project) {
     DomElement domDeclaration = getDomDeclaration();
     if (domDeclaration != null) {
-      final DomTarget target = DomTarget.getTarget(domDeclaration);
+      final DomTargetImpl target = DomTargetImpl.getTarget(domDeclaration);
       if (target != null) {
         return PomService.convertToPsi(target);
       }

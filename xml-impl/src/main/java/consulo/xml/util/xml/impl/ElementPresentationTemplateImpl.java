@@ -18,7 +18,7 @@ package consulo.xml.util.xml.impl;
 import consulo.application.presentation.TypePresentationService;
 import consulo.ui.image.Image;
 import consulo.util.lang.ref.Ref;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 /**
  * @author Dmitry Avdeev

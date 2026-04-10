@@ -18,8 +18,8 @@ package org.intellij.plugins.relaxNG.xml.dom.impl;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.path.FileReferenceSet;
+import consulo.xml.dom.*;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.*;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 

@@ -23,13 +23,13 @@ import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
 import consulo.index.io.StringRef;
-import consulo.xml.util.xml.Stubbed;
-import consulo.xml.util.xml.StubbedOccurrence;
+import consulo.xml.dom.Stubbed;
+import consulo.xml.dom.StubbedOccurrence;
 import consulo.xml.util.xml.impl.DomInvocationHandler;
 import consulo.xml.util.xml.impl.DomManagerImpl;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
-import consulo.xml.util.xml.reflect.DomChildrenDescription;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.reflect.CustomDomChildrenDescription;
+import consulo.xml.dom.reflect.DomChildrenDescription;
 import consulo.xml.util.xml.stubs.AttributeStub;
 import consulo.xml.util.xml.stubs.ElementStub;
 

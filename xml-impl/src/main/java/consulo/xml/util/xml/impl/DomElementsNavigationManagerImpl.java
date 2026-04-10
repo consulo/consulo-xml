@@ -22,9 +22,9 @@ import consulo.navigation.OpenFileDescriptor;
 import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.dom.*;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.*;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

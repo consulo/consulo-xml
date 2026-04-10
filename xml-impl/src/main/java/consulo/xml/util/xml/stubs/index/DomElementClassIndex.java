@@ -25,9 +25,9 @@ import consulo.language.psi.stub.StubIndex;
 import consulo.language.psi.stub.StubIndexKey;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileWithId;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.StubbedOccurrence;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.StubbedOccurrence;
 
 
 /**

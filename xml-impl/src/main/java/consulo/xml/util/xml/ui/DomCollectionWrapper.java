@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import consulo.util.lang.reflect.ReflectionUtil;
 
 

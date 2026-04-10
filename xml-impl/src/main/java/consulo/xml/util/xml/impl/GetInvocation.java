@@ -10,7 +10,7 @@ import consulo.util.collection.Lists;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Pair;
 import consulo.util.lang.ref.SimpleReference;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.List;

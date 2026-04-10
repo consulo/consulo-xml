@@ -9,11 +9,11 @@ import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
-import consulo.xml.util.xml.EvaluatedXmlName;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.events.DomEvent;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.DomEvent;
 import consulo.xml.util.xml.stubs.AttributeStub;
 
 import org.jspecify.annotations.Nullable;

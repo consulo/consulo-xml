@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.xml.language.psi.XmlFile;

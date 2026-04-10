@@ -15,6 +15,8 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.xml.dom.*;
+import consulo.xml.dom.convert.EnumConverter;
 import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.document.util.TextRange;
 import consulo.language.editor.completion.lookup.LookupElement;
@@ -91,7 +93,7 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
       return (PsiElement) o;
     }
     if (o instanceof DomElement) {
-      DomTarget target = DomTarget.getTarget((DomElement) o);
+      DomTargetImpl target = DomTargetImpl.getTarget((DomElement) o);
       return target == null ? null : PomService.convertToPsi(target);
     }
     if (o instanceof MergedObject) {
@@ -112,8 +114,8 @@ public class GenericDomValueReference<T> extends PsiReferenceBase<XmlElement> im
       T value = myGenericValue.getValue();
       if (value instanceof DomElement && element instanceof PomTargetPsiElement) {
         PomTarget target = ((PomTargetPsiElement) element).getTarget();
-        if (target instanceof DomTarget) {
-          if (value.equals(((DomTarget) target).getDomElement())) {
+        if (target instanceof DomTargetImpl) {
+          if (value.equals(((DomTargetImpl) target).getDomElement())) {
             return true;
           }
         }

@@ -3,11 +3,11 @@ package consulo.xml.util.xml.impl;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.Pair;
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomNameStrategy;
-import consulo.xml.util.xml.JavaMethod;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.DomFixedChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomNameStrategy;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.DomFixedChildDescription;
 import consulo.util.lang.StringUtil;
 
 import org.jspecify.annotations.Nullable;

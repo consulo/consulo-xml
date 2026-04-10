@@ -17,7 +17,7 @@
 package consulo.xml.util.xml.tree;
 
 import consulo.ui.ex.awt.tree.SimpleTreeStructure;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 public class DomModelTreeStructure extends SimpleTreeStructure {
   private final DomElement myDomElement;

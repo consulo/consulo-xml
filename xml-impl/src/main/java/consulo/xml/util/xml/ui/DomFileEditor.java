@@ -21,12 +21,12 @@ import consulo.ide.ServiceManager;
 import consulo.project.Project;
 import consulo.ui.ex.awt.MnemonicHelper;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomEventListener;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.events.DomEvent;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomEventListener;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.DomEvent;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
 
 import org.jspecify.annotations.Nullable;
 import javax.swing.*;

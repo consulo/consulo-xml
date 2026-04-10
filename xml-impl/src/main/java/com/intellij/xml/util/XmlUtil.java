@@ -16,15 +16,14 @@
 package com.intellij.xml.util;
 
 import com.intellij.xml.*;
-import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
-import com.intellij.xml.impl.schema.TypeDescriptor;
-import com.intellij.xml.impl.schema.XmlElementDescriptorImpl;
+import consulo.xml.descriptor.xsd.XsdSchemeUtil;
+import consulo.xml.language.XmlSharedUtil;
+import consulo.xml.language.psi.util.XmlPsiUtil;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.application.util.function.Processor;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -54,7 +53,7 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.xml.impl.localize.XmlErrorLocalize;
@@ -66,29 +65,31 @@ import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.*;
 import consulo.xml.language.psi.util.XmlTagUtil;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
-import consulo.xml.psi.impl.source.xml.XmlEntityCache;
+import consulo.xml.internal.XmlEntityCache;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.standardResource.XmlStandardResourceUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * @author Mike
  */
 public class XmlUtil {
-    public static final String XML_SCHEMA_URI = "http://www.w3.org/2001/XMLSchema";
-    public static final String XML_SCHEMA_URI2 = "http://www.w3.org/1999/XMLSchema";
-    public static final String XML_SCHEMA_URI3 = "http://www.w3.org/2000/10/XMLSchema";
-    public static final String[] SCHEMA_URIS = {
-        XML_SCHEMA_URI,
-        XML_SCHEMA_URI2,
-        XML_SCHEMA_URI3
-    };
+    @Deprecated
+    public static final String XML_SCHEMA_URI = XmlSharedUtil.XML_SCHEMA_URI;
+    @Deprecated
+    public static final String XML_SCHEMA_URI2 = XmlSharedUtil.XML_SCHEMA_URI2;
+    @Deprecated
+    public static final String XML_SCHEMA_URI3 = XmlSharedUtil.XML_SCHEMA_URI3;
+    @Deprecated
+    public static final String[] SCHEMA_URIS = XmlSharedUtil.SCHEMA_URIS;
+
     public static final String XML_SCHEMA_INSTANCE_URI = "http://www.w3.org/2001/XMLSchema-instance";
     public static final String XML_SCHEMA_VERSIONING_URI = "http://www.w3.org/2007/XMLSchema-versioning";
     public static final String XSLT_URI = "http://www.w3.org/1999/XSL/Transform";
@@ -123,7 +124,9 @@ public class XmlUtil {
     public static final String STRUTS_BEAN_URI2 = "http://jakarta.apache.org/struts/tags-bean";
     public static final String STRUTS_LOGIC_URI = "http://struts.apache.org/tags-logic";
 
-    public static final String XSD_SIMPLE_CONTENT_TAG = "simpleContent";
+    @Deprecated
+    public static final String XSD_SIMPLE_CONTENT_TAG = XsdSchemeUtil.XSD_SIMPLE_CONTENT_TAG;
+
     public static final String NO_NAMESPACE_SCHEMA_LOCATION_ATT = "noNamespaceSchemaLocation";
     public static final String SCHEMA_LOCATION_ATT = "schemaLocation";
 
@@ -132,8 +135,10 @@ public class XmlUtil {
     public static final List<String> ourSchemaUrisList = Arrays.asList(SCHEMA_URIS);
     public static final Key<Boolean> ANT_FILE_SIGN = Key.create("FORCED ANT FILE");
     public static final String TAG_DIR_NS_PREFIX = "urn:jsptagdir:";
-    public static final String VALUE_ATTR_NAME = "value";
-    public static final String ENUMERATION_TAG_NAME = "enumeration";
+    @Deprecated
+    public static final String VALUE_ATTR_NAME = XsdSchemeUtil.VALUE_ATTR_NAME;
+    @Deprecated
+    public static final String ENUMERATION_TAG_NAME = XsdSchemeUtil.ENUMERATION_TAG_NAME;
     public static final String HTML4_LOOSE_URI = XmlStandardResourceUtil.HTML4_LOOSE_URI;
     public static final String WSDL_SCHEMA_URI = "http://schemas.xmlsoap.org/wsdl/";
     public static final String XHTML4_SCHEMA_LOCATION;
@@ -148,7 +153,6 @@ public class XmlUtil {
     private static final String FILE = "file:";
     private static final String CLASSPATH = "classpath:/";
     private static final String URN = "urn:";
-    private final static Set<String> doNotVisitTags = new HashSet<>(Arrays.asList("annotation", "element", "attribute"));
 
     private XmlUtil() {
     }
@@ -388,37 +392,7 @@ public class XmlUtil {
 
     @Nullable
     public static XmlTag getSchemaSimpleContent(XmlTag tag) {
-        XmlElementDescriptor descriptor = tag.getDescriptor();
-
-        if (descriptor instanceof XmlElementDescriptorImpl) {
-            final TypeDescriptor type = ((XmlElementDescriptorImpl)descriptor).getType(tag);
-
-            if (type instanceof ComplexTypeDescriptor) {
-                final XmlTag[] simpleContent = new XmlTag[1];
-
-                processXmlElements(((ComplexTypeDescriptor)type).getDeclaration(), new PsiElementProcessor() {
-                    @Override
-                    public boolean execute(final PsiElement element) {
-                        if (element instanceof XmlTag) {
-                            final XmlTag tag = (XmlTag)element;
-                            final String s = ((XmlTag)element).getLocalName();
-
-                            if ((s.equals(XSD_SIMPLE_CONTENT_TAG) || s.equals("restriction")
-                                && "string".equals(findLocalNameByQualifiedName(tag.getAttributeValue("base"))))
-                                && XML_SCHEMA_URI.equals(tag.getNamespace())) {
-                                simpleContent[0] = tag;
-                                return false;
-                            }
-                        }
-
-                        return true;
-                    }
-                }, true);
-
-                return simpleContent[0];
-            }
-        }
-        return null;
+        return XsdSchemeUtil.getSchemaSimpleContent(tag);
     }
 
     public static <T extends PsiElement> void doDuplicationCheckForElements(
@@ -952,40 +926,15 @@ public class XmlUtil {
     }
 
     public static boolean collectEnumerationValues(final XmlTag element, final HashSet<String> variants) {
-        return processEnumerationValues(
-            element,
-            xmlTag -> {
-                variants.add(xmlTag.getAttributeValue(VALUE_ATTR_NAME));
-                return true;
-            }
-        );
+        return XsdSchemeUtil.collectEnumerationValues(element, variants);
     }
 
     /**
      * @return true if enumeration is exhaustive
      */
-    public static boolean processEnumerationValues(final XmlTag element, final Processor<XmlTag> tagProcessor) {
-        boolean exhaustiveEnum = true;
-
-        for (final XmlTag tag : element.getSubTags()) {
-            final String localName = tag.getLocalName();
-
-            if (localName.equals(ENUMERATION_TAG_NAME)) {
-                final String attributeValue = tag.getAttributeValue(VALUE_ATTR_NAME);
-                if (attributeValue != null && !tagProcessor.process(tag)) {
-                    return exhaustiveEnum;
-                }
-            }
-            else if (localName.equals("union")) {
-                exhaustiveEnum = false;
-                processEnumerationValues(tag, tagProcessor);
-            }
-            else if (!doNotVisitTags.contains(localName)) {
-                // don't go into annotation
-                exhaustiveEnum &= processEnumerationValues(tag, tagProcessor);
-            }
-        }
-        return exhaustiveEnum;
+    @Deprecated
+    public static boolean processEnumerationValues(final XmlTag element, final Predicate<XmlTag> tagProcessor) {
+        return XsdSchemeUtil.processEnumerationValues(element, tagProcessor);
     }
 
     /**
@@ -1306,8 +1255,9 @@ public class XmlUtil {
     }
 
     @Nullable
+    @Deprecated
     public static String findLocalNameByQualifiedName(String name) {
-        return name == null ? null : name.substring(name.indexOf(':') + 1);
+        return XmlSharedUtil.findLocalNameByQualifiedName(name);
     }
 
     public static XmlFile getContainingFile(PsiElement element) {

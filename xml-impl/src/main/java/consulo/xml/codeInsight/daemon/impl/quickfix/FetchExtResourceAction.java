@@ -59,7 +59,7 @@ import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlToken;
 import consulo.xml.language.psi.XmlTokenType;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.impl.source.xml.XmlEntityCache;
+import consulo.xml.internal.XmlEntityCache;
 import org.jspecify.annotations.Nullable;
 
 import javax.swing.*;

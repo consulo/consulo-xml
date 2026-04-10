@@ -1,8 +1,8 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.language.psi.PsiManager;
-import consulo.xml.util.xml.AbstractConvertContext;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.AbstractConvertContext;
+import consulo.xml.dom.DomElement;
 import consulo.module.Module;
 
 /**

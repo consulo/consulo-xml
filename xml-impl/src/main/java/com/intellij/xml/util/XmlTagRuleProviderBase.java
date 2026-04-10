@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.editor.XmlQuickFixFactory;
 import consulo.xml.codeInspection.htmlInspections.RemoveAttributeIntentionAction;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;

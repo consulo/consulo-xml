@@ -16,9 +16,9 @@
 package consulo.xml.util.xml.converters.values;
 
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.DomBundle;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.DomBundle;
 
 import org.jspecify.annotations.Nullable;
 

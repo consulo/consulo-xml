@@ -28,7 +28,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.filter.ClassFilter;
 import consulo.language.psi.resolve.FilterElementProcessor;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.language.psi.*;

@@ -21,8 +21,8 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.ToggleAction;
 import consulo.ui.image.Image;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.ElementPresentationManager;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.ElementPresentationManager;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 

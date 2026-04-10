@@ -39,12 +39,13 @@ import consulo.util.collection.MultiMap;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import org.jspecify.annotations.Nullable;
 import java.util.*;
 
@@ -613,7 +614,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
 
             if (STD_TYPES.contains(localNameByQualifiedName)
                 && (name.length() == localNameByQualifiedName.length() || UNDECLARED_STD_TYPES.contains(localNameByQualifiedName))) {
-                return new StdTypeDescriptor(localNameByQualifiedName);
+                return new StdTypeDescriptorImpl(localNameByQualifiedName);
             }
         }
 
@@ -626,10 +627,10 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
             return null;
         }
         final TypeDescriptor typeDescriptor = findTypeDescriptor(qName, instanceTag);
-        if (!(typeDescriptor instanceof ComplexTypeDescriptor)) {
+        if (!(typeDescriptor instanceof ComplexTypeDescriptorImpl)) {
             return null;
         }
-        return new XmlElementDescriptorByType(instanceTag, (ComplexTypeDescriptor)typeDescriptor);
+        return new XmlElementDescriptorByType(instanceTag, (ComplexTypeDescriptorImpl)typeDescriptor);
     }
 
     @Nullable
@@ -673,7 +674,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
             final CachedValue<TypeDescriptor> descriptor = myTypesMap.get(pair);
             if (descriptor != null) {
                 TypeDescriptor value = descriptor.getValue();
-                if (value == null || (value instanceof ComplexTypeDescriptor && ((ComplexTypeDescriptor)value).getDeclaration()
+                if (value == null || (value instanceof ComplexTypeDescriptorImpl && ((ComplexTypeDescriptorImpl)value).getDeclaration()
                     .isValid())) {
                     return value;
                 }
@@ -806,7 +807,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
     private CachedValue<TypeDescriptor> createAndPutTypesCachedValueSimpleType(final XmlTag tag, final Pair<QNameKey, XmlTag> pair) {
         final CachedValue<TypeDescriptor> value = CachedValuesManager.getManager(tag.getProject()).createCachedValue(
             () -> {
-                final SimpleTypeDescriptor simpleTypeDescriptor = new SimpleTypeDescriptor(tag);
+                final SimpleTypeDescriptorImpl simpleTypeDescriptor = new SimpleTypeDescriptorImpl(tag);
                 return new CachedValueProvider.Result<TypeDescriptor>(simpleTypeDescriptor, tag);
             },
             false
@@ -825,7 +826,7 @@ public class XmlNSDescriptorImpl implements XmlNSDescriptorEx, Validator<XmlDocu
                     myTypesMap.remove(pair);
                     return new CachedValueProvider.Result<>(null, PsiModificationTracker.MODIFICATION_COUNT);
                 }
-                final ComplexTypeDescriptor complexTypeDescriptor = new ComplexTypeDescriptor(this, tag);
+                final ComplexTypeDescriptorImpl complexTypeDescriptor = new ComplexTypeDescriptorImpl(this, tag);
                 return new CachedValueProvider.Result<>(complexTypeDescriptor, tag);
             },
             false

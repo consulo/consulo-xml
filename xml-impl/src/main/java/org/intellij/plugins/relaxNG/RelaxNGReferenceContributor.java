@@ -22,11 +22,11 @@ import consulo.language.psi.PsiReferenceContributor;
 import consulo.language.psi.PsiReferenceRegistrar;
 import consulo.language.psi.filter.position.PatternFilter;
 import consulo.xml.language.XMLLanguage;
-import consulo.xml.patterns.XmlNamedElementPattern;
+import consulo.xml.language.psi.pattern.XmlNamedElementPattern;
 import org.intellij.plugins.relaxNG.references.PrefixReferenceProvider;
 
 
-import static consulo.xml.patterns.XmlPatterns.*;
+import static consulo.xml.language.psi.pattern.XmlPatterns.*;
 
 /**
  * @author peter

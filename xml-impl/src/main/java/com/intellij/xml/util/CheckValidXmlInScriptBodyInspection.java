@@ -40,7 +40,7 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlTag;

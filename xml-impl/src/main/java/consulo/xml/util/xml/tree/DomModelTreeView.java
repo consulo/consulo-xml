@@ -32,10 +32,10 @@ import consulo.ui.ex.awt.tree.action.CollapseAllAction;
 import consulo.ui.ex.awt.tree.action.ExpandAllAction;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.dom.*;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
 
 import org.jspecify.annotations.Nullable;
 import javax.swing.*;

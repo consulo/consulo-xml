@@ -44,6 +44,7 @@ import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import org.jspecify.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
@@ -194,7 +195,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
             );
 
             TypeDescriptor type = elementDescriptor != null ? elementDescriptor.getType() : null;
-            if (type instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+            if (type instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
                 XmlUtil.processEnumerationValues(complexTypeDescriptor.getDeclaration(), processor);
             }
         }
@@ -295,7 +296,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
 
                 TypeDescriptor type = elementDescriptor != null ? elementDescriptor.getType(contextAttribute) : null;
 
-                if (type instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+                if (type instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
                     return complexTypeDescriptor.getDeclaration();
                 }
             }
@@ -307,7 +308,7 @@ public class XmlDocumentationProvider implements LanguageDocumentationProvider {
         }
 
         if (descriptor instanceof XmlElementDescriptorImpl elementDescriptor
-            && elementDescriptor.getType(contextTag) instanceof ComplexTypeDescriptor complexTypeDescriptor) {
+            && elementDescriptor.getType(contextTag) instanceof ComplexTypeDescriptorImpl complexTypeDescriptor) {
             return complexTypeDescriptor.getDeclaration();
         }
 

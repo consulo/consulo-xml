@@ -32,7 +32,7 @@ import consulo.language.editor.rawHighlight.HighlightInfoType;
 import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.*;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlAttribute;

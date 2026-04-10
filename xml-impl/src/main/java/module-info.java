@@ -2,11 +2,13 @@
  * @author VISTALL
  * @since 07-May-22
  */
-open module com.intellij.xml
-{
+open module com.intellij.xml {
     requires transitive consulo.ide.api;
 
     requires transitive com.intellij.xml.api;
+    requires transitive com.intellij.xml.editor.api;
+
+    requires transitive com.intellij.xml.dom.api;
 
     requires consulo.util.xml.fast.reader;
 
@@ -73,14 +75,11 @@ open module com.intellij.xml
     exports consulo.xml.codeInspection.htmlInspections;
     exports consulo.xml.copyright.psi;
     exports consulo.xml.dom.util.proxy;
-    exports consulo.xml.editor;
-    exports consulo.xml.editor.bidi;
     exports consulo.xml.featureStatistics;
     exports consulo.xml.ide.actions;
     exports consulo.xml.ide.highlighter;
     exports consulo.xml.ide.structureView.impl.xml;
     exports consulo.xml.ide.structureView.xml;
-    exports consulo.xml.impl.dom;
     exports consulo.xml.impl.localize;
     exports consulo.xml.intelliLang.inject.config;
     exports consulo.xml.intelliLang.inject.config.ui;
@@ -100,7 +99,6 @@ open module com.intellij.xml
     exports consulo.xml.navbar;
     exports consulo.xml.navigation;
     exports consulo.xml.options.colors.pages;
-    exports consulo.xml.patterns;
     exports consulo.xml.psi;
     exports consulo.xml.psi.filters;
     exports consulo.xml.psi.filters.getters;
@@ -131,7 +129,6 @@ open module com.intellij.xml
     exports consulo.xml.util.xml.actions.generate;
     exports consulo.xml.util.xml.converters;
     exports consulo.xml.util.xml.converters.values;
-    exports consulo.xml.util.xml.events;
     exports consulo.xml.util.xml.highlighting;
     exports consulo.xml.util.xml.impl;
     exports consulo.xml.util.xml.model;
@@ -149,7 +146,6 @@ open module com.intellij.xml
     exports consulo.xml.util.xml.ui.actions.generate;
     exports consulo.xml.localize;
     exports consulo.xml.vcsUtil;
-    exports consulo.xml.dom;
     exports com.intellij.xml.highlighter;
     exports org.intellij.html;
     exports org.intellij.plugins.relaxNG;

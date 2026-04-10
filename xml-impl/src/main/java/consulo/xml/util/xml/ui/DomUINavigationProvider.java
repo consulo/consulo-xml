@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
 
 import java.awt.*;
 import java.util.List;

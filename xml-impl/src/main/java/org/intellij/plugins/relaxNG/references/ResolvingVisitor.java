@@ -16,8 +16,8 @@
 
 package org.intellij.plugins.relaxNG.references;
 
-import consulo.xml.patterns.XmlAttributeValuePattern;
-import consulo.xml.patterns.XmlNamedElementPattern;
+import consulo.xml.language.psi.pattern.XmlAttributeValuePattern;
+import consulo.xml.language.psi.pattern.XmlNamedElementPattern;
 import consulo.language.psi.PsiElement;
 import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.language.psi.XmlAttribute;

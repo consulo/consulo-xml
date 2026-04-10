@@ -28,7 +28,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
-import static consulo.xml.patterns.XmlPatterns.*;
+import static consulo.xml.language.psi.pattern.XmlPatterns.*;
 
 /**
  * @author sweinreuter

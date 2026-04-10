@@ -20,9 +20,9 @@ import org.jspecify.annotations.Nullable;
 import consulo.application.ApplicationManager;
 import consulo.codeEditor.Editor;
 import consulo.language.psi.PsiFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomElementsNavigationManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementsNavigationManager;
 import consulo.project.Project;
 
 /**

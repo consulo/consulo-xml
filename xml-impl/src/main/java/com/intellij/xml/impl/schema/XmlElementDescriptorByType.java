@@ -27,10 +27,10 @@ import consulo.xml.language.psi.XmlTag;
  * @author ik
  */
 public class XmlElementDescriptorByType extends XmlElementDescriptorImpl {
-    private ComplexTypeDescriptor myType;
+    private ComplexTypeDescriptorImpl myType;
     public static final String QUALIFIED_ATTR_VALUE = "qualified";
 
-    public XmlElementDescriptorByType(XmlTag instanceTag, ComplexTypeDescriptor descriptor) {
+    public XmlElementDescriptorByType(XmlTag instanceTag, ComplexTypeDescriptorImpl descriptor) {
         myDescriptorTag = instanceTag;
         myType = descriptor;
     }
@@ -67,7 +67,7 @@ public class XmlElementDescriptorByType extends XmlElementDescriptorImpl {
     }
 
     @Override
-    public ComplexTypeDescriptor getType(XmlElement context) {
+    public ComplexTypeDescriptorImpl getType(XmlElement context) {
         return myType;
     }
 

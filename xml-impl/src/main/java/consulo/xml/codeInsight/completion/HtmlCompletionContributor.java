@@ -27,7 +27,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.io.CharsetToolkit;
 import consulo.xml.lang.xhtml.XHTMLLanguage;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.psi.html.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlElementDescriptorImpl;
 import consulo.xml.language.psi.XmlAttribute;

@@ -22,11 +22,14 @@ import consulo.language.editor.rawHighlight.SeverityRegistrar;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.function.Condition;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomUtil;
 
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementsInspection;
+import consulo.xml.dom.editor.DomElementsProblemsHolder;
 import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

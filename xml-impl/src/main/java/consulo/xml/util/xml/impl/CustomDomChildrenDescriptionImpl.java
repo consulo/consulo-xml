@@ -16,10 +16,14 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.util.collection.ArrayUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.reflect.DomReflectionUtil;
+import consulo.xml.dom.reflect.JavaMethod;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
+import consulo.xml.dom.reflect.CustomDomChildrenDescription;
 import consulo.xml.util.xml.reflect.DomExtensionImpl;
 import org.jspecify.annotations.Nullable;
 

@@ -16,10 +16,10 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.util.xml.AbstractDomDeclarationSearcher;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomTarget;
-import consulo.xml.util.xml.NameValue;
+import consulo.xml.dom.AbstractDomDeclarationSearcher;
+import consulo.xml.dom.DomElement;
+import consulo.xml.util.xml.DomTargetImpl;
+import consulo.xml.dom.NameValue;
 
 import org.jspecify.annotations.Nullable;
 
@@ -30,10 +30,10 @@ import org.jspecify.annotations.Nullable;
 public class DomDeclarationSearcher extends AbstractDomDeclarationSearcher {
 
   @Nullable
-  protected DomTarget createDomTarget(DomElement parent, DomElement nameElement) {
+  protected DomTargetImpl createDomTarget(DomElement parent, DomElement nameElement) {
     final NameValue nameValue = nameElement.getAnnotation(NameValue.class);
     if (nameValue != null && nameValue.referencable()) {
-      return DomTarget.getTarget(parent);
+      return DomTargetImpl.getTarget(parent);
     }
     return null;
   }

@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.ui.ex.awt.UIUtil;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 import java.awt.*;
 

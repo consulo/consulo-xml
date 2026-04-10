@@ -19,8 +19,8 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 
 /**
  * @author peter

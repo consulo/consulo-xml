@@ -22,6 +22,7 @@ import consulo.language.psi.PsiElement;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
 import consulo.xml.codeInsight.daemon.impl.analysis.InsertRequiredAttributeFix;
 import consulo.xml.codeInspection.htmlInspections.AddAttributeValueIntentionFix;
+import consulo.xml.editor.XmlQuickFixFactory;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlToken;

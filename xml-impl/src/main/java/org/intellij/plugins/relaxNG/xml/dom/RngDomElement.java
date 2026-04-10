@@ -16,11 +16,11 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.Attribute;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.JavaNameStrategy;
-import consulo.xml.util.xml.NameStrategy;
+import consulo.xml.dom.Attribute;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.JavaNameStrategy;
+import consulo.xml.dom.NameStrategy;
 import org.intellij.plugins.relaxNG.model.CommonElement;
 
 /**

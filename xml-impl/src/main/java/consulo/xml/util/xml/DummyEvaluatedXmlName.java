@@ -16,6 +16,8 @@
 package consulo.xml.util.xml;
 
 
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.language.XmlName;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 

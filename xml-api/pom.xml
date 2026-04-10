@@ -47,5 +47,12 @@
             <artifactId>consulo-language-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>consulo</groupId>
+            <artifactId>consulo-util-xml-fast-reader</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>

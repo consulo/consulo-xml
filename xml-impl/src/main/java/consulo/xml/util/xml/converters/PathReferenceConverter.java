@@ -18,10 +18,10 @@ package consulo.xml.util.xml.converters;
 
 import org.jspecify.annotations.Nullable;
 
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.CustomReferenceConverter;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.CustomReferenceConverter;
+import consulo.xml.dom.GenericDomValue;
 import consulo.language.psi.path.PathReferenceManager;
 import consulo.language.psi.path.PathReference;
 import consulo.language.psi.PsiReference;

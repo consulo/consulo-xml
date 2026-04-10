@@ -1,8 +1,8 @@
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.DomChildrenDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.DomChildrenDescription;
 
 import java.lang.reflect.Type;
 

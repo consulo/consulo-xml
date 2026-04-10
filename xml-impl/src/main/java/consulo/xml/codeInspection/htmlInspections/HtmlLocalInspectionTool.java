@@ -24,7 +24,7 @@ import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlTag;

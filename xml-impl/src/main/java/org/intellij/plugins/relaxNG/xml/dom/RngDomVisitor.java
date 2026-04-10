@@ -15,8 +15,8 @@
  */
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
 
 /**
  * @author sweinreuter

@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.model;
 
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import consulo.util.dataholder.UserDataHolder;
 
 import org.jspecify.annotations.Nullable;

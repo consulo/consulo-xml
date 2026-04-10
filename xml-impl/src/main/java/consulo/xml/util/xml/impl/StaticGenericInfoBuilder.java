@@ -23,7 +23,11 @@ import consulo.util.collection.primitive.ints.IntObjectMap;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.DomReflectionUtil;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.dom.reflect.JavaMethodSignature;
+import consulo.xml.language.XmlName;
 
 import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Method;

@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.ui.ex.awt.BooleanTableCellRenderer;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

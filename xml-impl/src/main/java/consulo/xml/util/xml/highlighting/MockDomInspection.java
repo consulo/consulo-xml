@@ -16,7 +16,8 @@
 package consulo.xml.util.xml.highlighting;
 
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.editor.BasicDomElementsInspection;
 
 
 /**

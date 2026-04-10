@@ -23,7 +23,7 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.localize.XmlLocalize;
 
 public abstract class RequiredAttributesInspectionBase extends XmlSuppressableInspectionTool implements UnfairLocalInspectionTool {

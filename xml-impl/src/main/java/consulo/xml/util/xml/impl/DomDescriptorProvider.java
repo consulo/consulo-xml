@@ -22,9 +22,9 @@ import consulo.xml.psi.impl.source.xml.XmlElementDescriptorProvider;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.impl.dom.DomElementXmlDescriptor;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DefinesXml;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DefinesXml;
 import org.jspecify.annotations.Nullable;
 
 /**

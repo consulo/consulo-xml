@@ -15,8 +15,8 @@
  */
 package org.intellij.plugins.relaxNG;
 
-import consulo.xml.util.xml.DomFileDescription;
-import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
+import consulo.xml.dom.DomFileDescription;
+import consulo.xml.dom.editor.DomElementsAnnotator;
 import org.intellij.plugins.relaxNG.model.annotation.ModelAnnotator;
 
 /**

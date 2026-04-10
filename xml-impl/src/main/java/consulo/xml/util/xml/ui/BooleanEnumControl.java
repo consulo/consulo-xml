@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.xml.util.xml.NamedEnumUtil;
+import consulo.xml.dom.NamedEnumUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

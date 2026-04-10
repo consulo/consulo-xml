@@ -22,6 +22,7 @@ import consulo.util.lang.Pair;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeWithPredefinedCharset;
 import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.XmlLikeFileType;
 import consulo.xml.localize.XmlLocalize;
 
 import java.nio.charset.Charset;

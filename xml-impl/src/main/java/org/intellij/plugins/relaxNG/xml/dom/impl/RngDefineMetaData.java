@@ -21,8 +21,8 @@ import consulo.language.util.IncorrectOperationException;
 import org.intellij.plugins.relaxNG.xml.dom.RngDefine;
 import consulo.application.AllIcons;
 import consulo.xml.util.xml.DomMetaData;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
 import consulo.ui.image.Image;
 
 /**

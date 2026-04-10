@@ -24,11 +24,12 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.ref.SoftReference;
+import consulo.xml.dom.reflect.*;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.JavaMethod;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.reflect.JavaMethod;
 import consulo.xml.util.xml.reflect.*;
 
 import org.jspecify.annotations.Nullable;

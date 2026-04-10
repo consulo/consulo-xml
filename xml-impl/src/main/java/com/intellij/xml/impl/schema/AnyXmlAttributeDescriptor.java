@@ -26,13 +26,13 @@ import consulo.xml.language.psi.XmlElement;
  */
 public class AnyXmlAttributeDescriptor implements XmlAttributeDescriptor {
     private final String myAttributeName;
-    private final ComplexTypeDescriptor.CanContainAttributeType myCanContainAttributeType;
+    private final ComplexTypeDescriptorImpl.CanContainAttributeType myCanContainAttributeType;
 
     public AnyXmlAttributeDescriptor(String attributeName) {
-        this(attributeName, ComplexTypeDescriptor.CanContainAttributeType.CanContainButDoNotSkip);
+        this(attributeName, ComplexTypeDescriptorImpl.CanContainAttributeType.CanContainButDoNotSkip);
     }
 
-    public AnyXmlAttributeDescriptor(String attributeName, ComplexTypeDescriptor.CanContainAttributeType canContainAttributeType) {
+    public AnyXmlAttributeDescriptor(String attributeName, ComplexTypeDescriptorImpl.CanContainAttributeType canContainAttributeType) {
         myAttributeName = attributeName;
         myCanContainAttributeType = canContainAttributeType;
     }
@@ -97,7 +97,7 @@ public class AnyXmlAttributeDescriptor implements XmlAttributeDescriptor {
         return null;
     }
 
-    public ComplexTypeDescriptor.CanContainAttributeType getCanContainAttributeType() {
+    public ComplexTypeDescriptorImpl.CanContainAttributeType getCanContainAttributeType() {
         return myCanContainAttributeType;
     }
 }

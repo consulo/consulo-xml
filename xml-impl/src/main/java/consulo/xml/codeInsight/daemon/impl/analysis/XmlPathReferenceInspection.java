@@ -26,7 +26,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.language.psi.XmlElementVisitor;

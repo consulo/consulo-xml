@@ -18,8 +18,8 @@ package consulo.xml.psi.impl.source.resolve.reference.impl.providers;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
-import com.intellij.xml.impl.schema.ComplexTypeDescriptor;
-import com.intellij.xml.impl.schema.TypeDescriptor;
+import com.intellij.xml.impl.schema.ComplexTypeDescriptorImpl;
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
 import consulo.document.util.TextRange;
@@ -170,8 +170,8 @@ public class TypeOrElementOrAttributeReference implements PsiReference {
         }
         case TypeReference: {
           TypeDescriptor typeDescriptor = nsDescriptor.getTypeDescriptor(canonicalText, tag);
-          if (typeDescriptor instanceof ComplexTypeDescriptor) {
-            return ((ComplexTypeDescriptor)typeDescriptor).getDeclaration();
+          if (typeDescriptor instanceof ComplexTypeDescriptorImpl) {
+            return ((ComplexTypeDescriptorImpl)typeDescriptor).getDeclaration();
           }
           else if (typeDescriptor != null) {
             return myElement;

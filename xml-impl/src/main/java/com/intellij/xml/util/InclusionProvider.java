@@ -24,6 +24,7 @@ import consulo.language.psi.PsiModificationTracker;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
+import consulo.xml.language.psi.util.XmlIncludeHandler;
 import org.jspecify.annotations.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +32,7 @@ import java.util.regex.Pattern;
 /**
  * @author peter
  */
-class InclusionProvider implements CachedValueProvider<PsiElement[]> {
+public class InclusionProvider implements CachedValueProvider<PsiElement[]> {
     //xpointer($1)
     public static Pattern XPOINTER_PATTERN = Pattern.compile("xpointer\\((.*)\\)");
 

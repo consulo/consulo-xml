@@ -34,11 +34,11 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import consulo.xml.util.xml.highlighting.DomCollectionProblemDescriptor;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
-import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import consulo.xml.util.xml.ui.actions.DefaultAddAction;
 import org.jspecify.annotations.Nullable;
 

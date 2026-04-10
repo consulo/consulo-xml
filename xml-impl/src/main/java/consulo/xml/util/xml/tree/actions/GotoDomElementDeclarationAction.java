@@ -23,9 +23,9 @@ import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.IdeActions;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 import consulo.xml.util.xml.tree.BaseDomElementNode;
-import consulo.xml.util.xml.DomElementsNavigationManager;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementsNavigationManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
 
 /**
  * @author Sergey.Vasiliev

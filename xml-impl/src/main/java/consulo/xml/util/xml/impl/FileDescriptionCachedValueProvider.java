@@ -27,9 +27,13 @@ import consulo.util.lang.function.Condition;
 import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileWithId;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileDescription;
+import consulo.xml.dom.DomService;
+import consulo.xml.language.XmlName;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.events.DomEvent;
+import consulo.xml.dom.DomEvent;
 import consulo.xml.util.xml.stubs.FileStub;
 
 import org.jspecify.annotations.Nullable;

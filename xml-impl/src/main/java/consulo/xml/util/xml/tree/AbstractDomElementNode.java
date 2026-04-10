@@ -20,8 +20,8 @@ import consulo.project.Project;
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.tree.SimpleNode;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
 

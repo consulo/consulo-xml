@@ -20,8 +20,8 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 
-import consulo.xml.util.xml.Attribute;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.Attribute;
+import consulo.xml.dom.GenericAttributeValue;
 import org.intellij.plugins.relaxNG.xml.dom.names.OpenNameClasses;
 
 /**

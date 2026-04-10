@@ -2,9 +2,9 @@ package consulo.xml.util.xml.impl;
 
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.EvaluatedXmlName;
-import consulo.xml.util.xml.events.DomEvent;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.DomEvent;
 import consulo.xml.util.xml.stubs.ElementStub;
 import consulo.xml.util.xml.stubs.StubParentStrategy;
 

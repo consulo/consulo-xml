@@ -23,6 +23,8 @@ import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.meta.PsiMetaOwner;
 import consulo.util.collection.ContainerUtil;
 
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.GenericValue;
 import org.jspecify.annotations.Nullable;
 import java.util.Set;
 

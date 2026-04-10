@@ -16,9 +16,9 @@ import consulo.util.concurrent.Promise;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomService;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomService;
 
 import org.jspecify.annotations.Nullable;
 import java.util.function.Function;

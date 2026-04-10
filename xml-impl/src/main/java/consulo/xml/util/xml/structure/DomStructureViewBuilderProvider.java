@@ -19,9 +19,9 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomService;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomService;
 
 import java.util.function.Function;
 

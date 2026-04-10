@@ -16,6 +16,7 @@
 package consulo.xml.util.xml;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.xml.dom.DomFileDescription;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.util.xml.impl.DomApplicationComponent;
 import consulo.index.io.DataIndexer;

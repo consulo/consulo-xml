@@ -16,8 +16,8 @@
 
 package consulo.xml.javaee.web;
 
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.CustomReferenceConverter;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.CustomReferenceConverter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 

@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import consulo.xml.util.xml.SubTag;
+import consulo.xml.dom.SubTag;
 
 import java.util.List;
 

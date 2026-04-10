@@ -19,12 +19,12 @@ import consulo.language.psi.PsiAnchor;
 import consulo.language.psi.PsiElement;
 import consulo.logging.Logger;
 import consulo.project.Project;
+import consulo.xml.dom.*;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;

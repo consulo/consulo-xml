@@ -16,7 +16,7 @@
 package consulo.xml.codeInsight.navigation;
 
 import consulo.language.navigation.GotoRelatedItem;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import consulo.ui.image.Image;
 
 /**

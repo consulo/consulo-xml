@@ -24,9 +24,9 @@ import consulo.language.psi.PsiElement;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.ElementPresentationManager;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.ElementPresentationManager;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;

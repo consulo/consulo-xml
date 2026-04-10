@@ -22,7 +22,7 @@ import consulo.language.editor.inspection.UnfairLocalInspectionTool;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import org.jspecify.annotations.Nullable;

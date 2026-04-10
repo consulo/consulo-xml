@@ -19,8 +19,11 @@ import consulo.component.bind.ParameterizedTypeImpl;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.XmlName;
+import consulo.xml.dom.reflect.CustomDomChildrenDescription;
+import consulo.xml.dom.reflect.DomExtension;
+import consulo.xml.dom.reflect.DomExtensionsRegistrar;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.language.XmlName;
 import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;

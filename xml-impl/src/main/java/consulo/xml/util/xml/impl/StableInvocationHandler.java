@@ -20,8 +20,8 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.function.Condition;
 import consulo.xml.dom.util.proxy.InvocationHandlerOwner;
-import consulo.xml.util.xml.MergedObject;
-import consulo.xml.util.xml.StableElement;
+import consulo.xml.dom.MergedObject;
+import consulo.xml.dom.StableElement;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

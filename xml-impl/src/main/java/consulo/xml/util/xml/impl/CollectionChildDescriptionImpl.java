@@ -4,10 +4,15 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomNameStrategy;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.ModelMergerUtil;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.language.XmlName;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import org.jspecify.annotations.Nullable;
 
 import java.lang.annotation.Annotation;

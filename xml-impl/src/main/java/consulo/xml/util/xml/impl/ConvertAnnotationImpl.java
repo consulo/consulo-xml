@@ -15,8 +15,8 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.Converter;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.Converter;
 
 import java.lang.annotation.Annotation;
 

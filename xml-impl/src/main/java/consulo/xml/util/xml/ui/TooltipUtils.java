@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
 
 import java.util.List;
 

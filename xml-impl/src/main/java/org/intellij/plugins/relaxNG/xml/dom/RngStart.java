@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 
 /**
  * http://relaxng.org/ns/structure/1.0:startElemType interface.

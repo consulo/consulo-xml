@@ -4,8 +4,12 @@ import consulo.application.util.ConcurrentFactoryMap;
 import consulo.component.ProcessCanceledException;
 import consulo.navigation.Navigatable;
 import consulo.util.dataholder.Key;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
+import consulo.xml.dom.reflect.AnnotatedElement;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.dom.reflect.JavaMethodSignature;
 import consulo.xml.language.psi.XmlAttribute;
-import consulo.xml.util.xml.*;
 
 import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;

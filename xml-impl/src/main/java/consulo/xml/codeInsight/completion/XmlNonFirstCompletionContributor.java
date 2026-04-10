@@ -23,14 +23,14 @@ import consulo.language.editor.completion.CompletionType;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElementType;
 
 import static consulo.language.pattern.PlatformPatterns.psiElement;
 import static consulo.xml.codeInsight.completion.XmlCompletionContributor.hasEnumerationReference;
-import static consulo.xml.patterns.XmlPatterns.xmlAttribute;
-import static consulo.xml.patterns.XmlPatterns.xmlTag;
+import static consulo.xml.language.psi.pattern.XmlPatterns.xmlAttribute;
+import static consulo.xml.language.psi.pattern.XmlPatterns.xmlTag;
 import static consulo.xml.psi.filters.getters.XmlAttributeValueGetter.getEnumeratedValues;
 
 /**

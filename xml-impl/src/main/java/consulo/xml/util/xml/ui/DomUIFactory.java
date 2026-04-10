@@ -23,11 +23,11 @@ import consulo.project.Project;
 import consulo.ui.ex.awt.ColumnInfo;
 import consulo.ui.ex.awt.UserActivityWatcher;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.Required;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.Required;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 
 import org.jspecify.annotations.Nullable;
 import javax.swing.table.TableCellEditor;

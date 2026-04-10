@@ -17,7 +17,7 @@ package consulo.xml.psi.impl.source.xml;
 
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlElementType;
-import com.intellij.xml.util.XmlPsiUtil;
+import consulo.xml.language.psi.util.XmlPsiUtil;
 import consulo.content.scope.SearchScope;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;

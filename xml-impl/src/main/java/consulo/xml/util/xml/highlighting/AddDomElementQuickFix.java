@@ -20,9 +20,9 @@ import consulo.ui.annotation.RequiredUIAccess;
 
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.project.Project;
+import consulo.xml.dom.localize.DomLocalize;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomBundle;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import consulo.language.editor.inspection.LocalQuickFix;
 
 /**
@@ -45,8 +45,8 @@ public class AddDomElementQuickFix<T extends DomElement> implements LocalQuickFi
     private LocalizeValue computeName() {
         String name = myElement.getXmlElementName();
         return isTag()
-            ? LocalizeValue.localizeTODO(DomBundle.message("add.element.fix.name", name))
-            : LocalizeValue.localizeTODO(DomBundle.message("add.attribute.fix.name", name));
+            ? DomLocalize.addElementFixName(name)
+            : DomLocalize.addAttributeFixName(name);
     }
 
     private boolean isTag() {

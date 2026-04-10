@@ -17,11 +17,11 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.ui.ex.JBColor;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
-import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
-import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementsProblemsHolder;
 import consulo.application.AllIcons;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.ui.ex.awt.JBLabel;

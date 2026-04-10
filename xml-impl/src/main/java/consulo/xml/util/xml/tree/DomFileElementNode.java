@@ -17,7 +17,7 @@
 package consulo.xml.util.xml.tree;
 
 import consulo.ui.ex.awt.tree.SimpleNode;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 
 public class DomFileElementNode extends BaseDomElementNode {
   private final DomFileElement myFileElement;

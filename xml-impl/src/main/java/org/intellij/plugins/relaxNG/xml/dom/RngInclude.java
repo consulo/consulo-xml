@@ -22,10 +22,10 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.Attribute;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.Attribute;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 import org.intellij.plugins.relaxNG.model.Include;
 import org.intellij.plugins.relaxNG.xml.dom.impl.RngHrefConverter;
 

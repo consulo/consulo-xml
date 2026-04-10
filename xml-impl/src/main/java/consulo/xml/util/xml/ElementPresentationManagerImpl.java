@@ -19,6 +19,7 @@ package consulo.xml.util.xml;
 import consulo.annotation.component.ServiceImpl;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiElement;
+import consulo.xml.dom.ElementPresentationManager;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;

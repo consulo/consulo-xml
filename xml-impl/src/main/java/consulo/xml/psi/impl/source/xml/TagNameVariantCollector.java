@@ -35,7 +35,7 @@ import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.descriptor.XmlElementDescriptor;
-import com.intellij.xml.XmlElementDescriptorAwareAboutChildren;
+import consulo.xml.descriptor.XmlElementDescriptorAwareAboutChildren;
 import com.intellij.xml.XmlExtension;
 import consulo.xml.descriptor.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;

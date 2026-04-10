@@ -21,8 +21,8 @@ package org.intellij.plugins.relaxNG.xml.dom;
 
 
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.SubTag;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.SubTag;
 import org.intellij.plugins.relaxNG.model.Pattern;
 
 /**

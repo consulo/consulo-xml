@@ -19,8 +19,8 @@ package consulo.xml.util.xml.tree;
 
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.tree.SimpleNode;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
 
 public class GenericValueNode extends AbstractDomElementNode {
   protected GenericDomValue myModelElement;

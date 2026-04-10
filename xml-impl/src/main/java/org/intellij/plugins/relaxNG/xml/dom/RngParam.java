@@ -20,8 +20,8 @@
 package org.intellij.plugins.relaxNG.xml.dom;
 
 
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 
 /**
  * http://relaxng.org/ns/structure/1.0:paramElemType interface.

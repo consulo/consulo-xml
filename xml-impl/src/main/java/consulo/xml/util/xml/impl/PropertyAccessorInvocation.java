@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.JavaMethod;
+import consulo.xml.dom.reflect.JavaMethod;
 import consulo.util.collection.ArrayUtil;
 
 import java.lang.reflect.InvocationTargetException;

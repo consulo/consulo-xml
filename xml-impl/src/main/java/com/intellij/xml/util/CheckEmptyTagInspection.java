@@ -32,7 +32,7 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.lang.html.HTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlChildRole;

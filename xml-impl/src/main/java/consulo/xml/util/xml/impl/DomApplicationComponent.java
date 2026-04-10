@@ -24,11 +24,11 @@ import consulo.ide.ServiceManager;
 import consulo.util.collection.FactoryMap;
 import consulo.util.lang.ReflectionAssignabilityCache;
 import consulo.xml.dom.DomElementImplementationProvider;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
-import consulo.xml.util.xml.DomFileDescription;
-import consulo.xml.util.xml.TypeChooserManager;
-import consulo.xml.util.xml.highlighting.DomElementsAnnotator;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
+import consulo.xml.dom.DomFileDescription;
+import consulo.xml.dom.TypeChooserManager;
+import consulo.xml.dom.editor.DomElementsAnnotator;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

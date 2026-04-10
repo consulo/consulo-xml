@@ -20,7 +20,7 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.TreeElement;
 import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

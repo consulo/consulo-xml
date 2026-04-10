@@ -20,7 +20,7 @@ import consulo.annotation.component.ServiceAPI;
 import consulo.codeEditor.Editor;
 import consulo.ide.ServiceManager;
 import consulo.project.Project;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 import java.util.Map;
 

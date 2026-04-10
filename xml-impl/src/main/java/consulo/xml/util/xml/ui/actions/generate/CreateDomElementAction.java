@@ -23,9 +23,9 @@ import consulo.language.psi.ElementManipulators;
 import consulo.project.Project;
 import consulo.language.psi.PsiFile;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericDomValue;
 import consulo.language.editor.action.SimpleCodeInsightAction;
 import consulo.language.editor.template.TemplateBuilder;
 

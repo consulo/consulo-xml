@@ -27,12 +27,15 @@ import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
+import consulo.xml.dom.*;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementResolveProblemDescriptor;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.ConvertContextFactory;
 import consulo.xml.util.xml.impl.DomManagerImpl;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 
 import org.jspecify.annotations.Nullable;
 

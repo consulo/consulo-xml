@@ -22,10 +22,11 @@ import consulo.project.Project;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightingAwareElementDescriptor;
+import consulo.xml.dom.*;
+import consulo.xml.language.XmlName;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.DomChildrenDescription;
+import consulo.xml.dom.reflect.DomChildrenDescription;
 
 import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;

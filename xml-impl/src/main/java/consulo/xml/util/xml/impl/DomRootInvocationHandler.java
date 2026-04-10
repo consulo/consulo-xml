@@ -7,10 +7,10 @@ import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomNameStrategy;
-import consulo.xml.util.xml.EvaluatedXmlName;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomNameStrategy;
+import consulo.xml.dom.EvaluatedXmlName;
 import consulo.xml.util.xml.stubs.ElementStub;
 
 import org.jspecify.annotations.Nullable;

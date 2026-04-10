@@ -25,7 +25,7 @@ import com.intellij.xml.util.HtmlUtil;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInspection.XmlQuickFixFactory;
+import consulo.xml.editor.XmlQuickFixFactory;
 import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.psi.html.HtmlTag;

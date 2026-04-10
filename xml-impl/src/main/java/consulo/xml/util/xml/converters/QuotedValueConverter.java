@@ -26,7 +26,7 @@ import consulo.language.psi.ResolveResult;
 import consulo.localize.LocalizeValue;
 import consulo.util.lang.StringUtil;
 import com.intellij.xml.util.XmlTagTextUtil;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import org.jspecify.annotations.Nullable;
 

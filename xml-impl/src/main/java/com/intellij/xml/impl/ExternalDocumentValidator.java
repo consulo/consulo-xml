@@ -41,7 +41,7 @@ import consulo.util.lang.Comparing;
 import consulo.util.lang.ref.SoftReference;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.language.psi.*;

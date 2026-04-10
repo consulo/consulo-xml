@@ -16,6 +16,7 @@
 package com.intellij.xml.impl.schema;
 
 import consulo.xml.language.psi.XmlTag;
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import org.jspecify.annotations.Nullable;
 
 /**

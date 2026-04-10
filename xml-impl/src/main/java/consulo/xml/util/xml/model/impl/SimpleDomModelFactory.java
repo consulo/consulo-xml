@@ -23,9 +23,9 @@ import java.util.Set;
 import org.jspecify.annotations.Nullable;
 import consulo.xml.language.psi.XmlFile;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.ModelMerger;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.ModelMerger;
 import consulo.xml.util.xml.model.DomModel;
 import consulo.xml.util.xml.model.SimpleModelFactory;
 

@@ -25,7 +25,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.XmlFileType;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomManager;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;
 

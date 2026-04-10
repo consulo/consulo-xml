@@ -36,7 +36,7 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.language.psi.XmlElementVisitor;

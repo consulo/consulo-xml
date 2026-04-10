@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.Namespace;
 
 /**
  * http://relaxng.org/ns/structure/1.0:groupElemType interface.

@@ -2,8 +2,12 @@ package consulo.xml.util.xml.impl;
 
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.reflect.ReflectionUtil;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.DomAttributeChildDescription;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomNameStrategy;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.DomAttributeChildDescription;
 
 import org.jspecify.annotations.Nullable;
 import java.lang.annotation.Annotation;

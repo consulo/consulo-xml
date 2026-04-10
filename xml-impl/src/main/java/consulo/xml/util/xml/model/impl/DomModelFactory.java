@@ -20,9 +20,9 @@ import consulo.language.psi.PsiElement;
 import consulo.module.Module;
 import consulo.project.Project;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
 import consulo.xml.util.xml.model.DomModel;
 import org.jspecify.annotations.Nullable;
 

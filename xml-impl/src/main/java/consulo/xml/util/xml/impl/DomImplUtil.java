@@ -23,11 +23,14 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.function.Condition;
 import consulo.util.lang.reflect.ReflectionUtil;
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.DomReflectionUtil;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.language.XmlName;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
-import consulo.xml.util.xml.reflect.DomFixedChildDescription;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.reflect.DomFixedChildDescription;
 
 import org.jspecify.annotations.Nullable;
 import java.lang.reflect.*;

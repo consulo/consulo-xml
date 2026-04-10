@@ -25,6 +25,7 @@ import consulo.util.io.CharsetToolkit;
 import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.language.XmlLikeFileType;
 import consulo.xml.localize.XmlLocalize;
 
 import org.jspecify.annotations.Nullable;

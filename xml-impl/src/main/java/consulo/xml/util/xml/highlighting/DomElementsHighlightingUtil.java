@@ -30,6 +30,8 @@ import consulo.localize.LocalizeValue;
 import consulo.util.lang.Pair;
 import consulo.util.lang.xml.XmlStringUtil;
 
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementResolveProblemDescriptor;
 import consulo.xml.language.XMLLanguage;
 import org.jspecify.annotations.Nullable;
 

@@ -28,7 +28,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 import org.intellij.plugins.relaxNG.model.Define;
 import org.intellij.plugins.relaxNG.model.resolve.DefinitionResolver;
 import org.intellij.plugins.relaxNG.xml.dom.RngGrammar;

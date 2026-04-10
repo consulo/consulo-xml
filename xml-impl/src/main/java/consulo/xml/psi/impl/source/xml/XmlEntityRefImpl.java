@@ -34,6 +34,7 @@ import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.language.psi.*;
+import consulo.xml.internal.XmlEntityCache;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,9 +24,9 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.image.Image;
+import consulo.xml.dom.*;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.DomCollectionChildDescription;
+import consulo.xml.dom.reflect.DomCollectionChildDescription;
 import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Type;

@@ -31,7 +31,7 @@ import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
 import consulo.xml.ide.highlighter.XmlFileType;
-import consulo.xml.ide.highlighter.XmlLikeFileType;
+import consulo.xml.language.XmlLikeFileType;
 
 import consulo.xml.language.psi.IXmlLeafElementType;
 import consulo.xml.language.psi.XmlTokenType;

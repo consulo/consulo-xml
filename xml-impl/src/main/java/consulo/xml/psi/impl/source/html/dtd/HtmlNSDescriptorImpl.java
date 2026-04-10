@@ -23,7 +23,7 @@ import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
-import com.intellij.xml.impl.schema.TypeDescriptor;
+import consulo.xml.descriptor.xsd.TypeDescriptor;
 import com.intellij.xml.impl.schema.XmlNSTypeDescriptorProvider;
 import consulo.application.dumb.DumbAware;
 

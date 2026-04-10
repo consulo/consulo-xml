@@ -16,12 +16,12 @@
 package consulo.xml.util.xml.impl;
 
 import consulo.application.util.function.Processor;
-import consulo.xml.util.xml.EvaluatedXmlName;
-import consulo.xml.util.xml.JavaMethod;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
-import consulo.xml.util.xml.reflect.CustomDomChildrenDescription;
-import consulo.xml.util.xml.reflect.DomGenericInfo;
+import consulo.xml.dom.EvaluatedXmlName;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.reflect.CustomDomChildrenDescription;
+import consulo.xml.dom.reflect.DomGenericInfo;
 import consulo.util.lang.StringUtil;
 
 import org.jspecify.annotations.Nullable;

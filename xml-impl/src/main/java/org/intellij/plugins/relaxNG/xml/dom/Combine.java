@@ -19,7 +19,7 @@
 
 package org.intellij.plugins.relaxNG.xml.dom;
 
-import consulo.xml.util.xml.NamedEnum;
+import consulo.xml.dom.NamedEnum;
 
 /**
  * http://relaxng.org/ns/structure/1.0:combineAttrType enumeration.

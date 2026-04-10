@@ -19,9 +19,9 @@ import java.lang.reflect.Method;
 
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.ide.impl.idea.util.containers.ConcurrentClassMap;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementVisitor;
-import consulo.xml.util.xml.DomReflectionUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementVisitor;
+import consulo.xml.dom.reflect.DomReflectionUtil;
 
 /**
  * @author peter

@@ -22,8 +22,8 @@ import consulo.application.Result;
 import consulo.codeEditor.Editor;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
 import consulo.ui.image.Image;
 
 import org.jspecify.annotations.Nullable;

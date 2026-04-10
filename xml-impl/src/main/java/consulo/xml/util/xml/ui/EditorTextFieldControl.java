@@ -31,10 +31,10 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.util.TextAttributesUtil;
 import consulo.undoRedo.CommandProcessor;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
-import consulo.xml.util.xml.highlighting.DomElementProblemDescriptor;
-import consulo.xml.util.xml.highlighting.DomElementsProblemsHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
+import consulo.xml.dom.editor.DomElementProblemDescriptor;
+import consulo.xml.dom.editor.DomElementsProblemsHolder;
 
 import javax.swing.*;
 import java.awt.*;

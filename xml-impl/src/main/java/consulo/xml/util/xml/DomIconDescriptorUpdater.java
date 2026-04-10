@@ -16,6 +16,8 @@
 package consulo.xml.util.xml;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.xml.dom.DomFileDescription;
+import consulo.xml.dom.DomManager;
 import consulo.xml.language.psi.XmlFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.icon.IconDescriptor;

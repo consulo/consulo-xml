@@ -1,8 +1,12 @@
 package consulo.xml.util.xml;
 
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.DomReflectionUtil;
+import consulo.xml.dom.reflect.JavaMethod;
+import consulo.xml.dom.reflect.JavaMethodSignature;
 import consulo.xml.util.xml.impl.DomInvocationHandler;
 import consulo.xml.util.xml.impl.DomManagerImpl;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.proxy.advanced.AdvancedProxyBuilder;
 import consulo.util.collection.FactoryMap;

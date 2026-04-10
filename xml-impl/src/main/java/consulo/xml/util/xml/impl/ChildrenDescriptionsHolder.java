@@ -15,7 +15,7 @@
  */
 package consulo.xml.util.xml.impl;
 
-import consulo.xml.util.xml.XmlName;
+import consulo.xml.language.XmlName;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

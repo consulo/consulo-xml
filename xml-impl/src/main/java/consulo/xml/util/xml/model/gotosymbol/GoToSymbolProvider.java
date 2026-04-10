@@ -33,9 +33,9 @@ import consulo.project.content.scope.ProjectAwareSearchScope;
 import consulo.ui.image.Image;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.ElementPresentationManager;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.ElementPresentationManager;
+import consulo.xml.dom.GenericDomValue;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;

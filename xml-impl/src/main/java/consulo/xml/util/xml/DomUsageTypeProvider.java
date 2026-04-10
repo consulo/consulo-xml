@@ -21,6 +21,9 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.usage.UsageType;
 import consulo.usage.UsageTypeProvider;
+import consulo.xml.dom.DomBundle;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlFile;
 

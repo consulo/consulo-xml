@@ -23,7 +23,7 @@ import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.PlatformPatterns;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.language.psi.XmlAttributeDecl;
 import consulo.xml.language.psi.XmlElementDecl;
 

@@ -24,10 +24,10 @@ import consulo.usage.UsageViewLongNameLocation;
 import consulo.usage.UsageViewNodeTextLocation;
 import consulo.usage.UsageViewTypeLocation;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomTarget;
-import consulo.xml.util.xml.ElementPresentation;
-import consulo.xml.util.xml.ElementPresentationTemplate;
+import consulo.xml.dom.DomElement;
+import consulo.xml.util.xml.DomTargetImpl;
+import consulo.xml.dom.ElementPresentation;
+import consulo.xml.dom.ElementPresentationTemplate;
 
 
 /**
@@ -36,9 +36,9 @@ import consulo.xml.util.xml.ElementPresentationTemplate;
 @ExtensionImpl(id = "domDefault", order = "last, before pomDefault")
 public class DefaultDomTargetDescriptionProvider extends PomDescriptionProvider {
   public String getElementDescription(PomTarget element, ElementDescriptionLocation location) {
-    if (!(element instanceof DomTarget)) return null;
+    if (!(element instanceof DomTargetImpl)) return null;
 
-    final DomTarget target = (DomTarget) element;
+    final DomTargetImpl target = (DomTargetImpl) element;
 
     DomElement domElement = target.getDomElement();
     final ElementPresentationTemplate template = domElement.getChildDescription().getPresentationTemplate();

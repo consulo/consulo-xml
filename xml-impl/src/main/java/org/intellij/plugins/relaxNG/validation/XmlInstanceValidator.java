@@ -27,7 +27,7 @@ import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.logging.Logger;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

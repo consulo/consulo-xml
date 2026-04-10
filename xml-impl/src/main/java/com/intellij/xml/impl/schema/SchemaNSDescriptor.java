@@ -19,7 +19,7 @@ import consulo.xml.impl.localize.XmlErrorLocalize;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiElement;
-import consulo.xml.Validator;
+import consulo.xml.language.Validator;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlTag;
 
