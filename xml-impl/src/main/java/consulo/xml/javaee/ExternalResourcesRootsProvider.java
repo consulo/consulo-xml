@@ -26,6 +26,7 @@ import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.codeInsight.daemon.impl.quickfix.FetchExtResourceAction;
 import consulo.xml.impl.internal.ExternalResource;
 import consulo.xml.impl.internal.StandardExternalResourceData;
+import consulo.xml.standardResource.StandardResourceProvider;
 import jakarta.inject.Inject;
 
 import java.util.HashSet;

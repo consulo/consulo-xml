@@ -19,6 +19,8 @@ import com.intellij.xml.util.HtmlUtil;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.impl.internal.ResourceRegistrarImpl;
+import consulo.xml.standardResource.ResourceRegistrar;
+import consulo.xml.standardResource.StandardResourceProvider;
 
 /**
  * @author Dmitry Avdeev

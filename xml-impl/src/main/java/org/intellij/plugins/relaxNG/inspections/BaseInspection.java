@@ -33,7 +33,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.editor.XmlSuppressableInspectionTool;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import org.jspecify.annotations.Nullable;
 import org.intellij.plugins.relaxNG.compact.psi.*;
 

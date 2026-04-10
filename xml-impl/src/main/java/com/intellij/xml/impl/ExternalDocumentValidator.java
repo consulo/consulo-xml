@@ -43,7 +43,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.language.Validator;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.xml.language.psi.*;
 import org.xml.sax.SAXParseException;
 

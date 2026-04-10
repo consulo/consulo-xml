@@ -19,7 +19,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.ide.highlighter.DTDFileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.virtualFileSystem.fileType.FileTypeFactory;
 import consulo.virtualFileSystem.fileType.FileTypeConsumer;
 
@@ -29,6 +29,7 @@ import consulo.virtualFileSystem.fileType.FileTypeConsumer;
  */
 @ExtensionImpl
 public class XmlFileTypeFactory extends FileTypeFactory {
+    @Override
     public void createFileTypes(final FileTypeConsumer consumer) {
         consumer.consume(HtmlFileType.INSTANCE, "html;htm;sht;shtm;shtml");
         consumer.consume(XHtmlFileType.INSTANCE, "xhtml");

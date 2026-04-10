@@ -1,7 +1,7 @@
 package org.intellij.plugins.relaxNG.model.resolve;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.language.psi.include.FileIncludeInfo;
 import consulo.language.psi.include.FileIncludeProvider;
 import consulo.language.psi.stub.FileContent;

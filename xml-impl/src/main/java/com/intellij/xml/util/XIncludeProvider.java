@@ -24,7 +24,7 @@ import consulo.util.lang.CharArrayUtil;
 import consulo.util.xml.fastReader.NanoXmlUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;

@@ -7,6 +7,7 @@ module com.intellij.xml.api {
 
     requires static consulo.util.xml.fast.reader;
 
+    exports consulo.xml.localize;
     exports consulo.xml.descriptor;
     exports consulo.xml.descriptor.xsd;
     exports consulo.xml.language;

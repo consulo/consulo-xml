@@ -17,7 +17,7 @@ package consulo.xml.impl.internal;
 
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.ExternalResourceManagerExImpl;
-import consulo.xml.javaee.ResourceRegistrar;
+import consulo.xml.standardResource.ResourceRegistrar;
 
 import org.jspecify.annotations.Nullable;
 import java.util.*;

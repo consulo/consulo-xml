@@ -22,7 +22,7 @@ import consulo.language.codeStyle.ui.setting.CodeStyleAbstractPanel;
 import consulo.language.psi.PsiFile;
 import consulo.ui.ex.awt.JBScrollPane;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 import consulo.xml.psi.formatter.xml.XmlCodeStyleSettings;
 

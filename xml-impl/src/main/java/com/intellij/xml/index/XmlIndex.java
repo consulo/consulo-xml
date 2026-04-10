@@ -20,7 +20,7 @@ import java.util.List;
 import org.jspecify.annotations.Nullable;
 
 import consulo.xml.ide.highlighter.DTDFileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.index.io.KeyDescriptor;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.stub.DefaultFileTypeSpecificInputFilter;

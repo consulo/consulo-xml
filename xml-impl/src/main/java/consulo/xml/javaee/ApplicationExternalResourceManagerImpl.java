@@ -7,6 +7,7 @@ import consulo.component.persist.State;
 import consulo.component.persist.Storage;
 import consulo.component.persist.StoragePathMacros;
 import consulo.xml.impl.internal.StandardExternalResourceData;
+import consulo.xml.standardResource.StandardResourceProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

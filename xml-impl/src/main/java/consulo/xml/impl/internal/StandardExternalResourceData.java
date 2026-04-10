@@ -2,7 +2,7 @@ package consulo.xml.impl.internal;
 
 import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.component.extension.ExtensionWalker;
-import consulo.xml.javaee.StandardResourceProvider;
+import consulo.xml.standardResource.StandardResourceProvider;
 
 import java.util.Map;
 import java.util.Set;

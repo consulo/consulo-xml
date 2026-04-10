@@ -33,7 +33,7 @@ import org.intellij.plugins.relaxNG.ApplicationLoader;
 import org.intellij.plugins.relaxNG.compact.RncFileType;
 import org.intellij.plugins.relaxNG.validation.RngValidateHandler;
 import consulo.xml.ide.highlighter.DTDFileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.project.Project;

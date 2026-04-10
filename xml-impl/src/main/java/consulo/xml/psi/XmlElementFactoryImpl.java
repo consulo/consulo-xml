@@ -31,7 +31,7 @@ import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.ide.highlighter.HtmlFileType;
 import consulo.xml.ide.highlighter.XHtmlFileType;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlDocument;

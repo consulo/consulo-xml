@@ -39,7 +39,7 @@ import consulo.util.xml.fastReader.XmlFileHeader;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileWithId;
 import consulo.xml.dom.*;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.xml.language.psi.*;
 import consulo.xml.util.xml.DomFileIndex;
 import consulo.xml.util.xml.DomTargetImpl;
