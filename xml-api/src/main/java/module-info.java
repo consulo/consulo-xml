@@ -3,7 +3,7 @@
  * @since 2026-04-06
  */
 module com.intellij.xml.api {
-    requires consulo.language.api;
+    requires transitive consulo.language.api;
 
     requires static consulo.util.xml.fast.reader;
 
@@ -15,6 +15,7 @@ module com.intellij.xml.api {
     exports consulo.xml.language.psi.pattern;
     exports consulo.xml.standardResource;
     exports consulo.xml.language.psi.util;
+    exports consulo.xml.language.psi.parser;
 
     exports consulo.xml.internal to com.intellij.xml;
 }

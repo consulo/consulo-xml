@@ -23,10 +23,10 @@ import consulo.language.lexer.Lexer;
 import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.lang.xml.XMLParserDefinition;
 import consulo.xml.lexer.XHtmlLexer;
 import consulo.xml.psi.impl.source.xml.XmlFileImpl;
-import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.psi.XmlElementTokenTypeImpl;
 
 

@@ -21,9 +21,9 @@ import consulo.language.Language;
 import consulo.language.editor.localize.CodeInsightLocalize;
 import consulo.language.editor.template.context.FileTypeBasedContextType;
 import consulo.language.psi.PsiFile;
-import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.html.language.HtmlFileType;
+import consulo.html.language.HTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 
 
 /**

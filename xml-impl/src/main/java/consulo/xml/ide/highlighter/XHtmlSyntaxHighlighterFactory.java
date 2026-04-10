@@ -5,7 +5,7 @@ import consulo.application.Application;
 import consulo.language.Language;
 import consulo.language.editor.highlight.SingleLazyInstanceSyntaxHighlighterFactory;
 import consulo.language.editor.highlight.SyntaxHighlighter;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import jakarta.inject.Inject;
 
 

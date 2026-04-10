@@ -21,8 +21,8 @@ import consulo.language.editor.HighlightErrorFilter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
-import consulo.xml.impl.localize.XmlErrorLocalize;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.xml.localize.XmlErrorLocalize;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.psi.XmlToken;
 import consulo.xml.language.psi.XmlTokenType;
 

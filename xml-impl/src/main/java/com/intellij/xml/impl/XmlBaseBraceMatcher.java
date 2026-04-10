@@ -28,8 +28,8 @@ import consulo.language.editor.highlight.XmlAwareBraceMatcher;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.BidirectionalMap;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.html.language.HtmlFileType;
+import consulo.xhtml.language.XHtmlFileType;
 import consulo.xml.language.XmlFileType;
 import consulo.xml.language.XmlLikeFileType;
 

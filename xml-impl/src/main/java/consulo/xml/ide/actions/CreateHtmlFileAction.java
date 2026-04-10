@@ -23,8 +23,8 @@ import consulo.ide.action.CreateFileFromTemplateDialog;
 import consulo.language.psi.PsiDirectory;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.html.language.HtmlFileType;
+import consulo.xhtml.language.XHtmlFileType;
 import consulo.xml.localize.XmlLocalize;
 
 /**

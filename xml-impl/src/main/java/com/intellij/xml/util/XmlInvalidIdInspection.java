@@ -24,12 +24,12 @@ import consulo.language.file.FileViewProvider;
 import consulo.language.impl.file.MultiplePsiFilesPerDocumentFileViewProvider;
 import consulo.localize.LocalizeValue;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 
 /**
  * @author Dmitry Avdeev

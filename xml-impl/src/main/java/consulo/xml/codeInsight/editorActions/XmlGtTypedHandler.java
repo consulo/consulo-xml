@@ -34,7 +34,7 @@ import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlText;
 import consulo.xml.language.psi.XmlToken;
 import consulo.xml.language.psi.XmlTokenType;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTokenImpl;
 import org.jspecify.annotations.Nullable;
 

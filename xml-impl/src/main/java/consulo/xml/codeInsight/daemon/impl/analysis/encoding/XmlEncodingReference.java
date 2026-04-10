@@ -26,7 +26,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.io.CharsetToolkit;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.psi.XmlAttributeValue;
 import org.jspecify.annotations.Nullable;
 

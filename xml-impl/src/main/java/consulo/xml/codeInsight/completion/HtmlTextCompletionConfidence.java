@@ -24,7 +24,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ThreeState;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlText;
 import consulo.xml.language.psi.XmlTokenType;

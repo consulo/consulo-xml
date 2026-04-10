@@ -30,7 +30,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 import consulo.xml.ide.highlighter.XmlHighlighterFactory;
 
 import javax.swing.*;

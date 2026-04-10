@@ -6,7 +6,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.language.psi.*;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 
 public class HtmlLinkUtil {
     public static final String LINK = "link";

@@ -16,6 +16,7 @@
 package consulo.xml.lang.html;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.html.language.HTMLLanguage;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IFileElementType;
@@ -28,71 +29,60 @@ import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
 import consulo.xml.lang.xml.XMLParserDefinition;
-import consulo.xml.lexer.HtmlLexer;
-import consulo.xml.psi.impl.source.html.HtmlFileImpl;
-import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlTokenType;
+import consulo.xml.lexer.HtmlLexer;
 import consulo.xml.psi.XmlElementTokenTypeImpl;
+import consulo.xml.psi.impl.source.html.HtmlFileImpl;
 
 
 /**
  * @author max
  */
 @ExtensionImpl
-public class HTMLParserDefinition implements ParserDefinition
-{
-	@Override
-	public Language getLanguage()
-	{
-		return HTMLLanguage.INSTANCE;
-	}
+public class HTMLParserDefinition implements ParserDefinition {
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
+    }
 
-	@Override
-	public Lexer createLexer(LanguageVersion languageVersion)
-	{
-		return new HtmlLexer();
-	}
+    @Override
+    public Lexer createLexer(LanguageVersion languageVersion) {
+        return new HtmlLexer();
+    }
 
-	@Override
-	public IFileElementType getFileNodeType()
-	{
-		return XmlElementTokenTypeImpl.HTML_FILE;
-	}
+    @Override
+    public IFileElementType getFileNodeType() {
+        return XmlElementTokenTypeImpl.HTML_FILE;
+    }
 
-	@Override
-	public TokenSet getWhitespaceTokens(LanguageVersion languageVersion)
-	{
-		return XmlTokenType.WHITESPACES;
-	}
+    @Override
+    public TokenSet getWhitespaceTokens(LanguageVersion languageVersion) {
+        return XmlTokenType.WHITESPACES;
+    }
 
-	@Override
-	public TokenSet getCommentTokens(LanguageVersion languageVersion)
-	{
-		return XmlTokenType.COMMENTS;
-	}
+    @Override
+    public TokenSet getCommentTokens(LanguageVersion languageVersion) {
+        return XmlTokenType.COMMENTS;
+    }
 
-	@Override
-	public TokenSet getStringLiteralElements(LanguageVersion languageVersion)
-	{
-		return TokenSet.EMPTY;
-	}
+    @Override
+    public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
+        return TokenSet.EMPTY;
+    }
 
-	@Override
-	public PsiParser createParser(LanguageVersion languageVersion)
-	{
-		return new HTMLParser();
-	}
+    @Override
+    public PsiParser createParser(LanguageVersion languageVersion) {
+        return HTMLParserImpl.INSTANCE;
+    }
 
-	@Override
-	public PsiFile createFile(FileViewProvider viewProvider)
-	{
-		return new HtmlFileImpl(viewProvider);
-	}
+    @Override
+    public PsiFile createFile(FileViewProvider viewProvider) {
+        return new HtmlFileImpl(viewProvider);
+    }
 
-	@Override
-	public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right)
-	{
-		final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE));
-		return XMLParserDefinition.canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
-	}
+    @Override
+    public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {
+        final Lexer lexer = createLexer(LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE));
+        return XMLParserDefinition.canStickTokensTogetherByLexerInXml(left, right, lexer, 0);
+    }
 }

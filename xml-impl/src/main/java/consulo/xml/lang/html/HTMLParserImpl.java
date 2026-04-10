@@ -19,6 +19,7 @@
  */
 package consulo.xml.lang.html;
 
+import consulo.html.internal.HtmlParser;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenSet;
@@ -27,15 +28,22 @@ import consulo.language.parser.PsiParser;
 import consulo.language.version.LanguageVersion;
 import consulo.xml.language.psi.XmlTokenType;
 
-public class HTMLParser implements PsiParser {
+public class HTMLParserImpl implements HtmlParser {
+  public static final HTMLParserImpl INSTANCE = new HTMLParserImpl();
 
+  @Override
   public ASTNode parse(final IElementType root, final PsiBuilder builder, LanguageVersion languageVersion) {
     builder.enforceCommentTokens(TokenSet.EMPTY);
     builder.registerWhitespaceToken(XmlTokenType.XML_REAL_WHITE_SPACE);
 
     final PsiBuilder.Marker file = builder.mark();
-    new HtmlParsing(builder).parseDocument();
+    parseDocument(builder);
     file.done(root);
     return builder.getTreeBuilt();
+  }
+
+  @Override
+  public void parseDocument(PsiBuilder builder) {
+    new HtmlParsing(builder).parseDocument();
   }
 }

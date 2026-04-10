@@ -33,7 +33,7 @@ import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.*;
 import consulo.localize.LocalizeValue;
 import consulo.xml.editor.XmlSuppressableInspectionTool;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeValue;

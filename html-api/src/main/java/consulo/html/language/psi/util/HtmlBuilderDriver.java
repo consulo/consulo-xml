@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.psi.impl.source.parsing.xml;
+package consulo.html.language.psi.util;
 
 import consulo.annotation.access.RequiredReadAction;
+import consulo.html.internal.HtmlParser;
+import consulo.html.language.HTMLLanguage;
 import consulo.language.parser.ParserDefinition;
 import consulo.language.parser.PsiBuilder;
 import consulo.language.parser.PsiBuilderFactory;
 import consulo.language.version.LanguageVersion;
 import consulo.language.version.LanguageVersionUtil;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.html.HtmlParsing;
+import consulo.xml.language.psi.parser.XmlBuilderDriver;
 
 /**
  * @author max
@@ -41,7 +42,9 @@ public class HtmlBuilderDriver extends XmlBuilderDriver {
         LanguageVersion defaultVersion = LanguageVersionUtil.findDefaultVersion(HTMLLanguage.INSTANCE);
         PsiBuilder b = PsiBuilderFactory.getInstance()
             .createBuilder(htmlParserDef, htmlParserDef.createLexer(defaultVersion), defaultVersion, getText());
-        new HtmlParsing(b).parseDocument();
+
+        HtmlParser parser = (HtmlParser) htmlParserDef.createParser(defaultVersion);
+        parser.parseDocument(b);
         return b;
     }
 }

@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.psi.impl.source.parsing.xml;
+package consulo.xml.language.psi.parser;
 
-import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.ast.IElementType;
 import consulo.language.ast.LighterASTNode;
@@ -32,6 +31,7 @@ import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.SimpleReference;
 import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.XmlSharedUtil;
 import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlTokenType;
 
@@ -203,7 +203,7 @@ public class XmlBuilderDriver {
             }
         }
 
-        CharSequence localName = XmlUtil.getLocalName(tagName);
+        CharSequence localName = XmlSharedUtil.getLocalName(tagName);
         String namespace = getNamespace(tagName);
 
         XmlBuilder.ProcessingOrder order =
@@ -270,7 +270,7 @@ public class XmlBuilderDriver {
                 processTextNode(structure, child, builder);
             }
             else if (tt == XmlTokenType.XML_CHAR_ENTITY_REF) {
-                builder.textElement(new String(new char[]{XmlUtil.getCharFromEntityRef(physical.toString())}), physical, start, end);
+                builder.textElement(new String(new char[]{XmlSharedUtil.getCharFromEntityRef(physical.toString())}), physical, start, end);
             }
             else {
                 builder.textElement(physical, physical, start, end);

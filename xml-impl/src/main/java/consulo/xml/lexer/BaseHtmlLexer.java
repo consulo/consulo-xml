@@ -29,7 +29,7 @@ import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
 import consulo.xml.lang.HtmlScriptContentProvider;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 
 import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;

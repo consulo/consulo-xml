@@ -48,7 +48,7 @@ import consulo.util.lang.ref.SimpleReference;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.UnknownFileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 import consulo.xml.language.XmlFileType;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.language.psi.XmlAttribute;

@@ -17,7 +17,7 @@
 /*
  * @author max
  */
-package consulo.xml.psi.impl.source.parsing.xml;
+package consulo.xml.language.psi.parser;
 
 import consulo.localize.LocalizeValue;
 

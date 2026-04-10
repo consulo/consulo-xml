@@ -55,9 +55,9 @@ import consulo.xml.codeInspection.htmlInspections.RequiredAttributesInspectionBa
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.lang.dtd.DTDLanguage;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;

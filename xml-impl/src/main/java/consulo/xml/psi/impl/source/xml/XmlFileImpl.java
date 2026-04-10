@@ -15,8 +15,8 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.html.language.HTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.psi.XmlElementVisitor;
 import consulo.xml.psi.impl.source.html.ScriptSupportUtil;
 import consulo.xml.language.psi.XmlDocument;

@@ -31,7 +31,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.http.HttpFileSystem;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.UriUtil;

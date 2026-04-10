@@ -29,7 +29,7 @@ import com.intellij.html.impl.RelaxedHtmlFromSchemaElementDescriptor;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlElement;

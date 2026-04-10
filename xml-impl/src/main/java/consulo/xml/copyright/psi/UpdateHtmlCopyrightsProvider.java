@@ -2,7 +2,7 @@ package consulo.xml.copyright.psi;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 
 
 /**

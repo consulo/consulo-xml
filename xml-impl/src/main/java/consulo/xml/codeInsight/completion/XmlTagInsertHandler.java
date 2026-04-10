@@ -53,7 +53,7 @@ import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptorWithCDataContent;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;

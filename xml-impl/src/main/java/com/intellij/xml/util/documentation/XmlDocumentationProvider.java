@@ -36,12 +36,12 @@ import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.lang.documentation.DocumentationUtil;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.*;
 import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.xml.SchemaPrefix;
 
 import consulo.xml.descriptor.xsd.TypeDescriptor;

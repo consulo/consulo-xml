@@ -20,7 +20,7 @@ import consulo.codeEditor.Editor;
 import consulo.fileEditor.structureView.StructureViewBuilder;
 import consulo.fileEditor.structureView.StructureViewModel;
 import consulo.fileEditor.structureView.TreeBasedStructureViewBuilder;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.language.psi.XmlFile;
 

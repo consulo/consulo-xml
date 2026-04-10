@@ -16,7 +16,7 @@ import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
-import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.xhtml.language.XHtmlFileType;
 import consulo.xml.language.XmlFileType;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.localize.XmlLocalize;

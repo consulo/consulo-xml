@@ -7,6 +7,7 @@ open module com.intellij.xml {
 
     requires transitive com.intellij.xml.api;
     requires transitive com.intellij.xml.editor.api;
+    requires com.intellij.xml.html.api;
 
     requires transitive com.intellij.xml.dom.api;
 
@@ -80,7 +81,6 @@ open module com.intellij.xml {
     exports consulo.xml.ide.highlighter;
     exports consulo.xml.ide.structureView.impl.xml;
     exports consulo.xml.ide.structureView.xml;
-    exports consulo.xml.impl.localize;
     exports consulo.xml.intelliLang.inject.config;
     exports consulo.xml.intelliLang.inject.config.ui;
     exports consulo.xml.intelliLang.inject.config.ui.configurables;
@@ -105,7 +105,6 @@ open module com.intellij.xml {
     exports consulo.xml.psi.filters.position;
     exports consulo.xml.psi.formatter;
     exports consulo.xml.psi.formatter.xml;
-    exports consulo.xml.psi.html;
     exports consulo.xml.psi.impl.cache.impl.idCache;
     exports consulo.xml.psi.impl.smartPointers;
     exports consulo.xml.psi.impl.source.html;

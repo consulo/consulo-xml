@@ -6,8 +6,8 @@ import consulo.language.ast.IElementType;
 import consulo.language.ast.IFileElementType;
 import consulo.language.util.CharTable;
 import consulo.xml.lang.dtd.DTDLanguage;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.html.language.HTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.psi.impl.source.parsing.xml.DtdParsing;
 

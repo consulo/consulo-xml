@@ -30,11 +30,11 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.*;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 
 /**
  * @author spleaner

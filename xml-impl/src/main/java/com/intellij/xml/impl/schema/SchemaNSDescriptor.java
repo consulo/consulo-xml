@@ -15,7 +15,7 @@
  */
 package com.intellij.xml.impl.schema;
 
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.language.psi.PsiElement;

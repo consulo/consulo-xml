@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.lang.html;
+package consulo.html.language.psi;
 
-import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlTag;
 
 /**
- * @author max
+ * @author maxim
  */
-public class HTMLLanguage extends XMLLanguage
-{
-	public static final HTMLLanguage INSTANCE = new HTMLLanguage();
-
-	private HTMLLanguage()
-	{
-		super(XMLLanguage.INSTANCE, "HTML", "text/html", "text/htmlh");
-	}
+public interface HtmlTag extends XmlTag {
 }

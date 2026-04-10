@@ -33,13 +33,13 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.xml.editor.XmlSuppressableInspectionTool;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlChildRole;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.language.psi.XmlElementVisitor;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;

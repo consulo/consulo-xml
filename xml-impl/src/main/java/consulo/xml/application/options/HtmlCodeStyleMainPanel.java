@@ -17,7 +17,7 @@ package consulo.xml.application.options;
 
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.ui.setting.TabbedLanguageCodeStylePanel;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 
 /**
  * @author Rustam Vishnyakov

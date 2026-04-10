@@ -2,7 +2,7 @@ package consulo.xml.psi.formatter;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 
 
 /**

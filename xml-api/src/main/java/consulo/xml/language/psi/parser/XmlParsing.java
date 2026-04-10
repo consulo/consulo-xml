@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.psi.impl.source.parsing.xml;
+package consulo.xml.language.psi.parser;
 
 import consulo.language.ast.CustomParsingType;
 import consulo.language.ast.IElementType;
@@ -21,7 +21,7 @@ import consulo.language.ast.ILazyParseableElementType;
 import consulo.language.parser.PsiBuilder;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.Stack;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 
 import org.jspecify.annotations.Nullable;
 

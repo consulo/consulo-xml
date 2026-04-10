@@ -8,7 +8,7 @@ import consulo.language.editor.gutter.LineMarkerInfo;
 import consulo.language.editor.gutter.LineMarkerProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.XMLLanguage;
 
 import java.util.*;

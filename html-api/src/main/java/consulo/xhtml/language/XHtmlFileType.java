@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.ide.highlighter;
+package consulo.xhtml.language;
 
 import consulo.application.AllIcons;
+import consulo.html.language.HtmlFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
 import consulo.xml.localize.XmlLocalize;
 
 

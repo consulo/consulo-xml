@@ -55,7 +55,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.application.options.XmlSettings;
 import consulo.xml.codeInsight.completion.ExtendedTagInsertHandler;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;

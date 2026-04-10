@@ -2,6 +2,7 @@ package consulo.xml.lang.xhtml;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.lang.base.XmlBasedCommenter;
 
 

@@ -19,7 +19,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlText;
 

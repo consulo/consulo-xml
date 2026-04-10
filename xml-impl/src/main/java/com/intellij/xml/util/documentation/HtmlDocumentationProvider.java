@@ -30,7 +30,7 @@ import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
 import consulo.xml.lang.documentation.DocumentationUtil;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeDecl;
 import consulo.xml.language.psi.XmlAttributeValue;

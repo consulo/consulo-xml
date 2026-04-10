@@ -44,9 +44,10 @@
     <modules>
         <module>rngom</module>
         <module>jingtrang</module>
-        <module>xml-impl</module>
         <module>xml-api</module>
+        <module>xml-impl</module>
         <module>xml-editor-api</module>
         <module>xml-dom-api</module>
+        <module>html-api</module>
     </modules>
 </project>

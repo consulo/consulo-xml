@@ -15,15 +15,15 @@
  */
 package com.intellij.xml.util;
 
-import com.intellij.xml.*;
-import consulo.xml.descriptor.xsd.XsdSchemeUtil;
-import consulo.xml.language.XmlSharedUtil;
-import consulo.xml.language.psi.util.XmlPsiUtil;
+import com.intellij.xml.Html5SchemaProvider;
+import com.intellij.xml.XmlExtension;
+import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.index.XsdNamespaceBuilder;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.html.language.HTMLLanguage;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -53,22 +53,23 @@ import consulo.util.lang.StringUtil;
 import consulo.util.xml.fastReader.XmlCharsetDetector;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.language.Validator;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.descriptor.xsd.XsdSchemeUtil;
+import consulo.xml.internal.XmlEntityCache;
 import consulo.xml.javaee.ExternalResourceManager;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import consulo.xml.javaee.UriUtil;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xml.language.Validator;
 import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.XmlSharedUtil;
 import consulo.xml.language.psi.*;
-import consulo.xml.language.psi.util.XmlTagUtil;
 import consulo.xml.language.psi.pattern.XmlPatterns;
+import consulo.xml.language.psi.util.XmlPsiUtil;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
-import consulo.xml.internal.XmlEntityCache;
 import consulo.xml.psi.impl.source.xml.XmlEntityRefImpl;
 import consulo.xml.standardResource.XmlStandardResourceUtil;
 import org.jspecify.annotations.Nullable;
@@ -261,7 +262,7 @@ public class XmlUtil {
             resources,
             resource -> {
                 PsiFile file = psiManager.findFile(resource.getFile());
-                return file instanceof XmlFile ? (XmlFile)file : null;
+                return file instanceof XmlFile ? (XmlFile) file : null;
             }
         );
     }
@@ -275,7 +276,7 @@ public class XmlUtil {
         }
 
         if (result instanceof XmlFile) {
-            return (XmlFile)result;
+            return (XmlFile) result;
         }
 
         return null;
@@ -291,7 +292,7 @@ public class XmlUtil {
 
         for (PsiElement child : children) {
             if (child instanceof XmlToken) {
-                XmlToken token = (XmlToken)child;
+                XmlToken token = (XmlToken) child;
 
                 if (token.getTokenType() == type) {
                     return token;
@@ -345,30 +346,7 @@ public class XmlUtil {
     }
 
     public static char getCharFromEntityRef(String text) {
-        try {
-            if (text.charAt(1) != '#') {
-                text = text.substring(1, text.length() - 1);
-                return XmlTagUtil.getCharacterByEntityName(text);
-            }
-            text = text.substring(2, text.length() - 1);
-        }
-        catch (StringIndexOutOfBoundsException e) {
-            LOG.error("Cannot parse ref: '" + text + "'", e);
-        }
-        try {
-            int code;
-            if (StringUtil.startsWithChar(text, 'x')) {
-                text = text.substring(1);
-                code = Integer.parseInt(text, 16);
-            }
-            else {
-                code = Integer.parseInt(text);
-            }
-            return (char)code;
-        }
-        catch (NumberFormatException e) {
-            return 0;
-        }
+        return XmlSharedUtil.getCharFromEntityRef(text);
     }
 
     public static boolean attributeFromTemplateFramework(final String name, final XmlTag tag) {
@@ -443,7 +421,7 @@ public class XmlUtil {
 
     public static boolean isAntFile(final PsiFile file) {
         if (file instanceof XmlFile) {
-            final XmlFile xmlFile = (XmlFile)file;
+            final XmlFile xmlFile = (XmlFile) file;
             final XmlDocument document = xmlFile.getDocument();
             if (document != null) {
                 final XmlTag tag = document.getRootTag();
@@ -473,7 +451,7 @@ public class XmlUtil {
     @Nullable
     public static PsiFile findRelativeFile(String uri, PsiElement base) {
         if (base instanceof PsiFile) {
-            PsiFile baseFile = (PsiFile)base;
+            PsiFile baseFile = (PsiFile) base;
             VirtualFile file = UriUtil.findRelative(uri, baseFile.getOriginalFile());
             if (file == null) {
                 return null;
@@ -504,10 +482,10 @@ public class XmlUtil {
             if (!(parent instanceof XmlElement)) {
                 return null;
             }
-            xmlElement = (XmlElement)parent;
+            xmlElement = (XmlElement) parent;
         }
         if (xmlElement != null) {
-            XmlTag tag = (XmlTag)xmlElement;
+            XmlTag tag = (XmlTag) xmlElement;
             while (tag != null) {
                 for (XmlAttribute attribute : tag.getAttributes()) {
                     if (attribute.isNamespaceDeclaration() && attribute.getLocalName().equals(nsName)) {
@@ -552,9 +530,9 @@ public class XmlUtil {
         if (!(node instanceof CompositeElement)) {
             return;
         }
-        CompositeElement compositeElement = (CompositeElement)node;
+        CompositeElement compositeElement = (CompositeElement) node;
 
-        final LeafElement emptyTagEnd = (LeafElement)XmlChildRole.EMPTY_TAG_END_FINDER.findChild(compositeElement);
+        final LeafElement emptyTagEnd = (LeafElement) XmlChildRole.EMPTY_TAG_END_FINDER.findChild(compositeElement);
         if (emptyTagEnd == null) {
             return;
         }
@@ -571,11 +549,7 @@ public class XmlUtil {
     }
 
     public static CharSequence getLocalName(final CharSequence tagName) {
-        int pos = StringUtil.indexOf(tagName, ':');
-        if (pos == -1) {
-            return tagName;
-        }
-        return tagName.subSequence(pos + 1, tagName.length());
+        return XmlSharedUtil.getLocalName(tagName);
     }
 
     public static boolean isStubBuilding() {
@@ -599,13 +573,13 @@ public class XmlUtil {
             final String name = parent.getName();
             final String text = parent.getText();
             final XmlTag tag = factory.createTagFromText(text.substring(0, text.length() - 2) + "></" + name + ">");
-            parent = (XmlTag)parent.replace(tag);
+            parent = (XmlTag) parent.replace(tag);
         }
 
         final XmlElementDescriptor parentDescriptor = parent.getDescriptor();
         final XmlTag[] subTags = parent.getSubTags();
         if (parentDescriptor == null || subTags.length == 0) {
-            return (XmlTag)parent.add(child);
+            return (XmlTag) parent.add(child);
         }
         int subTagNum = -1;
 
@@ -619,10 +593,10 @@ public class XmlUtil {
                 // insert child just after anchor
                 // insert into the position specified by index
                 subTagNum = index == -1 || index > subTagNum - prevSubTagNum ? subTagNum : prevSubTagNum + index;
-                return (XmlTag)(subTagNum == -1 ? parent.addBefore(child, subTags[0]) : parent.addAfter(child, subTags[subTagNum]));
+                return (XmlTag) (subTagNum == -1 ? parent.addBefore(child, subTags[0]) : parent.addAfter(child, subTags[subTagNum]));
             }
         }
-        return (XmlTag)parent.add(child);
+        return (XmlTag) parent.add(child);
     }
 
     /**
@@ -856,7 +830,7 @@ public class XmlUtil {
             new FilterElementProcessor(XmlTagFilter.INSTANCE) {
                 @Override
                 public void add(PsiElement element) {
-                    XmlTag tag = (XmlTag)element;
+                    XmlTag tag = (XmlTag) element;
                     if (!tags.contains(tag.getName())) {
                         tags.add(tag.getName());
                     }
@@ -910,14 +884,14 @@ public class XmlUtil {
                     if (containingFile instanceof XmlFile containingXmlFile) {
                         final XmlDocument document = containingXmlFile.getDocument();
                         if (document != null) {
-                            typeDecr = (XmlNSDescriptor)document.getMetaData();
+                            typeDecr = (XmlNSDescriptor) document.getMetaData();
                         }
                     }
                 }
             }
 
             if (typeDecr instanceof XmlNSDescriptorImpl) {
-                final XmlNSDescriptorImpl schemaDescriptor = (XmlNSDescriptorImpl)typeDecr;
+                final XmlNSDescriptorImpl schemaDescriptor = (XmlNSDescriptorImpl) typeDecr;
                 elementDescriptor = schemaDescriptor.getDescriptorByType(type, xmlTag);
             }
         }
@@ -1106,7 +1080,7 @@ public class XmlUtil {
         if (currentElement != null) {
             final String name = _element.getName();
             if (_element instanceof XmlEntityDecl) {
-                final XmlEntityDecl cachedEntity = XmlEntityCache.getCachedEntity((PsiFile)currentElement, name);
+                final XmlEntityDecl cachedEntity = XmlEntityCache.getCachedEntity((PsiFile) currentElement, name);
                 if (cachedEntity != null) {
                     return cachedEntity;
                 }
@@ -1115,7 +1089,7 @@ public class XmlUtil {
             final PsiNamedElement[] result = new PsiNamedElement[1];
 
             processXmlElements(
-                (XmlFile)currentElement,
+                (XmlFile) currentElement,
                 element -> {
                     if (element instanceof PsiNamedElement namedElement) {
                         final String elementName = namedElement.getName();
@@ -1279,7 +1253,7 @@ public class XmlUtil {
                 element = context;
             }
         }
-        return (XmlFile)element;
+        return (XmlFile) element;
     }
 
     @Nullable
@@ -1296,7 +1270,7 @@ public class XmlUtil {
             if (!(parent instanceof XmlTag)) {
                 break;
             }
-            xmlTag = (XmlTag)parent;
+            xmlTag = (XmlTag) parent;
         }
         return off;
     }
@@ -1350,7 +1324,7 @@ public class XmlUtil {
         if (text.startsWith("&#")) {
             text = text.substring(3, text.length() - 1);
             try {
-                return String.valueOf((char)Integer.parseInt(text));
+                return String.valueOf((char) Integer.parseInt(text));
             }
             catch (NumberFormatException e) {
                 // ignore
@@ -1495,10 +1469,10 @@ public class XmlUtil {
         @Override
         public int compareTo(Object o) {
             if (o instanceof MyAttributeInfo) {
-                return myName.compareTo(((MyAttributeInfo)o).myName);
+                return myName.compareTo(((MyAttributeInfo) o).myName);
             }
             else if (o instanceof XmlAttribute) {
-                return myName.compareTo(((XmlAttribute)o).getName());
+                return myName.compareTo(((XmlAttribute) o).getName());
             }
             return -1;
         }

@@ -21,7 +21,7 @@ import consulo.codeEditor.HighlighterIterator;
 import consulo.language.editor.action.FileQuoteHandler;
 import consulo.language.editor.action.QuoteHandler;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 
 
 /**

@@ -31,7 +31,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.PsiWhiteSpace;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.xml.TagNameVariantCollector;
 import consulo.xml.psi.impl.source.xml.XmlDocumentImpl;
 import consulo.xml.language.psi.XmlAttribute;

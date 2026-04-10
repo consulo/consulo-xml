@@ -29,6 +29,7 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlTokenType;
+import consulo.xml.language.psi.parser.XmlParsing;
 
 
 public class XmlParser implements PsiParser {

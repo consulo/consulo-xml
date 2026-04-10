@@ -7,8 +7,7 @@ import consulo.language.psi.PsiErrorElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-import consulo.xml.impl.localize.XmlErrorLocalize;
-
+import consulo.xml.localize.XmlErrorLocalize;
 
 class UnescapeAction implements SyntheticIntentionAction {
     private static final String AMP_ENTITY = "&amp;";

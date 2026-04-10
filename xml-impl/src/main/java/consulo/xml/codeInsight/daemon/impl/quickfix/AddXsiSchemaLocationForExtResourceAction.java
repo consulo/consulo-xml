@@ -32,7 +32,7 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentionFix;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.language.psi.XmlAttribute;

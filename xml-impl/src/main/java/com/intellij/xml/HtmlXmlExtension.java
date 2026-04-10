@@ -3,7 +3,7 @@ package com.intellij.xml;
 import com.intellij.xml.util.HtmlUtil;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiFile;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 
 import consulo.xml.language.psi.XmlDocument;
 import org.jspecify.annotations.Nullable;

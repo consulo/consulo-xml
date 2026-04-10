@@ -21,7 +21,7 @@ import consulo.language.psi.PsiComment;
 import consulo.language.psi.PsiElement;
 import consulo.language.spellcheker.SpellcheckingStrategy;
 import consulo.language.spellcheker.tokenizer.Tokenizer;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlText;
 

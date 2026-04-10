@@ -16,7 +16,7 @@
 package consulo.xml.codeInsight.completion;
 
 import consulo.annotation.access.RequiredReadAction;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.html.dtd.HtmlAttributeDescriptorImpl;
 import consulo.xml.psi.impl.source.xml.XmlAttributeImpl;
 import consulo.xml.psi.impl.source.xml.XmlAttributeReference;

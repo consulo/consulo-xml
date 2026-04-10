@@ -17,7 +17,7 @@ package consulo.xml.codeInsight.daemon;
 
 import consulo.annotation.DeprecationInfo;
 import consulo.annotation.internal.MigratedExtensionsTo;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import org.jetbrains.annotations.PropertyKey;
 import consulo.component.util.localize.AbstractBundle;
 

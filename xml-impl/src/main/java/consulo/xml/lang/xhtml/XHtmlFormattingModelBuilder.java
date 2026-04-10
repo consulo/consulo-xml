@@ -24,6 +24,7 @@ import consulo.language.Language;
 import consulo.language.codeStyle.*;
 import consulo.language.impl.psi.SourceTreeToPsiMap;
 import consulo.language.psi.PsiFile;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.lang.xml.XmlFormattingModel;
 import consulo.xml.psi.formatter.xml.HtmlPolicy;
 import consulo.xml.psi.formatter.xml.XmlBlock;

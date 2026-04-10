@@ -32,7 +32,7 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.undoRedo.CommandProcessor;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.psi.XmlChildRole;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlToken;

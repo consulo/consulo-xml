@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.xml.XmlTagImpl;
 import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlTag;

@@ -16,8 +16,8 @@
 package consulo.xml.navigation;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.html.language.HTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.xml.language.psi.XmlFile;

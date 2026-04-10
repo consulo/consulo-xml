@@ -107,6 +107,12 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>com.intellij.xml.html.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>com.intellij.xml.dom.api</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -2,7 +2,7 @@ package consulo.xml.codeInsight.hint.api.impls;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.html.HTMLLanguage;
+import consulo.html.language.HTMLLanguage;
 
 
 /**

@@ -29,14 +29,11 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.template.TemplateLanguageFileViewProvider;
-import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.collection.ContainerUtil;
-import consulo.util.io.CharsetToolkit;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
-import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xml.codeInspection.htmlInspections.XmlEntitiesInspection;
@@ -44,22 +41,19 @@ import consulo.xml.codeInspection.htmlInspections.BaseXmlEntitiesInspectionState
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
-import consulo.xml.ide.highlighter.HtmlFileType;
-import consulo.xml.ide.highlighter.XHtmlFileType;
+import consulo.html.language.HtmlFileType;
+import consulo.xhtml.language.XHtmlFileType;
 import consulo.xml.javaee.ExternalResourceManagerEx;
-import consulo.xml.lang.html.HTMLLanguage;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.html.language.HTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 import consulo.xml.language.psi.*;
-import consulo.xml.psi.*;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import consulo.xml.psi.impl.source.html.HtmlDocumentImpl;
 import consulo.xml.psi.impl.source.html.dtd.HtmlAttributeDescriptorImpl;
-import consulo.xml.psi.impl.source.parsing.xml.HtmlBuilderDriver;
-import consulo.xml.psi.impl.source.parsing.xml.XmlBuilder;
 import org.jetbrains.annotations.Contract;
 
 import org.jspecify.annotations.Nullable;
-import java.nio.charset.Charset;
+
 import java.util.*;
 
 /**
@@ -69,8 +63,7 @@ public class HtmlUtil {
     private static final Logger LOG = Logger.getInstance(HtmlUtil.class);
 
     private static final String JSFC = "jsfc";
-    private static final String CHARSET = "charset";
-    private static final String CHARSET_PREFIX = CHARSET + "=";
+
     private static final String HTML5_DATA_ATTR_PREFIX = "data-";
 
     public static final String SCRIPT_TAG_NAME = "script";
@@ -647,145 +640,6 @@ public class HtmlUtil {
         return false;
     }
 
-    private static class TerminateException extends RuntimeException {
-        private static final TerminateException INSTANCE = new TerminateException();
-    }
-
-    public static Charset detectCharsetFromMetaTag(CharSequence content) {
-        // check for <meta http-equiv="charset=CharsetName" > or <meta charset="CharsetName"> and return Charset
-        // because we will lightly parse and explicit charset isn't used very often do quick check for applicability
-        int charPrefix = StringUtil.indexOf(content, CHARSET);
-        do {
-            if (charPrefix == -1) {
-                return null;
-            }
-            int charsetPrefixEnd = charPrefix + CHARSET.length();
-            while (charsetPrefixEnd < content.length() && Character.isWhitespace(content.charAt(charsetPrefixEnd))) {
-                ++charsetPrefixEnd;
-            }
-            if (charsetPrefixEnd < content.length() && content.charAt(charsetPrefixEnd) == '=') {
-                break;
-            }
-            charPrefix = StringUtil.indexOf(content, CHARSET, charsetPrefixEnd);
-        }
-        while (true);
-
-        final Ref<String> charsetNameRef = new Ref<>();
-        try {
-            new HtmlBuilderDriver(content).build(new XmlBuilder() {
-                final Set<String> inTag = new HashSet<>();
-                boolean metHttpEquiv = false;
-                boolean metHttml5Charset = false;
-
-                @Override
-                public void doctype(
-                    @Nullable final CharSequence publicId,
-                    @Nullable final CharSequence systemId,
-                    final int startOffset,
-                    final int endOffset
-                ) {
-                }
-
-                @Override
-                public ProcessingOrder startTag(
-                    final CharSequence localName,
-                    final String namespace,
-                    final int startoffset,
-                    final int endoffset,
-                    final int headerEndOffset
-                ) {
-                    String name = localName.toString().toLowerCase();
-                    inTag.add(name);
-                    if (!inTag.contains("head") && !"html".equals(name)) {
-                        terminate();
-                    }
-                    return ProcessingOrder.TAGS_AND_ATTRIBUTES;
-                }
-
-                private void terminate() {
-                    throw TerminateException.INSTANCE;
-                }
-
-                @Override
-                public void endTag(final CharSequence localName, final String namespace, final int startoffset, final int endoffset) {
-                    final String name = localName.toString().toLowerCase();
-                    if ("meta".equals(name) && (metHttpEquiv || metHttml5Charset) && contentAttributeValue != null) {
-                        String charsetName;
-                        if (metHttpEquiv) {
-                            int start = contentAttributeValue.indexOf(CHARSET_PREFIX);
-                            if (start == -1) {
-                                return;
-                            }
-                            start += CHARSET_PREFIX.length();
-                            int end = contentAttributeValue.indexOf(';', start);
-                            if (end == -1) {
-                                end = contentAttributeValue.length();
-                            }
-                            charsetName = contentAttributeValue.substring(start, end);
-                        }
-                        else /*if (metHttml5Charset) */ {
-                            charsetName = StringUtil.stripQuotesAroundValue(contentAttributeValue);
-                        }
-                        charsetNameRef.set(charsetName);
-                        terminate();
-                    }
-                    if ("head".equals(name)) {
-                        terminate();
-                    }
-                    inTag.remove(name);
-                    metHttpEquiv = false;
-                    metHttml5Charset = false;
-                    contentAttributeValue = null;
-                }
-
-                private String contentAttributeValue;
-
-                @Override
-                public void attribute(final CharSequence localName, final CharSequence v, final int startoffset, final int endoffset) {
-                    final String name = localName.toString().toLowerCase();
-                    if (inTag.contains("meta")) {
-                        String value = v.toString().toLowerCase();
-                        if (name.equals("http-equiv")) {
-                            metHttpEquiv |= value.equals("content-type");
-                        }
-                        else if (name.equals(CHARSET)) {
-                            metHttml5Charset = true;
-                            contentAttributeValue = value;
-                        }
-                        if (name.equals("content")) {
-                            contentAttributeValue = value;
-                        }
-                    }
-                }
-
-                @Override
-                public void textElement(
-                    final CharSequence display,
-                    final CharSequence physical,
-                    final int startoffset,
-                    final int endoffset
-                ) {
-                }
-
-                @Override
-                public void entityRef(final CharSequence ref, final int startOffset, final int endOffset) {
-                }
-
-                @Override
-                public void error(LocalizeValue message, int startOffset, int endOffset) {
-                }
-            });
-        }
-        catch (TerminateException ignored) {
-            //ignore
-        }
-        catch (Exception ignored) {
-            // some weird things can happen, like unbalanaced tree
-        }
-
-        String name = charsetNameRef.get();
-        return CharsetToolkit.forName(name);
-    }
 
     public static boolean isTagWithoutAttributes(String tagName) {
         return tagName != null && "br".equalsIgnoreCase(tagName);

@@ -20,7 +20,7 @@ import consulo.language.lexer.Lexer;
 import consulo.language.psi.stub.LexerBasedIdIndexer;
 import consulo.language.psi.stub.OccurrenceConsumer;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.HtmlFileType;
+import consulo.html.language.HtmlFileType;
 import consulo.xml.lexer.HtmlHighlightingLexer;
 
 

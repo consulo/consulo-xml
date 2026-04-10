@@ -33,7 +33,7 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.codeInsight.daemon.impl.analysis.XmlHighlightVisitor;
 import consulo.xml.codeInspection.XmlInspectionGroupNames;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlChildRole;
 import consulo.xml.language.psi.XmlDoctype;
@@ -43,7 +43,7 @@ import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlProlog;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.localize.XmlLocalize;
-import consulo.xml.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 import org.jspecify.annotations.Nullable;
 
 /**

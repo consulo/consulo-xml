@@ -29,7 +29,7 @@ import consulo.language.parser.PsiBuilder;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.Stack;
 import consulo.util.lang.StringUtil;
-import consulo.xml.impl.localize.XmlErrorLocalize;
+import consulo.xml.localize.XmlErrorLocalize;
 import consulo.xml.language.psi.XmlElementType;
 import consulo.xml.language.psi.XmlTokenType;
 import org.jspecify.annotations.Nullable;

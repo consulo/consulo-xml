@@ -2,7 +2,7 @@ package consulo.xml.psi.impl.source.xml.behavior;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
-import consulo.xml.lang.xhtml.XHTMLLanguage;
+import consulo.xhtml.language.XHTMLLanguage;
 
 
 /**
