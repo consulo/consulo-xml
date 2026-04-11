@@ -18,7 +18,7 @@ package consulo.xml.codeInsight.completion;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import com.intellij.xml.XmlExtension;
 import com.intellij.xml.XmlNamespaceHelper;
-import com.intellij.xml.XmlSchemaProvider;
+import consulo.xml.descriptor.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;

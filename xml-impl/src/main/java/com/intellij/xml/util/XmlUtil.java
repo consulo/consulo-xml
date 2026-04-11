@@ -17,7 +17,7 @@ package com.intellij.xml.util;
 
 import com.intellij.xml.Html5SchemaProvider;
 import com.intellij.xml.XmlExtension;
-import com.intellij.xml.XmlSchemaProvider;
+import consulo.xml.descriptor.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import com.intellij.xml.index.IndexedRelevantResource;
 import com.intellij.xml.index.XmlNamespaceIndex;

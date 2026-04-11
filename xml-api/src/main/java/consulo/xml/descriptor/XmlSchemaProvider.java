@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.intellij.xml;
+package consulo.xml.descriptor;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;

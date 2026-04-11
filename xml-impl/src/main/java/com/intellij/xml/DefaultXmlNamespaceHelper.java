@@ -32,6 +32,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlSchemaProvider;
 import consulo.xml.language.psi.*;
 
 import org.jspecify.annotations.Nullable;

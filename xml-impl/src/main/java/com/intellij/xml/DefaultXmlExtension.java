@@ -28,6 +28,7 @@ import consulo.language.psi.PsiFile;
 
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlNSDescriptor;
+import consulo.xml.descriptor.XmlSchemaProvider;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;

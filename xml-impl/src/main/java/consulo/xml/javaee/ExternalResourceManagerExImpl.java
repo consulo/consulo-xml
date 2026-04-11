@@ -16,7 +16,7 @@
 package consulo.xml.javaee;
 
 import com.intellij.xml.Html5SchemaProvider;
-import com.intellij.xml.XmlSchemaProvider;
+import consulo.xml.descriptor.XmlSchemaProvider;
 import com.intellij.xml.index.XmlNamespaceIndex;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.ApplicationManager;
