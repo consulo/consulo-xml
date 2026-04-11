@@ -8,5 +8,6 @@ module com.intellij.xml.editor.api {
 
     requires transitive com.intellij.xml.api;
 
+    exports consulo.xml.editor.completion;
     exports consulo.xml.editor;
 }

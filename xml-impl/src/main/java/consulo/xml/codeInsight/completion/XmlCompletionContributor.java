@@ -48,6 +48,7 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.SimpleReference;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.xhtml.language.XHtmlFileType;
+import consulo.xml.editor.completion.XmlCompletionUtil;
 import consulo.xml.language.XmlFileType;
 import consulo.html.language.HTMLLanguage;
 import consulo.xml.language.XMLLanguage;
@@ -70,7 +71,6 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
  */
 @ExtensionImpl(id = "xml")
 public class XmlCompletionContributor extends CompletionContributor {
-    public static final Key<Boolean> WORD_COMPLETION_COMPATIBLE = Key.create("WORD_COMPLETION_COMPATIBLE");
     public static final EntityRefInsertHandler ENTITY_INSERT_HANDLER = new EntityRefInsertHandler();
 
     public static final String TAG_NAME_COMPLETION_FEATURE = "tag.name.completion";
@@ -139,7 +139,7 @@ public class XmlCompletionContributor extends CompletionContributor {
                 result.runRemainingContributors(
                     parameters,
                     r -> {
-                        if (r.getLookupElement().getUserData(WORD_COMPLETION_COMPATIBLE) == null) {
+                        if (r.getLookupElement().getUserData(XmlCompletionUtil.WORD_COMPLETION_COMPATIBLE) == null) {
                             addWordVariants.set(false);
                         }
                         usedWords.add(r.getLookupElement().getLookupString());
