@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.util.xml.converters;
+package consulo.xml.dom.convert;
 
 import consulo.language.psi.ElementManipulator;
 import consulo.language.psi.ElementManipulators;
@@ -25,9 +25,9 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.ResolveResult;
 import consulo.localize.LocalizeValue;
 import consulo.util.lang.StringUtil;
-import com.intellij.xml.util.XmlTagTextUtil;
 import consulo.xml.dom.*;
 
+import consulo.xml.language.psi.util.XmlTagUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
@@ -82,7 +82,7 @@ public abstract class QuotedValueConverter<T> extends ResolvingConverter<T> impl
     final String originalValue = genericDomValue.getStringValue();
     if (originalValue == null) return PsiReference.EMPTY_ARRAY;
     final String unquotedValue = unquote(originalValue, getQuoteSigns());
-    int startOffset = originalValue == unquotedValue? 0 : XmlTagTextUtil.escapeString(originalValue.substring(0, 1), false).length();
+    int startOffset = originalValue == unquotedValue? 0 : XmlTagUtil.escapeString(originalValue.substring(0, 1), false).length();
     int endOffset = originalValue == unquotedValue || quotationIsNotClosed(originalValue)? 0 : startOffset;
     final ElementManipulator<PsiElement> manipulator = ElementManipulators.getManipulator(element);
     assert manipulator != null : "manipulator not found";

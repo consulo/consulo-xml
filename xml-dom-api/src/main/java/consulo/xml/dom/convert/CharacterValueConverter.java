@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package consulo.xml.util.xml.converters.values;
+package consulo.xml.dom.convert;
 
 import consulo.localize.LocalizeValue;
 import consulo.xml.dom.ConvertContext;

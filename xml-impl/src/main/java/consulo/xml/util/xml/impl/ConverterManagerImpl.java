@@ -6,7 +6,7 @@ import consulo.application.util.ConcurrentFactoryMap;
 import consulo.language.psi.path.PathReference;
 import consulo.xml.dom.*;
 import consulo.xml.dom.convert.EnumConverter;
-import consulo.xml.util.xml.converters.PathReferenceConverter;
+import consulo.xml.dom.convert.PathReferenceConverter;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

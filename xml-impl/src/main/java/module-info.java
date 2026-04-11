@@ -126,8 +126,6 @@ open module com.intellij.xml {
     exports consulo.xml.util;
     exports consulo.xml.util.xml;
     exports consulo.xml.util.xml.actions.generate;
-    exports consulo.xml.util.xml.converters;
-    exports consulo.xml.util.xml.converters.values;
     exports consulo.xml.util.xml.highlighting;
     exports consulo.xml.util.xml.impl;
     exports consulo.xml.util.xml.model;

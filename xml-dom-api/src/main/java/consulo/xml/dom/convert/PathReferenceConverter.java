@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package consulo.xml.util.xml.converters;
+package consulo.xml.dom.convert;
 
 import org.jspecify.annotations.Nullable;
 
