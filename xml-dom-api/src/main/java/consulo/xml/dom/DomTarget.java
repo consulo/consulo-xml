@@ -13,4 +13,6 @@ import org.jspecify.annotations.Nullable;
 public interface DomTarget extends PsiTarget, PsiDeclaredTarget, PomRenameableTarget {
     @Nullable
     DomElement getDomElement();
+
+    int getTextOffset();
 }
