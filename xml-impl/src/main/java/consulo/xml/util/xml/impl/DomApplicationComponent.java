@@ -20,7 +20,7 @@ import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
 import consulo.application.Application;
 import consulo.application.util.ConcurrentFactoryMap;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.util.collection.FactoryMap;
 import consulo.util.lang.ReflectionAssignabilityCache;
 import consulo.xml.dom.DomElementImplementationProvider;
@@ -67,7 +67,7 @@ public class DomApplicationComponent
 
 	public static DomApplicationComponent getInstance()
 	{
-		return ServiceManager.getService(DomApplicationComponent.class);
+		return Application.get().getInstance(DomApplicationComponent.class);
 	}
 
 	public int getCumulativeVersion()

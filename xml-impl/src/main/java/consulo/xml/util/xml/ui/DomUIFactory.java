@@ -18,7 +18,7 @@ package consulo.xml.util.xml.ui;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.project.Project;
 import consulo.ui.ex.awt.ColumnInfo;
 import consulo.ui.ex.awt.UserActivityWatcher;
@@ -128,7 +128,7 @@ public abstract class DomUIFactory {
   }
 
   public static DomUIFactory getDomUIFactory() {
-    return ServiceManager.getService(DomUIFactory.class);
+    return Application.get().getInstance(DomUIFactory.class);
   }
 
   public DomUIControl createCollectionControl(DomElement element, DomCollectionChildDescription description) {

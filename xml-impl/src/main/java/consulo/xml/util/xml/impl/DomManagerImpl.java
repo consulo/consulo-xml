@@ -18,7 +18,7 @@ package consulo.xml.util.xml.impl;
 import consulo.annotation.component.ServiceImpl;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.language.pom.PomManager;
 import consulo.language.pom.PomModel;
 import consulo.language.pom.PomModelAspect;
@@ -227,7 +227,7 @@ public final class DomManagerImpl extends DomManager {
 
     @Override
     public final ConverterManager getConverterManager() {
-        return ServiceManager.getService(ConverterManager.class);
+        return Application.get().getInstance(ConverterManager.class);
     }
 
     @Override

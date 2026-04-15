@@ -21,7 +21,7 @@ import consulo.project.Project;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
 import consulo.disposer.Disposable;
-import consulo.ide.ServiceManager;
+
 
 /**
  * @author Sergey.Vasiliev
@@ -74,7 +74,7 @@ public class CommitablePanelUserActivityListener implements UserActivityListener
   }
 
   protected final void commit(final Committable panel) {
-    ServiceManager.getService(getProject(), CommittableUtil.class).commit(panel);
+    getProject().getInstance(CommittableUtil.class).commit(panel);
   }
 
   protected final Project getProject() {

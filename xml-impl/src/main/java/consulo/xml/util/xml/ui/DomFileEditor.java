@@ -17,7 +17,7 @@ package consulo.xml.util.xml.ui;
 
 import consulo.disposer.Disposer;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
-import consulo.ide.ServiceManager;
+
 import consulo.project.Project;
 import consulo.ui.ex.awt.MnemonicHelper;
 import consulo.virtualFileSystem.VirtualFile;
@@ -70,7 +70,7 @@ public class DomFileEditor<T extends BasicDomElementComponent> extends Perspecti
     if (checkIsValid() && isInitialised()) {
       setShowing(false);
       try {
-        ServiceManager.getService(getProject(), CommittableUtil.class).commit(myComponent);
+        getProject().getInstance(CommittableUtil.class).commit(myComponent);
       } finally {
         setShowing(true);
       }

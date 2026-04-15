@@ -23,7 +23,7 @@ import consulo.xml.lang.XmlCodeFoldingSettings;
 import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.util.xml.serializer.XmlSerializerUtil;
 import jakarta.inject.Singleton;
 
@@ -37,7 +37,7 @@ public class XmlFoldingSettings implements XmlCodeFoldingSettings, PersistentSta
     public boolean COLLAPSE_HTML_STYLE_ATTRIBUTE = true;
 
     public static XmlFoldingSettings getInstance() {
-        return ServiceManager.getService(XmlFoldingSettings.class);
+        return Application.get().getInstance(XmlFoldingSettings.class);
     }
 
     @Override

@@ -11,6 +11,18 @@ open module com.intellij.xml {
 
     requires transitive com.intellij.xml.dom.api;
 
+    requires consulo.language.editor.refactoring.api;
+    requires consulo.language.editor.ui.api;
+    requires consulo.language.code.style.ui.api;
+    requires consulo.language.editor.impl;
+    requires consulo.language.copyright.api;
+    requires consulo.virtual.file.system.http.api;
+    requires consulo.project.ui.view.api;
+    requires consulo.external.service.api;
+    requires consulo.http.api;
+    requires consulo.language.inject.advanced.api;
+    requires consulo.version.control.system.api;
+
     requires consulo.util.xml.fast.reader;
 
     // TODO remove in future
