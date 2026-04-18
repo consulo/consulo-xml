@@ -443,8 +443,9 @@ public abstract class ExternalResourceManagerExImpl extends SimpleModificationTr
 		}
 
 		Set<String> standardIgnored = data.ignored();
-		Set<String> set = new HashSet<>(standardIgnored.size());
+		Set<String> set = new HashSet<>(standardIgnored.size() + myIgnoredResources.size());
 		set.addAll(standardIgnored);
+		set.addAll(myIgnoredResources);
 		return ArrayUtil.toStringArray(set);
 	}
 
