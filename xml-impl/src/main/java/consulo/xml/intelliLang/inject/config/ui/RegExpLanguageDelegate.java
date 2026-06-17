@@ -15,9 +15,16 @@
  */
 package consulo.xml.intelliLang.inject.config.ui;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
 import consulo.component.util.pointer.NamedPointer;
 import consulo.language.Language;
-import consulo.language.LanguagePointerUtil;
+import consulo.language.LanguageRegistry;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author VISTALL
@@ -25,7 +32,23 @@ import consulo.language.LanguagePointerUtil;
  * <p/>
  * IDE can be without org.intellij.lang.regexp.RegExpLanguage class, and it ill produce ClassNotFoundException
  */
-public class RegExpLanguageDelegate
-{
-	public static final NamedPointer<Language> RegExp = LanguagePointerUtil.createPointer("RegExp");
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
+@Singleton
+public class RegExpLanguageDelegate {
+    @Deprecated
+    public static Language getRegExp() {
+        return Application.get().getInstance(RegExpLanguageDelegate.class).getRegExpLanguage();
+    }
+
+    private NamedPointer<Language> myRegExpPointer;
+
+    @Inject
+    public RegExpLanguageDelegate(LanguageRegistry languageRegistry) {
+        myRegExpPointer = languageRegistry.createLanguagePointer("RegExp");
+    }
+
+    public @Nullable Language getRegExpLanguage() {
+        return myRegExpPointer.get();
+    }
 }

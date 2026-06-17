@@ -131,7 +131,7 @@ public class TagPanel extends AbstractInjectionPanel<AbstractTagInjection>
 
 	private void createUIComponents()
 	{
-		myLocalName = new LanguageTextField(RegExpLanguageDelegate.RegExp.get(), getProject(), getOrigInjection().getTagName());
+		myLocalName = new LanguageTextField(RegExpLanguageDelegate.getRegExp(), getProject(), getOrigInjection().getTagName());
 		myNamespace = new ComboBox(200);
 	}
 }

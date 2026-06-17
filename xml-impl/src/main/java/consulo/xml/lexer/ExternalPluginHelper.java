@@ -1,9 +1,15 @@
 package consulo.xml.lexer;
 
 import consulo.annotation.DeprecationInfo;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.application.Application;
 import consulo.component.util.pointer.NamedPointer;
 import consulo.language.Language;
-import consulo.language.LanguagePointerUtil;
+import consulo.language.LanguageRegistry;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -12,20 +18,28 @@ import org.jspecify.annotations.Nullable;
  */
 @Deprecated
 @DeprecationInfo("Find another way, this create hard reference to other plugins")
-public class ExternalPluginHelper
-{
-	private static final NamedPointer<Language> ourCSSLanguage = LanguagePointerUtil.createPointer("CSS");
-	private static final NamedPointer<Language> ourJavaScriptLanguage = LanguagePointerUtil.createPointer("JavaScript");
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
+@Singleton
+public class ExternalPluginHelper {
+    private final NamedPointer<Language> myCSSLanguage;
+    private final NamedPointer<Language> myJavaScriptLanguage;
 
-	@Nullable
-	public static Language getCssLanguage()
-	{
-		return ourCSSLanguage.get();
-	}
+    @Inject
+    public ExternalPluginHelper(LanguageRegistry languageRegistry) {
+        myCSSLanguage = languageRegistry.createLanguagePointer("CSS");
+        myJavaScriptLanguage = languageRegistry.createLanguagePointer("JavaScript");
+    }
 
-	@Nullable
-	public static Language getJavaScriptLanguage()
-	{
-		return ourJavaScriptLanguage.get();
-	}
+    @Nullable
+    @Deprecated
+    public static Language getCssLanguage() {
+        return Application.get().getInstance(ExternalPluginHelper.class).myCSSLanguage.get();
+    }
+
+    @Nullable
+    @Deprecated
+    public static Language getJavaScriptLanguage() {
+        return Application.get().getInstance(ExternalPluginHelper.class).myJavaScriptLanguage.get();
+    }
 }

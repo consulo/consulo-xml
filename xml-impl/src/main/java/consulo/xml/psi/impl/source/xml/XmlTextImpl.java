@@ -117,7 +117,7 @@ public class XmlTextImpl extends XmlElementImpl implements XmlText, PsiLanguageI
 			{
 				buffer.append(child.getText());
 			}
-			else if(elementType == TokenType.ERROR_ELEMENT || elementType == TokenType.NEW_LINE_INDENT)
+			else if(elementType == TokenType.ERROR_ELEMENT)
 			{
 				buffer.append(child.getText());
 			}
