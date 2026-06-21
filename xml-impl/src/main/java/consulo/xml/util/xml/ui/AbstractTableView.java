@@ -16,7 +16,7 @@
 package consulo.xml.util.xml.ui;
 
 import consulo.dataContext.DataSink;
-import consulo.dataContext.TypeSafeDataProvider;
+import consulo.dataContext.UiDataProvider;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.project.Project;
@@ -29,7 +29,6 @@ import consulo.ui.ex.awt.ScrollPaneFactory;
 import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.table.ListTableModel;
 import consulo.ui.ex.awt.table.TableView;
-import consulo.util.dataholder.Key;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.xml.XmlStringUtil;
 
@@ -52,7 +51,7 @@ import java.util.List;
 /**
  * @author peter
  */
-public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDataProvider {
+public abstract class AbstractTableView<T> extends JPanel implements UiDataProvider {
     private final MyTableView myTable = new MyTableView();
     private final String myHelpID;
     private final String myEmptyPaneText;
@@ -224,10 +223,9 @@ public abstract class AbstractTableView<T> extends JPanel implements TypeSafeDat
         return myTableModel;
     }
 
-    public void calcData(Key<?> key, DataSink sink) {
-        if (PlatformDataKeys.HELP_ID == key) {
-            sink.put(PlatformDataKeys.HELP_ID, getHelpId());
-        }
+    @Override
+    public void uiDataSnapshot(DataSink sink) {
+        sink.set(PlatformDataKeys.HELP_ID, getHelpId());
     }
 
     private String getHelpId() {

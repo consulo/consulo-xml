@@ -24,7 +24,7 @@ import com.intellij.xml.util.XmlUtil;
 import consulo.application.ApplicationPropertiesComponent;
 import consulo.colorScheme.EditorColorsManager;
 import consulo.colorScheme.EditorFontType;
-import consulo.dataContext.DataManager;
+import consulo.dataContext.UiDataProvider;
 import consulo.fileChooser.FileChooserDescriptor;
 import consulo.fileChooser.FileSystemTree;
 import consulo.fileChooser.FileSystemTreeFactory;
@@ -36,6 +36,7 @@ import consulo.module.Module;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.*;
+import consulo.ui.ex.awt.ClientProperty;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awt.JBTabbedPane;
 import consulo.ui.ex.awt.ScrollPaneFactory;
@@ -234,15 +235,10 @@ public class MapExternalResourceDialog extends DialogWrapper {
 
     private void createUIComponents() {
         myExplorerPanel = new JPanel(new BorderLayout());
-        DataManager.registerDataProvider(myExplorerPanel, dataId ->
-        {
-            if (CommonDataKeys.VIRTUAL_FILE_ARRAY == dataId) {
-                return myExplorer.getSelectedFiles();
-            }
-            else if (FileSystemTree.DATA_KEY == dataId) {
-                return myExplorer;
-            }
-            return null;
+
+        ClientProperty.put(myExplorerPanel, UiDataProvider.KEY, sink -> {
+            sink.lazy(CommonDataKeys.VIRTUAL_FILE_ARRAY, myExplorer::getSelectedFiles);
+            sink.set(FileSystemTree.DATA_KEY, myExplorer);
         });
     }
 }

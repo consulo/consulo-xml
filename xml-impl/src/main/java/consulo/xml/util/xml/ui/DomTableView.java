@@ -15,17 +15,16 @@
  */
 package consulo.xml.util.xml.ui;
 
-import consulo.dataContext.DataSink;
-import consulo.dataContext.TypeSafeDataProvider;
 import consulo.application.Result;
+import consulo.dataContext.DataSink;
+import consulo.dataContext.UiDataProvider;
 import consulo.language.editor.WriteCommandAction;
-import consulo.util.collection.SmartList;
-import consulo.xml.dom.DomElement;
-import consulo.xml.dom.DomUtil;
 import consulo.project.Project;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.DefaultActionGroup;
-import consulo.util.dataholder.Key;
+import consulo.util.collection.SmartList;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
 
 import java.util.List;
 
@@ -33,41 +32,43 @@ import java.util.List;
  * @author peter
  */
 public class DomTableView extends AbstractTableView<DomElement> {
-  private final List<TypeSafeDataProvider> myCustomDataProviders = new SmartList<TypeSafeDataProvider>();
+    private final List<UiDataProvider> myCustomDataProviders = new SmartList<>();
 
-  public DomTableView(final Project project) {
-    super(project);
-  }
-
-  public DomTableView(final Project project, final String emptyPaneText, final String helpID) {
-    super(project, emptyPaneText, helpID);
-  }
-
-  public void addCustomDataProvider(TypeSafeDataProvider provider) {
-    myCustomDataProviders.add(provider);
-  }
-
-  public void calcData(final Key<?> key, final DataSink sink) {
-    super.calcData(key, sink);
-    for (final TypeSafeDataProvider customDataProvider : myCustomDataProviders) {
-      customDataProvider.calcData(key, sink);
+    public DomTableView(final Project project) {
+        super(project);
     }
-  }
 
-  @Deprecated
-  protected final void installPopup(final DefaultActionGroup group) {
-    installPopup(ActionPlaces.J2EE_ATTRIBUTES_VIEW_POPUP, group);
-  }
+    public DomTableView(final Project project, final String emptyPaneText, final String helpID) {
+        super(project, emptyPaneText, helpID);
+    }
 
-  protected void wrapValueSetting(final DomElement domElement, final Runnable valueSetter) {
-    if (domElement.isValid()) {
-      new WriteCommandAction(getProject(), DomUtil.getFile(domElement)) {
-        protected void run(final Result result) throws Throwable {
-          valueSetter.run();
+    public void addCustomDataProvider(UiDataProvider provider) {
+        myCustomDataProviders.add(provider);
+    }
+
+    @Override
+    public void uiDataSnapshot(DataSink sink) {
+        super.uiDataSnapshot(sink);
+        for (UiDataProvider uiDataProvider : myCustomDataProviders) {
+            uiDataProvider.uiDataSnapshot(sink);
         }
-      }.execute();
-      fireChanged();
     }
-  }
+
+    @Deprecated
+    protected final void installPopup(final DefaultActionGroup group) {
+        installPopup(ActionPlaces.J2EE_ATTRIBUTES_VIEW_POPUP, group);
+    }
+
+    @Override
+    protected void wrapValueSetting(final DomElement domElement, final Runnable valueSetter) {
+        if (domElement.isValid()) {
+            new WriteCommandAction(getProject(), DomUtil.getFile(domElement)) {
+                protected void run(final Result result) throws Throwable {
+                    valueSetter.run();
+                }
+            }.execute();
+            fireChanged();
+        }
+    }
 
 }
