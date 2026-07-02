@@ -19,12 +19,13 @@ import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.xml.util.xml.tree.DomModelTreeView;
 
 /**
  * @author Sergey.Vasiliev
  */
-abstract public class BaseDomTreeAction extends AnAction {
+abstract public class BaseDomTreeAction extends AnAction implements AnActionWithSyncUpdate {
     private DomModelTreeView myTreeView;
 
     protected BaseDomTreeAction(LocalizeValue text) {

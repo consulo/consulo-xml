@@ -7,6 +7,7 @@ import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.ui.ex.action.IdeActions;
 import consulo.ui.ex.awt.CommonActionsPanel;
 
@@ -17,7 +18,7 @@ import javax.swing.*;
  * @since 2025-09-26
  */
 @ActionImpl(id = "DomCollectionControl.Remove", shortcutFrom = @ActionRef(id = IdeActions.ACTION_DELETE))
-public class DomCollectionControlRemoveAction extends AnAction {
+public class DomCollectionControlRemoveAction extends AnAction implements AnActionWithSyncUpdate {
     public DomCollectionControlRemoveAction() {
         super(ApplicationLocalize.actionRemove(), LocalizeValue.empty(), DomCollectionControl.REMOVE_ICON);
         setShortcutSet(CommonActionsPanel.getCommonShortcut(CommonActionsPanel.Buttons.REMOVE));

@@ -15,6 +15,7 @@
  */
 package com.intellij.xml.actions.xmlbeans;
 
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
@@ -277,7 +278,7 @@ public class GenerateInstanceDocumentFromSchemaDialog extends DialogWrapper {
         return (String)rootElementChooser.getSelectedItem();
     }
 
-    public void setOkAction(Runnable runnable) {
+    public void setOkAction(@RequiredUIAccess Runnable runnable) {
         myOkAction = runnable;
     }
 

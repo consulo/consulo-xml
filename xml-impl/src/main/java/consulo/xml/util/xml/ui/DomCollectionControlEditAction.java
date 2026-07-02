@@ -7,6 +7,7 @@ import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.ui.ex.action.IdeActions;
 import consulo.ui.ex.awt.CommonActionsPanel;
 
@@ -15,7 +16,7 @@ import consulo.ui.ex.awt.CommonActionsPanel;
  * @since 2025-09-26
  */
 @ActionImpl(id = "DomCollectionControl.Edit", shortcutFrom = @ActionRef(id = IdeActions.ACTION_EDIT_SOURCE))
-public class DomCollectionControlEditAction extends AnAction {
+public class DomCollectionControlEditAction extends AnAction implements AnActionWithSyncUpdate {
     public DomCollectionControlEditAction() {
         super(ApplicationLocalize.actionEdit(), LocalizeValue.empty(), DomCollectionControl.EDIT_ICON);
         setShortcutSet(CommonActionsPanel.getCommonShortcut(CommonActionsPanel.Buttons.EDIT));

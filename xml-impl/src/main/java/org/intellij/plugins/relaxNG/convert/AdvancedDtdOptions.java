@@ -17,11 +17,7 @@ package org.intellij.plugins.relaxNG.convert;
 
 import consulo.application.AllIcons;
 import consulo.language.psi.PsiRecursiveElementVisitor;
-import consulo.ui.ex.action.ActionManager;
-import consulo.ui.ex.action.ActionPlaces;
-import consulo.ui.ex.action.ActionToolbar;
-import consulo.ui.ex.action.AnAction;
-import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.*;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
@@ -29,7 +25,6 @@ import consulo.language.psi.PsiManager;
 import consulo.xml.language.psi.XmlAttributeDecl;
 import consulo.xml.language.psi.XmlElementDecl;
 import consulo.project.Project;
-import consulo.ui.ex.action.DefaultActionGroup;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -82,7 +77,7 @@ public class AdvancedDtdOptions implements AdvancedOptions {
     myNamespaceMap.getColumnModel().getColumn(0).setMaxWidth((int)(new JLabel("Prefix").getPreferredSize().width * 1.2));
 
     final DefaultActionGroup group = new DefaultActionGroup();
-    group.add(new AnAction(null, "Remove Entry", AllIcons.General.Remove) {
+    group.add(new LegacyAnAction(null, "Remove Entry", AllIcons.General.Remove) {
       @Override
       public void update(AnActionEvent e) {
         if (myNamespaceMap.getModel().getRowCount() == 0 || myNamespaceMap.getSelectedRow() == -1) {

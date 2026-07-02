@@ -27,6 +27,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.xml.codeInsight.actions.GenerateDTDAction;
 import consulo.xml.relaxNG.localize.RelaxNGLocalize;
 import org.intellij.plugins.relaxNG.ApplicationLoader;
@@ -55,7 +56,7 @@ import consulo.xml.language.psi.XmlTag;
         relatedToAction = @ActionRef(type = GenerateDTDAction.class)
     )
 )
-public class ConvertSchemaAction extends AnAction {
+public class ConvertSchemaAction extends AnAction implements AnActionWithSyncUpdate {
     public ConvertSchemaAction() {
         super(RelaxNGLocalize.actionConvertSchemaText(), RelaxNGLocalize.actionConvertSchemaDescription());
     }

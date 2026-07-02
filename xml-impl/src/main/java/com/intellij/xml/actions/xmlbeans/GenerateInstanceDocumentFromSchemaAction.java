@@ -27,6 +27,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.ui.ex.awt.Messages;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.io.FileUtil;
@@ -51,7 +52,7 @@ import java.util.function.Supplier;
  * @author Konstantin Bulenkov
  */
 @ActionImpl(id = "Document2XSD")
-public class GenerateInstanceDocumentFromSchemaAction extends AnAction {
+public class GenerateInstanceDocumentFromSchemaAction extends AnAction implements AnActionWithSyncUpdate {
     public GenerateInstanceDocumentFromSchemaAction() {
         super(XmlLocalize.actionDocumentToXsdText());
     }

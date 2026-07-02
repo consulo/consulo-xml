@@ -26,6 +26,8 @@ import consulo.ui.ex.awt.CommonActionsPanel;
 import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.ui.ex.popup.ListPopup;
 import consulo.ui.image.Image;
+import consulo.util.concurrent.coroutine.Coroutine;
+import consulo.util.concurrent.coroutine.step.CodeExecution;
 import consulo.util.lang.reflect.ReflectionUtil;
 import consulo.xml.dom.DomElement;
 import consulo.xml.dom.DomManager;
@@ -44,38 +46,44 @@ import java.util.List;
 /**
  * @author Sergey.Vasiliev
  */
-public abstract class AddDomElementAction extends AnAction {
+public abstract class AddDomElementAction extends AnAction implements AnActionWithAsyncUpdate {
     public AddDomElementAction() {
         super(ApplicationLocalize.actionAdd(), LocalizeValue.empty(), DomCollectionControl.ADD_ICON);
     }
 
     @Override
-    public void update(AnActionEvent e) {
-        if (!isEnabled(e)) {
-            e.getPresentation().setEnabled(false);
-            return;
-        }
-
-        AnAction[] actions = getChildren(e);
-        for (AnAction action : actions) {
-            e.getPresentation().setEnabled(true);
-            action.update(e);
-            if (e.getPresentation().isEnabled()) {
-                break;
+    public Coroutine<?, ?> updateAsync(AnActionEvent e) {
+        return CodeExecution.run((c) -> {
+            if (!isEnabled(e)) {
+                e.getPresentation().setEnabled(false);
+                return;
             }
-        }
-        if (actions.length == 1) {
-            e.getPresentation().setText(actions[0].getTemplatePresentation().getTextValue());
-        }
-        else {
-            String actionText = getActionText(e);
-            if (!actionText.endsWith("...")) {
-                e.getPresentation().setText(actionText + (actions.length > 1 ? "..." : ""));
-            }
-        }
-        e.getPresentation().setIcon(DomCollectionControl.ADD_ICON);
 
-        super.update(e);
+            AnAction[] actions = getChildren(e);
+            for (AnAction action : actions) {
+                e.getPresentation().setEnabled(true);
+
+                if (action instanceof AnActionWithSyncUpdate syncUpdate) {
+                    syncUpdate.update(e);
+                } else if (action instanceof AnActionWithAsyncUpdate asyncUpdate) {
+                    asyncUpdate.updateAsync(e).runBlocking(c.scope(), null);
+                }
+
+                if (e.getPresentation().isEnabled()) {
+                    break;
+                }
+            }
+            if (actions.length == 1) {
+                e.getPresentation().setText(actions[0].getTemplatePresentation().getTextValue());
+            }
+            else {
+                String actionText = getActionText(e);
+                if (!actionText.endsWith("...")) {
+                    e.getPresentation().setText(actionText + (actions.length > 1 ? "..." : ""));
+                }
+            }
+            e.getPresentation().setIcon(DomCollectionControl.ADD_ICON);
+        }).toCoroutine();
     }
 
     @Override

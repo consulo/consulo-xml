@@ -10,10 +10,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.ui.ex.action.ActionPlaces;
-import consulo.ui.ex.action.AnAction;
-import consulo.ui.ex.action.AnActionEvent;
-import consulo.ui.ex.action.Presentation;
+import consulo.ui.ex.action.*;
 import consulo.undoRedo.CommandProcessor;
 import consulo.util.dataholder.Key;
 import consulo.xhtml.language.XHtmlFileType;
@@ -33,7 +30,7 @@ import jakarta.inject.Inject;
         @ActionParentRef(@ActionRef(id = "EditorTabPopupMenuEx"))
     }
 )
-public class ValidateXmlAction extends AnAction {
+public class ValidateXmlAction extends AnAction implements AnActionWithSyncUpdate {
     private static final Key<String> runningValidationKey = Key.create("xml.running.validation.indicator");
 
     private final Application myApplication;

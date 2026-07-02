@@ -26,6 +26,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.ui.ex.awt.Messages;
 import consulo.util.collection.ArrayUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
@@ -46,7 +47,7 @@ import java.util.Map;
  * @author Konstantin Bulenkov
  */
 @ActionImpl(id = "XSD2Document")
-public class GenerateSchemaFromInstanceDocumentAction extends AnAction {
+public class GenerateSchemaFromInstanceDocumentAction extends AnAction implements AnActionWithSyncUpdate {
     private static final Map<String, String> DESIGN_TYPES = new HashMap<>();
     private static final Map<String, String> CONTENT_TYPES = new HashMap<>();
 

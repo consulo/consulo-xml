@@ -21,13 +21,14 @@ import consulo.ui.ex.action.ActionGroup;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Dmitry Avdeev
  */
 @ActionImpl(id = "DomElementsTreeView.AddElementGroup")
-public class AddDomElementActionGroup extends ActionGroup {
+public class AddDomElementActionGroup extends ActionGroup implements AnActionWithSyncUpdate {
     private final AddElementInCollectionAction myAction = new AddElementInCollectionAction() {
         @Override
         protected boolean showAsPopup() {
@@ -42,8 +43,6 @@ public class AddDomElementActionGroup extends ActionGroup {
 
     @Override
     public void update(AnActionEvent e) {
-        //myAction.getChildren(e).length
         getTemplatePresentation().setText(myAction.getTemplatePresentation().getTextValue());
-        super.update(e);
     }
 }
