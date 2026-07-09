@@ -23,6 +23,7 @@ import consulo.document.util.TextRange;
 import consulo.language.editor.TargetElementUtil;
 import consulo.language.editor.TargetElementUtilExtender;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.versionControlSystem.action.VcsContext;
 import consulo.versionControlSystem.history.VcsSelection;
@@ -51,18 +52,18 @@ public class XmlVcsSelectionProvider implements VcsSelectionProvider
       return null;
     }
 
-    final String actionName;
+    final LocalizeValue actionName;
 
     if (psiElement instanceof XmlTag) {
-      actionName = VcsLocalize.actionNameShowHistoryForTag().get();
+      actionName = VcsLocalize.actionNameShowHistoryForTag();
     } else if (psiElement instanceof XmlText) {
-      actionName = VcsLocalize.actionNameShowHistoryForText().get();
+      actionName = VcsLocalize.actionNameShowHistoryForText();
     } else {
       return null;
     }
 
     TextRange textRange = psiElement.getTextRange();
-    if (textRange == null) {
+    if (textRange == TextRange.EMPTY_RANGE) {
       return null;
     }
 
