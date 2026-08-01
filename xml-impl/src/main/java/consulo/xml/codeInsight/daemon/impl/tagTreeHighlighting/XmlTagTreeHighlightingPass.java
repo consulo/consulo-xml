@@ -22,7 +22,12 @@ import consulo.codeEditor.CodeInsightColors;
 import consulo.codeEditor.DocumentMarkupModel;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.EditorEx;
+import consulo.codeEditor.markup.EditorGutterArea;
+import consulo.codeEditor.markup.FillColorLineMarkerPresentation;
 import consulo.codeEditor.markup.HighlighterTargetArea;
+import consulo.codeEditor.markup.LineMarkerPresentation;
+import consulo.codeEditor.markup.LineMarkerPresentationContext;
+import consulo.codeEditor.markup.LineMarkerPresentationProvider;
 import consulo.codeEditor.markup.MarkupModel;
 import consulo.codeEditor.markup.MarkupModelEx;
 import consulo.codeEditor.markup.RangeHighlighter;
@@ -39,6 +44,7 @@ import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.editor.rawHighlight.HighlightInfoType;
 import consulo.language.editor.rawHighlight.HighlightInfoTypeImpl;
 import consulo.language.file.FileViewProvider;
+import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
@@ -46,8 +52,9 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.color.ColorValue;
 import consulo.ui.color.RGBColor;
-import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.CharArrayUtil;
 import consulo.util.lang.Couple;
 import consulo.xml.application.options.editor.XmlEditorOptions;
 import consulo.xml.language.psi.XmlChildRole;
@@ -57,7 +64,10 @@ import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * @author Eugene.Kudelevsky
@@ -93,7 +103,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         }
 
         int offset = myEditor.getCaretModel().getOffset();
-        PsiElement[] elements = null; // FIXME [VISTALL] for now idk when it used, due it based on breadcrumbs, which removed
+        PsiElement[] elements = getLinePsiElements(offset);
 
         if (elements == null || elements.length == 0 || !XmlTagTreeHighlightingUtil.containsTagsWithSameName(elements)) {
             elements = PsiElement.EMPTY_ARRAY;
@@ -124,13 +134,82 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         }
     }
 
+    /**
+     * Ported from {@code PsiFileBreadcrumbsCollector}, which Consulo does not have, with
+     * {@code XmlLanguageBreadcrumbsInfoProvider.acceptElement} inlined as the accept test.
+     */
+    @RequiredReadAction
+    private PsiElement @Nullable [] getLinePsiElements(int offset) {
+        PsiElement element = findStartElement(offset);
+        if (element == null) {
+            return null;
+        }
+
+        LinkedList<PsiElement> result = new LinkedList<>();
+        while (element != null) {
+            if (element instanceof XmlTag && element.isValid()) {
+                result.addFirst(element);
+            }
+
+            element = element.getParent();
+            if (element instanceof PsiDirectory) {
+                break;
+            }
+        }
+        return result.toArray(PsiElement.EMPTY_ARRAY);
+    }
+
+    @RequiredReadAction
+    @Nullable
+    private PsiElement findStartElement(int offset) {
+        PsiElement middleElement = findFirstBreadcrumbedElement(offset);
+
+        // Let's simulate brace matcher logic of searching brace backwards (see `BraceHighlightingHandler.updateBraces`)
+        CharSequence chars = myEditor.getDocument().getCharsSequence();
+        int leftOffset = CharArrayUtil.shiftBackward(chars, offset - 1, "\t ");
+        leftOffset = leftOffset >= 0 ? leftOffset : offset - 1;
+
+        PsiElement leftElement = findFirstBreadcrumbedElement(leftOffset);
+        if (leftElement != null && (middleElement == null || PsiTreeUtil.isAncestor(middleElement, leftElement, true))) {
+            return leftElement;
+        }
+        else {
+            return middleElement;
+        }
+    }
+
+    @RequiredReadAction
+    @Nullable
+    private PsiElement findFirstBreadcrumbedElement(int offset) {
+        PriorityQueue<PsiElement> leafs = new PriorityQueue<>(
+            3,
+            (o1, o2) -> o2.getTextRange().getStartOffset() - o1.getTextRange().getStartOffset()
+        );
+
+        FileViewProvider viewProvider = myFile.getViewProvider();
+        for (Language language : viewProvider.getLanguages()) {
+            ContainerUtil.addIfNotNull(leafs, viewProvider.findElementAt(offset, language));
+        }
+
+        while (!leafs.isEmpty()) {
+            PsiElement element = leafs.remove();
+            if (element instanceof XmlTag && element.isValid()) {
+                return element;
+            }
+            if (!(element instanceof PsiFile)) {
+                ContainerUtil.addIfNotNull(leafs, element.getParent());
+            }
+        }
+        return null;
+    }
+
     @RequiredReadAction
     private static boolean isTagStartOrEnd(@Nullable PsiElement element) {
         if (element == null) {
             return false;
         }
         IElementType type = element.getNode().getElementType();
-        if (type == XmlTokenType.XML_NAME) {
+        if (type == XmlTokenType.XML_NAME || type == XmlTokenType.XML_TAG_NAME) {
             return isTagStartOrEnd(element.getNextSibling()) || isTagStartOrEnd(element.getPrevSibling());
         }
         return type == XmlTokenType.XML_START_TAG_START || type == XmlTokenType.XML_END_TAG_START || type == XmlTokenType.XML_TAG_END;
@@ -278,10 +357,22 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
         RangeHighlighter highlighter =
             mm.addRangeHighlighter(range.getStartOffset(), range.getEndOffset(), 0, null, HighlighterTargetArea.LINES_IN_RANGE);
 
-        highlighter.setLineMarkerRenderer((editor, g, r) ->
-        {
-            g.setColor(TargetAWT.to(color));
-            g.fillRect(r.x - 1, r.y, 2, r.height);
+        highlighter.setLineMarkerPresentationProvider(new LineMarkerPresentationProvider() {
+            @Override
+            public Set<EditorGutterArea> getUsedAreas() {
+                return Set.of(EditorGutterArea.RIGHT_FREE_PAINTERS);
+            }
+
+            @Override
+            public List<? extends LineMarkerPresentation> buildPresentations(LineMarkerPresentationContext context) {
+                return List.of(new FillColorLineMarkerPresentation(
+                    context.startLine(),
+                    context.endLine(),
+                    EditorGutterArea.RIGHT_FREE_PAINTERS,
+                    color,
+                    null
+                ));
+            }
         });
         return highlighter;
     }
