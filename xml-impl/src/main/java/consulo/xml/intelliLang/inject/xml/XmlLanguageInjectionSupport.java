@@ -339,7 +339,7 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
 
         final XmlTagInjection newInjection = originalInjection == null ? template : new XmlTagInjection().copyFrom(originalInjection);
 
-        ShowSettingsUtil.getInstance().editConfigurable(project, new XmlTagInjectionConfigurable(newInjection, null, project)).doWhenDone(() -> {
+        ShowSettingsUtil.getInstance().editConfigurable(project, new XmlTagInjectionConfigurable(newInjection, null, project)).whenComplete((_, _) -> {
             configuration.replaceInjectionsWithUndo(
                 project, Collections.singletonList(newInjection),
                 ContainerUtil.createMaybeSingletonList(originalInjection),
@@ -369,7 +369,7 @@ public class XmlLanguageInjectionSupport extends AbstractLanguageInjectionSuppor
         final BaseInjection originalInjection = configuration.findExistingInjection(template);
         final BaseInjection newInjection = originalInjection == null ? template : originalInjection.copy();
 
-        ShowSettingsUtil.getInstance().editConfigurable(project, new XmlAttributeInjectionConfigurable((XmlAttributeInjection) newInjection, null, project)).doWhenDone(() -> {
+        ShowSettingsUtil.getInstance().editConfigurable(project, new XmlAttributeInjectionConfigurable((XmlAttributeInjection) newInjection, null, project)).whenComplete((_, _) -> {
             configuration.replaceInjectionsWithUndo(
                 project, Collections.singletonList(newInjection),
                 ContainerUtil.createMaybeSingletonList(originalInjection),

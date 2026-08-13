@@ -94,6 +94,7 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
     @RequiredReadAction
     @Override
     public void doCollectInformation(ProgressIndicator progress) {
+        System.out.println("[TAGTREE] doCollectInformation editor=" + myEditor.getClass().getName());
         if (Application.get().isUnitTestMode()) {
             return;
         }
@@ -127,11 +128,15 @@ public class XmlTagTreeHighlightingPass extends TextEditorHighlightingPass {
             }
         }
 
+        System.out.println("[TAGTREE] elements=" + elements.length);
+
         for (int i = elements.length - 1; i >= 0; i--) {
             if (elements[i] instanceof XmlTag) {
                 myPairsToHighlight.add(getTagRanges((XmlTag)elements[i]));
             }
         }
+
+        System.out.println("[TAGTREE] pairsToHighlight=" + myPairsToHighlight.size());
     }
 
     /**
