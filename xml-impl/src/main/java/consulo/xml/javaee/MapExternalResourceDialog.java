@@ -43,6 +43,8 @@ import consulo.ui.ex.awt.ScrollPaneFactory;
 import consulo.ui.ex.awt.event.DocumentAdapter;
 import consulo.ui.ex.awt.tree.ColoredTreeCellRenderer;
 import consulo.ui.ex.awt.tree.TreeUtil;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.ui.font.Font;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
@@ -112,7 +114,8 @@ public class MapExternalResourceDialog extends DialogWrapper {
                 ConfigFilesTreeBuilder.renderNode(value, expanded, this);
             }
         };
-        renderer.setFont(EditorColorsManager.getInstance().getGlobalScheme().getFont(EditorFontType.PLAIN));
+        Font font = EditorColorsManager.getInstance().getGlobalScheme().getFont(EditorFontType.PLAIN);
+        renderer.setFont(TargetAWT.to(font));
 
         mySchemasTree.setCellRenderer(renderer);
         MouseAdapter mouseAdapter = new MouseAdapter() {

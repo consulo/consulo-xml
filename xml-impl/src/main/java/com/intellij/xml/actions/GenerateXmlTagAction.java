@@ -15,6 +15,8 @@
  */
 package com.intellij.xml.actions;
 
+import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.ui.font.Font;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import consulo.xml.descriptor.XmlElementDescriptor;
 import consulo.xml.descriptor.XmlElementsGroup;
@@ -113,7 +115,7 @@ public class GenerateXmlTagAction extends SimpleCodeInsightAction {
                         EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
                         Font font = scheme.getFont(EditorFontType.PLAIN);
 
-                        setFont(font);
+                        setFont(TargetAWT.to(font));
                         append(value.getName());
                         String namespace = getNamespace(value);
                         if (!namespace.isEmpty()) {
