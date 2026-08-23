@@ -17,18 +17,15 @@ package consulo.xml.util.xml.ui;
 
 import consulo.disposer.Disposer;
 import consulo.fileEditor.highlight.BackgroundEditorHighlighter;
-
 import consulo.project.Project;
+import consulo.ui.Component;
 import consulo.ui.ex.awt.MnemonicHelper;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.dom.DomElement;
-import consulo.xml.dom.DomEventListener;
-import consulo.xml.dom.DomManager;
-import consulo.xml.dom.DomUtil;
-import consulo.xml.dom.DomEvent;
+import consulo.xml.dom.*;
 import consulo.xml.dom.editor.DomElementAnnotationsManager;
-
 import org.jspecify.annotations.Nullable;
+
 import javax.swing.*;
 import java.util.function.Supplier;
 
@@ -36,102 +33,114 @@ import java.util.function.Supplier;
  * @author peter
  */
 public class DomFileEditor<T extends BasicDomElementComponent> extends PerspectiveFileEditor implements CommittablePanel, Highlightable {
-  private final String myName;
-  private final Supplier<? extends T> myComponentFactory;
-  private T myComponent;
+    private final String myName;
+    private final Supplier<? extends T> myComponentFactory;
+    private T myComponent;
 
-  public DomFileEditor(final DomElement element, final String name, final T component) {
-    this(element.getManager().getProject(), DomUtil.getFile(element).getVirtualFile(), name, component);
-  }
-
-  public DomFileEditor(final Project project, final VirtualFile file, final String name, final T component) {
-    this(project, file, name, (Supplier<T>) () -> component);
-  }
-
-  public DomFileEditor(final Project project, final VirtualFile file, final String name, final Supplier<? extends T> component) {
-    super(project, file);
-    myComponentFactory = component;
-    myName = name;
-
-    DomElementAnnotationsManager.getInstance(project).addHighlightingListener(element -> {
-      if (isInitialised() && getComponent().isShowing() && element.isValid()) {
-        updateHighlighting();
-      }
-    }, this);
-  }
-
-  public void updateHighlighting() {
-    if (checkIsValid()) {
-      CommittableUtil.updateHighlighting(myComponent);
+    public DomFileEditor(final DomElement element, final String name, final T component) {
+        this(element.getManager().getProject(), DomUtil.getFile(element).getVirtualFile(), name, component);
     }
-  }
 
-  public void commit() {
-    if (checkIsValid() && isInitialised()) {
-      setShowing(false);
-      try {
-        getProject().getInstance(CommittableUtil.class).commit(myComponent);
-      } finally {
-        setShowing(true);
-      }
+    public DomFileEditor(final Project project, final VirtualFile file, final String name, final T component) {
+        this(project, file, name, (Supplier<T>) () -> component);
     }
-  }
 
-  @Nullable
-  public JComponent getPreferredFocusedComponent() {
-    ensureInitialized();
-    return myComponent.getComponent();
-  }
+    public DomFileEditor(final Project project, final VirtualFile file, final String name, final Supplier<? extends T> component) {
+        super(project, file);
+        myComponentFactory = component;
+        myName = name;
 
-  protected final T getDomComponent() {
-    return myComponent;
-  }
-
-  protected JComponent createCustomComponent() {
-    MnemonicHelper.init(getComponent());
-    myComponent = myComponentFactory.get();
-    DomUIFactory.getDomUIFactory().setupErrorOutdatingUserActivityWatcher(this, getDomElement());
-    DomManager.getDomManager(getProject()).addDomEventListener(new DomEventListener() {
-      public void eventOccured(DomEvent event) {
-        checkIsValid();
-      }
-    }, this);
-    Disposer.register(this, myComponent);
-    return myComponent.getComponent();
-  }
-
-  public final String getName() {
-    return myName;
-  }
-
-  protected DomElement getSelectedDomElement() {
-    return DomUINavigationProvider.findDomElement(myComponent);
-  }
-
-  protected void setSelectedDomElement(DomElement domElement) {
-    final DomUIControl domControl = DomUINavigationProvider.findDomControl(myComponent, domElement);
-    if (domControl != null) {
-      domControl.navigate(domElement);
+        DomElementAnnotationsManager.getInstance(project).addHighlightingListener(element -> {
+            if (isInitialised() && getComponent().isShowing() && element.isValid()) {
+                updateHighlighting();
+            }
+        }, this);
     }
-  }
 
-  public BackgroundEditorHighlighter getBackgroundHighlighter() {
-    ensureInitialized();
-    return DomUIFactory.getDomUIFactory().createDomHighlighter(getProject(), this, getDomElement());
-  }
-
-  private DomElement getDomElement() {
-    return myComponent.getDomElement();
-  }
-
-
-  public boolean isValid() {
-    return super.isValid() && (!isInitialised() || getDomElement().isValid());
-  }
-
-  public void reset() {
-    if (checkIsValid()) {
-      myComponent.reset();
+    @Override
+    public void updateHighlighting() {
+        if (checkIsValid()) {
+            CommittableUtil.updateHighlighting(myComponent);
+        }
     }
-  }
+
+    @Override
+    public void commit() {
+        if (checkIsValid() && isInitialised()) {
+            setShowing(false);
+            try {
+                getProject().getInstance(CommittableUtil.class).commit(myComponent);
+            }
+            finally {
+                setShowing(true);
+            }
+        }
+    }
+
+    @Override
+    @Nullable
+    public JComponent getPreferredFocusedComponent() {
+        ensureInitialized();
+        return myComponent.getComponent();
+    }
+
+    protected final T getDomComponent() {
+        return myComponent;
+    }
+
+    @Override
+    protected JComponent createCustomComponent() {
+        MnemonicHelper.init(getComponent());
+        myComponent = myComponentFactory.get();
+        DomUIFactory.getDomUIFactory().setupErrorOutdatingUserActivityWatcher(this, getDomElement());
+        DomManager.getDomManager(getProject()).addDomEventListener(new DomEventListener() {
+            @Override
+            public void eventOccured(DomEvent event) {
+                checkIsValid();
+            }
+        }, this);
+        Disposer.register(this, myComponent);
+        return myComponent.getComponent();
+    }
+
+    @Override
+    public final String getName() {
+        return myName;
+    }
+
+    @Override
+    protected DomElement getSelectedDomElement() {
+        return DomUINavigationProvider.findDomElement(myComponent);
+    }
+
+    @Override
+    protected void setSelectedDomElement(DomElement domElement) {
+        final DomUIControl domControl = DomUINavigationProvider.findDomControl(myComponent, domElement);
+        if (domControl != null) {
+            domControl.navigate(domElement);
+        }
+    }
+
+    @Override
+    public BackgroundEditorHighlighter getBackgroundHighlighter() {
+        ensureInitialized();
+        return DomUIFactory.getDomUIFactory().createDomHighlighter(getProject(), this, getDomElement());
+    }
+
+    private DomElement getDomElement() {
+        return myComponent.getDomElement();
+    }
+
+
+    @Override
+    public boolean isValid() {
+        return super.isValid() && (!isInitialised() || getDomElement().isValid());
+    }
+
+    @Override
+    public void reset() {
+        if (checkIsValid()) {
+            myComponent.reset();
+        }
+    }
 }
