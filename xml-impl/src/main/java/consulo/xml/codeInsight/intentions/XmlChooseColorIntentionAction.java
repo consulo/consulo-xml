@@ -27,10 +27,18 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.ui.ColorPickerBuilder;
+import consulo.ui.Component;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.color.ColorValue;
 import consulo.ui.ex.JBColor;
-import consulo.ui.ex.awt.ColorChooser;
+import consulo.ui.ex.awt.UIUtil;
 import consulo.ui.ex.awt.util.ColorUtil;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.ui.style.StandardColors;
+import consulo.ui.util.ColorValueUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.language.psi.XmlAttribute;
@@ -53,51 +61,60 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
     @Override
     public boolean isAvailable(Project project, Editor editor, PsiElement element) {
         PsiElement parent = element.getParent();
-        return parent instanceof XmlAttributeValue attrValue && ColorUtil.fromHex(attrValue.getValue(), null) != null;
+        if (parent instanceof XmlAttributeValue attrValue) {
+            try {
+                return ColorValueUtil.fromHex(attrValue.getValue()) != null;
+            }
+            catch (Exception ignored) {
+            }
+        }
+        return false;
     }
 
     @Override
+    @RequiredUIAccess
     public void invoke(Project project, Editor editor, PsiElement element) throws IncorrectOperationException {
-        chooseColor(editor.getComponent(), element, getText().get());
+        chooseColor(editor.getUIComponent(), element, getText());
     }
 
-    public static void chooseColor(JComponent editorComponent, PsiElement element, String caption) {
+    @RequiredUIAccess
+    public static void chooseColor(Component editorComponent, PsiElement element, LocalizeValue caption) {
         XmlAttributeValue literal = PsiTreeUtil.getParentOfType(element, XmlAttributeValue.class, false);
         if (literal == null) {
             return;
         }
         String text = StringUtil.unquoteString(literal.getValue());
 
-        Color oldColor;
+        ColorValue oldColor;
         try {
-            oldColor = Color.decode(text);
+            oldColor = ColorValueUtil.fromHex(text);
         }
         catch (NumberFormatException e) {
-            oldColor = JBColor.GRAY;
+            oldColor = StandardColors.GRAY;
         }
 
-        Color temp = oldColor;
-        ColorChooser.chooseColor(
-            editorComponent,
-            caption,
-            temp,
-            true,
-            color -> {
-                if (color == null) {
+        ColorValue temp = oldColor;
+        ColorPickerBuilder.create()
+            .withTitle(caption)
+            .withColor(temp)
+            .withAlpha()
+            .showAsync(editorComponent)
+            .whenComplete((colorValue, throwable) -> {
+                if (colorValue == null) {
                     return;
                 }
 
-                if (!Objects.equals(color, temp)) {
+                if (!Objects.equals(colorValue, temp)) {
                     if (!FileModificationService.getInstance().preparePsiElementForWrite(element)) {
                         return;
                     }
 
-                    String newText = "#" + ColorUtil.toHex(color);
+                    String newText = "#" + ColorValueUtil.toHex(colorValue);
                     PsiManager manager = literal.getManager();
                     XmlAttribute newAttribute =
                         XmlElementFactory.getInstance(manager.getProject()).createXmlAttribute("name", newText);
 
-                    new WriteCommandAction(element.getProject(), caption) {
+                    new WriteCommandAction(element.getProject(), caption.get()) {
                         @Override
                         protected void run(Result result) throws Throwable {
                             XmlAttributeValue valueElement = newAttribute.getValueElement();
@@ -106,7 +123,6 @@ public class XmlChooseColorIntentionAction extends PsiElementBaseIntentionAction
                         }
                     }.execute();
                 }
-            }
-        );
+            });
     }
 }

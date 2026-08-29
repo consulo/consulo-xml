@@ -19,8 +19,10 @@ import consulo.codeEditor.Editor;
 import consulo.language.editor.completion.lookup.*;
 import consulo.language.psi.PsiElement;
 import consulo.project.ui.wm.WindowManager;
-import consulo.ui.ex.awt.ColorChooser;
+import consulo.ui.ColorPickerBuilder;
+import consulo.ui.color.RGBColor;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.undoRedo.CommandProcessor;
 import consulo.xml.localize.XmlLocalize;
 import consulo.xml.language.psi.XmlToken;
 import consulo.xml.util.ColorSampleLookupValue;
@@ -51,29 +53,27 @@ public class UserColorLookup extends LookupElementDecorator<LookupElement> {
 
         context.getDocument().deleteString(context.getStartOffset(), context.getTailOffset());
 
-        ColorChooser.chooseColor(
-            TargetAWT.to(WindowManager.getInstance().suggestParentWindow(context.getProject())),
-            XmlLocalize.chooseColorDialogTitle().get(),
-            myColorAtCaret,
-            true,
-            true,
-            color ->
-            {
-                if (color != null) {
-                    String s = Integer.toHexString(color.getRGB() & 0xFFFFFF);
-                    if (s.length() != 6) {
-                        StringBuilder buf = new StringBuilder(s);
-                        for (int i = 6 - buf.length(); i > 0; --i) {
-                            buf.insert(0, '0');
-                        }
-                        s = buf.toString();
-                    }
-                    s = "#" + s;
-                    context.getDocument().insertString(context.getStartOffset(), s);
-                    context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
+        ColorPickerBuilder.create()
+            .withTitle(XmlLocalize.chooseColorDialogTitle())
+            .withColor(TargetAWT.from(myColorAtCaret))
+            .withAlphaAsPercent()
+            .showAsync(WindowManager.getInstance().suggestParentWindow(context.getProject()))
+            .whenComplete((color, throwable) -> {
+                if (color == null) {
+                    return;
                 }
-            }
-        );
+
+                RGBColor rgb = color.toRGB();
+                String text = String.format("#%02x%02x%02x", rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+
+                CommandProcessor.getInstance().newCommand()
+                    .project(context.getProject())
+                    .inWriteAction()
+                    .run(() -> {
+                        context.getDocument().insertString(context.getStartOffset(), text);
+                        context.getEditor().getCaretModel().moveToOffset(context.getTailOffset());
+                    });
+            });
     }
 
     @Nullable
