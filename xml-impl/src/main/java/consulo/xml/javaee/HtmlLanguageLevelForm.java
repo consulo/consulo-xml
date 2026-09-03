@@ -34,6 +34,12 @@ import java.util.List;
  * @author Eugene.Kudelevsky
  */
 public class HtmlLanguageLevelForm {
+    enum HtmlOption {
+        HTML4,
+        HTML5,
+        OTHER
+    }
+
     private Layout myContentLayout;
 
     private RadioButton myHtml4RadioButton;
@@ -47,29 +53,28 @@ public class HtmlLanguageLevelForm {
     public HtmlLanguageLevelForm() {
         VerticalLayout layout = VerticalLayout.create();
 
-        myHtml4RadioButton = RadioButton.create(LocalizeValue.localizeTODO("HTML 4 (\"http://www.w3.org/TR/html4/loose.dtd\")"));
-        myHtml5RadioButton = RadioButton.create(LocalizeValue.localizeTODO("HTML 5"));
-        myOtherRadioButton = RadioButton.create(LocalizeValue.localizeTODO("Other doctype:"));
+        RadioGroup<HtmlOption> radioGroup = RadioGroup.create();
 
-        ValueGroups.boolGroup().add(myHtml4RadioButton).add(myHtml5RadioButton).add(myOtherRadioButton);
+        myHtml4RadioButton = radioGroup.newButton(LocalizeValue.localizeTODO("HTML 4 (\"http://www.w3.org/TR/html4/loose.dtd\")"), HtmlOption.HTML4);
+        myHtml5RadioButton = radioGroup.newButton(LocalizeValue.localizeTODO("HTML 5"), HtmlOption.HTML5);
+        myOtherRadioButton = radioGroup.newButton(LocalizeValue.localizeTODO("Other doctype:"), HtmlOption.OTHER);
 
         final String[] urls = ExternalResourceManager.getInstance().getResourceUrls(null, true);
         myDoctypeTextBox = TextBoxWithHistory.create();
         myDoctypeTextBox.setHistory(List.of(urls));
         myDoctypeTextBox.setVisibleLength(48);
 
-        layout.add(myHtml4RadioButton).add(myHtml5RadioButton).add(DockLayout.create().left(myOtherRadioButton).right(myDoctypeTextBox));
+        layout.add(myHtml4RadioButton)
+            .add(myHtml5RadioButton)
+            .add(DockLayout.create().left(myOtherRadioButton).right(myDoctypeTextBox));
 
         myContentLayout = LabeledLayout.create(LocalizeValue.localizeTODO("Default HTML language level"), layout);
 
-        ComponentEventListener<ValueComponent<Boolean>, ValueComponentEvent<Boolean>> customBoxEnabler = valueEvent -> {
-            myDoctypeTextBox.setEnabled(myOtherRadioButton.getValueOrError());
+        radioGroup.addValueListener(htmlOption -> {
+            myDoctypeTextBox.setEnabled(htmlOption == HtmlOption.OTHER);
             fireDoctypeChanged();
-        };
+        });
 
-        myHtml4RadioButton.addValueListener(customBoxEnabler);
-        myHtml5RadioButton.addValueListener(customBoxEnabler);
-        myOtherRadioButton.addValueListener(customBoxEnabler);
         myDoctypeTextBox.addValueListener(valueEvent -> fireDoctypeChanged());
     }
 

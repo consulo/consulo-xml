@@ -42,13 +42,13 @@ public class XmlAdditionalEditorAppearanceSettingProvider implements AdditionalE
         IntBox levelToHighlightBox = IntBox.create();
         propertyBuilder.add(levelToHighlightBox, options::getTagTreeHighlightingLevelCount, options::setTagTreeHighlightingLevelCount);
         Component labelLevel = LabeledBuilder.sided(XmlLocalize.settingsLevelsToHighlight(), levelToHighlightBox);
-        layout.add(Indenter.indent(labelLevel, 1));
+        layout.add(Indenter.indent(labelLevel));
 
         IntBox opacityBox = IntBox.create();
         opacityBox.setRange(0, 100);
         propertyBuilder.add(opacityBox, options::getTagTreeHighlightingOpacity, options::setTagTreeHighlightingOpacity);
         Component opacityLabel = LabeledBuilder.sided(XmlLocalize.settingsOpacity(), opacityBox);
-        layout.add(Indenter.indent(opacityLabel, 1));
+        layout.add(Indenter.indent(opacityLabel));
 
         enableHighlightBox.addValueListener(event -> {
             Boolean value = event.getValue();
