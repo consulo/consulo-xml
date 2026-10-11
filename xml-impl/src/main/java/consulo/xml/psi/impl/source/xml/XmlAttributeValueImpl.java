@@ -15,11 +15,13 @@
  */
 package consulo.xml.psi.impl.source.xml;
 
-
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.*;
 import consulo.language.psi.meta.PsiMetaData;
 import consulo.language.psi.util.SymbolPresentationUtil;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.ItemPresentation;
 import consulo.navigation.ItemPresentationWithSeparator;
 import consulo.logging.Logger;
@@ -42,157 +44,166 @@ import consulo.ui.image.Image;
  * @author Mike
  */
 public class XmlAttributeValueImpl extends XmlElementImpl implements XmlAttributeValue, PsiLanguageInjectionHost, PsiMetaOwner, PsiMetaData {
-  private static final Logger LOG = Logger.getInstance("#XmlAttributeValueImpl");
-  private volatile PsiReference[] myCachedReferences;
-  private volatile long myModCount;
+    private static final Logger LOG = Logger.getInstance("#XmlAttributeValueImpl");
+    private volatile PsiReference[] myCachedReferences;
+    private volatile long myModCount;
 
-  public XmlAttributeValueImpl() {
-    super(XmlElementType.XML_ATTRIBUTE_VALUE);
-  }
-
-  @Override
-  public void accept(PsiElementVisitor visitor) {
-    if (visitor instanceof XmlElementVisitor) {
-      ((XmlElementVisitor)visitor).visitXmlAttributeValue(this);
+    public XmlAttributeValueImpl() {
+        super(XmlElementType.XML_ATTRIBUTE_VALUE);
     }
-    else {
-      visitor.visitElement(this);
+
+    @Override
+    public void accept(PsiElementVisitor visitor) {
+        if (visitor instanceof XmlElementVisitor elemVisitor) {
+            elemVisitor.visitXmlAttributeValue(this);
+        }
+        else {
+            visitor.visitElement(this);
+        }
     }
-  }
 
-  @Override
-  public String getValue() {
-    // it is more correct way to strip quotes since injected xml may have quotes encoded
-    String text = getText();
-    ASTNode startQuote = findChildByType(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER);
-    if (startQuote != null) {
-      text = StringUtil.trimStart(text, startQuote.getText());
+    @Override
+    @RequiredReadAction
+    public String getValue() {
+        // it is more correct way to strip quotes since injected xml may have quotes encoded
+        String text = getText();
+        ASTNode startQuote = findChildByType(XmlTokenType.XML_ATTRIBUTE_VALUE_START_DELIMITER);
+        if (startQuote != null) {
+            text = StringUtil.trimStart(text, startQuote.getText());
+        }
+        ASTNode endQuote = findChildByType(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER);
+        if (endQuote != null) {
+            text = StringUtil.trimEnd(text, endQuote.getText());
+        }
+        return text;
     }
-    ASTNode endQuote = findChildByType(XmlTokenType.XML_ATTRIBUTE_VALUE_END_DELIMITER);
-    if (endQuote != null) {
-      text = StringUtil.trimEnd(text, endQuote.getText());
+
+    @Override
+    @RequiredReadAction
+    public TextRange getValueTextRange() {
+        TextRange range = getTextRange();
+        String value = getValue();
+        if (value.length() == 0) {
+            return range;
+        }
+        int start = range.getStartOffset() + getText().indexOf(value);
+        int end = start + value.length();
+        return new TextRange(start, end);
     }
-    return text;
-  }
 
-  @Override
-  public TextRange getValueTextRange() {
-    final TextRange range = getTextRange();
-    final String value = getValue();
-    if (value.length() == 0) {
-      return range; 
+    @Override
+    public void clearCaches() {
+        super.clearCaches();
+        myCachedReferences = null;
     }
-    final int start = range.getStartOffset() + getText().indexOf(value);
-    final int end = start + value.length();
-    return new TextRange(start, end);
-  }
 
-  @Override
-  public void clearCaches() {
-    super.clearCaches();
-    myCachedReferences = null;
-  }
-
-  @Override
-  public PsiReference[] getReferences() {
-    PsiReference[] cachedReferences = myCachedReferences;
-    final long curModCount = getManager().getModificationTracker().getModificationCount();
-    if (cachedReferences != null && myModCount == curModCount) {
-      return cachedReferences;
+    @Override
+    public PsiReference[] getReferences() {
+        PsiReference[] cachedReferences = myCachedReferences;
+        long curModCount = getManager().getModificationTracker().getModificationCount();
+        if (cachedReferences != null && myModCount == curModCount) {
+            return cachedReferences;
+        }
+        cachedReferences = ReferenceProvidersRegistry.getReferencesFromProviders(this);
+        myCachedReferences = cachedReferences;
+        myModCount = curModCount;
+        return cachedReferences;
     }
-    cachedReferences = ReferenceProvidersRegistry.getReferencesFromProviders(this);
-    myCachedReferences = cachedReferences;
-    myModCount = curModCount;
-    return cachedReferences;
-  }
 
-  @Override
-  public PsiReference getReference() {
-    final PsiReference[] refs = getReferences();
-    if (refs.length > 0) return refs[0];
-    return null;
-  }
-
-
-  @Override
-  public int getTextOffset() {
-    return getTextRange().getStartOffset() + 1;
-  }
-
-  @Override
-  public boolean isValidHost() {
-    return getParent() instanceof XmlAttributeImpl;
-  }
-
-  @Override
-  public PsiLanguageInjectionHost updateText(String text) {
-    try {
-      final String quoteChar = getTextLength() > 0 ? getText().substring(0, 1) : "";
-      String contents = StringUtil.containsAnyChar(quoteChar, "'\"") ?
-              StringUtil.trimEnd(StringUtil.trimStart(text, quoteChar), quoteChar) : text;
-      XmlAttribute newAttribute = XmlElementFactory.getInstance(getProject()).createXmlAttribute("q", contents);
-      XmlAttributeValue newValue = newAttribute.getValueElement();
-
-      CheckUtil.checkWritable(this);
-      replaceAllChildrenToChildrenOf(newValue.getNode());
-    }
-    catch (IncorrectOperationException e) {
-      LOG.error(e);
-    }
-    return this;
-  }
-
-  @Override
-  public LiteralTextEscaper<XmlAttributeValueImpl> createLiteralTextEscaper() {
-    return new XmlAttributeLiteralEscaper(this);
-  }
-
-  @Override
-  public PsiMetaData getMetaData() {
-    return this;
-  }
-
-  @Override
-  public PsiElement getDeclaration() {
-    return this;
-  }
-
-  @Override
-  public String getName(final PsiElement context) {
-    return getValue();
-  }
-
-  @Override
-  public String getName() {
-    return getValue();
-  }
-
-  @Override
-  public void init(final PsiElement element) {
-  }
-
-  @Override
-  public Object[] getDependences() {
-    return ArrayUtil.EMPTY_OBJECT_ARRAY;
-  }
-
-  @Override
-  public ItemPresentation getPresentation() {
-    return new ItemPresentationWithSeparator() {
-      @Override
-      public String getPresentableText() {
-        return getText();
-      }
-
-      @Override
-      public String getLocationString() {
-        return SymbolPresentationUtil.getFilePathPresentation(getContainingFile());
-      }
-
-      @Override
-      public Image getIcon() {
+    @Override
+    public PsiReference getReference() {
+        PsiReference[] refs = getReferences();
+        if (refs.length > 0) {
+            return refs[0];
+        }
         return null;
-      }
-    };
-  }
+    }
+
+
+    @Override
+    public int getTextOffset() {
+        return getTextRange().getStartOffset() + 1;
+    }
+
+    @Override
+    public boolean isValidHost() {
+        return getParent() instanceof XmlAttributeImpl;
+    }
+
+    @Override
+    @RequiredWriteAction
+    public PsiLanguageInjectionHost updateText(String text) {
+        try {
+            String quoteChar = getTextLength() > 0 ? getText().substring(0, 1) : "";
+            String contents = StringUtil.containsAnyChar(quoteChar, "'\"") ?
+                StringUtil.trimEnd(StringUtil.trimStart(text, quoteChar), quoteChar) : text;
+            XmlAttribute newAttribute = XmlElementFactory.getInstance(getProject()).createXmlAttribute("q", contents);
+            XmlAttributeValue newValue = newAttribute.getValueElement();
+
+            CheckUtil.checkWritable(this);
+            replaceAllChildrenToChildrenOf(newValue.getNode());
+        }
+        catch (IncorrectOperationException e) {
+            LOG.error(e);
+        }
+        return this;
+    }
+
+    @Override
+    public LiteralTextEscaper<XmlAttributeValueImpl> createLiteralTextEscaper() {
+        return new XmlAttributeLiteralEscaper(this);
+    }
+
+    @Override
+    public PsiMetaData getMetaData() {
+        return this;
+    }
+
+    @Override
+    public PsiElement getDeclaration() {
+        return this;
+    }
+
+    @Override
+    @RequiredReadAction
+    public String getName(PsiElement context) {
+        return getValue();
+    }
+
+    @Override
+    @RequiredReadAction
+    public String getName() {
+        return getValue();
+    }
+
+    @Override
+    public void init(PsiElement element) {
+    }
+
+    @Override
+    public Object[] getDependences() {
+        return ArrayUtil.EMPTY_OBJECT_ARRAY;
+    }
+
+    @Override
+    public ItemPresentation getPresentation() {
+        return new ItemPresentationWithSeparator() {
+            @Override
+            @RequiredReadAction
+            public LocalizeValue getPresentableText() {
+                return LocalizeValue.of(getText());
+            }
+
+            @Override
+            @RequiredReadAction
+            public String getLocationString() {
+                return SymbolPresentationUtil.getFilePathPresentation(getContainingFile());
+            }
+
+            @Override
+            public Image getIcon() {
+                return null;
+            }
+        };
+    }
 }

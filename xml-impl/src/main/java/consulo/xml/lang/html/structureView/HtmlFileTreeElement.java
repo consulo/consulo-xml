@@ -15,88 +15,98 @@
  */
 package consulo.xml.lang.html.structureView;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.ApplicationPropertiesComponent;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
 import consulo.language.editor.structureView.PsiTreeElementBase;
 import consulo.language.editor.structureView.StructureViewFactoryEx;
 import consulo.language.psi.resolve.FilterElementProcessor;
-import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.localize.LocalizeValue;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import org.jspecify.annotations.Nullable;
+import consulo.xml.psi.filters.XmlTagFilter;
 
 import java.util.*;
 
 class HtmlFileTreeElement extends PsiTreeElementBase<XmlFile> {
+    private final boolean myInStructureViewPopup;
 
-  private final boolean myInStructureViewPopup;
-
-  public HtmlFileTreeElement(final boolean inStructureViewPopup, final XmlFile xmlFile) {
-    super(xmlFile);
-    myInStructureViewPopup = inStructureViewPopup;
-  }
-
-  public Collection<StructureViewTreeElement> getChildrenBase() {
-    if (isHtml5SectionsMode()) {
-      return Collections.emptyList(); // Html5SectionsNodeProvider will return its structure
+    public HtmlFileTreeElement(boolean inStructureViewPopup, XmlFile xmlFile) {
+        super(xmlFile);
+        myInStructureViewPopup = inStructureViewPopup;
     }
 
-    final XmlFile xmlFile = getElement();
-    final XmlDocument document = xmlFile == null ? null : xmlFile.getDocument();
-    if (document == null) return Collections.emptyList();
-
-    final List<XmlTag> rootTags = new ArrayList<XmlTag>();
-    document.processElements(new FilterElementProcessor(XmlTagFilter.INSTANCE, rootTags), document);
-
-    if (rootTags.isEmpty()) return Collections.emptyList();
-
-    if (rootTags.size() == 1) {
-      final XmlTag rootTag = rootTags.get(0);
-
-      if ("html".equalsIgnoreCase(rootTag.getLocalName())) {
-        final XmlTag[] subTags = rootTag.getSubTags();
-        if (subTags.length == 1 &&
-            ("head".equalsIgnoreCase(subTags[0].getLocalName()) || "body".equalsIgnoreCase(subTags[0].getLocalName()))) {
-          return new HtmlTagTreeElement(subTags[0]).getChildrenBase();
+    @Override
+    @RequiredReadAction
+    public Collection<StructureViewTreeElement> getChildrenBase() {
+        if (isHtml5SectionsMode()) {
+            return Collections.emptyList(); // Html5SectionsNodeProvider will return its structure
         }
 
-        return new HtmlTagTreeElement(rootTag).getChildrenBase();
-      }
+        XmlFile xmlFile = getElement();
+        XmlDocument document = xmlFile == null ? null : xmlFile.getDocument();
+        if (document == null) {
+            return Collections.emptyList();
+        }
 
-      return Arrays.<StructureViewTreeElement>asList(new HtmlTagTreeElement(rootTag));
+        List<XmlTag> rootTags = new ArrayList<>();
+        document.processElements(new FilterElementProcessor(XmlTagFilter.INSTANCE, rootTags), document);
+
+        if (rootTags.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        if (rootTags.size() == 1) {
+            XmlTag rootTag = rootTags.get(0);
+
+            if ("html".equalsIgnoreCase(rootTag.getLocalName())) {
+                XmlTag[] subTags = rootTag.getSubTags();
+                if (subTags.length == 1 &&
+                    ("head".equalsIgnoreCase(subTags[0].getLocalName()) || "body".equalsIgnoreCase(subTags[0].getLocalName()))) {
+                    return new HtmlTagTreeElement(subTags[0]).getChildrenBase();
+                }
+
+                return new HtmlTagTreeElement(rootTag).getChildrenBase();
+            }
+
+            return Arrays.<StructureViewTreeElement>asList(new HtmlTagTreeElement(rootTag));
+        }
+        else {
+            Collection<StructureViewTreeElement> result = new ArrayList<>();
+
+            for (XmlTag tag : rootTags) {
+                result.add(new HtmlTagTreeElement(tag));
+            }
+
+            return result;
+        }
     }
-    else {
-      final Collection<StructureViewTreeElement> result = new ArrayList<StructureViewTreeElement>();
 
-      for (XmlTag tag : rootTags) {
-        result.add(new HtmlTagTreeElement(tag));
-      }
+    @RequiredReadAction
+    private boolean isHtml5SectionsMode() {
+        XmlFile xmlFile = getElement();
+        if (xmlFile == null) {
+            return false;
+        }
 
-      return result;
-    }
-  }
+        if (myInStructureViewPopup) {
+            String propertyName = TreeStructureUtil.getPropertyName(Html5SectionsNodeProvider.HTML5_OUTLINE_PROVIDER_PROPERTY);
+            if (ApplicationPropertiesComponent.getInstance().getBoolean(propertyName, false)) {
+                return true;
+            }
+        }
+        else if (StructureViewFactoryEx.getInstanceEx(xmlFile.getProject()).isActionActive(Html5SectionsNodeProvider.ACTION_ID)) {
+            return true;
+        }
 
-  private boolean isHtml5SectionsMode() {
-    final XmlFile xmlFile = getElement();
-    if (xmlFile == null) return false;
-
-    if (myInStructureViewPopup) {
-      final String propertyName = TreeStructureUtil.getPropertyName(Html5SectionsNodeProvider.HTML5_OUTLINE_PROVIDER_PROPERTY);
-      if (ApplicationPropertiesComponent.getInstance().getBoolean(propertyName, false)) {
-        return true;
-      }
-    }
-    else if (StructureViewFactoryEx.getInstanceEx(xmlFile.getProject()).isActionActive(Html5SectionsNodeProvider.ACTION_ID)) {
-      return true;
+        return false;
     }
 
-    return false;
-  }
-
-  @Nullable
-  public String getPresentableText() {
-    return toString(); // root element is not visible
-  }
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getPresentableText() {
+        return LocalizeValue.of(toString()); // root element is not visible
+    }
 }

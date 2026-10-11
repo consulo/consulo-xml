@@ -15,11 +15,13 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.highlight.HighlightUsagesDescriptionLocation;
 import consulo.language.pom.PomDescriptionProvider;
 import consulo.language.pom.PomTarget;
 import consulo.language.psi.ElementDescriptionLocation;
+import consulo.localize.LocalizeValue;
 import consulo.usage.UsageViewLongNameLocation;
 import consulo.usage.UsageViewNodeTextLocation;
 import consulo.usage.UsageViewTypeLocation;
@@ -35,25 +37,26 @@ import consulo.xml.dom.ElementPresentationTemplate;
  */
 @ExtensionImpl(id = "domDefault", order = "last, before pomDefault")
 public class DefaultDomTargetDescriptionProvider extends PomDescriptionProvider {
-  public String getElementDescription(PomTarget element, ElementDescriptionLocation location) {
-    if (!(element instanceof DomTargetImpl)) return null;
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getElementDescription(PomTarget element, ElementDescriptionLocation location) {
+        if (!(element instanceof DomTargetImpl target)) {
+            return LocalizeValue.empty();
+        }
 
-    final DomTargetImpl target = (DomTargetImpl) element;
+        DomElement domElement = target.getDomElement();
+        ElementPresentationTemplate template = domElement.getChildDescription().getPresentationTemplate();
+        ElementPresentation presentation = template != null ? template.createPresentation(domElement) : domElement.getPresentation();
 
-    DomElement domElement = target.getDomElement();
-    final ElementPresentationTemplate template = domElement.getChildDescription().getPresentationTemplate();
-    final ElementPresentation presentation = template != null ? template.createPresentation(domElement) : domElement.getPresentation();
-
-    if (location == UsageViewTypeLocation.INSTANCE) {
-      return presentation.getTypeName();
+        if (location == UsageViewTypeLocation.INSTANCE) {
+            return LocalizeValue.of(presentation.getTypeName());
+        }
+        if (location == UsageViewNodeTextLocation.INSTANCE || location == UsageViewLongNameLocation.INSTANCE) {
+            return LocalizeValue.localizeTODO(presentation.getTypeName() + " " + StringUtil.notNullize(presentation.getElementName(), "''"));
+        }
+        if (location instanceof HighlightUsagesDescriptionLocation) {
+            return LocalizeValue.of(presentation.getTypeName());
+        }
+        return LocalizeValue.empty();
     }
-    if (location == UsageViewNodeTextLocation.INSTANCE || location == UsageViewLongNameLocation.INSTANCE) {
-      return presentation.getTypeName() + " " + StringUtil.notNullize(presentation.getElementName(), "''");
-    }
-    if (location instanceof HighlightUsagesDescriptionLocation) {
-      return presentation.getTypeName();
-    }
-    return null;
-  }
-
 }

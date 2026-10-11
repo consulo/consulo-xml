@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.model.gotosymbol;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.util.function.Processor;
 import consulo.content.scope.SearchScope;
 import consulo.ide.navigation.GotoSymbolContributor;
@@ -24,6 +24,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.search.FindSymbolParameters;
 import consulo.language.psi.stub.IdFilter;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
 import consulo.module.ModuleManager;
 import consulo.navigation.ItemPresentation;
@@ -38,6 +39,7 @@ import consulo.xml.dom.ElementPresentationManager;
 import consulo.xml.dom.GenericDomValue;
 
 import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -49,181 +51,183 @@ import java.util.Set;
  * TODO need rewrite it to better handling {@link #processNames(Processor, SearchScope, IdFilter)} and {@link #processElementsWithName(String, Processor, FindSymbolParameters)}
  */
 public abstract class GoToSymbolProvider implements GotoSymbolContributor {
+    protected abstract void addNames(Module module, Set<String> result);
 
-  protected abstract void addNames(Module module, Set<String> result);
+    protected abstract void addItems(Module module, String name, List<NavigationItem> result);
 
-  protected abstract void addItems(Module module, String name, List<NavigationItem> result);
+    protected abstract boolean acceptModule(Module module);
 
-  protected abstract boolean acceptModule(final Module module);
-
-  protected static void addNewNames(final List<? extends DomElement> elements, final Set<String> existingNames) {
-    for (DomElement name : elements) {
-      existingNames.add(name.getGenericInfo().getElementName(name));
-    }
-  }
-
-  @Override
-  public void processNames(Processor<String> processor, SearchScope searchScope, @Nullable IdFilter idFilter) {
-    if (!(searchScope instanceof ProjectAwareSearchScope)) {
-      return;
+    protected static void addNewNames(List<? extends DomElement> elements, Set<String> existingNames) {
+        for (DomElement name : elements) {
+            existingNames.add(name.getGenericInfo().getElementName(name));
+        }
     }
 
-    Project project = ((ProjectAwareSearchScope)searchScope).getProject();
+    @Override
+    public void processNames(Processor<String> processor, SearchScope searchScope, @Nullable IdFilter idFilter) {
+        if (!(searchScope instanceof ProjectAwareSearchScope)) {
+            return;
+        }
 
-    String[] names = getNames(project, false);
-    for (String name : names) {
-      if (!processor.process(name)) {
-        return;
-      }
-    }
-  }
+        Project project = ((ProjectAwareSearchScope) searchScope).getProject();
 
-  @Override
-  public void processElementsWithName(String name,
-                                      Processor<NavigationItem> processor,
-                                      FindSymbolParameters params) {
-    NavigationItem[] itemsByName = getItemsByName(name,
-                                                  params.getCompletePattern(),
-                                                  params.getProject(),
-                                                  params.isSearchInLibraries());
-
-    for (NavigationItem navigationItem : itemsByName) {
-      if (!processor.process(navigationItem)) {
-        return;
-      }
-    }
-  }
-
-  public String[] getNames(final Project project, boolean includeNonProjectItems) {
-    Set<String> result = new HashSet<String>();
-    Module[] modules = ModuleManager.getInstance(project).getModules();
-    for (Module module : modules) {
-      if (acceptModule(module)) {
-        addNames(module, result);
-      }
+        String[] names = getNames(project, false);
+        for (String name : names) {
+            if (!processor.process(name)) {
+                return;
+            }
+        }
     }
 
-    return ArrayUtil.toStringArray(result);
-  }
+    @Override
+    public void processElementsWithName(String name, Processor<NavigationItem> processor, FindSymbolParameters params) {
+        NavigationItem[] itemsByName = getItemsByName(
+            name,
+            params.getCompletePattern(),
+            params.getProject(),
+            params.isSearchInLibraries()
+        );
 
-  public NavigationItem[] getItemsByName(final String name, final String pattern, final Project project, boolean includeNonProjectItems) {
-    List<NavigationItem> result = new ArrayList<NavigationItem>();
-    Module[] modules = ModuleManager.getInstance(project).getModules();
-    for (Module module : modules) {
-      if (acceptModule(module)) {
-        addItems(module, name, result);
-      }
+        for (NavigationItem navigationItem : itemsByName) {
+            if (!processor.process(navigationItem)) {
+                return;
+            }
+        }
     }
 
-    return result.toArray(new NavigationItem[result.size()]);
-  }
+    public String[] getNames(Project project, boolean includeNonProjectItems) {
+        Set<String> result = new HashSet<>();
+        Module[] modules = ModuleManager.getInstance(project).getModules();
+        for (Module module : modules) {
+            if (acceptModule(module)) {
+                addNames(module, result);
+            }
+        }
 
-  @Nullable
-  protected static NavigationItem createNavigationItem(final DomElement domElement) {
-    final GenericDomValue name = domElement.getGenericInfo().getNameDomElement(domElement);
-    assert name != null;
-    final XmlElement psiElement = name.getXmlElement();
-    final String value = name.getStringValue();
-    if (psiElement == null || value == null) {
-      return null;
+        return ArrayUtil.toStringArray(result);
     }
-    final Image icon = ElementPresentationManager.getIcon(domElement);
-    return createNavigationItem(psiElement, value, icon);
-  }
 
-  protected static NavigationItem createNavigationItem(final PsiElement element,
-                                                       final String text,
-                                                       @Nullable final Image icon) {
-    return new BaseNavigationItem(element, text, icon);
-  }
+    @Override
+    public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
+        List<NavigationItem> result = new ArrayList<>();
+        Module[] modules = ModuleManager.getInstance(project).getModules();
+        for (Module module : modules) {
+            if (acceptModule(module)) {
+                addItems(module, name, result);
+            }
+        }
 
+        return result.toArray(new NavigationItem[result.size()]);
+    }
 
-  /**
-   * Wraps one entry to display in "Go To Symbol" dialog.
-   */
-  public static class BaseNavigationItem extends FakePsiElement {
+    @Nullable
+    protected static NavigationItem createNavigationItem(DomElement domElement) {
+        GenericDomValue name = domElement.getGenericInfo().getNameDomElement(domElement);
+        assert name != null;
+        XmlElement psiElement = name.getXmlElement();
+        String value = name.getStringValue();
+        if (psiElement == null || value == null) {
+            return null;
+        }
+        Image icon = ElementPresentationManager.getIcon(domElement);
+        return createNavigationItem(psiElement, value, icon);
+    }
 
-    private final PsiElement myPsiElement;
-    private final String myText;
-    private final Image myIcon;
+    protected static NavigationItem createNavigationItem(PsiElement element, String text, @Nullable Image icon) {
+        return new BaseNavigationItem(element, text, icon);
+    }
 
     /**
-     * Creates a new display item.
-     *
-     * @param psiElement The PsiElement to navigate to.
-     * @param text       Text to show for this element.
-     * @param icon       Icon to show for this element.
+     * Wraps one entry to display in "Go To Symbol" dialog.
      */
-    public BaseNavigationItem(PsiElement psiElement, String text, @Nullable Image icon) {
-      myPsiElement = psiElement;
-      myText = text;
-      myIcon = icon;
-    }
+    public static class BaseNavigationItem extends FakePsiElement {
+        private final PsiElement myPsiElement;
+        private final String myText;
+        private final Image myIcon;
 
-    public PsiElement getNavigationElement() {
-      return myPsiElement;
-    }
-
-    public Image getIcon() {
-      return myIcon;
-    }
-
-    public ItemPresentation getPresentation() {
-      return new ItemPresentation() {
-
-        public String getPresentableText() {
-          return myText;
+        /**
+         * Creates a new display item.
+         *
+         * @param psiElement The PsiElement to navigate to.
+         * @param text       Text to show for this element.
+         * @param icon       Icon to show for this element.
+         */
+        public BaseNavigationItem(PsiElement psiElement, String text, @Nullable Image icon) {
+            myPsiElement = psiElement;
+            myText = text;
+            myIcon = icon;
         }
 
-        @Nullable
-        public String getLocationString() {
-          return '(' + myPsiElement.getContainingFile().getName() + ')';
+        @Override
+        public PsiElement getNavigationElement() {
+            return myPsiElement;
         }
 
-        @Nullable
+        @Override
         public Image getIcon() {
-          return myIcon;
+            return myIcon;
         }
-      };
+
+        @Override
+        public ItemPresentation getPresentation() {
+            return new ItemPresentation() {
+                @Override
+                public LocalizeValue getPresentableText() {
+                    return LocalizeValue.of(myText);
+                }
+
+                @Override
+                @RequiredReadAction
+                public @Nullable String getLocationString() {
+                    return '(' + myPsiElement.getContainingFile().getName() + ')';
+                }
+
+                @Override
+                public @Nullable Image getIcon() {
+                    return myIcon;
+                }
+            };
+        }
+
+        @Override
+        public PsiElement getParent() {
+            return myPsiElement.getParent();
+        }
+
+        @Override
+        public Project getProject() {
+            return myPsiElement.getProject();
+        }
+
+        @Override
+        public PsiFile getContainingFile() {
+            return myPsiElement.getContainingFile();
+        }
+
+        @Override
+        @RequiredReadAction
+        public boolean isValid() {
+            return myPsiElement.isValid();
+        }
+
+        @Override
+        public boolean equals(@Nullable Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            BaseNavigationItem that = (BaseNavigationItem) o;
+
+            return myPsiElement.equals(that.myPsiElement)
+                && myText.equals(that.myText);
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * myPsiElement.hashCode() + myText.hashCode();
+        }
     }
-
-    public PsiElement getParent() {
-      return myPsiElement.getParent();
-    }
-
-    @Override
-    public Project getProject() {
-      return myPsiElement.getProject();
-    }
-
-    @Override
-    public PsiFile getContainingFile() {
-      return myPsiElement.getContainingFile();
-    }
-
-    @Override
-    public boolean isValid() {
-      return myPsiElement.isValid();
-    }
-
-    public boolean equals(final Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      final BaseNavigationItem that = (BaseNavigationItem)o;
-
-      if (!myPsiElement.equals(that.myPsiElement)) return false;
-      if (!myText.equals(that.myText)) return false;
-
-      return true;
-    }
-
-    public int hashCode() {
-      int result;
-      result = myPsiElement.hashCode();
-      result = 31 * result + myText.hashCode();
-      return result;
-    }
-  }
-
 }

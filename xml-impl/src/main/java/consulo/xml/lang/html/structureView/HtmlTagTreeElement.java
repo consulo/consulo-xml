@@ -15,9 +15,11 @@
  */
 package consulo.xml.lang.html.structureView;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.ide.localize.IdeLocalize;
 import consulo.language.editor.structureView.PsiTreeElementBase;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.LocationPresentation;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
@@ -27,100 +29,116 @@ import consulo.xml.language.psi.XmlTag;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 class HtmlTagTreeElement extends PsiTreeElementBase<XmlTag> implements LocationPresentation {
-  static final int MAX_TEXT_LENGTH = 50;
+    static final int MAX_TEXT_LENGTH = 50;
 
-  public HtmlTagTreeElement(final XmlTag tag) {
-    super(tag);
-  }
-
-  public Collection<StructureViewTreeElement> getChildrenBase() {
-    final XmlTag tag = getElement();
-    if (tag == null || !tag.isValid()) return Collections.emptyList();
-
-    return ContainerUtil.map2List(tag.getSubTags(), (Function<XmlTag, StructureViewTreeElement>) subTag -> new HtmlTagTreeElement(subTag));
-  }
-
-  public String getPresentableText() {
-    final XmlTag tag = getElement();
-    if (tag == null) return IdeLocalize.nodeStructureviewInvalid().get();
-
-    return getTagPresentation(tag);
-  }
-
-  public String getLocationString() {
-    final XmlTag tag = getElement();
-    if (tag == null) return null;
-
-    final String text = normalizeSpacesAndShortenIfLong(tag.getValue().getTrimmedText());
-    return text.isEmpty() ? null : text;
-  }
-
-  public boolean isSearchInLocationString() {
-    return true;
-  }
-
-  public static String getTagPresentation(final XmlTag tag) {
-    final String id = XmlTagTreeElement.toCanonicalForm(tag.getAttributeValue("id"));
-
-    final String classValue = tag.getAttributeValue("class");
-    final List<String> classValues = classValue != null ? StringUtil.split(classValue, " ") : Collections.<String>emptyList();
-
-    final StringBuilder text = new StringBuilder(tag.getLocalName());
-
-    if (id != null) {
-      text.append("#").append(id);
+    public HtmlTagTreeElement(XmlTag tag) {
+        super(tag);
     }
 
-    if (!classValues.isEmpty()) {
-      text.append('.').append(StringUtil.join(classValues, "."));
-    }
-
-    return text.toString();
-  }
-
-  public static String normalizeSpacesAndShortenIfLong(final String text) {
-    return shortenTextIfLong(normalizeSpaces(text));
-  }
-
-  private static String normalizeSpaces(final String text) {
-    final StringBuilder buf = new StringBuilder();
-
-    for (char ch : text.toCharArray()) {
-      if (ch <= ' ' || Character.isSpaceChar(ch)) {
-        if (buf.length() == 0 || buf.charAt(buf.length() - 1) != ' ') {
-          buf.append(' ');
+    @Override
+    @RequiredReadAction
+    public Collection<StructureViewTreeElement> getChildrenBase() {
+        XmlTag tag = getElement();
+        if (tag == null || !tag.isValid()) {
+            return Collections.emptyList();
         }
-      }
-      else {
-        buf.append(ch);
-      }
+
+        return ContainerUtil.map2List(tag.getSubTags(), HtmlTagTreeElement::new);
     }
 
-    return buf.toString();
-  }
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getPresentableText() {
+        XmlTag tag = getElement();
+        if (tag == null) {
+            return IdeLocalize.nodeStructureviewInvalid();
+        }
 
-  private static String shortenTextIfLong(final String text) {
-    if (text.length() <= MAX_TEXT_LENGTH) return text;
-
-    int index;
-    for (index = MAX_TEXT_LENGTH; index > MAX_TEXT_LENGTH - 20; index--) {
-      if (!Character.isLetter(text.charAt(index))) {
-        break;
-      }
+        return LocalizeValue.of(getTagPresentation(tag));
     }
 
-    final int endIndex = Character.isLetter(index) ? MAX_TEXT_LENGTH : index;
-    return text.substring(0, endIndex) + "...";
-  }
+    @Override
+    @RequiredReadAction
+    public String getLocationString() {
+        XmlTag tag = getElement();
+        if (tag == null) {
+            return null;
+        }
 
-  public String getLocationPrefix() {
-    return "  ";
-  }
+        String text = normalizeSpacesAndShortenIfLong(tag.getValue().getTrimmedText());
+        return text.isEmpty() ? null : text;
+    }
 
-  public String getLocationSuffix() {
-    return "";
-  }
+    @Override
+    public boolean isSearchInLocationString() {
+        return true;
+    }
+
+    public static String getTagPresentation(XmlTag tag) {
+        String id = XmlTagTreeElement.toCanonicalForm(tag.getAttributeValue("id"));
+
+        String classValue = tag.getAttributeValue("class");
+        List<String> classValues = classValue != null ? StringUtil.split(classValue, " ") : Collections.<String>emptyList();
+
+        StringBuilder text = new StringBuilder(tag.getLocalName());
+
+        if (id != null) {
+            text.append("#").append(id);
+        }
+
+        if (!classValues.isEmpty()) {
+            text.append('.').append(StringUtil.join(classValues, "."));
+        }
+
+        return text.toString();
+    }
+
+    public static String normalizeSpacesAndShortenIfLong(String text) {
+        return shortenTextIfLong(normalizeSpaces(text));
+    }
+
+    private static String normalizeSpaces(String text) {
+        StringBuilder buf = new StringBuilder();
+
+        for (char ch : text.toCharArray()) {
+            if (ch <= ' ' || Character.isSpaceChar(ch)) {
+                if (buf.length() == 0 || buf.charAt(buf.length() - 1) != ' ') {
+                    buf.append(' ');
+                }
+            }
+            else {
+                buf.append(ch);
+            }
+        }
+
+        return buf.toString();
+    }
+
+    private static String shortenTextIfLong(String text) {
+        if (text.length() <= MAX_TEXT_LENGTH) {
+            return text;
+        }
+
+        int index;
+        for (index = MAX_TEXT_LENGTH; index > MAX_TEXT_LENGTH - 20; index--) {
+            if (!Character.isLetter(text.charAt(index))) {
+                break;
+            }
+        }
+
+        int endIndex = Character.isLetter(text.charAt(index)) ? MAX_TEXT_LENGTH : index;
+        return text.substring(0, endIndex) + "...";
+    }
+
+    @Override
+    public String getLocationPrefix() {
+        return "  ";
+    }
+
+    @Override
+    public String getLocationSuffix() {
+        return "";
+    }
 }

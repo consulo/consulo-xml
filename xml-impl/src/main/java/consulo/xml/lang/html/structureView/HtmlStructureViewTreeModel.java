@@ -20,6 +20,7 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.*;
 import consulo.ide.impl.idea.ide.util.treeView.smartTree.TreeStructureUtil;
 import consulo.ide.localize.IdeLocalize;
+import consulo.localize.LocalizeValue;
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.ex.PlaceHolder;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
@@ -30,116 +31,98 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 
-class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements PlaceHolder<String>
-{
+class HtmlStructureViewTreeModel extends XmlStructureViewTreeModel implements PlaceHolder<String> {
 
-	private final Collection<NodeProvider> myNodeProviders;
-	private String myStructureViewPlace;
+    private final Collection<NodeProvider> myNodeProviders;
+    private String myStructureViewPlace;
 
-	private static final Sorter HTML_ALPHA_SORTER = new Sorter()
-	{
-		@Override
-		public Comparator getComparator()
-		{
-			return new Comparator()
-			{
-				@Override
-				public int compare(Object o1, Object o2)
-				{
-					String s1 = SorterUtil.getStringPresentation(o1);
-					String s2 = SorterUtil.getStringPresentation(o2);
+    private static final Sorter HTML_ALPHA_SORTER = new Sorter() {
+        @Override
+        public Comparator getComparator() {
+            return new Comparator() {
+                @Override
+                public int compare(Object o1, Object o2) {
+                    LocalizeValue s1 = SorterUtil.getStringPresentation(o1);
+                    LocalizeValue s2 = SorterUtil.getStringPresentation(o2);
 
-					if(isTagPresentation(s1, "head") && isTagPresentation(s2, "body"))
-					{
-						return -1;
-					}
-					if(isTagPresentation(s1, "body") && isTagPresentation(s2, "head"))
-					{
-						return 1;
-					}
+                    if (isTagPresentation(s1.get(), "head") && isTagPresentation(s2.get(), "body")) {
+                        return -1;
+                    }
+                    if (isTagPresentation(s1.get(), "body") && isTagPresentation(s2.get(), "head")) {
+                        return 1;
+                    }
 
-					return s1.compareToIgnoreCase(s2);
-				}
+                    return s1.compareTo(s2);
+                }
 
-				private boolean isTagPresentation(final String presentation, final String tagName)
-				{
-					// "head", "head#id", "head.cls"
-					final String lowerCased = presentation.toLowerCase();
-					return lowerCased.startsWith(tagName) && (lowerCased.length() == tagName.length() || !Character.isLetter(lowerCased.charAt
-							(tagName.length())));
-				}
-			};
-		}
+                private boolean isTagPresentation(String presentation, String tagName) {
+                    // "head", "head#id", "head.cls"
+                    String lowerCased = presentation.toLowerCase();
+                    return lowerCased.startsWith(tagName)
+                        && (lowerCased.length() == tagName.length() || !Character.isLetter(lowerCased.charAt(tagName.length())));
+                }
+            };
+        }
 
-		@Override
-		public boolean isVisible()
-		{
-			return true;
-		}
+        @Override
+        public boolean isVisible() {
+            return true;
+        }
 
-		public String toString()
-		{
-			return getName();
-		}
+        @Override
+        public String toString() {
+            return getName();
+        }
 
-		@Override
-		public ActionPresentation getPresentation()
-		{
-			return new ActionPresentationData(
-				IdeLocalize.actionSortAlphabetically().get(),
-				IdeLocalize.actionSortAlphabetically().get(),
-				PlatformIconGroup.objectbrowserSorted()
-			);
-		}
+        @Override
+        public ActionPresentation getPresentation() {
+            return new ActionPresentationData(
+                IdeLocalize.actionSortAlphabetically(),
+                IdeLocalize.actionSortAlphabetically(),
+                PlatformIconGroup.objectbrowserSorted()
+            );
+        }
 
-		@Override
-		public String getName()
-		{
-			return ALPHA_SORTER_ID;
-		}
-	};
+        @Override
+        public String getName() {
+            return ALPHA_SORTER_ID;
+        }
+    };
 
-	private static final Sorter[] ourSorters = {HTML_ALPHA_SORTER};
+    private static final Sorter[] ourSorters = {HTML_ALPHA_SORTER};
 
-	public HtmlStructureViewTreeModel(final XmlFile file, @Nullable Editor editor)
-	{
-		super(file, editor);
+    public HtmlStructureViewTreeModel(XmlFile file, @Nullable Editor editor) {
+        super(file, editor);
 
-		myNodeProviders = Arrays.<NodeProvider>asList(new Html5SectionsNodeProvider());
-	}
+        myNodeProviders = Arrays.<NodeProvider>asList(new Html5SectionsNodeProvider());
+    }
 
-	@Override
-	public void setPlace(final String place)
-	{
-		myStructureViewPlace = place;
-	}
+    @Override
+    public void setPlace(String place) {
+        myStructureViewPlace = place;
+    }
 
-	@Override
-	public String getPlace()
-	{
-		return myStructureViewPlace;
-	}
+    @Override
+    public String getPlace() {
+        return myStructureViewPlace;
+    }
 
-	@Override
-	public Sorter[] getSorters()
-	{
-		if(TreeStructureUtil.isInStructureViewPopup(this))
-		{
-			return Sorter.EMPTY_ARRAY;  // because in popup there's no option to disable sorter
-		}
+    @Override
+    public Sorter[] getSorters() {
+        if (TreeStructureUtil.isInStructureViewPopup(this)) {
+            return Sorter.EMPTY_ARRAY;  // because in popup there's no option to disable sorter
+        }
 
-		return ourSorters;
-	}
+        return ourSorters;
+    }
 
-	@Override
-	public Collection<NodeProvider> getNodeProviders()
-	{
-		return myNodeProviders;
-	}
+    @Override
+    public Collection<NodeProvider> getNodeProviders() {
+        return myNodeProviders;
+    }
 
-	@Override
-	public StructureViewTreeElement getRoot()
-	{
-		return new HtmlFileTreeElement(TreeStructureUtil.isInStructureViewPopup(this), (XmlFile) getPsiFile());
-	}
+    @Override
+    public StructureViewTreeElement getRoot() {
+        return new HtmlFileTreeElement(TreeStructureUtil.isInStructureViewPopup(this), getPsiFile());
+    }
 }

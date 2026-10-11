@@ -19,52 +19,60 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.xml.language.psi.*;
 
 public class XmlFileTreeElement extends AbstractXmlTagTreeElement<XmlFile> {
-  public XmlFileTreeElement(XmlFile file) {
-    super(file);
-  }
-
-  public Collection<StructureViewTreeElement> getChildrenBase() {
-    final XmlDocument document = getElement().getDocument();
-    List<XmlTag> rootTags = new ArrayList<XmlTag>();
-    if (document != null) {
-      for (PsiElement element : document.getChildren())
-        if (element instanceof XmlTag) rootTags.add((XmlTag)element);
+    public XmlFileTreeElement(XmlFile file) {
+        super(file);
     }
 
-    Collection<StructureViewTreeElement> structureViewTreeElements =
-      getStructureViewTreeElements(rootTags.toArray(new XmlTag[rootTags.size()]));
-
-    Collection<StructureViewTreeElement> dtdStructureViewTreeElements = null;
-    final XmlProlog prolog = document != null ? document.getProlog():null;
-    if (prolog != null) {
-      final XmlDoctype doctype = prolog.getDoctype();
-
-      if (doctype != null) {
-        final XmlMarkupDecl xmlMarkupDecl = doctype.getMarkupDecl();
-        if (xmlMarkupDecl != null) {
-          dtdStructureViewTreeElements = DtdFileTreeElement.collectElements(xmlMarkupDecl);
+    @Override
+    @RequiredReadAction
+    public Collection<StructureViewTreeElement> getChildrenBase() {
+        XmlDocument document = getElement().getDocument();
+        List<XmlTag> rootTags = new ArrayList<>();
+        if (document != null) {
+            for (PsiElement element : document.getChildren()) {
+                if (element instanceof XmlTag tag) {
+                    rootTags.add(tag);
+                }
+            }
         }
-      }
+
+        Collection<StructureViewTreeElement> structureViewTreeElements =
+            getStructureViewTreeElements(rootTags.toArray(new XmlTag[rootTags.size()]));
+
+        Collection<StructureViewTreeElement> dtdStructureViewTreeElements = null;
+        XmlProlog prolog = document != null ? document.getProlog() : null;
+        if (prolog != null) {
+            XmlDoctype doctype = prolog.getDoctype();
+
+            if (doctype != null) {
+                XmlMarkupDecl xmlMarkupDecl = doctype.getMarkupDecl();
+                if (xmlMarkupDecl != null) {
+                    dtdStructureViewTreeElements = DtdFileTreeElement.collectElements(xmlMarkupDecl);
+                }
+            }
+        }
+
+        if (dtdStructureViewTreeElements != null) {
+            ArrayList<StructureViewTreeElement> result =
+                new ArrayList<>(dtdStructureViewTreeElements.size() + structureViewTreeElements.size());
+
+            result.addAll(dtdStructureViewTreeElements);
+            result.addAll(structureViewTreeElements);
+            structureViewTreeElements = result;
+        }
+        return structureViewTreeElements;
     }
 
-    if (dtdStructureViewTreeElements != null) {
-      final ArrayList<StructureViewTreeElement> result = new ArrayList<StructureViewTreeElement>(
-        dtdStructureViewTreeElements.size() + structureViewTreeElements.size()
-      );
-
-      result.addAll(dtdStructureViewTreeElements);
-      result.addAll(structureViewTreeElements);
-      structureViewTreeElements = result;
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getPresentableText() {
+        return LocalizeValue.of(getElement().getName());
     }
-    return structureViewTreeElements;
-  }
-
-  public String getPresentableText() {
-    return getElement().getName();
-  }
 }
