@@ -15,37 +15,40 @@
  */
 package consulo.xml.usageView;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.ElementDescriptionLocation;
 import consulo.language.psi.ElementDescriptionProvider;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.usage.UsageViewLongNameLocation;
 import consulo.usage.UsageViewShortNameLocation;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlTag;
-
 
 /**
  * @author yole
  */
 @ExtensionImpl
 public class XmlUsageViewDescriptionProvider implements ElementDescriptionProvider {
-  public String getElementDescription(final PsiElement element, final ElementDescriptionLocation location) {
-    if (location instanceof UsageViewShortNameLocation) {
-      if (element instanceof XmlAttributeValue) {
-        return ((XmlAttributeValue)element).getValue();
-      }
-    }
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getElementDescription(PsiElement element, ElementDescriptionLocation location) {
+        if (location instanceof UsageViewShortNameLocation) {
+            if (element instanceof XmlAttributeValue attrValue) {
+                return LocalizeValue.of(attrValue.getValue());
+            }
+        }
 
-    if (location instanceof UsageViewLongNameLocation) {
-      if (element instanceof XmlTag) {
-        return ((XmlTag)element).getName();
-      }
-      else if (element instanceof XmlAttributeValue) {
-        return ((XmlAttributeValue)element).getValue();
-      }
-    }
+        if (location instanceof UsageViewLongNameLocation) {
+            if (element instanceof XmlTag tag) {
+                return LocalizeValue.ofNullable(tag.getName());
+            }
+            else if (element instanceof XmlAttributeValue attrValue) {
+                return LocalizeValue.of(attrValue.getValue());
+            }
+        }
 
-    return null;
-  }
+        return LocalizeValue.empty();
+    }
 }

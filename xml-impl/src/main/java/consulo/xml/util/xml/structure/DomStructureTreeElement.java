@@ -13,102 +13,127 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package consulo.xml.util.xml.structure;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.TreeElement;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
 import consulo.xml.dom.*;
 
 import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 /**
  * @author Gregory.Shrago
  */
 public class DomStructureTreeElement implements StructureViewTreeElement, ItemPresentation {
-  private final DomElement myElement;
-  private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
-  private final DomElementNavigationProvider myNavigationProvider;
+    private final DomElement myElement;
+    private final Function<DomElement, DomService.StructureViewMode> myDescriptor;
+    private final DomElementNavigationProvider myNavigationProvider;
 
-  public DomStructureTreeElement(final DomElement element,
-                                 final Function<DomElement,DomService.StructureViewMode> descriptor,
-                                 @Nullable final DomElementNavigationProvider navigationProvider) {
-    myElement = element;
-    myDescriptor = descriptor;
-    myNavigationProvider = navigationProvider;
-  }
+    public DomStructureTreeElement(
+        DomElement element,
+        Function<DomElement, DomService.StructureViewMode> descriptor,
+        @Nullable DomElementNavigationProvider navigationProvider
+    ) {
+        myElement = element;
+        myDescriptor = descriptor;
+        myNavigationProvider = navigationProvider;
+    }
 
-  public DomElement getElement() {
-    return myElement;
-  }
+    public DomElement getElement() {
+        return myElement;
+    }
 
-  @Nullable
-  public Object getValue() {
-    return myElement.isValid() ? myElement.getXmlElement() : null;
-  }
+    @Override
+    public @Nullable Object getValue() {
+        return myElement.isValid() ? myElement.getXmlElement() : null;
+    }
 
-  public ItemPresentation getPresentation() {
-    return this;
-  }
+    @Override
+    public ItemPresentation getPresentation() {
+        return this;
+    }
 
-  public TreeElement[] getChildren() {
-    if (!myElement.isValid()) return EMPTY_ARRAY;
-    final ArrayList<TreeElement> result = new ArrayList<TreeElement>();
-    final DomElementVisitor elementVisitor = new DomElementVisitor() {
-      public void visitDomElement(final DomElement element) {
-        if (element instanceof GenericDomValue) return;
-        final DomService.StructureViewMode viewMode = myDescriptor.apply(element);
-        switch (viewMode) {
-          case SHOW:
-            result.add(createChildElement(element));
-            break;
-          case SHOW_CHILDREN:
-            DomUtil.acceptAvailableChildren(element, this);
-            break;
-          case SKIP:
-            break;
+    @Override
+    public TreeElement[] getChildren() {
+        if (!myElement.isValid()) {
+            return EMPTY_ARRAY;
         }
-      }
-    };
-    DomUtil.acceptAvailableChildren(myElement, elementVisitor);
-    return result.toArray(new TreeElement[result.size()]);
-  }
+        List<TreeElement> result = new ArrayList<>();
+        DomElementVisitor elementVisitor = new DomElementVisitor() {
+            @Override
+            public void visitDomElement(DomElement element) {
+                if (element instanceof GenericDomValue) {
+                    return;
+                }
+                DomService.StructureViewMode viewMode = myDescriptor.apply(element);
+                switch (viewMode) {
+                    case SHOW:
+                        result.add(createChildElement(element));
+                        break;
+                    case SHOW_CHILDREN:
+                        DomUtil.acceptAvailableChildren(element, this);
+                        break;
+                    case SKIP:
+                        break;
+                }
+            }
+        };
+        DomUtil.acceptAvailableChildren(myElement, elementVisitor);
+        return result.toArray(new TreeElement[result.size()]);
+    }
 
-  protected StructureViewTreeElement createChildElement(final DomElement element) {
-    return new DomStructureTreeElement(element, myDescriptor, myNavigationProvider);
-  }
+    protected StructureViewTreeElement createChildElement(DomElement element) {
+        return new DomStructureTreeElement(element, myDescriptor, myNavigationProvider);
+    }
 
-  public void navigate(boolean requestFocus) {
-    if (myNavigationProvider != null) myNavigationProvider.navigate(myElement, true);
-  }
+    @Override
+    @RequiredReadAction
+    public void navigate(boolean requestFocus) {
+        if (myNavigationProvider != null) {
+            myNavigationProvider.navigate(myElement, true);
+        }
+    }
 
-  public boolean canNavigate() {
-    return myNavigationProvider != null && myNavigationProvider.canNavigate(myElement);
-  }
+    @Override
+    @RequiredReadAction
+    public boolean canNavigate() {
+        return myNavigationProvider != null && myNavigationProvider.canNavigate(myElement);
+    }
 
-  public boolean canNavigateToSource() {
-    return myNavigationProvider != null && myNavigationProvider.canNavigate(myElement);
-  }
+    @Override
+    @RequiredReadAction
+    public boolean canNavigateToSource() {
+        return myNavigationProvider != null && myNavigationProvider.canNavigate(myElement);
+    }
 
-  public String getPresentableText() {
-    if (!myElement.isValid()) return "<unknown>";
-    final ElementPresentation presentation = myElement.getPresentation();
-    final String name = presentation.getElementName();
-    return name != null? name : presentation.getTypeName();
-  }
+    @Override
+    public LocalizeValue getPresentableText() {
+        if (!myElement.isValid()) {
+            return LocalizeValue.localizeTODO("<unknown>");
+        }
+        ElementPresentation presentation = myElement.getPresentation();
+        String name = presentation.getElementName();
+        return name != null ? LocalizeValue.of(name) : LocalizeValue.of(presentation.getTypeName());
+    }
 
-  @Nullable
-  public String getLocationString() {
-    return null;
-  }
+    @Override
+    public @Nullable String getLocationString() {
+        return null;
+    }
 
-  @Nullable
-  public Image getIcon() {
-    if (!myElement.isValid()) return null;
-    return myElement.getPresentation().getIcon();
-  }
+    @Override
+    public @Nullable Image getIcon() {
+        if (!myElement.isValid()) {
+            return null;
+        }
+        return myElement.getPresentation().getIcon();
+    }
 }

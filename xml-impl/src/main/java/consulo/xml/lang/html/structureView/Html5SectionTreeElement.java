@@ -15,49 +15,61 @@
  */
 package consulo.xml.lang.html.structureView;
 
-import consulo.application.util.function.Computable;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
-import consulo.xml.language.psi.XmlTag;
 import consulo.language.editor.structureView.PsiTreeElementBase;
-
+import consulo.localize.LocalizeValue;
+import consulo.xml.language.psi.XmlTag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 class Html5SectionTreeElement extends PsiTreeElementBase<XmlTag> {
+    private final Supplier<Collection<StructureViewTreeElement>> myChildrenComputable;
+    private final String myHeader;
 
-  private final Computable<Collection<StructureViewTreeElement>> myChildrenComputable;
-  private final String myHeader;
-
-  public Html5SectionTreeElement(final XmlTag tag,
-                                 final Computable<Collection<StructureViewTreeElement>> childrenComputable,
-                                 final @Nullable String header) {
-    super(tag);
-    myChildrenComputable = childrenComputable;
-    myHeader = header;
-  }
-
-  public Collection<StructureViewTreeElement> getChildrenBase() {
-    return myChildrenComputable.compute();
-  }
-
-  public String getPresentableText() {
-    if (myHeader != null) {
-      return HtmlTagTreeElement.normalizeSpacesAndShortenIfLong(myHeader);
+    public Html5SectionTreeElement(
+        XmlTag tag,
+        Supplier<Collection<StructureViewTreeElement>> childrenComputable,
+        @Nullable String header
+    ) {
+        super(tag);
+        myChildrenComputable = childrenComputable;
+        myHeader = header;
     }
 
-    final XmlTag tag = getElement();
-    return tag == null ? null : HtmlTagTreeElement.normalizeSpacesAndShortenIfLong(tag.getValue().getTrimmedText());
-  }
+    @Override
+    public Collection<StructureViewTreeElement> getChildrenBase() {
+        return myChildrenComputable.get();
+    }
 
-  public String getLocationString() {
-    final XmlTag tag = getElement();
-    if (tag == null) return null;
+    @Override
+    @RequiredReadAction
+    public LocalizeValue getPresentableText() {
+        if (myHeader != null) {
+            return LocalizeValue.of(HtmlTagTreeElement.normalizeSpacesAndShortenIfLong(myHeader));
+        }
 
-    return HtmlTagTreeElement.getTagPresentation(tag);
-  }
+        XmlTag tag = getElement();
+        return tag == null
+            ? LocalizeValue.empty()
+            : LocalizeValue.of(HtmlTagTreeElement.normalizeSpacesAndShortenIfLong(tag.getValue().getTrimmedText()));
+    }
 
-  public boolean isSearchInLocationString() {
-    return true;
-  }
+    @Override
+    @RequiredReadAction
+    public String getLocationString() {
+        XmlTag tag = getElement();
+        if (tag == null) {
+            return null;
+        }
+
+        return HtmlTagTreeElement.getTagPresentation(tag);
+    }
+
+    @Override
+    public boolean isSearchInLocationString() {
+        return true;
+    }
 }

@@ -15,11 +15,8 @@
  */
 package consulo.xml.dom;
 
-import consulo.xml.dom.DomElement;
-import consulo.xml.dom.ElementPresentationTemplate;
-import org.jspecify.annotations.Nullable;
-
 import consulo.ui.image.Image;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author peter
@@ -27,14 +24,16 @@ import consulo.ui.image.Image;
  * @see ElementPresentationTemplate
  */
 public abstract class ElementPresentation {
-  @Nullable
-  public abstract String getElementName();
+    @Nullable
+    public abstract String getElementName();
 
-  public abstract String getTypeName();
+    public abstract String getTypeName();
 
-  @Nullable
-  public abstract Image getIcon();
+    @Nullable
+    public abstract Image getIcon();
 
-  @Nullable
-  public String getDocumentation() { return null;}
+    @Nullable
+    public String getDocumentation() {
+        return null;
+    }
 }
