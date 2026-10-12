@@ -92,7 +92,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
     }
 
     @Override
-    public JComponent createComponent(Disposable uiDisposable) {
+    public consulo.ui.Component createUIComponent(Disposable uiDisposable) {
         myPanel = new JPanel(new GridBagLayout()) {
             @Override
             public Dimension getPreferredSize() {
@@ -175,7 +175,7 @@ public class ExternalResourceConfigurable extends BaseConfigurable implements Pr
         myExtPanel.getEmptyText().setText(XmlLocalize.noExternalResources());
         myIgnorePanel.getEmptyText().setText(XmlLocalize.noIgnoredResources());
 
-        return myPanel;
+        return TargetAWT.wrap(myPanel);
     }
 
     @RequiredUIAccess
