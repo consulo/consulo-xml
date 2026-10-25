@@ -17,9 +17,11 @@ package com.intellij.xml.actions.xmlbeans;
 
 import consulo.application.util.SystemInfo;
 import consulo.fileChooser.FileChooserDescriptor;
-import consulo.fileChooser.IdeaFileChooser;
+import consulo.fileChooser.FileChooserFactory;
 import consulo.project.Project;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.util.io.FileUtil;
+import consulo.util.io.NioFiles;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
@@ -28,6 +30,7 @@ import consulo.xml.localize.XmlLocalize;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,19 +67,27 @@ public class UIUtils {
 
                 fileChooserDescriptor.setTitle(selectFileDialogTitle);
 
-                VirtualFile initialFile = myProject.getBaseDir();
+                String basePath = myProject.getBasePath();
+                Path initialPath = basePath == null ? null : Path.of(basePath);
                 String selectedItem = wsdlUrl.getTextField().getText();
                 if (selectedItem != null && selectedItem.startsWith(LocalFileSystem.PROTOCOL_PREFIX)) {
-                    VirtualFile fileByPath = VirtualFileUtil.findRelativeFile(ExternalResourceManager.getInstance()
-                        .getResourceLocation(VirtualFileUtil.fixURLforIDEA(selectedItem)), null);
-                    if (fileByPath != null) initialFile = fileByPath;
+                    String location = ExternalResourceManager.getInstance().getResourceLocation(VirtualFileUtil.fixURLforIDEA(selectedItem));
+                    Path pathByUrl = NioFiles.toPath(FileUtil.toSystemDependentName(VirtualFileUtil.urlToPath(location)));
+                    if (pathByUrl != null) {
+                        initialPath = pathByUrl;
+                    }
                 }
 
-                final VirtualFile[] virtualFiles = IdeaFileChooser.chooseFiles(fileChooserDescriptor, myProject, initialFile);
-                if (virtualFiles.length == 1) {
-                    String url = fixIDEAUrl(virtualFiles[0].getUrl());
-                    wsdlUrl.setText(url);
-                }
+                FileChooserFactory.getInstance()
+                    .newBuilder(fileChooserDescriptor)
+                    .project(myProject)
+                    .toSelect(initialPath)
+                    .showMultipleAsVirtualFiles()
+                    .whenComplete((virtualFiles, error) -> {
+                        if (error == null && virtualFiles.size() == 1) {
+                            wsdlUrl.setText(fixIDEAUrl(virtualFiles.get(0).getUrl()));
+                        }
+                    });
             }
         });
     }

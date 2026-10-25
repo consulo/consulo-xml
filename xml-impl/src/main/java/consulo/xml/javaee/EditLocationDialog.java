@@ -16,20 +16,18 @@
 package consulo.xml.javaee;
 
 import consulo.fileChooser.FileChooserDescriptor;
-import consulo.fileChooser.IdeaFileChooser;
+import consulo.fileChooser.FileChooserFactory;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awt.FixedSizeButton;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
-import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.localize.XmlLocalize;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class EditLocationDialog extends DialogWrapper {
 
@@ -98,10 +96,11 @@ public class EditLocationDialog extends DialogWrapper {
           new ActionListener() {
             public void actionPerformed(ActionEvent ignored) {
               FileChooserDescriptor descriptor = getChooserDescriptor();
-              VirtualFile file = IdeaFileChooser.chooseFile(descriptor, myProject, null);
-              if (file != null) {
-                myTfPath.setText(file.getPath().replace('/', File.separatorChar));
-              }
+              FileChooserFactory.getInstance().newBuilder(descriptor).project(myProject).showSingle().whenComplete((path, error) -> {
+                if (path != null) {
+                  myTfPath.setText(path.toString());
+                }
+              });
             }
           }
       );
