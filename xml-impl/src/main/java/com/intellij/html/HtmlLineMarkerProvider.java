@@ -29,7 +29,7 @@ public class HtmlLineMarkerProvider implements LineMarkerProvider {
         if (!(language instanceof XMLLanguage)) {
             List<LineMarkerProvider> markerProviders = LineMarkerProvider.forLanguage(language);
             for (LineMarkerProvider provider : markerProviders) {
-                if (provider instanceof HtmlLineMarkerProvider) {
+                if (!isEmbeddedLanguageProvider(provider)) {
                     continue;
                 }
                 LineMarkerInfo<?> info = provider.getLineMarkerInfo(element);
@@ -55,7 +55,7 @@ public class HtmlLineMarkerProvider implements LineMarkerProvider {
             if (!(language instanceof XMLLanguage)) {
                 List<LineMarkerProvider> lineMarkerProviders = LineMarkerProvider.forLanguage(language);
                 for (LineMarkerProvider provider : lineMarkerProviders) {
-                    if (provider instanceof HtmlLineMarkerProvider) {
+                    if (!isEmbeddedLanguageProvider(provider)) {
                         continue;
                     }
                     if (embeddedLineMarkersWorkItems == null) {
@@ -71,6 +71,14 @@ public class HtmlLineMarkerProvider implements LineMarkerProvider {
                 entry.getKey().collectSlowLineMarkers(entry.getValue(), result);
             }
         }
+    }
+
+    /**
+     * The providers of the embedded language, without those of {@link Language#ANY}: the line marker pass queries them for
+     * the HTML file itself, asking them again here would duplicate their markers.
+     */
+    private static boolean isEmbeddedLanguageProvider(LineMarkerProvider provider) {
+        return !(provider instanceof HtmlLineMarkerProvider) && provider.getLanguage() != Language.ANY;
     }
 
     @Override
