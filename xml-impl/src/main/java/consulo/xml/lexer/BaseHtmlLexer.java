@@ -234,15 +234,59 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	@Nullable
 	protected IElementType getCurrentStylesheetElementType()
 	{
+		// a stylesheet language of its own (<style type="text/postcss">), when some provider embeds it
+		IElementType styleTypeElementType = findStylesheetElementTypeByMimeType();
+		if(styleTypeElementType != null)
+		{
+			return styleTypeElementType;
+		}
+
 		LanguageVersion languageVersion = getStyleLanguageVersion();
 		if(languageVersion != null)
 		{
-			for(EmbeddedTokenTypesProvider provider : EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME.getExtensions())
+			return findStylesheetElementType(languageVersion);
+		}
+		return null;
+	}
+
+	@Nullable
+	@SuppressWarnings("RequiredXAction")
+	private IElementType findStylesheetElementTypeByMimeType()
+	{
+		Language language = findStylesheetLanguageByMimeType();
+		return language == null ? null : findStylesheetElementType(LanguageVersionUtil.findDefaultVersion(language));
+	}
+
+	/**
+	 * @return the stylesheet language of {@code <style type="...">} other than CSS that some provider embeds
+	 */
+	@Nullable
+	@SuppressWarnings("RequiredXAction")
+	protected Language findStylesheetLanguageByMimeType()
+	{
+		Language cssLanguage = ExternalPluginHelper.getCssLanguage();
+		if(styleType == null || "text/css".equals(styleType))
+		{
+			return null;
+		}
+		for(Language language : Language.findInstancesByMimeType(styleType.trim()))
+		{
+			if(language != cssLanguage && findStylesheetElementType(LanguageVersionUtil.findDefaultVersion(language)) != null)
 			{
-				if(provider.isMyVersion(languageVersion))
-				{
-					return provider.getElementType();
-				}
+				return language;
+			}
+		}
+		return null;
+	}
+
+	@Nullable
+	private static IElementType findStylesheetElementType(LanguageVersion languageVersion)
+	{
+		for(EmbeddedTokenTypesProvider provider : EmbeddedTokenTypesProvider.EXTENSION_POINT_NAME.getExtensions())
+		{
+			if(provider.isMyVersion(languageVersion))
+			{
+				return provider.getElementType();
 			}
 		}
 		return null;

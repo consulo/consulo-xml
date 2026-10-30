@@ -39,6 +39,8 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 
 	private Lexer embeddedLexer;
 	private Lexer styleLexer;
+	private Language dialectStyleLanguage;
+	private Lexer dialectStyleLexer;
 	private Lexer scriptLexer;
 	private boolean hasNoEmbeddments;
 
@@ -128,7 +130,18 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 		Lexer newLexer = null;
 		if(hasSeenStyle())
 		{
-			if(styleLexer == null)
+			Language styleLanguage = findStylesheetLanguageByMimeType();
+			if(styleLanguage != null)
+			{
+				// <style type="text/postcss">: the highlighting lexer of the dialect
+				if(styleLanguage != dialectStyleLanguage)
+				{
+					dialectStyleLanguage = styleLanguage;
+					dialectStyleLexer = SyntaxHighlighterFactory.getSyntaxHighlighter(styleLanguage, null, null).getHighlightingLexer();
+				}
+				newLexer = dialectStyleLexer;
+			}
+			else if(styleLexer == null)
 			{
 				Language cssLanguage = ExternalPluginHelper.getCssLanguage();
 				if(cssLanguage != null)
@@ -137,7 +150,10 @@ public class HtmlHighlightingLexer extends BaseHtmlLexer
 				}
 			}
 
-			newLexer = styleLexer;
+			if(styleLanguage == null)
+			{
+				newLexer = styleLexer;
+			}
 		}
 		else if(hasSeenScript())
 		{
