@@ -18,7 +18,6 @@ package com.intellij.xml.util;
 import com.intellij.html.impl.providers.MicrodataReferenceProvider;
 import com.intellij.html.impl.util.MicrodataUtil;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.psi.impl.source.resolve.reference.CommentsReferenceContributor;
 import consulo.language.Language;
 import consulo.language.impl.psi.path.WebReference;
 import consulo.language.pattern.PlatformPatterns;
@@ -158,11 +157,7 @@ public class XmlReferenceContributor extends PsiReferenceContributor {
             }
         );
 
-        // last: its provider type is a constant of the IDE implementation, which is not there outside the IDE - like in
-        // headless tests - and the providers above stay registered
-        // TODO move COMMENTS_REFERENCE_PROVIDER_TYPE to the language API
-        PsiReferenceProviderByType commentsReference =
-            PsiReferenceProviderByType.forType(CommentsReferenceContributor.COMMENTS_REFERENCE_PROVIDER_TYPE);
+        PsiReferenceProviderByType commentsReference = PsiReferenceProviderByType.forType(ReferenceProviderType.COMMENTS);
         registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
     }
 

@@ -28,7 +28,6 @@ import consulo.codeEditor.CaretModel;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.externalService.statistic.FeatureUsageTracker;
-import consulo.ide.impl.idea.codeInsight.completion.WordCompletionContributor;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -152,7 +151,7 @@ public class XmlCompletionContributor extends CompletionContributor {
                 }
 
                 if (addWordVariants.get() && parameters.getInvocationCount() > 0) {
-                    WordCompletionContributor.addWordCompletionVariants(result, parameters, usedWords);
+                    XmlCompletionReferences.addWordCompletionVariants(result, parameters, usedWords);
                 }
             }
         );

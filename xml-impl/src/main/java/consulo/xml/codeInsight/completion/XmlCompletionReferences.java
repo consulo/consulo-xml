@@ -27,7 +27,21 @@ import consulo.language.psi.PsiMultiReference;
 import consulo.language.psi.PsiNamedElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.ReferenceRange;
+import consulo.language.editor.completion.CompletionUtilCore;
+import consulo.language.parser.ParserDefinition;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.psi.ElementManipulator;
+import consulo.language.psi.ElementManipulators;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiRecursiveElementWalkingVisitor;
+import consulo.language.psi.stub.IdTableBuilding;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.StringUtil;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 /**
@@ -90,6 +104,93 @@ public final class XmlCompletionReferences {
             return;
         }
         consumer.accept(reference, result.withPrefixMatcher(text.substring(range.getStartOffset(), offsetInElement)));
+    }
+
+    /**
+     * The words of the file and the values of its other string literals - what the IDE's word completion adds
+     */
+    @RequiredReadAction
+    public static void addWordCompletionVariants(CompletionResultSet result, CompletionParameters parameters, Set<String> excludes) {
+        Set<String> realExcludes = new HashSet<>(excludes);
+        for (String exclude : excludes) {
+            String[] words = exclude.split("[ \\.-]");
+            if (words.length > 0 && StringUtil.isNotEmpty(words[0])) {
+                realExcludes.add(words[0]);
+            }
+        }
+
+        PsiElement position = parameters.getPosition();
+        CompletionResultSet javaResultSet = result.withPrefixMatcher(CompletionUtilCore.findJavaIdentifierPrefix(parameters));
+        CompletionResultSet plainResultSet = result.withPrefixMatcher(CompletionUtilCore.findAlphanumericPrefix(parameters));
+        for (String word : getAllWords(position, parameters.getOffset())) {
+            if (!realExcludes.contains(word)) {
+                LookupElement item = LookupElementBuilder.create(word);
+                javaResultSet.addElement(item);
+                plainResultSet.addElement(item);
+            }
+        }
+
+        addValuesFromOtherStringLiterals(result, parameters, realExcludes, position);
+    }
+
+    @RequiredReadAction
+    private static void addValuesFromOtherStringLiterals(CompletionResultSet result, CompletionParameters parameters,
+                                                         Set<String> realExcludes, PsiElement position) {
+        ParserDefinition definition = ParserDefinition.forLanguage(position.getLanguage());
+        if (definition == null) {
+            return;
+        }
+        ElementPattern<PsiElement> pattern =
+            PlatformPatterns.psiElement().withElementType(definition.getStringLiteralElements(position.getLanguageVersion()));
+        PsiElement localString = PsiTreeUtil.findFirstParent(position, false, pattern::accepts);
+        if (localString == null) {
+            return;
+        }
+        ElementManipulator<PsiElement> manipulator = ElementManipulators.getManipulator(localString);
+        if (manipulator == null) {
+            return;
+        }
+        int offset = manipulator.getRangeInElement(localString).getStartOffset();
+        PsiFile file = position.getContainingFile();
+        CompletionResultSet fullStringResult = result.withPrefixMatcher(
+            file.getText().substring(offset + localString.getTextRange().getStartOffset(), parameters.getOffset()));
+        file.accept(new PsiRecursiveElementWalkingVisitor() {
+            @Override
+            public void visitElement(PsiElement element) {
+                if (element == localString) {
+                    return;
+                }
+                if (pattern.accepts(element)) {
+                    element.accept(new PsiRecursiveElementWalkingVisitor() {
+                        @Override
+                        public void visitElement(PsiElement each) {
+                            String valueText = ElementManipulators.getValueText(each);
+                            if (StringUtil.isNotEmpty(valueText) && !realExcludes.contains(valueText)) {
+                                fullStringResult.addElement(LookupElementBuilder.create(valueText));
+                            }
+                        }
+                    });
+                    return;
+                }
+                super.visitElement(element);
+            }
+        });
+    }
+
+    @RequiredReadAction
+    private static Set<String> getAllWords(PsiElement context, int offset) {
+        Set<String> words = new LinkedHashSet<>();
+        if (StringUtil.isEmpty(CompletionUtilCore.findJavaIdentifierPrefix(context, offset))) {
+            return words;
+        }
+
+        CharSequence chars = context.getContainingFile().getViewProvider().getContents();
+        IdTableBuilding.scanWords((chars1, charsArray, start, end) -> {
+            if (start > offset || offset > end) {
+                words.add(chars1.subSequence(start, end).toString());
+            }
+        }, chars, 0, chars.length());
+        return words;
     }
 
     private static LookupElement toLookupElement(Object variant) {
