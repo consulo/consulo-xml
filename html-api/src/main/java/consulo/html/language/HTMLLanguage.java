@@ -26,4 +26,11 @@ public class HTMLLanguage extends XMLLanguage {
     private HTMLLanguage() {
         super(XMLLanguage.INSTANCE, "HTML", "text/html", "text/htmlh");
     }
+
+    /**
+     * HTML dialects (Vue single-file components, Angular templates): their base language is HTML.
+     */
+    protected HTMLLanguage(HTMLLanguage baseLanguage, String name, String... mimeTypes) {
+        super(baseLanguage, name, mimeTypes);
+    }
 }

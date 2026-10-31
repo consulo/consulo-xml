@@ -76,7 +76,8 @@ public class HtmlNSDescriptorImpl implements XmlNSDescriptor, DumbAware, XmlNSTy
     XmlElementDescriptor[] elements = myDelegate == null ? XmlElementDescriptor.EMPTY_ARRAY : myDelegate.getRootElementsDescriptors(null);
 
     for (XmlElementDescriptor element : elements) {
-      decls.put(
+      // the HTML5 schema also has SVG and MathML elements with HTML names (a, script, style, title): the HTML one comes first
+      decls.putIfAbsent(
         element.getName(),
         new HtmlElementDescriptorImpl(element, myRelaxed, myCaseSensitive)
       );

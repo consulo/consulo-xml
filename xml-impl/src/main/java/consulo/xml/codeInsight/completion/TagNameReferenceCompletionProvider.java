@@ -20,7 +20,6 @@ import consulo.xml.psi.impl.source.xml.SchemaPrefixReference;
 import consulo.xml.psi.impl.source.xml.TagNameReference;
 import consulo.xml.language.psi.XmlTag;
 import com.intellij.xml.XmlTagNameProvider;
-import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
 import consulo.language.ast.ASTNode;
 import consulo.language.editor.completion.AutoCompletionPolicy;
 import consulo.language.editor.completion.CompletionParameters;
@@ -50,7 +49,7 @@ public class TagNameReferenceCompletionProvider implements CompletionProvider {
     @Override
     @RequiredReadAction
     public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
-        LegacyCompletionContributor.processReferences(
+        XmlCompletionReferences.processReferences(
             parameters,
             result,
             (reference, set) ->

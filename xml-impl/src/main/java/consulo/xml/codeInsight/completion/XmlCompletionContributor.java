@@ -28,7 +28,6 @@ import consulo.codeEditor.CaretModel;
 import consulo.codeEditor.Editor;
 import consulo.document.Document;
 import consulo.externalService.statistic.FeatureUsageTracker;
-import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
 import consulo.ide.impl.idea.codeInsight.completion.WordCompletionContributor;
 import consulo.language.Language;
 import consulo.language.ast.ASTNode;
@@ -182,8 +181,7 @@ public class XmlCompletionContributor extends CompletionContributor {
 
     static boolean hasEnumerationReference(CompletionParameters parameters, CompletionResultSet result) {
         SimpleReference<Boolean> hasRef = SimpleReference.create(false);
-        LegacyCompletionContributor.processReferences(parameters, result, (reference, resultSet) ->
-        {
+        XmlCompletionReferences.processReferences(parameters, result, (reference, resultSet) -> {
             if (reference instanceof XmlEnumeratedValueReference) {
                 hasRef.set(true);
             }

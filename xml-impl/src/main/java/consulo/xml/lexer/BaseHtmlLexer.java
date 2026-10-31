@@ -65,6 +65,8 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	private final boolean caseInsensitive;
 	protected boolean seenContentType;
 	protected boolean seenStylesheetType;
+	// lang="ts" / lang="scss" of a script or style tag (Vue, Svelte): see isLangAttributeSupported()
+	protected boolean seenLangAttribute;
 	private CharSequence cachedBufferSequence;
 	private Lexer lexerOfCacheBufferSequence;
 
@@ -101,19 +103,28 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			if(seenScript && !seenTag)
 			{
 				seenContentType = false;
+				seenLangAttribute = false;
 				if(((firstCh == 'l' || firstCh == 't') || (caseInsensitive && (firstCh == 'L' || firstCh == 'T'))))
 				{
 					String name = TreeUtil.getTokenText(lexer);
-					seenContentType = Comparing.strEqual("language", name, !caseInsensitive) || Comparing.strEqual("type", name, !caseInsensitive);
+					seenLangAttribute = isLangAttributeSupported() && Comparing.strEqual("lang", name, !caseInsensitive);
+					seenContentType = seenLangAttribute || Comparing.strEqual("language", name, !caseInsensitive) || Comparing.strEqual("type", name, !caseInsensitive);
 					return;
 				}
 			}
 			if(seenStyle && !seenTag)
 			{
 				seenStylesheetType = false;
+				seenLangAttribute = false;
 				if(firstCh == 't' || caseInsensitive && firstCh == 'T')
 				{
 					seenStylesheetType = Comparing.strEqual(TreeUtil.getTokenText(lexer), "type", !caseInsensitive);
+					return;
+				}
+				if(isLangAttributeSupported() && (firstCh == 'l' || caseInsensitive && firstCh == 'L'))
+				{
+					seenLangAttribute = Comparing.strEqual(TreeUtil.getTokenText(lexer), "lang", !caseInsensitive);
+					seenStylesheetType = seenLangAttribute;
 					return;
 				}
 			}
@@ -170,6 +181,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			}
 			seenContentType = false;
 			seenStylesheetType = false;
+			seenLangAttribute = false;
 		}
 	}
 
@@ -181,12 +193,26 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			if(seenContentType && seenScript && !seenAttribute)
 			{
 				String mimeType = TreeUtil.getTokenText(lexer);
-				scriptType = caseInsensitive ? mimeType.toLowerCase(Locale.US) : mimeType;
+				if(seenLangAttribute)
+				{
+					mimeType = getMimeTypeForLang(mimeType.trim(), false);
+				}
+				if(mimeType != null)
+				{
+					scriptType = caseInsensitive ? mimeType.toLowerCase(Locale.US) : mimeType;
+				}
 			}
 			if(seenStylesheetType && seenStyle && !seenAttribute)
 			{
 				String type = TreeUtil.getTokenText(lexer).trim();
-				styleType = caseInsensitive ? type.toLowerCase(Locale.US) : type;
+				if(seenLangAttribute)
+				{
+					type = getMimeTypeForLang(type, true);
+				}
+				if(type != null)
+				{
+					styleType = caseInsensitive ? type.toLowerCase(Locale.US) : type;
+				}
 			}
 		}
 	}
@@ -201,6 +227,25 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 		}
 		Collection<Language> instancesByMimeType = Language.findInstancesByMimeType(mimeType);
 		return instancesByMimeType.isEmpty() ? null : instancesByMimeType.iterator().next();
+	}
+
+	/**
+	 * Whether {@code <script lang="...">} / {@code <style lang="...">} choose the embedded language (single-file
+	 * components of Vue, Svelte), mapped to a mime type by {@link #getMimeTypeForLang(String, boolean)}.
+	 */
+	protected boolean isLangAttributeSupported()
+	{
+		return false;
+	}
+
+	/**
+	 * The mime type of a {@code lang} value ({@code ts} - {@code application/typescript}, {@code scss} - {@code text/scss});
+	 * null to keep the default language.
+	 */
+	@Nullable
+	protected String getMimeTypeForLang(String lang, boolean style)
+	{
+		return null;
 	}
 
 	@Nullable
@@ -348,6 +393,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			seenAttribute = false;
 			seenContentType = false;
 			seenStylesheetType = false;
+			seenLangAttribute = false;
 			scriptType = null;
 			styleType = null;
 		}

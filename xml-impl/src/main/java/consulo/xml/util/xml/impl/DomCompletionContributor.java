@@ -15,11 +15,11 @@
  */
 package consulo.xml.util.xml.impl;
 
+import consulo.xml.codeInsight.completion.XmlCompletionReferences;
 import consulo.xml.descriptor.XmlAttributeDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.ide.impl.idea.codeInsight.completion.LegacyCompletionContributor;
 import consulo.language.Language;
 import consulo.language.editor.completion.CompletionContributor;
 import consulo.language.editor.completion.CompletionParameters;
@@ -81,7 +81,7 @@ public class DomCompletionContributor extends CompletionContributor
 				final PsiReference[] references = myProvider.getReferencesByElement(element, new ProcessingContext());
 				if(references.length > 0)
 				{
-					return LegacyCompletionContributor.completeReference(parameters, result);
+					return XmlCompletionReferences.completeReference(parameters, result);
 				}
 			}
 		}

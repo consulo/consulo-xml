@@ -60,8 +60,19 @@ public class HtmlParsing {
     parseProlog();
 
     PsiBuilder.Marker error = null;
+    // text of the document level (not in a tag): XmlText for the dialects that ask for it
+    PsiBuilder.Marker topLevelText = null;
     while (!eof()) {
       final IElementType tt = token();
+      if (isTopLevelTextWrapped()) {
+        if (tt == XmlTokenType.XML_REAL_WHITE_SPACE || tt == XmlTokenType.XML_CHAR_ENTITY_REF || tt == XmlTokenType.XML_DATA_CHARACTERS) {
+          error = flushError(error);
+          topLevelText = startText(topLevelText);
+          advance();
+          continue;
+        }
+        topLevelText = terminateText(topLevelText);
+      }
       if (tt == XmlTokenType.XML_START_TAG_START) {
         error = flushError(error);
         parseTag("");
@@ -94,11 +105,21 @@ public class HtmlParsing {
       }
     }
 
+    terminateText(topLevelText);
+
     if (error != null) {
       error.error(XmlErrorLocalize.topLevelElementIsNotCompleted());
     }
 
     document.done(XmlElementType.HTML_DOCUMENT);
+  }
+
+  /**
+   * Whether the text of the document level (not in a tag) is an {@code XmlText}, like the text of tags: for HTML
+   * dialects whose top-level text holds code (the interpolations and control flow blocks of Angular templates).
+   */
+  protected boolean isTopLevelTextWrapped() {
+    return false;
   }
 
   private static PsiBuilder.@Nullable Marker flushError(PsiBuilder.Marker error) {

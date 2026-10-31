@@ -65,10 +65,6 @@ public class XmlReferenceContributor extends PsiReferenceContributor {
         registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlElementContentSpec.class), dtdReferencesProvider);
         registrar.registerReferenceProvider(PlatformPatterns.psiElement(XmlToken.class), dtdReferencesProvider);
 
-        PsiReferenceProviderByType commentsReference =
-            PsiReferenceProviderByType.forType(CommentsReferenceContributor.COMMENTS_REFERENCE_PROVIDER_TYPE);
-
-        registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
 
         URIReferenceProvider uriProvider = new URIReferenceProvider();
         XmlUtil.registerXmlAttributeValueReferenceProvider(
@@ -161,6 +157,13 @@ public class XmlReferenceContributor extends PsiReferenceContributor {
                 }
             }
         );
+
+        // last: its provider type is a constant of the IDE implementation, which is not there outside the IDE - like in
+        // headless tests - and the providers above stay registered
+        // TODO move COMMENTS_REFERENCE_PROVIDER_TYPE to the language API
+        PsiReferenceProviderByType commentsReference =
+            PsiReferenceProviderByType.forType(CommentsReferenceContributor.COMMENTS_REFERENCE_PROVIDER_TYPE);
+        registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
     }
 
     @Override

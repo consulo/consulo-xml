@@ -40,7 +40,8 @@ public class ExternalResource
 			return resolvedResourcePath;
 		}
 
-		final URL resource = myClassLoader.getResource(myFile);
+		// a class loader takes the resource name without the leading slash of Class#getResource
+		final URL resource = myClassLoader.getResource(myFile.startsWith("/") ? myFile.substring(1) : myFile);
 
 		if(resource == null)
 		{
