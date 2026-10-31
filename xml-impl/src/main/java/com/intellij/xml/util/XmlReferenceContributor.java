@@ -158,7 +158,9 @@ public class XmlReferenceContributor extends PsiReferenceContributor {
         );
 
         PsiReferenceProviderByType commentsReference = PsiReferenceProviderByType.forType(ReferenceProviderType.COMMENTS);
-        registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
+        if (commentsReference != null) {
+            registrar.registerReferenceProvider(xmlAttributeValue(), commentsReference, PsiReferenceRegistrar.LOWER_PRIORITY);
+        }
     }
 
     @Override
