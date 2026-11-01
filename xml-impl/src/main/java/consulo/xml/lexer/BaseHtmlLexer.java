@@ -65,6 +65,9 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	private final boolean caseInsensitive;
 	protected boolean seenContentType;
 	protected boolean seenStylesheetType;
+	// <template lang="pug"> of a single file component (Vue): its content is embedded like a script once the lang
+	// names a language with a script content provider; see isLangAttributeSupported()
+	protected boolean seenTemplate;
 	// lang="ts" / lang="scss" of a script or style tag (Vue, Svelte): see isLangAttributeSupported()
 	protected boolean seenLangAttribute;
 	private CharSequence cachedBufferSequence;
@@ -82,6 +85,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 	{
 		private static final String TOKEN_SCRIPT = "script";
 		private static final String TOKEN_STYLE = "style";
+		private static final String TOKEN_TEMPLATE = "template";
 		private static final String TOKEN_ON = "on";
 
 		@Override
@@ -100,6 +104,12 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			}
 			final char firstCh = buffer.charAt(lexer.getTokenStart());
 
+			if(seenTemplate && !seenScript && !seenTag)
+			{
+				seenLangAttribute = (firstCh == 'l' || caseInsensitive && firstCh == 'L')
+					&& Comparing.strEqual("lang", TreeUtil.getTokenText(lexer), !caseInsensitive);
+				return;
+			}
 			if(seenScript && !seenTag)
 			{
 				seenContentType = false;
@@ -129,7 +139,8 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 				}
 			}
 
-			if(firstCh != 'o' && firstCh != 's' && (!caseInsensitive || (firstCh != 'S' && firstCh != 'O')))
+			boolean template = isLangAttributeSupported() && (firstCh == 't' || caseInsensitive && firstCh == 'T');
+			if(!template && firstCh != 'o' && firstCh != 's' && (!caseInsensitive || (firstCh != 'S' && firstCh != 'O')))
 			{
 				return; // optimization
 			}
@@ -142,6 +153,17 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 
 			final boolean style = name.equals(TOKEN_STYLE);
 			final int state = getState() & BASE_STATE_MASK;
+			if(isLangAttributeSupported() && name.equals(TOKEN_TEMPLATE) && isHtmlTagState(state))
+			{
+				if(seenTag)
+				{
+					// the end tag of an embedded template
+					seenTag = false;
+					return;
+				}
+				seenTemplate = true;
+				return;
+			}
 			final boolean script = name.equals(TOKEN_SCRIPT) || ((name.startsWith(TOKEN_ON) && name.indexOf(':') == -1 && !isHtmlTagState(state) && HtmlDescriptorsTable.getAttributeDescriptor(name)
 					!= null));
 
@@ -190,6 +212,15 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 		@Override
 		public void handleElement(Lexer lexer)
 		{
+			if(seenTemplate && seenLangAttribute && !seenScript && !seenTag)
+			{
+				String mimeType = getMimeTypeForLang(TreeUtil.getTokenText(lexer).trim(), false);
+				if(mimeType != null && findScriptContentProvider(mimeType) != null)
+				{
+					seenScript = true;
+					scriptType = caseInsensitive ? mimeType.toLowerCase(Locale.US) : mimeType;
+				}
+			}
 			if(seenContentType && seenScript && !seenAttribute)
 			{
 				String mimeType = TreeUtil.getTokenText(lexer);
@@ -380,6 +411,12 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 					seenTag = true;
 				}
 			}
+			if(seenTemplate && !seenScript)
+			{
+				// a template without a lang of an embedded language: HTML content
+				seenTemplate = false;
+				seenLangAttribute = false;
+			}
 		}
 	}
 
@@ -394,6 +431,7 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 			seenContentType = false;
 			seenStylesheetType = false;
 			seenLangAttribute = false;
+			seenTemplate = false;
 			scriptType = null;
 			styleType = null;
 		}
@@ -565,7 +603,9 @@ public abstract class BaseHtmlLexer extends DelegateLexer
 
 	protected boolean endOfTheEmbeddment(String name)
 	{
-		return (hasSeenScript() && XmlNameHandler.TOKEN_SCRIPT.equals(name)) || (hasSeenStyle() && XmlNameHandler.TOKEN_STYLE.equals(name)) || CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED
+		return (hasSeenScript() && (XmlNameHandler.TOKEN_SCRIPT.equals(name)
+			// the content of <template lang="..."> (not in the state: a lexer restarted in it sees a script)
+			|| isLangAttributeSupported() && XmlNameHandler.TOKEN_TEMPLATE.equals(name))) || (hasSeenStyle() && XmlNameHandler.TOKEN_STYLE.equals(name)) || CompletionUtilCore.DUMMY_IDENTIFIER_TRIMMED
 				.equalsIgnoreCase(name);
 	}
 

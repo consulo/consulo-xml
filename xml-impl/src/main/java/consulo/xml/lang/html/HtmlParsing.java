@@ -73,7 +73,11 @@ public class HtmlParsing {
         }
         topLevelText = terminateText(topLevelText);
       }
-      if (tt == XmlTokenType.XML_START_TAG_START) {
+      if (tt instanceof CustomParsingType || tt instanceof ILazyParseableElementType) {
+        // embedded content of the document level (the expressions of a template dialect), as in tags
+        error = flushError(error);
+        advance();
+      } else if (tt == XmlTokenType.XML_START_TAG_START) {
         error = flushError(error);
         parseTag("");
         myTagMarkersStack.clear();
