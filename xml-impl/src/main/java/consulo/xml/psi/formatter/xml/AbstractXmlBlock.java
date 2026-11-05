@@ -311,13 +311,17 @@ public abstract class AbstractXmlBlock extends AbstractBlock {
       );
     }
     else {
-      result.add(createSimpleChild(child, indent, wrap, alignment));
+      result.add(createSimpleChild(child, indent, wrap, alignment, null));
     }
   }
 
 
-  protected XmlBlock createSimpleChild(final ASTNode child, final Indent indent, final Wrap wrap, final Alignment alignment) {
-    return new XmlBlock(child, wrap, alignment, myXmlFormattingPolicy, indent, null, isPreserveSpace());
+  protected XmlBlock createSimpleChild(ASTNode child,
+                                       @Nullable Indent indent,
+                                       @Nullable Wrap wrap,
+                                       @Nullable Alignment alignment,
+                                       @Nullable TextRange range) {
+    return new XmlBlock(child, wrap, alignment, myXmlFormattingPolicy, indent, range, isPreserveSpace());
   }
 
   protected XmlTagBlock createTagBlock(final ASTNode child, final Indent indent, final Wrap wrap, final Alignment alignment) {

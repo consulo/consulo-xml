@@ -118,6 +118,7 @@ open module com.intellij.xml {
     exports consulo.xml.psi.filters.position;
     exports consulo.xml.psi.formatter;
     exports consulo.xml.psi.formatter.xml;
+    exports consulo.xml.template.formatter;
     exports consulo.xml.psi.impl.cache.impl.idCache;
     exports consulo.xml.psi.impl.smartPointers;
     exports consulo.xml.psi.impl.source.html;

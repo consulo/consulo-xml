@@ -133,6 +133,10 @@ public abstract class AbstractSyntheticBlock implements Block {
     return myTag;
   }
 
+  public boolean shouldKeepWhiteSpacesInside() {
+    return myTag != null && myXmlFormattingPolicy.keepWhiteSpacesInsideTag(myTag);
+  }
+
   public boolean startsWithTextElement() {
     if (startsWithText()) return true;
     if (isStartOfTag() && myXmlFormattingPolicy.isTextElement(getTag())) return true;
