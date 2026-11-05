@@ -94,11 +94,19 @@ public class XmlAutoPopupHandler extends TypedHandlerDelegate {
     }
 
     @RequiredReadAction
-    private static boolean doCompleteIfNeeded(int offset, PsiFile file, PsiElement lastElement) {
+    static boolean doCompleteIfNeeded(int offset, PsiFile file, PsiElement lastElement) {
+        // A host offset cannot be used to slice a leaf from an injected document.
+        PsiFile elementFile = lastElement.getContainingFile();
+        if (elementFile == null || elementFile.getViewProvider() != file.getViewProvider()) {
+            return false;
+        }
         SimpleReference<Boolean> isRelevantLanguage = new SimpleReference<>();
         SimpleReference<Boolean> isAnt = new SimpleReference<>();
         String text = lastElement.getText();
         int len = offset - lastElement.getTextRange().getStartOffset();
+        if (len <= 0 || len > text.length()) {
+            return false;
+        }
         if (len < text.length()) {
             text = text.substring(0, len);
         }

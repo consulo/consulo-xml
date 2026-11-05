@@ -59,7 +59,7 @@ public class HtmlCompletionContributor extends CompletionContributor {
         );
     }
 
-    private static boolean hasHtmlAttributesCompletion(PsiElement position) {
+    public static boolean hasHtmlAttributesCompletion(PsiElement position) {
         if (PsiTreeUtil.getParentOfType(position, HtmlTag.class, false) != null) {
             return true;
         }
@@ -67,7 +67,7 @@ public class HtmlCompletionContributor extends CompletionContributor {
         return xmlTag != null && xmlTag.getLanguage() == XHTMLLanguage.INSTANCE;
     }
 
-    protected static String[] addSpecificCompletions(final XmlAttribute attribute) {
+    public static String[] addSpecificCompletions(final XmlAttribute attribute) {
         String name = attribute.getName();
         final XmlTag tag = attribute.getParent();
         if (tag == null) {
