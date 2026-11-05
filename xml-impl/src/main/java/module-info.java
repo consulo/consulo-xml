@@ -21,6 +21,7 @@ open module com.intellij.xml {
     requires consulo.external.service.api;
     requires consulo.http.api;
     requires consulo.language.inject.advanced.api;
+    requires consulo.language.spellchecker.editor.api;
     requires consulo.version.control.system.api;
 
     requires consulo.util.xml.fast.reader;
