@@ -1135,7 +1135,6 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
   protected class BodyInsertTransaction implements InsertAction {
     private final TreeElement myChild;
-    private ASTNode myNewElement;
 
     public BodyInsertTransaction(TreeElement child) {
       myChild = child;
@@ -1168,22 +1167,19 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
                   final XmlEntityRef entityRef = PsiTreeUtil.getParentOfType(subTags[subTagNum], XmlEntityRef.class);
                   throw new IncorrectOperationException("Can't insert subtag to the entity. Entity reference text: " + (entityRef == null ? "" : entityRef.getText()));
                 }
-                myNewElement = XmlTagImpl.super.addInternal(myChild, myChild, subTag, Boolean.FALSE);
+                return XmlTagImpl.super.addInternal(myChild, myChild, subTag, Boolean.FALSE);
               } else {
                 final ASTNode child = XmlChildRole.START_TAG_END_FINDER.findChild(XmlTagImpl.this);
-                myNewElement = XmlTagImpl.super.addInternal(myChild, myChild, child, Boolean.FALSE);
+                return XmlTagImpl.super.addInternal(myChild, myChild, child, Boolean.FALSE);
               }
-              return null;
             }
           }
         } else {
           final ASTNode child = XmlChildRole.CLOSING_TAG_START_FINDER.findChild(XmlTagImpl.this);
-          myNewElement = XmlTagImpl.super.addInternal(myChild, myChild, child, Boolean.TRUE);
-          return null;
+          return XmlTagImpl.super.addInternal(myChild, myChild, child, Boolean.TRUE);
         }
       }
-      myNewElement = XmlTagImpl.super.addInternal(myChild, myChild, anchor, Boolean.TRUE);
-      return (TreeElement) myNewElement;
+      return XmlTagImpl.super.addInternal(myChild, myChild, anchor, Boolean.TRUE);
     }
   }
 
