@@ -92,7 +92,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
   private volatile TextRange[] myTextElements;
   private volatile Map<String, String> myAttributeValueMap;
   private volatile XmlTagValue myValue;
-  private volatile boolean myHasNamespaceDeclarations;
+  private volatile Boolean myHasNamespaceDeclarations;
 
   public XmlTagImpl() {
     this(XmlElementType.XML_TAG);
@@ -136,7 +136,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     myAttributes = null;
     myTextElements = null;
     myAttributeValueMap = null;
-    myHasNamespaceDeclarations = false;
+    myHasNamespaceDeclarations = null;
     myValue = null;
     super.clearCaches();
   }
@@ -309,14 +309,14 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
     final String schemaLocationDeclaration = getAttributeValue("schemaLocation", XmlUtil.XML_SCHEMA_INSTANCE_URI);
 
     if (noNamespaceDeclaration != null) {
-      map = initializeSchema(XmlUtil.EMPTY_URI, null, noNamespaceDeclaration, null, myHasNamespaceDeclarations);
+      map = initializeSchema(XmlUtil.EMPTY_URI, null, noNamespaceDeclaration, null, hasNamespaceDeclarations());
     }
     if (schemaLocationDeclaration != null) {
       final StringTokenizer tokenizer = new StringTokenizer(schemaLocationDeclaration);
       while (tokenizer.hasMoreTokens()) {
         final String uri = tokenizer.nextToken();
         if (tokenizer.hasMoreTokens()) {
-          map = initializeSchema(uri, getNSVersion(uri, this), tokenizer.nextToken(), map, myHasNamespaceDeclarations);
+          map = initializeSchema(uri, getNSVersion(uri, this), tokenizer.nextToken(), map, hasNamespaceDeclarations());
         }
       }
     }
@@ -562,9 +562,7 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
       @Override
       public boolean execute(PsiElement element) {
         if (element instanceof XmlAttribute) {
-          XmlAttribute attribute = (XmlAttribute) element;
-          result.add(attribute);
-          myHasNamespaceDeclarations = myHasNamespaceDeclarations || attribute.isNamespaceDeclaration();
+          result.add((XmlAttribute) element);
         } else if (element instanceof XmlToken && ((XmlToken) element).getTokenType() == XmlTokenType.XML_TAG_END) {
           return false;
         }
@@ -901,8 +899,26 @@ public class XmlTagImpl extends XmlElementImpl implements XmlTag, HintedReferenc
 
   @Override
   public boolean hasNamespaceDeclarations() {
-    getAttributes();
-    return myHasNamespaceDeclarations;
+    Boolean result = myHasNamespaceDeclarations;
+    if (result == null) {
+      myHasNamespaceDeclarations = result = calculateHasNamespaceDeclarations();
+    }
+    return result;
+  }
+
+  private boolean calculateHasNamespaceDeclarations() {
+    final boolean[] result = {false};
+    processChildren(new PsiElementProcessor() {
+      @Override
+      public boolean execute(PsiElement element) {
+        if (element instanceof XmlAttribute && ((XmlAttribute) element).isNamespaceDeclaration()) {
+          result[0] = true;
+          return false;
+        }
+        return !(element instanceof XmlToken) || ((XmlToken) element).getTokenType() != XmlTokenType.XML_TAG_END;
+      }
+    });
+    return result[0];
   }
 
   @Override
