@@ -141,7 +141,7 @@ public class XmlTagRenameHandler implements RenameHandler, TitledHandler {
             XmlTagInplaceRenamer.rename(editor, (XmlTag)element.getParent());
         }
         else {
-            XmlTagRenameDialog.renameXmlTag(editor, element, (XmlTag)element.getParent());
+            XmlTagRenameDialog.renameXmlTag(element, (XmlTag)element.getParent());
         }
     }
 
